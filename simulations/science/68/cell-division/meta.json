@@ -1,0 +1,11 @@
+{
+  "title": "Cell Division: Mitosis Explorer",
+  "subject": "science",
+  "gradeBand": "68",
+  "gradeRange": "6-8",
+  "standards": ["NGSS MS-LS1-2"],
+  "timeMinutes": 45,
+  "aiPowered": false,
+  "author": "",
+  "version": "1.0.0"
+}
