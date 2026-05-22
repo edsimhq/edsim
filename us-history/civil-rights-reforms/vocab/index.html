@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Resistance and Reform · Civil Rights Vocabulary · EdSim</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Code+Pro:wght@400;500;600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#080c10;--surf:#0e1318;--surf2:#141b22;--surf3:#1a232c;
+  --border:#1e2d3a;--border-hi:#2e4558;
+  --text:#c8d4e0;--dim:#607080;--faint:#1a2530;
+  --gold:#b8860b;--gold-hi:#d4a017;--gold-glow:rgba(212,160,23,.25);
+  --gold-bright:#f0c040;
+  --blue:#1a3a5c;--blue-hi:#2d6fd4;--blue-glow:rgba(45,111,212,.22);
+  --green:#1a6e45;--green-hi:#27ae60;--green-glow:rgba(27,174,74,.22);
+  --red:#8b2e2e;--red-hi:#c0392b;--red-glow:rgba(139,46,46,.3);
+  --warm:#e8dfc8;--white:#eef4f8;
+  --fd:'Playfair Display',Georgia,serif;
+  --fm:'Source Code Pro',monospace;
+  --fb:'Libre Baskerville',Georgia,serif;
+  --ease:cubic-bezier(.4,0,.2,1);--r:4px;--rs:3px;
+}
+html,body{min-height:100%}
+body{font-family:var(--fb);background:var(--bg);color:var(--text);display:flex;flex-direction:column}
+
+/* LIGHT RAYS — dawn breaking through */
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9997;
+  background:
+    radial-gradient(ellipse 60% 40% at 50% 100%,rgba(212,160,23,.07) 0%,transparent 70%),
+    radial-gradient(ellipse 30% 60% at 50% 110%,rgba(45,111,212,.05) 0%,transparent 60%)}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9998;
+  background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(255,255,255,.008) 3px,rgba(255,255,255,.008) 4px)}
+
+/* HEADER */
+.hdr{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  padding:0 22px;height:52px;border-bottom:2px solid var(--border);
+  background:rgba(8,12,16,.96);backdrop-filter:blur(10px);flex-shrink:0}
+.hdr-l{display:flex;align-items:center;gap:11px}
+.logo{font-family:var(--fd);font-size:15px;font-weight:700;color:var(--dim);letter-spacing:.08em;font-style:italic}
+.hdiv{width:1px;height:16px;background:var(--border)}
+.unit{font-family:var(--fm);font-size:10px;color:var(--gold-hi);letter-spacing:.16em;text-transform:uppercase}
+.hdr-r{display:flex;align-items:center;gap:8px}
+.hdr-btn{font-family:var(--fm);font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  padding:4px 11px;border-radius:var(--rs);cursor:pointer;min-height:30px;
+  background:transparent;border:1px solid var(--border);color:var(--dim);transition:all .15s}
+.hdr-btn:hover{border-color:var(--border-hi);color:var(--white)}
+.hdr-btn.danger:hover{border-color:var(--red-hi);color:var(--red-hi)}
+.hdr-info{font-family:var(--fm);font-size:10px;color:var(--faint);letter-spacing:.06em}
+
+/* MAIN */
+.main{position:relative;z-index:5;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 16px 32px}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes cardIn{from{opacity:0;transform:translateY(-7px)}to{opacity:1;transform:translateY(0)}}
+@keyframes btnIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+@keyframes firepulse{0%,100%{transform:scale(1)}50%{transform:scale(1.55)}}
+@keyframes tdanger{from{opacity:1}to{opacity:.25}}
+@keyframes riseGlow{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* ═══════════════════════════════════════
+   SETUP SCREEN
+═══════════════════════════════════════ */
+.setup{width:100%;max-width:640px;animation:fadeUp .4s ease both}
+.setup-dateline{font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.2em;text-transform:uppercase;text-align:center;margin-bottom:8px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:5px 0}
+.setup-context{font-family:var(--fd);font-size:13px;font-style:italic;color:var(--gold-hi);text-align:center;margin-bottom:10px;opacity:.8}
+.setup-title{font-family:var(--fd);font-size:48px;font-weight:900;color:var(--white);text-align:center;line-height:1;margin-bottom:2px;letter-spacing:-.01em}
+.setup-deck{font-family:var(--fd);font-size:16px;font-weight:400;font-style:italic;color:var(--dim);text-align:center;margin-bottom:6px}
+.setup-sub{font-family:var(--fm);font-size:10px;color:var(--gold-hi);letter-spacing:.18em;text-transform:uppercase;text-align:center;margin-bottom:24px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:4px 0}
+
+/* Student info */
+.student-row{display:grid;grid-template-columns:1fr auto;gap:10px;margin-bottom:16px}
+.s-field{display:flex;flex-direction:column;gap:5px}
+.s-label{font-family:var(--fm);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+.s-input{font-family:var(--fb);font-size:14px;background:var(--surf2);color:var(--white);
+  border:1px solid var(--border);border-radius:var(--rs);padding:9px 12px;
+  transition:border-color .15s;width:100%}
+.s-input:focus{outline:none;border-color:var(--gold-hi);box-shadow:0 0 0 3px rgba(212,160,23,.1)}
+.s-select{font-family:var(--fb);font-size:14px;background:var(--surf2);color:var(--white);
+  border:1px solid var(--border);border-radius:var(--rs);padding:9px 28px 9px 12px;
+  appearance:none;-webkit-appearance:none;cursor:pointer;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath fill='%23607080' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 10px center;
+  transition:border-color .15s;min-width:100px}
+.s-select:focus{outline:none;border-color:var(--gold-hi)}
+
+/* Level picker */
+.setup-section-label{font-family:var(--fm);font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-bottom:8px}
+.level-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:16px}
+.level-btn{
+  background:var(--surf);border:2px solid var(--border);border-radius:var(--r);
+  padding:16px 14px;cursor:pointer;text-align:center;transition:all .18s var(--ease);position:relative;
+  opacity:.5;
+}
+.level-btn:hover{border-color:var(--border-hi);transform:translateY(-2px);opacity:.8}
+.level-btn.active{border-color:var(--gold-hi);background:rgba(212,160,23,.1);box-shadow:0 0 0 2px var(--gold-hi);opacity:1;transform:translateY(-2px)}
+.level-btn.active::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold-hi);border-radius:var(--r) var(--r) 0 0}
+.level-n{font-family:var(--fd);font-size:28px;font-weight:900;color:var(--white)}
+.level-btn.active .level-n{color:var(--gold-hi)}
+.level-count{font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.06em;margin-top:2px}
+.level-btn.active .level-count{color:var(--gold-hi);opacity:.8}
+.level-label{font-family:var(--fd);font-size:13px;font-style:italic;color:var(--dim);margin-top:4px}
+.level-btn.active .level-label{color:var(--text)}
+.level-desc{font-size:11px;color:var(--faint);margin-top:5px;line-height:1.4}
+.level-btn.active .level-desc{color:var(--text)}
+
+/* Difficulty picker */
+.diff-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:20px}
+.diff-card{
+  background:var(--surf);border:2px solid var(--border);border-radius:var(--r);
+  padding:14px;cursor:pointer;transition:all .18s var(--ease);position:relative;overflow:hidden;
+  opacity:.5;
+}
+.diff-card:hover{border-color:var(--border-hi);transform:translateY(-1px);opacity:.8}
+.diff-card.active{border-color:var(--blue-hi);background:rgba(45,111,212,.14);box-shadow:0 0 0 2px var(--blue-hi);opacity:1;transform:translateY(-1px)}
+.diff-card.active::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--blue-hi)}
+.diff-card.active .diff-name{color:var(--blue-hi)}
+.diff-card.active .diff-desc{color:var(--text)}
+.diff-name{font-family:var(--fd);font-size:16px;font-weight:700;color:var(--white);margin-bottom:4px}
+.diff-desc{font-size:12px;color:var(--dim);line-height:1.5}
+.diff-tag{font-family:var(--fm);font-size:9px;color:var(--blue-hi);letter-spacing:.08em;text-transform:uppercase;margin-top:6px;opacity:.7}
+.diff-card.active .diff-tag{opacity:1}
+
+/* Start btn */
+.start-btn{width:100%;font-family:var(--fd);font-size:20px;font-weight:700;letter-spacing:.06em;
+  background:var(--blue);color:var(--white);border:none;padding:15px;border-radius:var(--r);cursor:pointer;
+  transition:all .15s;box-shadow:0 0 0 0 var(--blue-glow)}
+.start-btn:hover{background:var(--blue-hi);transform:translateY(-2px);box-shadow:0 6px 24px var(--blue-glow)}
+.start-btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+
+/* Progress bars on setup */
+.setup-progress{background:var(--surf);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;margin-bottom:16px}
+.sp-title{font-family:var(--fm);font-size:10px;color:var(--faint);letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px}
+.sp-rows{display:flex;flex-direction:column;gap:8px}
+.sp-row{display:flex;align-items:center;gap:10px}
+.sp-lbl{font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.06em;width:90px;flex-shrink:0}
+.sp-track{flex:1;height:4px;background:var(--surf3);border-radius:2px;overflow:hidden}
+.sp-fill{height:100%;border-radius:2px;transition:width .4s}
+.fill-blue{background:var(--blue-hi)}.fill-gold{background:var(--gold-hi)}.fill-green{background:var(--green-hi)}
+.sp-val{font-family:var(--fm);font-size:10px;color:var(--dim);width:32px;text-align:right;flex-shrink:0}
+
+/* ═══════════════════════════════════════
+   MODE SELECT
+═══════════════════════════════════════ */
+.mode-select{width:100%;max-width:660px;animation:fadeUp .4s ease both}
+.ms-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:8px}
+.ms-info{display:flex;flex-direction:column;gap:2px}
+.ms-name{font-family:var(--fd);font-size:24px;font-weight:900;color:var(--white)}
+.ms-meta{font-family:var(--fm);font-size:11px;color:var(--dim);letter-spacing:.06em}
+.ms-change{font-family:var(--fm);font-size:10px;color:var(--faint);background:none;border:1px solid var(--border);
+  border-radius:var(--rs);padding:4px 10px;cursor:pointer;transition:all .15s;letter-spacing:.06em;text-transform:uppercase}
+.ms-change:hover{border-color:var(--border-hi);color:var(--dim)}
+.ms-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
+.ms-card{background:var(--surf);border:1px solid var(--border);border-radius:var(--r);
+  padding:20px 16px;cursor:pointer;transition:all .18s var(--ease);position:relative;overflow:hidden;text-align:left}
+.ms-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;opacity:0;transition:opacity .18s}
+.ms-card.rev::before{background:var(--blue-hi)}.ms-card.prac::before{background:var(--gold-hi)}.ms-card.chal::before{background:var(--green-hi)}
+.ms-card:hover:not(.locked){border-color:var(--border-hi);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.5)}
+.ms-card:hover:not(.locked)::before{opacity:1}
+.ms-card.locked{opacity:.38;cursor:not-allowed}
+.ms-icon{font-size:26px;margin-bottom:8px}
+.ms-card-name{font-family:var(--fd);font-size:19px;font-weight:700;margin-bottom:5px}
+.ms-card.rev .ms-card-name{color:var(--blue-hi)}.ms-card.prac .ms-card-name{color:var(--gold-hi)}.ms-card.chal .ms-card-name{color:var(--green-hi)}
+.ms-card-desc{font-size:12.5px;color:var(--dim);line-height:1.55}
+.ms-card-meta{font-family:var(--fm);font-size:9px;color:var(--faint);letter-spacing:.08em;text-transform:uppercase;margin-top:10px}
+.locked-badge{position:absolute;top:8px;right:8px;font-family:var(--fm);font-size:9px;letter-spacing:.08em;text-transform:uppercase;
+  background:var(--surf3);border:1px solid var(--border);border-radius:3px;padding:2px 6px;color:var(--faint)}
+.ms-prog{background:var(--surf);border:1px solid var(--border);border-radius:var(--r);padding:12px 16px}
+.ms-prog-rows{display:flex;gap:16px;flex-wrap:wrap}
+.ms-pi{flex:1;min-width:100px;display:flex;flex-direction:column;gap:3px}
+.ms-pi-lbl{font-family:var(--fm);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.ms-pi-bar{height:3px;background:var(--surf3);border-radius:2px;overflow:hidden;margin-top:2px}
+.ms-pi-fill{height:100%;border-radius:2px;transition:width .4s}
+.ms-pi-val{font-family:var(--fm);font-size:10px;color:var(--dim)}
+
+/* ═══════════════════════════════════════
+   SHARED ACTIVITY
+═══════════════════════════════════════ */
+.activity{width:100%;max-width:700px;display:none;flex-direction:column}
+.activity.active{display:flex}
+.back-btn{font-family:var(--fm);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  background:transparent;border:none;color:var(--dim);cursor:pointer;padding:0;margin-bottom:14px;
+  display:flex;align-items:center;gap:5px;transition:color .15s;align-self:flex-start}
+.back-btn:hover{color:var(--white)}
+.prog-row{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.prog-track{flex:1;height:3px;background:var(--surf3);border-radius:2px;overflow:hidden}
+.prog-fill{height:100%;border-radius:2px;transition:width .35s var(--ease)}
+.prog-lbl{font-family:var(--fm);font-size:11px;color:var(--dim);white-space:nowrap}
+.hud{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px}
+.hud-score{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--dim);letter-spacing:.04em}
+.hud-score span{color:var(--white);font-size:18px}
+.hud-streak{font-family:var(--fm);font-size:11px;color:var(--dim);display:flex;align-items:center;gap:5px}
+.fire{transition:transform .2s}.fire.hot{animation:firepulse .35s ease}
+
+/* Timer */
+.timer-wrap{position:relative;width:56px;height:56px;flex-shrink:0}
+.t-svg{position:absolute;inset:0;transform:rotate(-90deg)}
+.t-track{fill:none;stroke:var(--surf3);stroke-width:4}
+.t-arc{fill:none;stroke:var(--gold-hi);stroke-width:4;stroke-linecap:round;stroke-dasharray:145;stroke-dashoffset:0;transition:stroke-dashoffset .95s linear,stroke .25s}
+.t-arc.warn{stroke:var(--gold-bright)}.t-arc.danger{stroke:var(--red-hi)}
+.t-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--fm);font-size:15px;font-weight:600;color:var(--white)}
+.t-num.danger{color:var(--red-hi);animation:tdanger .4s ease infinite alternate}
+.timer-off .t-arc{stroke:var(--border)}.timer-off .t-num{font-size:10px;color:var(--faint)}
+
+/* Q badge */
+.q-badge{font-family:var(--fm);font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--dim);border:1px solid var(--border);border-radius:var(--rs);padding:3px 10px;
+  background:var(--surf2);margin-bottom:11px;align-self:flex-start}
+
+/* Q card */
+.q-card{background:var(--surf);border:1px solid var(--border);border-radius:var(--r);
+  padding:22px 22px 18px;margin-bottom:14px;position:relative;overflow:hidden;animation:cardIn .22s ease both}
+.q-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.q-card.def2term::before{background:linear-gradient(90deg,var(--blue-hi),transparent)}
+.q-card.term2def::before{background:linear-gradient(90deg,var(--gold-hi),transparent)}
+.q-lbl{font-family:var(--fm);font-size:10px;color:var(--faint);letter-spacing:.14em;text-transform:uppercase;margin-bottom:9px}
+.q-text{font-size:15.5px;line-height:1.6;color:var(--white)}
+.q-text.is-term{font-family:var(--fd);font-size:26px;font-weight:900;letter-spacing:.02em;line-height:1.1}
+.hint-reveal-btn{font-family:var(--fm);font-size:10px;color:var(--faint);background:none;border:none;cursor:pointer;
+  text-decoration:underline;text-underline-offset:2px;padding:0;transition:color .15s;margin-top:10px;display:none}
+.hint-reveal-btn:hover{color:var(--gold-hi)}
+.q-hint{margin-top:10px;padding:8px 12px;background:rgba(212,160,23,.07);border-radius:var(--rs);
+  display:none;align-items:flex-start;gap:7px;border-left:2px solid var(--gold-hi)}
+.hint-txt{font-size:12.5px;color:var(--gold-hi);font-style:italic;line-height:1.5}
+
+/* Answer grid */
+.ans-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ans-btn{font-family:var(--fb);font-size:13px;line-height:1.45;
+  background:var(--surf2);color:var(--text);border:1px solid var(--border);
+  border-radius:var(--rs);padding:13px 14px;cursor:pointer;text-align:left;
+  transition:background .12s,border-color .12s,transform .1s;
+  position:relative;overflow:hidden;min-height:58px;animation:btnIn .2s ease both}
+.ans-btn:nth-child(1){animation-delay:.04s}.ans-btn:nth-child(2){animation-delay:.09s}
+.ans-btn:nth-child(3){animation-delay:.14s}.ans-btn:nth-child(4){animation-delay:.19s}
+.ans-btn .kbd{position:absolute;top:7px;right:8px;font-family:var(--fm);font-size:9px;color:var(--faint)}
+.ans-btn:hover:not(:disabled){background:var(--surf3);border-color:var(--border-hi);transform:translateY(-1px)}
+.ans-btn.correct{background:rgba(27,174,74,.14)!important;border-color:var(--green-hi)!important;color:#7ef5b0!important;box-shadow:0 0 12px var(--green-glow);transform:none!important}
+.ans-btn.wrong{background:rgba(139,46,46,.2)!important;border-color:var(--red-hi)!important;color:#ff9090!important;transform:none!important}
+.ans-btn.reveal{background:rgba(27,174,74,.08)!important;border-color:var(--green-hi)!important;color:#7ef5b0!important}
+.ans-btn:disabled{cursor:default}
+
+/* Remediation */
+.remed{background:rgba(45,111,212,.08);border:1px solid rgba(45,111,212,.25);border-radius:var(--r);
+  padding:13px 16px;margin-bottom:13px;display:none}
+.remed.show{display:block}
+.remed-title{font-family:var(--fd);font-size:14px;font-weight:700;color:var(--blue-hi);margin-bottom:4px}
+.remed-txt{font-size:13px;color:var(--dim);line-height:1.55}
+.remed-ex{margin-top:7px;padding:8px 11px;background:var(--surf2);border-radius:var(--rs);
+  border-left:2px solid var(--gold-hi);font-size:12px;color:var(--dim);font-style:italic;line-height:1.55}
+
+/* Feedback flash */
+.ff{position:fixed;inset:0;z-index:200;pointer-events:none;opacity:0;transition:opacity .12s}
+.ff.correct{background:var(--green-glow)}.ff.wrong{background:var(--red-glow)}.ff.show{opacity:1}
+
+/* BUTTONS */
+.e-btn{font-family:var(--fd);font-size:14px;font-weight:700;padding:9px 20px;border-radius:var(--r);cursor:pointer;border:1px solid;transition:all .15s;min-height:40px}
+.e-btn-primary{background:var(--blue);color:var(--white);border-color:var(--blue-hi)}
+.e-btn-primary:hover{background:var(--blue-hi)}
+.e-btn-gold{background:rgba(184,134,11,.2);color:var(--gold-hi);border-color:var(--gold-hi)}
+.e-btn-gold:hover{background:rgba(184,134,11,.35)}
+.e-btn-ghost{background:transparent;color:var(--dim);border-color:var(--border)}
+.e-btn-ghost:hover{border-color:var(--border-hi);color:var(--white)}
+.e-btn-pdf{background:transparent;color:var(--gold-hi);border-color:var(--gold-hi)}
+.e-btn-pdf:hover{background:rgba(212,160,23,.1)}
+
+/* ═══════════════════════════════════════
+   FLASHCARDS
+═══════════════════════════════════════ */
+.fc-shell{width:100%;max-width:580px}
+.fc-piles{display:flex;gap:6px;margin-bottom:13px;justify-content:center}
+.fc-pile{background:var(--surf2);border:1px solid var(--border);border-radius:var(--rs);padding:7px 13px;text-align:center;flex:1}
+.fc-pile .pn{font-family:var(--fd);font-size:20px;font-weight:900;color:var(--white)}
+.fc-pile .pl{font-family:var(--fm);font-size:9px;color:var(--faint);letter-spacing:.09em;text-transform:uppercase}
+.fc-wrap{perspective:1000px;margin-bottom:16px;cursor:pointer;min-height:200px}
+.fc-card{width:100%;min-height:200px;transform-style:preserve-3d;transition:transform .45s var(--ease);position:relative}
+.fc-card.flipped{transform:rotateY(180deg)}
+.fc-face{
+  position:absolute;inset:0;
+  backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  border-radius:var(--r);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:28px 24px;text-align:center;min-height:200px;
+}
+.fc-front{background:#0e1318;border:1px solid var(--border)}
+.fc-back{background:#0c1420;border:1px solid rgba(45,111,212,.4);transform:rotateY(180deg)}
+.fc-lbl{font-family:var(--fm);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:13px}
+.fc-back .fc-lbl{color:var(--blue-hi)}
+.fc-term{font-family:var(--fd);font-size:30px;font-weight:900;color:var(--white);line-height:1.1}
+.fc-def-text{font-size:15px;color:var(--white);line-height:1.65}
+.fc-hint-btn{font-family:var(--fm);font-size:10px;color:var(--faint);background:none;border:1px solid var(--border);
+  border-radius:var(--rs);padding:5px 13px;cursor:pointer;margin-top:14px;transition:all .15s;min-height:32px}
+.fc-hint-btn:hover{border-color:var(--gold-hi);color:var(--gold-hi)}
+.fc-hint-shown{font-size:12px;color:var(--gold-hi);font-style:italic;margin-top:9px;padding:8px 12px;
+  background:rgba(212,160,23,.07);border-radius:var(--rs);line-height:1.5}
+.fc-flip-hint{font-family:var(--fm);font-size:10px;color:var(--faint);margin-top:13px}
+.fc-rate{display:flex;gap:8px;justify-content:center}
+.fc-rate-btn{font-family:var(--fd);font-size:14px;font-weight:700;
+  padding:10px 0;border-radius:var(--rs);cursor:pointer;border:1px solid;transition:all .15s;flex:1;max-width:155px;min-height:44px}
+.fc-know{background:rgba(27,174,74,.14);color:var(--green-hi);border-color:var(--green-hi)}
+.fc-know:hover{background:rgba(27,174,74,.28)}
+.fc-almost{background:rgba(212,160,23,.1);color:var(--gold-hi);border-color:var(--gold-hi)}
+.fc-almost:hover{background:rgba(212,160,23,.22)}
+.fc-nope{background:rgba(139,46,46,.14);color:var(--red-hi);border-color:var(--red-hi)}
+.fc-nope:hover{background:rgba(139,46,46,.28)}
+.fc-done-msg{text-align:center;padding:34px 20px;background:var(--surf);border:1px solid var(--border);border-radius:var(--r);margin-bottom:14px}
+.fc-done-title{font-family:var(--fd);font-size:26px;font-weight:900;color:var(--gold-hi);margin-bottom:7px}
+.fc-done-sub{font-size:13.5px;color:var(--dim);line-height:1.6}
+
+/* ═══════════════════════════════════════
+   END SCREEN
+═══════════════════════════════════════ */
+.end{width:100%;max-width:600px;display:flex;flex-direction:column;align-items:center;text-align:center;animation:fadeUp .4s ease both}
+.end-eye{font-family:var(--fm);font-size:11px;color:var(--dim);letter-spacing:.2em;text-transform:uppercase;margin-bottom:9px}
+.end-title{font-family:var(--fd);font-size:40px;font-weight:900;color:var(--white);margin-bottom:3px}
+.end-grade{font-family:var(--fd);font-size:15px;font-style:italic;color:var(--dim);margin-bottom:18px}
+.end-stats{display:flex;gap:1px;width:100%;margin-bottom:16px}
+.es{background:var(--surf2);border:1px solid var(--border);padding:13px 8px;flex:1;text-align:center}
+.es:first-child{border-radius:var(--r) 0 0 var(--r)}.es:last-child{border-radius:0 var(--r) var(--r) 0}
+.es .n{font-family:var(--fd);font-size:28px;font-weight:900;color:var(--white)}
+.es .n.perfect{color:var(--gold-hi)}.es .n.great{color:var(--green-hi)}.es .n.bad{color:var(--red-hi)}
+.es .l{font-family:var(--fm);font-size:9px;color:var(--dim);letter-spacing:.09em;text-transform:uppercase;margin-top:2px}
+.end-fail{background:rgba(139,46,46,.1);border:1px solid rgba(139,46,46,.3);border-radius:var(--r);padding:14px 18px;width:100%;margin-bottom:14px;text-align:left}
+.end-fail-title{font-family:var(--fd);font-size:14px;font-weight:700;color:var(--red-hi);margin-bottom:4px}
+.end-fail-txt{font-size:13px;color:var(--dim);line-height:1.55}
+.end-log{width:100%;margin-bottom:16px;text-align:left}
+.log-hdr{font-family:var(--fm);font-size:10px;color:var(--faint);letter-spacing:.1em;text-transform:uppercase;padding:6px 0;border-bottom:1px solid var(--border);margin-bottom:6px}
+.log-row{display:flex;align-items:center;gap:10px;padding:7px 10px;border-radius:var(--rs);background:var(--surf);border:1px solid var(--border);margin-bottom:4px;transition:border-color .15s}
+.log-row.clickable{cursor:pointer}.log-row.clickable:hover{border-color:var(--border-hi)}
+.log-row.open{border-color:var(--border-hi);border-bottom-left-radius:0;border-bottom-right-radius:0}
+.log-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.dc{background:var(--green-hi)}.dw{background:var(--red-hi)}.dt{background:var(--gold-hi)}
+.log-term{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--white);flex:1}
+.log-status{font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.04em}
+.log-chevron{font-size:12px;color:var(--dim);transition:transform .2s;margin-left:4px}
+.log-row.open .log-chevron{transform:rotate(180deg)}
+.log-expand{display:none;background:var(--surf2);border:1px solid var(--border-hi);border-top:none;
+  border-bottom-left-radius:var(--rs);border-bottom-right-radius:var(--rs);padding:12px;margin-bottom:4px}
+.log-expand.open{display:block}
+.log-compare{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.log-def-block{padding:10px;border-radius:var(--rs);background:var(--surf)}
+.wrong-block{border:1px solid rgba(139,46,46,.4)}.correct-block{border:1px solid rgba(27,174,96,.4)}
+.log-def-label{font-family:var(--fm);font-size:9px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
+.wrong-block .log-def-label{color:var(--red-hi)}.correct-block .log-def-label{color:var(--green-hi)}
+.log-def-term{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--white);margin-bottom:3px}
+.log-def-text{font-size:12px;color:var(--dim);line-height:1.5}
+.log-timeout-block{padding:10px;border-radius:var(--rs);background:var(--surf);border:1px solid rgba(212,160,23,.3)}
+.log-timeout-label{font-family:var(--fm);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-hi);margin-bottom:4px}
+.log-hint-line{font-size:12px;color:var(--gold-hi);font-style:italic;margin-top:8px;padding:6px 10px;background:rgba(212,160,23,.07);border-radius:var(--rs);border-left:2px solid var(--gold-hi)}
+.end-btns{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;width:100%}
+
+/* PRINT */
+@media print{
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  body{background:white!important;color:#111!important;font-family:Georgia,serif}
+  body::before,body::after,.hdr,.ff{display:none!important}
+  .main{padding:0!important;display:block!important}
+  .setup,.mode-select,.activity,.end{display:none!important}
+  #printDoc{display:block!important}
+}
+#printDoc{display:none;padding:28px 32px;font-family:Georgia,serif;color:#111;max-width:760px;margin:0 auto}
+.pd-header{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:2px solid #111;padding-bottom:12px;margin-bottom:18px}
+.pd-logo{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#111;font-style:italic}
+.pd-unit{font-family:'Source Code Pro',monospace;font-size:11px;letter-spacing:.08em;color:#444;margin-top:3px;text-transform:uppercase}
+.pd-meta{text-align:right;font-size:12px;color:#555;line-height:1.6}
+.pd-student-box{background:#f2f5f8;border:1px solid #ddd;border-radius:3px;padding:12px 16px;margin-bottom:18px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.pd-field{display:flex;flex-direction:column;gap:3px}
+.pd-field-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#888;font-family:'Source Code Pro',monospace}
+.pd-field-val{font-size:14px;font-weight:700;color:#111}
+.pd-section{margin-bottom:20px}
+.pd-section-title{font-family:'Playfair Display',serif;font-size:14px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  color:#fff;background:#1a3a5c;padding:6px 12px;border-radius:2px;margin-bottom:10px}
+.pd-section-title.needs{background:#6b1c1c}
+.pd-summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-bottom:16px;border:1px solid #ddd;border-radius:3px;overflow:hidden}
+.pd-stat{background:#f5f8fa;padding:12px;text-align:center}
+.pd-stat .sn{font-family:'Playfair Display',serif;font-size:26px;font-weight:900;color:#111}
+.pd-stat .sl{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#888;font-family:'Source Code Pro',monospace;margin-top:2px}
+.pd-know-list{display:flex;flex-wrap:wrap;gap:6px}
+.pd-know-chip{background:#eef4f8;border:1px solid #ccd8e0;border-radius:2px;padding:4px 10px;font-size:12.5px;color:#333}
+.pd-review-item{background:#fff8f5;border:1px solid #e8c8c8;border-radius:3px;padding:11px 13px;margin-bottom:8px}
+.pd-review-term{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:#1a3a5c;margin-bottom:4px}
+.pd-review-def{font-size:13px;color:#333;line-height:1.55}
+.pd-footer{border-top:1px solid #ddd;padding-top:10px;margin-top:20px;display:flex;justify-content:space-between;font-size:11px;color:#aaa;font-family:'Source Code Pro',monospace}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(3,6,10,.88);z-index:100;
+  align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.modal-overlay.open{display:flex}
+.modal{background:var(--surf2);border:1px solid var(--border);border-radius:var(--r);padding:26px;max-width:380px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+.modal h2{font-family:var(--fd);font-size:20px;color:var(--white);margin-bottom:8px}
+.modal p{font-size:13.5px;color:var(--dim);line-height:1.6;margin-bottom:18px}
+.modal-btns{display:flex;gap:8px;justify-content:flex-end}
+
+/* RESPONSIVE */
+@media(max-width:620px){
+  .setup-title{font-size:34px}.level-grid{grid-template-columns:1fr 1fr}.diff-grid{grid-template-columns:1fr}
+  .ms-cards{grid-template-columns:1fr}.ans-grid{grid-template-columns:1fr}
+  .end-stats{flex-wrap:wrap}.es{min-width:80px}.hdr{padding:0 12px}
+  .student-row{grid-template-columns:1fr}.log-compare{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-l">
+    <span class="logo">EdSim</span><div class="hdiv"></div>
+    <span class="unit">Civil Rights · Resistance &amp; Reform</span>
+  </div>
+  <div class="hdr-r">
+    <span class="hdr-info" id="hdrInfo"></span>
+    <button class="hdr-btn" id="timerToggleBtn" onclick="toggleTimer()" style="display:none">⏱ Timer: ON</button>
+    <button class="hdr-btn danger" onclick="confirmReset()">↺ Reset</button>
+  </div>
+</header>
+
+<div class="main" id="mainArea">
+
+  <div id="printDoc"></div>
+
+  <!-- ══ SETUP ══ -->
+  <div id="setupScreen" class="setup">
+    <div class="setup-dateline">EdSim · US History Regents · African American History</div>
+    <div class="setup-context">You've seen the record. Now see what broke through.</div>
+    <div class="setup-title">Resistance &amp; Reform</div>
+    <div class="setup-deck">The Civil Rights Movement in Action</div>
+    <div class="setup-sub">Vocabulary Study · Montgomery to the Voting Rights Act</div>
+
+    <div class="student-row">
+      <div class="s-field">
+        <div class="s-label">Student name</div>
+        <input class="s-input" id="studentName" type="text" placeholder="First and last name" oninput="validateSetup()"/>
+      </div>
+      <div class="s-field">
+        <div class="s-label">Period</div>
+        <select class="s-select" id="periodSel" onchange="validateSetup()">
+          <option value="">—</option>
+          <option>1</option><option>2</option><option>3</option>
+          <option>4</option><option>5</option><option>6</option>
+          <option>7</option><option>8</option><option>9</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="setup-section-label">Choose your level</div>
+    <div class="level-grid">
+      <div class="level-btn" onclick="setLevel(1)" id="lbtn-1">
+        <div class="level-n">1</div>
+        <div class="level-label">Foundation</div>
+        <div class="level-count">12 terms</div>
+        <div class="level-desc">Core people, tactics, and legislation every student must know</div>
+      </div>
+      <div class="level-btn" onclick="setLevel(2)" id="lbtn-2">
+        <div class="level-n">2</div>
+        <div class="level-label">Full Record</div>
+        <div class="level-count">24 terms</div>
+        <div class="level-desc">Complete set — all people, events, laws, and concepts</div>
+      </div>
+    </div>
+
+    <div class="setup-section-label">Choose difficulty</div>
+    <div class="diff-grid">
+      <div class="diff-card" onclick="setDiff('supported')" id="dbtn-supported">
+        <div class="diff-name">Supported</div>
+        <div class="diff-desc">Plain-language definitions. Hints on every question.</div>
+        <div class="diff-tag">Build foundational understanding</div>
+      </div>
+      <div class="diff-card active" onclick="setDiff('regular')" id="dbtn-regular">
+        <div class="diff-name">Standard</div>
+        <div class="diff-desc">Academic definitions. One hint per question in Practice.</div>
+        <div class="diff-tag">Standard Regents prep</div>
+      </div>
+      <div class="diff-card" onclick="setDiff('challenge')" id="dbtn-challenge">
+        <div class="diff-name">Challenge</div>
+        <div class="diff-desc">Compressed clues only. No hints. Timed pressure in Blitz.</div>
+        <div class="diff-tag">High-achieving students</div>
+      </div>
+    </div>
+
+    <div class="setup-progress" id="setupProgress" style="display:none">
+      <div class="sp-title">Your progress on this device</div>
+      <div class="sp-rows">
+        <div class="sp-row"><div class="sp-lbl">Review</div><div class="sp-track"><div class="sp-fill fill-blue" id="spReview" style="width:0%"></div></div><div class="sp-val" id="spReviewVal">0%</div></div>
+        <div class="sp-row"><div class="sp-lbl">Practice</div><div class="sp-track"><div class="sp-fill fill-gold" id="spPractice" style="width:0%"></div></div><div class="sp-val" id="spPracticeVal">0%</div></div>
+        <div class="sp-row"><div class="sp-lbl">Blitz best</div><div class="sp-track"><div class="sp-fill fill-green" id="spBlitz" style="width:0%"></div></div><div class="sp-val" id="spBlitzVal">0%</div></div>
+      </div>
+    </div>
+
+    <button class="start-btn" id="startBtn" onclick="goToModes()" disabled>Select name, period, level &amp; difficulty to begin</button>
+  </div>
+
+  <!-- ══ MODE SELECT ══ -->
+  <div id="modeScreen" class="mode-select" style="display:none">
+    <div class="ms-header">
+      <div class="ms-info">
+        <div class="ms-name" id="msName"></div>
+        <div class="ms-meta" id="msMeta"></div>
+      </div>
+      <button class="ms-change" onclick="backToSetup()">← Change settings</button>
+    </div>
+    <div class="ms-cards">
+      <div class="ms-card rev" onclick="startMode('review')">
+        <div class="ms-icon">🃏</div>
+        <div class="ms-card-name">Review</div>
+        <div class="ms-card-desc">Flashcards with hints. Flip to reveal the definition. Rate yourself — missed cards cycle back until 80% known.</div>
+        <div class="ms-card-meta">Flashcards · No timer · Hints available</div>
+      </div>
+      <div class="ms-card prac" onclick="startMode('practice')">
+        <div class="locked-badge" style="display:none">🔒 Complete Review</div>
+        <div class="ms-icon">🎯</div>
+        <div class="ms-card-name">Practice</div>
+        <div class="ms-card-desc">Multiple choice. Missed terms show the full definition and context. No time pressure — build accuracy first.</div>
+        <div class="ms-card-meta">Multiple choice · Timer optional · Full feedback</div>
+      </div>
+      <div class="ms-card chal" onclick="startMode('blitz')">
+        <div class="locked-badge" style="display:none">🔒 Complete Practice</div>
+        <div class="ms-icon">⚡</div>
+        <div class="ms-card-name">Blitz</div>
+        <div class="ms-card-desc">Timed. Alternating question types. Speed scoring. Pass 70% — or return to Practice for targeted review.</div>
+        <div class="ms-card-meta">Timed · <span id="blitzQCount">10</span> questions · Speed scoring · Pass/fail</div>
+      </div>
+    </div>
+    <div class="ms-prog">
+      <div class="ms-prog-rows">
+        <div class="ms-pi"><div class="ms-pi-lbl">Review</div><div class="ms-pi-bar"><div class="ms-pi-fill fill-blue" id="mpReview" style="width:0%"></div></div><div class="ms-pi-val" id="mpReviewVal">0%</div></div>
+        <div class="ms-pi"><div class="ms-pi-lbl">Practice</div><div class="ms-pi-bar"><div class="ms-pi-fill fill-gold" id="mpPractice" style="width:0%"></div></div><div class="ms-pi-val" id="mpPracticeVal">0%</div></div>
+        <div class="ms-pi"><div class="ms-pi-lbl">Blitz best</div><div class="ms-pi-bar"><div class="ms-pi-fill fill-green" id="mpBlitz" style="width:0%"></div></div><div class="ms-pi-val" id="mpBlitzVal">0%</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ REVIEW ══ -->
+  <div class="activity" id="reviewActivity">
+    <button class="back-btn" onclick="goToModes()">← Back to modes</button>
+    <div class="prog-row">
+      <div class="prog-track"><div class="prog-fill fill-blue" id="fcProg" style="width:0%"></div></div>
+      <div class="prog-lbl" id="fcLbl">Card 1</div>
+    </div>
+    <div id="fcWrap">
+      <div class="fc-shell">
+        <div class="fc-piles">
+          <div class="fc-pile"><div class="pn" id="fcKnow">0</div><div class="pl">Know it</div></div>
+          <div class="fc-pile"><div class="pn" id="fcAlmost">0</div><div class="pl">Almost</div></div>
+          <div class="fc-pile"><div class="pn" id="fcNope">0</div><div class="pl">Still learning</div></div>
+          <div class="fc-pile"><div class="pn" id="fcLeft">—</div><div class="pl">Remaining</div></div>
+        </div>
+        <div class="fc-wrap" id="fcWrap2" onclick="flipCard()">
+          <div class="fc-card" id="fcCard">
+            <div class="fc-face fc-front">
+              <div class="fc-lbl">Term</div>
+              <div class="fc-term" id="fcTerm"></div>
+              <button class="fc-hint-btn" id="fcHintBtn" onclick="showFCHint(event)">Show hint</button>
+              <div class="fc-hint-shown" id="fcHintShown" style="display:none"></div>
+              <div class="fc-flip-hint">Tap card to see definition</div>
+            </div>
+            <div class="fc-face fc-back">
+              <div class="fc-lbl">Definition</div>
+              <div class="fc-def-text" id="fcDef"></div>
+            </div>
+          </div>
+        </div>
+        <div id="fcRateWrap" style="display:none">
+          <div class="fc-rate">
+            <button class="fc-rate-btn fc-know" onclick="rateCard('know')">✓ Know it</button>
+            <button class="fc-rate-btn fc-almost" onclick="rateCard('almost')">≈ Almost</button>
+            <button class="fc-rate-btn fc-nope" onclick="rateCard('nope')">✗ Still learning</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ GAME ══ -->
+  <div class="activity" id="gameActivity">
+    <button class="back-btn" onclick="goToModes()">← Back to modes</button>
+    <div class="prog-row">
+      <div class="prog-track"><div class="prog-fill fill-gold" id="gProg" style="width:0%"></div></div>
+      <div class="prog-lbl" id="gProgLbl">1 / 10</div>
+    </div>
+    <div class="hud">
+      <div class="hud-score">Score <span id="gScore">0</span></div>
+      <div id="timerWrap" class="timer-wrap timer-off">
+        <svg class="t-svg" viewBox="0 0 56 56"><circle class="t-track" cx="28" cy="28" r="23"/><circle class="t-arc" id="tArc" cx="28" cy="28" r="23"/></svg>
+        <div class="t-num" id="tNum">—</div>
+      </div>
+      <div class="hud-streak"><span class="fire" id="fireMoji">✊</span><span id="gStreak">0</span> streak</div>
+    </div>
+    <div class="remed" id="remedEl">
+      <div class="remed-title">📖 Let's review this one</div>
+      <div class="remed-txt" id="remedTxt"></div>
+      <div class="remed-ex" id="remedEx"></div>
+    </div>
+    <div class="q-badge" id="gBadge"></div>
+    <div class="q-card" id="gCard">
+      <div class="q-lbl" id="gLbl"></div>
+      <div class="q-text" id="gText"></div>
+      <button class="hint-reveal-btn" id="hintBtn" onclick="showGameHint()">Show hint</button>
+      <div class="q-hint" id="hintBox"><span>💡</span><span class="hint-txt" id="hintTxt"></span></div>
+    </div>
+    <div class="ans-grid" id="ansGrid"></div>
+  </div>
+
+  <!-- ══ END ══ -->
+  <div class="end" id="endScreen" style="display:none">
+    <div class="end-eye" id="endEye"></div>
+    <div class="end-title" id="endTitle"></div>
+    <div class="end-grade" id="endGrade"></div>
+    <div class="end-stats">
+      <div class="es"><div class="n" id="endCorrect">0</div><div class="l">Correct</div></div>
+      <div class="es"><div class="n" id="endWrong">0</div><div class="l">Wrong</div></div>
+      <div class="es"><div class="n" id="endTO">0</div><div class="l">Timed out</div></div>
+      <div class="es"><div class="n" id="endPct">0%</div><div class="l">Score</div></div>
+    </div>
+    <div class="end-fail" id="endFail" style="display:none">
+      <div class="end-fail-title">Not quite — keep working</div>
+      <div class="end-fail-txt" id="endFailTxt"></div>
+    </div>
+    <div class="end-log" id="endLog"></div>
+    <div class="end-btns" id="endBtns"></div>
+  </div>
+
+</div>
+
+<div class="ff" id="ff"></div>
+
+<div class="modal-overlay" id="resetModal">
+  <div class="modal">
+    <h2>Reset all progress?</h2>
+    <p>This will clear your scores, progress, and "still learning" card list for this device. This cannot be undone.</p>
+    <div class="modal-btns">
+      <button class="e-btn e-btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="e-btn e-btn-primary" onclick="doReset()">Reset everything</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const VOCAB=[
+  // ── LEVEL 1: FOUNDATION (first 12) ──────────────────────────────
+  {term:"NAACP",tier:1,category:"Organizations",
+   def:{
+     supported:"An organization founded in 1909 to fight for the legal and civil rights of Black Americans — using the courts, lobbying, and public pressure to challenge discrimination",
+     regular:"National Association for the Advancement of Colored People — civil rights organization founded in 1909 that used litigation, legislation, and public advocacy to challenge racial discrimination",
+     challenge:"Interracial civil rights organization employing litigation and advocacy against racial discrimination"
+   },
+   hint:"The NAACP's Legal Defense Fund argued Brown v. Board of Education before the Supreme Court",
+   example:"When Southern states refused to protect Black citizens from violence and disenfranchisement, the NAACP took those fights to federal courts — winning victories that local white officials could not reverse."},
+
+  {term:"Martin Luther King Jr.",tier:1,category:"People",
+   def:{
+     supported:"The most prominent leader of the Civil Rights Movement, who organized nonviolent protests, marches, and boycotts to demand equal rights for Black Americans",
+     regular:"Baptist minister and civil rights leader who became the foremost public voice of the movement, organizing nonviolent direct action campaigns from the Montgomery Bus Boycott through the March on Washington and beyond",
+     challenge:"Foremost Civil Rights Movement leader; architect of nonviolent direct action strategy"
+   },
+   hint:"Assassinated April 4, 1968 in Memphis, where he had gone to support striking sanitation workers",
+   example:"King's 'Letter from Birmingham Jail' — written in the margins of a newspaper while imprisoned — became one of the most powerful arguments for nonviolent resistance ever written, directly answering critics who called the movement too confrontational."},
+
+  {term:"Rosa Parks",tier:1,category:"People",
+   def:{
+     supported:"A Black seamstress and NAACP member whose arrest for refusing to give up her bus seat to a white passenger in Montgomery, Alabama in 1955 sparked the Montgomery Bus Boycott",
+     regular:"NAACP secretary whose December 1955 arrest for refusing to yield her seat on a Montgomery, Alabama bus catalyzed the Montgomery Bus Boycott and galvanized the national Civil Rights Movement",
+     challenge:"NAACP activist whose 1955 arrest catalyzed the Montgomery Bus Boycott"
+   },
+   hint:"Parks was not the first to refuse — she was chosen because the NAACP believed she was the strongest possible plaintiff",
+   example:"Parks' arrest was not a spontaneous act of exhaustion. She was a trained activist who had attended the Highlander Folk School. Her case was chosen deliberately to challenge the law — and it worked."},
+
+  {term:"Civil disobedience",tier:1,category:"Tactics",
+   def:{
+     supported:"Deliberately breaking an unjust law in a peaceful, public way — and accepting the legal consequences — to expose the law's injustice and force change",
+     regular:"Nonviolent, public refusal to obey unjust laws as a means of moral and political protest, accepting legal consequences to expose the injustice of the law itself",
+     challenge:"Nonviolent public law violation to expose injustice and compel reform"
+   },
+   hint:"Rooted in the philosophy of Henry David Thoreau and Mahatma Gandhi — King studied both deeply",
+   example:"When protesters sat at segregated lunch counters, they weren't just asking to be served — they were demonstrating that enforcing segregation required arresting peaceful people in front of cameras. The law exposed itself."},
+
+  {term:"Nonviolent resistance",tier:1,category:"Tactics",
+   def:{
+     supported:"A strategy of fighting injustice through peaceful protest, marches, and civil disobedience — refusing to respond to violence with violence, and using moral pressure to force change",
+     regular:"Philosophical and tactical commitment to achieving social change through peaceful means — marches, boycotts, sit-ins — without retaliation against violence, intended to expose the moral bankruptcy of the opposition",
+     challenge:"Strategic pacifism as moral and political pressure for social change"
+   },
+   hint:"King argued that accepting violence without retaliation exposed the brutality of the system to the watching nation and world",
+   example:"In Birmingham, protesters were trained to protect their heads when attacked — and not to fight back. Images of police brutality against nonresisting protesters, broadcast nationally, turned public opinion against segregation."},
+
+  {term:"Montgomery Bus Boycott",tier:1,category:"Events",
+   def:{
+     supported:"A 381-day protest in which Black residents of Montgomery, Alabama refused to ride city buses after Rosa Parks' arrest — crippling the bus company financially and ending bus segregation",
+     regular:"1955–1956 organized refusal by Black Montgomery residents to use city buses following Rosa Parks' arrest, lasting 381 days and resulting in a Supreme Court ruling that bus segregation was unconstitutional",
+     challenge:"1955–56 Montgomery transit boycott resulting in Supreme Court desegregation ruling"
+   },
+   hint:"Black residents made up 75% of bus ridership — the bus company nearly went bankrupt",
+   example:"For 381 days, Black Montgomerians walked miles to work, organized carpools, and endured harassment rather than ride segregated buses. The Supreme Court ultimately ruled bus segregation unconstitutional. Economic pressure worked."},
+
+  {term:"Brown v. Board of Education",tier:1,category:"Legal & Legislative",
+   def:{
+     supported:"The 1954 Supreme Court decision that declared racial segregation in public schools unconstitutional — overturning the 'separate but equal' doctrine that had stood for 58 years",
+     regular:"Landmark 1954 Supreme Court decision unanimously ruling that racial segregation in public schools violated the Equal Protection Clause of the 14th Amendment, overturning Plessy v. Ferguson's 'separate but equal' doctrine",
+     challenge:"1954 ruling overturning Plessy; segregated schools unconstitutional under 14th Amendment"
+   },
+   hint:"Chief Justice Earl Warren worked to make the ruling unanimous — knowing a divided court would give segregationists an opening",
+   example:"Thurgood Marshall argued that segregated schools caused measurable psychological harm to Black children. The Court agreed that separate was inherently unequal — and overturned 58 years of legal precedent."},
+
+  {term:"Civil Rights Act (1964)",tier:1,category:"Legal & Legislative",
+   def:{
+     supported:"A landmark federal law that banned discrimination based on race, color, religion, sex, or national origin in employment, public accommodations, and federally funded programs",
+     regular:"Landmark federal legislation prohibiting discrimination based on race, color, religion, sex, or national origin in employment, public accommodations, and programs receiving federal funding — the most sweeping civil rights legislation since Reconstruction",
+     challenge:"1964 federal legislation prohibiting discrimination in employment and public accommodations"
+   },
+   hint:"Passed after an 83-day Senate filibuster — the longest in Senate history — led by Southern Democrats",
+   example:"The Civil Rights Act made it illegal for an employer to refuse to hire someone because of their race, or for a restaurant to refuse to serve them. It gave the federal government enforcement power that states had refused to use themselves."},
+
+  {term:"Voting Rights Act (1965)",tier:1,category:"Legal & Legislative",
+   def:{
+     supported:"A federal law that banned literacy tests and other tactics used to prevent Black Americans from voting — and gave the federal government power to oversee elections in states with a history of discrimination",
+     regular:"1965 federal legislation prohibiting discriminatory voting practices including literacy tests, authorizing federal oversight of elections in jurisdictions with histories of voter suppression, dramatically increasing Black voter registration across the South",
+     challenge:"1965 legislation prohibiting discriminatory suffrage barriers; authorizing federal electoral oversight"
+   },
+   hint:"Passed after Bloody Sunday — when marchers crossing the Edmund Pettus Bridge in Selma were beaten by state troopers on national television",
+   example:"In Mississippi, Black voter registration went from 6.7% to 59.8% in five years after the Voting Rights Act passed. The law didn't just change rules — it fundamentally shifted Southern political power."},
+
+  {term:"Little Rock Nine",tier:1,category:"Events",
+   def:{
+     supported:"Nine Black students who enrolled in Little Rock Central High School in 1957 after desegregation was ordered — facing violent mobs and requiring federal troops sent by President Eisenhower to escort them safely to class",
+     regular:"Nine Black students who enrolled in Little Rock, Arkansas's Central High School in 1957 following Brown v. Board, facing mob violence and requiring President Eisenhower to deploy the 101st Airborne Division to enforce federal desegregation orders",
+     challenge:"1957 Little Rock desegregation crisis requiring federal military enforcement of Brown ruling"
+   },
+   hint:"Arkansas Governor Orval Faubus called out the National Guard to block the students — Eisenhower federalized the Guard and sent paratroopers to override him",
+   example:"Elizabeth Eckford walked toward Central High alone, through a screaming mob. The photograph of that moment — her composure, the hatred surrounding her — became one of the defining images of the Civil Rights era."},
+
+  {term:"March on Washington",tier:1,category:"Events",
+   def:{
+     supported:"A massive 1963 demonstration in Washington D.C. where over 250,000 people gathered to demand civil rights legislation and economic justice — where Martin Luther King Jr. delivered his 'I Have a Dream' speech",
+     regular:"August 1963 civil rights demonstration of 250,000 participants in Washington D.C. demanding passage of civil rights legislation and economic equality; site of King's 'I Have a Dream' address",
+     challenge:"August 1963 mass demonstration demanding civil rights legislation; site of King's address"
+   },
+   hint:"The largest demonstration in American history to that point — putting enormous public pressure on Congress",
+   example:"The March put 250,000 people on the National Mall and King's speech on every television in America. Congress passed the Civil Rights Act less than a year later. Mass mobilization changed the political calculus."},
+
+  {term:"Desegregation",tier:1,category:"Concepts",
+   def:{
+     supported:"The process of ending the legal separation of Black and white Americans in schools, public spaces, and institutions — required by law after Brown v. Board but resisted fiercely across the South",
+     regular:"Elimination of legally mandated racial separation in public institutions, mandated by Brown v. Board and subsequent legislation but met with massive resistance, legal obstruction, and violence across the South",
+     challenge:"Court and legislatively mandated elimination of legally imposed racial separation"
+   },
+   hint:"Desegregation was ordered — integration, the actual mixing and inclusion that should have followed, was never fully achieved",
+   example:"Brown said schools must desegregate. But Little Rock showed what that actually meant — federal troops escorting nine students through a mob. The law changed; compliance required force."},
+
+  // ── LEVEL 2: FULL RECORD (12 additional terms) ──────────────────
+  {term:"Thurgood Marshall",tier:2,category:"People",
+   def:{
+     supported:"The NAACP lawyer who argued and won the Brown v. Board of Education case before the Supreme Court — later becoming the first Black Justice on the Supreme Court",
+     regular:"NAACP Legal Defense Fund attorney who successfully argued Brown v. Board of Education (1954) before the Supreme Court; later appointed as the first African American Supreme Court Justice in 1967",
+     challenge:"NAACP litigator who argued Brown v. Board; first Black Supreme Court Justice"
+   },
+   hint:"Marshall argued 32 cases before the Supreme Court and won 29 of them",
+   example:"Thurgood Marshall built the legal strategy that dismantled 'separate but equal' — arguing that segregated schools caused psychological harm to Black children and violated the 14th Amendment. The Court agreed unanimously."},
+
+  {term:"Malcolm X",tier:2,category:"People",
+   def:{
+     supported:"A Black leader who argued that African Americans had the right to defend themselves and should build their own political and economic power — offering a different vision of liberation than the nonviolent mainstream of the Civil Rights Movement",
+     regular:"Black nationalist leader and Nation of Islam minister who advocated Black self-determination, self-defense, and economic independence as an alternative to integration-focused civil rights strategies; assassinated in 1965",
+     challenge:"Black nationalist advocate of self-determination and self-defense; Nation of Islam minister assassinated 1965"
+   },
+   hint:"His speeches forced the country to confront how slowly nonviolent progress was moving — and what Black Americans might demand if it stopped",
+   example:"While King marched in Birmingham, Malcolm X argued that asking oppressors politely for rights was insufficient. His presence in the debate made King's demands seem moderate by comparison — and put pressure on the federal government to act."},
+
+  {term:"Black Panther Party",tier:2,category:"Organizations",
+   def:{
+     supported:"A Black political organization founded in 1966 that demanded an end to police brutality, armed Black communities for self-defense, and ran community programs including free breakfast for children",
+     regular:"Black revolutionary organization founded in Oakland in 1966 that combined armed self-defense against police brutality with community programs and a ten-point platform demanding economic and political rights for Black Americans",
+     challenge:"Black revolutionary organization combining armed self-defense with community programs; founded Oakland 1966"
+   },
+   hint:"Their free breakfast program fed thousands of children daily — the FBI considered it more politically dangerous than their weapons",
+   example:"The Panthers patrolled Oakland streets with loaded rifles — legally — to document and deter police brutality. They also ran free health clinics and fed 10,000 children breakfast every morning. The government surveilled and dismantled them."},
+
+  {term:"SCLC",tier:2,category:"Organizations",
+   def:{
+     supported:"An organization led by Martin Luther King Jr. that coordinated nonviolent protests across the South to fight segregation and demand civil rights",
+     regular:"Southern Christian Leadership Conference — civil rights organization founded in 1957 under Martin Luther King Jr. that coordinated nonviolent direct action campaigns across the South",
+     challenge:"King-led nonviolent direct action coordinating body founded 1957"
+   },
+   hint:"Based in Black churches — which were both safe organizing spaces and targets of white supremacist bombing",
+   example:"The SCLC organized the Birmingham Campaign in 1963, where images of police turning fire hoses and attack dogs on peaceful protesters shocked the nation and pressured President Kennedy to act."},
+
+  {term:"SNCC",tier:2,category:"Organizations",
+   def:{
+     supported:"A youth-led civil rights organization that organized sit-ins, voter registration drives, and Freedom Rides — often taking more risks and pushing further into danger than older organizations",
+     regular:"Student Nonviolent Coordinating Committee — youth-led civil rights organization founded in 1960 that organized direct action campaigns and voter registration drives, often in the most dangerous areas of the Deep South",
+     challenge:"Youth-led direct action and voter registration organization founded 1960"
+   },
+   hint:"SNCC workers faced some of the worst violence of the movement — three were murdered in Mississippi in 1964",
+   example:"SNCC workers went door to door in Mississippi trying to register Black voters — in counties where attempting to register could get you fired, evicted, or killed. They stayed anyway."},
+
+  {term:"Greensboro Sit-Ins",tier:2,category:"Events",
+   def:{
+     supported:"A protest begun in 1960 when four Black college students sat at a whites-only lunch counter in Greensboro, North Carolina and refused to leave when denied service — inspiring similar protests across the South",
+     regular:"February 1960 direct action protest in which four Black students from North Carolina A&T sat at a segregated Woolworth's lunch counter in Greensboro, refusing to leave when denied service — sparking a wave of sit-ins across the South",
+     challenge:"1960 Greensboro lunch counter protest that ignited a regional sit-in movement"
+   },
+   hint:"Within weeks, sit-ins had spread to more than 50 cities across the South",
+   example:"Four students sat down at the Woolworth's counter on February 1, 1960. By the end of the week, hundreds had joined. Within months, the tactic had spread across the South — a spontaneous national movement sparked by four people who refused to leave."},
+
+  {term:"Freedom Riders",tier:2,category:"Events",
+   def:{
+     supported:"Interracial groups of activists who rode interstate buses through the South in 1961 to challenge segregation in bus terminals — facing violent mobs and police attacks along the way",
+     regular:"Interracial groups of civil rights activists who in 1961 rode interstate buses into the Deep South to challenge the non-enforcement of federal desegregation rulings in bus terminals, facing mob violence and arrests",
+     challenge:"1961 interracial transit activists challenging unenforced federal desegregation rulings"
+   },
+   hint:"Federal law already required integrated interstate travel — the Freedom Riders were exposing the gap between law on paper and law in practice",
+   example:"In Anniston, Alabama, a Freedom Rider bus was firebombed. In Birmingham, riders were beaten while FBI informants watched. The violence forced the Kennedy administration to finally enforce the desegregation of interstate travel."},
+
+  {term:"Direct action",tier:2,category:"Tactics",
+   def:{
+     supported:"Tactics that confront injustice directly and immediately — sit-ins, marches, boycotts — rather than waiting for slow legal or political processes to produce change",
+     regular:"Civil rights strategy of immediate, confrontational nonviolent protest — sit-ins, marches, freedom rides — designed to create visible crisis that forced authorities to respond",
+     challenge:"Immediate confrontational nonviolent protest creating crisis requiring response"
+   },
+   hint:"King argued that direct action creates the tension necessary to force negotiation — without it, nothing moves",
+   example:"Filing a lawsuit could take years. Sitting at a lunch counter created a crisis that had to be resolved today — by arrest, which produced more protesters, or by desegregation. Direct action compressed the timeline of change."},
+
+  {term:"Executive Order 9981",tier:2,category:"Legal & Legislative",
+   def:{
+     supported:"President Truman's 1948 order desegregating the U.S. military — requiring equal treatment regardless of race, ending the system of separate Black and white military units",
+     regular:"1948 presidential order issued by Harry Truman mandating desegregation of the U.S. armed forces and equal treatment regardless of race, color, religion, or national origin",
+     challenge:"Truman's 1948 order desegregating the U.S. armed forces"
+   },
+   hint:"Black veterans had fought in segregated units in World War II — and returned home to face the same discrimination they had risked their lives opposing abroad",
+   example:"Black soldiers who had fought for democracy in World War II came home to Jim Crow. Truman, partly moved by the brutal attacks on returning Black veterans, signed the order. The military became one of the first major American institutions to desegregate."},
+
+  {term:"24th Amendment",tier:2,category:"Legal & Legislative",
+   def:{
+     supported:"A 1964 constitutional amendment that abolished the poll tax in federal elections — removing one of the key financial barriers that had prevented Black Americans from voting for nearly a century",
+     regular:"1964 constitutional amendment prohibiting the use of poll taxes as a condition for voting in federal elections, eliminating a primary tool of Black voter disenfranchisement",
+     challenge:"1964 amendment abolishing federal election poll taxes"
+   },
+   hint:"Only applied to federal elections — the Voting Rights Act (1965) was needed to address remaining state-level barriers",
+   example:"The poll tax had kept poor Black voters from the ballot box for nearly a century. The 24th Amendment eliminated it for federal races — but Southern states kept it for state elections until the Supreme Court struck it down in 1966."},
+
+  {term:"Equal Protection Clause",tier:2,category:"Concepts",
+   def:{
+     supported:"The part of the 14th Amendment that says no state can deny any person equal protection under the law — the constitutional foundation for most Civil Rights legal victories",
+     regular:"Provision of the 14th Amendment prohibiting states from denying any person equal protection of the laws — the constitutional basis for Brown v. Board, civil rights legislation, and subsequent equality claims",
+     challenge:"14th Amendment provision prohibiting unequal state treatment; basis for civil rights litigation"
+   },
+   hint:"Written after the Civil War to protect freed Black Americans — then largely ignored for 90 years until civil rights lawyers revived it",
+   example:"Every major civil rights legal victory ran through the Equal Protection Clause. Thurgood Marshall's entire litigation strategy was built on proving that segregation was, by definition, a denial of equal protection."},
+
+  {term:"Black Power",tier:2,category:"Concepts",
+   def:{
+     supported:"A political movement that called for Black Americans to build their own political, economic, and cultural institutions — emphasizing pride, self-determination, and community control rather than integration into existing white-dominated structures",
+     regular:"Post-1966 political movement and ideology emphasizing Black self-determination, economic independence, cultural pride, and community control as alternatives or complements to integration-focused civil rights strategies",
+     challenge:"Post-1966 Black self-determination ideology emphasizing independence over integration"
+   },
+   hint:"Popularized by Stokely Carmichael during the 1966 March Against Fear — it signaled a generational shift within the movement",
+   example:"After years of nonviolent protest met with violence and slow progress, younger activists began asking whether integration into a system that had oppressed them was really the goal. Black Power said the goal was power — political, economic, and cultural — on Black Americans' own terms."},
+];
+
+const LEVEL_SIZES={1:12,2:24};
+const BLITZ_Q={1:10,2:14};
+const PRACTICE_Q=10;
+const PASS={review:80,practice:75,blitz:70};
+const TIME={supported:20,regular:15,challenge:10};
+const CIRC=2*Math.PI*23;
+const LS_KEY='edsim_cr_reforms_v1';
+
+let studentName='',period='',level=0,difficulty='regular',timerOn=true;
+let currentMode=null;
+let questions=[],qIdx=0,score=0,streak=0,bestStreak=0,wrongCount=0,timeoutCount=0,qLog=[];
+let timerInt=null,timeLeft=15,answered=false;
+let fcDeck=[],fcIdx=0,fcKnow=0,fcAlmost=0,fcNope=0,fcFlipped=false,fcDeckOriginalSize=0;
+let lastResult=null;
+const sessionCorrect=new Set();
+// ══════════════════════════════════════════════
+// PERSISTENCE (localStorage)
+// ══════════════════════════════════════════════
+function ls(){try{return JSON.parse(localStorage.getItem(LS_KEY)||'{}')}catch{return{}}}
+function saveLS(d){try{localStorage.setItem(LS_KEY,JSON.stringify(d))}catch{}}
+function getProg(){const s=ls();return{reviewPct:s.reviewPct||0,practicePct:s.practicePct||0,blitzBest:s.blitzBest||0,stillLearning:s.stillLearning||[]}}
+function setProg(k,v){const d=ls();d[k]=v;saveLS(d);}
+function getStillLearning(){return ls().stillLearning||[]}
+function setStillLearning(a){const d=ls();d.stillLearning=a;saveLS(d);}
+
+window.addEventListener('DOMContentLoaded',()=>{
+  setDiff('regular',true);
+  const saved=ls();
+  if(saved.studentName){
+    document.getElementById('studentName').value=saved.studentName;
+    studentName=saved.studentName;
+  }
+  if(saved.period){
+    document.getElementById('periodSel').value=saved.period;
+    period=saved.period;
+  }
+  if(saved.level){setLevel(saved.level,true);level=saved.level;}
+  if(saved.difficulty){setDiff(saved.difficulty,true);difficulty=saved.difficulty;}
+  validateSetup();
+});
+
+function setLevel(n,silent){
+  level=n;
+  document.querySelectorAll('.level-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('lbtn-'+n).classList.add('active');
+  if(!silent)validateSetup();
+}
+function setDiff(d,silent){
+  difficulty=d;
+  document.querySelectorAll('.diff-card').forEach(b=>b.classList.remove('active'));
+  document.getElementById('dbtn-'+d).classList.add('active');
+  if(!silent)validateSetup();
+}
+function validateSetup(){
+  studentName=document.getElementById('studentName').value.trim();
+  period=document.getElementById('periodSel').value;
+  const btn=document.getElementById('startBtn');
+  const ok=studentName&&period&&level&&difficulty;
+  btn.disabled=!ok;
+  btn.textContent=ok?'Start studying →':'Select name, period, level & difficulty to begin';
+  if(ok)showSetupProgress();
+}
+function showSetupProgress(){
+  const p=getProg();
+  document.getElementById('setupProgress').style.display='';
+  document.getElementById('spReview').style.width=p.reviewPct+'%';
+  document.getElementById('spReviewVal').textContent=p.reviewPct+'%';
+  document.getElementById('spPractice').style.width=p.practicePct+'%';
+  document.getElementById('spPracticeVal').textContent=p.practicePct+'%';
+  document.getElementById('spBlitz').style.width=p.blitzBest+'%';
+  document.getElementById('spBlitzVal').textContent=p.blitzBest+'%';
+}
+function goToModes(){
+  const d=ls();d.studentName=studentName;d.period=period;d.level=level;d.difficulty=difficulty;saveLS(d);
+  document.getElementById('hdrInfo').textContent=studentName+' · Period '+period;
+  const levelLabel=level===1?'Foundation':'Full Record';
+  const diffLabel=difficulty==='regular'?'Standard':(difficulty.charAt(0).toUpperCase()+difficulty.slice(1));
+  document.getElementById('msName').textContent=levelLabel+' · '+diffLabel;
+  document.getElementById('msMeta').textContent=LEVEL_SIZES[level]+' terms · '+studentName+' · Period '+period;
+  document.getElementById('blitzQCount').textContent=BLITZ_Q[level]||10;
+  document.getElementById('timerToggleBtn').style.display='none';
+  showScreen('modeScreen');
+  renderModeProgress();
+}
+function backToSetup(){showScreen('setupScreen')}
+function renderModeProgress(){
+  const p=getProg();
+  ['Review','Practice','Blitz'].forEach(k=>{
+    const val=k==='Blitz'?p.blitzBest:k==='Review'?p.reviewPct:p.practicePct;
+    document.getElementById('mp'+k).style.width=val+'%';
+    document.getElementById('mp'+k+'Val').textContent=val+'%';
+  });
+}
+function startMode(m){currentMode=m;if(m==='review')initReview();else initGame(m);}
+
+function getPoolByLevel(){return VOCAB.slice(0,LEVEL_SIZES[level]||12);}
+
+function initReview(){
+  const pool=getPoolByLevel();
+  const sl=getStillLearning();
+  const priority=pool.filter(v=>sl.includes(v.term));
+  const rest=shuffle(pool.filter(v=>!sl.includes(v.term)));
+  fcDeck=[...priority,...rest];
+  fcDeckOriginalSize=pool.length;
+  fcIdx=0;fcKnow=0;fcAlmost=0;fcNope=0;fcFlipped=false;
+  showScreen('reviewActivity');
+  renderFC();
+}
+function renderFC(){
+  if(fcIdx>=fcDeck.length){endReview();return;}
+  const card=fcDeck[fcIdx];fcFlipped=false;
+  document.getElementById('fcCard').classList.remove('flipped');
+  document.getElementById('fcTerm').textContent=card.term;
+  document.getElementById('fcDef').textContent=card.def[difficulty];
+  document.getElementById('fcHintShown').style.display='none';
+  document.getElementById('fcHintShown').textContent='';
+  document.getElementById('fcHintBtn').style.display='';
+  document.getElementById('fcRateWrap').style.display='none';
+  document.getElementById('fcKnow').textContent=fcKnow;
+  document.getElementById('fcAlmost').textContent=fcAlmost;
+  document.getElementById('fcNope').textContent=fcNope;
+  document.getElementById('fcLeft').textContent=fcDeck.length-fcIdx;
+  document.getElementById('fcProg').style.width=Math.round((fcIdx/fcDeck.length)*100)+'%';
+  document.getElementById('fcLbl').textContent='Card '+(fcIdx+1)+' of '+fcDeck.length;
+}
+function flipCard(){
+  fcFlipped=!fcFlipped;
+  document.getElementById('fcCard').classList.toggle('flipped',fcFlipped);
+  document.getElementById('fcRateWrap').style.display=fcFlipped?'':'none';
+}
+function showFCHint(e){
+  e.stopPropagation();
+  const card=fcDeck[fcIdx];
+  document.getElementById('fcHintShown').textContent='💡 '+card.hint;
+  document.getElementById('fcHintShown').style.display='';
+  document.getElementById('fcHintBtn').style.display='none';
+}
+function rateCard(rating){
+  const card=fcDeck[fcIdx];
+  const sl=getStillLearning();
+  if(rating==='know'){fcKnow++;const i=sl.indexOf(card.term);if(i>-1)sl.splice(i,1);}
+  else{if(rating==='almost')fcAlmost++;else fcNope++;fcDeck.push(card);if(!sl.includes(card.term))sl.push(card.term);}
+  setStillLearning(sl);fcIdx++;renderFC();
+}
+function endReview(){
+  const pct=Math.round((fcKnow/fcDeckOriginalSize)*100);
+  setProg('reviewPct',pct);
+  const passed=pct>=PASS.review;
+  document.querySelector('.fc-shell').innerHTML=`
+    <div class="fc-done-msg">
+      <div class="fc-done-title">${passed?'✓ Deck Complete':'Keep Reviewing'}</div>
+      <div class="fc-done-sub">${passed
+        ?'You know '+pct+'% of the deck. You\'re ready to move to Practice.'
+        :'You know '+pct+'% — aim for '+PASS.review+'% before Practice. Missed cards are saved.'
+      }</div>
+    </div>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px">
+      <button class="e-btn e-btn-primary" onclick="startMode('review')">Review again</button>
+      ${passed?'<button class="e-btn e-btn-gold" onclick="startMode(\'practice\')">Practice →</button>':''}
+      <button class="e-btn e-btn-ghost" onclick="goToModes()">Home</button>
+    </div>`;
+}
+
+let totalQ=10;
+function initGame(mode){
+  totalQ=mode==='blitz'?(BLITZ_Q[level]||10):PRACTICE_Q;
+  const pool=getPoolByLevel();
+  const sl=getStillLearning();
+  let priority=[],middle=[],back=[];
+  pool.forEach(v=>{
+    if(sl.includes(v.term)){priority.push(v);priority.push(v);}
+    else if(sessionCorrect.has(v.term))back.push(v);
+    else middle.push(v);
+  });
+  const picked=[...shuffle(priority),...shuffle(middle),...shuffle(back)];
+  const seen=new Set(),unique=[];
+  for(const v of picked){if(!seen.has(v.term)){seen.add(v.term);unique.push(v);}}
+  const chosen=unique.slice(0,totalQ);
+  questions=chosen.map((item,i)=>{
+    const type=(i%2===0)?'def2term':'term2def';
+    const others=pool.filter(v=>v.term!==item.term);
+    const distractors=shuffle(others).slice(0,3);
+    return{item,type,choices:shuffle([item,...distractors])};
+  });
+  qIdx=0;score=0;streak=0;bestStreak=0;wrongCount=0;timeoutCount=0;qLog=[];
+  document.getElementById('gProg').className='prog-fill '+(mode==='blitz'?'fill-green':'fill-gold');
+  document.getElementById('timerToggleBtn').style.display=mode==='blitz'?'':'none';
+  document.getElementById('timerToggleBtn').textContent='⏱ Timer: '+(timerOn?'ON':'OFF');
+  showScreen('gameActivity');
+  document.getElementById('remedEl').classList.remove('show');
+  renderQuestion();
+}
+function renderQuestion(){
+  if(qIdx>=questions.length){endGame();return;}
+  answered=false;
+  const q=questions[qIdx];
+  document.getElementById('gProg').style.width=((qIdx/totalQ)*100)+'%';
+  document.getElementById('gProgLbl').textContent=(qIdx+1)+' / '+totalQ;
+  document.getElementById('gScore').textContent=score;
+  document.getElementById('gStreak').textContent=streak;
+  document.getElementById('gBadge').textContent=q.type==='def2term'?'Choose the correct term':'Choose the correct definition';
+  const card=document.getElementById('gCard');
+  card.className='q-card '+q.type;
+  card.style.animation='none';card.offsetHeight;card.style.animation='';
+  document.getElementById('gLbl').textContent=q.type==='def2term'?'Definition':'Term';
+  const qt=document.getElementById('gText');
+  qt.className='q-text'+(q.type==='term2def'?' is-term':'');
+  qt.textContent=q.type==='def2term'?q.item.def[difficulty]:q.item.term;
+  const hb=document.getElementById('hintBtn');
+  document.getElementById('hintBox').style.display='none';
+  document.getElementById('hintTxt').textContent=q.item.hint;
+  hb.style.display=(difficulty==='supported'||(currentMode==='practice'&&difficulty!=='challenge'))?'block':'none';
+  hb.textContent='Show hint';
+  document.getElementById('remedEl').classList.remove('show');
+  const grid=document.getElementById('ansGrid');
+  grid.innerHTML='';
+  const keys=['1','2','3','4'];
+  q.choices.forEach((choice,i)=>{
+    const btn=document.createElement('button');
+    btn.className='ans-btn';
+    const span=document.createElement('span');
+    span.textContent=q.type==='def2term'?choice.term:choice.def[difficulty];
+    btn.appendChild(span);
+    const k=document.createElement('span');k.className='kbd';k.textContent=keys[i];btn.appendChild(k);
+    btn.onclick=()=>handleAnswer(i);
+    btn.style.animation='none';grid.appendChild(btn);btn.offsetHeight;btn.style.animation='';
+  });
+  startTimerUI();
+}
+function showGameHint(){
+  document.getElementById('hintBox').style.display='flex';
+  document.getElementById('hintBtn').style.display='none';
+}
+function startTimerUI(){
+  clearInterval(timerInt);
+  const wrap=document.getElementById('timerWrap');
+  const arc=document.getElementById('tArc');
+  const num=document.getElementById('tNum');
+  const useTimer=timerOn&&currentMode==='blitz';
+  if(!useTimer){wrap.classList.add('timer-off');arc.style.strokeDashoffset=0;num.textContent='—';return;}
+  wrap.classList.remove('timer-off');
+  timeLeft=TIME[difficulty]||15;
+  updateTimerUI(timeLeft);
+  timerInt=setInterval(()=>{timeLeft--;updateTimerUI(timeLeft);if(timeLeft<=0){clearInterval(timerInt);handleTimeout();}},1000);
+}
+function updateTimerUI(t){
+  const arc=document.getElementById('tArc');const num=document.getElementById('tNum');
+  const max=TIME[difficulty]||15;
+  arc.style.strokeDashoffset=CIRC*(1-(t/max));
+  num.textContent=t;
+  arc.classList.remove('warn','danger');num.classList.remove('danger');
+  if(t<=2){arc.classList.add('danger');num.classList.add('danger');}
+  else if(t<=Math.ceil(max*0.4)){arc.classList.add('warn');}
+}
+function toggleTimer(){
+  timerOn=!timerOn;
+  document.getElementById('timerToggleBtn').textContent='⏱ Timer: '+(timerOn?'ON':'OFF');
+}
+function handleAnswer(idx){
+  if(answered)return;
+  answered=true;clearInterval(timerInt);
+  const q=questions[qIdx];const chosen=q.choices[idx];const isCorrect=chosen.term===q.item.term;
+  document.querySelectorAll('.ans-btn').forEach(b=>b.disabled=true);
+  if(isCorrect){
+    document.querySelectorAll('.ans-btn')[idx].classList.add('correct');
+    const bonus=(timerOn&&currentMode==='blitz')?Math.max(1,timeLeft):1;
+    score+=bonus;streak++;bestStreak=Math.max(bestStreak,streak);
+    qLog.push({term:q.item.term,result:'correct'});
+    doFlash('correct');animFire();
+    sessionCorrect.add(q.item.term);
+  } else {
+    document.querySelectorAll('.ans-btn')[idx].classList.add('wrong');
+    streak=0;wrongCount++;
+    qLog.push({term:q.item.term,result:'wrong',chosen:chosen.term});
+    doFlash('wrong');revealCorrect(q);showRemed(q.item);
+    sessionCorrect.delete(q.item.term);
+  }
+  document.getElementById('gScore').textContent=score;
+  document.getElementById('gStreak').textContent=streak;
+  setTimeout(()=>{qIdx++;renderQuestion();},isCorrect?700:(currentMode==='practice'?1900:1100));
+}
+function handleTimeout(){
+  if(answered)return;answered=true;
+  streak=0;timeoutCount++;
+  const q=questions[qIdx];
+  qLog.push({term:q.item.term,result:'timeout'});
+  doFlash('wrong');revealCorrect(q);showRemed(q.item);
+  setTimeout(()=>{qIdx++;renderQuestion();},1400);
+}
+function revealCorrect(q){
+  document.querySelectorAll('.ans-btn').forEach((btn,i)=>{
+    if(q.choices[i].term===q.item.term)btn.classList.add('reveal');
+  });
+}
+function showRemed(item){
+  if(currentMode!=='practice')return;
+  const defKey=difficulty==='challenge'?'regular':difficulty;
+  document.getElementById('remedTxt').textContent=item.def[defKey];
+  document.getElementById('remedEx').textContent='Historical context: '+item.example;
+  document.getElementById('remedEl').classList.add('show');
+}
+function doFlash(type){
+  const el=document.getElementById('ff');
+  el.className='ff '+type;el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'),140);
+}
+function animFire(){
+  const f=document.getElementById('fireMoji');f.classList.remove('hot');void f.offsetWidth;f.classList.add('hot');
+}
+
+function endGame(){
+  clearInterval(timerInt);
+  const correct=totalQ-wrongCount-timeoutCount;
+  const pct=Math.round((correct/totalQ)*100);
+  const passed=pct>=PASS[currentMode];
+  if(currentMode==='practice')setProg('practicePct',pct);
+  if(currentMode==='blitz'){if(pct>(ls().blitzBest||0))setProg('blitzBest',pct);}
+  const sl=getStillLearning();
+  qLog.forEach(e=>{
+    if(e.result==='correct'){const i=sl.indexOf(e.term);if(i>-1)sl.splice(i,1);}
+    else{if(!sl.includes(e.term))sl.push(e.term);sessionCorrect.delete(e.term);}
+  });
+  setStillLearning(sl);
+  let title,grade;
+  if(pct===100){title='Flawless';grade='Perfect — every term confirmed';}
+  else if(pct>=87){title='Sharp';grade='Strong command — minor gaps remain';}
+  else if(pct>=70){title='Developing';grade='Review flagged terms below';}
+  else{title='Needs Work';grade='Return to Review and Practice';}
+  document.getElementById('endEye').textContent=currentMode==='blitz'?'Blitz Results':'Practice Results';
+  document.getElementById('endTitle').textContent=title;
+  document.getElementById('endGrade').textContent=grade;
+  const pctEl=document.getElementById('endPct');
+  pctEl.textContent=pct+'%';pctEl.className='n '+(pct===100?'perfect':pct>=70?'great':'bad');
+  document.getElementById('endCorrect').textContent=correct;
+  document.getElementById('endWrong').textContent=wrongCount;
+  document.getElementById('endTO').textContent=timeoutCount;
+  const fb=document.getElementById('endFail');
+  if(!passed){
+    fb.style.display='';
+    document.getElementById('endFailTxt').textContent=currentMode==='blitz'
+      ?'You scored '+pct+'% — Blitz requires '+PASS.blitz+'%. Return to Practice, review missed terms, then try again.'
+      :'You scored '+pct+'% — Practice requires '+PASS.practice+'% before Blitz. Missed terms will appear first next round.';
+  } else {fb.style.display='none';}
+  const defKey=difficulty==='challenge'?'regular':difficulty;
+  let logHtml='<div class="log-hdr">Question log · tap a missed term for context</div>';
+  qLog.forEach((e,i)=>{
+    const cls=e.result==='correct'?'dc':e.result==='timeout'?'dt':'dw';
+    const status=e.result==='correct'?'✓ Correct':e.result==='timeout'?'⏱ Timed out':'✗ Chose: '+e.chosen;
+    const isClickable=e.result!=='correct';
+    logHtml+=`<div class="log-row${isClickable?' clickable':''}" id="logrow-${i}" ${isClickable?`onclick="toggleLogRow(${i})"`:''}>
+      <div class="log-dot ${cls}"></div>
+      <div class="log-term">${e.term}</div>
+      <div class="log-status">${status}</div>
+      ${isClickable?'<span class="log-chevron">▾</span>':''}
+    </div>`;
+    if(isClickable){
+      const correctV=VOCAB.find(v=>v.term===e.term);
+      const chosenV=e.chosen?VOCAB.find(v=>v.term===e.chosen):null;
+      let expandHtml='';
+      if(e.result==='wrong'&&chosenV){
+        expandHtml+=`<div class="log-compare">
+          <div class="log-def-block wrong-block"><div class="log-def-label">You chose</div><div class="log-def-term">${chosenV.term}</div><div class="log-def-text">${chosenV.def[defKey]}</div></div>
+          <div class="log-def-block correct-block"><div class="log-def-label">Correct answer</div><div class="log-def-term">${correctV.term}</div><div class="log-def-text">${correctV.def[defKey]}</div></div>
+        </div>`;
+      } else {
+        expandHtml+=`<div class="log-timeout-block"><div class="log-timeout-label">Correct answer</div><div class="log-def-term">${correctV.term}</div><div class="log-def-text">${correctV.def[defKey]}</div></div>`;
+      }
+      if(difficulty==='supported'&&correctV.hint){
+        expandHtml+=`<div class="log-hint-line">💡 ${correctV.hint}</div>`;
+      }
+      logHtml+=`<div class="log-expand" id="logexp-${i}">${expandHtml}</div>`;
+    }
+  });
+  document.getElementById('endLog').innerHTML=logHtml;
+  let btns=`<button class="e-btn e-btn-primary" onclick="startMode('${currentMode}')">Try again</button>`;
+  if(!passed&&currentMode==='blitz')btns+=`<button class="e-btn e-btn-gold" onclick="startMode('practice')">Go to Practice</button>`;
+  if(passed&&currentMode==='practice')btns+=`<button class="e-btn e-btn-gold" onclick="startMode('blitz')">Blitz →</button>`;
+  btns+=`<button class="e-btn e-btn-ghost" onclick="goToModes()">Home</button>`;
+  btns+=`<button class="e-btn e-btn-pdf" onclick="savePDF()">⬇ Save PDF</button>`;
+  document.getElementById('endBtns').innerHTML=btns;
+  lastResult={studentName,period,level,difficulty,mode:currentMode,pct,correct,wrongCount,timeoutCount,passed,qLog:[...qLog]};
+  showScreen('endScreen');
+}
+
+function toggleLogRow(i){
+  const row=document.getElementById('logrow-'+i);
+  const panel=document.getElementById('logexp-'+i);
+  if(!row||!panel)return;
+  const isOpen=panel.classList.contains('open');
+  panel.classList.toggle('open',!isOpen);
+  row.classList.toggle('open',!isOpen);
+}
+
+function savePDF(){
+  if(!lastResult)return;
+  const r=lastResult;
+  const pool=getPoolByLevel();
+  const knownTerms=r.qLog.filter(e=>e.result==='correct').map(e=>e.term);
+  const missedTerms=r.qLog.filter(e=>e.result!=='correct').map(e=>e.term);
+  const notAsked=pool.filter(v=>!r.qLog.find(e=>e.term===v.term)).map(v=>v.term);
+  const defKey=r.difficulty==='challenge'?'regular':r.difficulty;
+  const dateStr=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+  const levelLabel=r.level===1?'Foundation':'Full Record';
+  const diffLabel=r.difficulty==='regular'?'Standard':(r.difficulty.charAt(0).toUpperCase()+r.difficulty.slice(1));
+  const modeLabel=r.mode==='blitz'?'Challenge Blitz':'Practice';
+  const passLabel=r.passed?'✓ PASSED':'✗ Did not pass';
+  const passThresh=r.mode==='blitz'?PASS.blitz:PASS.practice;
+  let missedHTML='';
+  missedTerms.forEach(term=>{
+    const v=VOCAB.find(x=>x.term===term);if(!v)return;
+    missedHTML+=`<div class="pd-review-item"><div class="pd-review-term">${v.term}</div><div class="pd-review-def">${v.def[defKey]}</div></div>`;
+  });
+  const knownChips=[...knownTerms,...notAsked].map(t=>`<div class="pd-know-chip">${t}</div>`).join('');
+  document.getElementById('printDoc').innerHTML=`
+    <div class="pd-header">
+      <div><div class="pd-logo">EdSim · Resistance &amp; Reform</div><div class="pd-unit">Civil Rights · The Movement in Action · ${levelLabel} · ${diffLabel}</div></div>
+      <div class="pd-meta">${dateStr}<br>${modeLabel}<br>${passLabel} (${passThresh}% required)</div>
+    </div>
+    <div class="pd-student-box">
+      <div class="pd-field"><div class="pd-field-label">Student</div><div class="pd-field-val">${r.studentName}</div></div>
+      <div class="pd-field"><div class="pd-field-label">Period</div><div class="pd-field-val">${r.period}</div></div>
+      <div class="pd-field"><div class="pd-field-label">Score</div><div class="pd-field-val">${r.pct}%</div></div>
+    </div>
+    <div class="pd-section">
+      <div class="pd-section-title">Results Summary</div>
+      <div class="pd-summary-grid">
+        <div class="pd-stat"><div class="sn">${r.pct}%</div><div class="sl">Score</div></div>
+        <div class="pd-stat"><div class="sn">${r.correct}</div><div class="sl">Correct</div></div>
+        <div class="pd-stat"><div class="sn">${r.wrongCount}</div><div class="sl">Wrong</div></div>
+        <div class="pd-stat"><div class="sn">${r.timeoutCount}</div><div class="sl">Timed out</div></div>
+      </div>
+    </div>
+    ${missedTerms.length?`<div class="pd-section"><div class="pd-section-title needs">Terms to Review (${missedTerms.length})</div>${missedHTML}</div>`:''}
+    ${knownTerms.length?`<div class="pd-section"><div class="pd-section-title">Terms You Know</div><div class="pd-know-list">${knownChips}</div></div>`:''}
+    <div class="pd-footer"><span>EdSim · Civil Rights — Resistance and Reform</span><span>${levelLabel} · ${diffLabel} · ${modeLabel}</span></div>`;
+  setTimeout(()=>{window.print();},150);
+}
+
+function confirmReset(){document.getElementById('resetModal').classList.add('open')}
+function closeModal(){document.getElementById('resetModal').classList.remove('open')}
+function doReset(){
+  try{localStorage.removeItem(LS_KEY);}catch{}closeModal();
+  studentName='';period='';level=0;difficulty='regular';timerOn=true;currentMode=null;lastResult=null;
+  document.getElementById('studentName').value='';
+  document.getElementById('periodSel').value='';
+  document.querySelectorAll('.level-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.diff-card').forEach(b=>b.classList.remove('active'));
+  document.getElementById('dbtn-regular').classList.add('active');
+  document.getElementById('setupProgress').style.display='none';
+  const btn=document.getElementById('startBtn');btn.disabled=true;btn.textContent='Select name, period, level & difficulty to begin';
+  showScreen('setupScreen');
+}
+
+function showScreen(id){
+  ['setupScreen','modeScreen','reviewActivity','gameActivity','endScreen'].forEach(s=>{
+    const el=document.getElementById(s);if(!el)return;
+    el.style.display='none';el.classList.remove('active');
+  });
+  const target=document.getElementById(id);
+  if(target){target.style.display='';target.classList.add('active');}
+}
+
+function shuffle(arr){
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  return a;
+}
+document.addEventListener('keydown',e=>{
+  const map={'1':0,'2':1,'3':2,'4':3};
+  if(e.key in map&&document.getElementById('gameActivity').classList.contains('active')){
+    const btns=document.querySelectorAll('.ans-btn');
+    if(btns[map[e.key]]&&!btns[map[e.key]].disabled)handleAnswer(parseInt(map[e.key]));
+  }
+});
+</script>
+</body>
+</html>

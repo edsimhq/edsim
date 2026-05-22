@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Civil War &amp; Reconstruction Vocabulary · EdSim</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Source+Code+Pro:wght@400;500;600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#2a2a1e;--surf:#32321f;--surf2:#3c3c26;--surf3:#46462e;
+  --border:#5a5a3a;--border-hi:#7a7a50;
+  --text:#d6cea8;--dim:#8a8060;--faint:#3c3c26;
+  --red:#8b2020;--red-hi:#c0392b;--red-glow:rgba(139,32,32,.3);
+  --green:#2a5c2a;--green-hi:#3a9e3a;--green-glow:rgba(58,158,58,.22);
+  --amber:#8a6a10;--amber-hi:#c8960e;
+  --blue:#2a3c5e;--blue-hi:#3a5c9e;
+  --gold:#7a6010;--gold-hi:#b8960c;
+  --cannon:#c8b870;--smoke-col:rgba(180,170,120,.18);
+  --white:#ede8d0;
+  --fd:'Oswald',sans-serif;--fm:'Source Code Pro',monospace;--fb:'Libre Baskerville',Georgia,serif;
+  --ease:cubic-bezier(.4,0,.2,1);--r:7px;--rs:4px;
+}
+html,body{min-height:100%}
+body{font-family:var(--fb);background:var(--bg);color:var(--text);display:flex;flex-direction:column}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
+  background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.04) 3px,rgba(0,0,0,.04) 4px)}
+
+/* FIELD MAP BACKGROUND */
+.map-bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+/* Topographic contour lines */
+.map-bg::before{content:'';position:absolute;inset:0;
+  background-image:
+    repeating-linear-gradient(0deg,transparent,transparent 38px,rgba(180,170,100,.07) 38px,rgba(180,170,100,.07) 39px),
+    repeating-linear-gradient(90deg,transparent,transparent 38px,rgba(180,170,100,.07) 38px,rgba(180,170,100,.07) 39px),
+    repeating-linear-gradient(0deg,transparent,transparent 190px,rgba(180,170,100,.11) 190px,rgba(180,170,100,.11) 191px),
+    repeating-linear-gradient(90deg,transparent,transparent 190px,rgba(180,170,100,.11) 190px,rgba(180,170,100,.11) 191px);
+}
+/* Diagonal terrain hatching */
+.map-bg::after{content:'';position:absolute;inset:0;
+  background-image:repeating-linear-gradient(45deg,transparent,transparent 28px,rgba(140,130,80,.04) 28px,rgba(140,130,80,.04) 29px);
+}
+/* Ambient cannon — bottom left corner */
+.cannon-ambient{position:fixed;bottom:0;left:0;z-index:1;pointer-events:none;opacity:.18}
+.cannon-ambient svg{display:block}
+/* Drifting smoke particles */
+.smoke-particle{position:fixed;z-index:1;pointer-events:none;border-radius:50%;background:radial-gradient(circle,rgba(200,190,140,.55) 0%,transparent 70%)}
+.sp1{width:60px;height:60px;bottom:120px;left:90px;animation:smokeDrift1 9s ease-in-out infinite}
+.sp2{width:40px;height:40px;bottom:160px;left:120px;animation:smokeDrift2 12s ease-in-out infinite 2s}
+.sp3{width:80px;height:80px;bottom:100px;left:60px;animation:smokeDrift3 15s ease-in-out infinite 5s}
+@keyframes smokeDrift1{0%{transform:translate(0,0) scale(1);opacity:.55}50%{transform:translate(30px,-60px) scale(1.4);opacity:.25}100%{transform:translate(60px,-130px) scale(2);opacity:0}}
+@keyframes smokeDrift2{0%{transform:translate(0,0) scale(1);opacity:.45}50%{transform:translate(20px,-50px) scale(1.3);opacity:.2}100%{transform:translate(50px,-110px) scale(1.8);opacity:0}}
+@keyframes smokeDrift3{0%{transform:translate(0,0) scale(1);opacity:.3}50%{transform:translate(40px,-70px) scale(1.5);opacity:.12}100%{transform:translate(80px,-150px) scale(2.2);opacity:0}}
+/* Cannon blast on correct answer */
+@keyframes cannonBlast{0%{transform:translateX(0) rotate(0deg)}15%{transform:translateX(-8px) rotate(-2deg)}35%{transform:translateX(4px) rotate(1deg)}55%{transform:translateX(-2px) rotate(-.5deg)}100%{transform:translateX(0) rotate(0deg)}}
+@keyframes blastFlash{0%{opacity:0;transform:scale(0.3)}20%{opacity:1;transform:scale(1.2)}60%{opacity:.6;transform:scale(1.6)}100%{opacity:0;transform:scale(2.4)}}
+.cannon-blast-active .cannon-ambient{animation:cannonBlast .45s var(--ease);opacity:.55}
+.blast-ring{position:fixed;bottom:110px;left:130px;width:30px;height:30px;border-radius:50%;border:3px solid rgba(220,200,100,.8);z-index:2;pointer-events:none;opacity:0}
+.blast-ring.fire{animation:blastFlash .5s ease-out forwards}
+
+/* HEADER */
+.hdr{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  padding:0 22px;height:50px;border-bottom:1px solid var(--border);
+  background:rgba(42,42,30,.95);backdrop-filter:blur(10px);flex-shrink:0}
+.hdr-l{display:flex;align-items:center;gap:11px}
+.logo{font-family:var(--fd);font-size:16px;font-weight:600;color:var(--dim);letter-spacing:.1em}
+.hdiv{width:1px;height:15px;background:var(--border)}
+.unit{font-family:var(--fm);font-size:11px;color:var(--gold-hi);letter-spacing:.14em;text-transform:uppercase}
+.hdr-r{display:flex;align-items:center;gap:8px}
+.hdr-btn{font-family:var(--fm);font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  padding:4px 11px;border-radius:var(--rs);cursor:pointer;min-height:30px;
+  background:transparent;border:1px solid var(--border);color:var(--dim);transition:all .15s}
+.hdr-btn:hover{border-color:var(--border-hi);color:var(--white)}
+.hdr-btn.danger:hover{border-color:var(--red-hi);color:var(--red-hi)}
+.hdr-btn.on{border-color:var(--amber-hi);color:var(--amber-hi)}
+.hdr-info{font-family:var(--fm);font-size:10px;color:var(--faint);letter-spacing:.06em}
+
+/* MAIN */
+.main{position:relative;z-index:5;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 16px 32px}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes cardIn{from{opacity:0;transform:translateY(-7px)}to{opacity:1;transform:translateY(0)}}
+@keyframes btnIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+@keyframes firepulse{0%,100%{transform:scale(1)}50%{transform:scale(1.55)}}
+@keyframes tdanger{from{opacity:1}to{opacity:.25}}
+
+/* ═══════════════ SETUP ═══════════════ */
+.setup{width:100%;max-width:640px;animation:fadeUp .4s ease both}
+.setup-eye{font-family:var(--fm);font-size:11px;color:var(--dim);letter-spacing:.2em;text-transform:uppercase;text-align:center;margin-bottom:10px}
+.setup-title{font-family:var(--fd);font-size:44px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--white);text-align:center;line-height:1;margin-bottom:2px}
+.setup-sub{font-family:var(--fd);font-size:18px;font-weight:300;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);text-align:center;margin-bottom:26px}
+
+.student-row{display:grid;grid-template-columns:1fr auto;gap:10px;margin-bottom:16px}
+.s-field{display:flex;flex-direction:column;gap:5px}
+.s-label{font-family:var(--fm);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+.s-input{font-family:var(--fb);font-size:14px;background:var(--surf2);color:var(--white);border:1px solid var(--border);border-radius:var(--rs);padding:9px 12px;transition:border-color .15s;width:100%}
+.s-input:focus{outline:none;border-color:var(--gold-hi);box-shadow:0 0 0 3px rgba(196,154,0,.12)}
+.s-select{font-family:var(--fb);font-size:14px;background:var(--surf2);color:var(--white);border:1px solid var(--border);border-radius:var(--rs);padding:9px 28px 9px 12px;appearance:none;-webkit-appearance:none;cursor:pointer;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath fill='%237a6e5a' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 10px center;transition:border-color .15s;min-width:100px}
+.s-select:focus{outline:none;border-color:var(--gold-hi)}
+
+.setup-section-label{font-family:var(--fm);font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-bottom:8px}
+.level-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}
+.level-btn{background:var(--surf);border:2px solid var(--border);border-radius:var(--r);padding:14px 10px;cursor:pointer;text-align:center;transition:all .18s var(--ease);position:relative;opacity:.5}
+.level-btn:hover{border-color:var(--border-hi);transform:translateY(-2px);opacity:.8}
+.level-btn.active{border-color:var(--gold-hi);background:rgba(196,154,0,.14);box-shadow:0 0 0 2px var(--gold-hi);opacity:1;transform:translateY(-2px)}
+.level-btn.active::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--gold-hi);border-radius:var(--r) var(--r) 0 0}
+.level-n{font-family:var(--fd);font-size:28px;font-weight:700;color:var(--white);line-height:1}
+.level-count{font-family:var(--fm);font-size:10px;color:var(--gold-hi);margin:2px 0}
+.level-desc{font-size:11px;color:var(--dim);line-height:1.35}
+.level-badge{font-family:var(--fm);font-size:9px;background:var(--gold);color:var(--white);border-radius:3px;padding:2px 5px;margin-top:5px;display:inline-block;letter-spacing:.05em}
+
+.diff-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
+.diff-card{background:var(--surf);border:2px solid var(--border);border-radius:var(--r);padding:14px 12px;cursor:pointer;transition:all .18s var(--ease);opacity:.55}
+.diff-card:hover{border-color:var(--border-hi);opacity:.85}
+.diff-card.active{border-color:var(--gold-hi);background:rgba(196,154,0,.1);opacity:1}
+.diff-name{font-family:var(--fd);font-size:16px;font-weight:600;color:var(--white);margin-bottom:4px}
+.diff-desc{font-size:12px;color:var(--dim);line-height:1.4;margin-bottom:5px}
+.diff-tag{font-family:var(--fm);font-size:9px;color:var(--gold-hi);letter-spacing:.05em}
+
+.setup-progress{background:var(--surf2);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;margin-bottom:12px}
+.sp-title{font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px}
+.sp-rows{display:flex;flex-direction:column;gap:7px}
+.sp-row{display:grid;grid-template-columns:56px 1fr 36px;align-items:center;gap:8px}
+.sp-lbl{font-family:var(--fm);font-size:10px;color:var(--dim)}
+.sp-track{height:4px;background:var(--surf3);border-radius:2px;overflow:hidden}
+.sp-fill{height:100%;border-radius:2px;transition:width .5s var(--ease)}
+.fill-blue{background:var(--blue-hi)}.fill-amber{background:var(--amber-hi)}.fill-red{background:var(--red-hi)}
+.sp-val{font-family:var(--fm);font-size:10px;color:var(--dim);text-align:right}
+
+.start-btn{width:100%;padding:15px;font-family:var(--fd);font-size:17px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border-radius:var(--r);border:none;transition:all .2s var(--ease);background:var(--gold-hi);color:var(--bg)}
+.start-btn:disabled{background:var(--surf3);color:var(--dim);cursor:not-allowed}
+.start-btn:not(:disabled):hover{background:var(--amber-hi);transform:translateY(-1px)}
+
+/* ═══════════════ MODE SELECT ═══════════════ */
+.mode-select{width:100%;max-width:560px;animation:fadeUp .35s ease both}
+.ms-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.ms-name{font-family:var(--fd);font-size:24px;font-weight:700;color:var(--white);letter-spacing:.04em}
+.ms-meta{font-family:var(--fm);font-size:11px;color:var(--dim)}
+.ms-change{font-family:var(--fm);font-size:10px;background:transparent;border:1px solid var(--border);color:var(--dim);border-radius:var(--rs);padding:5px 10px;cursor:pointer;letter-spacing:.06em}
+.ms-change:hover{border-color:var(--border-hi);color:var(--white)}
+.ms-cards{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
+.ms-card{background:var(--surf);border:2px solid var(--border);border-radius:var(--r);padding:18px 20px;cursor:pointer;display:flex;align-items:center;gap:16px;transition:all .2s var(--ease)}
+.ms-card:hover{border-color:var(--border-hi);transform:translateX(4px)}
+.ms-card.rev:hover{border-color:var(--blue-hi)}
+.ms-card.prac:hover{border-color:var(--amber-hi)}
+.ms-card.blitz:hover{border-color:var(--red-hi)}
+.ms-icon{font-size:28px;flex-shrink:0}
+.ms-card-name{font-family:var(--fd);font-size:18px;font-weight:600;color:var(--white);letter-spacing:.04em;margin-bottom:3px}
+.ms-card-desc{font-size:12px;color:var(--dim);line-height:1.4}
+.ms-badge{font-family:var(--fm);font-size:9px;background:var(--surf3);color:var(--dim);border-radius:3px;padding:2px 5px;margin-top:5px;display:inline-block}
+
+.mp-section{background:var(--surf2);border:1px solid var(--border);border-radius:var(--r);padding:12px 16px}
+.mp-title{font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px}
+.mp-rows{display:flex;flex-direction:column;gap:7px}
+.mp-row{display:grid;grid-template-columns:60px 1fr 36px;align-items:center;gap:8px}
+.mp-lbl{font-family:var(--fm);font-size:10px;color:var(--dim)}
+.mp-track{height:4px;background:var(--surf3);border-radius:2px;overflow:hidden}
+.mp-fill{height:100%;border-radius:2px;transition:width .5s var(--ease)}
+.mp-val{font-family:var(--fm);font-size:10px;color:var(--dim);text-align:right}
+.locked-badge{font-family:var(--fm);font-size:9px;background:var(--surf3);color:var(--dim);border-radius:3px;padding:2px 6px}
+.ms-card.locked{opacity:.5;cursor:not-allowed}
+.ms-card.locked:hover{transform:none;border-color:var(--border)}
+
+/* ═══════════════ FLASHCARD REVIEW ═══════════════ */
+.fc-shell{width:100%;max-width:560px;animation:fadeUp .35s ease both}
+.fc-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.fc-title{font-family:var(--fd);font-size:16px;font-weight:600;color:var(--white);letter-spacing:.05em}
+.fc-stats{display:flex;gap:12px}
+.fc-stat{font-family:var(--fm);font-size:11px;color:var(--dim)}
+.fc-stat span{color:var(--white);font-weight:600}
+.fc-prog-bar{height:3px;background:var(--surf3);border-radius:2px;overflow:hidden;margin-bottom:4px}
+.fc-prog-fill{height:100%;background:var(--blue-hi);border-radius:2px;transition:width .4s var(--ease)}
+.fc-prog-lbl{font-family:var(--fm);font-size:10px;color:var(--dim);text-align:center;margin-bottom:14px}
+
+.fc-card-wrap{perspective:1000px;height:220px;cursor:pointer;margin-bottom:12px;user-select:none}
+.fc-card{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .5s var(--ease);border-radius:var(--r)}
+.fc-card.flipped{transform:rotateY(180deg)}
+.fc-face{position:absolute;inset:0;border-radius:var(--r);backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;border:2px solid var(--border)}
+.fc-front{background:var(--surf2)}
+.fc-back{background:var(--surf3);transform:rotateY(180deg)}
+.fc-face-label{font-family:var(--fm);font-size:9px;color:var(--dim);letter-spacing:.12em;text-transform:uppercase;position:absolute;top:10px;left:14px}
+.fc-term-text{font-family:var(--fd);font-size:28px;font-weight:600;color:var(--white);text-align:center;letter-spacing:.03em}
+.fc-def-text{font-size:13px;color:var(--text);text-align:center;line-height:1.55;max-width:400px}
+.fc-flip-hint{font-family:var(--fm);font-size:9px;color:var(--dim);position:absolute;bottom:10px;right:12px;letter-spacing:.06em}
+
+.fc-hint-btn{font-family:var(--fm);font-size:10px;background:transparent;border:1px solid var(--border);color:var(--dim);border-radius:var(--rs);padding:4px 10px;cursor:pointer;display:block;margin:0 auto 8px;letter-spacing:.06em}
+.fc-hint-btn:hover{border-color:var(--gold-hi);color:var(--gold-hi)}
+.fc-hint-shown{font-family:var(--fm);font-size:11px;color:var(--gold-hi);text-align:center;padding:6px 12px;background:rgba(196,154,0,.08);border-radius:var(--rs);margin-bottom:8px}
+
+.fc-rate-wrap{display:flex;gap:8px;justify-content:center}
+.fc-rate-btn{font-family:var(--fm);font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:8px 18px;border-radius:var(--rs);cursor:pointer;border:none;transition:all .15s}
+.fc-rate-know{background:var(--green);color:var(--white)}.fc-rate-know:hover{background:var(--green-hi)}
+.fc-rate-almost{background:var(--amber);color:var(--white)}.fc-rate-almost:hover{background:var(--amber-hi)}
+.fc-rate-nope{background:var(--red);color:var(--white)}.fc-rate-nope:hover{background:var(--red-hi)}
+
+.fc-done-msg{text-align:center;padding:20px}
+.fc-done-title{font-family:var(--fd);font-size:28px;font-weight:700;color:var(--white);letter-spacing:.04em;margin-bottom:8px}
+.fc-done-sub{font-size:13px;color:var(--dim);line-height:1.5;max-width:380px;margin:0 auto}
+
+/* ═══════════════ GAME ═══════════════ */
+.game-shell{width:100%;max-width:600px;animation:fadeUp .3s ease both}
+.g-prog-wrap{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.g-prog-track{flex:1;height:4px;background:var(--surf3);border-radius:2px;overflow:hidden}
+.prog-fill{height:100%;border-radius:2px;transition:width .35s var(--ease)}
+.g-prog-lbl{font-family:var(--fm);font-size:10px;color:var(--dim);min-width:36px;text-align:right}
+
+.g-hud{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.g-hud-item{display:flex;flex-direction:column;align-items:center;gap:2px}
+.g-hud-val{font-family:var(--fd);font-size:22px;font-weight:600;color:var(--white);line-height:1}
+.g-hud-lbl{font-family:var(--fm);font-size:9px;color:var(--dim);letter-spacing:.08em;text-transform:uppercase}
+
+/* Timer */
+.timer-wrap{position:relative;width:52px;height:52px;flex-shrink:0}
+.timer-wrap svg{position:absolute;inset:0;transform:rotate(-90deg)}
+.t-track{fill:none;stroke:var(--surf3);stroke-width:3}
+.t-arc{fill:none;stroke:var(--gold-hi);stroke-width:3;stroke-dasharray:146;stroke-dashoffset:0;stroke-linecap:round;transition:stroke-dashoffset .95s linear,stroke .3s}
+.t-arc.warn{stroke:var(--amber-hi)}
+.t-arc.danger{stroke:var(--red-hi);animation:tdanger .4s ease infinite alternate}
+.timer-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:16px;font-weight:600;color:var(--white)}
+.timer-num.danger{color:var(--red-hi)}
+.timer-wrap.timer-off .t-arc{stroke:var(--surf3)}
+
+.q-badge{font-family:var(--fm);font-size:9px;color:var(--gold-hi);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;text-align:center}
+.q-card{background:var(--surf2);border:2px solid var(--border);border-radius:var(--r);padding:22px 20px;margin-bottom:12px;animation:cardIn .25s ease both}
+.q-label{font-family:var(--fm);font-size:9px;color:var(--dim);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+.q-text{font-size:14px;color:var(--text);line-height:1.55}
+.q-text.is-term{font-family:var(--fd);font-size:26px;font-weight:600;color:var(--white);letter-spacing:.03em;line-height:1.1}
+
+.hint-box{background:rgba(196,154,0,.08);border:1px solid rgba(196,154,0,.2);border-radius:var(--rs);padding:8px 12px;margin-bottom:10px;display:flex;align-items:flex-start;gap:8px;display:none}
+.hint-icon{font-size:13px;flex-shrink:0;margin-top:1px}
+.hint-text{font-family:var(--fm);font-size:11px;color:var(--gold-hi);line-height:1.45}
+.hint-trigger{font-family:var(--fm);font-size:10px;background:transparent;border:1px solid var(--border);color:var(--dim);border-radius:var(--rs);padding:4px 10px;cursor:pointer;letter-spacing:.06em;display:none;margin-bottom:8px}
+.hint-trigger:hover{border-color:var(--gold-hi);color:var(--gold-hi)}
+
+.ans-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.ans-btn{font-family:var(--fb);font-size:12.5px;line-height:1.45;background:var(--surf);border:2px solid var(--border);color:var(--text);border-radius:var(--r);padding:12px 14px 12px 12px;cursor:pointer;text-align:left;transition:border-color .15s,background .15s;position:relative;display:flex;align-items:flex-start;gap:8px;animation:btnIn .2s ease both}
+.ans-btn span:first-child{flex:1}
+.ans-btn:hover:not(:disabled){border-color:var(--border-hi);background:var(--surf2)}
+.ans-btn.correct{border-color:var(--green-hi);background:rgba(39,174,96,.14);color:var(--white)}
+.ans-btn.wrong{border-color:var(--red-hi);background:rgba(192,57,43,.14);color:var(--white)}
+.ans-btn.reveal{border-color:var(--green-hi);background:rgba(39,174,96,.1)}
+.kbd{font-family:var(--fm);font-size:9px;color:var(--dim);border:1px solid var(--border);border-radius:2px;padding:1px 4px;flex-shrink:0;margin-top:2px}
+
+.remed{background:var(--surf3);border-left:3px solid var(--gold-hi);border-radius:0 var(--rs) var(--rs) 0;padding:10px 14px;margin-bottom:10px;display:none}
+.remed.show{display:block;animation:fadeUp .2s ease}
+.remed-text{font-size:12px;color:var(--text);line-height:1.5;margin-bottom:4px}
+.remed-ex{font-size:11px;color:var(--dim);font-style:italic;line-height:1.4}
+
+.fire-wrap{text-align:center;height:26px;overflow:visible;margin-bottom:6px}
+.fire-emoji{font-size:18px;display:inline-block}
+.fire-emoji.hot{animation:firepulse .3s ease}
+
+/* Flash overlay */
+.ff{position:fixed;inset:0;z-index:100;pointer-events:none;opacity:0;transition:opacity .08s}
+.ff.show{opacity:1}
+.ff.correct{background:rgba(39,174,96,.09)}
+.ff.wrong{background:rgba(192,57,43,.12)}
+
+/* ═══════════════ END SCREEN ═══════════════ */
+.end-shell{width:100%;max-width:580px;animation:fadeUp .35s ease both}
+.end-eye{font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.15em;text-transform:uppercase;text-align:center;margin-bottom:6px}
+.end-title{font-family:var(--fd);font-size:42px;font-weight:700;color:var(--white);text-align:center;letter-spacing:.04em;margin-bottom:2px}
+.end-grade{font-size:13px;color:var(--dim);text-align:center;margin-bottom:18px}
+.end-score-block{display:flex;gap:12px;justify-content:center;margin-bottom:18px}
+.es-item{display:flex;flex-direction:column;align-items:center;background:var(--surf2);border:1px solid var(--border);border-radius:var(--r);padding:12px 16px;min-width:70px}
+.n{font-family:var(--fd);font-size:30px;font-weight:700;color:var(--white)}
+.n.perfect{color:var(--gold-hi)}.n.great{color:var(--green-hi)}.n.bad{color:var(--red-hi)}
+.sl{font-family:var(--fm);font-size:9px;color:var(--dim);letter-spacing:.07em;margin-top:2px}
+
+.fail-box{background:rgba(155,44,44,.12);border:1px solid rgba(155,44,44,.3);border-radius:var(--r);padding:12px 16px;margin-bottom:14px;font-size:12px;color:var(--dim);line-height:1.5}
+
+.end-log{background:var(--surf);border:1px solid var(--border);border-radius:var(--r);padding:0;margin-bottom:14px;overflow:hidden;max-height:260px;overflow-y:auto}
+.log-hdr{font-family:var(--fm);font-size:9px;color:var(--dim);letter-spacing:.1em;text-transform:uppercase;padding:8px 14px;border-bottom:1px solid var(--border);background:var(--surf2)}
+.log-row{display:grid;grid-template-columns:10px 1fr auto;align-items:center;gap:10px;padding:8px 14px;border-bottom:1px solid var(--border);transition:background .12s}
+.log-row.clickable{cursor:pointer;grid-template-columns:10px 1fr auto 14px}
+.log-row.clickable:hover{background:var(--surf2)}
+.log-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.dc{background:var(--green-hi)}.dw{background:var(--red-hi)}.dt{background:var(--amber-hi)}
+.log-term{font-size:12px;color:var(--text)}
+.log-status{font-family:var(--fm);font-size:10px;color:var(--dim)}
+.log-chevron{font-size:12px;color:var(--dim);transition:transform .2s}
+.log-row.open .log-chevron{transform:rotate(180deg)}
+.log-expand{display:none;padding:10px 14px 12px;border-bottom:1px solid var(--border);background:var(--surf3)}
+.log-expand.open{display:block;animation:fadeUp .15s ease}
+.log-compare{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.log-def-block{padding:10px;border-radius:var(--rs);border:1px solid var(--border)}
+.wrong-block{border-color:rgba(192,57,43,.3);background:rgba(192,57,43,.06)}
+.correct-block{border-color:rgba(39,174,96,.3);background:rgba(39,174,96,.06)}
+.log-def-label{font-family:var(--fm);font-size:9px;letter-spacing:.07em;color:var(--dim);margin-bottom:4px}
+.log-def-term{font-family:var(--fd);font-size:14px;font-weight:600;color:var(--white);margin-bottom:3px}
+.log-def-text{font-size:11px;color:var(--text);line-height:1.45}
+.log-timeout-block{padding:10px}
+.log-timeout-label{font-family:var(--fm);font-size:9px;color:var(--dim);letter-spacing:.07em;margin-bottom:4px}
+.log-hint-line{font-family:var(--fm);font-size:10px;color:var(--gold-hi);margin-top:8px;padding:4px 8px;background:rgba(196,154,0,.08);border-radius:3px}
+
+.end-btns{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.e-btn{font-family:var(--fd);font-size:14px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:10px 18px;border-radius:var(--rs);cursor:pointer;border:none;transition:all .15s}
+.e-btn-primary{background:var(--gold-hi);color:var(--bg)}.e-btn-primary:hover{background:var(--amber-hi)}
+.e-btn-blue{background:var(--blue-hi);color:var(--white)}.e-btn-blue:hover{background:var(--blue)}
+.e-btn-ghost{background:var(--surf3);color:var(--dim);border:1px solid var(--border)}.e-btn-ghost:hover{color:var(--white);border-color:var(--border-hi)}
+.e-btn-pdf{background:transparent;color:var(--dim);border:1px solid var(--border)}.e-btn-pdf:hover{border-color:var(--gold-hi);color:var(--gold-hi)}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:200;display:flex;align-items:center;justify-content:center;display:none}
+.modal-overlay.open{display:flex;animation:fadeUp .15s ease}
+.modal-box{background:var(--surf2);border:1px solid var(--border);border-radius:var(--r);padding:24px;max-width:340px;width:90%}
+.modal-title{font-family:var(--fd);font-size:20px;font-weight:600;color:var(--white);margin-bottom:8px}
+.modal-body{font-size:13px;color:var(--dim);margin-bottom:18px;line-height:1.5}
+.modal-btns{display:flex;gap:8px;justify-content:flex-end}
+
+/* PRINT */
+@media print{
+  body>*:not(#printDoc){display:none!important}
+  #printDoc{display:block!important;position:static!important;overflow:visible!important}
+  .pd-review-item,.pd-student-box,.pd-section{overflow:visible!important;page-break-inside:avoid}
+  *{overflow:visible!important}
+}
+#printDoc{display:none}
+.pd-header{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:2px solid #000;padding-bottom:8px;margin-bottom:12px}
+.pd-logo{font-size:18px;font-weight:700;color:#000}
+.pd-unit{font-size:11px;color:#555;margin-top:2px}
+.pd-meta{font-size:10px;color:#555;text-align:right;line-height:1.5}
+.pd-student-box{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;border:1px solid #ccc;padding:10px;border-radius:4px}
+.pd-field-label{font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:#888;margin-bottom:2px}
+.pd-field-val{font-size:14px;font-weight:600;color:#000}
+.pd-section{margin-bottom:14px;overflow:visible}
+.pd-section-title{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#555;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid #ddd}
+.pd-section-title.needs{color:#900}
+.pd-summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.pd-stat{text-align:center;padding:8px;border:1px solid #ddd;border-radius:4px}
+.pd-stat .sn{font-size:22px;font-weight:700;color:#000}
+.pd-stat .sl{font-size:9px;color:#888;text-transform:uppercase}
+.pd-review-item{margin-bottom:8px;padding:8px;border:1px solid #ddd;border-radius:4px;overflow:visible}
+.pd-review-term{font-size:13px;font-weight:700;color:#000;margin-bottom:2px}
+.pd-review-def{font-size:11px;color:#333;line-height:1.45;overflow:visible}
+.pd-know-list{display:flex;flex-wrap:wrap;gap:4px}
+.pd-know-chip{font-size:10px;padding:2px 7px;border:1px solid #ccc;border-radius:10px;color:#444}
+.pd-footer{border-top:1px solid #ccc;padding-top:6px;display:flex;justify-content:space-between;font-size:9px;color:#888;margin-top:12px}
+</style>
+</head>
+<body>
+<div class="map-bg"></div>
+<div class="cannon-ambient" id="cannonAmbient">
+  <svg width="160" height="90" viewBox="0 0 160 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Wheels -->
+    <circle cx="40" cy="72" r="18" stroke="#c8b870" stroke-width="3" fill="none" opacity=".9"/>
+    <circle cx="40" cy="72" r="6" fill="#c8b870" opacity=".7"/>
+    <line x1="40" y1="54" x2="40" y2="90" stroke="#c8b870" stroke-width="2" opacity=".6"/>
+    <line x1="22" y1="72" x2="58" y2="72" stroke="#c8b870" stroke-width="2" opacity=".6"/>
+    <line x1="27" y1="59" x2="53" y2="85" stroke="#c8b870" stroke-width="1.5" opacity=".5"/>
+    <line x1="53" y1="59" x2="27" y2="85" stroke="#c8b870" stroke-width="1.5" opacity=".5"/>
+    <circle cx="110" cy="72" r="18" stroke="#c8b870" stroke-width="3" fill="none" opacity=".9"/>
+    <circle cx="110" cy="72" r="6" fill="#c8b870" opacity=".7"/>
+    <line x1="110" y1="54" x2="110" y2="90" stroke="#c8b870" stroke-width="2" opacity=".6"/>
+    <line x1="92" y1="72" x2="128" y2="72" stroke="#c8b870" stroke-width="2" opacity=".6"/>
+    <line x1="97" y1="59" x2="123" y2="85" stroke="#c8b870" stroke-width="1.5" opacity=".5"/>
+    <line x1="123" y1="59" x2="97" y2="85" stroke="#c8b870" stroke-width="1.5" opacity=".5"/>
+    <!-- Axle -->
+    <rect x="38" y="66" width="74" height="8" rx="3" fill="#a89040" opacity=".8"/>
+    <!-- Barrel -->
+    <rect x="28" y="38" width="120" height="22" rx="8" fill="#b8a050" opacity=".95"/>
+    <rect x="136" y="40" width="18" height="18" rx="5" fill="#c8b060" opacity=".9"/>
+    <!-- Muzzle ring -->
+    <rect x="24" y="36" width="14" height="26" rx="4" fill="#a89040" opacity=".85"/>
+    <!-- Barrel highlight -->
+    <rect x="30" y="40" width="110" height="5" rx="2" fill="#d4c070" opacity=".3"/>
+  </svg>
+</div>
+<div class="smoke-particle sp1"></div>
+<div class="smoke-particle sp2"></div>
+<div class="smoke-particle sp3"></div>
+<div class="blast-ring" id="blastRing"></div>
+
+<header class="hdr">
+  <div class="hdr-l">
+    <span class="logo">EdSim</span><div class="hdiv"></div>
+    <span class="unit">Civil War &amp; Reconstruction · Vocabulary</span>
+  </div>
+  <div class="hdr-r">
+    <span class="hdr-info" id="hdrInfo"></span>
+    <button class="hdr-btn" id="timerToggleBtn" onclick="toggleTimer()" style="display:none">⏱ Timer: ON</button>
+    <button class="hdr-btn danger" onclick="confirmReset()">↺ Reset</button>
+  </div>
+</header>
+
+<div class="main" id="mainArea">
+  <div id="printDoc"></div>
+
+  <!-- SETUP -->
+  <div id="setupScreen" class="setup">
+    <div class="setup-eye">EdSim · US History Regents</div>
+    <div class="setup-title">Civil War</div>
+    <div class="setup-sub">Vocabulary Study · 1850–1877</div>
+
+    <div class="student-row">
+      <div class="s-field">
+        <div class="s-label">Student name</div>
+        <input class="s-input" id="studentName" type="text" placeholder="First and last name" oninput="validateSetup()"/>
+      </div>
+      <div class="s-field">
+        <div class="s-label">Period</div>
+        <select class="s-select" id="periodSel" onchange="validateSetup()">
+          <option value="">—</option>
+          <option>1</option><option>2</option><option>3</option>
+          <option>4</option><option>5</option><option>6</option>
+          <option>7</option><option>8</option><option>9</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="setup-section-label" style="margin-bottom:8px">Choose your starting level</div>
+    <div class="level-grid" id="levelGrid">
+      <div class="level-btn" onclick="setLevel(1)" id="lbtn-1">
+        <div class="level-n">1</div>
+        <div class="level-count">10 terms</div>
+        <div class="level-desc">Causes and key turning points every student must know</div>
+      </div>
+      <div class="level-btn" onclick="setLevel(2)" id="lbtn-2">
+        <div class="level-n">2</div>
+        <div class="level-count">20 terms</div>
+        <div class="level-desc">Amendments, leaders, and Reconstruction policies added</div>
+      </div>
+      <div class="level-btn" onclick="setLevel(3)" id="lbtn-3">
+        <div class="level-n">3</div>
+        <div class="level-count">30 terms</div>
+        <div class="level-desc">Jim Crow, disenfranchisement, and the end of Reconstruction</div>
+      </div>
+      <div class="level-btn" onclick="setLevel(4)" id="lbtn-4">
+        <div class="level-n">4</div>
+        <div class="level-count">35 terms</div>
+        <div class="level-desc">Full set — specific laws, leaders, and political debates</div>
+        <div class="level-badge">Confident? Start here</div>
+      </div>
+    </div>
+
+    <div class="setup-section-label" style="margin-bottom:8px">Choose difficulty</div>
+    <div class="diff-grid">
+      <div class="diff-card" onclick="setDiff('supported')" id="dbtn-supported">
+        <div class="diff-name">Supported</div>
+        <div class="diff-desc">Plain-language definitions. Hints available on every question.</div>
+        <div class="diff-tag">Best for: building foundational understanding</div>
+      </div>
+      <div class="diff-card active" onclick="setDiff('regular')" id="dbtn-regular">
+        <div class="diff-name">Regular</div>
+        <div class="diff-desc">Full academic definitions. One hint per question in Practice.</div>
+        <div class="diff-tag">Best for: standard Regents prep</div>
+      </div>
+      <div class="diff-card" onclick="setDiff('challenge')" id="dbtn-challenge">
+        <div class="diff-name">Challenge</div>
+        <div class="diff-desc">Short clues only. No hints. Timed pressure in Blitz mode.</div>
+        <div class="diff-tag">Best for: confident, high-achieving students</div>
+      </div>
+    </div>
+
+    <div class="setup-progress" id="setupProgress" style="display:none">
+      <div class="sp-title">Your progress</div>
+      <div class="sp-rows">
+        <div class="sp-row"><div class="sp-lbl">Review</div><div class="sp-track"><div class="sp-fill fill-blue" id="spReview" style="width:0%"></div></div><div class="sp-val" id="spReviewVal">0%</div></div>
+        <div class="sp-row"><div class="sp-lbl">Practice</div><div class="sp-track"><div class="sp-fill fill-amber" id="spPractice" style="width:0%"></div></div><div class="sp-val" id="spPracticeVal">0%</div></div>
+        <div class="sp-row"><div class="sp-lbl">Blitz best</div><div class="sp-track"><div class="sp-fill fill-red" id="spBlitz" style="width:0%"></div></div><div class="sp-val" id="spBlitzVal">0%</div></div>
+      </div>
+    </div>
+
+    <button class="start-btn" id="startBtn" onclick="goToModes()" disabled>Select name, period, level &amp; difficulty to begin</button>
+  </div>
+
+  <!-- MODE SELECT -->
+  <div id="modeScreen" class="mode-select" style="display:none">
+    <div class="ms-header">
+      <div class="ms-info">
+        <div class="ms-name" id="msName">Civil War</div>
+        <div class="ms-meta" id="msMeta"></div>
+      </div>
+      <button class="ms-change" onclick="backToSetup()">← Change settings</button>
+    </div>
+    <div class="ms-cards">
+      <div class="ms-card rev" id="mc-review" onclick="startMode('review')">
+        <div class="ms-icon">🃏</div>
+        <div>
+          <div class="ms-card-name">Review</div>
+          <div class="ms-card-desc">Flashcards with hints. Flip to reveal the definition. Rate each card — missed terms surface again.</div>
+        </div>
+      </div>
+      <div class="ms-card prac" id="mc-practice" onclick="tryMode('practice')">
+        <div class="ms-icon">📝</div>
+        <div>
+          <div class="ms-card-name">Practice</div>
+          <div class="ms-card-desc">10 multiple choice questions. Missed terms show definitions. Build before you Blitz.</div>
+          <div class="locked-badge" style="display:none">Complete Review first</div>
+        </div>
+      </div>
+      <div class="ms-card blitz" id="mc-blitz" onclick="tryMode('blitz')">
+        <div class="ms-icon">⚡</div>
+        <div>
+          <div class="ms-card-name">Challenge Blitz</div>
+          <div class="ms-card-desc"><span id="blitzQCount">12</span> timed questions. Score bonus points for speed. Your best score is saved.</div>
+          <div class="locked-badge" style="display:none">Complete Practice first</div>
+        </div>
+      </div>
+    </div>
+    <div class="mp-section">
+      <div class="mp-title">Your progress</div>
+      <div class="mp-rows">
+        <div class="mp-row"><div class="mp-lbl">Review</div><div class="mp-track"><div class="mp-fill fill-blue" id="mpReview" style="width:0%"></div></div><div class="mp-val" id="mpReviewVal">0%</div></div>
+        <div class="mp-row"><div class="mp-lbl">Practice</div><div class="mp-track"><div class="mp-fill fill-amber" id="mpPractice" style="width:0%"></div></div><div class="mp-val" id="mpPracticeVal">0%</div></div>
+        <div class="mp-row"><div class="mp-lbl">Blitz best</div><div class="mp-track"><div class="mp-fill fill-red" id="mpBlitz" style="width:0%"></div></div><div class="mp-val" id="mpBlitzVal">0%</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REVIEW -->
+  <div id="reviewActivity" class="fc-shell" style="display:none">
+    <div class="fc-hdr">
+      <div class="fc-title">Flashcard Review</div>
+      <div class="fc-stats">
+        <div class="fc-stat">✓ <span id="fcKnow">0</span></div>
+        <div class="fc-stat">~ <span id="fcAlmost">0</span></div>
+        <div class="fc-stat">✗ <span id="fcNope">0</span></div>
+        <div class="fc-stat">Left: <span id="fcLeft">—</span></div>
+      </div>
+    </div>
+    <div class="fc-prog-bar"><div class="fc-prog-fill" id="fcProg" style="width:0%"></div></div>
+    <div class="fc-prog-lbl" id="fcLbl">Card 1 of 10</div>
+    <div id="fcWrap">
+      <div class="fc-card-wrap" onclick="flipCard()">
+        <div class="fc-card" id="fcCard">
+          <div class="fc-face fc-front">
+            <div class="fc-face-label">Term</div>
+            <div class="fc-term-text" id="fcTerm"></div>
+            <div class="fc-flip-hint">tap to flip →</div>
+          </div>
+          <div class="fc-face fc-back">
+            <div class="fc-face-label">Definition</div>
+            <div class="fc-def-text" id="fcDef"></div>
+          </div>
+        </div>
+      </div>
+      <button class="fc-hint-btn" id="fcHintBtn" onclick="showFCHint(event)">💡 Show hint</button>
+      <div class="fc-hint-shown" id="fcHintShown" style="display:none"></div>
+      <div class="fc-rate-wrap" id="fcRateWrap" style="display:none">
+        <button class="fc-rate-btn fc-rate-know" onclick="rateCard('know')">✓ Got it</button>
+        <button class="fc-rate-btn fc-rate-almost" onclick="rateCard('almost')">~ Almost</button>
+        <button class="fc-rate-btn fc-rate-nope" onclick="rateCard('nope')">✗ Again</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- GAME -->
+  <div id="gameActivity" class="game-shell" style="display:none">
+    <div class="g-prog-wrap">
+      <div class="g-prog-track"><div class="prog-fill fill-amber" id="gProg" style="width:0%"></div></div>
+      <div class="g-prog-lbl" id="gProgLbl">1 / 10</div>
+    </div>
+    <div class="g-hud">
+      <div class="g-hud-item"><div class="g-hud-val" id="gScore">0</div><div class="g-hud-lbl">Score</div></div>
+      <div class="timer-wrap" id="timerWrap">
+        <svg viewBox="0 0 52 52"><circle class="t-track" cx="26" cy="26" r="23"/><circle class="t-arc" id="tArc" cx="26" cy="26" r="23"/></svg>
+        <div class="timer-num" id="tNum">—</div>
+      </div>
+      <div class="g-hud-item"><div class="g-hud-val" id="gStreak">0</div><div class="g-hud-lbl">Streak</div></div>
+    </div>
+    <div class="q-badge" id="gBadge">Choose the correct term</div>
+    <div class="q-card" id="gCard">
+      <div class="q-label" id="gLbl">Definition</div>
+      <div class="q-text" id="gText"></div>
+    </div>
+    <button class="hint-trigger" id="hintBtn" onclick="showGameHint()">💡 Show hint</button>
+    <div class="hint-box" id="hintBox">
+      <div class="hint-icon">💡</div>
+      <div class="hint-text" id="hintTxt"></div>
+    </div>
+    <div class="ans-grid" id="ansGrid"></div>
+    <div class="remed" id="remedEl">
+      <div class="remed-text" id="remedTxt"></div>
+      <div class="remed-ex" id="remedEx"></div>
+    </div>
+    <div class="fire-wrap"><div class="fire-emoji" id="fireMoji">💥</div></div>
+  </div>
+
+  <!-- END -->
+  <div id="endScreen" class="end-shell" style="display:none">
+    <div class="end-eye" id="endEye">Practice Results</div>
+    <div class="end-title" id="endTitle">Sharp</div>
+    <div class="end-grade" id="endGrade">Strong performance</div>
+    <div class="end-score-block">
+      <div class="es-item"><div class="n" id="endPct">—</div><div class="sl">Score</div></div>
+      <div class="es-item"><div class="n" id="endCorrect">—</div><div class="sl">Correct</div></div>
+      <div class="es-item"><div class="n" id="endWrong">—</div><div class="sl">Wrong</div></div>
+      <div class="es-item"><div class="n" id="endTO">—</div><div class="sl">Timed out</div></div>
+    </div>
+    <div class="fail-box" id="endFail" style="display:none"><span id="endFailTxt"></span></div>
+    <div class="end-log" id="endLog"></div>
+    <div class="end-btns" id="endBtns"></div>
+  </div>
+</div>
+
+<!-- Flash overlay -->
+<div class="ff" id="ff"></div>
+
+<!-- Reset modal -->
+<div class="modal-overlay" id="resetModal">
+  <div class="modal-box">
+    <div class="modal-title">Reset all progress?</div>
+    <div class="modal-body">This will clear your saved scores and progress for this unit. Your student name and settings will also be cleared.</div>
+    <div class="modal-btns">
+      <button class="e-btn e-btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="e-btn e-btn-primary" onclick="doReset()">Reset</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════
+// VOCAB — Civil War & Reconstruction
+// 35 terms, 4 tiers, ordered Tier 1→4
+// Regents-aligned: causes, war, Reconstruction, collapse
+// ══════════════════════════════════════════════
+const VOCAB=[
+  // ─── TIER 1 — Core (10) ───────────────────────────────────
+  {term:"sectionalism",tier:1,category:"Causes",
+   def:{supported:"Loyalty to your own region — North or South — above loyalty to the whole country",regular:"Excessive loyalty to the interests of one's own region rather than the nation as a whole; a major cause of the Civil War",challenge:"Regional over-national loyalty"},
+   hint:"Northern and Southern economies were very different — this deepened the divide",
+   example:"While the North industrialized, the South's plantation economy depended on enslaved labor. These differences made sectionalism an explosive issue by the 1850s."},
+  {term:"slavery",tier:1,category:"Causes",
+   def:{supported:"The system in which people were legally owned as property and forced to work without pay or freedom",regular:"The institution of forced, unpaid labor in which enslaved African Americans were treated as legal property — the central cause of the Civil War",challenge:"The central cause of the Civil War"},
+   hint:"The Regents will often ask about slavery as an 'enduring issue' — connecting to power and inequality",
+   example:"By 1860 four million people were enslaved in the South. Southern states threatened to leave the Union if the federal government moved to restrict or abolish slavery."},
+  {term:"secession",tier:1,category:"Causes",
+   def:{supported:"When Southern states voted to leave the United States and form their own country — the Confederate States of America",regular:"The formal withdrawal of eleven Southern states from the Union in 1860–1861 to form the Confederacy, triggering the Civil War",challenge:"Southern states leaving the Union"},
+   hint:"South Carolina seceded first — after Lincoln's election in November 1860",
+   example:"When Abraham Lincoln was elected without carrying a single Southern state, South Carolina declared secession in December 1860. Ten more states followed within months."},
+  {term:"Emancipation Proclamation",tier:1,category:"Civil War",
+   def:{supported:"President Lincoln's 1863 order freeing enslaved people in Confederate states — it changed the war's purpose",regular:"Executive order issued by Lincoln on January 1, 1863, declaring enslaved people in rebelling Confederate states to be free and shifting the war's purpose to include abolition",challenge:"1863 Lincoln order freeing Confederate slaves"},
+   hint:"It did NOT free enslaved people in border states — only in Confederate territory",
+   example:"The Emancipation Proclamation redefined the war. It transformed a fight to preserve the Union into a war to end slavery — making it impossible for Britain or France to support the Confederacy."},
+  {term:"Reconstruction",tier:1,category:"Reconstruction",
+   def:{supported:"The period after the Civil War when the federal government tried to rebuild the South and bring formerly enslaved people into American life as equal citizens",regular:"Federal program from 1865–1877 to rebuild the South, reintegrate Confederate states, and establish civil rights for formerly enslaved African Americans",challenge:"1865–1877 post-war Southern rebuilding"},
+   hint:"Reconstruction ended with the Compromise of 1877 — troops withdrew from the South",
+   example:"During Reconstruction, formerly enslaved men could vote, hold office, and attend school. Federal troops enforced these rights — but when they left, the gains largely collapsed."},
+  {term:"13th Amendment",tier:1,category:"Reconstruction",
+   def:{supported:"The 1865 addition to the Constitution that officially made slavery illegal everywhere in the United States",regular:"Constitutional amendment ratified in 1865 that abolished slavery and involuntary servitude throughout the United States",challenge:"1865 abolition of slavery amendment"},
+   hint:"Lincoln's Emancipation Proclamation was a wartime order — the 13th Amendment made abolition permanent in the Constitution",
+   example:"The 13th Amendment went further than the Emancipation Proclamation — it abolished slavery everywhere, not just in Confederate states. Ratified in December 1865 after the war ended."},
+  {term:"14th Amendment",tier:1,category:"Reconstruction",
+   def:{supported:"The 1868 amendment that made all people born in the U.S. citizens and guaranteed equal protection under the law — including formerly enslaved people",regular:"Constitutional amendment ratified in 1868 granting citizenship to all persons born or naturalized in the U.S. and guaranteeing equal protection and due process",challenge:"1868 equal protection and citizenship amendment"},
+   hint:"The equal protection clause has been used in countless civil rights cases ever since",
+   example:"The 14th Amendment reversed the Dred Scott decision, which had said Black Americans could never be citizens. It became the constitutional foundation for civil rights law for generations."},
+  {term:"15th Amendment",tier:1,category:"Reconstruction",
+   def:{supported:"The 1870 amendment that said no citizen could be denied the right to vote because of their race or color",regular:"Constitutional amendment ratified in 1870 prohibiting denial of voting rights on the basis of race, color, or previous condition of servitude",challenge:"1870 Black male voting rights amendment"},
+   hint:"It did NOT apply to women — that took until the 19th Amendment in 1920",
+   example:"The 15th Amendment gave formerly enslaved men the right to vote. Southern states immediately worked around it with literacy tests, poll taxes, and grandfather clauses."},
+  {term:"Freedmen's Bureau",tier:1,category:"Reconstruction",
+   def:{supported:"A federal agency created in 1865 to help formerly enslaved people find work, get food, and access education after the Civil War",regular:"Federal agency established in 1865 to provide food, education, legal assistance, and employment support to formerly enslaved African Americans during Reconstruction",challenge:"1865 federal agency aiding formerly enslaved people"},
+   hint:"Helped establish over 1,000 schools and historically Black colleges including Howard University",
+   example:"The Freedmen's Bureau set up schools across the South where formerly enslaved people learned to read. It provided a safety net — but was underfunded and closed in 1872."},
+  {term:"Abraham Lincoln",tier:1,category:"Leaders",
+   def:{supported:"The 16th President of the United States who led the North through the Civil War, issued the Emancipation Proclamation, and was assassinated in 1865",regular:"16th U.S. President who preserved the Union through the Civil War, issued the Emancipation Proclamation, and proposed lenient Reconstruction before his 1865 assassination",challenge:"16th president; led the Union through the Civil War"},
+   hint:"His 10% Plan for Reconstruction was far more lenient than Congress wanted",
+   example:"Lincoln's Second Inaugural Address called for 'malice toward none' — a lenient Reconstruction. He was assassinated five days after Lee surrendered, changing the course of Reconstruction."},
+
+  // ─── TIER 2 — Expanding (20) ─────────────────────────────
+  {term:"popular sovereignty",tier:2,category:"Causes",
+   def:{supported:"The idea that settlers in a new territory — not Congress — should vote on whether to allow slavery there",regular:"Principle allowing settlers of a territory to decide by vote whether to permit slavery; proposed as a compromise but intensified sectional conflict",challenge:"Settler vote on territorial slavery"},
+   hint:"Stephen Douglas pushed this idea — Kansas became a battleground over it",
+   example:"In theory, popular sovereignty let democracy decide the slavery question. In practice, it turned Kansas into a violent battlefield — pro-slavery and anti-slavery settlers flooded in and attacked each other."},
+  {term:"Kansas-Nebraska Act",tier:2,category:"Causes",
+   def:{supported:"An 1854 law that let settlers in Kansas and Nebraska vote on whether to allow slavery — overturning the Missouri Compromise and sparking violent conflict",regular:"1854 congressional legislation creating Kansas and Nebraska territories and applying popular sovereignty to the slavery question, effectively repealing the Missouri Compromise",challenge:"1854 law repealing the Missouri Compromise"},
+   hint:"It directly led to 'Bleeding Kansas' and the formation of the Republican Party",
+   example:"The Kansas-Nebraska Act shattered the political calm. It turned the slavery question explosive, created the Republican Party, and launched the career of a little-known Illinois politician named Abraham Lincoln."},
+  {term:"Missouri Compromise",tier:2,category:"Causes",
+   def:{supported:"An 1820 agreement that admitted Missouri as a slave state and Maine as a free state, and drew a line at 36°30' — slavery allowed south of it, banned north of it",regular:"1820 congressional compromise admitting Missouri as a slave state, Maine as a free state, and establishing the 36°30' latitude line as a permanent boundary for slavery in western territories",challenge:"1820 slavery boundary compromise"},
+   hint:"The Kansas-Nebraska Act repealed it in 1854 — setting the stage for the Civil War",
+   example:"For thirty years the Missouri Compromise kept sectional peace by balancing slave and free states. When Congress threw it out in 1854, the compromise era ended and the path to war began."},
+  {term:"Compromise of 1850",tier:2,category:"Causes",
+   def:{supported:"A series of laws meant to resolve the dispute over slavery in territories gained from Mexico — it included admitting California as a free state but also a new Fugitive Slave Law",regular:"Series of five congressional measures that temporarily eased sectional conflict by admitting California as a free state, organizing territories without restrictions on slavery, and strengthening the Fugitive Slave Law",challenge:"Five-part 1850 sectional compromise"},
+   hint:"Senator Henry Clay proposed it; Daniel Webster supported it; John Calhoun opposed it",
+   example:"The Compromise of 1850 bought about four more years of peace. But its Fugitive Slave Law — requiring Northerners to return escaped enslaved people — outraged many in the North and fueled the abolitionist movement."},
+  {term:"abolition",tier:2,category:"Causes",
+   def:{supported:"The movement to end slavery completely throughout the United States",regular:"Reform movement demanding the immediate and complete elimination of slavery in the United States",challenge:"Movement to end slavery"},
+   hint:"Key figures: Frederick Douglass, William Lloyd Garrison, Harriet Tubman",
+   example:"Abolitionists published newspapers, gave speeches, and helped enslaved people escape via the Underground Railroad. Their message — that slavery was a moral crime — helped radicalize Northern opinion before the war."},
+  {term:"Underground Railroad",tier:2,category:"Causes",
+   def:{supported:"A secret network of people and safe houses that helped enslaved people escape from the South to freedom in the North or Canada",regular:"Clandestine network of safe houses and guides that helped enslaved African Americans escape north to freedom before the Civil War",challenge:"Secret escape network for enslaved people"},
+   hint:"Harriet Tubman made 13 missions freeing approximately 70 people — she called herself the 'Moses of her people'",
+   example:"The Underground Railroad was not an actual railroad — it was a coded network of homes, churches, and helpers who moved freedom-seekers north at night, often hundreds of miles."},
+  {term:"states' rights",tier:2,category:"Causes",
+   def:{supported:"The argument that individual states have the right to govern themselves without interference from the federal government — used by the South to defend slavery",regular:"Political doctrine asserting that states retain sovereign powers not explicitly granted to the federal government; used by Southerners to defend slavery and resist federal authority",challenge:"State sovereignty doctrine used to defend slavery"},
+   hint:"The South used states' rights to justify secession — but the real issue was protecting slavery",
+   example:"Southern leaders argued the federal government had no right to restrict slavery in new states. They framed it as a constitutional states' rights argument, but the specific right they were defending was slavery."},
+  {term:"Confederate States of America",tier:2,category:"Civil War",
+   def:{supported:"The new country formed by eleven Southern states that seceded from the United States in 1861 — with Jefferson Davis as president",regular:"Government formed in 1861 by eleven seceding Southern states, with Jefferson Davis as president and Montgomery (later Richmond) as its capital",challenge:"Eleven-state Southern secession government"},
+   hint:"Its constitution explicitly protected slavery — unlike the U.S. Constitution, which avoided the word",
+   example:"The Confederacy was founded specifically to protect slavery. Confederate Vice President Alexander Stephens called slavery the 'cornerstone' of the new government."},
+  {term:"Battle of Gettysburg",tier:2,category:"Civil War",
+   def:{supported:"The deadliest battle of the Civil War (July 1–3, 1863 in Pennsylvania) — the Union victory ended the South's last major invasion of the North",regular:"Three-day 1863 battle in Pennsylvania that ended the Confederate Army's last major northern invasion; the Union victory, with over 50,000 casualties, is considered the war's turning point",challenge:"1863 war's turning point — Union stops Confederate advance"},
+   hint:"Lincoln's Gettysburg Address was delivered at the dedication of the cemetery there in November 1863",
+   example:"Lee's Army of Northern Virginia was turned back at Gettysburg with devastating losses. The South could never recover its offensive strength — after Gettysburg, the Confederacy was only fighting to survive."},
+  {term:"Radical Republicans",tier:2,category:"Reconstruction",
+   def:{supported:"The congressional Republicans who wanted a harsh Reconstruction that would fully transform the South and guarantee the rights of formerly enslaved people",regular:"Republican faction in Congress that pushed for more stringent Reconstruction measures, African American citizenship and voting rights, and land redistribution in the former Confederacy",challenge:"Congressional Republicans demanding strict Reconstruction"},
+   hint:"Thaddeus Stevens in the House and Charles Sumner in the Senate were their leaders",
+   example:"Radical Republicans believed the South needed to be remade from the ground up — not just readmitted. They passed the Reconstruction Acts over President Johnson's veto, placing the South under military rule."},
+
+  // ─── TIER 3 — Deepening (30) ─────────────────────────────
+  {term:"Jim Crow laws",tier:3,category:"Post-Reconstruction",
+   def:{supported:"Laws passed by Southern states after Reconstruction to legally separate Black and white Americans in nearly every area of public life",regular:"State and local laws enacted primarily in the South from the 1870s through the 1960s that legally mandated racial segregation in public facilities, transportation, schools, and social life",challenge:"Post-Reconstruction racial segregation laws"},
+   hint:"The name 'Jim Crow' came from a racist minstrel character — it became a term for the whole segregation system",
+   example:"Jim Crow laws enforced separation in schools, restaurants, trains, hospitals, and water fountains. They were backed by violence and created a second-class citizenship for Black Southerners that lasted nearly 100 years."},
+  {term:"sharecropping",tier:3,category:"Post-Reconstruction",
+   def:{supported:"A system where formerly enslaved people farmed land owned by whites and gave a portion of the crop as rent — it kept Black Southerners trapped in poverty and debt",regular:"Agricultural labor system in which tenant farmers (mostly formerly enslaved African Americans) worked land owned by others in exchange for a share of the harvest, typically resulting in perpetual debt",challenge:"Post-war tenant farming system trapping Black farmers in debt"},
+   hint:"Debt peonage — sharecroppers could never earn enough to pay off what they owed the landowner",
+   example:"Sharecropping replaced slavery in many ways. Without land of their own, formerly enslaved people worked white-owned land and gave up half their crop — and the landowner controlled prices, so debt just kept growing."},
+  {term:"Freedmen",tier:3,category:"Reconstruction",
+   def:{supported:"The term used for formerly enslaved African Americans after the Civil War ended",regular:"Term referring to formerly enslaved African Americans who gained freedom following the Civil War and Emancipation Proclamation",challenge:"Formerly enslaved people after emancipation"},
+   hint:"The Freedmen's Bureau was named to serve this population",
+   example:"Freedmen faced the challenge of building new lives without land, money, or legal experience. Some reunited families separated by slavery. Others sought education, established churches, and ran for office."},
+  {term:"Dred Scott decision",tier:3,category:"Causes",
+   def:{supported:"An 1857 Supreme Court ruling that said enslaved people were property, not citizens, and had no right to sue — and that Congress could not ban slavery in any territory",regular:"1857 Supreme Court ruling that African Americans were not citizens and had no standing to sue, and that Congress lacked authority to ban slavery in the territories — inflaming sectional tensions",challenge:"1857 ruling: slaves are property, not citizens"},
+   hint:"Chief Justice Roger Taney wrote the majority opinion — Lincoln attacked it in his debates with Douglas",
+   example:"The Dred Scott decision outraged abolitionists and many Northerners. It said Congress had never had the right to ban slavery — invalidating the Missouri Compromise and pushing the country toward war."},
+  {term:"Compromise of 1877",tier:3,category:"Post-Reconstruction",
+   def:{supported:"The deal that ended the disputed 1876 presidential election — Rutherford B. Hayes became president and in exchange federal troops withdrew from the South, ending Reconstruction",regular:"Informal political agreement resolving the disputed 1876 presidential election by awarding the presidency to Hayes in exchange for withdrawing federal troops from the South, effectively ending Reconstruction",challenge:"Deal ending Reconstruction and the 1876 election dispute"},
+   hint:"After federal troops left, Southern states quickly reversed Black political gains through terror and new laws",
+   example:"The Compromise of 1877 was a death sentence for Reconstruction. Federal troops left, and without protection, Black voters were suppressed through violence. The promise of equality was abandoned for a generation."},
+  {term:"poll tax",tier:3,category:"Post-Reconstruction",
+   def:{supported:"A fee that had to be paid in order to vote — designed to prevent poor Black Southerners from voting even after the 15th Amendment",regular:"Fee required to vote, used throughout the South after Reconstruction to disenfranchise Black voters who lacked the cash to pay, despite the 15th Amendment's protections",challenge:"Voting fee used to disenfranchise Black voters"},
+   hint:"Along with literacy tests and grandfather clauses, it was one of three main disenfranchisement tools",
+   example:"Most formerly enslaved people had no cash savings. A $1 or $2 poll tax — worth much more then — effectively blocked them from voting. It was legal precisely because it didn't mention race."},
+  {term:"literacy test",tier:3,category:"Post-Reconstruction",
+   def:{supported:"A reading test required to vote — used in Southern states to prevent Black citizens from voting, since many had been illegally denied education under slavery",regular:"Requirement that voters demonstrate literacy, used selectively in the South to deny voting rights to Black Americans while white voters were often exempt through grandfather clauses",challenge:"Selective reading test to block Black voters"},
+   hint:"White voters could avoid it via the grandfather clause — only Black voters faced full enforcement",
+   example:"Literacy tests asked impossible questions — like reciting the entire state constitution. White registrars applied them only to Black applicants, who failed no matter how well they answered."},
+  {term:"Reconstruction Acts",tier:3,category:"Reconstruction",
+   def:{supported:"Laws passed by Congress in 1867 that divided the South into five military districts and required states to ratify the 14th Amendment before rejoining the Union",regular:"1867 congressional legislation that placed the former Confederate states under military rule, divided them into five districts, and required ratification of the 14th Amendment as a condition for readmission to the Union",challenge:"1867 military Reconstruction laws over Johnson's veto"},
+   hint:"Congress passed them over President Andrew Johnson's veto — showing Congress, not the president, controlled Reconstruction",
+   example:"Under the Reconstruction Acts, federal troops enforced Black voting rights across the South. Hundreds of Black men were elected to office. But the gains lasted only as long as troops remained."},
+  {term:"impeachment of Andrew Johnson",tier:3,category:"Reconstruction",
+   def:{supported:"The 1868 trial of President Andrew Johnson by Congress — he was impeached (charged) by the House for violating a law about firing officials, but the Senate acquitted him by one vote",regular:"1868 House impeachment of President Andrew Johnson for violating the Tenure of Office Act; Johnson was acquitted by the Senate by one vote, but the conflict revealed Congress's dominance over Reconstruction",challenge:"1868 Johnson impeachment — acquitted by one Senate vote"},
+   hint:"Johnson was acquitted 35–19 — one vote short of the two-thirds needed to convict",
+   example:"Radical Republicans hated Johnson's lenient treatment of Southern states. They impeached him hoping to remove him. He survived — but the episode showed how bitterly Congress and the president disagreed over Reconstruction."},
+  {term:"Black Codes",tier:3,category:"Reconstruction",
+   def:{supported:"Laws passed by Southern states right after the Civil War to restrict the rights of formerly enslaved people — limiting their freedom and keeping them working on plantations",regular:"Restrictive laws enacted by former Confederate states in 1865–1866 to severely limit the civil rights and economic freedom of formerly enslaved African Americans, essentially recreating conditions close to slavery",challenge:"Post-war laws recreating near-slavery conditions"},
+   hint:"They were the South's response to emancipation — and what provoked Radical Republican Reconstruction",
+   example:"Black Codes prohibited Black Southerners from owning land, leaving employers without permission, or serving on juries. When Northerners saw the codes, outrage swept Congress — leading to Radical Reconstruction."},
+
+  // ─── TIER 4 — Full set (35) ──────────────────────────────
+  {term:"Harriet Tubman",tier:4,category:"Leaders",
+   def:{supported:"An escaped enslaved woman who risked her life to lead dozens of others to freedom via the Underground Railroad — and later served as a Union spy and nurse",regular:"Formerly enslaved abolitionist who escaped in 1849 and led approximately 70 people to freedom via the Underground Railroad; later served as a Union spy and intelligence operative",challenge:"Underground Railroad conductor and Union spy"},
+   hint:"She said she 'never lost a passenger' — and carried a gun, warning that anyone who turned back would be shot",
+   example:"Harriet Tubman made 13 dangerous return trips into slave territory. During the war she led a Union raid that freed 700 enslaved people in South Carolina — the first military raid led by a woman in U.S. history."},
+  {term:"Frederick Douglass",tier:4,category:"Leaders",
+   def:{supported:"An formerly enslaved man who escaped and became the most powerful abolitionist speaker and writer in America — his autobiography was proof that enslaved people were fully human",regular:"Self-emancipated abolitionist, author, and orator whose 1845 autobiography and anti-slavery speeches made him the era's most influential African American voice for freedom and equality",challenge:"Foremost abolitionist orator and autobiographer"},
+   hint:"He met with Lincoln multiple times and argued for Black soldiers in the Union Army",
+   example:"Douglass gave speeches to thousands across the North and in Britain. His vivid accounts of slavery's brutality challenged the argument that enslaved people were content. His very existence refuted racist arguments."},
+  {term:"Gettysburg Address",tier:4,category:"Civil War",
+   def:{supported:"President Lincoln's famous short speech at the Gettysburg battlefield in 1863 — he defined the war as a fight to prove that democracy and equality could survive",regular:"Lincoln's November 1863 dedication speech at the Gettysburg battlefield, reframing the Civil War as a test of whether a democratic nation 'conceived in liberty and dedicated to the proposition that all men are created equal' could endure",challenge:"Lincoln's 1863 equality and democracy speech"},
+   hint:"Only 272 words — yet considered the greatest speech in American history",
+   example:"Lincoln used 272 words to redefine the war. It wasn't just about saving the Union — it was about proving democracy itself could survive. He tied the war directly to the Declaration's promise that 'all men are created equal.'"},
+  {term:"Andrew Johnson",tier:4,category:"Leaders",
+   def:{supported:"Lincoln's vice president who became president after Lincoln's assassination — he tried to allow Southern states back easily and vetoed Reconstruction laws, clashing repeatedly with Congress",regular:"17th U.S. President who succeeded Lincoln, pursued lenient Reconstruction policies, vetoed Radical Republican legislation, and was impeached by the House in 1868 though acquitted by the Senate",challenge:"17th president — impeached for obstructing Reconstruction"},
+   hint:"He was a Tennessean who sympathized with Southern whites and believed Reconstruction should be the president's job, not Congress's",
+   example:"Johnson pardoned thousands of Confederate leaders and allowed Southern states to pass Black Codes. When Congress passed Reconstruction Acts, he vetoed them — Congress overrode every veto. The conflict ended in his impeachment."},
+  {term:"carpetbaggers",tier:4,category:"Reconstruction",
+   def:{supported:"A derogatory term for Northerners who moved to the South after the Civil War — some came to help, some to profit from political opportunity",regular:"Derogatory term used by white Southerners for Northerners who relocated to the South after the war, often to participate in Reconstruction politics or economic opportunities; named for the cheap luggage they supposedly carried",challenge:"Derogatory term for Northern Reconstruction migrants"},
+   hint:"Many were teachers, Bureau agents, and genuine reformers — but the term was used to delegitimize all of them",
+   example:"Southerners branded all Northern newcomers as carpetbaggers — opportunists out to steal. Some were. But many were educators, former soldiers, and reformers genuinely working for racial equality."},
+  {term:"scalawags",tier:4,category:"Reconstruction",
+   def:{supported:"A derogatory term for white Southerners who supported Reconstruction and the Republican Party — they were seen as traitors by other white Southerners",regular:"Derogatory term used by white Southerners for native Southerners who supported Reconstruction, often poorer whites who saw opportunity in the new order or opposed the planter class",challenge:"Derogatory term for pro-Reconstruction white Southerners"},
+   hint:"Many were poor whites who had not owned enslaved people and resented planter-class control",
+   example:"Scalawags were seen as race traitors. But many were former Unionist farmers who had opposed secession. They allied with Black voters and carpetbaggers to build Republican governments in the South."},
+  {term:"Ku Klux Klan",tier:4,category:"Post-Reconstruction",
+   def:{supported:"A violent terrorist organization founded in 1865 by Confederate veterans to intimidate, threaten, and kill Black Southerners and their white allies to destroy Reconstruction",regular:"White supremacist terrorist organization founded in 1865 that used murder, arson, and intimidation to suppress Black political participation and undermine Reconstruction in the South",challenge:"1865 terrorist group suppressing Black political rights"},
+   hint:"Congress passed the Enforcement Acts (1870–71) to crush the KKK — temporarily succeeding",
+   example:"The KKK murdered Black voters, officeholders, and their white allies. They burned schools and churches. Congress passed laws against them, and Grant sent federal troops — but terror kept much of the South under white supremacist control."},
+  {term:"Plessy v. Ferguson",tier:4,category:"Post-Reconstruction",
+   def:{supported:"An 1896 Supreme Court ruling that said racial segregation was legal as long as facilities were 'separate but equal' — it provided the legal basis for Jim Crow for nearly 60 years",regular:"1896 Supreme Court decision upholding racial segregation under the 'separate but equal' doctrine, providing constitutional cover for Jim Crow laws until overturned by Brown v. Board of Education in 1954",challenge:"1896 'separate but equal' ruling legalizing segregation"},
+   hint:"The Regents often asks about this as a violation of the 14th Amendment's equal protection clause — which it was",
+   example:"Homer Plessy sat in a white train car in Louisiana to challenge segregation. The Supreme Court ruled 7-1 against him. The 'separate but equal' doctrine became the law of the land for 58 more years."},
+  {term:"Ulysses S. Grant",tier:4,category:"Leaders",
+   def:{supported:"The Union general who accepted Lee's surrender and later became the 18th president — he used federal power to fight the KKK and protect Black voting rights in the South",regular:"Union commanding general who accepted Lee's surrender at Appomattox, served as 18th U.S. President (1869–1877), and used federal enforcement powers to suppress KKK terrorism during Reconstruction",challenge:"Union general and 18th president; enforced Reconstruction"},
+   hint:"His presidency had serious corruption scandals, but he was genuinely committed to Black civil rights",
+   example:"Grant sent the Army against the KKK, prosecuting hundreds of members. Under his presidency, Reconstruction had real enforcement. But growing corruption and Northern fatigue eroded political will before he left office."},
+  {term:"Robert E. Lee",tier:4,category:"Leaders",
+   def:{supported:"Commander of the Confederate Army of Northern Virginia — he surrendered to Ulysses Grant at Appomattox Court House in April 1865, effectively ending the Civil War",regular:"Commanding general of the Confederate Army of Northern Virginia, renowned for military skill despite inferior resources; surrendered at Appomattox Court House on April 9, 1865",challenge:"Confederate commander who surrendered at Appomattox"},
+   hint:"He opposed secession personally but chose Virginia over the Union — 'I cannot draw my sword against my state'",
+   example:"Lee's surrender at Appomattox on April 9, 1865 effectively ended the Civil War. He urged Southerners to accept defeat and rebuild — a stance that helped prevent guerrilla warfare."},
+];
+
+const LEVEL_SIZES={1:10,2:20,3:30,4:35};
+const BLITZ_Q={1:10,2:12,3:15,4:15};
+const PRACTICE_Q=10;
+const PASS={review:80,practice:75,blitz:70};
+const TIME={supported:20,regular:15,challenge:10};
+const CIRC=2*Math.PI*23;
+const LS_KEY='edsim_civilwar_v1';
+
+let studentName='',period='',level=0,difficulty='regular',timerOn=true;
+let currentMode=null;
+let questions=[],qIdx=0,score=0,streak=0,bestStreak=0,wrongCount=0,timeoutCount=0,qLog=[];
+let timerInt=null,timeLeft=15,answered=false;
+let fcDeck=[],fcIdx=0,fcKnow=0,fcAlmost=0,fcNope=0,fcFlipped=false,fcDeckOriginalSize=0;
+let lastResult=null;
+
+function ls(){try{return JSON.parse(localStorage.getItem(LS_KEY)||'{}')}catch{return{}}}
+function saveLS(d){try{localStorage.setItem(LS_KEY,JSON.stringify(d))}catch{}}
+function getProg(){const d=ls();return{reviewPct:d.reviewPct||0,practicePct:d.practicePct||0,blitzBest:d.blitzBest||0,stillLearning:d.stillLearning||[]}}
+function setProg(k,v){const d=ls();d[k]=v;saveLS(d)}
+function getStillLearning(){return ls().stillLearning||[]}
+function setStillLearning(a){const d=ls();d.stillLearning=a;saveLS(d)}
+
+window.addEventListener('DOMContentLoaded',()=>{
+  const d=ls();
+  if(d.studentName&&d.level){
+    studentName=d.studentName;period=d.period||'';level=d.level;difficulty=d.difficulty||'regular';
+    document.getElementById('studentName').value=studentName;
+    document.getElementById('periodSel').value=period;
+    setLevel(level,true);setDiff(difficulty,true);
+    validateSetup();showSetupProgress();
+  } else {
+    setDiff('regular',true);
+  }
+});
+
+function setLevel(n,silent){level=n;document.querySelectorAll('.level-btn').forEach(b=>b.classList.remove('active'));document.getElementById('lbtn-'+n).classList.add('active');if(!silent)validateSetup();}
+function setDiff(d,silent){difficulty=d;document.querySelectorAll('.diff-card').forEach(b=>b.classList.remove('active'));document.getElementById('dbtn-'+d).classList.add('active');if(!silent)validateSetup();}
+function validateSetup(){
+  studentName=document.getElementById('studentName').value.trim();
+  period=document.getElementById('periodSel').value;
+  const btn=document.getElementById('startBtn');
+  const ok=studentName&&period&&level&&difficulty;
+  btn.disabled=!ok;
+  btn.textContent=ok?'Start studying →':'Enter name, period, level & difficulty to begin';
+  if(ok)showSetupProgress();
+}
+function showSetupProgress(){
+  const p=getProg();const sp=document.getElementById('setupProgress');sp.style.display='';
+  document.getElementById('spReview').style.width=p.reviewPct+'%';document.getElementById('spReviewVal').textContent=p.reviewPct+'%';
+  document.getElementById('spPractice').style.width=p.practicePct+'%';document.getElementById('spPracticeVal').textContent=p.practicePct+'%';
+  document.getElementById('spBlitz').style.width=p.blitzBest+'%';document.getElementById('spBlitzVal').textContent=p.blitzBest+'%';
+}
+function goToModes(){
+  const d=ls();d.studentName=studentName;d.period=period;d.level=level;d.difficulty=difficulty;saveLS(d);
+  document.getElementById('hdrInfo').textContent=studentName+' · Period '+period;
+  document.getElementById('msName').textContent='Level '+level+' · '+(difficulty.charAt(0).toUpperCase()+difficulty.slice(1));
+  document.getElementById('msMeta').textContent=LEVEL_SIZES[level]+' terms · '+studentName+' · Period '+period;
+  document.getElementById('blitzQCount').textContent=BLITZ_Q[level]||10;
+  updateModeLock();showScreen('modeScreen');renderModeProgress();
+}
+function backToSetup(){showScreen('setupScreen')}
+function updateModeLock(){
+  document.getElementById('mc-practice').classList.remove('locked');
+  document.getElementById('mc-blitz').classList.remove('locked');
+  document.getElementById('mc-practice').querySelector('.locked-badge').style.display='none';
+  document.getElementById('mc-blitz').querySelector('.locked-badge').style.display='none';
+  document.getElementById('timerToggleBtn').style.display='none';
+}
+function tryMode(m){startMode(m);}
+function renderModeProgress(){
+  const p=getProg();
+  ['Review','Practice','Blitz'].forEach(k=>{
+    const val=k==='Blitz'?p.blitzBest:k==='Review'?p.reviewPct:p.practicePct;
+    document.getElementById('mp'+k).style.width=val+'%';
+    document.getElementById('mp'+k+'Val').textContent=val+'%';
+  });
+}
+function startMode(m){currentMode=m;if(m==='review')initReview();else initGame(m);}
+
+function getPoolByLevel(){const size=LEVEL_SIZES[level];return VOCAB.slice(0,size);}
+
+function initReview(){
+  const pool=getPoolByLevel();
+  const sl=getStillLearning();
+  const priority=pool.filter(v=>sl.includes(v.term));
+  const rest=shuffle(pool.filter(v=>!sl.includes(v.term)));
+  fcDeck=[...priority,...rest];
+  fcDeckOriginalSize=pool.length;
+  fcIdx=0;fcKnow=0;fcAlmost=0;fcNope=0;fcFlipped=false;
+  showScreen('reviewActivity');renderFC();
+}
+function renderFC(){
+  if(fcIdx>=fcDeck.length){endReview();return;}
+  const card=fcDeck[fcIdx];fcFlipped=false;
+  document.getElementById('fcCard').classList.remove('flipped');
+  document.getElementById('fcTerm').textContent=card.term;
+  document.getElementById('fcDef').textContent=card.def[difficulty];
+  document.getElementById('fcHintShown').style.display='none';
+  document.getElementById('fcHintShown').textContent='';
+  document.getElementById('fcHintBtn').style.display='';
+  document.getElementById('fcRateWrap').style.display='none';
+  document.getElementById('fcKnow').textContent=fcKnow;
+  document.getElementById('fcAlmost').textContent=fcAlmost;
+  document.getElementById('fcNope').textContent=fcNope;
+  document.getElementById('fcLeft').textContent=fcDeck.length-fcIdx;
+  const pct=Math.round((fcIdx/fcDeck.length)*100);
+  document.getElementById('fcProg').style.width=pct+'%';
+  document.getElementById('fcLbl').textContent='Card '+(fcIdx+1)+' of '+fcDeck.length;
+}
+function flipCard(){fcFlipped=!fcFlipped;document.getElementById('fcCard').classList.toggle('flipped',fcFlipped);document.getElementById('fcRateWrap').style.display=fcFlipped?'':'none';}
+function showFCHint(e){e.stopPropagation();const card=fcDeck[fcIdx];document.getElementById('fcHintShown').textContent='💡 '+card.hint;document.getElementById('fcHintShown').style.display='';document.getElementById('fcHintBtn').style.display='none';}
+function rateCard(rating){
+  const card=fcDeck[fcIdx];const sl=getStillLearning();
+  if(rating==='know'){fcKnow++;const i=sl.indexOf(card.term);if(i>-1)sl.splice(i,1);}
+  else{if(rating==='almost')fcAlmost++;else fcNope++;fcDeck.push(card);if(!sl.includes(card.term))sl.push(card.term);}
+  setStillLearning(sl);fcIdx++;renderFC();
+}
+function endReview(){
+  const total=fcDeckOriginalSize;const pct=Math.round((fcKnow/total)*100);setProg('reviewPct',pct);
+  const passed=pct>=PASS.review;
+  const shell=document.querySelector('.fc-shell');
+  shell.innerHTML=`<div class="fc-done-msg">
+    <div class="fc-done-title">${passed?'✓ Deck Complete':'Keep Reviewing'}</div>
+    <div class="fc-done-sub">${passed?'You know '+pct+'% of the deck. You\'re ready to move to Practice.':'You know '+pct+'% — aim for '+PASS.review+'% before Practice. Missed cards are saved.'}</div>
+  </div>
+  <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px">
+    <button class="e-btn e-btn-primary" onclick="startMode('review')">Review again</button>
+    ${passed?'<button class="e-btn e-btn-blue" onclick="startMode(\'practice\')">Practice →</button>':''}
+    <button class="e-btn e-btn-ghost" onclick="goToModes()">Home</button>
+  </div>`;
+}
+
+let totalQ=10;
+const sessionCorrect=new Set();
+function initGame(mode){
+  totalQ=mode==='blitz'?(BLITZ_Q[level]||10):PRACTICE_Q;
+  const pool=getPoolByLevel();const sl=getStillLearning();
+  let priority=[],middle=[],back=[];
+  pool.forEach(v=>{if(sl.includes(v.term)){priority.push(v);priority.push(v);}else if(sessionCorrect.has(v.term))back.push(v);else middle.push(v);});
+  const picked=[...shuffle(priority),...shuffle(middle),...shuffle(back)];
+  const seen=new Set(),unique=[];
+  for(const v of picked){if(!seen.has(v.term)){seen.add(v.term);unique.push(v);}}
+  const chosen=unique.slice(0,totalQ);
+  questions=chosen.map((item,i)=>{
+    const type=(i%2===0)?'def2term':'term2def';
+    const others=pool.filter(v=>v.term!==item.term);
+    const distractors=shuffle(others).slice(0,3);
+    return{item,type,choices:shuffle([item,...distractors])};
+  });
+  qIdx=0;score=0;streak=0;bestStreak=0;wrongCount=0;timeoutCount=0;qLog=[];
+  document.getElementById('gProg').className='prog-fill '+(mode==='blitz'?'fill-red':'fill-amber');
+  document.getElementById('timerToggleBtn').style.display=mode==='blitz'?'':'none';
+  document.getElementById('timerToggleBtn').textContent='⏱ Timer: '+(timerOn?'ON':'OFF');
+  document.getElementById('timerToggleBtn').className='hdr-btn'+(timerOn?' on':'');
+  showScreen('gameActivity');
+  document.getElementById('remedEl').classList.remove('show');
+  renderQuestion();
+}
+function renderQuestion(){
+  if(qIdx>=questions.length){endGame();return;}
+  answered=false;
+  const q=questions[qIdx];
+  const pct=(qIdx/totalQ)*100;
+  document.getElementById('gProg').style.width=pct+'%';
+  document.getElementById('gProgLbl').textContent=(qIdx+1)+' / '+totalQ;
+  document.getElementById('gScore').textContent=score;
+  document.getElementById('gStreak').textContent=streak;
+  document.getElementById('gBadge').textContent=q.type==='def2term'?'Choose the correct term':'Choose the correct definition';
+  const card=document.getElementById('gCard');
+  card.className='q-card '+q.type;card.style.animation='none';card.offsetHeight;card.style.animation='';
+  document.getElementById('gLbl').textContent=q.type==='def2term'?'Definition':'Term';
+  const qt=document.getElementById('gText');
+  qt.className='q-text'+(q.type==='term2def'?' is-term':'');
+  qt.textContent=q.type==='def2term'?q.item.def[difficulty]:q.item.term;
+  const hb=document.getElementById('hintBtn');
+  document.getElementById('hintBox').style.display='none';
+  document.getElementById('hintTxt').textContent=q.item.hint;
+  hb.style.display=(difficulty==='supported'||(currentMode==='practice'&&difficulty!=='challenge'))?'block':'none';
+  hb.textContent='Show hint';
+  document.getElementById('remedEl').classList.remove('show');
+  const grid=document.getElementById('ansGrid');grid.innerHTML='';
+  const keys=['1','2','3','4'];
+  q.choices.forEach((choice,i)=>{
+    const btn=document.createElement('button');btn.className='ans-btn';
+    const span=document.createElement('span');span.textContent=q.type==='def2term'?choice.term:choice.def[difficulty];btn.appendChild(span);
+    const k=document.createElement('span');k.className='kbd';k.textContent=keys[i];btn.appendChild(k);
+    btn.onclick=()=>handleAnswer(i);
+    btn.style.animation='none';grid.appendChild(btn);btn.offsetHeight;btn.style.animation='';
+  });
+  startTimerUI();
+}
+function showGameHint(){document.getElementById('hintBox').style.display='flex';document.getElementById('hintBtn').style.display='none';}
+function startTimerUI(){
+  clearInterval(timerInt);
+  const wrap=document.getElementById('timerWrap');const arc=document.getElementById('tArc');const num=document.getElementById('tNum');
+  const useTimer=timerOn&&currentMode==='blitz';
+  if(!useTimer){wrap.classList.add('timer-off');arc.style.strokeDashoffset=0;num.textContent='—';return;}
+  wrap.classList.remove('timer-off');
+  timeLeft=TIME[difficulty]||15;updateTimerUI(timeLeft);
+  timerInt=setInterval(()=>{timeLeft--;updateTimerUI(timeLeft);if(timeLeft<=0){clearInterval(timerInt);handleTimeout();}},1000);
+}
+function updateTimerUI(t){
+  const arc=document.getElementById('tArc');const num=document.getElementById('tNum');const max=TIME[difficulty]||15;
+  arc.style.strokeDashoffset=CIRC*(1-(t/max));num.textContent=t;
+  arc.classList.remove('warn','danger');num.classList.remove('danger');
+  if(t<=2){arc.classList.add('danger');num.classList.add('danger');}else if(t<=Math.ceil(max*0.4)){arc.classList.add('warn');}
+}
+function toggleTimer(){timerOn=!timerOn;const btn=document.getElementById('timerToggleBtn');btn.textContent='⏱ Timer: '+(timerOn?'ON':'OFF');btn.classList.toggle('on',timerOn);}
+function handleAnswer(idx){
+  if(answered)return;answered=true;clearInterval(timerInt);
+  const q=questions[qIdx];const chosen=q.choices[idx];const isCorrect=chosen.term===q.item.term;
+  document.querySelectorAll('.ans-btn').forEach(b=>b.disabled=true);
+  if(isCorrect){
+    document.querySelectorAll('.ans-btn')[idx].classList.add('correct');
+    const bonus=(timerOn&&currentMode==='blitz')?Math.max(1,timeLeft):1;
+    score+=bonus;streak++;bestStreak=Math.max(bestStreak,streak);
+    qLog.push({term:q.item.term,result:'correct'});doFlash('correct');animFire();
+  } else {
+    document.querySelectorAll('.ans-btn')[idx].classList.add('wrong');
+    streak=0;wrongCount++;
+    qLog.push({term:q.item.term,result:'wrong',chosen:chosen.term});doFlash('wrong');revealCorrect(q);showRemed(q.item);
+  }
+  document.getElementById('gScore').textContent=score;document.getElementById('gStreak').textContent=streak;
+  setTimeout(()=>{qIdx++;renderQuestion();},isCorrect?700:(currentMode==='practice'?1900:1100));
+}
+function handleTimeout(){
+  if(answered)return;answered=true;streak=0;timeoutCount++;
+  const q=questions[qIdx];qLog.push({term:q.item.term,result:'timeout'});
+  doFlash('wrong');revealCorrect(q);showRemed(q.item);
+  setTimeout(()=>{qIdx++;renderQuestion();},1400);
+}
+function revealCorrect(q){document.querySelectorAll('.ans-btn').forEach((btn,i)=>{if(q.choices[i].term===q.item.term)btn.classList.add('reveal');});}
+function showRemed(item){
+  if(currentMode!=='practice')return;
+  const defKey=difficulty==='challenge'?'regular':difficulty;
+  document.getElementById('remedTxt').textContent=item.def[defKey];
+  document.getElementById('remedEx').textContent='Example: '+item.example;
+  document.getElementById('remedEl').classList.add('show');
+}
+function doFlash(type){const el=document.getElementById('ff');el.className='ff '+type;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),140);}
+function animFire(){
+  const f=document.getElementById('fireMoji');f.classList.remove('hot');void f.offsetWidth;f.classList.add('hot');
+  // Cannon recoil
+  const cannon=document.getElementById('cannonAmbient');
+  const ring=document.getElementById('blastRing');
+  if(cannon){document.body.classList.remove('cannon-blast-active');void cannon.offsetWidth;document.body.classList.add('cannon-blast-active');setTimeout(()=>document.body.classList.remove('cannon-blast-active'),500);}
+  if(ring){ring.classList.remove('fire');void ring.offsetWidth;ring.classList.add('fire');setTimeout(()=>ring.classList.remove('fire'),520);}
+}
+
+function endGame(){
+  clearInterval(timerInt);
+  const correct=totalQ-wrongCount-timeoutCount;
+  const pct=Math.round((correct/totalQ)*100);
+  const passed=pct>=PASS[currentMode];
+  if(currentMode==='practice')setProg('practicePct',pct);
+  if(currentMode==='blitz'){const d=ls();if(pct>(d.blitzBest||0))setProg('blitzBest',pct);}
+  const sl=getStillLearning();
+  qLog.forEach(e=>{
+    if(e.result==='correct'){const i=sl.indexOf(e.term);if(i>-1)sl.splice(i,1);sessionCorrect.add(e.term);}
+    else{if(!sl.includes(e.term))sl.push(e.term);sessionCorrect.delete(e.term);}
+  });
+  setStillLearning(sl);
+  let title,grade;
+  if(pct===100){title='Flawless';grade='Perfect — every term confirmed';}
+  else if(pct>=87){title='Sharp';grade='Strong — minor gaps remain';}
+  else if(pct>=70){title='Developing';grade='Review flagged terms below';}
+  else{title='Needs Work';grade='Return to Review mode';}
+  document.getElementById('endEye').textContent=currentMode==='blitz'?'Blitz Results':'Practice Results';
+  document.getElementById('endTitle').textContent=title;
+  document.getElementById('endGrade').textContent=grade;
+  const pctEl=document.getElementById('endPct');
+  pctEl.textContent=pct+'%';pctEl.className='n '+(pct===100?'perfect':pct>=70?'great':'bad');
+  document.getElementById('endCorrect').textContent=correct;
+  document.getElementById('endWrong').textContent=wrongCount;
+  document.getElementById('endTO').textContent=timeoutCount;
+  const fb=document.getElementById('endFail');const ft=document.getElementById('endFailTxt');
+  if(!passed){fb.style.display='';if(currentMode==='blitz')ft.textContent='You scored '+pct+'% — Challenge Blitz requires '+PASS.blitz+'%. Go back to Practice to review your missed terms, then try again.';else ft.textContent='You scored '+pct+'% — Practice requires '+PASS.practice+'% before Blitz. Your missed terms will surface first next time.';}
+  else{fb.style.display='none';}
+  const defKey=difficulty==='challenge'?'regular':difficulty;
+  let logHtml='<div class="log-hdr">Question log · tap a missed term for feedback</div>';
+  qLog.forEach((e,i)=>{
+    const cls=e.result==='correct'?'dc':e.result==='timeout'?'dt':'dw';
+    const status=e.result==='correct'?'✓ Correct':e.result==='timeout'?'⏱ Timed out':'✗ Chose: '+e.chosen;
+    const isClickable=e.result!=='correct';
+    const rowClass='log-row'+(isClickable?' clickable':'');
+    const chevron=isClickable?'<span class="log-chevron">▾</span>':'';
+    logHtml+=`<div class="${rowClass}" id="logrow-${i}" ${isClickable?`onclick="toggleLogRow(${i})"`:''}>
+      <div class="log-dot ${cls}"></div>
+      <div class="log-term">${e.term}</div>
+      <div class="log-status">${status}</div>
+      ${chevron}
+    </div>`;
+    if(isClickable){
+      const correctV=VOCAB.find(v=>v.term===e.term);
+      const chosenV=e.chosen?VOCAB.find(v=>v.term===e.chosen):null;
+      let expandHtml='';
+      if(e.result==='wrong'&&chosenV){
+        expandHtml+=`<div class="log-compare">
+          <div class="log-def-block wrong-block"><div class="log-def-label">You chose</div><div class="log-def-term">${chosenV.term}</div><div class="log-def-text">${chosenV.def[defKey]}</div></div>
+          <div class="log-def-block correct-block"><div class="log-def-label">Correct answer</div><div class="log-def-term">${correctV.term}</div><div class="log-def-text">${correctV.def[defKey]}</div></div>
+        </div>`;
+      } else {
+        expandHtml+=`<div class="log-timeout-block"><div class="log-timeout-label">Correct answer</div><div class="log-def-term">${correctV.term}</div><div class="log-def-text">${correctV.def[defKey]}</div></div>`;
+      }
+      if(difficulty==='supported'&&correctV.hint){expandHtml+=`<div class="log-hint-line">💡 ${correctV.hint}</div>`;}
+      logHtml+=`<div class="log-expand" id="logexp-${i}">${expandHtml}</div>`;
+    }
+  });
+  document.getElementById('endLog').innerHTML=logHtml;
+  let btns=`<button class="e-btn e-btn-primary" onclick="startMode('${currentMode}')">Try again</button>`;
+  if(!passed&&currentMode==='blitz')btns+=`<button class="e-btn e-btn-blue" onclick="startMode('practice')">Go to Practice</button>`;
+  if(passed&&currentMode==='practice')btns+=`<button class="e-btn e-btn-blue" onclick="startMode('blitz')">Blitz →</button>`;
+  btns+=`<button class="e-btn e-btn-ghost" onclick="goToModes()">Home</button>`;
+  btns+=`<button class="e-btn e-btn-pdf" onclick="savePDF()">⬇ Save PDF</button>`;
+  document.getElementById('endBtns').innerHTML=btns;
+  lastResult={studentName,period,level,difficulty,mode:currentMode,pct,correct,wrongCount,timeoutCount,passed,qLog:[...qLog]};
+  showScreen('endScreen');
+}
+
+function toggleLogRow(i){
+  const row=document.getElementById('logrow-'+i);const panel=document.getElementById('logexp-'+i);
+  if(!row||!panel)return;const isOpen=panel.classList.contains('open');
+  panel.classList.toggle('open',!isOpen);row.classList.toggle('open',!isOpen);
+}
+
+function savePDF(){
+  if(!lastResult){return;}
+  const r=lastResult;const pool=getPoolByLevel();
+  const knownTerms=r.qLog.filter(e=>e.result==='correct').map(e=>e.term);
+  const missedTerms=r.qLog.filter(e=>e.result!=='correct').map(e=>e.term);
+  const notAsked=pool.filter(v=>!r.qLog.find(e=>e.term===v.term)).map(v=>v.term);
+  const defKey=r.difficulty==='challenge'?'regular':r.difficulty;
+  const dateStr=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+  const diffLabel=r.difficulty.charAt(0).toUpperCase()+r.difficulty.slice(1);
+  const modeLabel=r.mode==='blitz'?'Challenge Blitz':'Practice';
+  const passLabel=r.passed?'✓ PASSED':'✗ Did not pass';
+  const passThresh=r.mode==='blitz'?PASS.blitz:PASS.practice;
+  let missedHTML='';
+  missedTerms.forEach(term=>{const v=VOCAB.find(x=>x.term===term);if(!v)return;missedHTML+=`<div class="pd-review-item"><div class="pd-review-term">${v.term}</div><div class="pd-review-def">${v.def[defKey]}</div></div>`;});
+  const knownChips=[...knownTerms,...notAsked].map(t=>`<div class="pd-know-chip">${t}</div>`).join('');
+  const html=`
+    <div class="pd-header">
+      <div><div class="pd-logo">EdSim</div><div class="pd-unit">Civil War &amp; Reconstruction · Vocabulary · Level ${r.level} · ${diffLabel}</div></div>
+      <div class="pd-meta">${dateStr}<br>${modeLabel}<br>${passLabel} (${passThresh}% required)</div>
+    </div>
+    <div class="pd-student-box">
+      <div class="pd-field"><div class="pd-field-label">Student</div><div class="pd-field-val">${r.studentName}</div></div>
+      <div class="pd-field"><div class="pd-field-label">Period</div><div class="pd-field-val">${r.period}</div></div>
+      <div class="pd-field"><div class="pd-field-label">Score</div><div class="pd-field-val">${r.pct}%</div></div>
+    </div>
+    <div class="pd-section">
+      <div class="pd-section-title">Results Summary</div>
+      <div class="pd-summary-grid">
+        <div class="pd-stat"><div class="sn">${r.pct}%</div><div class="sl">Score</div></div>
+        <div class="pd-stat"><div class="sn">${r.correct}</div><div class="sl">Correct</div></div>
+        <div class="pd-stat"><div class="sn">${r.wrongCount}</div><div class="sl">Wrong</div></div>
+        <div class="pd-stat"><div class="sn">${r.timeoutCount}</div><div class="sl">Timed out</div></div>
+      </div>
+    </div>
+    ${missedTerms.length?`<div class="pd-section"><div class="pd-section-title needs">Terms to Review (${missedTerms.length})</div>${missedHTML}</div>`:''}
+    ${knownTerms.length?`<div class="pd-section"><div class="pd-section-title">Terms You Know</div><div class="pd-know-list">${knownChips}</div></div>`:''}
+    <div class="pd-footer">
+      <span>EdSim · edsim.io · Civil War &amp; Reconstruction Vocabulary</span>
+      <span>Level ${r.level} · ${diffLabel} · ${modeLabel}</span>
+    </div>`;
+  document.getElementById('printDoc').innerHTML=html;
+  setTimeout(()=>{window.print();},150);
+}
+
+function confirmReset(){document.getElementById('resetModal').classList.add('open')}
+function closeModal(){document.getElementById('resetModal').classList.remove('open')}
+function doReset(){
+  try{localStorage.removeItem(LS_KEY);}catch{}closeModal();
+  studentName='';period='';level=0;difficulty='regular';timerOn=true;currentMode=null;lastResult=null;
+  document.getElementById('studentName').value='';document.getElementById('periodSel').value='';
+  document.querySelectorAll('.level-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.diff-card').forEach(b=>b.classList.remove('active'));
+  document.getElementById('dbtn-regular').classList.add('active');
+  document.getElementById('setupProgress').style.display='none';
+  const btn=document.getElementById('startBtn');btn.disabled=true;btn.textContent='Enter name, period, level & difficulty to begin';
+  showScreen('setupScreen');
+}
+
+function showScreen(id){
+  const screens=['setupScreen','modeScreen','reviewActivity','gameActivity','endScreen'];
+  screens.forEach(s=>{const el=document.getElementById(s);if(!el)return;el.style.display='none';el.classList.remove('active');});
+  const target=document.getElementById(id);if(target){target.style.display='';target.classList.add('active');}
+}
+function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+document.addEventListener('keydown',e=>{
+  const map={'1':0,'2':1,'3':2,'4':3};
+  if(e.key in map&&document.getElementById('gameActivity').classList.contains('active')){
+    const btns=document.querySelectorAll('.ans-btn');
+    if(btns[map[e.key]]&&!btns[map[e.key]].disabled)handleAnswer(parseInt(map[e.key]));
+  }
+});
+</script>
+</body>
+</html>

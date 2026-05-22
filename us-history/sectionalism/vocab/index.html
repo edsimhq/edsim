@@ -1,0 +1,1461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Sectionalism Vocabulary · EdSim</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Source+Code+Pro:wght@400;500;600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d0a07;--surf:#161209;--surf2:#1e180f;--surf3:#261f14;
+  --border:#3a2e1e;--border-hi:#5a4830;
+  --text:#d8cdb8;--dim:#8a7a60;--faint:#2e2416;
+  --red:#8b2020;--red-hi:#c0392b;--red-glow:rgba(139,32,32,.32);
+  --green:#1a5c35;--green-hi:#229954;--green-glow:rgba(26,92,53,.22);
+  --amber:#b07d1a;--amber-hi:#d4a017;
+  --blue:#1a3a6a;--blue-hi:#2d5fb8;
+  --white:#f0e8d8;
+  --fd:'Oswald',sans-serif;--fm:'Source Code Pro',monospace;--fb:'Libre Baskerville',Georgia,serif;
+  --ease:cubic-bezier(.4,0,.2,1);--r:7px;--rs:4px;
+}
+html,body{min-height:100%}
+body{font-family:var(--fb);background:var(--bg);color:var(--text);display:flex;flex-direction:column}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity:.6}
+
+/* DIVIDE — North/South fault line */
+.radar{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+/* Vertical center crack */
+.rr{position:absolute;top:0;bottom:0;left:50%;width:1px;
+  background:linear-gradient(180deg,transparent 0%,var(--border) 20%,var(--border-hi) 50%,var(--border) 80%,transparent 100%);
+  transform:translateX(-50%);opacity:.35}
+/* Horizontal Mason-Dixon line */
+.rx{position:absolute;top:50%;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--amber) 15%,var(--amber) 85%,transparent);
+  transform:translateY(-50%);opacity:.18}
+/* NORTH label */
+.ry{position:absolute;top:18%;left:50%;transform:translateX(-50%);
+  font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.3em;color:var(--border-hi);
+  text-transform:uppercase;white-space:nowrap;opacity:.25}
+/* SOUTH label */
+.rs{position:absolute;top:64%;left:50%;transform:translateX(-50%);
+  font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.3em;color:var(--border-hi);
+  text-transform:uppercase;white-space:nowrap;opacity:.25}
+/* Pulse on the dividing line */
+@keyframes dividepulse{0%,100%{opacity:.18}50%{opacity:.32}}
+.rx{animation:dividepulse 4s ease-in-out infinite}
+/* Jagged fault lines emanating from center */
+.rr::before{content:'';position:absolute;top:35%;left:-20px;width:40px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--border-hi),transparent);
+  transform:rotate(-12deg);opacity:.5}
+.rr::after{content:'';position:absolute;top:60%;left:-24px;width:48px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--border-hi),transparent);
+  transform:rotate(8deg);opacity:.4}
+
+/* HEADER */
+.hdr{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  padding:0 22px;height:50px;border-bottom:1px solid var(--border);
+  background:rgba(10,12,15,.93);backdrop-filter:blur(10px);flex-shrink:0}
+.hdr-l{display:flex;align-items:center;gap:11px}
+.logo{font-family:var(--fd);font-size:16px;font-weight:600;color:var(--dim);letter-spacing:.1em}
+.hdiv{width:1px;height:15px;background:var(--border)}
+.unit{font-family:var(--fm);font-size:11px;color:var(--red);letter-spacing:.14em;text-transform:uppercase}
+.hdr-r{display:flex;align-items:center;gap:8px}
+.hdr-btn{font-family:var(--fm);font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  padding:4px 11px;border-radius:var(--rs);cursor:pointer;min-height:30px;
+  background:transparent;border:1px solid var(--border);color:var(--dim);transition:all .15s}
+.hdr-btn:hover{border-color:var(--border-hi);color:var(--white)}
+.hdr-btn.danger:hover{border-color:var(--red-hi);color:var(--red-hi)}
+.hdr-info{font-family:var(--fm);font-size:10px;color:var(--faint);letter-spacing:.06em}
+
+/* MAIN */
+.main{position:relative;z-index:5;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 16px 32px}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes cardIn{from{opacity:0;transform:translateY(-7px)}to{opacity:1;transform:translateY(0)}}
+@keyframes btnIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+@keyframes firepulse{0%,100%{transform:scale(1)}50%{transform:scale(1.55)}}
+@keyframes sweep{to{transform:rotate(360deg)}}
+@keyframes tdanger{from{opacity:1}to{opacity:.25}}
+
+/* ═══════════════════════════════════════
+   SETUP SCREEN
+═══════════════════════════════════════ */
+.setup{width:100%;max-width:640px;animation:fadeUp .4s ease both}
+.setup-eye{font-family:var(--fm);font-size:11px;color:var(--dim);letter-spacing:.2em;text-transform:uppercase;text-align:center;margin-bottom:10px}
+.setup-title{font-family:var(--fd);font-size:48px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--white);text-align:center;line-height:1;margin-bottom:4px}
+.setup-sub{font-family:var(--fd);font-size:18px;font-weight:300;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);text-align:center;margin-bottom:26px}
+
+/* Student info */
+.student-row{display:grid;grid-template-columns:1fr auto;gap:10px;margin-bottom:16px}
+.s-field{display:flex;flex-direction:column;gap:5px}
+.s-label{font-family:var(--fm);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+.s-input{font-family:var(--fb);font-size:14px;background:var(--surf2);color:var(--white);
+  border:1px solid var(--border);border-radius:var(--rs);padding:9px 12px;
+  transition:border-color .15s;width:100%}
+.s-input:focus{outline:none;border-color:var(--amber-hi);box-shadow:0 0 0 3px rgba(200,144,10,.12)}
+.s-select{font-family:var(--fb);font-size:14px;background:var(--surf2);color:var(--white);
+  border:1px solid var(--border);border-radius:var(--rs);padding:9px 28px 9px 12px;
+  appearance:none;-webkit-appearance:none;cursor:pointer;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath fill='%236b7890' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 10px center;
+  transition:border-color .15s;min-width:100px}
+.s-select:focus{outline:none;border-color:var(--amber-hi)}
+
+/* Level picker */
+.setup-section-label{font-family:var(--fm);font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-bottom:8px}
+.level-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}
+.level-btn{
+  background:var(--surf);border:2px solid var(--border);border-radius:var(--r);
+  padding:14px 10px;cursor:pointer;text-align:center;transition:all .18s var(--ease);position:relative;
+  opacity:.5;
+}
+.level-btn:hover{border-color:var(--border-hi);transform:translateY(-2px);opacity:.8}
+.level-btn.active{border-color:var(--amber-hi);background:rgba(200,144,10,.18);box-shadow:0 0 0 2px var(--amber-hi);opacity:1;transform:translateY(-2px)}
+.level-btn.active::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--amber-hi);border-radius:var(--r) var(--r) 0 0}
+.level-n{font-family:var(--fd);font-size:26px;font-weight:700;color:var(--white)}
+.level-btn.active .level-n{color:var(--amber-hi)}
+.level-count{font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.06em;margin-top:2px}
+.level-btn.active .level-count{color:var(--amber-hi);opacity:.8}
+.level-desc{font-size:11px;color:var(--faint);margin-top:6px;line-height:1.4}
+.level-btn.active .level-desc{color:var(--text)}
+.level-badge{display:inline-block;margin-top:6px;font-family:var(--fm);font-size:9px;letter-spacing:.08em;text-transform:uppercase;
+  background:rgba(200,144,10,.15);color:var(--amber-hi);border:1px solid rgba(200,144,10,.3);border-radius:3px;padding:2px 6px}
+
+/* Difficulty picker */
+.diff-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:20px}
+.diff-card{
+  background:var(--surf);border:2px solid var(--border);border-radius:var(--r);
+  padding:14px;cursor:pointer;transition:all .18s var(--ease);position:relative;overflow:hidden;
+  opacity:.5;
+}
+.diff-card:hover{border-color:var(--border-hi);transform:translateY(-1px);opacity:.8}
+.diff-card.active{border-color:var(--blue-hi);background:rgba(45,111,212,.16);box-shadow:0 0 0 2px var(--blue-hi);opacity:1;transform:translateY(-1px)}
+.diff-card.active::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--blue-hi)}
+.diff-card.active .diff-name{color:var(--blue-hi)}
+.diff-card.active .diff-desc{color:var(--text)}
+.diff-card.active .diff-tag{color:var(--blue-hi);opacity:1}
+.diff-name{font-family:var(--fd);font-size:17px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--white);margin-bottom:4px}
+.diff-desc{font-size:12px;color:var(--dim);line-height:1.5}
+.diff-tag{font-family:var(--fm);font-size:9px;color:var(--blue-hi);letter-spacing:.08em;text-transform:uppercase;margin-top:6px}
+
+/* Start btn */
+.start-btn{width:100%;font-family:var(--fd);font-size:20px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  background:var(--red);color:var(--white);border:none;padding:15px;border-radius:var(--r);cursor:pointer;
+  transition:all .15s;box-shadow:0 0 0 0 var(--red-glow)}
+.start-btn:hover{background:var(--red-hi);transform:translateY(-2px);box-shadow:0 6px 24px var(--red-glow)}
+.start-btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+
+/* Progress bars on setup */
+.setup-progress{background:var(--surf);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;margin-bottom:16px}
+.sp-title{font-family:var(--fm);font-size:10px;color:var(--faint);letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px}
+.sp-rows{display:flex;flex-direction:column;gap:8px}
+.sp-row{display:flex;align-items:center;gap:10px}
+.sp-lbl{font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.06em;width:90px;flex-shrink:0}
+.sp-track{flex:1;height:4px;background:var(--surf3);border-radius:2px;overflow:hidden}
+.sp-fill{height:100%;border-radius:2px;transition:width .4s}
+.fill-blue{background:var(--blue-hi)}.fill-amber{background:var(--amber-hi)}.fill-red{background:var(--red-hi)}
+.sp-val{font-family:var(--fm);font-size:10px;color:var(--dim);width:32px;text-align:right;flex-shrink:0}
+
+/* ═══════════════════════════════════════
+   MODE SELECT
+═══════════════════════════════════════ */
+.mode-select{width:100%;max-width:660px;animation:fadeUp .4s ease both}
+.ms-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:8px}
+.ms-info{display:flex;flex-direction:column;gap:2px}
+.ms-name{font-family:var(--fd);font-size:26px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--white)}
+.ms-meta{font-family:var(--fm);font-size:11px;color:var(--dim);letter-spacing:.08em}
+.ms-change{font-family:var(--fm);font-size:10px;color:var(--faint);background:none;border:1px solid var(--border);
+  border-radius:var(--rs);padding:4px 10px;cursor:pointer;transition:all .15s;letter-spacing:.06em;text-transform:uppercase}
+.ms-change:hover{border-color:var(--border-hi);color:var(--dim)}
+.ms-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
+.ms-card{background:var(--surf);border:1px solid var(--border);border-radius:var(--r);
+  padding:20px 16px;cursor:pointer;transition:all .18s var(--ease);position:relative;overflow:hidden;text-align:left}
+.ms-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;opacity:0;transition:opacity .18s}
+.ms-card.rev::before{background:var(--blue-hi)}.ms-card.prac::before{background:var(--amber-hi)}.ms-card.chal::before{background:var(--red-hi)}
+.ms-card:hover:not(.locked){border-color:var(--border-hi);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.ms-card:hover:not(.locked)::before{opacity:1}
+.ms-card.locked{opacity:.38;cursor:not-allowed}
+.ms-icon{font-size:26px;margin-bottom:8px}
+.ms-card-name{font-family:var(--fd);font-size:20px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px}
+.ms-card.rev .ms-card-name{color:var(--blue-hi)}.ms-card.prac .ms-card-name{color:var(--amber-hi)}.ms-card.chal .ms-card-name{color:var(--red-hi)}
+.ms-card-desc{font-size:12.5px;color:var(--dim);line-height:1.55}
+.ms-card-meta{font-family:var(--fm);font-size:9px;color:var(--faint);letter-spacing:.08em;text-transform:uppercase;margin-top:10px}
+.locked-badge{position:absolute;top:8px;right:8px;font-family:var(--fm);font-size:9px;letter-spacing:.08em;text-transform:uppercase;
+  background:var(--surf3);border:1px solid var(--border);border-radius:3px;padding:2px 6px;color:var(--faint)}
+.ms-prog{background:var(--surf);border:1px solid var(--border);border-radius:var(--r);padding:12px 16px}
+.ms-prog-rows{display:flex;gap:16px;flex-wrap:wrap}
+.ms-pi{flex:1;min-width:100px;display:flex;flex-direction:column;gap:3px}
+.ms-pi-lbl{font-family:var(--fm);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.ms-pi-bar{height:3px;background:var(--surf3);border-radius:2px;overflow:hidden;margin-top:2px}
+.ms-pi-fill{height:100%;border-radius:2px;transition:width .4s}
+.ms-pi-val{font-family:var(--fm);font-size:10px;color:var(--dim)}
+
+/* ═══════════════════════════════════════
+   SHARED ACTIVITY
+═══════════════════════════════════════ */
+.activity{width:100%;max-width:700px;display:none;flex-direction:column}
+.activity.active{display:flex}
+.back-btn{font-family:var(--fm);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  background:transparent;border:none;color:var(--dim);cursor:pointer;padding:0;margin-bottom:14px;
+  display:flex;align-items:center;gap:5px;transition:color .15s;align-self:flex-start}
+.back-btn:hover{color:var(--white)}
+.prog-row{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.prog-track{flex:1;height:3px;background:var(--surf3);border-radius:2px;overflow:hidden}
+.prog-fill{height:100%;border-radius:2px;transition:width .35s var(--ease)}
+.prog-lbl{font-family:var(--fm);font-size:11px;color:var(--dim);white-space:nowrap}
+.hud{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px}
+.hud-score{font-family:var(--fd);font-size:13px;font-weight:500;color:var(--dim);letter-spacing:.06em;text-transform:uppercase}
+.hud-score span{color:var(--white);font-size:18px}
+.hud-streak{font-family:var(--fm);font-size:11px;color:var(--dim);display:flex;align-items:center;gap:5px}
+.fire{transition:transform .2s}.fire.hot{animation:firepulse .35s ease}
+
+/* Timer */
+.timer-wrap{position:relative;width:56px;height:56px;flex-shrink:0}
+.t-svg{position:absolute;inset:0;transform:rotate(-90deg)}
+.t-track{fill:none;stroke:var(--surf3);stroke-width:4}
+.t-arc{fill:none;stroke:var(--red);stroke-width:4;stroke-linecap:round;stroke-dasharray:145;stroke-dashoffset:0;transition:stroke-dashoffset .95s linear,stroke .25s}
+.t-arc.warn{stroke:var(--amber-hi)}.t-arc.danger{stroke:var(--red-hi)}
+.t-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--fm);font-size:15px;font-weight:600;color:var(--white)}
+.t-num.danger{color:var(--red-hi);animation:tdanger .4s ease infinite alternate}
+.timer-off .t-arc{stroke:var(--border)}.timer-off .t-num{font-size:10px;color:var(--faint)}
+
+/* Q badge */
+.q-badge{font-family:var(--fm);font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--dim);border:1px solid var(--border);border-radius:var(--rs);padding:3px 10px;
+  background:var(--surf2);margin-bottom:11px;align-self:flex-start}
+
+/* Q card */
+.q-card{background:var(--surf);border:1px solid var(--border);border-radius:var(--r);
+  padding:22px 22px 18px;margin-bottom:14px;position:relative;overflow:hidden;animation:cardIn .22s ease both}
+.q-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.q-card.def2term::before{background:linear-gradient(90deg,var(--blue-hi),transparent)}
+.q-card.term2def::before{background:linear-gradient(90deg,var(--amber-hi),transparent)}
+.q-lbl{font-family:var(--fm);font-size:10px;color:var(--faint);letter-spacing:.14em;text-transform:uppercase;margin-bottom:9px}
+.q-text{font-size:15.5px;line-height:1.6;color:var(--white)}
+.q-text.is-term{font-family:var(--fd);font-size:26px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;line-height:1.1}
+.hint-reveal-btn{font-family:var(--fm);font-size:10px;color:var(--faint);background:none;border:none;cursor:pointer;
+  text-decoration:underline;text-underline-offset:2px;padding:0;transition:color .15s;margin-top:10px;display:none}
+.hint-reveal-btn:hover{color:var(--amber-hi)}
+.q-hint{margin-top:10px;padding:8px 12px;background:rgba(200,144,10,.08);border-radius:var(--rs);
+  display:none;align-items:flex-start;gap:7px;border-left:2px solid var(--amber-hi)}
+.hint-txt{font-size:12.5px;color:var(--amber-hi);font-style:italic;line-height:1.5}
+
+/* Answer grid */
+.ans-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ans-btn{font-family:var(--fb);font-size:13px;line-height:1.45;
+  background:var(--surf2);color:var(--text);border:1px solid var(--border);
+  border-radius:var(--rs);padding:13px 14px;cursor:pointer;text-align:left;
+  transition:background .12s,border-color .12s,transform .1s;
+  position:relative;overflow:hidden;min-height:58px;animation:btnIn .2s ease both}
+.ans-btn:nth-child(1){animation-delay:.04s}.ans-btn:nth-child(2){animation-delay:.09s}
+.ans-btn:nth-child(3){animation-delay:.14s}.ans-btn:nth-child(4){animation-delay:.19s}
+.ans-btn .kbd{position:absolute;top:7px;right:8px;font-family:var(--fm);font-size:9px;color:var(--faint)}
+.ans-btn:hover:not(:disabled){background:var(--surf3);border-color:var(--border-hi);transform:translateY(-1px)}
+.ans-btn.correct{background:rgba(27,174,74,.14)!important;border-color:var(--green-hi)!important;color:#7ef5b0!important;box-shadow:0 0 12px var(--green-glow);transform:none!important}
+.ans-btn.wrong{background:rgba(139,32,32,.16)!important;border-color:var(--red-hi)!important;color:#ff9090!important;transform:none!important}
+.ans-btn.reveal{background:rgba(27,174,74,.08)!important;border-color:var(--green-hi)!important;color:#7ef5b0!important}
+.ans-btn:disabled{cursor:default}
+
+/* Remediation */
+.remed{background:rgba(139,32,32,.1);border:1px solid rgba(139,32,32,.3);border-radius:var(--r);
+  padding:13px 16px;margin-bottom:13px;display:none}
+.remed.show{display:block}
+.remed-title{font-family:var(--fd);font-size:14px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--red-hi);margin-bottom:4px}
+.remed-txt{font-size:13px;color:var(--dim);line-height:1.55}
+.remed-ex{margin-top:7px;padding:8px 11px;background:var(--surf2);border-radius:var(--rs);
+  border-left:2px solid var(--amber-hi);font-size:12px;color:var(--dim);font-style:italic;line-height:1.55}
+
+/* Feedback flash */
+.ff{position:fixed;inset:0;z-index:200;pointer-events:none;opacity:0;transition:opacity .12s}
+.ff.correct{background:var(--green-glow)}.ff.wrong{background:var(--red-glow)}.ff.show{opacity:1}
+
+/* ═══════════════════════════════════════
+   FLASHCARDS
+═══════════════════════════════════════ */
+.fc-shell{width:100%;max-width:580px}
+.fc-piles{display:flex;gap:6px;margin-bottom:13px;justify-content:center}
+.fc-pile{background:var(--surf2);border:1px solid var(--border);border-radius:var(--rs);padding:7px 13px;text-align:center;flex:1}
+.fc-pile .pn{font-family:var(--fd);font-size:20px;font-weight:700;color:var(--white)}
+.fc-pile .pl{font-family:var(--fm);font-size:9px;color:var(--faint);letter-spacing:.09em;text-transform:uppercase}
+/* Card flip — solid backs prevent bleed-through */
+.fc-wrap{perspective:1000px;margin-bottom:16px;cursor:pointer;min-height:200px}
+.fc-card{width:100%;min-height:200px;transform-style:preserve-3d;transition:transform .45s var(--ease);position:relative}
+.fc-card.flipped{transform:rotateY(180deg)}
+.fc-face{
+  position:absolute;inset:0;
+  backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  border-radius:var(--r);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:28px 24px;text-align:center;min-height:200px;
+}
+/* Front: fully opaque solid background */
+.fc-front{
+  background:#111418; /* same as --surf, explicit hex so no transparency */
+  border:1px solid var(--border);
+}
+/* Back: different solid color so it reads as a reveal, not transparent */
+.fc-back{
+  background:#1a2438; /* navy-mid, fully opaque */
+  border:1px solid rgba(45,111,212,.4);
+  transform:rotateY(180deg);
+}
+.fc-lbl{font-family:var(--fm);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:13px}
+.fc-back .fc-lbl{color:var(--blue-hi)}
+.fc-term{font-family:var(--fd);font-size:30px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--white);line-height:1.1}
+.fc-def-text{font-size:15px;color:var(--white);line-height:1.65}
+.fc-hint-btn{font-family:var(--fm);font-size:10px;color:var(--faint);background:none;border:1px solid var(--border);
+  border-radius:var(--rs);padding:5px 13px;cursor:pointer;margin-top:14px;transition:all .15s;min-height:32px}
+.fc-hint-btn:hover{border-color:var(--amber-hi);color:var(--amber-hi)}
+.fc-hint-shown{font-size:12px;color:var(--amber-hi);font-style:italic;margin-top:9px;padding:8px 12px;
+  background:rgba(200,144,10,.08);border-radius:var(--rs);line-height:1.5}
+.fc-flip-hint{font-family:var(--fm);font-size:10px;color:var(--faint);margin-top:13px}
+.fc-rate{display:flex;gap:8px;justify-content:center}
+.fc-rate-btn{font-family:var(--fd);font-size:14px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;
+  padding:10px 0;border-radius:var(--rs);cursor:pointer;border:1px solid;transition:all .15s;flex:1;max-width:155px;min-height:44px}
+.fc-know{background:rgba(27,174,74,.14);color:var(--green-hi);border-color:var(--green-hi)}
+.fc-know:hover{background:rgba(27,174,74,.28)}
+.fc-almost{background:rgba(200,144,10,.11);color:var(--amber-hi);border-color:var(--amber-hi)}
+.fc-almost:hover{background:rgba(200,144,10,.24)}
+.fc-nope{background:rgba(139,32,32,.13);color:var(--red-hi);border-color:var(--red-hi)}
+.fc-nope:hover{background:rgba(139,32,32,.26)}
+.fc-done-msg{text-align:center;padding:34px 20px;background:var(--surf);border:1px solid var(--border);border-radius:var(--r);margin-bottom:14px}
+.fc-done-title{font-family:var(--fd);font-size:26px;font-weight:700;text-transform:uppercase;color:var(--amber-hi);margin-bottom:7px}
+.fc-done-sub{font-size:13.5px;color:var(--dim);line-height:1.6}
+
+/* ═══════════════════════════════════════
+   END SCREEN
+═══════════════════════════════════════ */
+.end{width:100%;max-width:600px;display:flex;flex-direction:column;align-items:center;text-align:center;animation:fadeUp .4s ease both}
+.end-eye{font-family:var(--fm);font-size:11px;color:var(--dim);letter-spacing:.2em;text-transform:uppercase;margin-bottom:9px}
+.end-title{font-family:var(--fd);font-size:40px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--white);margin-bottom:3px}
+.end-grade{font-family:var(--fd);font-size:15px;font-weight:300;color:var(--dim);letter-spacing:.08em;text-transform:uppercase;margin-bottom:18px}
+.end-stats{display:flex;gap:1px;width:100%;margin-bottom:16px}
+.es{background:var(--surf2);border:1px solid var(--border);padding:13px 8px;flex:1;text-align:center}
+.es:first-child{border-radius:var(--r) 0 0 var(--r)}.es:last-child{border-radius:0 var(--r) var(--r) 0}
+.es .n{font-family:var(--fd);font-size:28px;font-weight:700;color:var(--white)}
+.es .n.perfect{color:var(--amber-hi)}.es .n.great{color:var(--green-hi)}.es .n.bad{color:var(--red-hi)}
+.es .l{font-family:var(--fm);font-size:9px;color:var(--dim);letter-spacing:.09em;text-transform:uppercase;margin-top:2px}
+.end-fail{background:rgba(139,32,32,.1);border:1px solid rgba(139,32,32,.28);border-radius:var(--r);
+  padding:14px 16px;margin-bottom:14px;width:100%;text-align:left;display:none}
+.end-fail-title{font-family:var(--fd);font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--red-hi);margin-bottom:5px}
+.end-fail-txt{font-size:13px;color:var(--dim);line-height:1.6}
+.end-log{width:100%;background:var(--surf);border:1px solid var(--border);border-radius:var(--r);
+  overflow:hidden;margin-bottom:16px;max-height:320px;overflow-y:auto}
+.end-log::-webkit-scrollbar{width:4px}
+.end-log::-webkit-scrollbar-thumb{background:var(--border-hi);border-radius:2px}
+.log-hdr{font-family:var(--fm);font-size:9px;color:var(--faint);letter-spacing:.12em;text-transform:uppercase;
+  padding:8px 13px;border-bottom:1px solid var(--border);background:var(--surf2);position:sticky;top:0}
+.log-row{display:flex;align-items:flex-start;gap:9px;padding:8px 13px;border-bottom:1px solid var(--border);font-size:12px}
+.log-row.clickable{cursor:pointer;transition:background .12s}
+.log-row.clickable:hover{background:var(--surf2)}
+.log-row:last-child{border-bottom:none}
+.log-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:3px}
+.dc{background:var(--green-hi)}.dw{background:var(--red-hi)}.dt{background:var(--amber-hi)}
+.log-term{font-family:var(--fd);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--white);min-width:130px}
+.log-status{font-size:11px;color:var(--dim);font-family:var(--fm)}
+.log-chevron{font-size:10px;color:var(--faint);margin-left:auto;transition:transform .2s;flex-shrink:0;line-height:1.8}
+.log-row.open .log-chevron{transform:rotate(180deg)}
+.log-expand{
+  display:none;padding:0 13px;
+  border-bottom:1px solid var(--border);
+  background:var(--surf2);
+}
+.log-expand.open{display:block;padding:10px 13px 12px}
+.log-compare{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:2px}
+.log-def-block{border-radius:var(--rs);padding:10px 12px}
+.log-def-block.wrong-block{background:rgba(139,32,32,.1);border:1px solid rgba(139,32,32,.3)}
+.log-def-block.correct-block{background:rgba(27,174,74,.1);border:1px solid rgba(27,174,74,.3)}
+.log-def-label{font-family:var(--fm);font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:5px}
+.log-def-block.wrong-block .log-def-label{color:var(--red-hi)}
+.log-def-block.correct-block .log-def-label{color:var(--green-hi)}
+.log-def-term{font-family:var(--fd);font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--white);margin-bottom:4px}
+.log-def-text{font-size:12px;color:var(--dim);line-height:1.55}
+.log-timeout-block{background:rgba(200,144,10,.08);border:1px solid rgba(200,144,10,.25);border-radius:var(--rs);padding:10px 12px}
+.log-timeout-label{font-family:var(--fm);font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--amber-hi);margin-bottom:5px}
+.log-hint-line{font-size:11px;color:var(--amber-hi);font-style:italic;margin-top:6px;padding-top:6px;border-top:1px solid var(--border)}
+.end-btns{display:flex;gap:9px;flex-wrap:wrap;justify-content:center;margin-bottom:14px}
+.e-btn{font-family:var(--fd);font-size:14px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  padding:11px 26px;border-radius:var(--rs);cursor:pointer;border:1px solid;transition:all .15s;min-height:44px}
+.e-btn-primary{background:var(--red);color:var(--white);border-color:var(--red)}
+.e-btn-primary:hover{background:var(--red-hi);transform:translateY(-1px);box-shadow:0 4px 16px var(--red-glow)}
+.e-btn-ghost{background:transparent;color:var(--dim);border-color:var(--border)}
+.e-btn-ghost:hover{border-color:var(--border-hi);color:var(--white)}
+.e-btn-blue{background:rgba(45,111,212,.18);color:var(--blue-hi);border-color:var(--blue-hi)}
+.e-btn-blue:hover{background:rgba(45,111,212,.32)}
+.e-btn-pdf{background:rgba(200,144,10,.15);color:var(--amber-hi);border-color:var(--amber-hi)}
+.e-btn-pdf:hover{background:rgba(200,144,10,.28)}
+
+/* ═══════════════════════════════════════
+   PRINT STYLES
+═══════════════════════════════════════ */
+@media print{
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  body{background:white!important;color:#111!important;font-family:Georgia,serif}
+  body::after,.radar,.hdr,.ff{display:none!important}
+  .main{padding:0!important;display:block!important;justify-content:flex-start!important;align-items:flex-start!important}
+  .setup,.mode-select,.activity,.end{display:none!important}
+  #printDoc{display:block!important}
+}
+#printDoc{display:none;padding:28px 32px;font-family:Georgia,serif;color:#111;max-width:760px;margin:0 auto}
+.pd-header{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:2px solid #111;padding-bottom:12px;margin-bottom:18px}
+.pd-logo{font-family:'Oswald',sans-serif;font-size:20px;font-weight:700;letter-spacing:.1em;color:#111}
+.pd-unit{font-family:'Oswald',sans-serif;font-size:13px;letter-spacing:.08em;color:#444;margin-top:3px}
+.pd-meta{text-align:right;font-size:12px;color:#555;line-height:1.6}
+.pd-student-box{background:#f5f5f5;border:1px solid #ddd;border-radius:4px;padding:12px 16px;margin-bottom:18px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.pd-field{display:flex;flex-direction:column;gap:3px}
+.pd-field-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#888;font-family:'Source Code Pro',monospace}
+.pd-field-val{font-size:14px;font-weight:700;color:#111}
+.pd-section{margin-bottom:20px}
+.pd-section-title{font-family:'Oswald',sans-serif;font-size:14px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:#fff;background:#111;padding:6px 12px;border-radius:3px;margin-bottom:10px}
+.pd-section-title.needs{background:#8b2e2e}
+.pd-summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-bottom:16px;border:1px solid #ddd;border-radius:4px;overflow:hidden}
+.pd-stat{background:#f9f9f9;padding:12px;text-align:center}
+.pd-stat .sn{font-family:'Oswald',sans-serif;font-size:26px;font-weight:700;color:#111}
+.pd-stat .sl{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#888;font-family:'Source Code Pro',monospace;margin-top:2px}
+.pd-know-list{display:flex;flex-wrap:wrap;gap:6px}
+.pd-know-chip{background:#e8f5e9;border:1px solid #a5d6a7;border-radius:3px;padding:4px 10px;font-size:12.5px;color:#1b5e20}
+.pd-review-item{background:#fff8f8;border:1px solid #ffcdd2;border-radius:4px;padding:11px 13px;margin-bottom:8px}
+.pd-review-term{font-family:'Oswald',sans-serif;font-size:15px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#8b2e2e;margin-bottom:4px}
+.pd-review-def{font-size:13px;color:#333;line-height:1.55}
+.pd-footer{border-top:1px solid #ddd;padding-top:10px;margin-top:20px;display:flex;justify-content:space-between;font-size:11px;color:#aaa;font-family:'Source Code Pro',monospace}
+
+/* ═══════════════════════════════════════
+   CONFIRM MODAL
+═══════════════════════════════════════ */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(5,8,16,.8);z-index:100;
+  align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.modal-overlay.open{display:flex}
+.modal{background:var(--surf2);border:1px solid var(--border);border-radius:var(--r);padding:26px;max-width:380px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.modal h2{font-family:var(--fd);font-size:20px;color:var(--white);margin-bottom:8px}
+.modal p{font-size:13.5px;color:var(--dim);line-height:1.6;margin-bottom:18px}
+.modal-btns{display:flex;gap:8px;justify-content:flex-end}
+
+/* RESPONSIVE */
+@media(max-width:620px){
+  .setup-title{font-size:34px}.level-grid{grid-template-columns:repeat(2,1fr)}.diff-grid{grid-template-columns:1fr}
+  .ms-cards{grid-template-columns:1fr}.ans-grid{grid-template-columns:1fr}
+  .end-stats{flex-wrap:wrap}.es{min-width:80px}.hdr{padding:0 12px}
+  .student-row{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="radar">
+  <div class="rr"></div>
+  <div class="rx"></div>
+  <div class="ry">North</div>
+  <div class="rs">South</div>
+</div>
+
+<header class="hdr">
+  <div class="hdr-l">
+    <span class="logo">EdSim</span><div class="hdiv"></div>
+    <span class="unit">Sectionalism · Vocabulary</span>
+  </div>
+  <div class="hdr-r">
+    <span class="hdr-info" id="hdrInfo"></span>
+    <button class="hdr-btn" id="timerToggleBtn" onclick="toggleTimer()" style="display:none">⏱ Timer: ON</button>
+    <button class="hdr-btn danger" onclick="confirmReset()">↺ Reset</button>
+  </div>
+</header>
+
+<div class="main" id="mainArea">
+
+  <!-- PRINT DOC (hidden until print) -->
+  <div id="printDoc"></div>
+
+  <!-- ══ SETUP ══ -->
+  <div id="setupScreen" class="setup">
+    <div class="setup-eye">EdSim · US History Regents</div>
+    <div class="setup-title">Sectionalism</div>
+    <div class="setup-sub">Vocabulary Study</div>
+
+    <div class="student-row">
+      <div class="s-field">
+        <div class="s-label">Student name</div>
+        <input class="s-input" id="studentName" type="text" placeholder="First and last name" oninput="validateSetup()"/>
+      </div>
+      <div class="s-field">
+        <div class="s-label">Period</div>
+        <select class="s-select" id="periodSel" onchange="validateSetup()">
+          <option value="">—</option>
+          <option>1</option><option>2</option><option>3</option>
+          <option>4</option><option>5</option><option>6</option>
+          <option>7</option><option>8</option><option>9</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="setup-section-label" style="margin-bottom:8px">Choose your starting level</div>
+    <div class="level-grid" id="levelGrid">
+      <div class="level-btn" onclick="setLevel(1)" id="lbtn-1">
+        <div class="level-n">1</div>
+        <div class="level-count">10 terms</div>
+        <div class="level-desc">Core concepts every student must know</div>
+      </div>
+      <div class="level-btn" onclick="setLevel(2)" id="lbtn-2">
+        <div class="level-n">2</div>
+        <div class="level-count">20 terms</div>
+        <div class="level-desc">Policies, events, and alliances added</div>
+      </div>
+      <div class="level-btn" onclick="setLevel(3)" id="lbtn-3">
+        <div class="level-n">3</div>
+        <div class="level-count">30 terms</div>
+        <div class="level-desc">Doctrines, crises, and domestic impact</div>
+      </div>
+      <div class="level-btn" onclick="setLevel(4)" id="lbtn-4">
+        <div class="level-n">4</div>
+        <div class="level-count">35 terms</div>
+        <div class="level-desc">Full set — people, specifics, all topics</div>
+        <div class="level-badge">Confident? Start here</div>
+      </div>
+    </div>
+
+    <div class="setup-section-label" style="margin-bottom:8px">Choose difficulty</div>
+    <div class="diff-grid">
+      <div class="diff-card" onclick="setDiff('supported')" id="dbtn-supported">
+        <div class="diff-name">Supported</div>
+        <div class="diff-desc">Plain-language definitions. Hints available on every question.</div>
+        <div class="diff-tag">Best for: building foundational understanding</div>
+      </div>
+      <div class="diff-card active" onclick="setDiff('regular')" id="dbtn-regular">
+        <div class="diff-name">Regular</div>
+        <div class="diff-desc">Full academic definitions. One hint per question in Practice.</div>
+        <div class="diff-tag">Best for: standard Regents prep</div>
+      </div>
+      <div class="diff-card" onclick="setDiff('challenge')" id="dbtn-challenge">
+        <div class="diff-name">Challenge</div>
+        <div class="diff-desc">Short clues only. No hints. Timed pressure in Blitz mode.</div>
+        <div class="diff-tag">Best for: confident, high-achieving students</div>
+      </div>
+    </div>
+
+    <div class="setup-progress" id="setupProgress" style="display:none">
+      <div class="sp-title">Your progress</div>
+      <div class="sp-rows">
+        <div class="sp-row"><div class="sp-lbl">Review</div><div class="sp-track"><div class="sp-fill fill-blue" id="spReview" style="width:0%"></div></div><div class="sp-val" id="spReviewVal">0%</div></div>
+        <div class="sp-row"><div class="sp-lbl">Practice</div><div class="sp-track"><div class="sp-fill fill-amber" id="spPractice" style="width:0%"></div></div><div class="sp-val" id="spPracticeVal">0%</div></div>
+        <div class="sp-row"><div class="sp-lbl">Blitz best</div><div class="sp-track"><div class="sp-fill fill-red" id="spBlitz" style="width:0%"></div></div><div class="sp-val" id="spBlitzVal">0%</div></div>
+      </div>
+    </div>
+
+    <button class="start-btn" id="startBtn" onclick="goToModes()" disabled>Select name, period, level &amp; difficulty to begin</button>
+  </div>
+
+  <!-- ══ MODE SELECT ══ -->
+  <div id="modeScreen" class="mode-select" style="display:none">
+    <div class="ms-header">
+      <div class="ms-info">
+        <div class="ms-name" id="msName">Sectionalism</div>
+        <div class="ms-meta" id="msMeta"></div>
+      </div>
+      <button class="ms-change" onclick="backToSetup()">← Change settings</button>
+    </div>
+    <div class="ms-cards">
+      <div class="ms-card rev" id="mc-review" onclick="startMode('review')">
+        <div class="ms-icon">🃏</div>
+        <div class="ms-card-name">Review</div>
+        <div class="ms-card-desc">Flashcards with hints. Flip to reveal the definition. Rate yourself — missed cards cycle back until 80% known.</div>
+        <div class="ms-card-meta">Flashcards · No timer · Hints available</div>
+      </div>
+      <div class="ms-card prac" id="mc-practice" onclick="tryMode('practice')">
+        <div class="locked-badge" style="display:none">🔒 Complete Review</div>
+        <div class="ms-icon">🎯</div>
+        <div class="ms-card-name">Practice</div>
+        <div class="ms-card-desc">Multiple choice. Missed terms show a full definition and example. No time pressure — build accuracy first.</div>
+        <div class="ms-card-meta">Multiple choice · Timer optional · Full feedback</div>
+      </div>
+      <div class="ms-card chal" id="mc-blitz" onclick="tryMode('blitz')">
+        <div class="locked-badge" style="display:none">🔒 Complete Practice</div>
+        <div class="ms-icon">⚡</div>
+        <div class="ms-card-name">Blitz</div>
+        <div class="ms-card-desc">Timed. Alternating question types. Speed scoring. Pass 70% — or return to Practice for targeted remediation.</div>
+        <div class="ms-card-meta">Timed · <span id="blitzQCount">10</span> questions · Speed scoring · Pass/fail</div>
+      </div>
+    </div>
+    <div class="ms-prog">
+      <div class="ms-prog-rows">
+        <div class="ms-pi"><div class="ms-pi-lbl">Review</div><div class="ms-pi-bar"><div class="ms-pi-fill fill-blue" id="mpReview" style="width:0%"></div></div><div class="ms-pi-val" id="mpReviewVal">0%</div></div>
+        <div class="ms-pi"><div class="ms-pi-lbl">Practice</div><div class="ms-pi-bar"><div class="ms-pi-fill fill-amber" id="mpPractice" style="width:0%"></div></div><div class="ms-pi-val" id="mpPracticeVal">0%</div></div>
+        <div class="ms-pi"><div class="ms-pi-lbl">Blitz best</div><div class="ms-pi-bar"><div class="ms-pi-fill fill-red" id="mpBlitz" style="width:0%"></div></div><div class="ms-pi-val" id="mpBlitzVal">0%</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ REVIEW ══ -->
+  <div class="activity" id="reviewActivity">
+    <button class="back-btn" onclick="goToModes()">← Back to modes</button>
+    <div class="prog-row">
+      <div class="prog-track"><div class="prog-fill fill-blue" id="fcProg" style="width:0%"></div></div>
+      <div class="prog-lbl" id="fcLbl">Card 1</div>
+    </div>
+    <div class="fc-shell">
+      <div class="fc-piles">
+        <div class="fc-pile"><div class="pn" id="fcKnow">0</div><div class="pl">Know it</div></div>
+        <div class="fc-pile"><div class="pn" id="fcAlmost">0</div><div class="pl">Almost</div></div>
+        <div class="fc-pile"><div class="pn" id="fcNope">0</div><div class="pl">Still learning</div></div>
+        <div class="fc-pile"><div class="pn" id="fcLeft">0</div><div class="pl">Remaining</div></div>
+      </div>
+      <div class="fc-wrap" onclick="flipCard()" id="fcWrap">
+        <div class="fc-card" id="fcCard">
+          <div class="fc-face fc-front">
+            <div class="fc-lbl">Term</div>
+            <div class="fc-term" id="fcTerm"></div>
+            <button class="fc-hint-btn" id="fcHintBtn" onclick="showFCHint(event)">Show hint</button>
+            <div class="fc-hint-shown" id="fcHintShown" style="display:none"></div>
+            <div class="fc-flip-hint">Click card to see definition</div>
+          </div>
+          <div class="fc-face fc-back">
+            <div class="fc-lbl">Definition</div>
+            <div class="fc-def-text" id="fcDef"></div>
+          </div>
+        </div>
+      </div>
+      <div id="fcRateWrap" style="display:none">
+        <div class="fc-rate">
+          <button class="fc-rate-btn fc-know" onclick="rateCard('know')">Know it ✓</button>
+          <button class="fc-rate-btn fc-almost" onclick="rateCard('almost')">Almost</button>
+          <button class="fc-rate-btn fc-nope" onclick="rateCard('nope')">Still learning</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ GAME (Practice / Blitz) ══ -->
+  <div class="activity" id="gameActivity">
+    <button class="back-btn" onclick="goToModes()">← Back to modes</button>
+    <div class="prog-row">
+      <div class="prog-track"><div class="prog-fill" id="gProg" style="width:0%"></div></div>
+      <div class="prog-lbl" id="gProgLbl">1 / 8</div>
+    </div>
+    <div class="hud">
+      <div class="hud-score">Score <span id="gScore">0</span></div>
+      <div class="timer-wrap" id="timerWrap">
+        <svg class="t-svg" viewBox="0 0 52 52">
+          <circle class="t-track" cx="26" cy="26" r="23"/>
+          <circle class="t-arc" id="tArc" cx="26" cy="26" r="23"/>
+        </svg>
+        <div class="t-num" id="tNum">—</div>
+      </div>
+      <div class="hud-streak"><span class="fire" id="fireMoji">🔥</span><span id="gStreak">0</span> streak</div>
+    </div>
+    <div class="remed" id="remedEl">
+      <div class="remed-title">📚 Let's review this one</div>
+      <div class="remed-txt" id="remedTxt"></div>
+      <div class="remed-ex" id="remedEx"></div>
+    </div>
+    <div class="q-badge" id="gBadge"></div>
+    <div class="q-card" id="gCard">
+      <div class="q-lbl" id="gLbl"></div>
+      <div class="q-text" id="gText"></div>
+      <button class="hint-reveal-btn" id="hintBtn" onclick="showGameHint()">Show hint</button>
+      <div class="q-hint" id="hintBox"><span>💡</span><span class="hint-txt" id="hintTxt"></span></div>
+    </div>
+    <div class="ans-grid" id="ansGrid"></div>
+  </div>
+
+  <!-- ══ END ══ -->
+  <div class="end" id="endScreen" style="display:none">
+    <div class="end-eye" id="endEye"></div>
+    <div class="end-title" id="endTitle"></div>
+    <div class="end-grade" id="endGrade"></div>
+    <div class="end-stats">
+      <div class="es"><div class="n" id="endCorrect">0</div><div class="l">Correct</div></div>
+      <div class="es"><div class="n" id="endWrong">0</div><div class="l">Wrong</div></div>
+      <div class="es"><div class="n" id="endTO">0</div><div class="l">Timed out</div></div>
+      <div class="es"><div class="n" id="endPct">0%</div><div class="l">Score</div></div>
+    </div>
+    <div class="end-fail" id="endFail">
+      <div class="end-fail-title">Not quite — let's keep working</div>
+      <div class="end-fail-txt" id="endFailTxt"></div>
+    </div>
+    <div class="end-log" id="endLog"></div>
+    <div class="end-btns" id="endBtns"></div>
+  </div>
+
+</div>
+
+<div class="ff" id="ff"></div>
+
+<!-- Reset confirm modal -->
+<div class="modal-overlay" id="resetModal">
+  <div class="modal">
+    <h2>Reset all progress?</h2>
+    <p>This will clear your scores, progress, and "still learning" card list for this device. This cannot be undone.</p>
+    <div class="modal-btns">
+      <button class="e-btn e-btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="e-btn e-btn-primary" onclick="doReset()">Reset everything</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════
+// VOCAB — 35 terms, 4 def tiers, hint, example
+// ══════════════════════════════════════════════
+const VOCAB=[
+  {term:"sectionalism",tier:1,category:"Concepts",
+   def:{supported:"When people's loyalty is to their own region rather than to the whole country",regular:"Excessive loyalty to the interests of one's own section or region over the nation as a whole",challenge:"Regional loyalty superseding national unity"},
+   hint:"The word comes from 'section' — meaning a part of the country with its own interests",
+   example:"By the 1850s, Northern and Southern politicians cared more about protecting their region's interests than compromise — sectionalism was tearing the union apart."},
+  {term:"slavery",tier:1,category:"Concepts",
+   def:{supported:"A system in which people were forced to work without pay or freedom, with no legal rights",regular:"The institution of legally owning human beings as property, requiring their forced labor",challenge:"Chattel bondage institution"},
+   hint:"By 1860, nearly 4 million enslaved people lived in the South",
+   example:"Slavery was the economic foundation of the Southern plantation system — and the central moral and political issue dividing North from South by the mid-1800s."},
+  {term:"Missouri Compromise",tier:1,category:"Events & Legislation",
+   def:{supported:"An 1820 deal that admitted Missouri as a slave state and Maine as a free state, drawing a line across the country: slavery allowed south of 36-30, banned north of it",regular:"1820 agreement admitting Missouri as a slave state and Maine as a free state, establishing the 36 degrees 30 latitude line as the boundary for slavery in new territories",challenge:"1820 sectional balance legislation"},
+   hint:"Held the country together for 30 years — until the Mexican-American War brought new territory",
+   example:"In 1820 Congress was deadlocked: could Missouri enter as a slave state? The compromise kept the Senate balanced between free and slave states and drew a dividing line."},
+  {term:"popular sovereignty",tier:1,category:"Concepts",
+   def:{supported:"The idea that the people living in a new territory should vote to decide whether to allow slavery, not Congress",regular:"Doctrine holding that the residents of a territory, not Congress, should determine whether slavery would be permitted",challenge:"Territorial self-determination on slavery"},
+   hint:"Stephen Douglas championed this idea in the Kansas-Nebraska Act",
+   example:"Douglas argued: let the settlers decide. Sounds democratic — but it led directly to violence in 'Bleeding Kansas' as pro- and anti-slavery settlers flooded the territory to vote."},
+  {term:"abolitionism",tier:1,category:"Concepts",
+   def:{supported:"The movement to completely end slavery in the United States",regular:"Reform movement demanding the immediate end of slavery throughout the United States",challenge:"Anti-slavery reform movement"},
+   hint:"Frederick Douglass and William Lloyd Garrison were leading abolitionists",
+   example:"Abolitionists like Garrison published newspapers and Douglass gave speeches demanding slavery's end — infuriating the South and pushing the country toward crisis."},
+  {term:"states' rights",tier:1,category:"Concepts",
+   def:{supported:"The belief that states have the right to make their own laws and the federal government should not interfere",regular:"Political doctrine holding that states retain broad powers independent of federal authority, especially on issues not explicitly granted to Congress",challenge:"State sovereignty doctrine"},
+   hint:"The South used states' rights arguments to defend slavery and resist Northern laws",
+   example:"Southerners argued: slavery is our business, not Washington's. States' rights became the constitutional argument for resisting federal power — and eventually, secession."},
+  {term:"secession",tier:1,category:"Events & Legislation",
+   def:{supported:"When Southern states formally left the United States to form their own country",regular:"Formal withdrawal of Southern states from the United States, beginning with South Carolina in December 1860",challenge:"Southern states' withdrawal from the Union"},
+   hint:"South Carolina was first, declaring secession December 20, 1860",
+   example:"When Lincoln was elected without a single Southern electoral vote, seven states seceded before he was even inaugurated — convinced the federal government would end slavery."},
+  {term:"Compromise of 1850",tier:1,category:"Events & Legislation",
+   def:{supported:"A package of laws that temporarily eased tensions between North and South over slavery and the new western territories",regular:"Five-part legislative compromise resolving territorial disputes after the Mexican-American War, including admitting California as a free state and strengthening the Fugitive Slave Act",challenge:"Five-bill sectional settlement"},
+   hint:"Henry Clay proposed it; Daniel Webster defended it; Millard Fillmore signed it",
+   example:"California wanted to enter as a free state — throwing off the Senate balance. The compromise admitted it free but gave the South a tougher Fugitive Slave Act. Both sides were unhappy."},
+  {term:"Fugitive Slave Act",tier:1,category:"Events & Legislation",
+   def:{supported:"A federal law that required Northerners to help capture and return enslaved people who had escaped to the North",regular:"1850 federal law requiring citizens to assist in the capture of escaped slaves and mandating their return to slaveholders",challenge:"1850 federal slave-return mandate"},
+   hint:"Northern resistance to this law — hiding escapees — outraged the South",
+   example:"Northerners who had ignored slavery were now legally required to participate in it. Helping capture escaped people was the law. Outrage in the North turned many toward abolitionism."},
+  {term:"Confederate States of America",tier:1,category:"Events & Legislation",
+   def:{supported:"The new government formed by Southern states after they seceded from the United States",regular:"Nation formed by seceding Southern states in 1861, with Jefferson Davis as president, organized to preserve slavery and states' rights",challenge:"Southern breakaway republic"},
+   hint:"Jefferson Davis was elected Confederate president; Montgomery, Alabama was the first capital",
+   example:"By February 1861, seven states had left the U.S. and formed their own government with their own constitution — one that explicitly protected slavery."},
+  {term:"Kansas-Nebraska Act",tier:2,category:"Events & Legislation",
+   def:{supported:"An 1854 law that allowed the territories of Kansas and Nebraska to vote on whether to allow slavery, overturning the Missouri Compromise line",regular:"1854 legislation creating Kansas and Nebraska territories and repealing the Missouri Compromise by allowing popular sovereignty to determine their slave or free status",challenge:"1854 Missouri Compromise repeal"},
+   hint:"Its passage led to the formation of the Republican Party",
+   example:"Repealing the Missouri Compromise outraged the North. Violence erupted in Kansas. The controversy destroyed the Whig Party and created the Republicans."},
+  {term:"Bleeding Kansas",tier:2,category:"Events & Legislation",
+   def:{supported:"A period of violent conflict in Kansas between pro-slavery and anti-slavery settlers after the Kansas-Nebraska Act allowed them to vote on slavery",regular:"1854-1861 period of guerrilla violence in Kansas between pro-slavery and anti-slavery factions competing to control the territory's government",challenge:"Kansas territorial civil war"},
+   hint:"John Brown's Pottawatomie massacre killed 5 pro-slavery settlers",
+   example:"Pro-slavery 'Border Ruffians' from Missouri flooded Kansas to vote illegally. Anti-slavery settlers fought back. Over 50 people died. Kansas became a preview of Civil War."},
+  {term:"Dred Scott v. Sandford",tier:2,category:"Events & Legislation",
+   def:{supported:"An 1857 Supreme Court decision that said enslaved people were property, not citizens, and that Congress could not ban slavery in any territory",regular:"1857 Supreme Court ruling declaring African Americans were not citizens, enslaved people were property protected by the Constitution, and Congress lacked authority to ban slavery in territories",challenge:"1857 citizenship-denial and territorial-slavery ruling"},
+   hint:"Chief Justice Taney wrote the opinion — it made the Missouri Compromise unconstitutional",
+   example:"Dred Scott had lived in free territory and sued for his freedom. The Court ruled he had no right to sue at all — and that Congress could never ban slavery anywhere. The North erupted."},
+  {term:"nullification",tier:2,category:"Concepts",
+   def:{supported:"The idea that a state could declare a federal law unconstitutional and refuse to follow it",regular:"Doctrine asserting that states have the authority to invalidate federal laws they deem unconstitutional within their borders",challenge:"State federal law invalidation doctrine"},
+   hint:"John C. Calhoun developed the theory; South Carolina tried it in the 1832 crisis",
+   example:"When Congress passed high tariffs in 1828, South Carolina declared them null and void — and threatened to leave the Union if forced to comply. Jackson threatened military force."},
+  {term:"Tariff of Abominations",tier:2,category:"Events & Legislation",
+   def:{supported:"An 1828 federal tax on imported goods that helped Northern factories but raised prices for Southern planters who depended on imported goods",regular:"Tariff of 1828, which imposed high protective duties on imported goods, benefiting Northern industry but significantly raising costs for Southern planters",challenge:"1828 protective tariff"},
+   hint:"South Carolina's furious reaction led to the Nullification Crisis of 1832",
+   example:"The South had no factories to protect. High tariffs just meant they paid more for manufactured goods. Southerners called it the 'Tariff of Abominations' and talked of leaving the Union."},
+  {term:"Underground Railroad",tier:2,category:"Concepts",
+   def:{supported:"A secret network of people who helped enslaved people escape to freedom in the North or Canada",regular:"Informal network of secret routes and safe houses used by enslaved African Americans to escape to free states and Canada",challenge:"Clandestine slavery escape network"},
+   hint:"Harriet Tubman made 13 missions and freed approximately 70 people",
+   example:"Harriet Tubman escaped slavery and returned to the South repeatedly to guide others north. She used safe houses, codes, and disguises — and never lost a single person."},
+  {term:"John Brown",tier:2,category:"People & Leaders",
+   def:{supported:"A radical abolitionist who used violence to fight slavery — he attacked settlers in Kansas and then raided a federal weapons storage in Virginia to start a slave rebellion",regular:"Militant abolitionist who conducted violent raids against slavery, including the Pottawatomie massacre (1856) and the Harpers Ferry raid (1859)",challenge:"Militant abolitionist insurrectionist"},
+   hint:"His Harpers Ferry raid terrified the South — and his execution made him a martyr in the North",
+   example:"When Brown raided Harpers Ferry in 1859 trying to arm enslaved people for a rebellion, he was captured and hanged. The South was terrified. Northern abolitionists called him a hero."},
+  {term:"Harriet Beecher Stowe",tier:2,category:"People & Leaders",
+   def:{supported:"Author of 'Uncle Tom's Cabin,' a novel that showed the horrors of slavery to millions of Northern readers",regular:"Author of Uncle Tom's Cabin (1852), the antislavery novel that galvanized Northern public opinion and intensified sectional tensions",challenge:"Antislavery novelist"},
+   hint:"Lincoln reportedly greeted her: 'So this is the little lady who made this big war'",
+   example:"Before Stowe's book, many Northerners felt slavery was distant and abstract. Her characters made it human. Over 300,000 copies sold in the first year — outrage spread nationwide."},
+  {term:"John C. Calhoun",tier:2,category:"People & Leaders",
+   def:{supported:"A South Carolina senator and vice president who became the leading defender of slavery and states' rights",regular:"South Carolina statesman who served as senator and vice president; leading advocate of nullification, states' rights, and slavery's expansion",challenge:"States' rights and nullification theorist"},
+   hint:"He resigned as Vice President — the first to do so — over his conflict with Jackson on nullification",
+   example:"Calhoun argued slavery was a 'positive good' and that states could nullify federal laws. He became the intellectual architect of Southern defiance."},
+  {term:"Henry Clay",tier:2,category:"People & Leaders",
+   def:{supported:"A Kentucky senator known as the 'Great Compromiser' for repeatedly brokering deals between the North and South",regular:"Kentucky senator and House speaker who negotiated the Missouri Compromise (1820) and Compromise of 1850, earning the title 'Great Compromiser'",challenge:"Antebellum sectional compromise broker"},
+   hint:"Clay was involved in every major sectional compromise from 1820 to 1850",
+   example:"When sectional crises threatened to tear the Union apart, Clay found the middle ground. Three times he brokered major compromises — buying the nation time before the Civil War."},
+  {term:"Wilmot Proviso",tier:3,category:"Events & Legislation",
+   def:{supported:"An 1846 proposal to ban slavery in all territory gained from Mexico — it passed the House but failed in the Senate",regular:"1846 congressional proposal to ban slavery from any territory acquired from Mexico; passed the House twice but failed in the Senate",challenge:"1846 anti-slavery territorial amendment"},
+   hint:"Though it failed, the debate revealed the depth of sectional division",
+   example:"The Mexican-American War raised the question: could slavery expand into new western lands? The Wilmot Proviso said no — and its defeat made clear the Senate would block free-soil expansion."},
+  {term:"free soil",tier:3,category:"Concepts",
+   def:{supported:"The political position that slavery should not be allowed to expand into new western territories",regular:"Political position opposing the extension of slavery into western territories, regardless of whether existing slavery was addressed",challenge:"Territorial anti-expansion doctrine"},
+   hint:"The Free Soil Party ran Martin Van Buren for president in 1848",
+   example:"Many Northerners weren't abolitionists — they just didn't want slavery competing with free white labor in the West. The Free Soil movement merged into the Republican Party by 1856."},
+  {term:"Republican Party",tier:3,category:"Concepts",
+   def:{supported:"A new political party founded in 1854 that opposed the expansion of slavery into new territories",regular:"Political party founded in 1854 in opposition to the Kansas-Nebraska Act; united anti-slavery Whigs, Free Soilers, and Democrats into a sectionally Northern party",challenge:"1854 anti-slavery expansion coalition"},
+   hint:"The party was only 6 years old when Lincoln won the 1860 election",
+   example:"The Kansas-Nebraska Act shattered old party coalitions. The Republican Party united everyone who opposed slavery's expansion — winning the presidency in just 6 years of existence."},
+  {term:"Lincoln-Douglas debates",tier:3,category:"Events & Legislation",
+   def:{supported:"A series of seven debates in 1858 between Abraham Lincoln and Stephen Douglas focused on whether slavery should expand into new territories",regular:"Seven 1858 Illinois Senate debates between Lincoln and Douglas that became a national forum on slavery's expansion and the morality of popular sovereignty",challenge:"1858 Illinois Senate slavery expansion debates"},
+   hint:"Douglas won the Senate seat; Lincoln won the presidency two years later",
+   example:"Lincoln forced Douglas to admit that popular sovereignty could block slavery anywhere — the 'Freeport Doctrine.' Douglas kept his Senate seat but lost the South for 1860."},
+  {term:"Harriet Tubman",tier:3,category:"People & Leaders",
+   def:{supported:"An escaped enslaved woman who returned to the South repeatedly to guide others to freedom on the Underground Railroad",regular:"Escaped enslaved woman who became the most celebrated conductor of the Underground Railroad, making 13 return missions to free approximately 70 people",challenge:"Underground Railroad conductor"},
+   hint:"She threatened to shoot anyone who turned back — and never lost a passenger",
+   example:"Tubman escaped slavery in 1849, then risked her life 13 more times to free others. She was so effective that slaveholders offered a $40,000 bounty for her capture."},
+  {term:"Stephen Douglas",tier:3,category:"People & Leaders",
+   def:{supported:"An Illinois senator who championed popular sovereignty and authored the Kansas-Nebraska Act — he debated Lincoln in 1858",regular:"Illinois Democratic senator who authored the Kansas-Nebraska Act (1854) and championed popular sovereignty as a solution to the slavery question",challenge:"Popular sovereignty advocate and Kansas-Nebraska author"},
+   hint:"His 1860 presidential campaign tried to appeal to both North and South — and satisfied neither",
+   example:"Douglas thought popular sovereignty was a clever compromise. Instead it created Bleeding Kansas, split the Democratic Party in 1860, and helped elect Lincoln."},
+  {term:"Nat Turner's Rebellion",tier:3,category:"Events & Legislation",
+   def:{supported:"An 1831 slave revolt in Virginia led by Nat Turner that killed about 60 white Virginians and led to much harsher slave laws across the South",regular:"1831 Virginia slave insurrection led by Nat Turner in which approximately 60 white Southerners were killed, triggering severe reprisals and tightened slave codes across the South",challenge:"1831 Virginia slave insurrection"},
+   hint:"Virginia's legislature briefly debated emancipation after the rebellion — then decided against it",
+   example:"Turner's rebellion terrified the South. Virginia considered emancipation — then chose the opposite: harsher slave codes, bans on educating enslaved people, and suppression of abolitionist mail."},
+  {term:"Daniel Webster",tier:3,category:"People & Leaders",
+   def:{supported:"A Massachusetts senator who gave a famous speech supporting the Compromise of 1850, arguing that preserving the Union mattered more than opposing slavery",regular:"Massachusetts senator and nationalist orator whose March 7, 1850 speech supporting the Compromise of 1850 prioritized Union over antislavery principles",challenge:"Unionist Compromise of 1850 advocate"},
+   hint:"He was denounced by abolitionists for betraying antislavery principles to preserve the Union",
+   example:"Webster told the Senate: he spoke 'not as a Massachusetts man, nor as a Northern man, but as an American.' His support for the compromise saved it — and ended his presidential ambitions."},
+  {term:"election of 1860",tier:3,category:"Events & Legislation",
+   def:{supported:"The presidential election in which Abraham Lincoln won without carrying a single Southern state — his victory triggered Southern secession",regular:"Presidential election in which Abraham Lincoln, the Republican candidate, won the electoral college without appearing on ballots in most Southern states, triggering secession",challenge:"Sectional fracture election"},
+   hint:"Four candidates split the vote — Lincoln got 40% of the popular vote but a majority of electoral votes",
+   example:"Lincoln won every Northern state. The South voted for Breckinridge or Bell. When Lincoln's name wasn't even on the ballot in 10 Southern states, his victory felt like an invasion."},
+  {term:"Fort Sumter",tier:3,category:"Events & Legislation",
+   def:{supported:"A federal fort in South Carolina that was attacked by Confederate forces in April 1861 — the first battle of the Civil War",regular:"Federal installation in Charleston Harbor whose bombardment by Confederate forces on April 12-13, 1861 began the Civil War",challenge:"Civil War's opening military engagement"},
+   hint:"Lincoln's attempt to resupply the fort forced the South to either let it succeed or fire first",
+   example:"Lincoln cleverly told South Carolina he was only sending food — not weapons — to Fort Sumter. The Confederacy attacked anyway, giving Lincoln the moral high ground when he called for troops."},
+  {term:"Frederick Douglass",tier:4,category:"People & Leaders",
+   def:{supported:"An escaped enslaved man who became the most powerful abolitionist speaker and writer in America",regular:"Formerly enslaved orator, author, and abolitionist leader whose Narrative and speeches made him the most prominent voice against slavery",challenge:"Abolitionist orator and Narrative author"},
+   hint:"His autobiography describing slavery's brutality became an international bestseller",
+   example:"Douglass escaped slavery in 1838 and spent decades arguing slavery's contradiction with American ideals. He met with Lincoln and pushed him toward emancipation."},
+  {term:"Compromise of 1820",tier:4,category:"Events & Legislation",
+   def:{supported:"Another name for the Missouri Compromise — the deal that admitted Missouri as a slave state and Maine as free, and drew the 36-30 line",regular:"Alternative designation for the Missouri Compromise of 1820, establishing Missouri and Maine's admission and setting the territorial slavery boundary at 36 degrees 30",challenge:"Missouri Compromise alternate designation"},
+   hint:"Many exam questions use 'Missouri Compromise' and 'Compromise of 1820' interchangeably",
+   example:"Whether it's called the Compromise of 1820 or the Missouri Compromise, it's the same law — and the same fragile balance that held the country together for a generation."},
+  {term:"'Bleeding Sumner'",tier:4,category:"Events & Legislation",
+   def:{supported:"A violent incident in 1856 when a Southern congressman beat Senator Charles Sumner with a cane on the Senate floor after Sumner delivered an anti-slavery speech",regular:"1856 assault on Senator Charles Sumner by Congressman Preston Brooks in the Senate chamber after Sumner's 'Crime Against Kansas' speech; Sumner's empty seat became an abolitionist symbol",challenge:"1856 Senate chamber assault"},
+   hint:"Southerners sent Brooks congratulatory canes; Northerners displayed Sumner's empty chair",
+   example:"Brooks beat Sumner so severely he couldn't return to his seat for three years. Northerners kept the seat empty as a symbol. Southerners celebrated Brooks. Sectionalism had turned violent."},
+  {term:"William Lloyd Garrison",tier:4,category:"People & Leaders",
+   def:{supported:"A radical abolitionist publisher who founded 'The Liberator' newspaper and demanded the immediate end of slavery",regular:"Radical abolitionist journalist who founded The Liberator (1831) and the American Anti-Slavery Society, demanding immediate emancipation",challenge:"Immediatist abolitionist publisher"},
+   hint:"He burned the Constitution — calling it a 'covenant with death' for protecting slavery",
+   example:"Garrison refused gradual emancipation. He demanded immediate freedom, burned the Constitution, and made abolition a moral crusade. Even many abolitionists thought he went too far."},
+  {term:"Freeport Doctrine",tier:4,category:"Concepts",
+   def:{supported:"Stephen Douglas's argument that territories could block slavery by refusing to pass the local laws needed to enforce it — even if the Supreme Court said slavery was legal",regular:"Douglas's 1858 debate position that territorial legislatures could exclude slavery by withholding protective legislation, despite the Dred Scott ruling",challenge:"Douglas's popular sovereignty and Dred Scott reconciliation"},
+   hint:"It satisfied Illinois voters but cost Douglas Southern Democratic support in 1860",
+   example:"Lincoln trapped Douglas: if Dred Scott said Congress can't ban slavery, can territories? Douglas said yes — by not protecting it. The South never forgave him. It split the Democratic Party in 1860."},
+];
+
+
+const LEVEL_SIZES={1:10,2:20,3:30,4:35};
+const BLITZ_Q={1:10,2:12,3:15,4:15}; // scales with level, capped at 15
+const PRACTICE_Q=10;                  // practice always 10 — focused, not exhausting
+const PASS={review:80,practice:75,blitz:70};
+const TIME={supported:20,regular:15,challenge:10};
+const CIRC=2*Math.PI*23;
+const LS_KEY='edsim_sectionalism_v1';
+
+// ══════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════
+let studentName='',period='',level=0,difficulty='regular',timerOn=true;
+let currentMode=null;
+let questions=[],qIdx=0,score=0,streak=0,bestStreak=0,wrongCount=0,timeoutCount=0,qLog=[];
+let timerInt=null,timeLeft=15,answered=false;
+let fcDeck=[],fcIdx=0,fcKnow=0,fcAlmost=0,fcNope=0,fcFlipped=false;
+// For PDF
+let lastResult=null;
+
+// ══════════════════════════════════════════════
+// PERSISTENCE
+// ══════════════════════════════════════════════
+function ls(){try{return JSON.parse(localStorage.getItem(LS_KEY)||'{}')}catch{return{}}}
+function saveLS(d){try{localStorage.setItem(LS_KEY,JSON.stringify(d))}catch{}}
+function getProg(){const d=ls();return{reviewPct:d.reviewPct||0,practicePct:d.practicePct||0,blitzBest:d.blitzBest||0,stillLearning:d.stillLearning||[]}}
+function setProg(k,v){const d=ls();d[k]=v;saveLS(d)}
+function getStillLearning(){return ls().stillLearning||[]}
+function setStillLearning(a){const d=ls();d.stillLearning=a;saveLS(d)}
+
+// ══════════════════════════════════════════════
+// SETUP
+// ══════════════════════════════════════════════
+window.addEventListener('DOMContentLoaded',()=>{
+  const d=ls();
+  if(d.studentName&&d.level){
+    // Restore last session
+    studentName=d.studentName;period=d.period||'';level=d.level;difficulty=d.difficulty||'regular';
+    document.getElementById('studentName').value=studentName;
+    document.getElementById('periodSel').value=period;
+    setLevel(level,true);setDiff(difficulty,true);
+    validateSetup();
+    showSetupProgress();
+  } else {
+    // Fresh load — pre-highlight default difficulty so nothing looks unselected
+    setDiff('regular',true);
+  }
+});
+
+function setLevel(n,silent){
+  level=n;
+  document.querySelectorAll('.level-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('lbtn-'+n).classList.add('active');
+  if(!silent) validateSetup();
+}
+function setDiff(d,silent){
+  difficulty=d;
+  document.querySelectorAll('.diff-card').forEach(b=>b.classList.remove('active'));
+  document.getElementById('dbtn-'+d).classList.add('active');
+  if(!silent) validateSetup();
+}
+function validateSetup(){
+  studentName=document.getElementById('studentName').value.trim();
+  period=document.getElementById('periodSel').value;
+  const btn=document.getElementById('startBtn');
+  const ok=studentName&&period&&level&&difficulty;
+  btn.disabled=!ok;
+  btn.textContent=ok?'Start studying →':'Enter name, period, level & difficulty to begin';
+  if(ok) showSetupProgress();
+}
+function showSetupProgress(){
+  const p=getProg();
+  const sp=document.getElementById('setupProgress');
+  sp.style.display='';
+  document.getElementById('spReview').style.width=p.reviewPct+'%';
+  document.getElementById('spReviewVal').textContent=p.reviewPct+'%';
+  document.getElementById('spPractice').style.width=p.practicePct+'%';
+  document.getElementById('spPracticeVal').textContent=p.practicePct+'%';
+  document.getElementById('spBlitz').style.width=p.blitzBest+'%';
+  document.getElementById('spBlitzVal').textContent=p.blitzBest+'%';
+}
+function goToModes(){
+  // Save settings
+  const d=ls();d.studentName=studentName;d.period=period;d.level=level;d.difficulty=difficulty;saveLS(d);
+  // Update header
+  document.getElementById('hdrInfo').textContent=studentName+' · Period '+period;
+  // Mode meta
+  document.getElementById('msName').textContent='Level '+level+' · '+(difficulty.charAt(0).toUpperCase()+difficulty.slice(1));
+  document.getElementById('msMeta').textContent=LEVEL_SIZES[level]+' terms · '+studentName+' · Period '+period;
+  document.getElementById('blitzQCount').textContent=BLITZ_Q[level]||10;
+  updateModeLock();
+  showScreen('modeScreen');
+  renderModeProgress();
+}
+function backToSetup(){showScreen('setupScreen')}
+function updateModeLock(){
+  // No gates — students can jump to any mode freely
+  const pc=document.getElementById('mc-practice');
+  const bc=document.getElementById('mc-blitz');
+  pc.classList.remove('locked');
+  bc.classList.remove('locked');
+  pc.querySelector('.locked-badge').style.display='none';
+  bc.querySelector('.locked-badge').style.display='none';
+  document.getElementById('timerToggleBtn').style.display='none';
+}
+function tryMode(m){
+  // Gates removed — go directly
+  startMode(m);
+}
+function renderModeProgress(){
+  const p=getProg();
+  ['Review','Practice','Blitz'].forEach(k=>{
+    const val=k==='Blitz'?p.blitzBest:k==='Review'?p.reviewPct:p.practicePct;
+    document.getElementById('mp'+k).style.width=val+'%';
+    document.getElementById('mp'+k+'Val').textContent=val+'%';
+  });
+}
+function startMode(m){
+  currentMode=m;
+  if(m==='review') initReview();
+  else initGame(m);
+}
+
+// ══════════════════════════════════════════════
+// POOL
+// ══════════════════════════════════════════════
+function getPool(){
+  const size=LEVEL_SIZES[level]||10;
+  return VOCAB.filter(v=>v.tier<=(level));
+  // tier 1=10, tier 2 adds to 20, tier 3 to 28 (we pad), tier 4=35
+}
+// Actually filter by cumulative tier
+function getPoolByLevel(){
+  const size=LEVEL_SIZES[level];
+  // Sort by tier then return first `size`
+  return VOCAB.slice(0,size);
+}
+
+// ══════════════════════════════════════════════
+// REVIEW — FLASHCARDS
+// ══════════════════════════════════════════════
+function initReview(){
+  const pool=getPoolByLevel();
+  const sl=getStillLearning();
+  const priority=pool.filter(v=>sl.includes(v.term));
+  const rest=shuffle(pool.filter(v=>!sl.includes(v.term)));
+  fcDeck=[...priority,...rest];
+  fcIdx=0;fcKnow=0;fcAlmost=0;fcNope=0;fcFlipped=false;
+  showScreen('reviewActivity');
+  renderFC();
+}
+function renderFC(){
+  if(fcIdx>=fcDeck.length){endReview();return;}
+  const card=fcDeck[fcIdx];fcFlipped=false;
+  document.getElementById('fcCard').classList.remove('flipped');
+  document.getElementById('fcTerm').textContent=card.term;
+  document.getElementById('fcDef').textContent=card.def[difficulty];
+  document.getElementById('fcHintShown').style.display='none';
+  document.getElementById('fcHintShown').textContent='';
+  document.getElementById('fcHintBtn').style.display='';
+  document.getElementById('fcRateWrap').style.display='none';
+  document.getElementById('fcKnow').textContent=fcKnow;
+  document.getElementById('fcAlmost').textContent=fcAlmost;
+  document.getElementById('fcNope').textContent=fcNope;
+  document.getElementById('fcLeft').textContent=fcDeck.length-fcIdx;
+  const pct=Math.round((fcIdx/fcDeck.length)*100);
+  document.getElementById('fcProg').style.width=pct+'%';
+  document.getElementById('fcLbl').textContent='Card '+(fcIdx+1)+' of '+fcDeck.length;
+}
+function flipCard(){
+  fcFlipped=!fcFlipped;
+  document.getElementById('fcCard').classList.toggle('flipped',fcFlipped);
+  document.getElementById('fcRateWrap').style.display=fcFlipped?'':'none';
+}
+function showFCHint(e){
+  e.stopPropagation();
+  const card=fcDeck[fcIdx];
+  document.getElementById('fcHintShown').textContent='💡 '+card.hint;
+  document.getElementById('fcHintShown').style.display='';
+  document.getElementById('fcHintBtn').style.display='none';
+}
+function rateCard(rating){
+  const card=fcDeck[fcIdx];
+  const sl=getStillLearning();
+  if(rating==='know'){
+    fcKnow++;
+    const i=sl.indexOf(card.term);if(i>-1)sl.splice(i,1);
+  } else {
+    if(rating==='almost')fcAlmost++;else fcNope++;
+    fcDeck.push(card);
+    if(!sl.includes(card.term))sl.push(card.term);
+  }
+  setStillLearning(sl);
+  fcIdx++;
+  renderFC();
+}
+function endReview(){
+  const total=fcDeck.length;
+  const pct=Math.round((fcKnow/total)*100);
+  setProg('reviewPct',pct);
+  const passed=pct>=PASS.review;
+  const wrap=document.getElementById('fcWrap').parentElement;
+  // Show done message inside fc-shell
+  const shell=document.querySelector('.fc-shell');
+  shell.innerHTML=`
+    <div class="fc-done-msg">
+      <div class="fc-done-title">${passed?'✓ Deck Complete':'Keep Reviewing'}</div>
+      <div class="fc-done-sub">${passed
+        ?'You know '+pct+'% of the deck. You\'re ready to move to Practice.'
+        :'You know '+pct+'% — aim for '+PASS.review+'% before Practice. Missed cards are saved.'
+      }</div>
+    </div>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px">
+      <button class="e-btn e-btn-primary" onclick="startMode('review')">Review again</button>
+      ${passed?'<button class="e-btn e-btn-blue" onclick="startMode(\'practice\')">Practice →</button>':''}
+      <button class="e-btn e-btn-ghost" onclick="goToModes()">Home</button>
+    </div>`;
+}
+
+// ══════════════════════════════════════════════
+// PRACTICE / BLITZ
+// ══════════════════════════════════════════════
+let totalQ=10; // set per game start based on mode + level
+const sessionCorrect=new Set(); // in-memory only — resets when file closes
+function initGame(mode){
+  totalQ=mode==='blitz'?(BLITZ_Q[level]||10):PRACTICE_Q;
+  const pool=getPoolByLevel();
+  const sl=getStillLearning();
+  // Build queue: still-learning first (double weight), then unseen, then session-correct last
+  let priority=[],middle=[],back=[];
+  pool.forEach(v=>{
+    if(sl.includes(v.term)){priority.push(v);priority.push(v);} // double weight
+    else if(sessionCorrect.has(v.term)) back.push(v);
+    else middle.push(v);
+  });
+  const picked=[...shuffle(priority),...shuffle(middle),...shuffle(back)];
+  // Deduplicate preserving order
+  const seen=new Set(),unique=[];
+  for(const v of picked){if(!seen.has(v.term)){seen.add(v.term);unique.push(v);}}
+  const chosen=unique.slice(0,totalQ);
+  questions=chosen.map((item,i)=>{
+    const type=(i%2===0)?'def2term':'term2def';
+    const others=pool.filter(v=>v.term!==item.term);
+    const distractors=shuffle(others).slice(0,3);
+    return{item,type,choices:shuffle([item,...distractors])};
+  });
+  qIdx=0;score=0;streak=0;bestStreak=0;wrongCount=0;timeoutCount=0;qLog=[];
+  document.getElementById('gProg').className='prog-fill '+(mode==='blitz'?'fill-red':'fill-amber');
+  document.getElementById('timerToggleBtn').style.display=mode==='blitz'?'':'none';
+  document.getElementById('timerToggleBtn').textContent='⏱ Timer: '+(timerOn?'ON':'OFF');
+  document.getElementById('timerToggleBtn').className='hdr-btn'+(timerOn?' on':'');
+  showScreen('gameActivity');
+  document.getElementById('remedEl').classList.remove('show');
+  renderQuestion();
+}
+function renderQuestion(){
+  if(qIdx>=questions.length){endGame();return;}
+  answered=false;
+  const q=questions[qIdx];
+  const pct=(qIdx/totalQ)*100;
+  document.getElementById('gProg').style.width=pct+'%';
+  document.getElementById('gProgLbl').textContent=(qIdx+1)+' / '+totalQ;
+  document.getElementById('gScore').textContent=score;
+  document.getElementById('gStreak').textContent=streak;
+  document.getElementById('gBadge').textContent=q.type==='def2term'?'Choose the correct term':'Choose the correct definition';
+  const card=document.getElementById('gCard');
+  card.className='q-card '+q.type;
+  card.style.animation='none';card.offsetHeight;card.style.animation='';
+  document.getElementById('gLbl').textContent=q.type==='def2term'?'Definition':'Term';
+  const qt=document.getElementById('gText');
+  qt.className='q-text'+(q.type==='term2def'?' is-term':'');
+  qt.textContent=q.type==='def2term'?q.item.def[difficulty]:q.item.term;
+  // Hint
+  const hb=document.getElementById('hintBtn');
+  document.getElementById('hintBox').style.display='none';
+  document.getElementById('hintTxt').textContent=q.item.hint;
+  hb.style.display=(difficulty==='supported'||(currentMode==='practice'&&difficulty!=='challenge'))?'block':'none';
+  hb.textContent='Show hint';
+  document.getElementById('remedEl').classList.remove('show');
+  // Answers
+  const grid=document.getElementById('ansGrid');
+  grid.innerHTML='';
+  const keys=['1','2','3','4'];
+  q.choices.forEach((choice,i)=>{
+    const btn=document.createElement('button');
+    btn.className='ans-btn';
+    const span=document.createElement('span');
+    span.textContent=q.type==='def2term'?choice.term:choice.def[difficulty];
+    btn.appendChild(span);
+    const k=document.createElement('span');k.className='kbd';k.textContent=keys[i];btn.appendChild(k);
+    btn.onclick=()=>handleAnswer(i);
+    btn.style.animation='none';grid.appendChild(btn);btn.offsetHeight;btn.style.animation='';
+  });
+  startTimerUI();
+}
+function showGameHint(){
+  document.getElementById('hintBox').style.display='flex';
+  document.getElementById('hintBtn').style.display='none';
+}
+function startTimerUI(){
+  clearInterval(timerInt);
+  const wrap=document.getElementById('timerWrap');
+  const arc=document.getElementById('tArc');
+  const num=document.getElementById('tNum');
+  const useTimer=timerOn&&currentMode==='blitz';
+  if(!useTimer){
+    wrap.classList.add('timer-off');
+    arc.style.strokeDashoffset=0;num.textContent='—';return;
+  }
+  wrap.classList.remove('timer-off');
+  timeLeft=TIME[difficulty]||15;
+  updateTimerUI(timeLeft);
+  timerInt=setInterval(()=>{timeLeft--;updateTimerUI(timeLeft);if(timeLeft<=0){clearInterval(timerInt);handleTimeout();}},1000);
+}
+function updateTimerUI(t){
+  const arc=document.getElementById('tArc');const num=document.getElementById('tNum');
+  const max=TIME[difficulty]||15;
+  arc.style.strokeDashoffset=CIRC*(1-(t/max));
+  num.textContent=t;
+  arc.classList.remove('warn','danger');num.classList.remove('danger');
+  if(t<=2){arc.classList.add('danger');num.classList.add('danger');}
+  else if(t<=Math.ceil(max*0.4)){arc.classList.add('warn');}
+}
+function toggleTimer(){
+  timerOn=!timerOn;
+  const btn=document.getElementById('timerToggleBtn');
+  btn.textContent='⏱ Timer: '+(timerOn?'ON':'OFF');
+  btn.classList.toggle('on',timerOn);
+}
+function handleAnswer(idx){
+  if(answered)return;
+  answered=true;clearInterval(timerInt);
+  const q=questions[qIdx];const chosen=q.choices[idx];const isCorrect=chosen.term===q.item.term;
+  document.querySelectorAll('.ans-btn').forEach(b=>b.disabled=true);
+  if(isCorrect){
+    document.querySelectorAll('.ans-btn')[idx].classList.add('correct');
+    const bonus=(timerOn&&currentMode==='blitz')?Math.max(1,timeLeft):1;
+    score+=bonus;streak++;bestStreak=Math.max(bestStreak,streak);
+    qLog.push({term:q.item.term,result:'correct'});
+    doFlash('correct');animFire();
+  } else {
+    document.querySelectorAll('.ans-btn')[idx].classList.add('wrong');
+    streak=0;wrongCount++;
+    qLog.push({term:q.item.term,result:'wrong',chosen:chosen.term});
+    doFlash('wrong');revealCorrect(q);showRemed(q.item);
+  }
+  document.getElementById('gScore').textContent=score;
+  document.getElementById('gStreak').textContent=streak;
+  setTimeout(()=>{qIdx++;renderQuestion();},isCorrect?700:(currentMode==='practice'?1900:1100));
+}
+function handleTimeout(){
+  if(answered)return;answered=true;
+  streak=0;timeoutCount++;
+  const q=questions[qIdx];
+  qLog.push({term:q.item.term,result:'timeout'});
+  doFlash('wrong');revealCorrect(q);showRemed(q.item);
+  setTimeout(()=>{qIdx++;renderQuestion();},1400);
+}
+function revealCorrect(q){
+  document.querySelectorAll('.ans-btn').forEach((btn,i)=>{
+    if(q.choices[i].term===q.item.term)btn.classList.add('reveal');
+  });
+}
+function showRemed(item){
+  if(currentMode!=='practice')return;
+  const defKey=difficulty==='challenge'?'regular':difficulty;
+  document.getElementById('remedTxt').textContent=item.def[defKey];
+  document.getElementById('remedEx').textContent='Example: '+item.example;
+  document.getElementById('remedEl').classList.add('show');
+}
+function doFlash(type){
+  const el=document.getElementById('ff');
+  el.className='ff '+type;el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'),140);
+}
+function animFire(){
+  const f=document.getElementById('fireMoji');f.classList.remove('hot');void f.offsetWidth;f.classList.add('hot');
+}
+
+// ══════════════════════════════════════════════
+// END GAME
+// ══════════════════════════════════════════════
+function endGame(){
+  clearInterval(timerInt);
+  const correct=totalQ-wrongCount-timeoutCount;
+  const pct=Math.round((correct/totalQ)*100);
+  const passed=pct>=PASS[currentMode];
+  if(currentMode==='practice')setProg('practicePct',pct);
+  if(currentMode==='blitz'){const d=ls();if(pct>(d.blitzBest||0))setProg('blitzBest',pct);}
+  // Update stillLearning and sessionCorrect from this round's results
+  const sl=getStillLearning();
+  qLog.forEach(e=>{
+    if(e.result==='correct'){
+      // Remove from stillLearning — student proved they know it
+      const i=sl.indexOf(e.term);if(i>-1)sl.splice(i,1);
+      // Track as correct this session — deprioritize next round
+      sessionCorrect.add(e.term);
+    } else {
+      // Wrong or timeout — add to stillLearning for next round priority
+      if(!sl.includes(e.term))sl.push(e.term);
+      // Remove from sessionCorrect if it was there
+      sessionCorrect.delete(e.term);
+    }
+  });
+  setStillLearning(sl);
+  let title,grade;
+  if(pct===100){title='Flawless';grade='Perfect — every term confirmed';}
+  else if(pct>=87){title='Sharp';grade='Strong — minor gaps remain';}
+  else if(pct>=70){title='Developing';grade='Review flagged terms below';}
+  else{title='Needs Work';grade='Return to remediation';}
+  document.getElementById('endEye').textContent=currentMode==='blitz'?'Blitz Results':'Practice Results';
+  document.getElementById('endTitle').textContent=title;
+  document.getElementById('endGrade').textContent=grade;
+  const pctEl=document.getElementById('endPct');
+  pctEl.textContent=pct+'%';pctEl.className='n '+(pct===100?'perfect':pct>=70?'great':'bad');
+  document.getElementById('endCorrect').textContent=correct;
+  document.getElementById('endWrong').textContent=wrongCount;
+  document.getElementById('endTO').textContent=timeoutCount;
+  // Fail box
+  const fb=document.getElementById('endFail');
+  const ft=document.getElementById('endFailTxt');
+  if(!passed){
+    fb.style.display='';
+    if(currentMode==='blitz')ft.textContent='You scored '+pct+'% — Challenge Blitz requires '+PASS.blitz+'%. Go back to Practice to review your missed terms, then try again.';
+    else ft.textContent='You scored '+pct+'% — Practice requires '+PASS.practice+'% before Blitz. Your missed terms will surface first next time.';
+  } else {fb.style.display='none';}
+  // Log — wrong/timeout rows are clickable and expand feedback
+  const defKey=difficulty==='challenge'?'regular':difficulty;
+  let logHtml='<div class="log-hdr">Question log · tap a missed term for feedback</div>';
+  qLog.forEach((e,i)=>{
+    const cls=e.result==='correct'?'dc':e.result==='timeout'?'dt':'dw';
+    const status=e.result==='correct'?'✓ Correct':e.result==='timeout'?'⏱ Timed out':'✗ Chose: '+e.chosen;
+    const isClickable=e.result!=='correct';
+    const rowClass='log-row'+(isClickable?' clickable':'');
+    const chevron=isClickable?'<span class="log-chevron">▾</span>':'';
+    logHtml+=`<div class="${rowClass}" id="logrow-${i}" ${isClickable?`onclick="toggleLogRow(${i})"`:''}>
+      <div class="log-dot ${cls}"></div>
+      <div class="log-term">${e.term}</div>
+      <div class="log-status">${status}</div>
+      ${chevron}
+    </div>`;
+    if(isClickable){
+      const correctV=VOCAB.find(v=>v.term===e.term);
+      const chosenV=e.chosen?VOCAB.find(v=>v.term===e.chosen):null;
+      let expandHtml='';
+      if(e.result==='wrong'&&chosenV){
+        // Side-by-side: what they chose vs correct answer
+        expandHtml+=`<div class="log-compare">
+          <div class="log-def-block wrong-block">
+            <div class="log-def-label">You chose</div>
+            <div class="log-def-term">${chosenV.term}</div>
+            <div class="log-def-text">${chosenV.def[defKey]}</div>
+          </div>
+          <div class="log-def-block correct-block">
+            <div class="log-def-label">Correct answer</div>
+            <div class="log-def-term">${correctV.term}</div>
+            <div class="log-def-text">${correctV.def[defKey]}</div>
+          </div>
+        </div>`;
+      } else {
+        // Timeout — just show correct answer
+        expandHtml+=`<div class="log-timeout-block">
+          <div class="log-timeout-label">Correct answer</div>
+          <div class="log-def-term">${correctV.term}</div>
+          <div class="log-def-text">${correctV.def[defKey]}</div>
+        </div>`;
+      }
+      // Hint only on Supported difficulty
+      if(difficulty==='supported'&&correctV.hint){
+        expandHtml+=`<div class="log-hint-line">💡 ${correctV.hint}</div>`;
+      }
+      logHtml+=`<div class="log-expand" id="logexp-${i}">${expandHtml}</div>`;
+    }
+  });
+  document.getElementById('endLog').innerHTML=logHtml;
+  // Buttons
+  let btns=`<button class="e-btn e-btn-primary" onclick="startMode('${currentMode}')">Try again</button>`;
+  if(!passed&&currentMode==='blitz')btns+=`<button class="e-btn e-btn-blue" onclick="startMode('practice')">Go to Practice</button>`;
+  if(passed&&currentMode==='practice')btns+=`<button class="e-btn e-btn-blue" onclick="startMode('blitz')">Blitz →</button>`;
+  btns+=`<button class="e-btn e-btn-ghost" onclick="goToModes()">Home</button>`;
+  btns+=`<button class="e-btn e-btn-pdf" onclick="savePDF()">⬇ Save PDF</button>`;
+  document.getElementById('endBtns').innerHTML=btns;
+  // Store result for PDF
+  lastResult={studentName,period,level,difficulty,mode:currentMode,pct,correct,wrongCount,timeoutCount,passed,qLog:[...qLog]};
+  showScreen('endScreen');
+}
+
+function toggleLogRow(i){
+  const row=document.getElementById('logrow-'+i);
+  const panel=document.getElementById('logexp-'+i);
+  if(!row||!panel)return;
+  const isOpen=panel.classList.contains('open');
+  panel.classList.toggle('open',!isOpen);
+  row.classList.toggle('open',!isOpen);
+}
+
+// ══════════════════════════════════════════════
+// PDF / PRINT
+// ══════════════════════════════════════════════
+function savePDF(){
+  if(!lastResult){return;}
+  const r=lastResult;
+  const pool=getPoolByLevel();
+  const knownTerms=r.qLog.filter(e=>e.result==='correct').map(e=>e.term);
+  const missedTerms=r.qLog.filter(e=>e.result!=='correct').map(e=>e.term);
+  const notAsked=pool.filter(v=>!r.qLog.find(e=>e.term===v.term)).map(v=>v.term);
+  const defKey=r.difficulty==='challenge'?'regular':r.difficulty;
+  const dateStr=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+  const diffLabel=r.difficulty.charAt(0).toUpperCase()+r.difficulty.slice(1);
+  const modeLabel=r.mode==='blitz'?'Challenge Blitz':'Practice';
+  const passLabel=r.passed?'✓ PASSED':'✗ Did not pass';
+  const passThresh=r.mode==='blitz'?PASS.blitz:PASS.practice;
+
+  // Build missed items with definitions
+  let missedHTML='';
+  missedTerms.forEach(term=>{
+    const v=VOCAB.find(x=>x.term===term);if(!v)return;
+    missedHTML+=`<div class="pd-review-item">
+      <div class="pd-review-term">${v.term}</div>
+      <div class="pd-review-def">${v.def[defKey]}</div>
+    </div>`;
+  });
+
+  // Known chips
+  const knownChips=[...knownTerms,...notAsked].map(t=>`<div class="pd-know-chip">${t}</div>`).join('');
+
+  const html=`
+    <div class="pd-header">
+      <div><div class="pd-logo">EdSim</div><div class="pd-unit">Sectionalism · Vocabulary · Level ${r.level} · ${diffLabel}</div></div>
+      <div class="pd-meta">${dateStr}<br>${modeLabel}<br>${passLabel} (${passThresh}% required)</div>
+    </div>
+    <div class="pd-student-box">
+      <div class="pd-field"><div class="pd-field-label">Student</div><div class="pd-field-val">${r.studentName}</div></div>
+      <div class="pd-field"><div class="pd-field-label">Period</div><div class="pd-field-val">${r.period}</div></div>
+      <div class="pd-field"><div class="pd-field-label">Score</div><div class="pd-field-val">${r.pct}%</div></div>
+    </div>
+    <div class="pd-section">
+      <div class="pd-section-title">Results Summary</div>
+      <div class="pd-summary-grid">
+        <div class="pd-stat"><div class="sn">${r.pct}%</div><div class="sl">Score</div></div>
+        <div class="pd-stat"><div class="sn">${r.correct}</div><div class="sl">Correct</div></div>
+        <div class="pd-stat"><div class="sn">${r.wrongCount}</div><div class="sl">Wrong</div></div>
+        <div class="pd-stat"><div class="sn">${r.timeoutCount}</div><div class="sl">Timed out</div></div>
+      </div>
+    </div>
+    ${missedTerms.length?`
+    <div class="pd-section">
+      <div class="pd-section-title needs">Terms to Review (${missedTerms.length})</div>
+      ${missedHTML}
+    </div>`:''}
+    ${knownTerms.length?`
+    <div class="pd-section">
+      <div class="pd-section-title">Terms You Know</div>
+      <div class="pd-know-list">${knownChips}</div>
+    </div>`:''}
+    <div class="pd-footer">
+      <span>EdSim · edsim.io · Sectionalism Vocabulary</span>
+      <span>Level ${r.level} · ${diffLabel} · ${modeLabel}</span>
+    </div>`;
+
+  document.getElementById('printDoc').innerHTML=html;
+  setTimeout(()=>{window.print();},150);
+}
+
+// ══════════════════════════════════════════════
+// RESET
+// ══════════════════════════════════════════════
+function confirmReset(){document.getElementById('resetModal').classList.add('open')}
+function closeModal(){document.getElementById('resetModal').classList.remove('open')}
+function doReset(){
+  try{localStorage.removeItem(LS_KEY);}catch{}
+  closeModal();
+  // Reset all state
+  studentName='';period='';level=0;difficulty='regular';timerOn=true;currentMode=null;lastResult=null;
+  document.getElementById('studentName').value='';
+  document.getElementById('periodSel').value='';
+  document.querySelectorAll('.level-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.diff-card').forEach(b=>b.classList.remove('active'));
+  document.getElementById('dbtn-regular').classList.add('active');
+  document.getElementById('setupProgress').style.display='none';
+  const btn=document.getElementById('startBtn');btn.disabled=true;btn.textContent='Enter name, period, level & difficulty to begin';
+  showScreen('setupScreen');
+}
+
+// ══════════════════════════════════════════════
+// SCREEN NAV
+// ══════════════════════════════════════════════
+function showScreen(id){
+  const screens=['setupScreen','modeScreen','reviewActivity','gameActivity','endScreen'];
+  screens.forEach(s=>{
+    const el=document.getElementById(s);
+    if(!el)return;
+    el.style.display='none';
+    el.classList.remove('active');
+  });
+  const target=document.getElementById(id);
+  if(target){target.style.display='';target.classList.add('active');}
+}
+
+// ══════════════════════════════════════════════
+// UTILS
+// ══════════════════════════════════════════════
+function shuffle(arr){
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  return a;
+}
+document.addEventListener('keydown',e=>{
+  const map={'1':0,'2':1,'3':2,'4':3};
+  if(e.key in map&&document.getElementById('gameActivity').classList.contains('active')){
+    const btns=document.querySelectorAll('.ans-btn');
+    if(btns[map[e.key]]&&!btns[map[e.key]].disabled)handleAnswer(parseInt(map[e.key]));
+  }
+});
+</script>
+</body>
+</html>

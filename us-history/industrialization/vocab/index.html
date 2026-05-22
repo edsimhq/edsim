@@ -1,0 +1,1489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Industrialization &amp; Gilded Age · Vocabulary · EdSim</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Source+Code+Pro:wght@400;500;600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d0b09;--surf:#16130f;--surf2:#1e1a14;--surf3:#26211a;
+  --border:#332c22;--border-hi:#554839;
+  --text:#d9cfc0;--dim:#7a6e5e;--faint:#352e24;
+  --red:#b84c1a;--red-hi:#e06030;--red-glow:rgba(184,76,26,.28);
+  --green:#1a5e38;--green-hi:#2a9e58;--green-glow:rgba(42,158,88,.22);
+  --amber:#c8900a;--amber-hi:#f0a500;--amber-glow:rgba(200,144,10,.22);
+  --steel:#4a6680;--steel-hi:#6a90b0;--steel-glow:rgba(74,102,128,.22);
+  --white:#f0e8dc;
+  --fd:'Oswald',sans-serif;--fm:'Source Code Pro',monospace;--fb:'Libre Baskerville',Georgia,serif;
+  --ease:cubic-bezier(.4,0,.2,1);--r:7px;--rs:4px;
+}
+html,body{min-height:100%}
+body{font-family:var(--fb);background:var(--bg);color:var(--text);display:flex;flex-direction:column}
+
+/* SCANLINES overlay */
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
+  background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.06) 3px,rgba(0,0,0,.06) 4px)}
+
+/* ═══════════════════════════════════════
+   FACTORY BACKGROUND — exposed steel + steam
+═══════════════════════════════════════ */
+.factory-bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+
+/* Structural steel grid */
+.steel-h{position:absolute;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent 0%,var(--border) 15%,var(--border) 85%,transparent 100%);opacity:.4}
+.steel-h:nth-child(1){top:18%}
+.steel-h:nth-child(2){top:42%}
+.steel-h:nth-child(3){top:67%}
+.steel-h:nth-child(4){top:88%}
+
+.steel-v{position:absolute;top:0;bottom:0;width:1px;background:linear-gradient(180deg,transparent 0%,var(--border) 10%,var(--border) 90%,transparent 100%);opacity:.3}
+.steel-v:nth-child(5){left:12%}
+.steel-v:nth-child(6){left:88%}
+
+/* Rivet dots at intersections */
+.rivet{position:absolute;width:6px;height:6px;border-radius:50%;background:var(--border-hi);border:1px solid var(--faint);opacity:.5}
+
+/* Gear — large ambient, bottom right */
+.gear-wrap{position:absolute;bottom:-60px;right:-60px;width:220px;height:220px;opacity:.06}
+.gear-wrap svg{width:100%;height:100%;animation:gearSpin 18s linear infinite}
+@keyframes gearSpin{to{transform:rotate(360deg)}}
+
+/* Gear — small, top left */
+.gear-sm{position:absolute;top:-30px;left:-30px;width:120px;height:120px;opacity:.05}
+.gear-sm svg{width:100%;height:100%;animation:gearSpin 12s linear infinite reverse}
+
+/* Pressure gauges — decorative SVG circles bottom left */
+.gauge-wrap{position:absolute;bottom:24px;left:24px;display:flex;gap:16px;opacity:.12}
+
+/* Steam particles */
+.steam-cont{position:absolute;bottom:0;left:0;right:0;height:100%;pointer-events:none}
+.steam{position:absolute;bottom:0;width:3px;border-radius:50%;background:rgba(255,255,255,.06);animation:steamRise var(--dur,6s) ease-in infinite var(--delay,0s)}
+@keyframes steamRise{
+  0%{transform:translateY(0) translateX(0) scale(.6);opacity:.12}
+  40%{opacity:.08}
+  80%{transform:translateY(-60vh) translateX(var(--drift,20px)) scale(3);opacity:.04}
+  100%{transform:translateY(-80vh) translateX(var(--drift2,30px)) scale(4);opacity:0}
+}
+
+/* Ember sparks on correct answer */
+.ember{position:fixed;pointer-events:none;z-index:10000;border-radius:50%;animation:emberFly .8s ease-out forwards}
+@keyframes emberFly{
+  0%{opacity:1;transform:translate(0,0) scale(1)}
+  100%{opacity:0;transform:translate(var(--ex),var(--ey)) scale(.2)}
+}
+
+/* HEADER */
+.hdr{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  padding:0 22px;height:50px;border-bottom:1px solid var(--border);
+  background:rgba(13,11,9,.95);backdrop-filter:blur(10px);flex-shrink:0}
+.hdr-l{display:flex;align-items:center;gap:11px}
+.logo{font-family:var(--fd);font-size:16px;font-weight:600;color:var(--dim);letter-spacing:.1em}
+.hdiv{width:1px;height:15px;background:var(--border)}
+.unit{font-family:var(--fm);font-size:11px;color:var(--amber);letter-spacing:.14em;text-transform:uppercase}
+.hdr-r{display:flex;align-items:center;gap:8px}
+.hdr-btn{font-family:var(--fm);font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  padding:4px 11px;border-radius:var(--rs);cursor:pointer;min-height:30px;min-width:44px;
+  background:transparent;border:1px solid var(--border);color:var(--dim);transition:all .15s}
+.hdr-btn:hover{border-color:var(--border-hi);color:var(--white)}
+.hdr-btn.danger:hover{border-color:var(--red-hi);color:var(--red-hi)}
+.hdr-btn.on{border-color:var(--amber);color:var(--amber-hi)}
+.hdr-info{font-family:var(--fm);font-size:10px;color:var(--faint);letter-spacing:.06em}
+
+/* MAIN */
+.main{position:relative;z-index:5;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 16px 32px}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes cardIn{from{opacity:0;transform:translateY(-7px)}to{opacity:1;transform:translateY(0)}}
+@keyframes btnIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pumpPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.6)}}
+@keyframes needlePop{0%{transform:rotate(-20deg)}50%{transform:rotate(20deg)}100%{transform:rotate(0deg)}}
+@keyframes tdanger{from{opacity:1}to{opacity:.25}}
+
+/* ═══════════════════════════════════════
+   SETUP SCREEN
+═══════════════════════════════════════ */
+.setup{width:100%;max-width:640px;animation:fadeUp .4s ease both}
+.setup-eye{font-family:var(--fm);font-size:11px;color:var(--dim);letter-spacing:.2em;text-transform:uppercase;text-align:center;margin-bottom:10px}
+.setup-title{font-family:var(--fd);font-size:48px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--white);text-align:center;line-height:1;margin-bottom:4px}
+.setup-sub{font-family:var(--fd);font-size:18px;font-weight:300;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);text-align:center;margin-bottom:26px}
+
+/* Student info */
+.student-row{display:grid;grid-template-columns:1fr auto;gap:10px;margin-bottom:16px}
+.s-field{display:flex;flex-direction:column;gap:5px}
+.s-label{font-family:var(--fm);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+.s-input{font-family:var(--fb);font-size:14px;background:var(--surf2);color:var(--white);
+  border:1px solid var(--border);border-radius:var(--rs);padding:9px 12px;
+  transition:border-color .15s;width:100%}
+.s-input:focus{outline:none;border-color:var(--amber)}
+.s-select{font-family:var(--fb);font-size:14px;background:var(--surf2);color:var(--white);
+  border:1px solid var(--border);border-radius:var(--rs);padding:9px 12px;
+  cursor:pointer;transition:border-color .15s;min-width:80px}
+.s-select:focus{outline:none;border-color:var(--amber)}
+
+/* Levels */
+.setup-section-label{font-family:var(--fm);font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.level-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:20px}
+.level-btn{background:var(--surf2);border:1px solid var(--border);border-radius:var(--r);padding:14px 10px;
+  cursor:pointer;transition:all .15s;text-align:center;position:relative;min-height:44px}
+.level-btn:hover{border-color:var(--border-hi)}
+.level-btn.active{border-color:var(--amber);background:rgba(200,144,10,.1)}
+.level-n{font-family:var(--fd);font-size:28px;font-weight:700;color:var(--white);line-height:1}
+.level-count{font-family:var(--fm);font-size:10px;color:var(--amber);letter-spacing:.08em;margin:3px 0}
+.level-desc{font-size:11.5px;color:var(--dim);line-height:1.4}
+.level-badge{font-family:var(--fm);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--amber-hi);
+  border:1px solid var(--amber);border-radius:3px;padding:2px 6px;display:inline-block;margin-top:5px}
+
+/* Difficulty */
+.diff-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:20px}
+.diff-card{background:var(--surf2);border:1px solid var(--border);border-radius:var(--r);padding:14px 12px;
+  cursor:pointer;transition:all .15s;min-height:44px}
+.diff-card:hover{border-color:var(--border-hi)}
+.diff-card.active{border-color:var(--amber);background:rgba(200,144,10,.1)}
+.diff-name{font-family:var(--fd);font-size:16px;font-weight:600;color:var(--white);margin-bottom:4px}
+.diff-desc{font-size:12px;color:var(--dim);line-height:1.45;margin-bottom:6px}
+.diff-tag{font-family:var(--fm);font-size:10px;color:var(--faint);letter-spacing:.04em}
+
+/* Progress on setup */
+.setup-progress{background:var(--surf2);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;margin-bottom:16px}
+.sp-title{font-family:var(--fm);font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-bottom:10px}
+.sp-rows{display:flex;flex-direction:column;gap:7px}
+.sp-row{display:flex;align-items:center;gap:10px}
+.sp-lbl{font-family:var(--fm);font-size:10px;color:var(--dim);width:72px;flex-shrink:0}
+.sp-track{flex:1;height:5px;background:var(--faint);border-radius:3px;overflow:hidden}
+.sp-fill{height:100%;border-radius:3px;transition:width .4s var(--ease)}
+.sp-val{font-family:var(--fm);font-size:10px;color:var(--amber);width:32px;text-align:right}
+.fill-amber{background:var(--amber)}
+.fill-red{background:var(--red-hi)}
+.fill-blue{background:var(--steel-hi)}
+
+/* Start button */
+.start-btn{font-family:var(--fd);font-size:16px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  width:100%;padding:15px;border-radius:var(--r);cursor:pointer;
+  background:var(--amber);color:#0d0b09;border:none;transition:all .15s;min-height:44px}
+.start-btn:hover:not(:disabled){background:var(--amber-hi)}
+.start-btn:disabled{background:var(--faint);color:var(--dim);cursor:not-allowed}
+
+/* ═══════════════════════════════════════
+   MODE SELECT
+═══════════════════════════════════════ */
+.mode-select{width:100%;max-width:680px;animation:fadeUp .35s ease both}
+.ms-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.ms-name{font-family:var(--fd);font-size:28px;font-weight:700;text-transform:uppercase;color:var(--white)}
+.ms-meta{font-family:var(--fm);font-size:11px;color:var(--dim);margin-top:3px}
+.ms-change{font-family:var(--fm);font-size:11px;color:var(--dim);background:transparent;border:1px solid var(--border);
+  border-radius:var(--rs);padding:6px 12px;cursor:pointer;transition:all .15s;min-height:44px}
+.ms-change:hover{color:var(--white);border-color:var(--border-hi)}
+.ms-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px}
+.ms-card{background:var(--surf2);border:1px solid var(--border);border-radius:var(--r);padding:18px 16px;
+  cursor:pointer;transition:all .15s;position:relative;min-height:44px}
+.ms-card:hover{border-color:var(--border-hi);transform:translateY(-2px)}
+.ms-card.rev:hover{border-color:var(--steel-hi)}
+.ms-card.prac:hover{border-color:var(--amber-hi)}
+.ms-card.blitz:hover{border-color:var(--red-hi)}
+.ms-icon{font-size:24px;margin-bottom:8px}
+.ms-card-name{font-family:var(--fd);font-size:18px;font-weight:600;text-transform:uppercase;color:var(--white);margin-bottom:5px}
+.ms-card-desc{font-size:12px;color:var(--dim);line-height:1.5;margin-bottom:8px}
+.ms-card-meta{font-family:var(--fm);font-size:10px;color:var(--faint);letter-spacing:.05em}
+.locked-badge{display:none}
+
+.ms-prog{background:var(--surf2);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px}
+.ms-prog-rows{display:flex;flex-direction:column;gap:7px}
+.ms-pi{display:flex;align-items:center;gap:10px}
+.ms-pi-lbl{font-family:var(--fm);font-size:10px;color:var(--dim);width:72px;flex-shrink:0}
+.ms-pi-bar{flex:1;height:5px;background:var(--faint);border-radius:3px;overflow:hidden}
+.ms-pi-fill{height:100%;border-radius:3px;transition:width .4s var(--ease)}
+.ms-pi-val{font-family:var(--fm);font-size:10px;color:var(--amber);width:32px;text-align:right}
+
+/* ═══════════════════════════════════════
+   ACTIVITY WRAPPER
+═══════════════════════════════════════ */
+.activity{width:100%;max-width:660px;animation:fadeUp .35s ease both;display:none}
+.activity.active{display:block}
+.back-btn{font-family:var(--fm);font-size:11px;color:var(--dim);background:transparent;border:1px solid var(--border);
+  border-radius:var(--rs);padding:6px 12px;cursor:pointer;transition:all .15s;margin-bottom:16px;display:inline-block;min-height:44px}
+.back-btn:hover{color:var(--white);border-color:var(--border-hi)}
+.prog-row{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.prog-track{flex:1;height:6px;background:var(--faint);border-radius:3px;overflow:hidden}
+.prog-fill{height:100%;border-radius:3px;transition:width .4s var(--ease)}
+.prog-lbl{font-family:var(--fm);font-size:11px;color:var(--dim);white-space:nowrap}
+
+/* ═══════════════════════════════════════
+   FLASHCARDS
+═══════════════════════════════════════ */
+.fc-shell{display:flex;flex-direction:column;align-items:center;gap:16px}
+.fc-piles{display:flex;gap:20px;justify-content:center;flex-wrap:wrap}
+.fc-pile{text-align:center}
+.pn{font-family:var(--fd);font-size:24px;font-weight:700;color:var(--white)}
+.pl{font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.08em;text-transform:uppercase}
+.fc-wrap{width:100%;max-width:560px;height:210px;perspective:1000px;cursor:pointer}
+.fc-card{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform .45s var(--ease)}
+.fc-card.flipped{transform:rotateY(180deg)}
+.fc-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--r);
+  background:var(--surf2);border:1px solid var(--border);display:flex;flex-direction:column;
+  align-items:center;justify-content:center;padding:24px;gap:8px;text-align:center}
+.fc-back{transform:rotateY(180deg);background:var(--surf3);border-color:var(--amber)}
+.fc-lbl{font-family:var(--fm);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.fc-term{font-family:var(--fd);font-size:28px;font-weight:600;color:var(--white);line-height:1.15}
+.fc-def-text{font-size:14px;color:var(--text);line-height:1.55}
+.fc-hint-btn{font-family:var(--fm);font-size:10px;color:var(--dim);background:transparent;border:1px solid var(--border);
+  border-radius:var(--rs);padding:4px 10px;cursor:pointer;transition:all .15s;min-height:44px}
+.fc-hint-btn:hover{color:var(--amber-hi);border-color:var(--amber)}
+.fc-hint-shown{font-family:var(--fm);font-size:12px;color:var(--amber-hi);text-align:center}
+.fc-flip-hint{font-family:var(--fm);font-size:10px;color:var(--faint);letter-spacing:.06em;position:absolute;bottom:10px}
+.fc-rate{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.fc-rate-btn{font-family:var(--fm);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  padding:9px 18px;border-radius:var(--rs);cursor:pointer;border:1px solid;transition:all .15s;min-height:44px}
+.fc-know{background:transparent;border-color:var(--green-hi);color:var(--green-hi)}
+.fc-know:hover{background:rgba(42,158,88,.12)}
+.fc-almost{background:transparent;border-color:var(--amber);color:var(--amber-hi)}
+.fc-almost:hover{background:rgba(200,144,10,.1)}
+.fc-nope{background:transparent;border-color:var(--dim);color:var(--dim)}
+.fc-nope:hover{border-color:var(--red-hi);color:var(--red-hi)}
+.fc-done-msg{text-align:center;padding:20px 0}
+.fc-done-title{font-family:var(--fd);font-size:28px;font-weight:700;color:var(--white);margin-bottom:8px}
+.fc-done-sub{font-size:14px;color:var(--dim);line-height:1.5}
+
+/* ═══════════════════════════════════════
+   GAME
+═══════════════════════════════════════ */
+.hud{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.hud-score{font-family:var(--fd);font-size:22px;font-weight:700;color:var(--white)}
+.hud-score span{color:var(--amber-hi)}
+.hud-streak{font-family:var(--fm);font-size:12px;color:var(--dim);display:flex;align-items:center;gap:5px}
+.fire{display:inline-block;transition:transform .2s}
+.fire.hot{animation:pumpPulse .3s ease}
+
+.timer-wrap{position:relative;width:52px;height:52px}
+.t-svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
+.t-track{fill:none;stroke:var(--faint);stroke-width:4}
+.t-arc{fill:none;stroke:var(--amber);stroke-width:4;stroke-linecap:round;
+  stroke-dasharray:144.51;stroke-dashoffset:0;transition:stroke-dashoffset .9s linear,stroke .3s}
+.t-arc.warn{stroke:var(--red-hi)}
+.t-arc.danger{stroke:var(--red-hi);animation:tdanger .4s ease infinite alternate}
+.t-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-family:var(--fm);font-size:14px;font-weight:600;color:var(--dim)}
+.t-num.danger{color:var(--red-hi)}
+.timer-wrap.timer-off .t-arc{stroke:var(--faint)}
+
+.remed{background:var(--surf2);border:1px solid var(--amber);border-radius:var(--r);padding:13px 15px;
+  margin-bottom:12px;display:none;animation:fadeUp .25s ease both}
+.remed.show{display:block}
+.remed-title{font-family:var(--fm);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);margin-bottom:6px}
+.remed-txt{font-size:13.5px;color:var(--text);line-height:1.55}
+.remed-ex{font-size:12.5px;color:var(--dim);margin-top:6px;line-height:1.5;font-style:italic}
+
+.q-badge{font-family:var(--fm);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-bottom:8px}
+.q-card{background:var(--surf2);border:1px solid var(--border);border-radius:var(--r);padding:22px 20px;
+  margin-bottom:12px;animation:cardIn .25s ease both}
+.q-card.def2term{border-top:2px solid var(--amber)}
+.q-card.term2def{border-top:2px solid var(--steel-hi)}
+.q-lbl{font-family:var(--fm);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-bottom:8px}
+.q-text{font-size:16px;color:var(--text);line-height:1.55}
+.q-text.is-term{font-family:var(--fd);font-size:26px;font-weight:600;color:var(--white)}
+.hint-reveal-btn{font-family:var(--fm);font-size:10px;color:var(--dim);background:transparent;
+  border:1px solid var(--faint);border-radius:var(--rs);padding:4px 10px;cursor:pointer;
+  margin-top:10px;transition:all .15s;display:none;min-height:44px}
+.hint-reveal-btn:hover{border-color:var(--amber);color:var(--amber-hi)}
+.q-hint{display:none;align-items:flex-start;gap:8px;margin-top:8px;
+  background:var(--surf3);border:1px solid var(--border);border-radius:var(--rs);padding:10px 12px}
+.hint-txt{font-size:12.5px;color:var(--dim);line-height:1.5}
+
+.ans-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.ans-btn{background:var(--surf2);border:1px solid var(--border);border-radius:var(--r);padding:12px 14px;
+  cursor:pointer;text-align:left;transition:all .12s;display:flex;align-items:flex-start;justify-content:space-between;
+  gap:8px;animation:btnIn .2s ease both;min-height:44px}
+.ans-btn:hover:not(:disabled){border-color:var(--border-hi);background:var(--surf3)}
+.ans-btn span{font-size:13.5px;color:var(--text);line-height:1.45;flex:1}
+.ans-btn .kbd{font-family:var(--fm);font-size:10px;color:var(--faint);background:var(--faint);
+  border-radius:3px;padding:2px 5px;flex-shrink:0;margin-top:2px}
+.ans-btn:disabled{cursor:default}
+.ans-btn.correct{border-color:var(--green-hi);background:rgba(42,158,88,.12)}
+.ans-btn.correct span{color:var(--green-hi)}
+.ans-btn.wrong{border-color:var(--red-hi);background:rgba(184,76,26,.12)}
+.ans-btn.wrong span{color:var(--red-hi)}
+.ans-btn.reveal{border-color:var(--steel-hi);background:rgba(74,102,128,.12)}
+.ans-btn.reveal span{color:var(--steel-hi)}
+
+/* ═══════════════════════════════════════
+   END SCREEN
+═══════════════════════════════════════ */
+.end{width:100%;max-width:600px;animation:fadeUp .35s ease both;display:none}
+.end.active{display:block}
+.end-eye{font-family:var(--fm);font-size:11px;color:var(--dim);letter-spacing:.18em;text-transform:uppercase;margin-bottom:8px}
+.end-title{font-family:var(--fd);font-size:40px;font-weight:700;text-transform:uppercase;color:var(--white);margin-bottom:4px}
+.end-grade{font-size:14px;color:var(--dim);margin-bottom:16px}
+.end-stats{display:flex;gap:16px;margin-bottom:16px;flex-wrap:wrap}
+.es{background:var(--surf2);border:1px solid var(--border);border-radius:var(--r);padding:12px 16px;flex:1;min-width:80px;text-align:center}
+.es .n{font-family:var(--fd);font-size:28px;font-weight:700;color:var(--white)}
+.es .n.perfect{color:var(--green-hi)}
+.es .n.great{color:var(--amber-hi)}
+.es .n.bad{color:var(--red-hi)}
+.es .l{font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.08em;text-transform:uppercase}
+.end-fail{background:var(--surf2);border:1px solid var(--red);border-radius:var(--r);padding:13px 15px;margin-bottom:12px}
+.end-fail-title{font-family:var(--fm);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--red-hi);margin-bottom:5px}
+.end-fail-txt{font-size:13px;color:var(--dim);line-height:1.5}
+.end-log{margin-bottom:16px}
+.log-hdr{font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+.log-row{display:flex;align-items:center;gap:8px;padding:8px 0;border-top:1px solid var(--faint);font-size:13px}
+.log-row.clickable{cursor:pointer}
+.log-row.clickable:hover{color:var(--white)}
+.log-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.dc{background:var(--green-hi)}.dw{background:var(--red-hi)}.dt{background:var(--dim)}
+.log-term{font-family:var(--fd);font-size:14px;color:var(--white);flex:1}
+.log-status{font-family:var(--fm);font-size:11px;color:var(--dim);flex-shrink:0}
+.log-chevron{color:var(--dim);margin-left:4px;transition:transform .2s}
+.log-row.open .log-chevron{transform:rotate(180deg)}
+.log-expand{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.log-expand.open{max-height:400px}
+.log-compare{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:10px 0 6px}
+.log-def-block{background:var(--surf3);border-radius:var(--rs);padding:10px 12px;border:1px solid var(--border)}
+.wrong-block{border-color:rgba(184,76,26,.3)}
+.correct-block{border-color:rgba(42,158,88,.3)}
+.log-def-label{font-family:var(--fm);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin-bottom:4px}
+.log-def-term{font-family:var(--fd);font-size:14px;color:var(--white);margin-bottom:4px}
+.log-def-text{font-size:12.5px;color:var(--dim);line-height:1.4}
+.log-timeout-block{padding:10px 0 6px}
+.log-timeout-label{font-family:var(--fm);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin-bottom:4px}
+.log-hint-line{font-family:var(--fm);font-size:12px;color:var(--amber-hi);padding:6px 0}
+.end-btns{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+.e-btn{font-family:var(--fm);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  padding:9px 16px;border-radius:var(--rs);cursor:pointer;border:1px solid;transition:all .15s;min-height:44px}
+.e-btn-primary{background:var(--amber);color:#0d0b09;border-color:var(--amber)}
+.e-btn-primary:hover{background:var(--amber-hi);border-color:var(--amber-hi)}
+.e-btn-blue{background:transparent;border-color:var(--steel-hi);color:var(--steel-hi)}
+.e-btn-blue:hover{background:rgba(74,102,128,.15)}
+.e-btn-ghost{background:transparent;border-color:var(--border);color:var(--dim)}
+.e-btn-ghost:hover{border-color:var(--border-hi);color:var(--white)}
+.e-btn-pdf{background:transparent;border-color:var(--border);color:var(--dim)}
+.e-btn-pdf:hover{border-color:var(--amber);color:var(--amber-hi)}
+
+/* FLASH */
+.ff{position:fixed;inset:0;pointer-events:none;z-index:200;opacity:0;transition:opacity .08s}
+.ff.show{opacity:1}
+.ff.correct{background:rgba(42,158,88,.07)}
+.ff.wrong{background:rgba(184,76,26,.08)}
+
+/* ═══════════════════════════════════════
+   PRINT
+═══════════════════════════════════════ */
+#printDoc{display:none}
+@media print{
+  body>*:not(#printDoc){display:none!important}
+  #printDoc{display:block!important;font-family:'Libre Baskerville',Georgia,serif;color:#111;padding:24px}
+  .pd-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;padding-bottom:12px;border-bottom:2px solid #333}
+  .pd-logo{font-family:'Oswald',sans-serif;font-size:18px;font-weight:700;letter-spacing:.08em}
+  .pd-unit{font-size:12px;color:#666;letter-spacing:.04em;margin-top:2px}
+  .pd-meta{font-size:12px;color:#666;text-align:right;line-height:1.5}
+  .pd-student-box{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;background:#f7f7f5;border:1px solid #ddd;border-radius:6px;padding:12px 16px;margin-bottom:16px}
+  .pd-field-label{font-family:'Source Code Pro',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#888;margin-bottom:2px}
+  .pd-field-val{font-size:15px;font-weight:700;color:#111}
+  .pd-section{margin-bottom:16px}
+  .pd-section-title{font-family:'Oswald',sans-serif;font-size:14px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#333;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid #eee}
+  .pd-section-title.needs{color:#8b2e2e}
+  .pd-summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:8px}
+  .pd-stat{background:#f5f5f5;border:1px solid #ddd;border-radius:4px;padding:10px;text-align:center}
+  .pd-stat .sn{font-family:'Oswald',sans-serif;font-size:26px;font-weight:700;color:#111}
+  .pd-stat .sl{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#888;font-family:'Source Code Pro',monospace;margin-top:2px}
+  .pd-know-list{display:flex;flex-wrap:wrap;gap:6px}
+  .pd-know-chip{background:#e8f5e9;border:1px solid #a5d6a7;border-radius:3px;padding:4px 10px;font-size:12.5px;color:#1b5e20}
+  .pd-review-item{background:#fff8f8;border:1px solid #ffcdd2;border-radius:4px;padding:11px 13px;margin-bottom:8px}
+  .pd-review-term{font-family:'Oswald',sans-serif;font-size:15px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#8b2e2e;margin-bottom:4px}
+  .pd-review-def{font-size:13px;color:#333;line-height:1.55}
+  .pd-footer{border-top:1px solid #ddd;padding-top:10px;margin-top:20px;display:flex;justify-content:space-between;font-size:11px;color:#aaa;font-family:'Source Code Pro',monospace}
+}
+
+/* ═══════════════════════════════════════
+   CONFIRM MODAL
+═══════════════════════════════════════ */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(5,4,3,.85);z-index:100;
+  align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.modal-overlay.open{display:flex}
+.modal{background:var(--surf2);border:1px solid var(--border);border-radius:var(--r);padding:26px;max-width:380px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.modal h2{font-family:var(--fd);font-size:20px;color:var(--white);margin-bottom:8px}
+.modal p{font-size:13.5px;color:var(--dim);line-height:1.6;margin-bottom:18px}
+.modal-btns{display:flex;gap:8px;justify-content:flex-end}
+
+/* RESPONSIVE */
+@media(max-width:620px){
+  .setup-title{font-size:34px}.level-grid{grid-template-columns:repeat(2,1fr)}.diff-grid{grid-template-columns:1fr}
+  .ms-cards{grid-template-columns:1fr}.ans-grid{grid-template-columns:1fr}
+  .end-stats{flex-wrap:wrap}.es{min-width:80px}.hdr{padding:0 12px}
+  .student-row{grid-template-columns:1fr}.log-compare{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- FACTORY BACKGROUND -->
+<div class="factory-bg">
+  <div class="steel-h"></div>
+  <div class="steel-h"></div>
+  <div class="steel-h"></div>
+  <div class="steel-h"></div>
+  <div class="steel-v"></div>
+  <div class="steel-v"></div>
+
+  <!-- Rivet decorations -->
+  <div class="rivet" style="top:18%;left:12%;transform:translate(-50%,-50%)"></div>
+  <div class="rivet" style="top:18%;left:88%;transform:translate(-50%,-50%)"></div>
+  <div class="rivet" style="top:42%;left:12%;transform:translate(-50%,-50%)"></div>
+  <div class="rivet" style="top:42%;left:88%;transform:translate(-50%,-50%)"></div>
+  <div class="rivet" style="top:67%;left:12%;transform:translate(-50%,-50%)"></div>
+  <div class="rivet" style="top:67%;left:88%;transform:translate(-50%,-50%)"></div>
+
+  <!-- Large background gear — bottom right -->
+  <div class="gear-wrap">
+    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <path fill="#c8900a" d="M50,30 a20,20 0 1,1 0,40 a20,20 0 1,1 0,-40z
+        M43,10 h14 l2,12 a22,22 0 0,1 8,4.8l11.5-4.5 9.9,9.9 -4.5,11.5 A22,22 0 0,1 89,51v1
+        l-12,2.2 a22,22 0 0,1 -4.8,8l4.5,11.5 -9.9,9.9 -11.5,-4.5 A22,22 0 0,1 50,89
+        l-2,0 -2.2,-12 A22,22 0 0,1 37,72.8l-11.5,4.5 -9.9,-9.9 4.5,-11.5 A22,22 0 0,1 11,48
+        l0,-2 12,-2.2 A22,22 0 0,1 27.2,36l-4.5,-11.5 9.9,-9.9 11.5,4.5 A22,22 0 0,1 50,17z"/>
+    </svg>
+  </div>
+
+  <!-- Small gear — top left -->
+  <div class="gear-sm">
+    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <path fill="#c8900a" d="M50,30 a20,20 0 1,1 0,40 a20,20 0 1,1 0,-40z
+        M43,10 h14 l2,12 a22,22 0 0,1 8,4.8l11.5-4.5 9.9,9.9 -4.5,11.5 A22,22 0 0,1 89,51v1
+        l-12,2.2 a22,22 0 0,1 -4.8,8l4.5,11.5 -9.9,9.9 -11.5,-4.5 A22,22 0 0,1 50,89
+        l-2,0 -2.2,-12 A22,22 0 0,1 37,72.8l-11.5,4.5 -9.9,-9.9 4.5,-11.5 A22,22 0 0,1 11,48
+        l0,-2 12,-2.2 A22,22 0 0,1 27.2,36l-4.5,-11.5 9.9,-9.9 11.5,4.5 A22,22 0 0,1 50,17z"/>
+    </svg>
+  </div>
+
+  <!-- Steam particles -->
+  <div class="steam-cont">
+    <div class="steam" style="left:8%;--dur:7s;--delay:0s;--drift:18px;--drift2:28px"></div>
+    <div class="steam" style="left:15%;--dur:9s;--delay:2s;--drift:-12px;--drift2:-22px"></div>
+    <div class="steam" style="left:22%;--dur:6s;--delay:4s;--drift:22px;--drift2:35px"></div>
+    <div class="steam" style="left:80%;--dur:8s;--delay:1s;--drift:-18px;--drift2:-30px"></div>
+    <div class="steam" style="left:88%;--dur:10s;--delay:3.5s;--drift:14px;--drift2:24px"></div>
+    <div class="steam" style="left:93%;--dur:7.5s;--delay:6s;--drift:-10px;--drift2:-20px"></div>
+  </div>
+</div>
+
+<header class="hdr">
+  <div class="hdr-l">
+    <span class="logo">EdSim</span><div class="hdiv"></div>
+    <span class="unit">Industrialization &amp; Gilded Age · Vocabulary</span>
+  </div>
+  <div class="hdr-r">
+    <span class="hdr-info" id="hdrInfo"></span>
+    <button class="hdr-btn" id="timerToggleBtn" onclick="toggleTimer()" style="display:none" aria-label="Toggle timer">⏱ Timer: ON</button>
+    <button class="hdr-btn danger" onclick="confirmReset()" aria-label="Reset all progress">↺ Reset</button>
+  </div>
+</header>
+
+<div class="main" id="mainArea">
+
+  <!-- PRINT DOC (hidden until print) -->
+  <div id="printDoc"></div>
+
+  <!-- ══ SETUP ══ -->
+  <div id="setupScreen" class="setup">
+    <div class="setup-eye">EdSim · US History Regents</div>
+    <div class="setup-title">Industrialization</div>
+    <div class="setup-sub">Gilded Age · Vocabulary Study</div>
+
+    <div class="student-row">
+      <div class="s-field">
+        <div class="s-label">Student name</div>
+        <input class="s-input" id="studentName" type="text" placeholder="First and last name" oninput="validateSetup()" aria-label="Student name"/>
+      </div>
+      <div class="s-field">
+        <div class="s-label">Period</div>
+        <select class="s-select" id="periodSel" onchange="validateSetup()" aria-label="Class period">
+          <option value="">—</option>
+          <option>1</option><option>2</option><option>3</option>
+          <option>4</option><option>5</option><option>6</option>
+          <option>7</option><option>8</option><option>9</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="setup-section-label" style="margin-bottom:8px">Choose your starting level</div>
+    <div class="level-grid" id="levelGrid">
+      <div class="level-btn" onclick="setLevel(1)" id="lbtn-1" role="button" tabindex="0">
+        <div class="level-n">1</div>
+        <div class="level-count">10 terms</div>
+        <div class="level-desc">Core concepts every student must know</div>
+      </div>
+      <div class="level-btn" onclick="setLevel(2)" id="lbtn-2" role="button" tabindex="0">
+        <div class="level-n">2</div>
+        <div class="level-count">20 terms</div>
+        <div class="level-desc">Business practices and reform movements</div>
+      </div>
+      <div class="level-btn" onclick="setLevel(3)" id="lbtn-3" role="button" tabindex="0">
+        <div class="level-n">3</div>
+        <div class="level-count">30 terms</div>
+        <div class="level-desc">Labor, politics, and Gilded Age figures</div>
+      </div>
+      <div class="level-btn" onclick="setLevel(4)" id="lbtn-4" role="button" tabindex="0">
+        <div class="level-n">4</div>
+        <div class="level-count">35 terms</div>
+        <div class="level-desc">Full set — all people, events, and concepts</div>
+        <div class="level-badge">Confident? Start here</div>
+      </div>
+    </div>
+
+    <div class="setup-section-label" style="margin-bottom:8px">Choose difficulty</div>
+    <div class="diff-grid">
+      <div class="diff-card" onclick="setDiff('supported')" id="dbtn-supported" role="button" tabindex="0">
+        <div class="diff-name">Supported</div>
+        <div class="diff-desc">Plain-language definitions. Hints available on every question.</div>
+        <div class="diff-tag">Best for: building foundational understanding</div>
+      </div>
+      <div class="diff-card active" onclick="setDiff('regular')" id="dbtn-regular" role="button" tabindex="0">
+        <div class="diff-name">Regular</div>
+        <div class="diff-desc">Full academic definitions. One hint per question in Practice.</div>
+        <div class="diff-tag">Best for: standard Regents prep</div>
+      </div>
+      <div class="diff-card" onclick="setDiff('challenge')" id="dbtn-challenge" role="button" tabindex="0">
+        <div class="diff-name">Challenge</div>
+        <div class="diff-desc">Short clues only. No hints. Timed pressure in Blitz mode.</div>
+        <div class="diff-tag">Best for: confident, high-achieving students</div>
+      </div>
+    </div>
+
+    <div class="setup-progress" id="setupProgress" style="display:none">
+      <div class="sp-title">Your progress</div>
+      <div class="sp-rows">
+        <div class="sp-row"><div class="sp-lbl">Review</div><div class="sp-track"><div class="sp-fill fill-blue" id="spReview" style="width:0%"></div></div><div class="sp-val" id="spReviewVal">0%</div></div>
+        <div class="sp-row"><div class="sp-lbl">Practice</div><div class="sp-track"><div class="sp-fill fill-amber" id="spPractice" style="width:0%"></div></div><div class="sp-val" id="spPracticeVal">0%</div></div>
+        <div class="sp-row"><div class="sp-lbl">Blitz best</div><div class="sp-track"><div class="sp-fill fill-red" id="spBlitz" style="width:0%"></div></div><div class="sp-val" id="spBlitzVal">0%</div></div>
+      </div>
+    </div>
+
+    <button class="start-btn" id="startBtn" onclick="goToModes()" disabled>Select name, period, level &amp; difficulty to begin</button>
+  </div>
+
+  <!-- ══ MODE SELECT ══ -->
+  <div id="modeScreen" class="mode-select" style="display:none">
+    <div class="ms-header">
+      <div class="ms-info">
+        <div class="ms-name" id="msName">Industrialization</div>
+        <div class="ms-meta" id="msMeta"></div>
+      </div>
+      <button class="ms-change" onclick="backToSetup()">← Change settings</button>
+    </div>
+    <div class="ms-cards">
+      <div class="ms-card rev" id="mc-review" onclick="startMode('review')">
+        <div class="ms-icon">🃏</div>
+        <div class="ms-card-name">Review</div>
+        <div class="ms-card-desc">Flashcards with flip, hint, and self-rating. Missed cards resurface until you know them.</div>
+        <div class="ms-card-meta">Self-paced · Flashcards · Track progress</div>
+        <div class="locked-badge"></div>
+      </div>
+      <div class="ms-card prac" id="mc-practice" onclick="tryMode('practice')">
+        <div class="ms-icon">⚙️</div>
+        <div class="ms-card-name">Practice</div>
+        <div class="ms-card-desc">10 multiple choice questions. Hints available. Missed terms reviewed with examples.</div>
+        <div class="ms-card-meta">Untimed · 10 questions · Remediation</div>
+        <div class="locked-badge"></div>
+      </div>
+      <div class="ms-card blitz" id="mc-blitz" onclick="tryMode('blitz')">
+        <div class="ms-icon">🔥</div>
+        <div class="ms-card-name">Challenge Blitz</div>
+        <div class="ms-card-desc">Timed. Alternating question types. Speed scoring. Pass 70% — or return to Practice.</div>
+        <div class="ms-card-meta">Timed · <span id="blitzQCount">10</span> questions · Speed scoring</div>
+        <div class="locked-badge"></div>
+      </div>
+    </div>
+    <div class="ms-prog">
+      <div class="ms-prog-rows">
+        <div class="ms-pi"><div class="ms-pi-lbl">Review</div><div class="ms-pi-bar"><div class="ms-pi-fill fill-blue" id="mpReview" style="width:0%"></div></div><div class="ms-pi-val" id="mpReviewVal">0%</div></div>
+        <div class="ms-pi"><div class="ms-pi-lbl">Practice</div><div class="ms-pi-bar"><div class="ms-pi-fill fill-amber" id="mpPractice" style="width:0%"></div></div><div class="ms-pi-val" id="mpPracticeVal">0%</div></div>
+        <div class="ms-pi"><div class="ms-pi-lbl">Blitz best</div><div class="ms-pi-bar"><div class="ms-pi-fill fill-red" id="mpBlitz" style="width:0%"></div></div><div class="ms-pi-val" id="mpBlitzVal">0%</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ REVIEW ══ -->
+  <div class="activity" id="reviewActivity">
+    <button class="back-btn" onclick="goToModes()">← Back to modes</button>
+    <div class="prog-row">
+      <div class="prog-track"><div class="prog-fill fill-blue" id="fcProg" style="width:0%"></div></div>
+      <div class="prog-lbl" id="fcLbl">Card 1</div>
+    </div>
+    <div class="fc-shell">
+      <div class="fc-piles">
+        <div class="fc-pile"><div class="pn" id="fcKnow">0</div><div class="pl">Know it</div></div>
+        <div class="fc-pile"><div class="pn" id="fcAlmost">0</div><div class="pl">Almost</div></div>
+        <div class="fc-pile"><div class="pn" id="fcNope">0</div><div class="pl">Still learning</div></div>
+        <div class="fc-pile"><div class="pn" id="fcLeft">0</div><div class="pl">Remaining</div></div>
+      </div>
+      <div class="fc-wrap" onclick="flipCard()" id="fcWrap">
+        <div class="fc-card" id="fcCard">
+          <div class="fc-face fc-front">
+            <div class="fc-lbl">Term</div>
+            <div class="fc-term" id="fcTerm"></div>
+            <button class="fc-hint-btn" id="fcHintBtn" onclick="showFCHint(event)">Show hint</button>
+            <div class="fc-hint-shown" id="fcHintShown" style="display:none"></div>
+            <div class="fc-flip-hint">Click card to see definition</div>
+          </div>
+          <div class="fc-face fc-back">
+            <div class="fc-lbl">Definition</div>
+            <div class="fc-def-text" id="fcDef"></div>
+          </div>
+        </div>
+      </div>
+      <div id="fcRateWrap" style="display:none">
+        <div class="fc-rate">
+          <button class="fc-rate-btn fc-know" onclick="rateCard('know')">Know it ✓</button>
+          <button class="fc-rate-btn fc-almost" onclick="rateCard('almost')">Almost</button>
+          <button class="fc-rate-btn fc-nope" onclick="rateCard('nope')">Still learning</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ GAME (Practice / Blitz) ══ -->
+  <div class="activity" id="gameActivity">
+    <button class="back-btn" onclick="goToModes()">← Back to modes</button>
+    <div class="prog-row">
+      <div class="prog-track"><div class="prog-fill" id="gProg" style="width:0%"></div></div>
+      <div class="prog-lbl" id="gProgLbl">1 / 8</div>
+    </div>
+    <div class="hud">
+      <div class="hud-score">Score <span id="gScore">0</span></div>
+      <div class="timer-wrap" id="timerWrap">
+        <svg class="t-svg" viewBox="0 0 52 52" aria-hidden="true">
+          <circle class="t-track" cx="26" cy="26" r="23"/>
+          <circle class="t-arc" id="tArc" cx="26" cy="26" r="23"/>
+        </svg>
+        <div class="t-num" id="tNum" aria-live="polite">—</div>
+      </div>
+      <div class="hud-streak"><span class="fire" id="fireMoji">⚙️</span><span id="gStreak">0</span> streak</div>
+    </div>
+    <div class="remed" id="remedEl">
+      <div class="remed-title">🔧 Let's review this one</div>
+      <div class="remed-txt" id="remedTxt"></div>
+      <div class="remed-ex" id="remedEx"></div>
+    </div>
+    <div class="q-badge" id="gBadge"></div>
+    <div class="q-card" id="gCard">
+      <div class="q-lbl" id="gLbl"></div>
+      <div class="q-text" id="gText"></div>
+      <button class="hint-reveal-btn" id="hintBtn" onclick="showGameHint()">Show hint</button>
+      <div class="q-hint" id="hintBox"><span>💡</span><span class="hint-txt" id="hintTxt"></span></div>
+    </div>
+    <div class="ans-grid" id="ansGrid"></div>
+  </div>
+
+  <!-- ══ END ══ -->
+  <div class="end" id="endScreen" style="display:none">
+    <div class="end-eye" id="endEye"></div>
+    <div class="end-title" id="endTitle"></div>
+    <div class="end-grade" id="endGrade"></div>
+    <div class="end-stats">
+      <div class="es"><div class="n" id="endCorrect">0</div><div class="l">Correct</div></div>
+      <div class="es"><div class="n" id="endWrong">0</div><div class="l">Wrong</div></div>
+      <div class="es"><div class="n" id="endTO">0</div><div class="l">Timed out</div></div>
+      <div class="es"><div class="n" id="endPct">0%</div><div class="l">Score</div></div>
+    </div>
+    <div class="end-fail" id="endFail">
+      <div class="end-fail-title">Not quite — let's keep working</div>
+      <div class="end-fail-txt" id="endFailTxt"></div>
+    </div>
+    <div class="end-log" id="endLog"></div>
+    <div class="end-btns" id="endBtns"></div>
+  </div>
+
+</div>
+
+<div class="ff" id="ff"></div>
+
+<!-- Reset confirm modal -->
+<div class="modal-overlay" id="resetModal" role="dialog" aria-modal="true">
+  <div class="modal">
+    <h2>Reset all progress?</h2>
+    <p>This will clear your scores, progress, and "still learning" card list for this device. This cannot be undone.</p>
+    <div class="modal-btns">
+      <button class="e-btn e-btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="e-btn e-btn-primary" onclick="doReset()">Reset everything</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════
+// VOCAB — 35 terms, Industrialization & Gilded Age
+// Tier 1 (10) → Tier 2 (20) → Tier 3 (30) → Tier 4 (35)
+// ══════════════════════════════════════════════
+const VOCAB=[
+  // ── TIER 1 — 10 core terms ──
+  {term:"industrialization",tier:1,category:"Economic Change",
+   def:{supported:"The shift from hand-made goods on farms to machine-made products in factories",regular:"The process by which an economy transforms from primarily agricultural to manufacturing-based, driven by technology and wage labor",challenge:"Agrarian-to-manufacturing economic transformation"},
+   hint:"U.S. industrialized rapidly after the Civil War — especially in the Northeast and Midwest",
+   example:"Before industrialization, most Americans made goods by hand at home or in small shops. After, massive factories with machines did the work — and millions moved to cities to get jobs."},
+
+  {term:"laissez-faire",tier:1,category:"Economic Policy",
+   def:{supported:"The idea that the government should leave businesses alone and not interfere with the economy",regular:"Economic doctrine holding that government should not regulate or interfere with private enterprise, allowing market forces to operate freely",challenge:"Non-interventionist economic doctrine"},
+   hint:"French phrase meaning 'let do' — let business do what it wants",
+   example:"During the Gilded Age, the government mostly stayed out of business. Corporations could set any wages and prices they wanted — that was laissez-faire in action."},
+
+  {term:"monopoly",tier:1,category:"Business Practices",
+   def:{supported:"When one company takes over an entire industry and has no real competition",regular:"Complete domination of a market by a single firm, eliminating competition and allowing the monopolist to control prices",challenge:"Single-firm market domination"},
+   hint:"John D. Rockefeller's Standard Oil controlled 90% of U.S. oil refining by 1880",
+   example:"Standard Oil bought out or undercut every rival until it controlled nearly all oil refining in America. With no competition, Rockefeller could set any price he wanted."},
+
+  {term:"robber baron",tier:1,category:"Gilded Age Figures",
+   def:{supported:"A nickname for the super-rich businessmen of the Gilded Age who used ruthless tactics to crush competitors and get rich",regular:"Pejorative term for the powerful industrialists of the Gilded Age who amassed fortunes through ruthless business practices and exploitation of workers",challenge:"Exploitative Gilded Age industrialist"},
+   hint:"Rockefeller (oil), Carnegie (steel), Vanderbilt (railroads), Morgan (banking)",
+   example:"Critics called men like Rockefeller 'robber barons' because they got rich by paying workers poverty wages, crushing competitors, and bribing politicians."},
+
+  {term:"Gilded Age",tier:1,category:"Historical Period",
+   def:{supported:"The late 1800s period of rapid industrial growth, great wealth for a few, and serious problems hidden beneath the surface",regular:"Term coined by Mark Twain for the era roughly 1870–1900, characterized by rapid economic growth, extreme inequality, political corruption, and social conflict",challenge:"Post-Civil War era of industrial prosperity and inequality"},
+   hint:"Twain called it 'gilded' — gold on the outside, corrupt underneath",
+   example:"The Gilded Age looks shiny: new railroads, steel mills, millionaires. But beneath that glitter were dangerous factories, child labor, corrupt politicians, and desperate poverty."},
+
+  {term:"transcontinental railroad",tier:1,category:"Technology & Innovation",
+   def:{supported:"The railroad completed in 1869 that connected the East and West coasts of the United States for the first time",regular:"Railroad network spanning the continent, completed in 1869 when the Central Pacific and Union Pacific lines met at Promontory Summit, Utah",challenge:"1869 coast-to-coast rail connection"},
+   hint:"Chinese immigrants did most of the dangerous western construction; Irish immigrants built east-to-west",
+   example:"Before 1869, crossing the country took months by wagon. The transcontinental railroad made it possible in days — reshaping where people settled and how goods moved."},
+
+  {term:"urbanization",tier:1,category:"Social Change",
+   def:{supported:"The movement of large numbers of people from rural farms to cities",regular:"The demographic shift in which growing proportions of a population move from rural areas to cities, driven by industrial job opportunities",challenge:"Rural-to-urban population migration"},
+   hint:"U.S. urban population went from 20% in 1860 to over 40% by 1900",
+   example:"Factories needed workers — and workers needed to live near factories. Millions left farms and flooded into cities like New York, Chicago, and Pittsburgh, creating rapid and often chaotic urban growth."},
+
+  {term:"immigration",tier:1,category:"Social Change",
+   def:{supported:"The arrival of millions of people from other countries who came to the U.S. looking for work and a better life",regular:"The mass influx of people from Southern and Eastern Europe, Asia, and elsewhere who arrived in the U.S. between 1880–1920 to meet industrial labor demands",challenge:"Late 19th–early 20th century mass population influx"},
+   hint:"From 1880–1920, over 20 million immigrants arrived — mostly from Southern and Eastern Europe",
+   example:"As factories boomed, they needed cheap labor. Millions of Italians, Poles, Greeks, and others poured into American cities, often settling in ethnic neighborhoods and taking dangerous, low-paying jobs."},
+
+  {term:"labor union",tier:1,category:"Labor Movement",
+   def:{supported:"An organization of workers who join together to demand better pay, safer conditions, and shorter hours from their employers",regular:"Worker organization that collectively bargains with employers over wages, hours, and working conditions",challenge:"Collective worker bargaining organization"},
+   hint:"The AFL (American Federation of Labor) was the dominant union of the Gilded Age, led by Samuel Gompers",
+   example:"Individual workers had no power to demand better wages. By forming a union, workers could threaten to all walk off the job at once — forcing employers to negotiate."},
+
+  {term:"strike",tier:1,category:"Labor Movement",
+   def:{supported:"When workers refuse to work until their employer agrees to improve their pay or conditions",regular:"Collective work stoppage by employees to compel employers to meet demands regarding wages, hours, or working conditions",challenge:"Collective work cessation to force concessions"},
+   hint:"The Great Railroad Strike of 1877 was the first major national labor strike in U.S. history",
+   example:"When Carnegie's Homestead Steel workers demanded fair pay in 1892, they went on strike. Carnegie hired armed Pinkerton guards — and when the state militia arrived, workers lost."},
+
+  // ── TIER 2 — adds 10 more (total 20) ──
+  {term:"trust",tier:2,category:"Business Practices",
+   def:{supported:"A secret arrangement where competing companies hand control to the same board of directors to end competition and fix prices",regular:"Business combination in which stockholders of competing companies transfer control to a central board of trustees, eliminating competition",challenge:"Corporate consolidation mechanism eliminating competition"},
+   hint:"Rockefeller used the trust structure to unite 40 different oil companies under his control",
+   example:"Rockefeller got competing oil companies to turn over their stock to Standard Oil's board. Now one board ran them all — prices went up, competition disappeared."},
+
+  {term:"vertical integration",tier:2,category:"Business Practices",
+   def:{supported:"When one company owns every step of making its product — from raw materials to the finished good to how it's sold",regular:"Business strategy of controlling all stages of production, from raw materials through manufacturing to distribution",challenge:"Supply chain ownership consolidation"},
+   hint:"Carnegie owned steel mills, iron ore mines, coal mines, and the railroads that connected them",
+   example:"Carnegie didn't just make steel — he owned the iron ore mines, the coal to power the furnaces, and the ships and railroads to transport everything. No middleman meant lower costs."},
+
+  {term:"horizontal integration",tier:2,category:"Business Practices",
+   def:{supported:"When one company buys out or merges with all its competitors in the same industry",regular:"Business strategy of acquiring or merging with all competitors in the same stage of production to dominate a market",challenge:"Competitor acquisition for market dominance"},
+   hint:"Rockefeller's Standard Oil used horizontal integration to control 90% of oil refining",
+   example:"Rockefeller's strategy: buy out rival oil refineries or undercut their prices until they sold to him. Once they were all gone, Standard Oil set the price — with no rivals to compete."},
+
+  {term:"Social Darwinism",tier:2,category:"Ideas & Ideology",
+   def:{supported:"The idea that rich people are successful because they are naturally superior — and that helping the poor only makes society weaker",regular:"Application of Darwin's 'survival of the fittest' to human society, used to justify economic inequality and oppose social welfare programs",challenge:"Biological determinism applied to socioeconomic hierarchy"},
+   hint:"Herbert Spencer coined the phrase 'survival of the fittest' — Gilded Age elites loved the idea",
+   example:"Social Darwinists said: Rockefeller is rich because he's naturally superior. The poor are poor because they're weak. Government help for the poor would only slow human progress."},
+
+  {term:"Gospel of Wealth",tier:2,category:"Ideas & Ideology",
+   def:{supported:"Andrew Carnegie's idea that the rich had a duty to use their money to help society through charity and public giving",regular:"Carnegie's 1889 essay arguing that the wealthy have a moral obligation to use their fortunes philanthropically for the public good",challenge:"Carnegie's philanthropic obligation doctrine"},
+   hint:"Carnegie gave away $350 million — building 2,500 public libraries among other gifts",
+   example:"Carnegie believed the rich didn't deserve their wealth if they just kept it. His answer: give it back — libraries, universities, concert halls — improving society with his fortune."},
+
+  {term:"Homestead Strike",tier:2,category:"Labor Events",
+   def:{supported:"A violent 1892 strike at Carnegie's Homestead Steel plant that ended badly for workers when the government sided with Carnegie",regular:"1892 labor conflict at Carnegie Steel's Homestead, PA plant, where workers struck over wage cuts and Carnegie hired Pinkerton agents, resulting in violent clashes and a broken union",challenge:"1892 Carnegie Steel labor suppression"},
+   hint:"Carnegie was in Scotland — Henry Clay Frick managed the brutal crackdown",
+   example:"Homestead workers struck when Carnegie cut wages. Frick brought in 300 armed Pinkertons. When the state militia arrived, the union was broken — workers had to accept Carnegie's terms."},
+
+  {term:"Sherman Antitrust Act",tier:2,category:"Government & Regulation",
+   def:{supported:"The first federal law (1890) trying to break up monopolies and protect competition in business",regular:"1890 federal law prohibiting business combinations that restrain trade or create monopolies, the first major federal regulatory effort against big business",challenge:"1890 monopoly prohibition statute"},
+   hint:"Poorly enforced at first — actually used more against labor unions than against corporations",
+   example:"Congress passed the Sherman Antitrust Act to break up monopolies — but courts rarely enforced it against corporations. Instead, they used it to declare strikes illegal 'restraint of trade.'"},
+
+  {term:"Populist Party",tier:2,category:"Political Reform",
+   def:{supported:"A political party in the 1890s that represented struggling farmers demanding government control of railroads, more money in circulation, and direct election of senators",regular:"Third party movement of the 1890s representing agrarian interests, calling for railroad regulation, currency inflation, graduated income tax, and direct democracy reforms",challenge:"1890s agrarian reform third party"},
+   hint:"Also called the People's Party — nominated William Jennings Bryan for president in 1896",
+   example:"Farmers felt crushed by railroad rates and debt. The Populist Party demanded the government take control of railroads, coin more silver to raise prices, and let people vote directly on laws."},
+
+  {term:"Pullman Strike",tier:2,category:"Labor Events",
+   def:{supported:"A nationwide 1894 railroad strike that President Cleveland shut down by sending federal troops — showing the government favored business over workers",regular:"1894 nationwide railroad strike sparked by wage cuts at the Pullman Palace Car Company, broken by federal troops and a court injunction obtained by President Cleveland",challenge:"1894 federal intervention against railroad labor"},
+   hint:"Eugene Debs led the strike — he was jailed; the Supreme Court upheld the injunction in In re Debs",
+   example:"When Pullman cut wages but not rents for company housing, workers struck. The strike spread nationwide. Cleveland sent troops — not to help workers, but to get mail moving again."},
+
+  {term:"muckraker",tier:2,category:"Progressive Era Reform",
+   def:{supported:"Journalists and writers who exposed corruption in business and government to push for reforms",regular:"Investigative journalists of the Progressive Era who exposed corporate corruption, political graft, and social problems to build public pressure for reform",challenge:"Progressive Era investigative journalists"},
+   hint:"Teddy Roosevelt called them muckrakers — 'raking the muck' of society's worst problems",
+   example:"Ida Tarbell exposed Standard Oil's corrupt practices. Upton Sinclair's 'The Jungle' revealed unsanitary meatpacking conditions. Their reporting forced real change."},
+
+  // ── TIER 3 — adds 10 more (total 30) ──
+  {term:"Andrew Carnegie",tier:3,category:"Gilded Age Figures",
+   def:{supported:"Scottish immigrant who built the largest steel empire in the world and later gave away most of his fortune",regular:"Scottish-born industrialist who dominated the U.S. steel industry through vertical integration and later became history's greatest philanthropist",challenge:"Steel magnate and progressive philanthropist"},
+   hint:"His company became U.S. Steel — Morgan paid him $480 million for it in 1901",
+   example:"Carnegie started as a poor immigrant and became the world's richest man by applying vertical integration to steel. Then he spent the last 20 years of his life giving his fortune away."},
+
+  {term:"John D. Rockefeller",tier:3,category:"Gilded Age Figures",
+   def:{supported:"The man who built Standard Oil into a monopoly controlling 90% of U.S. oil refining, making himself the world's wealthiest person",regular:"Founder of Standard Oil who used horizontal integration, secret railroad rebates, and trusts to control 90% of U.S. oil refining",challenge:"Standard Oil monopolist and trust pioneer"},
+   hint:"Net worth adjusted for inflation: approximately $400 billion — the wealthiest American in history",
+   example:"Rockefeller undercut rivals' prices until they went broke or sold out, then secretly negotiated lower railroad rates that his competitors couldn't get — eliminating them one by one."},
+
+  {term:"Samuel Gompers",tier:3,category:"Labor Leaders",
+   def:{supported:"Founder and long-time president of the American Federation of Labor (AFL), who focused unions on practical goals like better wages and shorter hours",regular:"Founder and longtime president of the AFL who championed 'pure and simple' unionism — focusing on wages, hours, and conditions rather than broad political reform",challenge:"AFL founder and pure-and-simple unionism advocate"},
+   hint:"Gompers led the AFL for nearly 40 years — pragmatic, not revolutionary",
+   example:"Gompers rejected radical politics. He focused on what workers could actually win: an eight-hour day, higher wages, better conditions. Slow, steady gains — not revolution."},
+
+  {term:"Eugene Debs",tier:3,category:"Labor Leaders",
+   def:{supported:"Labor leader who organized the Pullman Strike in 1894 and later ran for president as a Socialist five times",regular:"Founder of the American Railway Union who led the 1894 Pullman Strike, was jailed by federal court injunction, and became the leading voice of American socialism",challenge:"Railway union leader and socialist presidential candidate"},
+   hint:"He ran for president from prison in 1920 and won nearly a million votes",
+   example:"Debs believed the whole economic system was rigged against workers. After being jailed for the Pullman Strike, he ran for president on a Socialist platform — workers across America voted for him."},
+
+  {term:"Chinese Exclusion Act",tier:3,category:"Immigration & Nativism",
+   def:{supported:"The 1882 law that banned Chinese workers from coming to the United States — the first law in U.S. history to bar an entire group based on race",regular:"1882 federal law prohibiting Chinese laborers from immigrating to the United States — the first race-based federal immigration restriction",challenge:"1882 racially targeted immigration ban"},
+   hint:"Not repealed until 1943 — during WWII, when China became a U.S. ally",
+   example:"After Chinese workers helped build the transcontinental railroad, white workers feared competition. Congress responded with the Chinese Exclusion Act — banning Chinese laborers entirely."},
+
+  {term:"Social Gospel",tier:3,category:"Reform Movements",
+   def:{supported:"A Christian reform movement that said the church had a duty to fix poverty, child labor, and inequality — not just save souls",regular:"Late 19th century Protestant movement applying Christian ethics to social problems, advocating for labor rights, poverty relief, and social reform",challenge:"Christian ethics applied to industrial social reform"},
+   hint:"Jane Addams's Hull House in Chicago was the Social Gospel in practice",
+   example:"Social Gospel activists said Christianity demanded action on poverty and injustice. They built settlement houses, pushed for child labor laws, and demanded government help the poor."},
+
+  {term:"tenement",tier:3,category:"Urban Life",
+   def:{supported:"Crowded, dangerous apartment buildings where poor immigrants lived in cities — often with many families sharing small, dark rooms",regular:"Overcrowded, poorly ventilated urban apartment buildings that housed immigrant and working-class families in squalid conditions",challenge:"Overcrowded urban immigrant housing"},
+   hint:"Jacob Riis's 'How the Other Half Lives' (1890) exposed tenement conditions with photographs",
+   example:"In a New York City tenement, a family of eight might share one tiny room with no windows or running water. Disease spread rapidly — and landlords got rich doing nothing to improve conditions."},
+
+  {term:"Tammany Hall",tier:3,category:"Political Corruption",
+   def:{supported:"New York City's corrupt Democratic political machine that traded government jobs and favors for votes — especially immigrant votes",regular:"New York City Democratic political organization that controlled city government through patronage, corruption, and delivery of services to immigrant communities",challenge:"NYC Democratic patronage machine"},
+   hint:"Boss Tweed stole an estimated $25–200 million from NYC taxpayers in the 1860s–70s",
+   example:"Tammany Hall politicians helped immigrants find jobs and housing — and in return, immigrants voted for Tammany candidates. The machine controlled everything: jobs, contracts, judges."},
+
+  {term:"Interstate Commerce Act",tier:3,category:"Government & Regulation",
+   def:{supported:"The 1887 law that created the first federal commission to regulate railroad rates and prevent unfair practices",regular:"1887 law establishing the Interstate Commerce Commission (ICC) to regulate railroad rates, prohibit price discrimination, and ensure rates were 'reasonable and just'",challenge:"1887 federal railroad rate regulation statute"},
+   hint:"The ICC was the first federal regulatory agency — though early enforcement was very weak",
+   example:"Farmers were furious that railroads charged different rates to different customers. Congress created the ICC to enforce fair rates — but railroads found ways around it for years."},
+
+  {term:"Ida Tarbell",tier:3,category:"Muckrakers & Reform"},
+
+  // ── TIER 4 — adds 5 more (total 35) ──
+  {term:"Haymarket Affair",tier:4,category:"Labor Events",
+   def:{supported:"A 1886 labor rally in Chicago where someone threw a bomb at police — leading to a crackdown on unions and anarchists",regular:"1886 Chicago labor rally that turned violent when a bomb killed police officers, leading to the trial and execution of labor activists and setting back the union movement",challenge:"1886 Chicago anarchist-labor bombing incident"},
+   hint:"Became a symbol of both labor's power and anti-labor backlash — May 1 (May Day) commemorates it",
+   example:"Workers were striking for an 8-hour day when a bomb exploded in Haymarket Square. Police arrested labor leaders — most had nothing to do with the bomb. Four were hanged anyway."},
+
+  {term:"Bessemer process",tier:4,category:"Technology & Innovation",
+   def:{supported:"A new cheap way to make steel by blasting air through molten iron — making steel affordable for railroads and skyscrapers",regular:"Industrial process invented in the 1850s that produced large quantities of steel cheaply by blowing air through molten pig iron to remove impurities",challenge:"Pneumatic steel production innovation"},
+   hint:"Made Carnegie's steel empire possible — steel rails lasted 20x longer than iron ones",
+   example:"Before Bessemer, steel was expensive and rare. After, Carnegie could make steel rails cheaply enough to rebuild America's entire railroad network — and the skyscraper was born."},
+
+  {term:"William Jennings Bryan",tier:4,category:"Political Reform",
+   def:{supported:"Populist politician who gave the famous 'Cross of Gold' speech demanding the government coin silver to help poor farmers and workers",regular:"Nebraska congressman who became the Populist and Democratic presidential candidate in 1896, champion of free silver and agrarian interests against Eastern financial power",challenge:"Free silver populist presidential candidate"},
+   hint:"'You shall not crucify mankind upon a cross of gold' — 1896 Democratic Convention",
+   example:"Bryan electrified farmers with his Cross of Gold speech, arguing the gold standard was crushing them. He lost to McKinley — backed by big business — marking the end of the Populist movement's peak."},
+
+  {term:"Hull House",tier:4,category:"Reform Movements",
+   def:{supported:"A settlement house in Chicago founded by Jane Addams that provided services to poor immigrants and pushed for social reforms",regular:"Chicago settlement house founded by Jane Addams in 1889 that offered education, childcare, and social services to immigrants while advocating for labor reform and women's rights",challenge:"Addams's progressive immigrant service center"},
+   hint:"Jane Addams won the Nobel Peace Prize in 1931 — the first American woman to do so",
+   example:"Hull House gave immigrant women English classes, childcare, and job training. But Addams didn't just help — she used what she learned there to lobby for child labor laws and workers' rights."},
+
+  {term:"Pendleton Act",tier:4,category:"Government & Regulation",
+   def:{supported:"The 1883 law that required government jobs to be given based on merit through exams — not as political rewards",regular:"1883 reform law establishing a merit-based civil service system, requiring competitive examinations for federal jobs and ending the spoils system of patronage appointments",challenge:"1883 civil service merit system reform"},
+   hint:"Passed after President Garfield was assassinated by a disappointed office-seeker",
+   example:"Before Pendleton, winning political parties handed out government jobs to supporters as rewards — the spoils system. After Garfield's assassination, Congress created a merit exam system instead."},
+];
+
+// Patch missing Ida Tarbell entry
+VOCAB.find(v=>v.term==="Ida Tarbell").def={
+  supported:"Journalist who published a detailed investigation of Standard Oil's corrupt tactics — helping break up Rockefeller's monopoly",
+  regular:"Investigative journalist whose 19-part 1902 exposé of Standard Oil's monopolistic practices contributed to the company's 1911 Supreme Court breakup",
+  challenge:"Standard Oil muckraking journalist"
+};
+VOCAB.find(v=>v.term==="Ida Tarbell").hint="Her father's oil business was destroyed by Standard Oil — her investigation was personal";
+VOCAB.find(v=>v.term==="Ida Tarbell").example="Tarbell spent two years documenting every dirty tactic Standard Oil used to crush rivals. Her reporting was so thorough that the Supreme Court used it — and Standard Oil was broken up into 34 companies.";
+
+const LEVEL_SIZES={1:10,2:20,3:30,4:35};
+const BLITZ_Q={1:10,2:12,3:15,4:15};
+const PRACTICE_Q=10;
+const PASS={review:80,practice:75,blitz:70};
+const TIME={supported:20,regular:15,challenge:10};
+const CIRC=2*Math.PI*23;
+const LS_KEY='edsim_industrial_v1';
+
+// ══════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════
+let studentName='',period='',level=0,difficulty='regular',timerOn=true;
+let currentMode=null;
+let questions=[],qIdx=0,score=0,streak=0,bestStreak=0,wrongCount=0,timeoutCount=0,qLog=[];
+let timerInt=null,timeLeft=15,answered=false;
+let fcDeck=[],fcIdx=0,fcKnow=0,fcAlmost=0,fcNope=0,fcFlipped=false,fcDeckOriginalSize=0;
+let lastResult=null;
+
+// ══════════════════════════════════════════════
+// PERSISTENCE
+// ══════════════════════════════════════════════
+function ls(){try{return JSON.parse(localStorage.getItem(LS_KEY)||'{}')}catch{return{}}}
+function saveLS(d){try{localStorage.setItem(LS_KEY,JSON.stringify(d))}catch{}}
+function getProg(){const d=ls();return{reviewPct:d.reviewPct||0,practicePct:d.practicePct||0,blitzBest:d.blitzBest||0,stillLearning:d.stillLearning||[]}}
+function setProg(k,v){const d=ls();d[k]=v;saveLS(d)}
+function getStillLearning(){return ls().stillLearning||[]}
+function setStillLearning(a){const d=ls();d.stillLearning=a;saveLS(d)}
+
+// ══════════════════════════════════════════════
+// SETUP
+// ══════════════════════════════════════════════
+window.addEventListener('DOMContentLoaded',()=>{
+  const d=ls();
+  if(d.studentName&&d.level){
+    studentName=d.studentName;period=d.period||'';level=d.level;difficulty=d.difficulty||'regular';
+    document.getElementById('studentName').value=studentName;
+    document.getElementById('periodSel').value=period;
+    setLevel(level,true);setDiff(difficulty,true);
+    validateSetup();showSetupProgress();
+  } else {
+    setDiff('regular',true);
+  }
+  // Keyboard nav for level/diff buttons
+  document.querySelectorAll('.level-btn,.diff-card').forEach(el=>{
+    el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();el.click();}});
+  });
+});
+
+function setLevel(n,silent){
+  level=n;
+  document.querySelectorAll('.level-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('lbtn-'+n).classList.add('active');
+  if(!silent)validateSetup();
+}
+function setDiff(d,silent){
+  difficulty=d;
+  document.querySelectorAll('.diff-card').forEach(b=>b.classList.remove('active'));
+  document.getElementById('dbtn-'+d).classList.add('active');
+  if(!silent)validateSetup();
+}
+function validateSetup(){
+  studentName=document.getElementById('studentName').value.trim();
+  period=document.getElementById('periodSel').value;
+  const btn=document.getElementById('startBtn');
+  const ok=studentName&&period&&level&&difficulty;
+  btn.disabled=!ok;
+  btn.textContent=ok?'Start studying →':'Enter name, period, level & difficulty to begin';
+  if(ok)showSetupProgress();
+}
+function showSetupProgress(){
+  const p=getProg();
+  const sp=document.getElementById('setupProgress');
+  sp.style.display='';
+  document.getElementById('spReview').style.width=p.reviewPct+'%';
+  document.getElementById('spReviewVal').textContent=p.reviewPct+'%';
+  document.getElementById('spPractice').style.width=p.practicePct+'%';
+  document.getElementById('spPracticeVal').textContent=p.practicePct+'%';
+  document.getElementById('spBlitz').style.width=p.blitzBest+'%';
+  document.getElementById('spBlitzVal').textContent=p.blitzBest+'%';
+}
+function goToModes(){
+  const d=ls();d.studentName=studentName;d.period=period;d.level=level;d.difficulty=difficulty;saveLS(d);
+  document.getElementById('hdrInfo').textContent=studentName+' · Period '+period;
+  document.getElementById('msName').textContent='Level '+level+' · '+(difficulty.charAt(0).toUpperCase()+difficulty.slice(1));
+  document.getElementById('msMeta').textContent=LEVEL_SIZES[level]+' terms · '+studentName+' · Period '+period;
+  document.getElementById('blitzQCount').textContent=BLITZ_Q[level]||10;
+  updateModeLock();showScreen('modeScreen');renderModeProgress();
+}
+function backToSetup(){showScreen('setupScreen')}
+function updateModeLock(){
+  ['practice','blitz'].forEach(m=>{
+    const c=document.getElementById('mc-'+m);
+    c.classList.remove('locked');
+    c.querySelector('.locked-badge').style.display='none';
+  });
+  document.getElementById('timerToggleBtn').style.display='none';
+}
+function tryMode(m){startMode(m)}
+function renderModeProgress(){
+  const p=getProg();
+  ['Review','Practice','Blitz'].forEach(k=>{
+    const val=k==='Blitz'?p.blitzBest:k==='Review'?p.reviewPct:p.practicePct;
+    document.getElementById('mp'+k).style.width=val+'%';
+    document.getElementById('mp'+k+'Val').textContent=val+'%';
+  });
+}
+function startMode(m){
+  currentMode=m;
+  if(m==='review')initReview();else initGame(m);
+}
+
+// ══════════════════════════════════════════════
+// POOL
+// ══════════════════════════════════════════════
+function getPoolByLevel(){
+  const size=LEVEL_SIZES[level];
+  return VOCAB.slice(0,size);
+}
+
+// ══════════════════════════════════════════════
+// REVIEW — FLASHCARDS
+// ══════════════════════════════════════════════
+function initReview(){
+  const pool=getPoolByLevel();
+  const sl=getStillLearning();
+  const priority=pool.filter(v=>sl.includes(v.term));
+  const rest=shuffle(pool.filter(v=>!sl.includes(v.term)));
+  fcDeck=[...priority,...rest];
+  fcDeckOriginalSize=pool.length;
+  fcIdx=0;fcKnow=0;fcAlmost=0;fcNope=0;fcFlipped=false;
+  showScreen('reviewActivity');renderFC();
+}
+function renderFC(){
+  if(fcIdx>=fcDeck.length){endReview();return;}
+  const card=fcDeck[fcIdx];fcFlipped=false;
+  document.getElementById('fcCard').classList.remove('flipped');
+  document.getElementById('fcTerm').textContent=card.term;
+  document.getElementById('fcDef').textContent=card.def[difficulty];
+  document.getElementById('fcHintShown').style.display='none';
+  document.getElementById('fcHintShown').textContent='';
+  document.getElementById('fcHintBtn').style.display='';
+  document.getElementById('fcRateWrap').style.display='none';
+  document.getElementById('fcKnow').textContent=fcKnow;
+  document.getElementById('fcAlmost').textContent=fcAlmost;
+  document.getElementById('fcNope').textContent=fcNope;
+  document.getElementById('fcLeft').textContent=fcDeck.length-fcIdx;
+  const pct=Math.round((fcIdx/fcDeck.length)*100);
+  document.getElementById('fcProg').style.width=pct+'%';
+  document.getElementById('fcLbl').textContent='Card '+(fcIdx+1)+' of '+fcDeck.length;
+}
+function flipCard(){
+  fcFlipped=!fcFlipped;
+  document.getElementById('fcCard').classList.toggle('flipped',fcFlipped);
+  document.getElementById('fcRateWrap').style.display=fcFlipped?'':'none';
+}
+function showFCHint(e){
+  e.stopPropagation();
+  const card=fcDeck[fcIdx];
+  document.getElementById('fcHintShown').textContent='💡 '+card.hint;
+  document.getElementById('fcHintShown').style.display='';
+  document.getElementById('fcHintBtn').style.display='none';
+}
+function rateCard(rating){
+  const card=fcDeck[fcIdx];
+  const sl=getStillLearning();
+  if(rating==='know'){
+    fcKnow++;
+    const i=sl.indexOf(card.term);if(i>-1)sl.splice(i,1);
+  } else {
+    if(rating==='almost')fcAlmost++;else fcNope++;
+    fcDeck.push(card);
+    if(!sl.includes(card.term))sl.push(card.term);
+  }
+  setStillLearning(sl);
+  fcIdx++;renderFC();
+}
+function endReview(){
+  const total=fcDeckOriginalSize;
+  const pct=Math.round((fcKnow/total)*100);
+  setProg('reviewPct',pct);
+  const passed=pct>=PASS.review;
+  const shell=document.querySelector('.fc-shell');
+  shell.innerHTML=`
+    <div class="fc-done-msg">
+      <div class="fc-done-title">${passed?'✓ Deck Complete':'Keep Reviewing'}</div>
+      <div class="fc-done-sub">${passed
+        ?'You know '+pct+'% of the deck. You\'re ready to move to Practice.'
+        :'You know '+pct+'% — aim for '+PASS.review+'% before Practice. Missed cards are saved.'
+      }</div>
+    </div>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px">
+      <button class="e-btn e-btn-primary" onclick="startMode('review')">Review again</button>
+      ${passed?'<button class="e-btn e-btn-blue" onclick="startMode(\'practice\')">Practice →</button>':''}
+      <button class="e-btn e-btn-ghost" onclick="goToModes()">Home</button>
+    </div>`;
+}
+
+// ══════════════════════════════════════════════
+// PRACTICE / BLITZ
+// ══════════════════════════════════════════════
+let totalQ=10;
+const sessionCorrect=new Set();
+function initGame(mode){
+  totalQ=mode==='blitz'?(BLITZ_Q[level]||10):PRACTICE_Q;
+  const pool=getPoolByLevel();
+  const sl=getStillLearning();
+  let priority=[],middle=[],back=[];
+  pool.forEach(v=>{
+    if(sl.includes(v.term)){priority.push(v);priority.push(v);}
+    else if(sessionCorrect.has(v.term))back.push(v);
+    else middle.push(v);
+  });
+  const picked=[...shuffle(priority),...shuffle(middle),...shuffle(back)];
+  const seen=new Set(),unique=[];
+  for(const v of picked){if(!seen.has(v.term)){seen.add(v.term);unique.push(v);}}
+  const chosen=unique.slice(0,totalQ);
+  questions=chosen.map((item,i)=>{
+    const type=(i%2===0)?'def2term':'term2def';
+    const others=pool.filter(v=>v.term!==item.term);
+    const distractors=shuffle(others).slice(0,3);
+    return{item,type,choices:shuffle([item,...distractors])};
+  });
+  qIdx=0;score=0;streak=0;bestStreak=0;wrongCount=0;timeoutCount=0;qLog=[];
+  document.getElementById('gProg').className='prog-fill '+(mode==='blitz'?'fill-red':'fill-amber');
+  document.getElementById('timerToggleBtn').style.display=mode==='blitz'?'':'none';
+  document.getElementById('timerToggleBtn').textContent='⏱ Timer: '+(timerOn?'ON':'OFF');
+  document.getElementById('timerToggleBtn').className='hdr-btn'+(timerOn?' on':'');
+  showScreen('gameActivity');
+  document.getElementById('remedEl').classList.remove('show');
+  renderQuestion();
+}
+function renderQuestion(){
+  if(qIdx>=questions.length){endGame();return;}
+  answered=false;
+  const q=questions[qIdx];
+  const pct=(qIdx/totalQ)*100;
+  document.getElementById('gProg').style.width=pct+'%';
+  document.getElementById('gProgLbl').textContent=(qIdx+1)+' / '+totalQ;
+  document.getElementById('gScore').textContent=score;
+  document.getElementById('gStreak').textContent=streak;
+  document.getElementById('gBadge').textContent=q.type==='def2term'?'Choose the correct term':'Choose the correct definition';
+  const card=document.getElementById('gCard');
+  card.className='q-card '+q.type;
+  card.style.animation='none';card.offsetHeight;card.style.animation='';
+  document.getElementById('gLbl').textContent=q.type==='def2term'?'Definition':'Term';
+  const qt=document.getElementById('gText');
+  qt.className='q-text'+(q.type==='term2def'?' is-term':'');
+  qt.textContent=q.type==='def2term'?q.item.def[difficulty]:q.item.term;
+  const hb=document.getElementById('hintBtn');
+  document.getElementById('hintBox').style.display='none';
+  document.getElementById('hintTxt').textContent=q.item.hint;
+  hb.style.display=(difficulty==='supported'||(currentMode==='practice'&&difficulty!=='challenge'))?'block':'none';
+  hb.textContent='Show hint';
+  document.getElementById('remedEl').classList.remove('show');
+  const grid=document.getElementById('ansGrid');
+  grid.innerHTML='';
+  const keys=['1','2','3','4'];
+  q.choices.forEach((choice,i)=>{
+    const btn=document.createElement('button');
+    btn.className='ans-btn';
+    const span=document.createElement('span');
+    span.textContent=q.type==='def2term'?choice.term:choice.def[difficulty];
+    btn.appendChild(span);
+    const k=document.createElement('span');k.className='kbd';k.textContent=keys[i];btn.appendChild(k);
+    btn.onclick=()=>handleAnswer(i);
+    btn.style.animation='none';grid.appendChild(btn);btn.offsetHeight;btn.style.animation='';
+  });
+  startTimerUI();
+}
+function showGameHint(){
+  document.getElementById('hintBox').style.display='flex';
+  document.getElementById('hintBtn').style.display='none';
+}
+function startTimerUI(){
+  clearInterval(timerInt);
+  const wrap=document.getElementById('timerWrap');
+  const arc=document.getElementById('tArc');
+  const num=document.getElementById('tNum');
+  const useTimer=timerOn&&currentMode==='blitz';
+  if(!useTimer){wrap.classList.add('timer-off');arc.style.strokeDashoffset=0;num.textContent='—';return;}
+  wrap.classList.remove('timer-off');
+  timeLeft=TIME[difficulty]||15;
+  updateTimerUI(timeLeft);
+  timerInt=setInterval(()=>{timeLeft--;updateTimerUI(timeLeft);if(timeLeft<=0){clearInterval(timerInt);handleTimeout();}},1000);
+}
+function updateTimerUI(t){
+  const arc=document.getElementById('tArc');const num=document.getElementById('tNum');
+  const max=TIME[difficulty]||15;
+  arc.style.strokeDashoffset=CIRC*(1-(t/max));
+  arc.classList.remove('warn','danger');num.classList.remove('danger');
+  if(t<=2){arc.classList.add('danger');num.classList.add('danger');}
+  else if(t<=Math.ceil(max*0.4)){arc.classList.add('warn');}
+  num.textContent=t;
+}
+function toggleTimer(){
+  timerOn=!timerOn;
+  const btn=document.getElementById('timerToggleBtn');
+  btn.textContent='⏱ Timer: '+(timerOn?'ON':'OFF');
+  btn.classList.toggle('on',timerOn);
+}
+function handleAnswer(idx){
+  if(answered)return;
+  answered=true;clearInterval(timerInt);
+  const q=questions[qIdx];const chosen=q.choices[idx];const isCorrect=chosen.term===q.item.term;
+  document.querySelectorAll('.ans-btn').forEach(b=>b.disabled=true);
+  if(isCorrect){
+    document.querySelectorAll('.ans-btn')[idx].classList.add('correct');
+    const bonus=(timerOn&&currentMode==='blitz')?Math.max(1,timeLeft):1;
+    score+=bonus;streak++;bestStreak=Math.max(bestStreak,streak);
+    qLog.push({term:q.item.term,result:'correct'});
+    doFlash('correct');animSpark();
+  } else {
+    document.querySelectorAll('.ans-btn')[idx].classList.add('wrong');
+    streak=0;wrongCount++;
+    qLog.push({term:q.item.term,result:'wrong',chosen:chosen.term});
+    doFlash('wrong');revealCorrect(q);showRemed(q.item);
+  }
+  document.getElementById('gScore').textContent=score;
+  document.getElementById('gStreak').textContent=streak;
+  setTimeout(()=>{qIdx++;renderQuestion();},isCorrect?700:(currentMode==='practice'?1900:1100));
+}
+function handleTimeout(){
+  if(answered)return;answered=true;
+  streak=0;timeoutCount++;
+  const q=questions[qIdx];
+  qLog.push({term:q.item.term,result:'timeout'});
+  doFlash('wrong');revealCorrect(q);showRemed(q.item);
+  setTimeout(()=>{qIdx++;renderQuestion();},1400);
+}
+function revealCorrect(q){
+  document.querySelectorAll('.ans-btn').forEach((btn,i)=>{
+    if(q.choices[i].term===q.item.term)btn.classList.add('reveal');
+  });
+}
+function showRemed(item){
+  if(currentMode!=='practice')return;
+  const defKey=difficulty==='challenge'?'regular':difficulty;
+  document.getElementById('remedTxt').textContent=item.def[defKey];
+  document.getElementById('remedEx').textContent='Example: '+item.example;
+  document.getElementById('remedEl').classList.add('show');
+}
+function doFlash(type){
+  const el=document.getElementById('ff');
+  el.className='ff '+type;el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'),140);
+}
+function animSpark(){
+  // Gear spin on streak emoji
+  const f=document.getElementById('fireMoji');
+  f.style.transition='transform .15s';
+  f.style.transform='rotate(45deg)';
+  setTimeout(()=>{f.style.transform='rotate(0deg)'},150);
+  // Emit ember sparks from center
+  const cx=window.innerWidth/2,cy=window.innerHeight/2;
+  for(let i=0;i<6;i++){
+    const em=document.createElement('div');
+    em.className='ember';
+    const angle=Math.random()*Math.PI*2;
+    const dist=60+Math.random()*80;
+    em.style.cssText=`left:${cx}px;top:${cy}px;width:${4+Math.random()*4}px;height:${4+Math.random()*4}px;
+      background:${Math.random()>.5?'#f0a500':'#e06030'};
+      --ex:${Math.cos(angle)*dist}px;--ey:${Math.sin(angle)*dist}px`;
+    document.body.appendChild(em);
+    setTimeout(()=>em.remove(),900);
+  }
+}
+
+// ══════════════════════════════════════════════
+// END GAME
+// ══════════════════════════════════════════════
+function endGame(){
+  clearInterval(timerInt);
+  const correct=totalQ-wrongCount-timeoutCount;
+  const pct=Math.round((correct/totalQ)*100);
+  const passed=pct>=PASS[currentMode];
+  if(currentMode==='practice')setProg('practicePct',pct);
+  if(currentMode==='blitz'){const d=ls();if(pct>(d.blitzBest||0))setProg('blitzBest',pct);}
+  const sl=getStillLearning();
+  qLog.forEach(e=>{
+    if(e.result==='correct'){
+      const i=sl.indexOf(e.term);if(i>-1)sl.splice(i,1);
+      sessionCorrect.add(e.term);
+    } else {
+      if(!sl.includes(e.term))sl.push(e.term);
+      sessionCorrect.delete(e.term);
+    }
+  });
+  setStillLearning(sl);
+  let title,grade;
+  if(pct===100){title='Flawless';grade='Perfect — every term confirmed';}
+  else if(pct>=87){title='Sharp';grade='Strong — minor gaps remain';}
+  else if(pct>=70){title='Developing';grade='Review flagged terms below';}
+  else{title='Needs Work';grade='Return to remediation';}
+  document.getElementById('endEye').textContent=currentMode==='blitz'?'Blitz Results':'Practice Results';
+  document.getElementById('endTitle').textContent=title;
+  document.getElementById('endGrade').textContent=grade;
+  const pctEl=document.getElementById('endPct');
+  pctEl.textContent=pct+'%';pctEl.className='n '+(pct===100?'perfect':pct>=70?'great':'bad');
+  document.getElementById('endCorrect').textContent=correct;
+  document.getElementById('endWrong').textContent=wrongCount;
+  document.getElementById('endTO').textContent=timeoutCount;
+  const fb=document.getElementById('endFail');
+  const ft=document.getElementById('endFailTxt');
+  if(!passed){
+    fb.style.display='';
+    if(currentMode==='blitz')ft.textContent='You scored '+pct+'% — Challenge Blitz requires '+PASS.blitz+'%. Return to Practice to review your missed terms, then try again.';
+    else ft.textContent='You scored '+pct+'% — Practice requires '+PASS.practice+'% before Blitz. Your missed terms will surface first next time.';
+  } else {fb.style.display='none';}
+  const defKey=difficulty==='challenge'?'regular':difficulty;
+  let logHtml='<div class="log-hdr">Question log · tap a missed term for feedback</div>';
+  qLog.forEach((e,i)=>{
+    const cls=e.result==='correct'?'dc':e.result==='timeout'?'dt':'dw';
+    const status=e.result==='correct'?'✓ Correct':e.result==='timeout'?'⏱ Timed out':'✗ Chose: '+e.chosen;
+    const isClickable=e.result!=='correct';
+    const rowClass='log-row'+(isClickable?' clickable':'');
+    const chevron=isClickable?'<span class="log-chevron">▾</span>':'';
+    logHtml+=`<div class="${rowClass}" id="logrow-${i}" ${isClickable?`onclick="toggleLogRow(${i})"`:''}>
+      <div class="log-dot ${cls}"></div>
+      <div class="log-term">${e.term}</div>
+      <div class="log-status">${status}</div>
+      ${chevron}
+    </div>`;
+    if(isClickable){
+      const correctV=VOCAB.find(v=>v.term===e.term);
+      const chosenV=e.chosen?VOCAB.find(v=>v.term===e.chosen):null;
+      let expandHtml='';
+      if(e.result==='wrong'&&chosenV){
+        expandHtml+=`<div class="log-compare">
+          <div class="log-def-block wrong-block">
+            <div class="log-def-label">You chose</div>
+            <div class="log-def-term">${chosenV.term}</div>
+            <div class="log-def-text">${chosenV.def[defKey]}</div>
+          </div>
+          <div class="log-def-block correct-block">
+            <div class="log-def-label">Correct answer</div>
+            <div class="log-def-term">${correctV.term}</div>
+            <div class="log-def-text">${correctV.def[defKey]}</div>
+          </div>
+        </div>`;
+      } else {
+        expandHtml+=`<div class="log-timeout-block">
+          <div class="log-timeout-label">Correct answer</div>
+          <div class="log-def-term">${correctV.term}</div>
+          <div class="log-def-text">${correctV.def[defKey]}</div>
+        </div>`;
+      }
+      if(difficulty==='supported'&&correctV.hint){
+        expandHtml+=`<div class="log-hint-line">💡 ${correctV.hint}</div>`;
+      }
+      logHtml+=`<div class="log-expand" id="logexp-${i}">${expandHtml}</div>`;
+    }
+  });
+  document.getElementById('endLog').innerHTML=logHtml;
+  let btns=`<button class="e-btn e-btn-primary" onclick="startMode('${currentMode}')">Try again</button>`;
+  if(!passed&&currentMode==='blitz')btns+=`<button class="e-btn e-btn-blue" onclick="startMode('practice')">Go to Practice</button>`;
+  if(passed&&currentMode==='practice')btns+=`<button class="e-btn e-btn-blue" onclick="startMode('blitz')">Blitz →</button>`;
+  btns+=`<button class="e-btn e-btn-ghost" onclick="goToModes()">Home</button>`;
+  btns+=`<button class="e-btn e-btn-pdf" onclick="savePDF()">⬇ Save PDF</button>`;
+  document.getElementById('endBtns').innerHTML=btns;
+  lastResult={studentName,period,level,difficulty,mode:currentMode,pct,correct,wrongCount,timeoutCount,passed,qLog:[...qLog]};
+  showScreen('endScreen');
+}
+
+function toggleLogRow(i){
+  const row=document.getElementById('logrow-'+i);
+  const panel=document.getElementById('logexp-'+i);
+  if(!row||!panel)return;
+  const isOpen=panel.classList.contains('open');
+  panel.classList.toggle('open',!isOpen);
+  row.classList.toggle('open',!isOpen);
+}
+
+// ══════════════════════════════════════════════
+// PDF / PRINT
+// ══════════════════════════════════════════════
+function savePDF(){
+  if(!lastResult)return;
+  const r=lastResult;
+  const pool=getPoolByLevel();
+  const knownTerms=r.qLog.filter(e=>e.result==='correct').map(e=>e.term);
+  const missedTerms=r.qLog.filter(e=>e.result!=='correct').map(e=>e.term);
+  const notAsked=pool.filter(v=>!r.qLog.find(e=>e.term===v.term)).map(v=>v.term);
+  const defKey=r.difficulty==='challenge'?'regular':r.difficulty;
+  const dateStr=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+  const diffLabel=r.difficulty.charAt(0).toUpperCase()+r.difficulty.slice(1);
+  const modeLabel=r.mode==='blitz'?'Challenge Blitz':'Practice';
+  const passLabel=r.passed?'✓ PASSED':'✗ Did not pass';
+  const passThresh=r.mode==='blitz'?PASS.blitz:PASS.practice;
+  let missedHTML='';
+  missedTerms.forEach(term=>{
+    const v=VOCAB.find(x=>x.term===term);if(!v)return;
+    missedHTML+=`<div class="pd-review-item">
+      <div class="pd-review-term">${v.term}</div>
+      <div class="pd-review-def">${v.def[defKey]}</div>
+    </div>`;
+  });
+  const knownChips=[...knownTerms,...notAsked].map(t=>`<div class="pd-know-chip">${t}</div>`).join('');
+  const html=`
+    <div class="pd-header">
+      <div><div class="pd-logo">EdSim</div><div class="pd-unit">Industrialization &amp; Gilded Age · Vocabulary · Level ${r.level} · ${diffLabel}</div></div>
+      <div class="pd-meta">${dateStr}<br>${modeLabel}<br>${passLabel} (${passThresh}% required)</div>
+    </div>
+    <div class="pd-student-box">
+      <div class="pd-field"><div class="pd-field-label">Student</div><div class="pd-field-val">${r.studentName}</div></div>
+      <div class="pd-field"><div class="pd-field-label">Period</div><div class="pd-field-val">${r.period}</div></div>
+      <div class="pd-field"><div class="pd-field-label">Score</div><div class="pd-field-val">${r.pct}%</div></div>
+    </div>
+    <div class="pd-section">
+      <div class="pd-section-title">Results Summary</div>
+      <div class="pd-summary-grid">
+        <div class="pd-stat"><div class="sn">${r.pct}%</div><div class="sl">Score</div></div>
+        <div class="pd-stat"><div class="sn">${r.correct}</div><div class="sl">Correct</div></div>
+        <div class="pd-stat"><div class="sn">${r.wrongCount}</div><div class="sl">Wrong</div></div>
+        <div class="pd-stat"><div class="sn">${r.timeoutCount}</div><div class="sl">Timed out</div></div>
+      </div>
+    </div>
+    ${missedTerms.length?`
+    <div class="pd-section">
+      <div class="pd-section-title needs">Terms to Review (${missedTerms.length})</div>
+      ${missedHTML}
+    </div>`:''}
+    ${knownTerms.length?`
+    <div class="pd-section">
+      <div class="pd-section-title">Terms You Know</div>
+      <div class="pd-know-list">${knownChips}</div>
+    </div>`:''}
+    <div class="pd-footer">
+      <span>EdSim · edsim.io · Industrialization &amp; Gilded Age Vocabulary</span>
+      <span>Level ${r.level} · ${diffLabel} · ${modeLabel}</span>
+    </div>`;
+  document.getElementById('printDoc').innerHTML=html;
+  setTimeout(()=>{window.print();},150);
+}
+
+// ══════════════════════════════════════════════
+// RESET
+// ══════════════════════════════════════════════
+function confirmReset(){document.getElementById('resetModal').classList.add('open')}
+function closeModal(){document.getElementById('resetModal').classList.remove('open')}
+function doReset(){
+  try{localStorage.removeItem(LS_KEY);}catch{}
+  closeModal();
+  studentName='';period='';level=0;difficulty='regular';timerOn=true;currentMode=null;lastResult=null;
+  document.getElementById('studentName').value='';
+  document.getElementById('periodSel').value='';
+  document.querySelectorAll('.level-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.diff-card').forEach(b=>b.classList.remove('active'));
+  document.getElementById('dbtn-regular').classList.add('active');
+  document.getElementById('setupProgress').style.display='none';
+  const btn=document.getElementById('startBtn');btn.disabled=true;btn.textContent='Enter name, period, level & difficulty to begin';
+  showScreen('setupScreen');
+}
+
+// ══════════════════════════════════════════════
+// SCREEN NAV
+// ══════════════════════════════════════════════
+function showScreen(id){
+  const screens=['setupScreen','modeScreen','reviewActivity','gameActivity','endScreen'];
+  screens.forEach(s=>{
+    const el=document.getElementById(s);
+    if(!el)return;
+    el.style.display='none';el.classList.remove('active');
+  });
+  const target=document.getElementById(id);
+  if(target){target.style.display='';target.classList.add('active');}
+}
+
+// ══════════════════════════════════════════════
+// UTILS
+// ══════════════════════════════════════════════
+function shuffle(arr){
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  return a;
+}
+document.addEventListener('keydown',e=>{
+  const map={'1':0,'2':1,'3':2,'4':3};
+  if(e.key in map&&document.getElementById('gameActivity').classList.contains('active')){
+    const btns=document.querySelectorAll('.ans-btn');
+    if(btns[map[e.key]]&&!btns[map[e.key]].disabled)handleAnswer(parseInt(map[e.key]));
+  }
+});
+</script>
+</body>
+</html>
