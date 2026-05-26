@@ -1,0 +1,1937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Civil Rights in America — EdSim</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-base: #0e0c0a;
+  --bg-card: #1a1714;
+  --bg-card-hover: #221f1b;
+  --bg-panel: #161310;
+  --text-primary: #f0ebe3;
+  --text-muted: #9a9087;
+  --text-dim: #5a5450;
+  --border: #2e2a26;
+  --border-light: #3d3830;
+
+  /* Theme colors by category */
+  --color-law: #c8a96e;          /* Legal milestones — gold */
+  --color-law-bg: #2a2010;
+  --color-protest: #e07070;      /* Resistance & protest — warm red */
+  --color-protest-bg: #2a1010;
+  --color-setback: #7090c8;      /* Setbacks & backlash — blue-grey */
+  --color-setback-bg: #101828;
+  --color-policy: #78c878;       /* Federal policy & executive action — green */
+  --color-policy-bg: #0e2010;
+
+  --accent: #c8a96e;
+  --tab-active: #c8a96e;
+  --tab-inactive: #2e2a26;
+
+  --radius: 6px;
+  --shadow: 0 4px 24px rgba(0,0,0,0.4);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg-base);
+  color: var(--text-primary);
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: 16px;
+  line-height: 1.65;
+  min-height: 100vh;
+}
+
+/* ─── HEADER ─── */
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 28px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-panel);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.logo {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: 1.25rem;
+  color: var(--accent);
+  letter-spacing: 0.05em;
+}
+.sim-title {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* ─── TABS ─── */
+.tab-nav {
+  display: flex;
+  gap: 4px;
+  padding: 16px 28px 0;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-panel);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.tab-nav::-webkit-scrollbar { display: none; }
+.tab-btn {
+  padding: 10px 20px;
+  border: 1px solid var(--border);
+  border-bottom: none;
+  border-radius: var(--radius) var(--radius) 0 0;
+  background: var(--tab-inactive);
+  color: var(--text-muted);
+  font-family: 'Source Serif 4', serif;
+  font-size: 0.82rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  min-height: 44px;
+}
+.tab-btn:hover { background: var(--bg-card-hover); color: var(--text-primary); }
+.tab-btn.active {
+  background: var(--bg-base);
+  color: var(--accent);
+  border-color: var(--border-light);
+  border-bottom-color: var(--bg-base);
+}
+
+/* ─── TAB PANELS ─── */
+.tab-panel { display: none; padding: 32px 28px; max-width: 1100px; margin: 0 auto; }
+.tab-panel.active { display: block; }
+
+/* ─── NAV BUTTONS ─── */
+.panel-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 28px;
+  border-top: 1px solid var(--border);
+  margin-top: 32px;
+  gap: 12px;
+}
+.nav-btn {
+  padding: 12px 28px;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-family: 'Source Serif 4', serif;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-height: 44px;
+  min-width: 120px;
+}
+.nav-btn:hover { background: var(--bg-card-hover); border-color: var(--accent); color: var(--accent); }
+.nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.nav-btn.primary {
+  background: var(--accent);
+  color: var(--bg-base);
+  border-color: var(--accent);
+  font-weight: 600;
+}
+.nav-btn.primary:hover { filter: brightness(1.1); }
+.progress-label { font-size: 0.8rem; color: var(--text-muted); }
+
+/* ─── TAB 1: DIRECTIONS ─── */
+.directions-hero {
+  text-align: center;
+  padding: 40px 0 32px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 36px;
+}
+.directions-hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 900;
+  line-height: 1.15;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+.directions-hero h1 span { color: var(--accent); }
+.directions-hero p {
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  font-style: italic;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.section-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+.section-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+}
+.section-card .section-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  color: var(--accent);
+  opacity: 0.4;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.section-card h3 { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; color: var(--accent); }
+.section-card p { font-size: 0.85rem; color: var(--text-muted); }
+.section-card .time { font-size: 0.75rem; color: var(--text-dim); margin-top: 8px; }
+
+.legend-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 8px;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+}
+.legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ─── TAB 2: TIMELINE ─── */
+.era-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+.era-chip {
+  padding: 7px 16px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: var(--bg-card);
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+.era-chip:hover { border-color: var(--accent); color: var(--text-primary); }
+.era-chip.active { background: var(--accent); color: var(--bg-base); border-color: var(--accent); font-weight: 600; }
+
+/* Reading level toggle */
+.reading-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 24px;
+  padding: 12px 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  width: fit-content;
+}
+.reading-toggle label { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em; }
+.toggle-switch {
+  position: relative;
+  width: 48px;
+  height: 26px;
+}
+.toggle-switch input { opacity: 0; width: 0; height: 0; }
+.toggle-slider {
+  position: absolute;
+  inset: 0;
+  background: var(--border);
+  border-radius: 13px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.toggle-slider:before {
+  content: '';
+  position: absolute;
+  width: 20px; height: 20px;
+  left: 3px; bottom: 3px;
+  background: var(--text-muted);
+  border-radius: 50%;
+  transition: 0.3s;
+}
+input:checked + .toggle-slider { background: var(--accent); }
+input:checked + .toggle-slider:before { transform: translateX(22px); background: var(--bg-base); }
+
+/* Timeline */
+.timeline-container { position: relative; padding-left: 36px; }
+.timeline-spine {
+  position: absolute;
+  left: 10px;
+  top: 0; bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--accent) 0%, var(--border) 100%);
+}
+
+.timeline-event {
+  position: relative;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+.timeline-event.hidden { display: none; }
+
+.event-dot {
+  position: absolute;
+  left: -30px;
+  top: 18px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid var(--bg-base);
+  transition: transform 0.2s;
+  z-index: 1;
+}
+.timeline-event:hover .event-dot { transform: scale(1.3); }
+
+.event-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-left-width: 3px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: border-color 0.2s, background 0.2s;
+}
+.timeline-event:hover .event-card { background: var(--bg-card-hover); }
+
+.event-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+}
+.event-year {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  min-width: 52px;
+  flex-shrink: 0;
+}
+.event-title-text { font-size: 0.95rem; font-weight: 600; flex: 1; }
+.event-theme-badge {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 3px 9px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+.event-expand-icon {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  transition: transform 0.3s;
+  flex-shrink: 0;
+}
+.timeline-event.expanded .event-expand-icon { transform: rotate(180deg); }
+
+.event-body {
+  display: none;
+  padding: 0 18px 16px;
+  border-top: 1px solid var(--border);
+}
+.timeline-event.expanded .event-body { display: block; }
+.event-body p { font-size: 0.9rem; color: var(--text-muted); margin-top: 12px; }
+.event-body .simplified { display: none; }
+body.simplified-mode .event-body .standard { display: none; }
+body.simplified-mode .event-body .simplified { display: block; }
+.significance-label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-dim);
+  margin-top: 12px;
+  margin-bottom: 4px;
+}
+.significance-text { font-size: 0.88rem; color: var(--text-muted); font-style: italic; }
+
+/* Theme color application */
+.theme-law .event-card { border-left-color: var(--color-law); }
+.theme-law .event-dot { background: var(--color-law); }
+.theme-law .event-year { color: var(--color-law); }
+.theme-law .event-theme-badge { background: var(--color-law-bg); color: var(--color-law); }
+
+.theme-protest .event-card { border-left-color: var(--color-protest); }
+.theme-protest .event-dot { background: var(--color-protest); }
+.theme-protest .event-year { color: var(--color-protest); }
+.theme-protest .event-theme-badge { background: var(--color-protest-bg); color: var(--color-protest); }
+
+.theme-setback .event-card { border-left-color: var(--color-setback); }
+.theme-setback .event-dot { background: var(--color-setback); }
+.theme-setback .event-year { color: var(--color-setback); }
+.theme-setback .event-theme-badge { background: var(--color-setback-bg); color: var(--color-setback); }
+
+.theme-policy .event-card { border-left-color: var(--color-policy); }
+.theme-policy .event-dot { background: var(--color-policy); }
+.theme-policy .event-year { color: var(--color-policy); }
+.theme-policy .event-theme-badge { background: var(--color-policy-bg); color: var(--color-policy); }
+
+/* ─── TAB 3: SORT ACTIVITY ─── */
+.sort-intro {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+  padding: 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.sort-workspace {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+@media (max-width: 768px) { .sort-workspace { grid-template-columns: 1fr; } }
+
+.sort-bank {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+.sort-bank h3 {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+.sort-categories { display: flex; flex-direction: column; gap: 14px; }
+.sort-category {
+  border-radius: var(--radius);
+  padding: 12px;
+  min-height: 80px;
+  border: 2px dashed var(--border);
+  transition: border-color 0.2s, background 0.2s;
+}
+.sort-category.drag-over { border-color: var(--accent); background: rgba(200,169,110,0.05); }
+.sort-category-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.sort-category-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.sort-category-label { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; }
+.sort-items { display: flex; flex-direction: column; gap: 6px; min-height: 30px; }
+
+.sort-item {
+  padding: 9px 13px;
+  background: var(--bg-base);
+  border: 1px solid var(--border-light);
+  border-radius: 4px;
+  font-size: 0.82rem;
+  cursor: grab;
+  transition: opacity 0.2s, border-color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  user-select: none;
+}
+.sort-item:active { cursor: grabbing; opacity: 0.7; }
+.sort-item .drag-handle { color: var(--text-dim); font-size: 0.7rem; }
+.sort-item .item-category-hint {
+  font-size: 0.68rem;
+  padding: 2px 6px;
+  border-radius: 3px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.sort-result-bar {
+  margin-top: 16px;
+  padding: 14px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 0.88rem;
+  display: none;
+}
+.sort-result-bar.visible { display: block; }
+
+/* ─── TAB 4: ASSESSMENT ─── */
+.question-block {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 24px;
+}
+.question-source {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-dim);
+  margin-bottom: 10px;
+}
+.stimulus-box {
+  background: var(--bg-base);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 14px 16px;
+  font-size: 0.87rem;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-bottom: 16px;
+  line-height: 1.7;
+}
+.question-text { font-size: 1rem; margin-bottom: 18px; font-weight: 600; }
+.choices { display: flex; flex-direction: column; gap: 10px; }
+.choice-btn {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 13px 16px;
+  background: var(--bg-base);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  text-align: left;
+  font-family: 'Source Serif 4', serif;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  transition: all 0.2s;
+  min-height: 44px;
+  width: 100%;
+}
+.choice-btn:hover:not(:disabled) { border-color: var(--accent); background: var(--bg-card-hover); }
+.choice-btn .choice-letter {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  min-width: 20px;
+  flex-shrink: 0;
+  padding-top: 1px;
+}
+.choice-btn.correct { border-color: var(--color-policy); background: var(--color-policy-bg); }
+.choice-btn.incorrect { border-color: var(--color-protest); background: var(--color-protest-bg); }
+.choice-btn:disabled { cursor: not-allowed; }
+
+.hint-row { margin-top: 14px; display: flex; align-items: flex-start; gap: 12px; flex-wrap: wrap; }
+.hint-btn {
+  padding: 7px 16px;
+  border: 1px dashed var(--border-light);
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--text-muted);
+  font-family: 'Source Serif 4', serif;
+  font-size: 0.8rem;
+  cursor: pointer;
+  min-height: 44px;
+  transition: all 0.2s;
+}
+.hint-btn:hover { border-color: var(--color-law); color: var(--color-law); }
+.hint-text {
+  font-size: 0.83rem;
+  color: var(--color-law);
+  font-style: italic;
+  padding: 8px 12px;
+  background: var(--color-law-bg);
+  border-radius: 4px;
+  display: none;
+  flex: 1;
+}
+.hint-text.visible { display: block; }
+
+.feedback-box {
+  margin-top: 14px;
+  padding: 12px 16px;
+  border-radius: var(--radius);
+  font-size: 0.88rem;
+  display: none;
+}
+.feedback-box.visible { display: block; }
+.feedback-box.correct-fb { background: var(--color-policy-bg); border: 1px solid var(--color-policy); color: var(--color-policy); }
+.feedback-box.incorrect-fb { background: var(--color-protest-bg); border: 1px solid var(--color-protest); color: var(--color-protest); }
+.retry-btn {
+  margin-top: 8px;
+  padding: 6px 14px;
+  background: transparent;
+  border: 1px solid var(--color-protest);
+  border-radius: 4px;
+  color: var(--color-protest);
+  font-family: 'Source Serif 4', serif;
+  font-size: 0.8rem;
+  cursor: pointer;
+  min-height: 36px;
+}
+.retry-btn:hover { background: var(--color-protest-bg); }
+
+.score-display {
+  text-align: center;
+  padding: 28px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  display: none;
+}
+.score-display.visible { display: block; }
+.score-number {
+  font-family: 'Playfair Display', serif;
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: var(--accent);
+}
+.score-label { font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; }
+
+/* ─── TAB 5: SUMMARY ─── */
+.summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media (max-width: 640px) { .summary-grid { grid-template-columns: 1fr; } }
+.summary-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+}
+.summary-card h3 {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+.summary-stat { font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--accent); }
+.summary-stat-label { font-size: 0.82rem; color: var(--text-dim); }
+
+.save-btn {
+  display: block;
+  width: 100%;
+  padding: 16px;
+  margin-top: 20px;
+  background: var(--accent);
+  color: var(--bg-base);
+  border: none;
+  border-radius: var(--radius);
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: filter 0.2s;
+  min-height: 44px;
+}
+.save-btn:hover { filter: brightness(1.1); }
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  z-index: 200;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+.modal-overlay.active { display: flex; }
+.modal {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  padding: 28px;
+  max-width: 440px;
+  width: 90%;
+}
+.modal h2 { font-family: 'Playfair Display', serif; font-size: 1.3rem; margin-bottom: 8px; }
+.modal p { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 18px; }
+.modal-checks { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+.modal-check { display: flex; align-items: center; gap: 10px; font-size: 0.88rem; cursor: pointer; min-height: 36px; }
+.modal-check input[type=checkbox] { width: 18px; height: 18px; accent-color: var(--accent); }
+.modal-actions { display: flex; gap: 10px; }
+.modal-btn {
+  flex: 1;
+  padding: 12px;
+  border-radius: var(--radius);
+  font-family: 'Source Serif 4', serif;
+  font-size: 0.9rem;
+  cursor: pointer;
+  min-height: 44px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-primary);
+}
+.modal-btn.confirm { background: var(--accent); color: var(--bg-base); border-color: var(--accent); font-weight: 600; }
+
+/* ─── TAB 5: EXIT TICKET ─── */
+.exit-ticket-intro {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  margin-bottom: 28px;
+  padding: 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius);
+}
+.exit-question-block {
+  margin-bottom: 28px;
+}
+.exit-question-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.exit-question-text {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+.exit-textarea {
+  width: 100%;
+  min-height: 100px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  color: var(--text-primary);
+  font-family: 'Source Serif 4', serif;
+  font-size: 0.92rem;
+  padding: 14px;
+  resize: vertical;
+  transition: border-color 0.2s;
+  line-height: 1.65;
+}
+.exit-textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+.exit-textarea::placeholder { color: var(--text-dim); }
+.exit-char-count {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  text-align: right;
+  margin-top: 4px;
+}
+
+/* Reset button */
+.reset-btn {
+  padding: 7px 16px;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--text-dim);
+  font-family: 'Source Serif 4', serif;
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-height: 36px;
+  letter-spacing: 0.03em;
+}
+.reset-btn:hover { border-color: var(--color-protest); color: var(--color-protest); }
+
+/* Print styles */
+@media print {
+  .tab-nav, .site-header, .panel-nav, .era-filter, .reading-toggle,
+  .hint-btn, .retry-btn, .save-btn, .era-chip, .modal-overlay,
+  .reset-btn, .exit-char-count { display: none !important; }
+  .tab-panel { display: block !important; padding: 20px 0; }
+  body { background: white; color: black; }
+  .event-body { display: block !important; }
+  /* Render exit ticket responses as visible text blocks */
+  .exit-textarea { display: none !important; }
+  .exit-response-print {
+    display: block !important;
+    white-space: pre-wrap;
+    font-family: Georgia, serif;
+    font-size: 0.9rem;
+    color: #111;
+    border: 1px solid #ccc;
+    padding: 10px 14px;
+    border-radius: 4px;
+    min-height: 60px;
+    overflow: visible;
+  }
+  /* Summary exit ticket print section */
+  .summary-exit-print { display: block !important; }
+}
+
+/* Utility */
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+</style>
+</head>
+<body>
+
+<header class="site-header" role="banner">
+  <div class="logo">EdSim</div>
+  <div class="sim-title">Civil Rights in America · Reconstruction → 1965</div>
+  <button class="reset-btn" onclick="confirmReset()" aria-label="Reset all progress and start over">↺ Reset</button>
+</header>
+
+<nav class="tab-nav" role="tablist" aria-label="Activity sections">
+  <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="panel-1" onclick="switchTab(1)">① Directions</button>
+  <button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-2" onclick="switchTab(2)">② Timeline</button>
+  <button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-3" onclick="switchTab(3)">③ Sort Activity</button>
+  <button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-4" onclick="switchTab(4)">④ Assessment</button>
+  <button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-5" onclick="switchTab(5)">⑤ Exit Ticket</button>
+  <button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-6" onclick="switchTab(6)">⑥ Summary</button>
+</nav>
+
+<!-- ═══════════════════════════════════════════ TAB 1: DIRECTIONS -->
+<div id="panel-1" class="tab-panel active" role="tabpanel">
+  <div class="directions-hero">
+    <h1>Civil Rights in <span>America</span></h1>
+    <p>From the promise of Reconstruction to the landmark legislation of 1965 — a century of struggle, setback, and breakthrough.</p>
+  </div>
+
+  <div class="section-grid">
+    <div class="section-card">
+      <div class="section-num">01</div>
+      <h3>Timeline</h3>
+      <p>Explore 20 events from 1865–1965. Click any event to read the full story. Use the era filter to focus on one period at a time.</p>
+      <div class="time">~10 minutes</div>
+    </div>
+    <div class="section-card">
+      <div class="section-num">02</div>
+      <h3>Sort Activity</h3>
+      <p>Drag 8 events into the correct category: Legal Milestone, Resistance & Protest, Setback/Backlash, or Federal Policy.</p>
+      <div class="time">~8 minutes</div>
+    </div>
+    <div class="section-card">
+      <div class="section-num">03</div>
+      <h3>Assessment</h3>
+      <p>Answer 4 Regents-style multiple choice questions. Use hints if you need them — they won't affect your score.</p>
+      <div class="time">~10 minutes</div>
+    </div>
+    <div class="section-card">
+      <div class="section-num">04</div>
+      <h3>Exit Ticket</h3>
+      <p>Answer 3 short-response questions to show what you learned and what questions you still have.</p>
+      <div class="time">~5 minutes</div>
+    </div>
+    <div class="section-card">
+      <div class="section-num">05</div>
+      <h3>Summary</h3>
+      <p>Review your score and save your work as a PDF to turn in. Select which sections to include before saving.</p>
+      <div class="time">~3 minutes</div>
+    </div>
+  </div>
+
+  <div style="margin-bottom:12px;font-size:0.8rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;">Color Code — Events are color-coded by theme throughout the activity</div>
+  <div class="legend-row">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--color-law)"></div> Legal Milestone</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--color-protest)"></div> Resistance &amp; Protest</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--color-setback)"></div> Setback / Backlash</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--color-policy)"></div> Federal Policy</div>
+  </div>
+
+  <div class="panel-nav">
+    <button class="nav-btn" disabled aria-label="Previous section">← Previous</button>
+    <span class="progress-label">Section 1 of 5</span>
+    <button class="nav-btn primary" onclick="switchTab(2)">Start Timeline →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ TAB 2: TIMELINE -->
+<div id="panel-2" class="tab-panel" role="tabpanel">
+  <div class="era-filter" role="group" aria-label="Filter by era">
+    <button class="era-chip active" onclick="filterEra('all',this)">All Eras</button>
+    <button class="era-chip" onclick="filterEra('reconstruction',this)">Reconstruction (1865–1877)</button>
+    <button class="era-chip" onclick="filterEra('jimcrow',this)">Jim Crow Era (1877–1920)</button>
+    <button class="era-chip" onclick="filterEra('seeds',this)">Seeds of Change (1930s–1940s)</button>
+    <button class="era-chip" onclick="filterEra('movement',this)">Civil Rights Movement (1950s–1965)</button>
+  </div>
+
+  <div class="reading-toggle" title="Toggle between standard and simplified event descriptions">
+    <label for="reading-level-toggle">Standard</label>
+    <label class="toggle-switch">
+      <input type="checkbox" id="reading-level-toggle" onchange="toggleReadingLevel(this)" aria-label="Switch to simplified reading level">
+      <span class="toggle-slider"></span>
+    </label>
+    <label>Simplified</label>
+  </div>
+
+  <div class="timeline-container" id="timeline">
+    <div class="timeline-spine" aria-hidden="true"></div>
+
+    <!-- RECONSTRUCTION -->
+    <div class="timeline-event theme-law" data-era="reconstruction" onclick="toggleEvent(this)">
+      <div class="event-dot" aria-hidden="true"></div>
+      <div class="event-card">
+        <div class="event-header">
+          <div class="event-year">1865</div>
+          <div class="event-title-text">13th Amendment Abolishes Slavery</div>
+          <div class="event-theme-badge">Legal Milestone</div>
+          <div class="event-expand-icon" aria-hidden="true">▼</div>
+        </div>
+        <div class="event-body" aria-expanded="false">
+          <p class="standard">Ratified in December 1865, the Thirteenth Amendment formally abolished slavery throughout the United States. It declared that "neither slavery nor involuntary servitude, except as a punishment for crime" could exist within the country. The amendment was the culmination of Lincoln's Emancipation Proclamation (1863), which had applied only to Confederate states.</p>
+          <p class="simplified">In 1865, the United States added a new rule to the Constitution that made slavery illegal everywhere in the country. This was the 13th Amendment. Before this, the president had only freed enslaved people in the Southern states that were fighting against the Union.</p>
+          <div class="significance-label">Why it matters</div>
+          <div class="significance-text">First constitutional guarantee of freedom — but without political rights, economic opportunity, or protection from violence, freedom alone proved fragile.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-event theme-policy" data-era="reconstruction" onclick="toggleEvent(this)">
+      <div class="event-dot" aria-hidden="true"></div>
+      <div class="event-card">
+        <div class="event-header">
+          <div class="event-year">1865</div>
+          <div class="event-title-text">Freedmen's Bureau Established</div>
+          <div class="event-theme-badge">Federal Policy</div>
+          <div class="event-expand-icon" aria-hidden="true">▼</div>
+        </div>
+        <div class="event-body">
+          <p class="standard">Congress created the Bureau of Refugees, Freedmen, and Abandoned Lands to help formerly enslaved people transition to freedom. The Bureau provided food, housing, medical care, schools, and legal protection. It also worked to negotiate labor contracts between freedpeople and white landowners. Despite limited funding and intense opposition, it established over 1,000 schools in the South.</p>
+          <p class="simplified">The government created an agency called the Freedmen's Bureau to help formerly enslaved people start their lives as free citizens. It gave out food and medicine, set up schools, and helped people sign fair work contracts. But it didn't have enough money or power to do everything that was needed.</p>
+          <div class="significance-label">Why it matters</div>
+          <div class="significance-text">The Bureau's limited reach and eventual dismantling foreshadowed the incompleteness of Reconstruction's promises.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-event theme-law" data-era="reconstruction" onclick="toggleEvent(this)">
+      <div class="event-dot" aria-hidden="true"></div>
+      <div class="event-card">
+        <div class="event-header">
+          <div class="event-year">1868</div>
+          <div class="event-title-text">14th Amendment — Equal Protection</div>
+          <div class="event-theme-badge">Legal Milestone</div>
+          <div class="event-expand-icon" aria-hidden="true">▼</div>
+        </div>
+        <div class="event-body">
+          <p class="standard">The Fourteenth Amendment granted citizenship to all persons born or naturalized in the United States, including formerly enslaved people. It guaranteed "equal protection of the laws" and "due process" to all citizens. Southern states were required to ratify the amendment as a condition of readmission to the Union.</p>
+          <p class="simplified">The 14th Amendment made formerly enslaved people official citizens of the United States. It said that every citizen deserves equal treatment under the law. Southern states had to agree to this new rule before they could rejoin the country.</p>
+          <div class="significance-label">Why it matters</div>
+          <div class="significance-text">The Equal Protection Clause became the legal foundation for nearly every major civil rights case in the 20th century, including Brown v. Board of Education.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-event theme-law" data-era="reconstruction" onclick="toggleEvent(this)">
+      <div class="event-dot" aria-hidden="true"></div>
+      <div class="event-card">
+        <div class="event-header">
+          <div class="event-year">1870</div>
+          <div class="event-title-text">15th Amendment — Right to Vote</div>
+          <div class="event-theme-badge">Legal Milestone</div>
+          <div class="event-expand-icon" aria-hidden="true">▼</div>
+        </div>
+        <div class="event-body">
+          <p class="standard">The Fifteenth Amendment prohibited denying the right to vote based on "race, color, or previous condition of servitude." African American men voted in large numbers during Reconstruction, and over 2,000 Black men held public office — including 16 U.S. Congressmen and 2 U.S. Senators — between 1865 and 1880.</p>
+          <p class="simplified">The 15th Amendment said the government could not stop someone from voting just because of their race. During Reconstruction, many Black men voted and even got elected to government jobs. This was a huge change from life under slavery.</p>
+          <div class="significance-label">Why it matters</div>
+          <div class="significance-text">Despite the amendment's passage, states quickly found ways around it — literacy tests, poll taxes, and violence — that would suppress Black voting for nearly a century.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-event theme-setback" data-era="reconstruction" onclick="toggleEvent(this)">
+      <div class="event-dot" aria-hidden="true"></div>
+      <div class="event-card">
+        <div class="event-header">
+          <div class="event-year">1877</div>
+          <div class="event-title-text">End of Reconstruction</div>
+          <div class="event-theme-badge">Setback / Backlash</div>
+          <div class="event-expand-icon" aria-hidden="true">▼</div>
+        </div>
+        <div class="event-body">
+          <p class="standard">The Compromise of 1877 ended the disputed presidential election by giving the presidency to Rutherford B. Hayes in exchange for the withdrawal of federal troops from the South. Without military protection, Reconstruction governments collapsed. White supremacist groups like the Ku Klux Klan used violence and intimidation to reassert control. Black political gains were rapidly reversed.</p>
+          <p class="simplified">In 1877, the federal government made a political deal that ended Reconstruction. Federal soldiers were pulled out of the South. Without protection, African Americans lost most of the rights and political power they had gained. White supremacist groups used violence to take control again.</p>
+          <div class="significance-label">Why it matters</div>
+          <div class="significance-text">The end of Reconstruction marked the beginning of nearly 90 years of Jim Crow — state-sponsored racial segregation and disenfranchisement.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- JIM CROW ERA -->
+    <div class="timeline-event theme-setback" data-era="jimcrow" onclick="toggleEvent(this)">
+      <div class="event-dot" aria-hidden="true"></div>
+      <div class="event-card">
+        <div class="event-header">
+          <div class="event-year">1896</div>
+          <div class="event-title-text">Plessy v. Ferguson — "Separate but Equal"</div>
+          <div class="event-theme-badge">Setback / Backlash</div>
+          <div class="event-expand-icon" aria-hidden="true">▼</div>
+        </div>
+        <div class="event-body">
+          <p class="standard">The Supreme Court ruled 7–1 in Plessy v. Ferguson that racial segregation was constitutional as long as facilities were "separate but equal." The case arose when Homer Plessy, who was 1/8 Black, was arrested for sitting in a whites-only railroad car in Louisiana. The lone dissent came from Justice John Marshall Harlan, who wrote that "our Constitution is color-blind."</p>
+          <p class="simplified">In 1896, the Supreme Court decided that it was legal to keep Black and white people separated in public places, as long as both groups got similar facilities. This became known as the "separate but equal" rule. In reality, Black facilities were almost always inferior. One Justice disagreed and said the Constitution should not care about a person's race.</p>
+          <div class="significance-label">Why it matters</div>
+          <div class="significance-text">Plessy gave legal cover to Jim Crow laws for nearly 60 years until Brown v. Board of Education overturned it in 1954.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-event theme-protest" data-era="jimcrow" onclick="toggleEvent(this)">
+      <div class="event-dot" aria-hidden="true"></div>
+      <div class="event-card">
+        <div class="event-header">
+          <div class="event-year">1909</div>
+          <div class="event-title-text">NAACP Founded</div>
+          <div class="event-theme-badge">Resistance &amp; Protest</div>
+          <div class="event-expand-icon" aria-hidden="true">▼</div>
+        </div>
+        <div class="event-body">
+          <p class="standard">The National Association for the Advancement of Colored People (NAACP) was founded by a coalition of Black activists — including W.E.B. Du Bois — and white progressives in response to the widespread racial violence of the era. The organization focused on legal challenges to segregation and voter suppression, political lobbying, and public advocacy.</p>
+          <p class="simplified">The NAACP was created by Black activists and white supporters who wanted to fight for civil rights through the court system and through political pressure. W.E.B. Du Bois was one of its most important founders. The NAACP would go on to win many important legal battles against segregation.</p>
+          <div class="significance-label">Why it matters</div>
+          <div class="significance-text">The NAACP's legal strategy, led later by Thurgood Marshall, would produce Brown v. Board — the most consequential civil rights ruling of the 20th century.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEEDS OF CHANGE -->
+    <div class="timeline-event theme-policy" data-era="seeds" onclick="toggleEvent(this)">
+      <div class="event-dot" aria-hidden="true"></div>
+      <div class="event-card">
+        <div class="event-header">
+          <div class="event-year">1941</div>
+          <div class="event-title-text">Executive Order 8802 — Defense Industry Integration</div>
+          <div class="event-theme-badge">Federal Policy</div>
+          <div class="event-expand-icon" aria-hidden="true">▼</div>
+        </div>
+        <div class="event-body">
+          <p class="standard">Threatened by A. Philip Randolph's planned March on Washington of 100,000 Black Americans, President Roosevelt signed Executive Order 8802, which banned discriminatory hiring in the federal government and defense industries. This was the first federal action against employment discrimination since Reconstruction. Randolph called off the march in exchange for the order.</p>
+          <p class="simplified">Black labor leader A. Philip Randolph threatened to bring 100,000 Black Americans to march on Washington to protest discrimination in the military and defense industries. To stop the march, President Roosevelt signed an order banning discrimination in defense jobs. This was one of the first times the federal government had taken action against job discrimination.</p>
+          <div class="significance-label">Why it matters</div>
+          <div class="significance-text">Demonstrated that organized pressure on the federal government could produce civil rights gains — a strategy the civil rights movement would use repeatedly.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-event theme-policy" data-era="seeds" onclick="toggleEvent(this)">
+      <div class="event-dot" aria-hidden="true"></div>
+      <div class="event-card">
+        <div class="event-header">
+          <div class="event-year">1948</div>
+          <div class="event-title-text">Executive Order 9981 — Military Desegregation</div>
+          <div class="event-theme-badge">Federal Policy</div>
+          <div class="event-expand-icon" aria-hidden="true">▼</div>
+        </div>
+        <div class="event-body">
+          <p class="standard">President Truman signed Executive Order 9981, desegregating the United States Armed Forces. The order declared that "there shall be equality of treatment and opportunity for all persons in the armed services without regard to race, color, religion, or national origin." The military had fought World War II in segregated units; this order began dismantling that system.</p>
+          <p class="simplified">President Truman signed an order that ended racial segregation in the U.S. military. Before this, Black and white soldiers served in separate units. This was a major step toward equality because millions of Americans served in the military, and the change showed that integration was possible.</p>
+          <div class="significance-label">Why it matters</div>
+          <div class="significance-text">Full military integration took years to implement, but the order established a federal precedent that equality was government policy.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CIVIL RIGHTS MOVEMENT -->
+    <div class="timeline-event theme-law" data-era="movement" onclick="toggleEvent(this)">
+      <div class="event-dot" aria-hidden="true"></div>
+      <div class="event-card">
+        <div class="event-header">
+          <div class="event-year">1954</div>
+          <div class="event-title-text">Brown v. Board of Education</div>
+          <div class="event-theme-badge">Legal Milestone</div>
+          <div class="event-expand-icon" aria-hidden="true">▼</div>
+        </div>
+        <div class="event-body">
+          <p class="standard">The Supreme Court unanimously ruled in Brown v. Board of Education that racial segregation in public schools was unconstitutional, directly overturning Plessy v. Ferguson. Chief Justice Earl Warren wrote that "separate educational facilities are inherently unequal." NAACP attorney Thurgood Marshall argued the case. The following year, Brown II ordered desegregation "with all deliberate speed."</p>
+          <p class="simplified">The Supreme Court ruled 9–0 that it was unconstitutional to have separate schools for Black and white students. The judges said that segregated schools could never be truly equal. This overturned the "separate but equal" rule from 1896. A Black lawyer named Thurgood Marshall won the case — he later became a Supreme Court Justice himself.</p>
+          <div class="significance-label">Why it matters</div>
+          <div class="significance-text">The most consequential civil rights ruling of the century — it made segregation legally indefensible and supercharged the civil rights movement.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-event theme-protest" data-era="movement" onclick="toggleEvent(this)">
+      <div class="event-dot" aria-hidden="true"></div>
+      <div class="event-card">
+        <div class="event-header">
+          <div class="event-year">1955</div>
+          <div class="event-title-text">Montgomery Bus Boycott Begins</div>
+          <div class="event-theme-badge">Resistance &amp; Protest</div>
+          <div class="event-expand-icon" aria-hidden="true">▼</div>
+        </div>
+        <div class="event-body">
+          <p class="standard">After Rosa Parks was arrested for refusing to give up her seat on a segregated Montgomery, Alabama bus, the Black community organized a 381-day boycott of the city bus system. Led by a young Rev. Dr. Martin Luther King Jr., the boycott crippled the bus company financially and culminated in a Supreme Court ruling that bus segregation was unconstitutional.</p>
+          <p class="simplified">When Rosa Parks was arrested for refusing to give up her seat on a bus to a white passenger, Black residents of Montgomery, Alabama stopped riding the buses for over a year. This hurt the bus company financially. Dr. Martin Luther King Jr. helped lead the boycott, which ended when the Supreme Court ruled that bus segregation was illegal.</p>
+          <div class="significance-label">Why it matters</div>
+          <div class="significance-text">Launched Dr. King to national prominence and demonstrated the power of organized economic pressure and nonviolent direct action.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-event theme-setback" data-era="movement" onclick="toggleEvent(this)">
+      <div class="event-dot" aria-hidden="true"></div>
+      <div class="event-card">
+        <div class="event-header">
+          <div class="event-year">1957</div>
+          <div class="event-title-text">Little Rock Crisis — Central High School</div>
+          <div class="event-theme-badge">Setback / Backlash</div>
+          <div class="event-expand-icon" aria-hidden="true">▼</div>
+        </div>
+        <div class="event-body">
+          <p class="standard">When nine Black students ("the Little Rock Nine") attempted to integrate Central High School in Arkansas, Governor Orval Faubus deployed the National Guard to block them. President Eisenhower responded by federalizing the Arkansas National Guard and sending in the 101st Airborne Division to escort the students into school — the first major federal military intervention to enforce civil rights since Reconstruction.</p>
+          <p class="simplified">When nine Black students tried to attend a previously all-white school in Arkansas, the governor sent soldiers to block them. President Eisenhower then sent in Army troops to protect the students and make sure they could go to school. This was a major moment where the federal government directly defended integration.</p>
+          <div class="significance-label">Why it matters</div>
+          <div class="significance-text">Exposed the depth of Southern resistance to desegregation and forced the federal government to choose a side — visibly and dramatically.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-event theme-protest" data-era="movement" onclick="toggleEvent(this)">
+      <div class="event-dot" aria-hidden="true"></div>
+      <div class="event-card">
+        <div class="event-header">
+          <div class="event-year">1960</div>
+          <div class="event-title-text">Greensboro Sit-Ins</div>
+          <div class="event-theme-badge">Resistance &amp; Protest</div>
+          <div class="event-expand-icon" aria-hidden="true">▼</div>
+        </div>
+        <div class="event-body">
+          <p class="standard">Four Black college students — Ezell Blair Jr., David Richmond, Franklin McCain, and Joseph McNeil — sat down at a whites-only Woolworth's lunch counter in Greensboro, North Carolina and refused to leave when denied service. The sit-in sparked similar protests across the South within weeks, involving over 50,000 students and resulting in the desegregation of lunch counters in dozens of cities.</p>
+          <p class="simplified">Four Black college students sat at a lunch counter that only served white people and refused to leave when the staff wouldn't serve them. Their peaceful protest inspired thousands of other students to do the same across the South. Within months, many lunch counters were desegregated as a result.</p>
+          <div class="significance-label">Why it matters</div>
+          <div class="significance-text">Sparked a new generation of youth-led activism and directly led to the founding of the Student Nonviolent Coordinating Committee (SNCC).</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-event theme-protest" data-era="movement" onclick="toggleEvent(this)">
+      <div class="event-dot" aria-hidden="true"></div>
+      <div class="event-card">
+        <div class="event-header">
+          <div class="event-year">1963</div>
+          <div class="event-title-text">March on Washington</div>
+          <div class="event-theme-badge">Resistance &amp; Protest</div>
+          <div class="event-expand-icon" aria-hidden="true">▼</div>
+        </div>
+        <div class="event-body">
+          <p class="standard">Over 250,000 people gathered at the Lincoln Memorial in Washington D.C. in one of the largest political demonstrations in American history. It was here that Dr. Martin Luther King Jr. delivered his "I Have a Dream" speech. The march demanded civil rights legislation, an end to job discrimination, and federal enforcement of the Constitution. It directly pressured Congress and helped build momentum for the Civil Rights Act of 1964.</p>
+          <p class="simplified">About 250,000 people came to Washington, D.C. to demand civil rights for Black Americans. It was one of the biggest protests in American history. Dr. Martin Luther King Jr. gave his famous "I Have a Dream" speech at the event. The march put pressure on Congress to pass a civil rights law.</p>
+          <div class="significance-label">Why it matters</div>
+          <div class="significance-text">Demonstrated the scale of national support for civil rights legislation and provided an iconic moment in American history.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-event theme-law" data-era="movement" onclick="toggleEvent(this)">
+      <div class="event-dot" aria-hidden="true"></div>
+      <div class="event-card">
+        <div class="event-header">
+          <div class="event-year">1964</div>
+          <div class="event-title-text">Civil Rights Act of 1964</div>
+          <div class="event-theme-badge">Legal Milestone</div>
+          <div class="event-expand-icon" aria-hidden="true">▼</div>
+        </div>
+        <div class="event-body">
+          <p class="standard">Signed by President Lyndon B. Johnson as part of his Great Society program, the Civil Rights Act of 1964 outlawed discrimination based on race, color, religion, sex, or national origin. It banned segregation in public accommodations (hotels, restaurants, theaters), prohibited discriminatory employment practices, and created the Equal Employment Opportunity Commission (EEOC) to enforce the law.</p>
+          <p class="simplified">President Johnson signed a major law that made it illegal to discriminate against people because of their race, religion, sex, or where they were from. It banned segregation in restaurants, hotels, and other public places. It also made it illegal to discriminate against people when hiring them for jobs. This law was a major victory for the civil rights movement.</p>
+          <div class="significance-label">Why it matters</div>
+          <div class="significance-text">The most comprehensive civil rights legislation since Reconstruction — but voting rights still required a separate, dedicated law.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-event theme-protest" data-era="movement" onclick="toggleEvent(this)">
+      <div class="event-dot" aria-hidden="true"></div>
+      <div class="event-card">
+        <div class="event-header">
+          <div class="event-year">1965</div>
+          <div class="event-title-text">Selma to Montgomery Marches — Bloody Sunday</div>
+          <div class="event-theme-badge">Resistance &amp; Protest</div>
+          <div class="event-expand-icon" aria-hidden="true">▼</div>
+        </div>
+        <div class="event-body">
+          <p class="standard">On March 7, 1965, 600 civil rights marchers were beaten by state troopers with clubs and tear gas as they crossed the Edmund Pettus Bridge in Selma, Alabama. Television footage of "Bloody Sunday" shocked the nation. A second march was led by Dr. King. A third march, protected by federalized National Guard, reached Montgomery on March 25. The events accelerated passage of the Voting Rights Act.</p>
+          <p class="simplified">Civil rights marchers in Selma, Alabama were attacked by police with clubs and tear gas when they tried to march for voting rights. The attack was on television and shocked the whole country. After more marches, and with protection from the U.S. military, the marchers eventually reached Montgomery. The violence they faced helped push Congress to pass the Voting Rights Act.</p>
+          <div class="significance-label">Why it matters</div>
+          <div class="significance-text">The televised violence of Bloody Sunday turned national opinion and gave President Johnson the political momentum to pass the Voting Rights Act.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-event theme-law" data-era="movement" onclick="toggleEvent(this)">
+      <div class="event-dot" aria-hidden="true"></div>
+      <div class="event-card">
+        <div class="event-header">
+          <div class="event-year">1965</div>
+          <div class="event-title-text">Voting Rights Act of 1965</div>
+          <div class="event-theme-badge">Legal Milestone</div>
+          <div class="event-expand-icon" aria-hidden="true">▼</div>
+        </div>
+        <div class="event-body">
+          <p class="standard">Signed by President Johnson on August 6, 1965, the Voting Rights Act outlawed discriminatory voting practices — specifically literacy tests, poll taxes, and other barriers that had been used to prevent Black Americans from voting since Reconstruction. It also required federal approval before certain states could change their voting laws. Within three years, Black voter registration in the South had more than doubled.</p>
+          <p class="simplified">President Johnson signed a law on August 6, 1965 that made it illegal to use literacy tests, poll taxes, and other tricks to stop Black Americans from voting. The law also gave the federal government power to watch over states that had been discriminating. In just a few years, twice as many Black voters registered in Southern states than before the law.</p>
+          <div class="significance-label">Why it matters</div>
+          <div class="significance-text">Fulfilled the promise of the 15th Amendment nearly 100 years after it was ratified — and transformed American politics by enfranchising millions of Black voters.</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end timeline-container -->
+
+  <div class="panel-nav">
+    <button class="nav-btn" onclick="switchTab(1)">← Directions</button>
+    <span class="progress-label">Section 2 of 5</span>
+    <button class="nav-btn primary" onclick="switchTab(3)">Sort Activity →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ TAB 3: SORT ACTIVITY -->
+<div id="panel-3" class="tab-panel" role="tabpanel">
+  <div class="sort-intro">
+    <strong>Directions:</strong> Drag each event card from the <em>Unsorted Events</em> bank on the right into the correct category on the left. Each event belongs in exactly one category. Use the color hints if you need support — they show which color the event should be. When you're done, click <strong>Check My Work</strong>.
+  </div>
+
+  <div class="sort-workspace">
+    <!-- DROP ZONES -->
+    <div>
+      <div class="sort-categories">
+        <div class="sort-category" id="cat-law" ondragover="dragOver(event)" ondragleave="dragLeave(event)" ondrop="drop(event,'law')" aria-label="Drop zone: Legal Milestone">
+          <div class="sort-category-header">
+            <div class="sort-category-dot" style="background:var(--color-law)"></div>
+            <div class="sort-category-label" style="color:var(--color-law)">Legal Milestone</div>
+          </div>
+          <div class="sort-items" id="drop-law"></div>
+        </div>
+        <div class="sort-category" id="cat-protest" ondragover="dragOver(event)" ondragleave="dragLeave(event)" ondrop="drop(event,'protest')" aria-label="Drop zone: Resistance and Protest">
+          <div class="sort-category-header">
+            <div class="sort-category-dot" style="background:var(--color-protest)"></div>
+            <div class="sort-category-label" style="color:var(--color-protest)">Resistance &amp; Protest</div>
+          </div>
+          <div class="sort-items" id="drop-protest"></div>
+        </div>
+        <div class="sort-category" id="cat-setback" ondragover="dragOver(event)" ondragleave="dragLeave(event)" ondrop="drop(event,'setback')" aria-label="Drop zone: Setback/Backlash">
+          <div class="sort-category-header">
+            <div class="sort-category-dot" style="background:var(--color-setback)"></div>
+            <div class="sort-category-label" style="color:var(--color-setback)">Setback / Backlash</div>
+          </div>
+          <div class="sort-items" id="drop-setback"></div>
+        </div>
+        <div class="sort-category" id="cat-policy" ondragover="dragOver(event)" ondragleave="dragLeave(event)" ondrop="drop(event,'policy')" aria-label="Drop zone: Federal Policy">
+          <div class="sort-category-header">
+            <div class="sort-category-dot" style="background:var(--color-policy)"></div>
+            <div class="sort-category-label" style="color:var(--color-policy)">Federal Policy</div>
+          </div>
+          <div class="sort-items" id="drop-policy"></div>
+        </div>
+      </div>
+      <button onclick="checkSort()" class="nav-btn primary" style="margin-top:16px;width:100%">Check My Work</button>
+      <div class="sort-result-bar" id="sort-result"></div>
+    </div>
+
+    <!-- UNSORTED BANK -->
+    <div class="sort-bank">
+      <h3>Unsorted Events</h3>
+      <div class="sort-items" id="sort-bank-items">
+        <!-- populated by JS -->
+      </div>
+    </div>
+  </div>
+
+  <div class="panel-nav">
+    <button class="nav-btn" onclick="switchTab(2)">← Timeline</button>
+    <span class="progress-label">Section 3 of 5</span>
+    <button class="nav-btn primary" onclick="switchTab(4)">Assessment →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ TAB 4: ASSESSMENT -->
+<div id="panel-4" class="tab-panel" role="tabpanel">
+
+  <!-- Q1 -->
+  <div class="question-block" id="q1-block">
+    <div class="question-source">NYS Regents — August 2025</div>
+    <div class="stimulus-box">"The Right of Citizens of the United States to Vote Shall Not Be Denied or Abridged By the United States or Any State on Account of Race, Color, or Condition of Servitude" — Celebration at Baltimore, May 19th, 1870. <em>The Fifteenth Amendment and Its Results</em></div>
+    <div class="question-text">Which method was used after Reconstruction to deny African Americans the right illustrated in this poster?</div>
+    <div class="choices" id="q1-choices">
+      <button class="choice-btn" onclick="selectAnswer(1,1,true)" aria-label="Choice A">
+        <span class="choice-letter">A</span> passage of literacy tests and poll taxes
+      </button>
+      <button class="choice-btn" onclick="selectAnswer(1,2,false)" aria-label="Choice B">
+        <span class="choice-letter">B</span> introduction of sharecropping
+      </button>
+      <button class="choice-btn" onclick="selectAnswer(1,3,false)" aria-label="Choice C">
+        <span class="choice-letter">C</span> establishment of the Freedmen's Bureau
+      </button>
+      <button class="choice-btn" onclick="selectAnswer(1,4,false)" aria-label="Choice D">
+        <span class="choice-letter">D</span> decision of the Supreme Court in Brown v. Board of Education
+      </button>
+    </div>
+    <div class="hint-row">
+      <button class="hint-btn" onclick="showHint(1)" aria-label="Reveal hint for question 1">💡 Show Hint</button>
+      <div class="hint-text" id="hint-1">Think about what tools Southern states used to prevent Black voters from registering after the 15th Amendment passed.</div>
+    </div>
+    <div class="feedback-box" id="feedback-1"></div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="question-block" id="q2-block">
+    <div class="question-source">NYS Regents — June 2023</div>
+    <div class="stimulus-box">Photograph: President Lyndon B. Johnson signs the Voting Rights Act as Martin Luther King Jr. and other civil rights leaders look on at the United States Capitol. — LBJ Presidential Library, August 6, 1965</div>
+    <div class="question-text">What was one way the Voting Rights Act expanded the civil rights of African Americans?</div>
+    <div class="choices" id="q2-choices">
+      <button class="choice-btn" onclick="selectAnswer(2,1,false)" aria-label="Choice A">
+        <span class="choice-letter">A</span> It stopped the practice of sharecropping.
+      </button>
+      <button class="choice-btn" onclick="selectAnswer(2,2,false)" aria-label="Choice B">
+        <span class="choice-letter">B</span> It ended discrimination in public facilities.
+      </button>
+      <button class="choice-btn" onclick="selectAnswer(2,3,true)" aria-label="Choice C">
+        <span class="choice-letter">C</span> It outlawed the use of literacy tests.
+      </button>
+      <button class="choice-btn" onclick="selectAnswer(2,4,false)" aria-label="Choice D">
+        <span class="choice-letter">D</span> It forced the integration of public schools.
+      </button>
+    </div>
+    <div class="hint-row">
+      <button class="hint-btn" onclick="showHint(2)" aria-label="Reveal hint for question 2">💡 Show Hint</button>
+      <div class="hint-text" id="hint-2">The Voting Rights Act specifically targeted the tricks states used to stop Black Americans from registering to vote. Which answer choice is about voting?</div>
+    </div>
+    <div class="feedback-box" id="feedback-2"></div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="question-block" id="q3-block">
+    <div class="question-source">NYS Regents — August 2025</div>
+    <div class="stimulus-box">"SEC. 703. (a) It shall be an unlawful employment practice for an employer — (1) to fail or refuse to hire or to discharge any individual… because of such individual's race, color, religion, sex, or national origin…" — Civil Rights Act, 1964</div>
+    <div class="question-text">The Civil Rights Act of 1964 was part of which federal program?</div>
+    <div class="choices" id="q3-choices">
+      <button class="choice-btn" onclick="selectAnswer(3,1,false)" aria-label="Choice A">
+        <span class="choice-letter">A</span> Reconstruction
+      </button>
+      <button class="choice-btn" onclick="selectAnswer(3,2,false)" aria-label="Choice B">
+        <span class="choice-letter">B</span> Square Deal
+      </button>
+      <button class="choice-btn" onclick="selectAnswer(3,3,false)" aria-label="Choice C">
+        <span class="choice-letter">C</span> New Deal
+      </button>
+      <button class="choice-btn" onclick="selectAnswer(3,4,true)" aria-label="Choice D">
+        <span class="choice-letter">D</span> Great Society
+      </button>
+    </div>
+    <div class="hint-row">
+      <button class="hint-btn" onclick="showHint(3)" aria-label="Reveal hint for question 3">💡 Show Hint</button>
+      <div class="hint-text" id="hint-3">Which president signed the Civil Rights Act in 1964? What was the name of his domestic reform agenda?</div>
+    </div>
+    <div class="feedback-box" id="feedback-3"></div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="question-block" id="q4-block">
+    <div class="question-source">NYS Regents — January 2024</div>
+    <div class="stimulus-box">Mike Wallace (reporter): "A Federal District Court has already ruled that Little Rock Central High School should be integrated… will you respect this decision?" Governor Faubus: "The Guard was not called out to prevent integration, but to keep the peace and order of the community…" — Mike Wallace interview with Arkansas Governor Orval Faubus, September 15, 1957</div>
+    <div class="question-text">Which action did President Eisenhower take to address the issue raised in this interview?</div>
+    <div class="choices" id="q4-choices">
+      <button class="choice-btn" onclick="selectAnswer(4,1,true)" aria-label="Choice A">
+        <span class="choice-letter">A</span> sending federal troops to protect African American students in Arkansas
+      </button>
+      <button class="choice-btn" onclick="selectAnswer(4,2,false)" aria-label="Choice B">
+        <span class="choice-letter">B</span> signing the Voting Rights Act passed by Congress
+      </button>
+      <button class="choice-btn" onclick="selectAnswer(4,3,false)" aria-label="Choice C">
+        <span class="choice-letter">C</span> forcing the resignation of Arkansas Governor Orval Faubus
+      </button>
+      <button class="choice-btn" onclick="selectAnswer(4,4,false)" aria-label="Choice D">
+        <span class="choice-letter">D</span> desegregating all southern schools
+      </button>
+    </div>
+    <div class="hint-row">
+      <button class="hint-btn" onclick="showHint(4)" aria-label="Reveal hint for question 4">💡 Show Hint</button>
+      <div class="hint-text" id="hint-4">The governor used the state National Guard to block integration. Eisenhower had to respond with federal power. What kind of power did he have as commander-in-chief?</div>
+    </div>
+    <div class="feedback-box" id="feedback-4"></div>
+  </div>
+
+  <div class="score-display" id="score-display">
+    <div class="score-number" id="score-number">0/4</div>
+    <div class="score-label">Assessment Score</div>
+  </div>
+
+  <div class="panel-nav">
+    <button class="nav-btn" onclick="switchTab(3)">← Sort Activity</button>
+    <span class="progress-label">Section 4 of 6</span>
+    <button class="nav-btn primary" onclick="switchTab(5)">Exit Ticket →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ TAB 6: SUMMARY -->
+<div id="panel-6" class="tab-panel" role="tabpanel">
+  <h2 style="font-family:'Playfair Display',serif;font-size:1.8rem;margin-bottom:24px;">Your Summary</h2>
+  <div class="summary-grid">
+    <div class="summary-card">
+      <h3>Assessment Score</h3>
+      <div class="summary-stat" id="summary-score">—</div>
+      <div class="summary-stat-label">out of 4 questions</div>
+    </div>
+    <div class="summary-card">
+      <h3>Sort Activity</h3>
+      <div class="summary-stat" id="summary-sort">—</div>
+      <div class="summary-stat-label">events correctly categorized</div>
+    </div>
+    <div class="summary-card" style="grid-column:1/-1;">
+      <h3>What You Explored</h3>
+      <p style="font-size:0.88rem;color:var(--text-muted);line-height:1.75;">
+        In this activity you traced civil rights in America from the Reconstruction amendments (1865–1870) through the landmark legislation of 1964–1965. You identified four major categories of events: legal milestones that expanded rights on paper, acts of resistance and protest that built political pressure, setbacks and backlash that revealed the depth of opposition, and federal policy decisions that either extended or betrayed those rights.
+      </p>
+    </div>
+    <div class="summary-card" style="grid-column:1/-1;" id="summary-exit-card">
+      <h3>Exit Ticket Responses</h3>
+      <div id="summary-et-q1-wrap" style="margin-bottom:18px;">
+        <div style="font-size:0.78rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-dim);margin-bottom:6px;">Q1 — Most important turning point</div>
+        <div id="summary-et-q1" style="font-size:0.88rem;color:var(--text-muted);font-style:italic;white-space:pre-wrap;padding:10px 14px;background:var(--bg-base);border:1px solid var(--border);border-radius:4px;min-height:40px;overflow:visible;">—</div>
+      </div>
+      <div id="summary-et-q2-wrap" style="margin-bottom:18px;">
+        <div style="font-size:0.78rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-dim);margin-bottom:6px;">Q2 — Why 100 years?</div>
+        <div id="summary-et-q2" style="font-size:0.88rem;color:var(--text-muted);font-style:italic;white-space:pre-wrap;padding:10px 14px;background:var(--bg-base);border:1px solid var(--border);border-radius:4px;min-height:40px;overflow:visible;">—</div>
+      </div>
+      <div id="summary-et-q3-wrap">
+        <div style="font-size:0.78rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-dim);margin-bottom:6px;">Q3 — Remaining question</div>
+        <div id="summary-et-q3" style="font-size:0.88rem;color:var(--text-muted);font-style:italic;white-space:pre-wrap;padding:10px 14px;background:var(--bg-base);border:1px solid var(--border);border-radius:4px;min-height:40px;overflow:visible;">—</div>
+      </div>
+    </div>
+  </div>
+
+  <button class="save-btn" onclick="openSaveModal()" aria-label="Save your work as a PDF">⬇ Save as PDF — Choose Sections</button>
+
+  <div class="panel-nav">
+    <button class="nav-btn" onclick="switchTab(5)">← Exit Ticket</button>
+    <span class="progress-label">Section 6 of 6</span>
+    <button class="nav-btn" disabled>Done ✓</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ TAB 5: EXIT TICKET -->
+<div id="panel-5" class="tab-panel" role="tabpanel">
+  <h2 style="font-family:'Playfair Display',serif;font-size:1.8rem;margin-bottom:16px;">Exit Ticket</h2>
+  <div class="exit-ticket-intro">
+    Answer each question in your own words. There are no right or wrong answers here — your teacher wants to know what you're thinking. Aim for at least 2–3 sentences per response.
+  </div>
+
+  <div class="exit-question-block">
+    <div class="exit-question-label">Question 1 of 3</div>
+    <div class="exit-question-text">Choose one event from the timeline that you think was the most important turning point in the civil rights struggle. Explain why you chose it and what changed as a result.</div>
+    <textarea class="exit-textarea" id="et-q1" placeholder="Type your response here…" oninput="saveExitTicket(); updateCharCount('et-q1','et-q1-count')" aria-label="Exit ticket question 1 response"></textarea>
+    <div class="exit-response-print" id="et-q1-print" style="display:none"></div>
+    <div class="exit-char-count" id="et-q1-count">0 words</div>
+  </div>
+
+  <div class="exit-question-block">
+    <div class="exit-question-label">Question 2 of 3</div>
+    <div class="exit-question-text">Why do you think it took nearly 100 years after the 15th Amendment (1870) for the federal government to pass the Voting Rights Act (1965)? Use at least two events from the timeline to support your answer.</div>
+    <textarea class="exit-textarea" id="et-q2" placeholder="Type your response here…" oninput="saveExitTicket(); updateCharCount('et-q2','et-q2-count')" aria-label="Exit ticket question 2 response"></textarea>
+    <div class="exit-response-print" id="et-q2-print" style="display:none"></div>
+    <div class="exit-char-count" id="et-q2-count">0 words</div>
+  </div>
+
+  <div class="exit-question-block">
+    <div class="exit-question-label">Question 3 of 3</div>
+    <div class="exit-question-text">What is one question you still have after exploring this timeline? What would you want to investigate further?</div>
+    <textarea class="exit-textarea" id="et-q3" placeholder="Type your response here…" oninput="saveExitTicket(); updateCharCount('et-q3','et-q3-count')" aria-label="Exit ticket question 3 response"></textarea>
+    <div class="exit-response-print" id="et-q3-print" style="display:none"></div>
+    <div class="exit-char-count" id="et-q3-count">0 words</div>
+  </div>
+
+  <div class="panel-nav">
+    <button class="nav-btn" onclick="switchTab(4)">← Assessment</button>
+    <span class="progress-label">Section 5 of 6</span>
+    <button class="nav-btn primary" onclick="switchTab(6)">Summary →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ SAVE MODAL -->
+<div class="modal-overlay" id="save-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal">
+    <h2 id="modal-title">Save as PDF</h2>
+    <p>Choose which sections to include in your download:</p>
+    <div class="modal-checks">
+      <label class="modal-check"><input type="checkbox" id="save-timeline" checked> Timeline (event list)</label>
+      <label class="modal-check"><input type="checkbox" id="save-sort" checked> Sort Activity results</label>
+      <label class="modal-check"><input type="checkbox" id="save-assessment" checked> Assessment questions &amp; answers</label>
+      <label class="modal-check"><input type="checkbox" id="save-exit" checked> Exit Ticket responses</label>
+      <label class="modal-check"><input type="checkbox" id="save-summary" checked> Summary</label>
+    </div>
+    <div class="modal-actions">
+      <button class="modal-btn" onclick="closeModal()">Cancel</button>
+      <button class="modal-btn confirm" onclick="printSelected()">Save PDF</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ RESET MODAL -->
+<div class="modal-overlay" id="reset-modal" role="dialog" aria-modal="true" aria-labelledby="reset-modal-title">
+  <div class="modal">
+    <h2 id="reset-modal-title">Reset All Progress?</h2>
+    <p>This will clear all your answers, sort placements, and exit ticket responses. This cannot be undone.</p>
+    <div class="modal-actions">
+      <button class="modal-btn" onclick="closeResetModal()">Cancel</button>
+      <button class="modal-btn" onclick="doReset()" style="background:var(--color-protest);color:var(--bg-base);border-color:var(--color-protest);font-weight:600;">Reset Everything</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── RESET ───────────────────────────────────
+function confirmReset() {
+  document.getElementById('reset-modal').classList.add('active');
+}
+function closeResetModal() {
+  document.getElementById('reset-modal').classList.remove('active');
+}
+function doReset() {
+  try { localStorage.removeItem(LS_KEY); } catch(e) {}
+  location.reload();
+}
+
+// ─── CONSTANTS ───────────────────────────────
+const LS_KEY = 'edsim_civil_rights_v1';
+
+const SORT_ITEMS = [
+  { id: 's1', text: '13th Amendment abolishes slavery (1865)', correct: 'law' },
+  { id: 's2', text: 'Plessy v. Ferguson — "Separate but Equal" (1896)', correct: 'setback' },
+  { id: 's3', text: 'NAACP Founded (1909)', correct: 'protest' },
+  { id: 's4', text: 'Montgomery Bus Boycott (1955)', correct: 'protest' },
+  { id: 's5', text: 'Executive Order 9981 — Military Desegregation (1948)', correct: 'policy' },
+  { id: 's6', text: 'End of Reconstruction (1877)', correct: 'setback' },
+  { id: 's7', text: 'Civil Rights Act of 1964', correct: 'law' },
+  { id: 's8', text: 'Greensboro Sit-Ins (1960)', correct: 'protest' },
+];
+
+// ─── STATE ───────────────────────────────────
+let state = {
+  currentTab: 1,
+  simplifiedMode: false,
+  eraFilter: 'all',
+  quizAnswers: {},
+  sortPlacements: {},
+  sortChecked: false,
+  sortScore: 0,
+  exitTicket: { q1: '', q2: '', q3: '' },
+};
+
+// ─── INIT ─────────────────────────────────────
+window.addEventListener('DOMContentLoaded', () => {
+  // Always start at tab 1
+  loadState();
+  buildSortBank();
+  restoreSortPlacements();
+  updateSummary();
+});
+
+// ─── LOCAL STORAGE ────────────────────────────
+function saveState() {
+  try {
+    const saved = {
+      simplifiedMode: state.simplifiedMode,
+      eraFilter: state.eraFilter,
+      quizAnswers: state.quizAnswers,
+      sortPlacements: state.sortPlacements,
+      sortChecked: state.sortChecked,
+      sortScore: state.sortScore,
+      exitTicket: state.exitTicket,
+    };
+    localStorage.setItem(LS_KEY, JSON.stringify(saved));
+  } catch(e) {}
+}
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    if (!raw) return;
+    const saved = JSON.parse(raw);
+    state.simplifiedMode = saved.simplifiedMode || false;
+    state.eraFilter = saved.eraFilter || 'all';
+    state.quizAnswers = saved.quizAnswers || {};
+    state.sortPlacements = saved.sortPlacements || {};
+    state.sortChecked = saved.sortChecked || false;
+    state.sortScore = saved.sortScore || 0;
+    state.exitTicket = saved.exitTicket || { q1: '', q2: '', q3: '' };
+
+    // Apply reading level
+    if (state.simplifiedMode) {
+      document.body.classList.add('simplified-mode');
+      document.getElementById('reading-level-toggle').checked = true;
+    }
+    // Restore exit ticket text
+    ['q1','q2','q3'].forEach(k => {
+      const el = document.getElementById('et-' + k);
+      if (el && state.exitTicket[k]) {
+        el.value = state.exitTicket[k];
+        updateCharCount('et-' + k, 'et-' + k + '-count');
+      }
+    });
+    // Restore quiz answers
+    Object.entries(state.quizAnswers).forEach(([qNum, data]) => {
+      restoreQuizAnswer(parseInt(qNum), data);
+    });
+  } catch(e) {}
+}
+
+// ─── TAB NAVIGATION ──────────────────────────
+function switchTab(n) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
+  document.getElementById('panel-' + n).classList.add('active');
+  document.querySelectorAll('.tab-btn')[n-1].classList.add('active');
+  document.querySelectorAll('.tab-btn')[n-1].setAttribute('aria-selected','true');
+  state.currentTab = n;
+  if (n === 6) updateSummary();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ─── TIMELINE ────────────────────────────────
+function toggleEvent(el) {
+  const wasExpanded = el.classList.contains('expanded');
+  // Close all
+  document.querySelectorAll('.timeline-event.expanded').forEach(e => {
+    e.classList.remove('expanded');
+    const body = e.querySelector('.event-body');
+    if (body) body.setAttribute('aria-expanded','false');
+  });
+  if (!wasExpanded) {
+    el.classList.add('expanded');
+    const body = el.querySelector('.event-body');
+    if (body) body.setAttribute('aria-expanded','true');
+  }
+}
+
+function filterEra(era, btn) {
+  state.eraFilter = era;
+  document.querySelectorAll('.era-chip').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.timeline-event').forEach(ev => {
+    if (era === 'all' || ev.dataset.era === era) {
+      ev.classList.remove('hidden');
+    } else {
+      ev.classList.add('hidden');
+    }
+  });
+  saveState();
+}
+
+function toggleReadingLevel(cb) {
+  state.simplifiedMode = cb.checked;
+  document.body.classList.toggle('simplified-mode', cb.checked);
+  saveState();
+}
+
+// ─── SORT ACTIVITY ───────────────────────────
+function buildSortBank() {
+  const bank = document.getElementById('sort-bank-items');
+  bank.innerHTML = '';
+  // Shuffle
+  const shuffled = [...SORT_ITEMS].sort(() => Math.random() - 0.5);
+  shuffled.forEach(item => {
+    if (!state.sortPlacements[item.id]) {
+      bank.appendChild(createSortItem(item));
+    }
+  });
+}
+
+function createSortItem(item) {
+  const div = document.createElement('div');
+  div.className = 'sort-item';
+  div.id = 'si-' + item.id;
+  div.draggable = true;
+  div.setAttribute('tabindex', '0');
+  div.setAttribute('aria-label', item.text + ' — drag to categorize');
+
+  // Color hint dot
+  const colorMap = { law: 'var(--color-law)', protest: 'var(--color-protest)', setback: 'var(--color-setback)', policy: 'var(--color-policy)' };
+  const labelMap = { law: 'Legal', protest: 'Protest', setback: 'Setback', policy: 'Policy' };
+
+  div.innerHTML = `
+    <span class="drag-handle" aria-hidden="true">⠿</span>
+    <span>${item.text}</span>
+  `;
+  div.addEventListener('dragstart', e => {
+    draggedItemId = item.id;
+    e.dataTransfer.setData('text/plain', item.id);
+    e.dataTransfer.effectAllowed = 'move';
+    setTimeout(() => { div.style.opacity = '0.4'; }, 0);
+  });
+  div.addEventListener('dragend', () => { div.style.opacity = '1'; draggedItemId = null; });
+  return div;
+}
+
+let draggedItemId = null;
+
+function dragOver(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  // Highlight the closest .sort-category ancestor
+  const zone = e.currentTarget.closest('.sort-category') || e.currentTarget;
+  document.querySelectorAll('.sort-category').forEach(z => z.classList.remove('drag-over'));
+  zone.classList.add('drag-over');
+}
+
+function dragLeave(e) {
+  const zone = e.currentTarget.closest('.sort-category') || e.currentTarget;
+  // Only remove if leaving the zone entirely (not entering a child)
+  if (!zone.contains(e.relatedTarget)) {
+    zone.classList.remove('drag-over');
+  }
+}
+
+function drop(e, category) {
+  e.preventDefault();
+  e.stopPropagation();
+  document.querySelectorAll('.sort-category').forEach(z => z.classList.remove('drag-over'));
+
+  const itemId = draggedItemId || e.dataTransfer.getData('text/plain');
+  draggedItemId = null;
+  if (!itemId) return;
+
+  const item = SORT_ITEMS.find(i => i.id === itemId);
+  if (!item) return;
+
+  // Remove old placement
+  const existing = document.getElementById('si-' + itemId);
+  if (existing) existing.remove();
+
+  // Place in new drop zone
+  const dropZone = document.getElementById('drop-' + category);
+  if (!dropZone) return;
+  dropZone.appendChild(createSortItem(item));
+  state.sortPlacements[itemId] = category;
+  saveState();
+}
+
+function dropToBank(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  document.querySelectorAll('.sort-category').forEach(z => z.classList.remove('drag-over'));
+
+  const itemId = draggedItemId || e.dataTransfer.getData('text/plain');
+  draggedItemId = null;
+  if (!itemId) return;
+
+  const item = SORT_ITEMS.find(i => i.id === itemId);
+  if (!item) return;
+
+  const existing = document.getElementById('si-' + itemId);
+  if (existing) existing.remove();
+
+  const bank = document.getElementById('sort-bank-items');
+  bank.appendChild(createSortItem(item));
+  delete state.sortPlacements[itemId];
+  saveState();
+}
+
+// Wire up bank drag/drop after DOM ready
+document.addEventListener('DOMContentLoaded', () => {
+  const bank = document.getElementById('sort-bank-items');
+  if (bank) {
+    bank.addEventListener('dragover', e => { e.preventDefault(); e.stopPropagation(); });
+    bank.addEventListener('drop', dropToBank);
+  }
+  // Wire dragleave on all sort-category zones
+  document.querySelectorAll('.sort-category').forEach(zone => {
+    zone.addEventListener('dragleave', dragLeave);
+  });
+});
+
+function restoreSortPlacements() {
+  Object.entries(state.sortPlacements).forEach(([itemId, category]) => {
+    const item = SORT_ITEMS.find(i => i.id === itemId);
+    if (!item) return;
+    const bankEl = document.getElementById('si-' + itemId);
+    if (bankEl) bankEl.remove();
+    const dropZone = document.getElementById('drop-' + category);
+    if (dropZone) dropZone.appendChild(createSortItem(item));
+  });
+  if (state.sortChecked) {
+    markSortResults();
+  }
+}
+
+function checkSort() {
+  let correct = 0;
+  let total = 0;
+  SORT_ITEMS.forEach(item => {
+    const placed = state.sortPlacements[item.id];
+    if (placed) {
+      total++;
+      if (placed === item.correct) correct++;
+    }
+  });
+  state.sortChecked = true;
+  state.sortScore = correct;
+  markSortResults();
+  const result = document.getElementById('sort-result');
+  result.classList.add('visible');
+  result.innerHTML = `<strong>${correct} of ${SORT_ITEMS.length} correct.</strong> ${total < SORT_ITEMS.length ? ` (${SORT_ITEMS.length - total} item(s) not yet placed.)` : ''} ${correct === SORT_ITEMS.length ? '🎉 Perfect!' : ' Review the timeline and try moving any misplaced events.'}`;
+  saveState();
+  updateSummary();
+}
+
+function markSortResults() {
+  SORT_ITEMS.forEach(item => {
+    const el = document.getElementById('si-' + item.id);
+    if (!el) return;
+    const placed = state.sortPlacements[item.id];
+    el.style.borderColor = placed === item.correct ? 'var(--color-policy)' : 'var(--color-protest)';
+  });
+}
+
+// ─── ASSESSMENT ──────────────────────────────
+function selectAnswer(qNum, choiceIdx, isCorrect) {
+  const choices = document.querySelectorAll(`#q${qNum}-choices .choice-btn`);
+  choices.forEach(b => b.disabled = true);
+
+  choices[choiceIdx - 1].classList.add(isCorrect ? 'correct' : 'incorrect');
+  if (!isCorrect) {
+    // Find correct one and highlight
+    // We don't auto-reveal; instead show retry
+  }
+
+  const fb = document.getElementById('feedback-' + qNum);
+  fb.classList.add('visible');
+
+  if (isCorrect) {
+    fb.className = 'feedback-box visible correct-fb';
+    fb.innerHTML = '✓ Correct! ' + getExplanation(qNum, true);
+  } else {
+    fb.className = 'feedback-box visible incorrect-fb';
+    fb.innerHTML = '✗ Not quite. ' + getExplanation(qNum, false) +
+      `<br><button class="retry-btn" onclick="resetQuestion(${qNum})">↩ Try Again</button>`;
+  }
+
+  state.quizAnswers[qNum] = { chosen: choiceIdx, correct: isCorrect };
+  saveState();
+  updateSummary();
+}
+
+function getExplanation(qNum, isCorrect) {
+  const explanations = {
+    1: isCorrect ? 'After Reconstruction ended, Southern states used literacy tests, poll taxes, and grandfather clauses to effectively strip Black men of the right to vote the 15th Amendment had guaranteed.' : 'Remember: the poster celebrates the 15th Amendment and the right to vote. Which answer is about taking that right away?',
+    2: isCorrect ? 'The Voting Rights Act specifically targeted the tools — especially literacy tests — that states had used since Reconstruction to prevent Black voters from registering.' : 'The Voting Rights Act focused on expanding voting rights. Which answer is specifically about voting registration barriers?',
+    3: isCorrect ? 'The Civil Rights Act of 1964 was part of President Lyndon B. Johnson\'s Great Society — his sweeping domestic reform agenda.' : 'Think about which president signed the Civil Rights Act and what he called his domestic agenda. It was not Roosevelt\'s New Deal era.',
+    4: isCorrect ? 'When Arkansas\'s governor used the state National Guard to block integration, Eisenhower federalized the Guard and deployed the 101st Airborne Division to escort the Little Rock Nine into school.' : 'The governor was using state power. Eisenhower had to match that with federal power — specifically military power he held as Commander-in-Chief.',
+  };
+  return explanations[qNum] || '';
+}
+
+function resetQuestion(qNum) {
+  const choices = document.querySelectorAll(`#q${qNum}-choices .choice-btn`);
+  choices.forEach(b => { b.disabled = false; b.classList.remove('correct','incorrect'); });
+  const fb = document.getElementById('feedback-' + qNum);
+  fb.classList.remove('visible');
+  fb.className = 'feedback-box';
+  delete state.quizAnswers[qNum];
+  saveState();
+  updateSummary();
+}
+
+function restoreQuizAnswer(qNum, data) {
+  const choices = document.querySelectorAll(`#q${qNum}-choices .choice-btn`);
+  if (!choices.length) return;
+  choices.forEach(b => b.disabled = true);
+  choices[data.chosen - 1].classList.add(data.correct ? 'correct' : 'incorrect');
+  const fb = document.getElementById('feedback-' + qNum);
+  fb.classList.add('visible');
+  if (data.correct) {
+    fb.className = 'feedback-box visible correct-fb';
+    fb.innerHTML = '✓ Correct! ' + getExplanation(qNum, true);
+  } else {
+    fb.className = 'feedback-box visible incorrect-fb';
+    fb.innerHTML = '✗ Not quite. ' + getExplanation(qNum, false) +
+      `<br><button class="retry-btn" onclick="resetQuestion(${qNum})">↩ Try Again</button>`;
+  }
+}
+
+function showHint(qNum) {
+  document.getElementById('hint-' + qNum).classList.add('visible');
+}
+
+// ─── EXIT TICKET ─────────────────────────────
+function saveExitTicket() {
+  state.exitTicket.q1 = document.getElementById('et-q1')?.value || '';
+  state.exitTicket.q2 = document.getElementById('et-q2')?.value || '';
+  state.exitTicket.q3 = document.getElementById('et-q3')?.value || '';
+  saveState();
+  updateSummary();
+}
+
+function updateCharCount(textareaId, countId) {
+  const el = document.getElementById(textareaId);
+  const counter = document.getElementById(countId);
+  if (!el || !counter) return;
+  const words = el.value.trim().split(/\s+/).filter(w => w.length > 0).length;
+  counter.textContent = words === 1 ? '1 word' : `${words} words`;
+}
+
+// ─── SUMMARY ─────────────────────────────────
+function updateSummary() {
+  const correct = Object.values(state.quizAnswers).filter(a => a.correct).length;
+  const answered = Object.keys(state.quizAnswers).length;
+  document.getElementById('summary-score').textContent = answered > 0 ? `${correct}/4` : '—';
+  document.getElementById('score-number') && (document.getElementById('score-number').textContent = `${correct}/4`);
+  if (answered === 4) {
+    const scoreDisplay = document.getElementById('score-display');
+    if (scoreDisplay) scoreDisplay.classList.add('visible');
+  }
+  const sortEl = document.getElementById('summary-sort');
+  if (sortEl) sortEl.textContent = state.sortChecked ? `${state.sortScore}/8` : '—';
+
+  // Populate exit ticket responses in summary
+  const et = state.exitTicket;
+  const q1El = document.getElementById('summary-et-q1');
+  const q2El = document.getElementById('summary-et-q2');
+  const q3El = document.getElementById('summary-et-q3');
+  if (q1El) q1El.textContent = et.q1 || '(no response)';
+  if (q2El) q2El.textContent = et.q2 || '(no response)';
+  if (q3El) q3El.textContent = et.q3 || '(no response)';
+
+  // Sync print-mirror divs on exit ticket tab
+  ['q1','q2','q3'].forEach(k => {
+    const printEl = document.getElementById('et-' + k + '-print');
+    if (printEl) printEl.textContent = et[k] || '(no response)';
+  });
+}
+
+// ─── SAVE / PRINT ─────────────────────────────
+function openSaveModal() {
+  document.getElementById('save-modal').classList.add('active');
+}
+function closeModal() {
+  document.getElementById('save-modal').classList.remove('active');
+}
+function printSelected() {
+  closeModal();
+  window.print();
+  // Clear localStorage after successful export (shared device protection)
+  try {
+    localStorage.removeItem(LS_KEY);
+  } catch(e) {}
+}
+
+// Close modals on overlay click
+document.getElementById('save-modal')?.addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+document.getElementById('reset-modal')?.addEventListener('click', function(e) {
+  if (e.target === this) closeResetModal();
+});
+
+// Keyboard navigation
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeModal(); closeResetModal(); }
+});
+</script>
+</body>
+</html>
