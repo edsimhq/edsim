@@ -1,0 +1,327 @@
+================================================================
+SURVEY SHOWDOWN · EdSim
+BUILD NOTES — Developer & Creator Reference
+================================================================
+Version:      4.2
+Built:        May 2026
+Platform:     EdSim (edsim.org)
+Hosted:       Netlify (drag-and-drop deploy, no build step)
+Author:       EdSim
+================================================================
+
+
+PEDAGOGICAL INTENT
+------------------
+Survey Showdown is modeled on Family Feud but grounded in real
+Regents exam content. The "100 historians were polled" framing
+serves a specific purpose: it repositions historical knowledge
+as something that exists on a spectrum of importance rather than
+as a binary right/wrong. Students who know "taxation without
+representation" is the top answer AND why it ranks above
+"quartering of troops" understand the content more deeply than
+students who can simply recall both facts.
+
+The point ranking system (38 pts vs 10 pts) is not arbitrary —
+it reflects how frequently each answer appeared in Regents
+responses. This is real data, not invented difficulty.
+
+The word bank feature was added specifically for differentiation.
+A teacher running the same game with two different periods can
+dial the scaffold up or down without changing the content.
+Fewer phantoms = more scaffolded. More phantoms = harder because
+correct answers are buried in more noise. This gives teachers
+a live differentiation lever that doesn't exist in most edtech.
+
+
+ARCHITECTURE OVERVIEW
+----------------------
+Survey Showdown is a fully static HTML application. No server,
+no database, no build step. All files are plain HTML/CSS/JS.
+
+Files:
+  index.html          Home page and mode selector
+  host.html           Teacher dashboard (password protected)
+  game-class.html     Student scoreboard (projected view)
+  game-wordbank.html  Solo mode (individual student play)
+  audio.js            AudioEngine — Web Audio API sound effects
+  data/               JSON unit files (11 units, not used in v4)
+                      Note: all unit data is embedded directly
+                      in host.html and game-wordbank.html as
+                      const UNITS = {...}. The /data/ folder
+                      contains the source JSON files for
+                      reference and future use.
+
+No frameworks. No dependencies. No npm. No build pipeline.
+This is intentional — the simpler the stack, the easier it is
+for a teacher-creator to understand, modify, and maintain.
+
+
+CLASS MODE SYNC — BROADCASTCHANNEL
+------------------------------------
+Class Mode uses the browser's built-in BroadcastChannel API to
+sync state between the teacher dashboard (host.html) and the
+student scoreboard (game-class.html).
+
+How it works:
+  - Both windows connect to BroadcastChannel('feud_scoreboard')
+  - Every state change in host.html calls broadcastState()
+  - broadcastState() posts a complete state snapshot to the channel
+  - game-class.html listens via bc.onmessage and re-renders
+
+CRITICAL LIMITATION: BroadcastChannel is same-browser,
+same-machine only. It does NOT work across devices. Both windows
+must be open on the same physical computer.
+
+This means class mode requires a single machine with HDMI or
+display output to a projector or smartboard. Teacher controls
+from their laptop; students see the projected window.
+
+This was a deliberate tradeoff. The alternative (Ably, PartyKit,
+WebSockets) requires a real-time server, third-party accounts,
+and ongoing infrastructure costs. BroadcastChannel is free,
+dependency-free, and works for the primary use case (one machine
+to projector). Cross-device support is a Phase 2 feature.
+
+FUTURE: When cross-device sync is added, replace BroadcastChannel
+with a room-code-based system (4-digit code, teacher generates,
+scoreboard joins). The broadcastState() and bc.onmessage pattern
+are designed for this swap — only the transport layer changes.
+
+
+WORD BANK — PHANTOM ANSWER LOGIC
+----------------------------------
+The word bank in both Solo Mode and Class Mode uses "phantom"
+answers — real answers from OTHER rounds in the same unit —
+as distractors. This is intentional: phantom answers are
+historically plausible (they come from the same content area)
+but contextually wrong (they don't belong to this question).
+
+This is harder than random distractors and more pedagogically
+honest. A student who confuses "Containment of communism" with
+a Cold War domestic policy answer is making a meaningful error
+worth addressing, not a random guess.
+
+Phantom generation (buildWordBank in host.html):
+  1. Collect all answers from rounds OTHER than current round
+  2. Shuffle the pool
+  3. Take the first N answers (N = teacher's phantom count)
+  4. Combine with 5 real answers and shuffle again
+
+Phantom count range: 0–10, default 5.
+  0 phantoms = only real answers shown (easiest)
+  10 phantoms = 5 real buried in 15 chips (hardest)
+
+MINIMUM ROUND POLICY: Units must have at least 3 rounds to be
+published on EdSim. A 3-round unit has 10 phantom candidates
+available (2 other rounds × 5 answers), which exactly covers
+the maximum phantom count of 10. Units with fewer rounds should
+be expanded or combined with a thematically related unit before
+publishing.
+
+All 11 current units have 6 rounds = 25 phantom candidates.
+The phantom shortfall scenario cannot occur with current content.
+
+
+AUDIO ENGINE
+-------------
+audio.js contains a lightweight AudioEngine built on the Web
+Audio API. All sounds are synthesized programmatically — no
+audio files, no external assets, no loading time.
+
+Sounds:
+  AudioEngine.reveal()          Answer revealed
+  AudioEngine.strike()          Wrong answer / strike
+  AudioEngine.roundWin()        All answers found
+  AudioEngine.steal()           3 strikes, steal offered
+  AudioEngine.stealWin()        Steal successful
+  AudioEngine.stealFail()       Steal failed
+  AudioEngine.questionReveal()  New round loaded
+  AudioEngine.multiplierStart() Multiplier round begins
+
+The engine gracefully handles browsers that block autoplay —
+sounds simply don't play if the AudioContext can't be created.
+
+
+PASSWORD
+---------
+Host view password: feud123
+Set at line: const HOST_PASSWORD = 'feud123' in host.html
+Change this directly in the file before deploying if needed.
+Note: this is client-side only — the password is visible in
+source code. It is a deterrent, not true security. It prevents
+students from stumbling into the host view, not a determined
+effort to access it.
+
+
+AI FEEDBACK (SOLO MODE)
+------------------------
+Solo mode includes optional feedback on wrong answers. When
+enabled, clicking a wrong chip displays a brief explanation
+of why that answer doesn't fit the current question.
+
+The feedback is hardcoded — each answer in UNITS carries an
+"explanation" field written by the teacher-creator. When a
+student clicks a phantom answer, showAIFeedback() looks up
+the matching answer object in gameData.rounds and displays
+its explanation field instantly.
+
+No API call. No network request. No cost. Works offline.
+The feedback panel appears immediately with no loading state.
+
+If an answer has no explanation field, the panel does not
+appear — it fails silently. All 330 answers across all 11
+units currently have explanations.
+
+The "explanation" field lives on each answer object in UNITS:
+  { "text": "Containment of communism", "points": 40,
+    "explanation": "This is a Cold War strategy — Kennan's
+    containment doctrine held that the US should prevent
+    Soviet expansion without directly attacking the USSR." }
+
+When adding new units, include an explanation for each answer.
+The explanation should say what topic the answer DOES belong
+to, not just that it's wrong — students need the correct
+context, not just a correction.
+
+Note: The Netlify Function (netlify/functions/ai-feedback.js)
+was built but is no longer used. It can be removed on next
+deploy or retained for a potential future "custom question"
+mode where content isn't pre-authored.
+
+
+UNIT DATA
+----------
+All 11 units are embedded as a const UNITS = {...} object in
+both host.html and game-wordbank.html. This was a deliberate
+decision to make both files self-contained — no fetch() calls,
+no server required, works offline.
+
+The /data/ folder contains the same units as individual JSON
+files. These are the source of truth for content. If a unit
+is updated, update both the JSON file AND the embedded object
+in both HTML files.
+
+Units:
+  colonial-revolution.json
+  early-republic.json
+  civil-war-reconstruction.json
+  industrialization-immigration.json
+  progressive-era.json
+  wwi-1920s.json
+  great-depression-new-deal.json
+  world-war-ii.json
+  cold-war.json
+  civil-rights.json
+  modern-america.json
+
+Each unit follows this schema:
+  {
+    "unit": "Unit Name",
+    "poll_label": "100 historians were surveyed...",
+    "rounds": [
+      {
+        "id": "r1",
+        "question": "Name a...",
+        "multiplier": 1,
+        "answers": [
+          { "text": "Answer text", "points": 38 },
+          ...
+        ]
+      }
+    ]
+  }
+
+Points per round must sum to 100.
+Multiplier applies to all answer points for that round (1, 2, or 3).
+Answers should be ordered highest to lowest points.
+
+
+HOSTING
+--------
+Deployed on Netlify via drag-and-drop.
+URL: bucolic-sundae-f11870.netlify.app
+Custom domain: edsim.org (DNS to be configured)
+No netlify.toml required at current scale.
+No build step — files are served as-is.
+
+
+VERSION HISTORY
+----------------
+v1.0  Initial build — Class Mode with JSON upload, Solo Mode
+v2.0  Word Bank mode added (chip-snap mechanic)
+v3.0  Word Bank rebuilt, Host view added, all units embedded
+v4.0  Major restructure:
+        - Solo Mode replaces Word Bank as primary individual mode
+        - Old Solo Mode (fuzzy text input) removed
+        - Class Mode rebuilt as clean projected scoreboard
+        - Host view separated as standalone teacher dashboard
+        - localStorage sync replaced with BroadcastChannel
+        - Word bank toggle + phantom slider added to class mode
+        - Game over end state added to host view
+        - Home buttons added throughout
+        - Meta/OG tags added to index.html
+        - Dead files removed (game-individual.html, fuzzy.js)
+        - Deployed to Netlify
+v4.1  Infrastructure:
+        - Netlify Function added (netlify/functions/ai-feedback.js)
+        - AI feedback now works in production via server-side proxy
+        - game-wordbank.html updated to call /.netlify/functions/ai-feedback
+        - build-notes.txt updated with Ably integration plan
+v4.2  AI feedback replaced with hardcoded explanations:
+        - Removed Anthropic API call from showAIFeedback()
+        - Added "explanation" field to all 330 answers across 11 units
+        - Feedback is now instant, offline-capable, and zero-cost
+        - Netlify Function retained but no longer called
+        - build-notes.txt updated to reflect new approach
+
+
+KNOWN LIMITATIONS
+------------------
+1. Class Mode is same-machine only (BroadcastChannel constraint)
+2. Feedback only available for pre-authored units (no dynamic AI)
+3. No user accounts — no usage tracking, no login
+4. No custom unit upload in current build (was removed in v4)
+5. Password is client-side only — not true security
+6. No mobile optimization for host.html (teacher tool, not student)
+
+
+NEXT DEVELOPMENT PRIORITIES
+-----------------------------
+1. Custom domain (edsim.org) DNS configuration — see HOSTING section
+2. Room code system for future cross-device class mode (Ably)
+3. User accounts and usage tracking (Supabase)
+4. Creator submission portal
+5. Additional simulations (Constitutional Convention, Ratification)
+
+
+ABLY — FUTURE CROSS-DEVICE CLASS MODE
+---------------------------------------
+The current BroadcastChannel sync is same-machine only (see CLASS
+MODE SYNC section above). When cross-device class mode is needed
+(students on their own devices), Ably is the planned transport layer.
+
+Why Ably:
+  - Managed WebSocket infrastructure — no self-hosted server
+  - Free tier covers classroom-scale usage (200 concurrent
+    connections, 6M messages/month)
+  - Simple pub/sub API that maps directly to broadcastState()
+
+Planned implementation:
+  - Teacher generates a 4-digit room code in host.html
+  - Students visit edsim.org/join and enter the code
+  - host.html publishes state to Ably channel named by room code
+  - game-class.html (or a new student view) subscribes to same channel
+  - Replace BroadcastChannel('feud_scoreboard') with
+    ably.channels.get(roomCode) — the broadcastState() and
+    bc.onmessage pattern is designed for this exact swap
+
+Ably account: not yet created (Phase 2)
+Ably docs: https://ably.com/docs
+
+
+================================================================
+EdSim — Built by teachers, for teachers.
+The best educational content in the world is sitting in teacher
+hard drives right now — owned ambiguously, monetized poorly,
+reaching far fewer students than it should.
+================================================================

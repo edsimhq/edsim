@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Survey Showdown — Solo Mode · EdSim</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d0f14;--surf:#161922;--surf2:#1e2230;--surf3:#252a3a;
+  --border:#2e3448;--border-hi:#3d4562;
+  --text:#e8ecf4;--dim:#7a8399;--faint:#2a3048;
+  --gold:#f5c842;--gold-dim:#b89020;--gold-glow:rgba(245,200,66,0.22);
+  --red:#e03e3e;--red-dim:#8a1f1f;--red-glow:rgba(224,62,62,0.2);
+  --green:#27c97a;--green-dim:#145c38;--green-glow:rgba(39,201,122,0.18);
+  --blue:#3a7bd5;--purple:#8b5cf6;--orange:#f97316;
+  --fd:'Bebas Neue',sans-serif;--fb:'DM Sans',sans-serif;--fm:'DM Mono',monospace;
+  --r:8px;--rs:4px;--ease:cubic-bezier(.4,0,.2,1);
+}
+html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var(--fb)}
+body{display:flex;flex-direction:column;align-items:center;
+  background-image:radial-gradient(ellipse at 50% 0%,rgba(245,200,66,0.05) 0%,transparent 50%)}
+
+/* HEADER */
+.hdr{width:100%;max-width:860px;display:flex;align-items:center;justify-content:space-between;
+  padding:13px 20px;border-bottom:1px solid var(--border);position:sticky;top:0;
+  background:rgba(13,15,20,0.95);backdrop-filter:blur(8px);z-index:50}
+.hdr-logo{font-family:var(--fd);font-size:20px;color:var(--gold);letter-spacing:2px}
+.hdr-home{font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.1em;
+  text-decoration:none;padding:5px 10px;border:1px solid var(--border);border-radius:4px;
+  transition:all .2s;white-space:nowrap}
+.hdr-home:hover{color:var(--gold);border-color:var(--gold-dim)}
+.hdr-right{display:flex;align-items:center;gap:16px}
+.hdr-score{font-family:var(--fd);font-size:20px}
+.hdr-score span{color:var(--gold)}
+.hdr-tag{font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.1em;text-transform:uppercase}
+
+/* SCREENS */
+.screen{width:100%;max-width:860px;padding:28px 20px;display:none}
+.screen.active{display:block}
+
+/* SETUP */
+.setup-hero{text-align:center;margin-bottom:36px}
+.setup-title{font-family:var(--fd);font-size:72px;color:var(--gold);letter-spacing:4px;
+  line-height:.95;text-shadow:0 0 60px var(--gold-glow)}
+.setup-sub{font-family:var(--fm);font-size:11px;color:var(--dim);letter-spacing:.15em;
+  text-transform:uppercase;margin-top:10px}
+.setup-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:620px;margin:0 auto 16px}
+.setup-card{background:var(--surf);border:1px solid var(--border);border-radius:12px;padding:22px}
+.setup-card h2{font-family:var(--fd);font-size:20px;letter-spacing:1px;margin-bottom:14px}
+.field label{display:block;font-family:var(--fm);font-size:10px;color:var(--dim);
+  letter-spacing:.1em;text-transform:uppercase;margin-bottom:5px}
+.field select,.field input{width:100%;background:var(--surf2);border:1px solid var(--border);
+  border-radius:var(--rs);padding:9px 12px;color:var(--text);font-family:var(--fb);
+  font-size:14px;outline:none;transition:border-color .2s;margin-bottom:12px}
+.field select:focus,.field input:focus{border-color:var(--gold)}
+.field input::placeholder{color:var(--dim)}
+/* AI toggle */
+.toggle-row{display:flex;align-items:center;justify-content:space-between;gap:10px;
+  background:var(--surf2);border:1px solid var(--border);border-radius:var(--rs);padding:10px 12px}
+.toggle-desc{font-size:12px;color:var(--dim);line-height:1.45;flex:1}
+.toggle-sw{position:relative;width:42px;height:23px;flex-shrink:0}
+.toggle-sw input{opacity:0;width:0;height:0;position:absolute}
+.toggle-sl{position:absolute;inset:0;background:var(--surf3);border-radius:11px;
+  cursor:pointer;transition:background .2s;border:1px solid var(--border)}
+.toggle-sl::before{content:'';position:absolute;width:17px;height:17px;left:2px;top:2px;
+  background:var(--dim);border-radius:50%;transition:transform .2s,background .2s}
+.toggle-sw input:checked+.toggle-sl{background:rgba(139,92,246,0.3);border-color:var(--purple)}
+.toggle-sw input:checked+.toggle-sl::before{transform:translateX(19px);background:var(--purple)}
+.ai-status{font-family:var(--fm);font-size:10px;margin-top:7px;color:var(--dim)}
+.ai-status.on{color:var(--purple)}
+.big-btn{width:100%;max-width:620px;display:block;margin:0 auto;
+  background:var(--gold);color:#0d0f14;font-family:var(--fd);font-size:22px;
+  letter-spacing:2px;border:none;border-radius:var(--r);padding:13px;cursor:pointer;transition:all .2s}
+.big-btn:hover{background:#ffd84d;transform:translateY(-1px)}
+.big-btn:disabled{background:var(--surf3);color:var(--dim);cursor:not-allowed;transform:none}
+
+/* GAME SCREEN */
+.prog-wrap{margin-bottom:18px}
+.prog-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.prog-label{font-family:var(--fm);font-size:11px;color:var(--dim);letter-spacing:.08em;text-transform:uppercase}
+.prog-pips{display:flex;gap:5px}
+.prog-pip{width:30px;height:5px;border-radius:3px;background:var(--surf3);transition:background .4s}
+.prog-pip.done{background:var(--gold-dim)}
+.prog-pip.active{background:var(--gold)}
+
+/* Question card */
+.q-card{background:var(--surf);border:1px solid var(--border);border-radius:12px;
+  padding:16px 20px;margin-bottom:14px}
+.q-poll{font-family:var(--fm);font-size:10px;color:var(--gold-dim);letter-spacing:.15em;
+  text-transform:uppercase;margin-bottom:6px}
+.q-text{font-family:var(--fd);font-size:28px;color:var(--text);letter-spacing:.5px;line-height:1.15}
+.q-meta{display:flex;align-items:center;gap:10px;margin-top:8px;flex-wrap:wrap}
+.q-mult{display:inline-block;background:var(--gold);color:#0d0f14;font-family:var(--fd);
+  font-size:13px;padding:2px 11px;border-radius:20px;letter-spacing:1px}
+.q-matched{font-family:var(--fm);font-size:11px;color:var(--dim)}
+
+/* Strikes row */
+.strikes-wrap{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.strike-x{font-family:var(--fd);font-size:40px;color:var(--dim);opacity:.25;
+  transition:all .25s;line-height:1}
+.strike-x.active{color:var(--red);opacity:1;text-shadow:0 0 14px var(--red-glow);
+  animation:sxIn .3s ease}
+@keyframes sxIn{0%{transform:scale(1.6) rotate(-10deg)}100%{transform:scale(1) rotate(0)}}
+.strikes-label{font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.06em}
+
+/* Steal prompt */
+.steal-prompt{background:rgba(139,92,246,0.12);border:1px solid rgba(139,92,246,0.4);
+  border-radius:var(--r);padding:14px 16px;margin-bottom:14px;display:none;
+  animation:fadeIn .3s ease}
+.steal-prompt.show{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.steal-prompt-label{font-family:var(--fd);font-size:20px;color:var(--purple);letter-spacing:1px;margin-bottom:8px}
+.steal-prompt-desc{font-size:13px;color:var(--dim);margin-bottom:12px;line-height:1.5}
+.steal-chips{display:flex;flex-wrap:wrap;gap:7px}
+.steal-chip{background:var(--surf2);border:1.5px solid rgba(139,92,246,0.4);border-radius:20px;
+  padding:8px 16px;font-size:13px;font-weight:500;color:var(--text);cursor:pointer;
+  transition:all .18s var(--ease)}
+.steal-chip:hover{border-color:var(--purple);color:var(--purple)}
+
+/* Word bank */
+.bank-wrap{background:var(--surf);border:1px solid var(--border);border-radius:12px;
+  padding:14px 16px;margin-bottom:14px}
+.bank-label{font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.12em;
+  text-transform:uppercase;margin-bottom:10px}
+.bank-chips{display:flex;flex-wrap:wrap;gap:7px;min-height:44px}
+.chip{background:var(--surf2);border:1.5px solid var(--border);border-radius:20px;
+  padding:8px 16px;font-size:13px;font-weight:500;color:var(--text);
+  cursor:pointer;transition:all .18s var(--ease);user-select:none}
+.chip:hover{border-color:var(--gold-dim);color:var(--gold);transform:translateY(-1px)}
+.chip.selected{border-color:var(--gold);color:var(--gold);background:rgba(245,200,66,0.08)}
+.chip.shake{animation:shake .4s ease}
+@keyframes shake{
+  0%{transform:translateX(0)}15%{transform:translateX(-7px)}
+  35%{transform:translateX(7px)}55%{transform:translateX(-4px)}
+  75%{transform:translateX(4px)}100%{transform:translateX(0)}
+}
+
+/* Answer slots — pre-numbered, filled in order */
+.slots-wrap{display:grid;gap:8px;margin-bottom:14px}
+.slot{background:var(--surf);border:2px dashed var(--border);border-radius:10px;
+  padding:13px 16px;display:flex;align-items:center;gap:14px;min-height:58px;
+  transition:all .3s var(--ease)}
+.slot.filled{border-style:solid;border-color:var(--gold-dim);background:var(--surf2)}
+.slot.reveal-flash{animation:revealFlash .4s ease}
+@keyframes revealFlash{
+  0%{border-color:var(--green);background:rgba(39,201,122,0.1);transform:scale(1.01)}
+  100%{border-color:var(--gold-dim);background:var(--surf2);transform:scale(1)}
+}
+.slot.missed-reveal{border-style:solid;border-color:var(--red-dim);background:rgba(224,62,62,0.05)}
+.slot-num{font-family:var(--fd);font-size:22px;color:var(--dim);min-width:26px;flex-shrink:0}
+.slot.filled .slot-num{color:var(--gold-dim)}
+.slot.missed-reveal .slot-num{color:var(--red-dim)}
+.slot-content{flex:1}
+.slot-placeholder{font-size:12px;color:var(--faint);font-style:italic}
+.slot-text{font-family:var(--fd);font-size:20px;letter-spacing:.3px;color:var(--text);
+  display:none}
+.slot.filled .slot-text,.slot.missed-reveal .slot-text{display:block}
+.slot.filled .slot-placeholder,.slot.missed-reveal .slot-placeholder{display:none}
+.slot-pts{font-family:var(--fd);font-size:24px;color:var(--gold);flex-shrink:0;display:none}
+.slot.filled .slot-pts{display:block}
+
+/* AI panel */
+.ai-panel{background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.3);
+  border-radius:var(--r);padding:13px 15px;margin-bottom:12px;display:none}
+.ai-panel.show{display:block;animation:fadeIn .3s ease}
+.ai-panel-hdr{display:flex;align-items:center;gap:7px;margin-bottom:7px}
+.ai-panel-lbl{font-family:var(--fm);font-size:10px;color:var(--purple);letter-spacing:.1em;text-transform:uppercase}
+.ai-loading{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--dim)}
+.ai-dots span{animation:dot 1.2s infinite;display:inline-block}
+.ai-dots span:nth-child(2){animation-delay:.2s}
+.ai-dots span:nth-child(3){animation-delay:.4s}
+@keyframes dot{0%,80%,100%{opacity:.2}40%{opacity:1}}
+.ai-text{font-size:13px;color:var(--text);line-height:1.65}
+.ai-dismiss{font-family:var(--fm);font-size:10px;color:var(--dim);background:none;
+  border:none;cursor:pointer;margin-top:7px;padding:0;min-height:28px}
+.ai-dismiss:hover{color:var(--text)}
+
+/* Round complete */
+.round-complete{background:var(--surf);border:1px solid var(--border);border-radius:12px;
+  padding:22px;text-align:center;display:none;margin-bottom:14px}
+.round-complete.show{display:block;animation:fadeIn .4s ease}
+.rc-title{font-family:var(--fd);font-size:36px;color:var(--gold);letter-spacing:2px;margin-bottom:4px}
+.rc-sub{font-size:13px;color:var(--dim);margin-bottom:16px}
+.rc-sub span{color:var(--gold);font-weight:700}
+.rc-rows{display:grid;gap:5px;text-align:left;margin-bottom:18px}
+.rc-row{display:flex;align-items:center;gap:9px;padding:8px 11px;border-radius:var(--rs);font-size:13px}
+.rc-row.got{background:rgba(39,201,122,0.08);border:1px solid var(--green-dim)}
+.rc-row.missed{background:var(--surf2);border:1px solid var(--border);opacity:.5}
+.rc-icon{font-size:13px;flex-shrink:0}
+.rc-txt{flex:1;font-weight:500}
+.rc-row.got .rc-txt{color:var(--green)}
+.rc-pts{font-family:var(--fd);font-size:20px;color:var(--gold)}
+.next-btn{background:var(--gold);color:#0d0f14;font-family:var(--fd);font-size:20px;
+  letter-spacing:2px;border:none;border-radius:var(--r);padding:12px 32px;cursor:pointer;transition:all .2s}
+.next-btn:hover{background:#ffd84d}
+
+/* END */
+.end-wrap{text-align:center;padding:32px 20px}
+.end-title{font-family:var(--fd);font-size:68px;color:var(--gold);letter-spacing:4px;
+  text-shadow:0 0 50px var(--gold-glow);margin-bottom:6px}
+.end-player{font-family:var(--fm);font-size:12px;color:var(--dim);letter-spacing:.1em;margin-bottom:6px}
+.end-score{font-family:var(--fd);font-size:90px;color:var(--text);line-height:1}
+.end-max{font-family:var(--fm);font-size:12px;color:var(--dim);margin-bottom:6px}
+.end-accuracy{font-family:var(--fd);font-size:24px;margin-bottom:28px}
+.end-accuracy span{color:var(--gold)}
+.end-breakdown{background:var(--surf);border:1px solid var(--border);border-radius:12px;
+  padding:18px;max-width:440px;margin:0 auto 22px;text-align:left}
+.end-breakdown h3{font-family:var(--fd);font-size:17px;letter-spacing:1px;color:var(--dim);margin-bottom:12px}
+.end-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;
+  border-bottom:1px solid var(--border);font-size:13px}
+.end-row:last-child{border-bottom:none}
+.end-row-pts{font-family:var(--fm);color:var(--gold)}
+.end-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.end-btn{padding:11px 22px;border-radius:var(--r);font-family:var(--fd);font-size:17px;
+  letter-spacing:1px;cursor:pointer;border:none;transition:all .15s}
+.end-btn.primary{background:var(--gold);color:#0d0f14}
+.end-btn.primary:hover{background:#ffd84d}
+.end-btn.secondary{background:var(--surf);color:var(--text);border:1px solid var(--border)}
+.end-btn.secondary:hover{border-color:var(--border-hi)}
+
+@media(max-width:580px){
+  .setup-grid{grid-template-columns:1fr}
+  .setup-title{font-size:52px}
+  .q-text{font-size:22px}
+  .chip{font-size:12px;padding:7px 13px}
+}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <a class="hdr-home" href="index.html" aria-label="Home">⌂ HOME</a>
+  <div class="hdr-logo">SURVEY SHOWDOWN</div>
+  <div class="hdr-right">
+    <div class="hdr-tag">Solo Mode</div>
+    <div class="hdr-score">Score: <span id="hdrScore">0</span></div>
+  </div>
+</div>
+
+<!-- SETUP -->
+<div class="screen active" id="setupScreen">
+  <div class="setup-hero">
+    <div class="setup-title">SOLO<br>MODE</div>
+    <div class="setup-sub">EdSim · Survey Showdown</div>
+  </div>
+  <div class="setup-grid">
+    <div class="setup-card">
+      <h2>GAME SETUP</h2>
+      <div class="field">
+        <label>Question Set</label>
+        <select id="unitSelect">
+          <option value="">— Choose a unit —</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Your Name</label>
+        <input type="text" id="playerName" placeholder="Enter your name" maxlength="24"/>
+      </div>
+    </div>
+    <div class="setup-card">
+      <h2>TEACHER SETTINGS</h2>
+      <p style="font-size:12px;color:var(--dim);margin-bottom:12px;line-height:1.5">When AI feedback is on, wrong answers get a brief explanation of why they don't fit this question.</p>
+      <div class="toggle-row">
+        <div class="toggle-desc">AI explains wrong answers</div>
+        <label class="toggle-sw" aria-label="Toggle AI feedback">
+          <input type="checkbox" id="aiToggle"/>
+          <span class="toggle-sl"></span>
+        </label>
+      </div>
+      <div class="ai-status" id="aiStatus">AI feedback: OFF</div>
+
+      <div style="margin-top:16px;border-top:1px solid var(--border);padding-top:14px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+          <span style="font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.1em">DIFFICULTY</span>
+          <span style="font-family:var(--fd);font-size:16px;color:var(--gold)" id="soloPhantomLabel">5 distractors</span>
+        </div>
+        <input type="range" id="soloPhantomSlider" min="0" max="10" value="5" step="1"
+          oninput="updateSoloPhantomLabel()"
+          style="width:100%;accent-color:var(--gold);cursor:pointer"/>
+        <div style="display:flex;justify-content:space-between;margin-top:4px">
+          <span style="font-family:var(--fm);font-size:10px;color:var(--dim)">Easier</span>
+          <span style="font-family:var(--fm);font-size:10px;color:var(--dim)">Harder</span>
+        </div>
+        <div style="font-family:var(--fm);font-size:10px;color:var(--dim);margin-top:6px;line-height:1.5">
+          More distractors = harder to find the correct answers
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="big-btn" id="startBtn" disabled>CHOOSE A UNIT TO BEGIN</button>
+</div>
+
+<!-- GAME -->
+<div class="screen" id="gameScreen">
+
+  <div class="prog-wrap">
+    <div class="prog-meta">
+      <div class="prog-label" id="progLabel">Round 1 of 6</div>
+      <div class="prog-pips" id="progPips"></div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-poll" id="pollLabel">100 historians were surveyed...</div>
+    <div class="q-text" id="questionText">—</div>
+    <div class="q-meta">
+      <div id="multBadge" class="q-mult" style="display:none"></div>
+      <div class="q-matched" id="qMatched">0 / 5 found</div>
+    </div>
+  </div>
+
+  <!-- Strikes -->
+  <div class="strikes-wrap">
+    <div class="strike-x" id="sx1">✕</div>
+    <div class="strike-x" id="sx2">✕</div>
+    <div class="strike-x" id="sx3">✕</div>
+    <span class="strikes-label" id="strikesLabel">0 strikes</span>
+  </div>
+
+  <!-- Steal prompt (appears on 3 strikes) -->
+  <div class="steal-prompt" id="stealPrompt">
+    <div class="steal-prompt-label">🔥 STEAL OPPORTUNITY</div>
+    <div class="steal-prompt-desc" id="stealDesc">3 strikes! Pick one answer from the bank — if it's correct, you earn those points. Wrong and the round ends.</div>
+    <div class="steal-chips" id="stealChips"></div>
+  </div>
+
+  <!-- AI panel -->
+  <div class="ai-panel" id="aiPanel">
+    <div class="ai-panel-hdr">
+      <span>🤖</span>
+      <span class="ai-panel-lbl">Why doesn't that fit?</span>
+    </div>
+    <div id="aiPanelBody">
+      <div class="ai-loading">Thinking<span class="ai-dots"><span>.</span><span>.</span><span>.</span></span></div>
+    </div>
+    <button class="ai-dismiss" onclick="dismissAI()">Got it ✕</button>
+  </div>
+
+  <!-- Word bank -->
+  <div class="bank-wrap">
+    <div class="bank-label">Click the answers that belong to this question</div>
+    <div class="bank-chips" id="bankChips"></div>
+  </div>
+
+  <!-- Answer slots — pre-numbered, fill automatically -->
+  <div class="slots-wrap" id="slotsWrap"></div>
+
+  <!-- Round complete -->
+  <div class="round-complete" id="roundComplete">
+    <div class="rc-title" id="rcTitle">ROUND COMPLETE</div>
+    <div class="rc-sub" id="rcSub">You earned <span>0</span> points</div>
+    <div class="rc-rows" id="rcRows"></div>
+    <button class="next-btn" id="nextRoundBtn">NEXT ROUND →</button>
+  </div>
+
+</div>
+
+<!-- END -->
+<div class="screen" id="endScreen">
+  <div class="end-wrap">
+    <div class="end-title">FINAL SCORE</div>
+    <div class="end-player" id="endPlayer">—</div>
+    <div class="end-score" id="endScore">0</div>
+    <div class="end-max" id="endMax">out of 0 possible points</div>
+    <div class="end-accuracy" id="endAccuracy">Accuracy: <span>0%</span></div>
+    <div class="end-breakdown">
+      <h3>ROUND BREAKDOWN</h3>
+      <div id="endBreakdown"></div>
+    </div>
+    <div class="end-actions">
+      <button class="end-btn primary" onclick="restartGame()">PLAY AGAIN</button>
+      <button class="end-btn secondary" onclick="goSetup()">CHANGE UNIT</button>
+    </div>
+  </div>
+</div>
+
+<script src="audio.js"></script>
+<script>
+// ══ ALL UNITS EMBEDDED ══
+const UNITS = {"colonial-revolution":{"unit":"Colonial America & The Revolution","poll_label":"100 historians were surveyed...","rounds":[{"id":"r1","question":"Name a grievance colonists had against Britain","multiplier":1,"answers":[{"text":"Taxation without representation","points":38,"explanation":"This is a Colonial grievance \u2014 colonists had no seat in Parliament but were still taxed by Britain."},{"text":"Quartering of British troops","points":22,"explanation":"This is a Colonial grievance \u2014 the Quartering Act forced colonists to house British soldiers in their homes."},{"text":"Restricted manufacturing","points":17,"explanation":"This is a Colonial grievance \u2014 Britain's mercantile policy banned colonists from making finished goods to protect British manufacturers."},{"text":"Closing of Boston Harbor","points":13,"explanation":"This is a Colonial grievance \u2014 the Intolerable Acts closed Boston Harbor to punish Massachusetts after the Tea Party."},{"text":"Trials without juries","points":10,"explanation":"This is a Colonial grievance \u2014 the Intolerable Acts allowed accused colonists to be tried in British courts without a jury of peers."}]},{"id":"r2","question":"Name a weakness of the Articles of Confederation","multiplier":1,"answers":[{"text":"Congress could not collect taxes","points":35,"explanation":"This is a weakness of the Articles of Confederation \u2014 Congress had to beg states for money and had no enforcement power."},{"text":"No executive branch","points":28,"explanation":"This is a weakness of the Articles of Confederation \u2014 there was no president or executive authority to enforce national laws."},{"text":"No national army","points":18,"explanation":"This is a weakness of the Articles of Confederation \u2014 the federal government couldn't raise a standing army, as Shays' Rebellion exposed."},{"text":"States had too much power","points":12,"explanation":"This is a weakness of the Articles of Confederation \u2014 states acted like independent nations, ignoring federal requests."},{"text":"No power to regulate trade","points":7,"explanation":"This is a weakness of the Articles of Confederation \u2014 states taxed each other's goods and trade became chaotic."}]},{"id":"r3","question":"Name a reason colonists supported independence from Britain","multiplier":2,"answers":[{"text":"No voice in Parliament","points":32,"explanation":"This is a reason colonists supported independence \u2014 they believed taxation required representation, which Britain denied them."},{"text":"Influence of Common Sense by Thomas Paine","points":25,"explanation":"This is a reason colonists supported independence \u2014 Paine's pamphlet argued monarchy was irrational and independence was inevitable."},{"text":"Intolerable Acts pushed colonists away","points":20,"explanation":"This is a reason colonists supported independence \u2014 Britain's harsh response to the Tea Party radicalized moderate colonists."},{"text":"Belief in natural rights","points":15,"explanation":"This is a reason colonists supported independence \u2014 Enlightenment ideas about life, liberty, and property underpinned the Declaration."},{"text":"Economic independence from mercantilism","points":8,"explanation":"This is a reason colonists supported independence \u2014 breaking from Britain's mercantilist system would allow free trade."}]},{"id":"r4","question":"Name a constitutional principle the Founders built into the new government","multiplier":2,"answers":[{"text":"Checks and balances","points":40,"explanation":"This is a constitutional principle \u2014 each branch of government can limit the power of the other two."},{"text":"Separation of powers","points":28,"explanation":"This is a constitutional principle \u2014 legislative, executive, and judicial powers are divided among three distinct branches."},{"text":"Federalism","points":16,"explanation":"This is a constitutional principle \u2014 power is divided between the national government and the states."},{"text":"Popular sovereignty","points":10,"explanation":"This is a constitutional principle \u2014 government authority comes from the consent of the governed."},{"text":"Reserved powers for states","points":6,"explanation":"This is a constitutional principle \u2014 the 10th Amendment reserves powers not granted to the federal government to the states."}]},{"id":"r5","question":"Name a reason Antifederalists opposed ratifying the Constitution","multiplier":3,"answers":[{"text":"Too much power given to central government","points":36,"explanation":"This is an Antifederalist objection \u2014 they feared a strong central government would become a tyranny like Britain."},{"text":"No Bill of Rights","points":30,"explanation":"This is an Antifederalist objection \u2014 they refused to ratify until individual liberties were explicitly protected."},{"text":"Feared a tyrannical president","points":16,"explanation":"This is an Antifederalist objection \u2014 they worried a powerful executive would resemble a monarch."},{"text":"States would lose too much authority","points":12,"explanation":"This is an Antifederalist objection \u2014 they valued state sovereignty and feared it would be swallowed by federal power."},{"text":"Standing army was dangerous","points":6,"explanation":"This is an Antifederalist objection \u2014 a permanent federal army, they argued, could be used to oppress citizens."}]},{"id":"r6","question":"Name something the Bill of Rights protects American citizens from or guarantees","multiplier":3,"answers":[{"text":"Freedom of speech and press","points":34,"explanation":"This is a Bill of Rights protection \u2014 the 1st Amendment guarantees these civil liberties against government restriction."},{"text":"Unreasonable search and seizure","points":26,"explanation":"This is a Bill of Rights protection \u2014 the 4th Amendment requires warrants and probable cause for searches."},{"text":"Right to bear arms","points":18,"explanation":"This is a Bill of Rights protection \u2014 the 2nd Amendment guarantees this right, often debated in the context of militias."},{"text":"Trial by jury","points":14,"explanation":"This is a Bill of Rights protection \u2014 the 6th and 7th Amendments guarantee jury trials in criminal and civil cases."},{"text":"Cruel and unusual punishment","points":8,"explanation":"This is a Bill of Rights protection \u2014 the 8th Amendment prohibits excessive bail, fines, and inhumane punishments."}]}]},"early-republic":{"unit":"Early Republic & Expansion","poll_label":"100 historians were surveyed...","rounds":[{"id":"r1","question":"Name a foreign policy principle from the Early Republic era","multiplier":1,"answers":[{"text":"Monroe Doctrine","points":35,"explanation":"This is an Early Republic foreign policy principle \u2014 it warned European powers not to colonize or interfere in the Western Hemisphere."},{"text":"Avoid permanent alliances","points":28,"explanation":"This is an Early Republic foreign policy principle \u2014 Washington's Farewell Address warned against entangling alliances with Europe."},{"text":"Isolationism","points":18,"explanation":"This is an Early Republic foreign policy principle \u2014 the US sought to stay out of European conflicts and focus on domestic growth."},{"text":"Neutrality in European wars","points":12,"explanation":"This is an Early Republic foreign policy principle \u2014 both Washington and Adams tried to keep the US out of the French Revolutionary Wars."},{"text":"Freedom of the seas","points":7,"explanation":"This is an Early Republic principle \u2014 the US insisted on its right to trade freely without interference from warring European powers."}]},{"id":"r2","question":"Name a method the United States used to expand westward","multiplier":1,"answers":[{"text":"Louisiana Purchase","points":32,"explanation":"This is a method of westward expansion \u2014 Jefferson bought this vast territory from France in 1803, doubling the size of the US."},{"text":"Manifest Destiny as justification","points":26,"explanation":"This is a westward expansion concept \u2014 Americans believed God ordained them to spread across the continent."},{"text":"Treaties with foreign nations","points":18,"explanation":"This is a method of westward expansion \u2014 agreements like the Treaty of 1818 and the Adams-On\u00eds Treaty added territory peacefully."},{"text":"War with Mexico","points":14,"explanation":"This is a method of westward expansion \u2014 the Mexican-American War (1846\u201348) resulted in the US gaining the Southwest."},{"text":"Removal of Native Americans","points":10,"explanation":"This is a method of westward expansion \u2014 policies like the Indian Removal Act cleared land for white settlers."}]},{"id":"r3","question":"Name a cause of the War of 1812","multiplier":2,"answers":[{"text":"British attacks on American ships","points":38,"explanation":"This is a cause of the War of 1812 \u2014 Britain's Royal Navy seized American merchant vessels to enforce its blockade of France."},{"text":"Impressment of American sailors","points":27,"explanation":"This is a cause of the War of 1812 \u2014 Britain forced American sailors into the Royal Navy, violating US sovereignty."},{"text":"British support for Native tribes","points":18,"explanation":"This is a cause of the War of 1812 \u2014 Britain armed and encouraged Native resistance to US westward expansion."},{"text":"Desire to annex Canada","points":10,"explanation":"This is a cause of the War of 1812 \u2014 War Hawks in Congress saw the conflict as an opportunity to seize British Canada."},{"text":"Failure of the Embargo Acts","points":7,"explanation":"This is a cause of the War of 1812 \u2014 Jefferson's trade embargo failed to change British behavior and hurt the US economy."}]},{"id":"r4","question":"Name a conflict or compromise over slavery's expansion","multiplier":2,"answers":[{"text":"Missouri Compromise","points":36,"explanation":"This is a slavery compromise \u2014 it admitted Missouri as a slave state and Maine as free, drawing a line at 36\u00b030'."},{"text":"Kansas-Nebraska Act","points":28,"explanation":"This is a slavery conflict \u2014 it repealed the Missouri Compromise line and introduced popular sovereignty, sparking violence in Kansas."},{"text":"Wilmot Proviso","points":16,"explanation":"This is a slavery conflict \u2014 it proposed banning slavery in any territory gained from Mexico, but never passed the Senate."},{"text":"Compromise of 1850","points":13,"explanation":"This is a slavery compromise \u2014 it admitted California as free while strengthening the Fugitive Slave Law to appease the South."},{"text":"Popular sovereignty debate","points":7,"explanation":"This is a slavery conflict \u2014 the idea of letting settlers vote on slavery inflamed tensions throughout the 1850s."}]},{"id":"r5","question":"Name something associated with Manifest Destiny","multiplier":3,"answers":[{"text":"Belief God intended westward expansion","points":34,"explanation":"This is associated with Manifest Destiny \u2014 Americans used religious and racial arguments to justify pushing Native peoples off their land."},{"text":"Oregon Trail migration","points":24,"explanation":"This is associated with Manifest Destiny \u2014 thousands of settlers used this route to claim land in the Pacific Northwest."},{"text":"Annexation of Texas","points":20,"explanation":"This is associated with Manifest Destiny \u2014 Texas was annexed in 1845 after years of American settlement and the Texas Revolution."},{"text":"Displacement of Native Americans","points":14,"explanation":"This is associated with Manifest Destiny \u2014 expansion was achieved through forced removal, broken treaties, and violent conflict."},{"text":"California Gold Rush","points":8,"explanation":"This is associated with Manifest Destiny \u2014 the 1849 rush brought tens of thousands west and accelerated California statehood."}]},{"id":"r6","question":"Name a political development of the Jacksonian era","multiplier":3,"answers":[{"text":"Expanded voting rights for white men","points":35,"explanation":"This is a Jacksonian era development \u2014 property requirements were eliminated, making democracy broader \u2014 for white men only."},{"text":"Indian Removal Act","points":28,"explanation":"This is a Jacksonian policy \u2014 it forced the Five Civilized Tribes off their land in the Southeast, leading to the Trail of Tears."},{"text":"Spoils system","points":18,"explanation":"This is a Jacksonian practice \u2014 Jackson rewarded political supporters with government jobs, normalizing patronage."},{"text":"Nullification Crisis","points":12,"explanation":"This is a Jacksonian political event \u2014 South Carolina claimed the right to nullify federal tariff law, threatening secession."},{"text":"Rise of the Democratic Party","points":7,"explanation":"This is a Jacksonian development \u2014 Jackson's coalition of farmers and workers transformed into the modern Democratic Party."}]}]},"civil-war-reconstruction":{"unit":"Civil War & Reconstruction","poll_label":"100 historians were surveyed...","rounds":[{"id":"r1","question":"Name a cause of the Civil War","multiplier":1,"answers":[{"text":"Slavery and its expansion","points":40,"explanation":"This is a cause of the Civil War \u2014 the central conflict was whether slavery would spread into western territories."},{"text":"States' rights vs federal power","points":26,"explanation":"This is a cause of the Civil War \u2014 Southern states argued they had the right to secede; the Union disputed this."},{"text":"Election of Abraham Lincoln","points":18,"explanation":"This is a cause of the Civil War \u2014 Southern states seceded after Lincoln won without carrying a single Southern state."},{"text":"Economic differences North vs South","points":10,"explanation":"This is a cause of the Civil War \u2014 the industrial North and the agricultural, slave-based South had clashing economic interests."},{"text":"Failure of compromise in Congress","points":6,"explanation":"This is a cause of the Civil War \u2014 decades of political compromise over slavery collapsed in the 1850s."}]},{"id":"r2","question":"Name something the Emancipation Proclamation did or did not do","multiplier":1,"answers":[{"text":"Freed enslaved people in Confederate states","points":38,"explanation":"This is what the Emancipation Proclamation did \u2014 it freed enslaved people in rebel states, as a war measure."},{"text":"Made the war about slavery","points":26,"explanation":"This is an effect of the Emancipation Proclamation \u2014 it redefined the war's purpose, making European support for the Confederacy politically toxic."},{"text":"Did not free enslaved people in border states","points":18,"explanation":"This is a limit of the Emancipation Proclamation \u2014 Lincoln excluded border states to keep them in the Union."},{"text":"Allowed Black men to join the Union Army","points":12,"explanation":"This is a consequence of the Emancipation Proclamation \u2014 nearly 180,000 Black soldiers served in the USCT afterward."},{"text":"Was a war measure not a law","points":6,"explanation":"This is the legal basis of the Emancipation Proclamation \u2014 Lincoln used his war powers as commander-in-chief, not Congress."}]},{"id":"r3","question":"Name a Reconstruction amendment and what it guaranteed","multiplier":2,"answers":[{"text":"13th Amendment abolished slavery","points":36,"explanation":"This is a Reconstruction amendment \u2014 it permanently abolished slavery throughout the United States in 1865."},{"text":"14th Amendment granted citizenship","points":28,"explanation":"This is a Reconstruction amendment \u2014 it made all people born in the US citizens and guaranteed equal protection."},{"text":"15th Amendment gave Black men the vote","points":22,"explanation":"This is a Reconstruction amendment \u2014 it prohibited denying the vote based on race, color, or prior servitude."},{"text":"Equal protection under the law","points":9,"explanation":"This is a Reconstruction amendment guarantee \u2014 the 14th Amendment's equal protection clause is the foundation of civil rights law."},{"text":"Due process for all citizens","points":5,"explanation":"This is a Reconstruction amendment guarantee \u2014 the 14th Amendment applied due process rights against state governments."}]},{"id":"r4","question":"Name a way Reconstruction was undermined after 1877","multiplier":2,"answers":[{"text":"Jim Crow laws enforced segregation","points":34,"explanation":"This is how Reconstruction was undermined \u2014 Southern states passed laws mandating racial separation in public life."},{"text":"Literacy tests and poll taxes","points":28,"explanation":"This is how Reconstruction was undermined \u2014 these devices effectively stripped Black men of the vote the 15th Amendment had given them."},{"text":"Sharecropping kept freedmen in poverty","points":18,"explanation":"This is how Reconstruction was undermined \u2014 the sharecropping system trapped formerly enslaved people in cycles of debt."},{"text":"KKK terrorism and intimidation","points":13,"explanation":"This is how Reconstruction was undermined \u2014 the Klan used violence to drive Black voters and officeholders from public life."},{"text":"Compromise of 1877 ended Reconstruction","points":7,"explanation":"This is how Reconstruction was undermined \u2014 Hayes became president in exchange for withdrawing federal troops from the South."}]},{"id":"r5","question":"Name a characteristic of slavery in the antebellum South","multiplier":3,"answers":[{"text":"Slavery passed from mother to child","points":36,"explanation":"This is a feature of antebellum slavery \u2014 the 'partus' rule made the child's status follow the mother's, expanding slaveholder property."},{"text":"Enslaved people had no legal rights","points":28,"explanation":"This is a feature of antebellum slavery \u2014 enslaved people were legally property; they could not own, marry, or testify in court."},{"text":"Families were separated and sold","points":20,"explanation":"This is a feature of antebellum slavery \u2014 the domestic slave trade routinely broke up families, which abolitionists highlighted."},{"text":"Slave codes controlled daily life","points":10,"explanation":"This is a feature of antebellum slavery \u2014 state laws regulated every aspect of enslaved people's lives, including movement and literacy."},{"text":"Resistance was punished severely","points":6,"explanation":"This is a feature of antebellum slavery \u2014 any sign of rebellion, from running away to learning to read, was harshly punished."}]},{"id":"r6","question":"Name a goal or policy of Lincoln's Reconstruction plan","multiplier":3,"answers":[{"text":"Forgiveness and reunification","points":35,"explanation":"This is Lincoln's Reconstruction philosophy \u2014 his 'malice toward none' approach prioritized quickly restoring the Union."},{"text":"10% loyalty oath to rejoin Union","points":27,"explanation":"This is Lincoln's Reconstruction plan \u2014 states could rejoin when 10% of 1860 voters swore loyalty, far less than Radicals wanted."},{"text":"No punishment for Confederate leaders","points":20,"explanation":"This is Lincoln's Reconstruction position \u2014 he opposed treating Southern leaders as traitors, which Radical Republicans rejected."},{"text":"Restore Southern states quickly","points":12,"explanation":"This is Lincoln's Reconstruction goal \u2014 he wanted rapid reunion, not a prolonged period of federal occupation."},{"text":"Opposed radical Republican demands","points":6,"explanation":"This is Lincoln's Reconstruction stance \u2014 he vetoed the Wade-Davis Bill, which set much harsher readmission requirements."}]}]},"industrialization-immigration":{"unit":"Industrialization & Immigration","poll_label":"100 historians were surveyed...","rounds":[{"id":"r1","question":"Name a cause of rapid industrialization after the Civil War","multiplier":1,"answers":[{"text":"Abundance of natural resources","points":32,"explanation":"This is a cause of industrialization \u2014 the US had vast iron, coal, and timber needed for factories and railroads."},{"text":"Expansion of railroads","points":28,"explanation":"This is a cause of industrialization \u2014 railroads created a national market, moving raw materials and finished goods efficiently."},{"text":"Large immigrant labor force","points":20,"explanation":"This is a cause of industrialization \u2014 millions of immigrants provided cheap labor for factories, mines, and construction."},{"text":"New inventions and technology","points":13,"explanation":"This is a cause of industrialization \u2014 innovations like the Bessemer process, telephone, and electric light powered economic growth."},{"text":"Government support for business","points":7,"explanation":"This is a cause of industrialization \u2014 high tariffs, land grants, and laissez-faire policies gave corporations enormous advantages."}]},{"id":"r2","question":"Name a problem caused by the rise of big business and trusts","multiplier":1,"answers":[{"text":"Elimination of competition","points":36,"explanation":"This is a problem of big business \u2014 trusts and monopolies drove out competitors, leaving consumers and workers with no alternatives."},{"text":"Low wages and poor conditions for workers","points":27,"explanation":"This is a problem of big business \u2014 corporations maximized profits by minimizing labor costs, ignoring worker safety."},{"text":"Corrupt political influence","points":18,"explanation":"This is a problem of big business \u2014 robber barons bribed legislators and controlled political machines at every level."},{"text":"Price gouging consumers","points":12,"explanation":"This is a problem of big business \u2014 without competition, monopolies could charge whatever they wanted for essential goods."},{"text":"Small businesses were destroyed","points":7,"explanation":"This is a problem of big business \u2014 Standard Oil and similar trusts used predatory pricing to eliminate smaller rivals."}]},{"id":"r3","question":"Name a reason immigrants came to the United States in the late 1800s","multiplier":2,"answers":[{"text":"Economic opportunity and jobs","points":38,"explanation":"This is a reason immigrants came to the US \u2014 the 'pull' of factory jobs and land was powerful compared to conditions in Europe."},{"text":"Escape poverty and famine","points":25,"explanation":"This is a reason immigrants came to the US \u2014 famine in Ireland, poverty in Southern Italy, and persecution in Eastern Europe pushed millions out."},{"text":"Political and religious freedom","points":18,"explanation":"This is a reason immigrants came to the US \u2014 Jews fleeing pogroms, political dissidents, and religious minorities all sought refuge."},{"text":"Hope to eventually prosper","points":12,"explanation":"This is a reason immigrants came to the US \u2014 the promise of the American Dream, however imperfect, drew people across the Atlantic."},{"text":"Join family already in America","points":7,"explanation":"This is a reason immigrants came to the US \u2014 chain migration meant earlier arrivals sent letters home encouraging others to follow."}]},{"id":"r4","question":"Name a response to the problems of industrialization","multiplier":2,"answers":[{"text":"Sherman Antitrust Act","points":34,"explanation":"This is a response to industrialization \u2014 the 1890 law gave the federal government power to break up monopolistic trusts."},{"text":"Labor unions formed","points":27,"explanation":"This is a response to industrialization \u2014 workers organized the Knights of Labor, AFL, and others to demand better conditions."},{"text":"Interstate Commerce Act","points":18,"explanation":"This is a response to industrialization \u2014 it created the first federal regulatory agency, aimed at controlling railroad rates."},{"text":"Workers went on strike","points":14,"explanation":"This is a response to industrialization \u2014 major strikes like Homestead and Pullman brought national attention to labor conditions."},{"text":"Muckrakers exposed abuses","points":7,"explanation":"This is a response to industrialization \u2014 journalists like Upton Sinclair and Ida Tarbell turned public opinion against big business."}]},{"id":"r5","question":"Name a hardship faced by immigrants arriving in the late 1800s","multiplier":3,"answers":[{"text":"Dangerous factory work conditions","points":32,"explanation":"This is a hardship immigrants faced \u2014 factories had no safety regulations; injuries and deaths were common and uncompensated."},{"text":"Discrimination and nativism","points":26,"explanation":"This is a hardship immigrants faced \u2014 'old stock' Americans opposed new immigrants from Southern and Eastern Europe."},{"text":"Overcrowded tenement housing","points":20,"explanation":"This is a hardship immigrants faced \u2014 urban slums were dangerously overcrowded, with poor sanitation and disease."},{"text":"Language barriers","points":14,"explanation":"This is a hardship immigrants faced \u2014 non-English speakers were exploited by employers and struggled to navigate daily life."},{"text":"Low wages and long hours","points":8,"explanation":"This is a hardship immigrants faced \u2014 12-hour days, six days a week, for poverty wages was the norm in Gilded Age factories."}]},{"id":"r6","question":"Name a tactic used by workers to improve conditions","multiplier":3,"answers":[{"text":"Strikes and work stoppages","points":36,"explanation":"This is a worker tactic \u2014 refusing to work was the labor movement's most powerful tool to force employer concessions."},{"text":"Forming labor unions","points":28,"explanation":"This is a worker tactic \u2014 collective organization gave workers bargaining power they could never have had individually."},{"text":"Collective bargaining","points":18,"explanation":"This is a worker tactic \u2014 unions negotiated wages, hours, and conditions on behalf of all workers, not just individuals."},{"text":"Boycotts of company products","points":12,"explanation":"This is a worker tactic \u2014 consumer pressure through boycotts was used alongside strikes to hurt company profits."},{"text":"Political lobbying for laws","points":6,"explanation":"This is a worker tactic \u2014 unions pushed for legislation like the eight-hour workday and child labor bans."}]}]},"progressive-era":{"unit":"Progressive Era","poll_label":"100 historians were surveyed...","rounds":[{"id":"r1","question":"Name a problem Progressives tried to fix in the early 1900s","multiplier":1,"answers":[{"text":"Unsafe food and drugs","points":32,"explanation":"This is a Progressive Era problem \u2014 Upton Sinclair's The Jungle exposed the meatpacking industry, leading to the Pure Food and Drug Act."},{"text":"Monopolies and trusts","points":26,"explanation":"This is a Progressive Era problem \u2014 TR's trust-busting broke up Standard Oil and other monopolies that stifled competition."},{"text":"Child labor in factories","points":20,"explanation":"This is a Progressive Era problem \u2014 millions of children worked dangerous jobs; reformers campaigned for laws to protect them."},{"text":"Political corruption and bossism","points":14,"explanation":"This is a Progressive Era problem \u2014 urban political machines like Tammany Hall used patronage and bribery to dominate city government."},{"text":"Poor conditions for workers","points":8,"explanation":"This is a Progressive Era problem \u2014 the Triangle Shirtwaist Fire (1911) galvanized public support for workplace safety laws."}]},{"id":"r2","question":"Name a muckraker and what they exposed","multiplier":1,"answers":[{"text":"Upton Sinclair exposed the meatpacking industry","points":38,"explanation":"This is a muckraker \u2014 Sinclair's The Jungle described unsanitary conditions so vividly it forced passage of the Meat Inspection Act."},{"text":"Ida Tarbell exposed Standard Oil","points":28,"explanation":"This is a muckraker \u2014 Tarbell's investigation of Rockefeller's monopoly helped build the case for breaking up Standard Oil."},{"text":"Jacob Riis exposed tenement poverty","points":18,"explanation":"This is a muckraker \u2014 Riis's photographs in How the Other Half Lives shocked middle-class Americans with images of slum life."},{"text":"Lincoln Steffens exposed political corruption","points":10,"explanation":"This is a muckraker \u2014 Steffens documented city machine corruption in The Shame of the Cities."},{"text":"Yellow journalism sensationalized news","points":6,"explanation":"This is a journalism-era term \u2014 yellow journalism inflamed public opinion (especially around the Spanish-American War), not Progressive reform."}]},{"id":"r3","question":"Name a Progressive Era reform law or amendment","multiplier":2,"answers":[{"text":"Pure Food and Drug Act","points":34,"explanation":"This is a Progressive Era reform \u2014 it banned adulterated food and false labeling, the direct result of Sinclair's muckraking."},{"text":"Sherman Antitrust Act enforcement","points":24,"explanation":"This is a Progressive Era reform \u2014 TR used the Sherman Act aggressively to break up monopolies in ways it had never been used before."},{"text":"17th Amendment \u2014 direct election of senators","points":18,"explanation":"This is a Progressive Era reform \u2014 it removed senators from the control of corrupt state legislatures and gave voters direct power."},{"text":"19th Amendment \u2014 women's suffrage","points":15,"explanation":"This is a Progressive Era reform \u2014 the decades-long suffrage campaign culminated in the 19th Amendment in 1920."},{"text":"Child labor laws","points":9,"explanation":"This is a Progressive Era reform \u2014 the Keating-Owen Act (1916) and later laws restricted or banned children from factory work."}]},{"id":"r4","question":"Name something associated with American imperialism in the early 1900s","multiplier":2,"answers":[{"text":"Spanish-American War","points":34,"explanation":"This is associated with American imperialism \u2014 the 1898 war gave the US control of Cuba, Puerto Rico, Guam, and the Philippines."},{"text":"Acquisition of Puerto Rico and Guam","points":24,"explanation":"This is associated with American imperialism \u2014 these territories were ceded by Spain after the Spanish-American War."},{"text":"Panama Canal construction","points":20,"explanation":"This is associated with American imperialism \u2014 TR helped engineer Panama's independence from Colombia to secure the canal route."},{"text":"Roosevelt Corollary to Monroe Doctrine","points":14,"explanation":"This is associated with American imperialism \u2014 TR claimed the right to intervene in Latin American nations to stabilize their finances."},{"text":"United States as a world power","points":8,"explanation":"This is associated with American imperialism \u2014 the Spanish-American War signaled the US had joined Britain and Germany as a global power."}]},{"id":"r5","question":"Name a method Progressives used to push for reform","multiplier":3,"answers":[{"text":"Investigative journalism and muckraking","points":33,"explanation":"This is a Progressive reform method \u2014 expos\u00e9s by Sinclair, Tarbell, and Riis created the public pressure that drove legislation."},{"text":"Lobbying for new legislation","points":25,"explanation":"This is a Progressive reform method \u2014 organizations like the National Consumers League pushed Congress and state legislatures directly."},{"text":"Settlement houses like Hull House","points":20,"explanation":"This is a Progressive reform method \u2014 Jane Addams's Hull House provided social services to immigrants and became a hub for reform organizing."},{"text":"Constitutional amendments","points":14,"explanation":"This is a Progressive reform method \u2014 the 16th, 17th, 18th, and 19th Amendments were all passed in the Progressive Era."},{"text":"Civil disobedience and protests","points":8,"explanation":"This is a Progressive reform method \u2014 suffragists picketed the White House and were arrested, drawing national attention."}]},{"id":"r6","question":"Name a goal of the women's suffrage movement","multiplier":3,"answers":[{"text":"Right to vote","points":42,"explanation":"This is a goal of the women's suffrage movement \u2014 the central demand was the 19th Amendment, finally ratified in 1920."},{"text":"Equal treatment under the law","points":26,"explanation":"This is a goal of the women's suffrage movement \u2014 suffragists argued voting was the foundation of equal citizenship."},{"text":"Access to education and careers","points":16,"explanation":"This is a goal of the women's suffrage movement \u2014 reformers like Elizabeth Cady Stanton connected voting rights to professional equality."},{"text":"End of gender discrimination","points":10,"explanation":"This is a goal of the women's suffrage movement \u2014 the movement argued women deserved equal rights in all areas of public life."},{"text":"Political representation","points":6,"explanation":"This is a goal of the women's suffrage movement \u2014 without the vote, women had no way to hold elected officials accountable."}]}]},"wwi-1920s":{"unit":"WWI & The 1920s","poll_label":"100 historians were surveyed...","rounds":[{"id":"r1","question":"Name a reason the United States entered World War I","multiplier":1,"answers":[{"text":"German submarine attacks on US ships","points":36,"explanation":"This is a reason the US entered WWI \u2014 German U-boats attacked American merchant ships, killing US citizens."},{"text":"Zimmermann Telegram","points":26,"explanation":"This is a reason the US entered WWI \u2014 Germany's secret offer to Mexico to attack the US in exchange for territory was intercepted."},{"text":"Sinking of the Lusitania","points":20,"explanation":"This is a reason the US entered WWI \u2014 Germany sank the British liner in 1915, killing 1,198 people including 128 Americans."},{"text":"To make the world safe for democracy","points":12,"explanation":"This is a reason the US entered WWI \u2014 Wilson's idealistic framing cast the war as a crusade for democratic values."},{"text":"Ties to Allied nations","points":6,"explanation":"This is a reason the US entered WWI \u2014 cultural, economic, and financial bonds with Britain and France pulled the US toward the Allies."}]},{"id":"r2","question":"Name something in Wilson's Fourteen Points","multiplier":1,"answers":[{"text":"Creation of the League of Nations","points":38,"explanation":"This is from Wilson's Fourteen Points \u2014 Wilson's dream of a peacekeeping organization was the centerpiece of his postwar vision."},{"text":"Self-determination for nations","points":26,"explanation":"This is from Wilson's Fourteen Points \u2014 he believed people had the right to form their own governments, reshaping Europe's map."},{"text":"Freedom of the seas","points":16,"explanation":"This is an Early Republic principle \u2014 the US insisted on its right to trade freely without interference from warring European powers."},{"text":"No secret treaties","points":12,"explanation":"This is from Wilson's Fourteen Points \u2014 Wilson believed secret diplomacy had caused the war and demanded open negotiations."},{"text":"Reduction of armaments","points":8,"explanation":"This is from Wilson's Fourteen Points \u2014 he called for military disarmament to reduce the threat of future wars."}]},{"id":"r3","question":"Name a reason the Senate rejected the Treaty of Versailles","multiplier":2,"answers":[{"text":"Fear of being drawn into foreign wars","points":36,"explanation":"This is a reason the Senate rejected the Treaty of Versailles \u2014 isolationists feared the League's collective security clause would pull the US into every conflict."},{"text":"Opposition to the League of Nations","points":28,"explanation":"This is a reason the Senate rejected the Treaty of Versailles \u2014 Henry Cabot Lodge led Republicans who opposed surrendering Congress's war power to the League."},{"text":"Return to isolationism","points":18,"explanation":"This is a reason the Senate rejected the Treaty of Versailles \u2014 Americans were tired of European entanglements after the war's massive casualties."},{"text":"Congress wanted control over war powers","points":12,"explanation":"This is a reason the Senate rejected the Treaty of Versailles \u2014 the League's Article X seemed to give the League authority to commit US troops."},{"text":"Treaty was seen as too harsh on Germany","points":6,"explanation":"This is a reason the Senate rejected the Treaty of Versailles \u2014 some Americans thought the punitive terms would destabilize Europe."}]},{"id":"r4","question":"Name a social or cultural change of the 1920s","multiplier":2,"answers":[{"text":"Harlem Renaissance","points":32,"explanation":"This is a 1920s cultural change \u2014 Black artists, writers, and musicians in New York created a flourishing of African American culture."},{"text":"Prohibition and the rise of speakeasies","points":26,"explanation":"This is a 1920s social change \u2014 the 18th Amendment banned alcohol sales, generating organized crime and underground bars."},{"text":"Rise of mass consumer culture","points":18,"explanation":"This is a 1920s change \u2014 installment buying and advertising created the first mass market for cars, appliances, and radios."},{"text":"Women's changing roles \u2014 flappers","points":14,"explanation":"This is a 1920s cultural change \u2014 young women challenged Victorian norms with short hair, jazz, and public independence."},{"text":"Growth of the Ku Klux Klan","points":10,"explanation":"This is a 1920s social change \u2014 the revived Klan expanded from the South to target Catholics, Jews, and immigrants nationwide."}]},{"id":"r5","question":"Name a cause of fear and intolerance during the Red Scare","multiplier":3,"answers":[{"text":"Fear of communist revolution","points":36,"explanation":"This is a cause of the Red Scare \u2014 the 1917 Russian Revolution alarmed Americans and fueled hysteria about radicals at home."},{"text":"Suspicion of immigrants and radicals","points":27,"explanation":"This is a cause of the Red Scare \u2014 many 'subversives' targeted by the Palmer Raids were immigrants with left-wing political views."},{"text":"Palmer Raids on suspected communists","points":18,"explanation":"This is a Red Scare event \u2014 Attorney General Palmer ordered mass arrests of suspected radicals, deporting many without due process."},{"text":"Impact on civil liberties","points":12,"explanation":"This is a Red Scare consequence \u2014 the raids violated First and Fourth Amendment rights and set a troubling precedent for wartime repression."},{"text":"Sacco and Vanzetti case","points":7,"explanation":"This is a Red Scare event \u2014 two Italian anarchists were convicted of murder in a trial widely seen as driven by anti-immigrant prejudice."}]},{"id":"r6","question":"Name something that contributed to the Great Migration","multiplier":3,"answers":[{"text":"Escape from Jim Crow laws in the South","points":36,"explanation":"This is a cause of the Great Migration \u2014 racial terror and legal segregation pushed Black Southerners to seek dignity elsewhere."},{"text":"Job opportunities in Northern factories","points":28,"explanation":"This is a cause of the Great Migration \u2014 WWI cut off European immigration, creating factory jobs in cities like Chicago and Detroit."},{"text":"WWI created labor shortages in the North","points":18,"explanation":"This is a cause of the Great Migration \u2014 with young men overseas and immigration halted, Northern employers actively recruited Black workers."},{"text":"Racial violence and lynching in the South","points":12,"explanation":"This is a cause of the Great Migration \u2014 nearly 4,000 Black Americans were lynched between 1877 and 1950, driving millions north."},{"text":"Growth of Black communities in cities","points":6,"explanation":"This is a consequence of the Great Migration \u2014 Harlem, Bronzeville, and other urban communities became centers of Black culture and politics."}]}]},"great-depression-new-deal":{"unit":"Great Depression & New Deal","poll_label":"100 historians were surveyed...","rounds":[{"id":"r1","question":"Name a cause of the Great Depression","multiplier":1,"answers":[{"text":"Stock market crash of 1929","points":36,"explanation":"This is a cause of the Great Depression \u2014 the October crash wiped out billions in paper wealth, triggering a cascading financial collapse."},{"text":"Overproduction and falling farm prices","points":26,"explanation":"This is a cause of the Great Depression \u2014 farmers were already struggling through the 1920s before the Depression deepened the crisis."},{"text":"Easy credit and speculation","points":18,"explanation":"This is a cause of the Great Depression \u2014 investors bought stocks on thin margins; when prices fell, the debts couldn't be repaid."},{"text":"Bank failures wiped out savings","points":13,"explanation":"This is a cause of the Great Depression \u2014 over 9,000 banks failed in the 1930s, erasing the savings of millions of ordinary Americans."},{"text":"Smoot-Hawley Tariff hurt global trade","points":7,"explanation":"This is a cause of the Great Depression \u2014 retaliatory tariffs from other nations collapsed international trade and deepened the slump."}]},{"id":"r2","question":"Name a hardship Americans faced during the Great Depression","multiplier":1,"answers":[{"text":"Mass unemployment","points":38,"explanation":"This is a Depression hardship \u2014 by 1933, 25% of American workers were unemployed, with millions more underemployed."},{"text":"Dust Bowl destroyed farms","points":26,"explanation":"This is a Depression hardship \u2014 drought and poor farming practices turned the Great Plains into a wasteland, displacing 'Okies' to California."},{"text":"Bank closures and lost savings","points":18,"explanation":"This is a Depression hardship \u2014 FDR's first act was a bank holiday to stop the panic; millions had already lost everything."},{"text":"Homelessness and Hoovervilles","points":12,"explanation":"This is a Depression hardship \u2014 shantytowns of unemployed men sprang up across the country, named mockingly for President Hoover."},{"text":"Deflation and falling prices","points":6,"explanation":"This is a Depression hardship \u2014 falling prices sounds good, but it meant farmers couldn't cover costs and businesses couldn't earn profit."}]},{"id":"r3","question":"Name a New Deal program and its purpose","multiplier":2,"answers":[{"text":"Works Progress Administration \u2014 jobs","points":34,"explanation":"This is a New Deal program \u2014 the WPA employed millions to build roads, bridges, parks, and public murals during the Depression."},{"text":"Social Security \u2014 income for elderly","points":28,"explanation":"This is a New Deal program \u2014 it created the retirement safety net that still exists today, funded by payroll taxes."},{"text":"FDIC \u2014 protected bank deposits","points":18,"explanation":"This is a New Deal program \u2014 federal deposit insurance ended bank runs by guaranteeing customers wouldn't lose their savings."},{"text":"CCC \u2014 conservation and youth employment","points":13,"explanation":"This is a New Deal program \u2014 young men planted trees, built trails, and worked in national parks for food, shelter, and small wages."},{"text":"SEC \u2014 regulated the stock market","points":7,"explanation":"This is a New Deal program \u2014 the Securities and Exchange Commission was created to prevent the speculation and fraud that caused the crash."}]},{"id":"r4","question":"Name a criticism of FDR's New Deal","multiplier":2,"answers":[{"text":"Government spending was too large","points":33,"explanation":"This is a New Deal criticism \u2014 conservatives argued deficit spending would saddle future generations with debt."},{"text":"Too much federal power and control","points":27,"explanation":"This is a New Deal criticism \u2014 the Supreme Court struck down several programs as unconstitutional overreach of federal power."},{"text":"Did not do enough for Black Americans","points":20,"explanation":"This is a New Deal criticism \u2014 many programs allowed racial discrimination; the AAA actually pushed Black sharecroppers off land."},{"text":"Court-packing plan threatened democracy","points":13,"explanation":"This is a New Deal criticism \u2014 FDR's attempt to add six justices to the Supreme Court alarmed even his Democratic allies."},{"text":"Did not end the Depression","points":7,"explanation":"This is a New Deal criticism \u2014 unemployment remained above 14% through 1940; only WWII military spending ended the Depression."}]},{"id":"r5","question":"Name a way FDR expanded the role of the federal government","multiplier":3,"answers":[{"text":"Created a social safety net","points":34,"explanation":"This is how FDR expanded federal government \u2014 Social Security, unemployment insurance, and welfare programs permanently changed the government's role."},{"text":"Federal job creation programs","points":27,"explanation":"This is how FDR expanded federal government \u2014 the WPA, CCC, and PWA made Washington a direct employer of millions."},{"text":"Regulated banks and the stock market","points":20,"explanation":"This is how FDR expanded federal government \u2014 the FDIC and SEC created permanent federal oversight of the financial industry."},{"text":"Government relief payments to poor","points":12,"explanation":"This is how FDR expanded federal government \u2014 direct relief to unemployed citizens was a radical departure from Hoover's laissez-faire approach."},{"text":"Executive branch power expanded","points":7,"explanation":"This is how FDR expanded federal government \u2014 his first 100 days set a precedent for presidential leadership in domestic policy."}]},{"id":"r6","question":"Name something the US did to move away from isolationism before WWII","multiplier":3,"answers":[{"text":"Lend-Lease Act aided the Allies","points":36,"explanation":"This is how the US moved away from isolationism \u2014 FDR lent war materials to Britain without requiring immediate payment."},{"text":"Cash and carry policy","points":26,"explanation":"This is how the US moved away from isolationism \u2014 it allowed Allies to buy American arms if they transported them on their own ships."},{"text":"FDR called for being Arsenal of Democracy","points":20,"explanation":"This is how the US moved away from isolationism \u2014 FDR's fireside chat framed supplying the Allies as a patriotic duty."},{"text":"Repealed Neutrality Acts","points":11,"explanation":"This is how the US moved away from isolationism \u2014 earlier laws had barred selling arms to any warring nation; repeal allowed Allied aid."},{"text":"Atlantic Charter with Churchill","points":7,"explanation":"This is how the US moved away from isolationism \u2014 FDR and Churchill's 1941 joint declaration outlined war aims before the US even entered."}]}]},"world-war-ii":{"unit":"World War II","poll_label":"100 historians were surveyed...","rounds":[{"id":"r1","question":"Name a reason the United States entered World War II","multiplier":1,"answers":[{"text":"Japanese attack on Pearl Harbor","points":42,"explanation":"This is a reason the US entered WWII \u2014 the December 7, 1941 attack on the US naval base killed 2,400 Americans and ended isolationism."},{"text":"Germany declared war on the US","points":24,"explanation":"This is a reason the US entered WWII \u2014 Hitler declared war four days after Pearl Harbor, bringing the US into the European theater."},{"text":"Axis threat to democracy worldwide","points":16,"explanation":"This is a reason the US entered WWII \u2014 FDR framed the war as a global struggle between fascism and democratic freedom."},{"text":"US already supplying Allies via Lend-Lease","points":12,"explanation":"This is a reason the US entered WWII \u2014 the US was already deeply invested in Allied victory before Pearl Harbor formalized the commitment."},{"text":"End of isolationism after Pearl Harbor","points":6,"explanation":"This is a reason the US entered WWII \u2014 the attack shattered domestic opposition to involvement that had been strong through 1941."}]},{"id":"r2","question":"Name a sacrifice Americans made on the home front during WWII","multiplier":1,"answers":[{"text":"Rationing of food and gas","points":34,"explanation":"This is a home front sacrifice \u2014 Americans used ration books for meat, sugar, butter, and gasoline to ensure supplies reached the military."},{"text":"Women entered the workforce","points":27,"explanation":"This is a home front sacrifice \u2014 'Rosie the Riveter' became an icon as women took industrial jobs vacated by men who joined the military."},{"text":"War bond drives raised money","points":18,"explanation":"This is a home front sacrifice \u2014 Americans bought billions in bonds, deferring consumption to finance the war."},{"text":"Factories converted to war production","points":14,"explanation":"This is a home front sacrifice \u2014 auto plants switched to tanks and jeeps; appliance makers produced weapons; the entire economy mobilized."},{"text":"Victory gardens grown at home","points":7,"explanation":"This is a home front sacrifice \u2014 families grew their own vegetables to free up commercial food for military use."}]},{"id":"r3","question":"Name a turning point or major event of World War II","multiplier":2,"answers":[{"text":"D-Day invasion of Normandy","points":34,"explanation":"This is a WWII turning point \u2014 the June 6, 1944 Allied landing in France opened the Western Front and began the liberation of Europe."},{"text":"Battle of Midway in the Pacific","points":26,"explanation":"This is a WWII turning point \u2014 the June 1942 naval battle destroyed Japan's carrier fleet and shifted momentum in the Pacific."},{"text":"Atomic bombs dropped on Japan","points":22,"explanation":"This is a WWII turning point \u2014 the bombs on Hiroshima and Nagasaki in August 1945 led directly to Japan's surrender."},{"text":"Battle of Stalingrad","points":11,"explanation":"This is a WWII turning point \u2014 the German defeat at Stalingrad in 1943 marked the beginning of the Nazi retreat on the Eastern Front."},{"text":"Allied invasion of North Africa","points":7,"explanation":"This is a WWII event \u2014 Operation Torch in 1942 gave the Allies experience and set the stage for the invasion of Italy."}]},{"id":"r4","question":"Name a civil liberties violation that occurred during WWII","multiplier":2,"answers":[{"text":"Japanese American internment","points":44,"explanation":"This is a WWII civil liberties violation \u2014 Executive Order 9066 forcibly relocated 120,000 Japanese Americans to prison camps."},{"text":"Korematsu v. United States upheld it","points":24,"explanation":"This is a WWII civil liberties violation \u2014 the Supreme Court upheld internment; the decision was formally repudiated in 2018."},{"text":"Executive Order 9066","points":16,"explanation":"This is a WWII civil liberties violation \u2014 FDR's order authorized the military to designate 'exclusion zones' and remove Japanese Americans."},{"text":"Suspension of due process for citizens","points":10,"explanation":"This is a WWII civil liberties violation \u2014 Japanese Americans were imprisoned without trial, charge, or individual review."},{"text":"Racial discrimination in the military","points":6,"explanation":"This is a WWII civil liberties issue \u2014 Black soldiers served in segregated units; the Double V campaign demanded victory over fascism and racism."}]},{"id":"r5","question":"Name an outcome or consequence of World War II","multiplier":3,"answers":[{"text":"United Nations was created","points":32,"explanation":"This is a WWII outcome \u2014 the UN replaced the failed League of Nations as a forum for international cooperation."},{"text":"Start of the Cold War with USSR","points":26,"explanation":"This is a WWII outcome \u2014 wartime alliance with the Soviets dissolved quickly as competing visions for postwar Europe emerged."},{"text":"US emerged as a superpower","points":20,"explanation":"This is a WWII outcome \u2014 the war destroyed rival economies while the US emerged stronger, becoming the dominant world power."},{"text":"Nuremberg Trials held Nazis accountable","points":14,"explanation":"This is a WWII outcome \u2014 the trials established the precedent of prosecuting war crimes and crimes against humanity."},{"text":"Decolonization movements spread","points":8,"explanation":"This is a WWII outcome \u2014 the war weakened European colonial powers and emboldened independence movements in Asia and Africa."}]},{"id":"r6","question":"Name a debate surrounding the decision to drop the atomic bomb","multiplier":3,"answers":[{"text":"Saved lives by avoiding an invasion","points":33,"explanation":"This is an argument in the atomic bomb debate \u2014 proponents said an invasion of Japan would have killed hundreds of thousands on both sides."},{"text":"Killed hundreds of thousands of civilians","points":27,"explanation":"This is an argument in the atomic bomb debate \u2014 critics argue targeting civilian populations constituted a war crime."},{"text":"Japan was already close to surrender","points":18,"explanation":"This is an argument in the atomic bomb debate \u2014 some historians argue Japan was seeking terms before the bombs fell."},{"text":"Sent a message to the Soviet Union","points":14,"explanation":"This is an argument in the atomic bomb debate \u2014 some historians believe the bombs were partly intended to intimidate the USSR."},{"text":"Started the nuclear arms race","points":8,"explanation":"This is an argument in the atomic bomb debate \u2014 the bombs launched a decades-long superpower competition in nuclear weapons."}]}]},"cold-war":{"unit":"Cold War","poll_label":"100 historians were surveyed...","rounds":[{"id":"r1","question":"Name a US foreign policy strategy during the Cold War","multiplier":1,"answers":[{"text":"Containment of communism","points":40,"explanation":"This is a Cold War foreign policy strategy \u2014 Kennan's containment doctrine held that the US should prevent Soviet expansion without directly attacking the USSR."},{"text":"Truman Doctrine \u2014 aid to threatened nations","points":25,"explanation":"This is a Cold War foreign policy strategy \u2014 Truman's 1947 speech pledged US support to Greece and Turkey and set a global precedent."},{"text":"Marshall Plan \u2014 economic aid to Europe","points":18,"explanation":"This is a Cold War foreign policy strategy \u2014 $13 billion rebuilt Western Europe, preventing economic desperation that communists could exploit."},{"text":"NATO military alliance","points":11,"explanation":"This is a Cold War foreign policy strategy \u2014 the North Atlantic Treaty committed the US and Western Europe to collective defense."},{"text":"Brinkmanship \u2014 threat of nuclear war","points":6,"explanation":"This is a Cold War foreign policy strategy \u2014 Eisenhower and Dulles threatened massive nuclear retaliation to deter Soviet aggression."}]},{"id":"r2","question":"Name a Cold War conflict or confrontation","multiplier":1,"answers":[{"text":"Korean War","points":33,"explanation":"This is a Cold War conflict \u2014 the US-led UN force fought to push communist North Korea back across the 38th parallel."},{"text":"Cuban Missile Crisis","points":28,"explanation":"This is a Cold War conflict \u2014 the 1962 standoff over Soviet missiles in Cuba brought the US and USSR closest to nuclear war."},{"text":"Vietnam War","points":22,"explanation":"This is a Cold War conflict \u2014 the US fought to prevent communist North Vietnam from unifying the country under Ho Chi Minh."},{"text":"Berlin Wall and airlift","points":11,"explanation":"This is a Cold War conflict \u2014 the airlift (1948) supplied West Berlin during a Soviet blockade; the Wall (1961) divided the city for 28 years."},{"text":"Space Race","points":6,"explanation":"This is a Cold War conflict \u2014 competition over satellites and the moon was a proxy for superpower technological supremacy."}]},{"id":"r3","question":"Name a way the Cold War affected life inside the United States","multiplier":2,"answers":[{"text":"McCarthyism and the Second Red Scare","points":34,"explanation":"This is a Cold War domestic effect \u2014 Senator McCarthy's accusations of communist infiltration ruined careers with little evidence."},{"text":"HUAC investigated suspected communists","points":24,"explanation":"This is a Cold War domestic effect \u2014 the House Un-American Activities Committee pressured Hollywood and government workers to name names."},{"text":"Nuclear fallout shelters and drills","points":18,"explanation":"This is a Cold War domestic effect \u2014 'Duck and cover' drills and backyard shelters reflected genuine fear of nuclear annihilation."},{"text":"Loyalty oaths required for government jobs","points":14,"explanation":"This is a Cold War domestic effect \u2014 federal employees were required to swear they had never been communists."},{"text":"Civil liberties threatened by fear","points":10,"explanation":"This is a Cold War domestic effect \u2014 the Red Scare paralleled WWI repression in silencing dissent through fear."}]},{"id":"r4","question":"Name a reason the United States got involved in the Korean War","multiplier":2,"answers":[{"text":"Contain the spread of communism","points":38,"explanation":"This is a reason the US fought in Korea \u2014 directly applying the Truman Doctrine to a hot conflict on the Korean peninsula."},{"text":"UN authorized a multinational force","points":26,"explanation":"This is a reason the US fought in Korea \u2014 the Soviet boycott of the Security Council allowed a UN resolution authorizing force."},{"text":"North Korea invaded South Korea","points":20,"explanation":"This is a reason the US fought in Korea \u2014 the June 1950 invasion across the 38th parallel triggered immediate US response."},{"text":"Truman Doctrine committed US to resist","points":10,"explanation":"This is a reason the US fought in Korea \u2014 Truman felt bound by his own pledge to support nations resisting communist takeover."},{"text":"China and USSR backed North Korea","points":6,"explanation":"This is a reason the US fought in Korea \u2014 Chinese intervention after UN forces approached the Yalu River widened the conflict dramatically."}]},{"id":"r5","question":"Name something that contributed to the end of the Cold War","multiplier":3,"answers":[{"text":"Soviet economy collapsed","points":33,"explanation":"This is a cause of the Cold War's end \u2014 70 years of central planning and military spending left the USSR unable to compete."},{"text":"Reagan's military buildup pressured USSR","points":26,"explanation":"This is a cause of the Cold War's end \u2014 the SDI program and defense spending forced the Soviets into an arms race they couldn't afford."},{"text":"Gorbachev's reforms \u2014 glasnost and perestroika","points":20,"explanation":"This is a cause of the Cold War's end \u2014 Gorbachev's openness and restructuring policies inadvertently destabilized Soviet control."},{"text":"Fall of the Berlin Wall in 1989","points":14,"explanation":"This is a cause of the Cold War's end \u2014 the Wall's fall symbolized the collapse of communist control across Eastern Europe."},{"text":"Breakup of the Soviet Union in 1991","points":7,"explanation":"This is a cause of the Cold War's end \u2014 15 Soviet republics declared independence, formally ending the USSR on December 25, 1991."}]},{"id":"r6","question":"Name a criticism of US involvement in the Vietnam War","multiplier":3,"answers":[{"text":"Massive civilian casualties","points":32,"explanation":"This is a criticism of Vietnam \u2014 napalm, Agent Orange, and operations like My Lai turned domestic and international opinion against the war."},{"text":"No clear strategy to win","points":26,"explanation":"This is a criticism of Vietnam \u2014 critics argued the US could win every battle but not the war without a political solution."},{"text":"Massive antiwar protests at home","points":20,"explanation":"This is a criticism of Vietnam \u2014 student protests, veterans' demonstrations, and the 1968 Democratic Convention showed deep public opposition."},{"text":"Gulf of Tonkin Resolution misused","points":14,"explanation":"This is a criticism of Vietnam \u2014 Congress later learned the second Tonkin incident was fabricated, yet it gave LBJ blank-check war authority."},{"text":"Draft was seen as unfair","points":8,"explanation":"This is a criticism of Vietnam \u2014 college deferments meant the burden fell disproportionately on poor and working-class men."}]}]},"civil-rights":{"unit":"Civil Rights Movement","poll_label":"100 historians were surveyed...","rounds":[{"id":"r1","question":"Name a method used by civil rights activists to fight segregation","multiplier":1,"answers":[{"text":"Nonviolent civil disobedience","points":36,"explanation":"This is a civil rights activist method \u2014 inspired by Gandhi, King argued that suffering injustice publicly would expose its moral bankruptcy."},{"text":"Sit-ins at segregated lunch counters","points":25,"explanation":"This is a civil rights activist method \u2014 the Greensboro sit-ins (1960) spread across the South and led to the founding of SNCC."},{"text":"Freedom Rides on interstate buses","points":18,"explanation":"This is a civil rights activist method \u2014 interracial groups tested federal desegregation rulings and faced violent mobs in Alabama."},{"text":"Marches and demonstrations","points":14,"explanation":"This is a civil rights activist method \u2014 Selma, Birmingham, and the March on Washington put movement demands before the nation."},{"text":"Legal challenges in federal courts","points":7,"explanation":"This is a civil rights activist method \u2014 the NAACP Legal Defense Fund's strategy culminated in Brown v. Board of Education."}]},{"id":"r2","question":"Name a barrier that prevented African Americans from voting","multiplier":1,"answers":[{"text":"Literacy tests","points":35,"explanation":"This is a voting barrier \u2014 designed to fail Black applicants, these tests asked impossible questions while ignoring white illiteracy."},{"text":"Poll taxes","points":28,"explanation":"This is a voting barrier \u2014 charging a fee to vote effectively disenfranchised poor Black Southerners; abolished by the 24th Amendment."},{"text":"Grandfather clauses","points":17,"explanation":"This is a voting barrier \u2014 they allowed men to vote if their grandfather had, exempting whites from literacy tests while excluding Black men."},{"text":"Intimidation and violence","points":13,"explanation":"This is a voting barrier \u2014 registrars threatened, fired, or evicted Black Southerners who tried to register."},{"text":"White-only primaries","points":7,"explanation":"This is a voting barrier \u2014 since the South was one-party, exclusion from the Democratic primary meant exclusion from all meaningful elections."}]},{"id":"r3","question":"Name a landmark civil rights law or Supreme Court decision","multiplier":2,"answers":[{"text":"Brown v. Board of Education","points":34,"explanation":"This is a landmark civil rights ruling \u2014 the 1954 Supreme Court decision declared school segregation unconstitutional."},{"text":"Civil Rights Act of 1964","points":28,"explanation":"This is a landmark civil rights law \u2014 it banned discrimination in public accommodations and employment based on race, color, religion, or sex."},{"text":"Voting Rights Act of 1965","points":20,"explanation":"This is a Great Society achievement \u2014 it directly addressed the voting barriers that had disenfranchised Black Southerners for generations."},{"text":"24th Amendment abolished poll taxes","points":12,"explanation":"This is a landmark civil rights reform \u2014 it removed the poll tax barrier for federal elections, ratified in 1964."},{"text":"Executive Order desegregating the military","points":6,"explanation":"This is a landmark civil rights measure \u2014 Truman's Executive Order 9981 (1948) desegregated the armed forces."}]},{"id":"r4","question":"Name something Martin Luther King Jr. advocated for or believed","multiplier":2,"answers":[{"text":"Nonviolent protest and civil disobedience","points":36,"explanation":"This is what MLK advocated \u2014 the strategy he outlined in 'Letter from Birmingham Jail' and practiced from Montgomery to Memphis."},{"text":"Racial equality under the law","points":26,"explanation":"This is what MLK advocated \u2014 his dream of a colorblind legal system is expressed in the 'I Have a Dream' speech."},{"text":"Economic justice for all Americans","points":18,"explanation":"This is what MLK advocated \u2014 his final years focused on poverty; he was in Memphis supporting striking sanitation workers when he was killed."},{"text":"Voting rights for Black Americans","points":13,"explanation":"This is what MLK advocated \u2014 Selma and Bloody Sunday directly led to the Voting Rights Act of 1965."},{"text":"End to segregation in public life","points":7,"explanation":"This is what MLK advocated \u2014 his campaigns targeted Birmingham's public facilities and led to the Civil Rights Act of 1964."}]},{"id":"r5","question":"Name a response the federal government took during the Civil Rights era","multiplier":3,"answers":[{"text":"Sent federal troops to Little Rock","points":33,"explanation":"This is a federal government response \u2014 Eisenhower nationalized the Arkansas Guard to enforce desegregation at Central High School."},{"text":"Passed the Civil Rights Act of 1964","points":27,"explanation":"This is a federal government response \u2014 LBJ pushed the bill through Congress after Kennedy's assassination."},{"text":"Outlawed literacy tests","points":18,"explanation":"This is a federal government response \u2014 the Voting Rights Act banned the literacy test device and sent federal examiners to register voters."},{"text":"FBI monitored civil rights leaders","points":14,"explanation":"This is a federal government response \u2014 COINTELPRO surveilled, harassed, and attempted to discredit King and other movement leaders."},{"text":"Supreme Court ruled segregation unconstitutional","points":8,"explanation":"This is a federal government response \u2014 Brown v. Board (1954) overturned Plessy v. Ferguson's 'separate but equal' doctrine."}]},{"id":"r6","question":"Name a goal of the women's rights movement of the 1960s and 1970s","multiplier":3,"answers":[{"text":"Equal pay for equal work","points":34,"explanation":"This is a women's rights goal \u2014 the Equal Pay Act (1963) was the first federal law addressing the gender pay gap."},{"text":"End workplace discrimination","points":27,"explanation":"This is a women's rights goal \u2014 Title VII of the Civil Rights Act of 1964 banned sex discrimination in employment."},{"text":"Equal Rights Amendment","points":18,"explanation":"This is a women's rights goal \u2014 the ERA passed Congress in 1972 but failed to be ratified by enough states."},{"text":"Access to reproductive rights","points":13,"explanation":"This is a women's rights goal \u2014 Roe v. Wade (1973) and access to contraception were central demands of second-wave feminism."},{"text":"Equal opportunity in education","points":8,"explanation":"This is a women's rights goal \u2014 Title IX (1972) banned sex discrimination in federally funded education programs."}]}]},"modern-america":{"unit":"Modern America","poll_label":"100 historians were surveyed...","rounds":[{"id":"r1","question":"Name a program or goal of LBJ's Great Society","multiplier":1,"answers":[{"text":"Medicare and Medicaid","points":34,"explanation":"This is a Great Society program \u2014 Medicare provides health insurance for seniors; Medicaid for low-income Americans."},{"text":"Federal aid to education","points":26,"explanation":"This is a Great Society program \u2014 the Elementary and Secondary Education Act (1965) sent federal dollars to public schools for the first time."},{"text":"War on Poverty","points":20,"explanation":"This is a Great Society program \u2014 LBJ's effort to end poverty created Head Start, food stamps, and community action programs."},{"text":"Voting Rights Act of 1965","points":13,"explanation":"This is a Great Society achievement \u2014 it directly addressed the voting barriers that had disenfranchised Black Southerners for generations."},{"text":"Environmental protection laws","points":7,"explanation":"This is a Great Society legacy \u2014 LBJ signed the Clean Air Act (1963) and the Wilderness Act (1964), starting the environmental movement."}]},{"id":"r2","question":"Name a cause or consequence of the September 11, 2001 attacks","multiplier":1,"answers":[{"text":"War on Terror declared","points":33,"explanation":"This is a consequence of 9/11 \u2014 Bush declared a global War on Terror that sent US forces to Afghanistan and later Iraq."},{"text":"USA PATRIOT Act passed","points":25,"explanation":"This is a consequence of 9/11 \u2014 the law expanded surveillance powers, allowing the government to monitor phone calls and internet activity."},{"text":"Invasion of Afghanistan","points":20,"explanation":"This is a consequence of 9/11 \u2014 the US invaded in October 2001 to destroy Al-Qaeda's base and remove the Taliban government."},{"text":"Civil liberties threatened by security laws","points":14,"explanation":"This is a consequence of 9/11 \u2014 critics argued the PATRIOT Act and NSA surveillance violated 4th Amendment protections."},{"text":"Department of Homeland Security created","points":8,"explanation":"This is a consequence of 9/11 \u2014 the new cabinet department consolidated federal agencies to coordinate domestic security."}]},{"id":"r3","question":"Name a debate over the balance between security and civil liberties","multiplier":2,"answers":[{"text":"PATRIOT Act allowed mass surveillance","points":35,"explanation":"This is a security vs. liberty debate \u2014 NSA collection of phone records and internet data raised 4th Amendment concerns."},{"text":"Guantanamo Bay detention without trial","points":26,"explanation":"This is a security vs. liberty debate \u2014 detaining prisoners as 'enemy combatants' outside US legal jurisdiction was widely criticized."},{"text":"NSA collected phone records of Americans","points":18,"explanation":"This is a security vs. liberty debate \u2014 Snowden's 2013 leaks revealed the scope of domestic surveillance under post-9/11 laws."},{"text":"Racial profiling of Muslim Americans","points":13,"explanation":"This is a security vs. liberty debate \u2014 security policies that targeted people by religion or ethnicity raised equal protection concerns."},{"text":"Free speech limits during wartime","points":8,"explanation":"This is a security vs. liberty debate \u2014 courts have historically permitted more speech restrictions during national emergencies."}]},{"id":"r4","question":"Name a social movement that gained momentum after the 1960s","multiplier":2,"answers":[{"text":"Women's rights movement","points":32,"explanation":"This is a post-1960s social movement \u2014 second-wave feminism addressed workplace equality, reproductive rights, and legal discrimination."},{"text":"Environmental movement","points":26,"explanation":"This is a post-1960s social movement \u2014 Earth Day (1970) and the EPA were responses to growing awareness of pollution and ecological damage."},{"text":"LGBTQ rights movement","points":20,"explanation":"This is a post-1960s social movement \u2014 from Stonewall (1969) through marriage equality (2015), the movement fought legal discrimination."},{"text":"Disability rights movement","points":14,"explanation":"This is a post-1960s social movement \u2014 the ADA (1990) was the result of decades of activism by people with disabilities."},{"text":"Latino civil rights movement","points":8,"explanation":"This is a post-1960s social movement \u2014 Cesar Chavez and the UFW brought attention to the exploitation of farmworkers."}]},{"id":"r5","question":"Name a way one group's struggle for equality opened doors for others","multiplier":3,"answers":[{"text":"Civil rights tactics used by women's movement","points":33,"explanation":"This is how one struggle opened doors for others \u2014 suffragists and feminists explicitly modeled their tactics on Black civil rights organizing."},{"text":"Legal precedents applied across groups","points":26,"explanation":"This is how one struggle opened doors for others \u2014 Brown v. Board's equal protection reasoning was later applied to gender and disability rights."},{"text":"14th Amendment used to expand rights","points":20,"explanation":"This is how one struggle opened doors for others \u2014 the amendment's equal protection and due process clauses became the legal foundation for multiple civil rights expansions."},{"text":"Disability rights modeled on civil rights laws","points":14,"explanation":"This is how one struggle opened doors for others \u2014 the ADA's structure directly mirrored the Civil Rights Act of 1964."},{"text":"LGBTQ movement drew from civil rights era","points":7,"explanation":"This is how one struggle opened doors for others \u2014 activists used the same organizing, litigation, and legislative strategies that succeeded in the 1960s."}]},{"id":"r6","question":"Name a challenge facing the United States in the post-Cold War era","multiplier":3,"answers":[{"text":"International terrorism","points":35,"explanation":"This is a post-Cold War challenge \u2014 non-state actors like Al-Qaeda replaced state adversaries as the primary security threat."},{"text":"Economic globalization and job loss","points":26,"explanation":"This is a post-Cold War challenge \u2014 NAFTA and trade with China accelerated deindustrialization in American manufacturing regions."},{"text":"Climate change and energy policy","points":18,"explanation":"This is a post-Cold War challenge \u2014 the US has struggled to balance economic growth with the scientific consensus on climate risk."},{"text":"Immigration and border security","points":13,"explanation":"This is a post-Cold War challenge \u2014 immigration policy has been a persistent political conflict without legislative resolution."},{"text":"Political polarization","points":8,"explanation":"This is a post-Cold War challenge \u2014 partisan division has intensified since the 1990s, making major legislation increasingly difficult."}]}]}};
+
+// ══ STATE ══
+let gameData = null;
+let playerName = '';
+let aiEnabled = false;
+let state = {
+  roundIdx: 0,
+  totalScore: 0,
+  totalCorrect: 0,
+  totalAttempts: 0,
+  roundScores: [],
+  // per round:
+  strikes: 0,
+  foundIndices: [],    // which answer indices have been found
+  stealActive: false,
+  roundDone: false,
+};
+
+// ══ SETUP ══
+function populateUnits() {
+  const sel = document.getElementById('unitSelect');
+  Object.entries(UNITS).forEach(([k, d]) => {
+    const o = document.createElement('option');
+    o.value = k; o.textContent = d.unit;
+    sel.appendChild(o);
+  });
+}
+populateUnits();
+
+document.getElementById('unitSelect').addEventListener('change', () => {
+  const key = document.getElementById('unitSelect').value;
+  document.getElementById('startBtn').disabled = !key;
+  document.getElementById('startBtn').textContent = key ? 'START GAME' : 'CHOOSE A UNIT TO BEGIN';
+});
+
+document.getElementById('aiToggle').addEventListener('change', e => {
+  aiEnabled = e.target.checked;
+  const s = document.getElementById('aiStatus');
+  s.textContent = aiEnabled ? 'AI feedback: ON' : 'AI feedback: OFF';
+  s.className = 'ai-status' + (aiEnabled ? ' on' : '');
+});
+
+document.getElementById('startBtn').addEventListener('click', () => {
+  const key = document.getElementById('unitSelect').value;
+  if (!key) return;
+  gameData = UNITS[key];
+  playerName = document.getElementById('playerName').value.trim() || 'Student';
+  initGame();
+});
+
+// ══ INIT ══
+function initGame() {
+  state.roundIdx = 0;
+  state.totalScore = 0;
+  state.totalCorrect = 0;
+  state.totalAttempts = 0;
+  state.roundScores = [];
+
+  // Build pips
+  const pips = document.getElementById('progPips');
+  pips.innerHTML = '';
+  gameData.rounds.forEach(() => {
+    const p = document.createElement('div');
+    p.className = 'prog-pip';
+    pips.appendChild(p);
+  });
+
+  showScreen('gameScreen');
+  loadRound(0);
+}
+
+// ══ LOAD ROUND ══
+function loadRound(idx) {
+  const round = gameData.rounds[idx];
+  state.strikes = 0;
+  state.foundIndices = [];
+  state.stealActive = false;
+  state.roundDone = false;
+
+  document.getElementById('hdrScore').textContent = state.totalScore;
+  document.getElementById('progLabel').textContent = 'Round ' + (idx+1) + ' of ' + gameData.rounds.length;
+  updatePips(idx);
+
+  document.getElementById('pollLabel').textContent = gameData.poll_label || '100 historians were surveyed...';
+  document.getElementById('questionText').textContent = round.question;
+  const mb = document.getElementById('multBadge');
+  if (round.multiplier > 1) { mb.textContent = '×' + round.multiplier + ' POINT ROUND'; mb.style.display = 'inline-block'; AudioEngine.multiplierStart(round.multiplier); }
+  else { mb.style.display = 'none'; AudioEngine.questionReveal(); }
+
+  updateMatched(0, round.answers.length);
+
+  // Reset strikes
+  for (let i = 1; i <= 3; i++) document.getElementById('sx' + i).classList.remove('active');
+  document.getElementById('strikesLabel').textContent = '0 strikes';
+
+  // Hide steal, AI, round complete
+  document.getElementById('stealPrompt').classList.remove('show');
+  dismissAI();
+  document.getElementById('roundComplete').classList.remove('show');
+
+  // Build bank: 5 real answers + 5 phantoms from other rounds, shuffled
+  const bank = buildBank(idx, round);
+  renderBank(bank, round);
+
+  // Build pre-numbered slots
+  renderSlots(round);
+}
+
+function updateSoloPhantomLabel() {
+  const val = parseInt(document.getElementById('soloPhantomSlider').value);
+  const label = document.getElementById('soloPhantomLabel');
+  label.textContent = val === 0 ? 'No distractors' : val === 1 ? '1 distractor' : val + ' distractors';
+}
+
+// ══ BANK BUILDER ══
+function buildBank(roundIdx, round) {
+  const phantomCount = parseInt(document.getElementById('soloPhantomSlider').value);
+  const real = round.answers.map((a, i) => ({ text: a.text, real: true, answerIdx: i }));
+
+  // Collect all answers from other rounds as pool
+  const pool = [];
+  gameData.rounds.forEach((r, ri) => {
+    if (ri === roundIdx) return;
+    r.answers.forEach(a => {
+      if (!real.some(x => x.text === a.text) && !pool.some(x => x.text === a.text)) {
+        pool.push(a.text);
+      }
+    });
+  });
+
+  // Shuffle pool and pick up to phantomCount
+  for (let i = pool.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
+  }
+  const phantoms = pool.slice(0, phantomCount).map(t => ({ text: t, real: false, answerIdx: null }));
+
+  return shuffle([...real, ...phantoms]);
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length-1; i > 0; i--) { const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+  return a;
+}
+
+// ══ RENDER ══
+function renderBank(bank, round) {
+  const el = document.getElementById('bankChips');
+  el.innerHTML = '';
+  bank.forEach(item => {
+    const chip = document.createElement('button');
+    chip.className = 'chip';
+    chip.textContent = item.text;
+    chip.dataset.real = item.real;
+    chip.dataset.answerIdx = item.answerIdx ?? '';
+    chip.setAttribute('aria-label', item.text);
+    chip.addEventListener('click', () => onChipClick(chip, item, round));
+    el.appendChild(chip);
+  });
+}
+
+function renderSlots(round) {
+  const wrap = document.getElementById('slotsWrap');
+  wrap.innerHTML = '';
+  round.answers.forEach((ans, i) => {
+    const slot = document.createElement('div');
+    slot.className = 'slot';
+    slot.id = 'slot-' + i;
+    const pts = ans.points * round.multiplier;
+    slot.innerHTML = `
+      <div class="slot-num">${i + 1}</div>
+      <div class="slot-content">
+        <div class="slot-placeholder">—</div>
+        <div class="slot-text"></div>
+      </div>
+      <div class="slot-pts">${pts}</div>`;
+    wrap.appendChild(slot);
+  });
+}
+
+// ══ CHIP CLICK ══
+function onChipClick(chip, item, round) {
+  if (state.roundDone || state.stealActive) return;
+  state.totalAttempts++;
+
+  if (item.real) {
+    // Correct answer
+    correctAnswer(chip, item.answerIdx, round);
+  } else {
+    // Phantom — wrong
+    wrongAnswer(chip, item, round);
+  }
+}
+
+function correctAnswer(chip, answerIdx, round) {
+  const ans = round.answers[answerIdx];
+  const pts = ans.points * round.multiplier;
+
+  state.foundIndices.push(answerIdx);
+  state.totalCorrect++;
+  state.totalScore += pts;
+  document.getElementById('hdrScore').textContent = state.totalScore;
+
+  // Fill the correct slot
+  const slot = document.getElementById('slot-' + answerIdx);
+  slot.classList.add('filled');
+  slot.querySelector('.slot-text').textContent = ans.text;
+  slot.classList.add('reveal-flash');
+
+  // Remove chip from bank
+  chip.remove();
+  dismissAI();
+  AudioEngine.reveal();
+  updateMatched(state.foundIndices.length, round.answers.length);
+
+  if (state.foundIndices.length === round.answers.length) {
+    setTimeout(() => { AudioEngine.roundWin(); endRound(round, true); }, 400);
+  }
+}
+
+function wrongAnswer(chip, item, round) {
+  // Shake chip
+  chip.classList.remove('shake');
+  void chip.offsetWidth;
+  chip.classList.add('shake');
+  setTimeout(() => chip.classList.remove('shake'), 450);
+  AudioEngine.strike();
+
+  // Add strike
+  state.strikes++;
+  const sx = document.getElementById('sx' + state.strikes);
+  if (sx) sx.classList.add('active');
+  document.getElementById('strikesLabel').textContent = state.strikes + (state.strikes === 1 ? ' strike' : ' strikes');
+
+  // AI feedback
+  if (aiEnabled) {
+    showAIFeedback(item.text, round.question, round.answers.map(a => a.text));
+  }
+
+  // 3 strikes → steal
+  if (state.strikes >= 3) {
+    setTimeout(() => triggerSteal(round), aiEnabled ? 0 : 200);
+  }
+}
+
+// ══ STEAL ══
+function triggerSteal(round) {
+  state.stealActive = true;
+  dismissAI();
+
+  // Build steal chips from remaining unfound answers
+  const remaining = round.answers.filter((_, i) => !state.foundIndices.includes(i));
+  const stealChips = document.getElementById('stealChips');
+  stealChips.innerHTML = '';
+
+  remaining.forEach((ans, _) => {
+    const realIdx = round.answers.indexOf(ans);
+    const sc = document.createElement('button');
+    sc.className = 'steal-chip';
+    sc.textContent = ans.text;
+    sc.setAttribute('aria-label', 'Steal: ' + ans.text);
+    sc.addEventListener('click', () => resolveSteal(sc, realIdx, round));
+    stealChips.appendChild(sc);
+  });
+
+  // Also include some phantoms as distractors in steal
+  const bankPhantoms = [...document.querySelectorAll('#bankChips .chip')].filter(c => c.dataset.real === 'false');
+  bankPhantoms.slice(0, 2).forEach(c => {
+    const sc = document.createElement('button');
+    sc.className = 'steal-chip';
+    sc.textContent = c.textContent;
+    sc.dataset.phantom = 'true';
+    sc.setAttribute('aria-label', 'Steal: ' + c.textContent);
+    sc.addEventListener('click', () => resolveStealPhantom(round));
+    stealChips.appendChild(sc);
+  });
+
+  // Shuffle steal chips
+  const shuffled = shuffle([...stealChips.children]);
+  stealChips.innerHTML = '';
+  shuffled.forEach(sc => stealChips.appendChild(sc));
+
+  AudioEngine.steal();
+  document.getElementById('stealPrompt').classList.add('show');
+}
+
+function resolveSteal(chip, answerIdx, round) {
+  // Correct steal
+  state.stealActive = false;
+  document.getElementById('stealPrompt').classList.remove('show');
+  AudioEngine.stealWin();
+
+  const ans = round.answers[answerIdx];
+  const pts = ans.points * round.multiplier;
+  state.foundIndices.push(answerIdx);
+  state.totalCorrect++;
+  state.totalScore += pts;
+  document.getElementById('hdrScore').textContent = state.totalScore;
+
+  const slot = document.getElementById('slot-' + answerIdx);
+  slot.classList.add('filled');
+  slot.querySelector('.slot-text').textContent = ans.text;
+  slot.classList.add('reveal-flash');
+
+  updateMatched(state.foundIndices.length, round.answers.length);
+  setTimeout(() => endRound(round, false), 600);
+}
+
+function resolveStealPhantom(round) {
+  // Wrong steal — round ends, reveal all
+  state.stealActive = false;
+  state.roundDone = true;
+  document.getElementById('stealPrompt').classList.remove('show');
+  AudioEngine.stealFail();
+  revealRemaining(round);
+  setTimeout(() => endRound(round, false), 800);
+}
+
+function revealRemaining(round) {
+  round.answers.forEach((ans, i) => {
+    if (state.foundIndices.includes(i)) return;
+    const slot = document.getElementById('slot-' + i);
+    slot.classList.add('missed-reveal');
+    slot.querySelector('.slot-text').textContent = ans.text;
+  });
+}
+
+// ══ ROUND END ══
+function endRound(round, allFound) {
+  state.roundDone = true;
+  if (allFound) AudioEngine.roundWin();
+
+  // Reveal any remaining
+  revealRemaining(round);
+
+  const roundPts = state.foundIndices.reduce((s, i) => s + round.answers[i].points * round.multiplier, 0);
+  state.roundScores.push({ q: round.question, pts: roundPts, mult: round.multiplier,
+    found: state.foundIndices.length, total: round.answers.length });
+
+  // Build summary
+  const rows = document.getElementById('rcRows');
+  rows.innerHTML = '';
+  round.answers.forEach((ans, i) => {
+    const got = state.foundIndices.includes(i);
+    const pts = ans.points * round.multiplier;
+    const row = document.createElement('div');
+    row.className = 'rc-row ' + (got ? 'got' : 'missed');
+    row.innerHTML = `<span class="rc-icon">${got ? '✓' : '—'}</span>
+      <span class="rc-txt">${ans.text}</span>
+      ${got ? `<span class="rc-pts">+${pts}</span>` : ''}`;
+    rows.appendChild(row);
+  });
+
+  document.getElementById('rcTitle').textContent = allFound ? 'ROUND COMPLETE!' : 'ROUND OVER';
+  document.getElementById('rcSub').innerHTML = `You earned <span>${roundPts}</span> points this round`;
+
+  const isLast = state.roundIdx >= gameData.rounds.length - 1;
+  document.getElementById('nextRoundBtn').textContent = isLast ? 'SEE FINAL SCORE →' : 'NEXT ROUND →';
+  document.getElementById('roundComplete').classList.add('show');
+  window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+}
+
+document.getElementById('nextRoundBtn').addEventListener('click', () => {
+  const isLast = state.roundIdx >= gameData.rounds.length - 1;
+  if (isLast) { showEndScreen(); return; }
+  state.roundIdx++;
+  document.getElementById('roundComplete').classList.remove('show');
+  loadRound(state.roundIdx);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// ══ AI FEEDBACK ══
+// Looks up the hardcoded explanation stored on the answer object in UNITS.
+// No API call, no network, no cost — works offline and instantly.
+function showAIFeedback(wrongText, question, correctAnswers) {
+  // Find the explanation by searching all rounds of the current unit
+  let explanation = null;
+  for (const round of gameData.rounds) {
+    const match = round.answers.find(a => a.text === wrongText);
+    if (match && match.explanation) {
+      explanation = match.explanation;
+      break;
+    }
+  }
+  if (!explanation) return; // No explanation available — fail silently
+
+  const panel = document.getElementById('aiPanel');
+  const body = document.getElementById('aiPanelBody');
+  body.innerHTML = `<div class="ai-text">${explanation}</div>`;
+  panel.classList.add('show');
+}
+
+function dismissAI() { document.getElementById('aiPanel').classList.remove('show'); }
+
+// ══ END SCREEN ══
+function showEndScreen() {
+  AudioEngine.gameOver();
+  const maxPossible = gameData.rounds.reduce((s, r) => s + r.answers.reduce((x, a) => x + a.points * r.multiplier, 0), 0);
+  const accuracy = state.totalAttempts > 0 ? Math.round(state.totalCorrect / state.totalAttempts * 100) : 0;
+
+  document.getElementById('endPlayer').textContent = playerName;
+  document.getElementById('endScore').textContent = state.totalScore;
+  document.getElementById('endMax').textContent = 'out of ' + maxPossible + ' possible points';
+  document.getElementById('endAccuracy').innerHTML = 'Accuracy: <span>' + accuracy + '%</span>';
+
+  const bd = document.getElementById('endBreakdown');
+  bd.innerHTML = '';
+  state.roundScores.forEach((r, i) => {
+    const row = document.createElement('div');
+    row.className = 'end-row';
+    row.innerHTML = `<span>Round ${i+1}${r.mult>1?' (×'+r.mult+')':''} — ${r.found}/${r.total} correct</span><span class="end-row-pts">${r.pts} pts</span>`;
+    bd.appendChild(row);
+  });
+
+  showScreen('endScreen');
+}
+
+// ══ UTILS ══
+function updateMatched(found, total) {
+  document.getElementById('qMatched').textContent = found + ' / ' + total + ' found';
+}
+
+function updatePips(activeIdx) {
+  document.querySelectorAll('.prog-pip').forEach((p, i) => {
+    p.className = 'prog-pip' + (i < activeIdx ? ' done' : i === activeIdx ? ' active' : '');
+  });
+}
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function restartGame() { initGame(); }
+function goSetup() { showScreen('setupScreen'); }
+</script>
+</body>
+</html>

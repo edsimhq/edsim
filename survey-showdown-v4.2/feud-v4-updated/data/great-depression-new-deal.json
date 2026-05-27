@@ -1,0 +1,198 @@
+{
+  "unit": "Great Depression & New Deal",
+  "poll_label": "100 historians were surveyed...",
+  "rounds": [
+    {
+      "id": "r1",
+      "question": "Name a cause of the Great Depression",
+      "multiplier": 1,
+      "answers": [
+        {
+          "text": "Stock market crash of 1929",
+          "points": 36,
+          "explanation": "This is a cause of the Great Depression \u2014 the October crash wiped out billions in paper wealth, triggering a cascading financial collapse."
+        },
+        {
+          "text": "Overproduction and falling farm prices",
+          "points": 26,
+          "explanation": "This is a cause of the Great Depression \u2014 farmers were already struggling through the 1920s before the Depression deepened the crisis."
+        },
+        {
+          "text": "Easy credit and speculation",
+          "points": 18,
+          "explanation": "This is a cause of the Great Depression \u2014 investors bought stocks on thin margins; when prices fell, the debts couldn't be repaid."
+        },
+        {
+          "text": "Bank failures wiped out savings",
+          "points": 13,
+          "explanation": "This is a cause of the Great Depression \u2014 over 9,000 banks failed in the 1930s, erasing the savings of millions of ordinary Americans."
+        },
+        {
+          "text": "Smoot-Hawley Tariff hurt global trade",
+          "points": 7,
+          "explanation": "This is a cause of the Great Depression \u2014 retaliatory tariffs from other nations collapsed international trade and deepened the slump."
+        }
+      ]
+    },
+    {
+      "id": "r2",
+      "question": "Name a hardship Americans faced during the Great Depression",
+      "multiplier": 1,
+      "answers": [
+        {
+          "text": "Mass unemployment",
+          "points": 38,
+          "explanation": "This is a Depression hardship \u2014 by 1933, 25% of American workers were unemployed, with millions more underemployed."
+        },
+        {
+          "text": "Dust Bowl destroyed farms",
+          "points": 26,
+          "explanation": "This is a Depression hardship \u2014 drought and poor farming practices turned the Great Plains into a wasteland, displacing 'Okies' to California."
+        },
+        {
+          "text": "Bank closures and lost savings",
+          "points": 18,
+          "explanation": "This is a Depression hardship \u2014 FDR's first act was a bank holiday to stop the panic; millions had already lost everything."
+        },
+        {
+          "text": "Homelessness and Hoovervilles",
+          "points": 12,
+          "explanation": "This is a Depression hardship \u2014 shantytowns of unemployed men sprang up across the country, named mockingly for President Hoover."
+        },
+        {
+          "text": "Deflation and falling prices",
+          "points": 6,
+          "explanation": "This is a Depression hardship \u2014 falling prices sounds good, but it meant farmers couldn't cover costs and businesses couldn't earn profit."
+        }
+      ]
+    },
+    {
+      "id": "r3",
+      "question": "Name a New Deal program and its purpose",
+      "multiplier": 2,
+      "answers": [
+        {
+          "text": "Works Progress Administration \u2014 jobs",
+          "points": 34,
+          "explanation": "This is a New Deal program \u2014 the WPA employed millions to build roads, bridges, parks, and public murals during the Depression."
+        },
+        {
+          "text": "Social Security \u2014 income for elderly",
+          "points": 28,
+          "explanation": "This is a New Deal program \u2014 it created the retirement safety net that still exists today, funded by payroll taxes."
+        },
+        {
+          "text": "FDIC \u2014 protected bank deposits",
+          "points": 18,
+          "explanation": "This is a New Deal program \u2014 federal deposit insurance ended bank runs by guaranteeing customers wouldn't lose their savings."
+        },
+        {
+          "text": "CCC \u2014 conservation and youth employment",
+          "points": 13,
+          "explanation": "This is a New Deal program \u2014 young men planted trees, built trails, and worked in national parks for food, shelter, and small wages."
+        },
+        {
+          "text": "SEC \u2014 regulated the stock market",
+          "points": 7,
+          "explanation": "This is a New Deal program \u2014 the Securities and Exchange Commission was created to prevent the speculation and fraud that caused the crash."
+        }
+      ]
+    },
+    {
+      "id": "r4",
+      "question": "Name a criticism of FDR's New Deal",
+      "multiplier": 2,
+      "answers": [
+        {
+          "text": "Government spending was too large",
+          "points": 33,
+          "explanation": "This is a New Deal criticism \u2014 conservatives argued deficit spending would saddle future generations with debt."
+        },
+        {
+          "text": "Too much federal power and control",
+          "points": 27,
+          "explanation": "This is a New Deal criticism \u2014 the Supreme Court struck down several programs as unconstitutional overreach of federal power."
+        },
+        {
+          "text": "Did not do enough for Black Americans",
+          "points": 20,
+          "explanation": "This is a New Deal criticism \u2014 many programs allowed racial discrimination; the AAA actually pushed Black sharecroppers off land."
+        },
+        {
+          "text": "Court-packing plan threatened democracy",
+          "points": 13,
+          "explanation": "This is a New Deal criticism \u2014 FDR's attempt to add six justices to the Supreme Court alarmed even his Democratic allies."
+        },
+        {
+          "text": "Did not end the Depression",
+          "points": 7,
+          "explanation": "This is a New Deal criticism \u2014 unemployment remained above 14% through 1940; only WWII military spending ended the Depression."
+        }
+      ]
+    },
+    {
+      "id": "r5",
+      "question": "Name a way FDR expanded the role of the federal government",
+      "multiplier": 3,
+      "answers": [
+        {
+          "text": "Created a social safety net",
+          "points": 34,
+          "explanation": "This is how FDR expanded federal government \u2014 Social Security, unemployment insurance, and welfare programs permanently changed the government's role."
+        },
+        {
+          "text": "Federal job creation programs",
+          "points": 27,
+          "explanation": "This is how FDR expanded federal government \u2014 the WPA, CCC, and PWA made Washington a direct employer of millions."
+        },
+        {
+          "text": "Regulated banks and the stock market",
+          "points": 20,
+          "explanation": "This is how FDR expanded federal government \u2014 the FDIC and SEC created permanent federal oversight of the financial industry."
+        },
+        {
+          "text": "Government relief payments to poor",
+          "points": 12,
+          "explanation": "This is how FDR expanded federal government \u2014 direct relief to unemployed citizens was a radical departure from Hoover's laissez-faire approach."
+        },
+        {
+          "text": "Executive branch power expanded",
+          "points": 7,
+          "explanation": "This is how FDR expanded federal government \u2014 his first 100 days set a precedent for presidential leadership in domestic policy."
+        }
+      ]
+    },
+    {
+      "id": "r6",
+      "question": "Name something the US did to move away from isolationism before WWII",
+      "multiplier": 3,
+      "answers": [
+        {
+          "text": "Lend-Lease Act aided the Allies",
+          "points": 36,
+          "explanation": "This is how the US moved away from isolationism \u2014 FDR lent war materials to Britain without requiring immediate payment."
+        },
+        {
+          "text": "Cash and carry policy",
+          "points": 26,
+          "explanation": "This is how the US moved away from isolationism \u2014 it allowed Allies to buy American arms if they transported them on their own ships."
+        },
+        {
+          "text": "FDR called for being Arsenal of Democracy",
+          "points": 20,
+          "explanation": "This is how the US moved away from isolationism \u2014 FDR's fireside chat framed supplying the Allies as a patriotic duty."
+        },
+        {
+          "text": "Repealed Neutrality Acts",
+          "points": 11,
+          "explanation": "This is how the US moved away from isolationism \u2014 earlier laws had barred selling arms to any warring nation; repeal allowed Allied aid."
+        },
+        {
+          "text": "Atlantic Charter with Churchill",
+          "points": 7,
+          "explanation": "This is how the US moved away from isolationism \u2014 FDR and Churchill's 1941 joint declaration outlined war aims before the US even entered."
+        }
+      ]
+    }
+  ]
+}

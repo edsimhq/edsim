@@ -1,0 +1,198 @@
+{
+  "unit": "Civil War & Reconstruction",
+  "poll_label": "100 historians were surveyed...",
+  "rounds": [
+    {
+      "id": "r1",
+      "question": "Name a cause of the Civil War",
+      "multiplier": 1,
+      "answers": [
+        {
+          "text": "Slavery and its expansion",
+          "points": 40,
+          "explanation": "This is a cause of the Civil War \u2014 the central conflict was whether slavery would spread into western territories."
+        },
+        {
+          "text": "States' rights vs federal power",
+          "points": 26,
+          "explanation": "This is a cause of the Civil War \u2014 Southern states argued they had the right to secede; the Union disputed this."
+        },
+        {
+          "text": "Election of Abraham Lincoln",
+          "points": 18,
+          "explanation": "This is a cause of the Civil War \u2014 Southern states seceded after Lincoln won without carrying a single Southern state."
+        },
+        {
+          "text": "Economic differences North vs South",
+          "points": 10,
+          "explanation": "This is a cause of the Civil War \u2014 the industrial North and the agricultural, slave-based South had clashing economic interests."
+        },
+        {
+          "text": "Failure of compromise in Congress",
+          "points": 6,
+          "explanation": "This is a cause of the Civil War \u2014 decades of political compromise over slavery collapsed in the 1850s."
+        }
+      ]
+    },
+    {
+      "id": "r2",
+      "question": "Name something the Emancipation Proclamation did or did not do",
+      "multiplier": 1,
+      "answers": [
+        {
+          "text": "Freed enslaved people in Confederate states",
+          "points": 38,
+          "explanation": "This is what the Emancipation Proclamation did \u2014 it freed enslaved people in rebel states, as a war measure."
+        },
+        {
+          "text": "Made the war about slavery",
+          "points": 26,
+          "explanation": "This is an effect of the Emancipation Proclamation \u2014 it redefined the war's purpose, making European support for the Confederacy politically toxic."
+        },
+        {
+          "text": "Did not free enslaved people in border states",
+          "points": 18,
+          "explanation": "This is a limit of the Emancipation Proclamation \u2014 Lincoln excluded border states to keep them in the Union."
+        },
+        {
+          "text": "Allowed Black men to join the Union Army",
+          "points": 12,
+          "explanation": "This is a consequence of the Emancipation Proclamation \u2014 nearly 180,000 Black soldiers served in the USCT afterward."
+        },
+        {
+          "text": "Was a war measure not a law",
+          "points": 6,
+          "explanation": "This is the legal basis of the Emancipation Proclamation \u2014 Lincoln used his war powers as commander-in-chief, not Congress."
+        }
+      ]
+    },
+    {
+      "id": "r3",
+      "question": "Name a Reconstruction amendment and what it guaranteed",
+      "multiplier": 2,
+      "answers": [
+        {
+          "text": "13th Amendment abolished slavery",
+          "points": 36,
+          "explanation": "This is a Reconstruction amendment \u2014 it permanently abolished slavery throughout the United States in 1865."
+        },
+        {
+          "text": "14th Amendment granted citizenship",
+          "points": 28,
+          "explanation": "This is a Reconstruction amendment \u2014 it made all people born in the US citizens and guaranteed equal protection."
+        },
+        {
+          "text": "15th Amendment gave Black men the vote",
+          "points": 22,
+          "explanation": "This is a Reconstruction amendment \u2014 it prohibited denying the vote based on race, color, or prior servitude."
+        },
+        {
+          "text": "Equal protection under the law",
+          "points": 9,
+          "explanation": "This is a Reconstruction amendment guarantee \u2014 the 14th Amendment's equal protection clause is the foundation of civil rights law."
+        },
+        {
+          "text": "Due process for all citizens",
+          "points": 5,
+          "explanation": "This is a Reconstruction amendment guarantee \u2014 the 14th Amendment applied due process rights against state governments."
+        }
+      ]
+    },
+    {
+      "id": "r4",
+      "question": "Name a way Reconstruction was undermined after 1877",
+      "multiplier": 2,
+      "answers": [
+        {
+          "text": "Jim Crow laws enforced segregation",
+          "points": 34,
+          "explanation": "This is how Reconstruction was undermined \u2014 Southern states passed laws mandating racial separation in public life."
+        },
+        {
+          "text": "Literacy tests and poll taxes",
+          "points": 28,
+          "explanation": "This is how Reconstruction was undermined \u2014 these devices effectively stripped Black men of the vote the 15th Amendment had given them."
+        },
+        {
+          "text": "Sharecropping kept freedmen in poverty",
+          "points": 18,
+          "explanation": "This is how Reconstruction was undermined \u2014 the sharecropping system trapped formerly enslaved people in cycles of debt."
+        },
+        {
+          "text": "KKK terrorism and intimidation",
+          "points": 13,
+          "explanation": "This is how Reconstruction was undermined \u2014 the Klan used violence to drive Black voters and officeholders from public life."
+        },
+        {
+          "text": "Compromise of 1877 ended Reconstruction",
+          "points": 7,
+          "explanation": "This is how Reconstruction was undermined \u2014 Hayes became president in exchange for withdrawing federal troops from the South."
+        }
+      ]
+    },
+    {
+      "id": "r5",
+      "question": "Name a characteristic of slavery in the antebellum South",
+      "multiplier": 3,
+      "answers": [
+        {
+          "text": "Slavery passed from mother to child",
+          "points": 36,
+          "explanation": "This is a feature of antebellum slavery \u2014 the 'partus' rule made the child's status follow the mother's, expanding slaveholder property."
+        },
+        {
+          "text": "Enslaved people had no legal rights",
+          "points": 28,
+          "explanation": "This is a feature of antebellum slavery \u2014 enslaved people were legally property; they could not own, marry, or testify in court."
+        },
+        {
+          "text": "Families were separated and sold",
+          "points": 20,
+          "explanation": "This is a feature of antebellum slavery \u2014 the domestic slave trade routinely broke up families, which abolitionists highlighted."
+        },
+        {
+          "text": "Slave codes controlled daily life",
+          "points": 10,
+          "explanation": "This is a feature of antebellum slavery \u2014 state laws regulated every aspect of enslaved people's lives, including movement and literacy."
+        },
+        {
+          "text": "Resistance was punished severely",
+          "points": 6,
+          "explanation": "This is a feature of antebellum slavery \u2014 any sign of rebellion, from running away to learning to read, was harshly punished."
+        }
+      ]
+    },
+    {
+      "id": "r6",
+      "question": "Name a goal or policy of Lincoln's Reconstruction plan",
+      "multiplier": 3,
+      "answers": [
+        {
+          "text": "Forgiveness and reunification",
+          "points": 35,
+          "explanation": "This is Lincoln's Reconstruction philosophy \u2014 his 'malice toward none' approach prioritized quickly restoring the Union."
+        },
+        {
+          "text": "10% loyalty oath to rejoin Union",
+          "points": 27,
+          "explanation": "This is Lincoln's Reconstruction plan \u2014 states could rejoin when 10% of 1860 voters swore loyalty, far less than Radicals wanted."
+        },
+        {
+          "text": "No punishment for Confederate leaders",
+          "points": 20,
+          "explanation": "This is Lincoln's Reconstruction position \u2014 he opposed treating Southern leaders as traitors, which Radical Republicans rejected."
+        },
+        {
+          "text": "Restore Southern states quickly",
+          "points": 12,
+          "explanation": "This is Lincoln's Reconstruction goal \u2014 he wanted rapid reunion, not a prolonged period of federal occupation."
+        },
+        {
+          "text": "Opposed radical Republican demands",
+          "points": 6,
+          "explanation": "This is Lincoln's Reconstruction stance \u2014 he vetoed the Wade-Davis Bill, which set much harsher readmission requirements."
+        }
+      ]
+    }
+  ]
+}
