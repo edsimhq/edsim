@@ -95,8 +95,13 @@ main{position:relative;z-index:5;flex:1;max-width:1100px;margin:0 auto;width:100
 .tag-vocab{background:rgba(200,152,10,.1);color:var(--gold-hi);border:1px solid rgba(200,152,10,.2)}
 .tag-soon{background:var(--faint);color:var(--dim);border:1px solid var(--border)}
 .tag-new{background:rgba(39,174,96,.1);color:#27ae60;border:1px solid rgba(39,174,96,.2)}
+.tag-game{background:rgba(147,112,219,.1);color:#9370db;border:1px solid rgba(147,112,219,.2)}
+.tag-timeline{background:rgba(112,144,200,.1);color:#7090c8;border:1px solid rgba(112,144,200,.2)}
 .sim-arrow{font-size:14px;color:var(--dim);transition:color .2s,transform .2s;flex-shrink:0}
 .sim-card:hover .sim-arrow{color:var(--gold-hi);transform:translateX(3px)}
+
+/* ── SECTION DIVIDER ── */
+.section-gap{margin-top:56px}
 
 /* ── FOOTER ── */
 footer{position:relative;z-index:5;border-top:1px solid var(--border);
@@ -137,10 +142,38 @@ footer{position:relative;z-index:5;border-top:1px solid var(--border);
 </div>
 
 <main>
+
+  <!-- ── REVIEW GAMES ── -->
   <div class="section-hd">
+    <span class="section-label">Games</span>
+    <span class="section-title">Review Games</span>
+    <span class="section-count">1 game available</span>
+  </div>
+
+  <div class="timeline" style="margin-bottom:0">
+    <div class="era" style="border-bottom:none">
+      <div class="era-label">
+        <div class="era-date">All Units</div>
+        <div class="era-name">Class &amp; Solo</div>
+      </div>
+      <div class="era-sims">
+        <a class="sim-card" href="survey-showdown/">
+          <div class="sim-info">
+            <div class="sim-title">Survey Showdown</div>
+            <div class="sim-desc">Family Feud-style review game built on real Regents content — Class Mode for whole-class play and Solo Mode for independent practice</div>
+          </div>
+          <div class="sim-tags"><span class="tag tag-new">New</span><span class="tag tag-game">Game</span></div>
+          <span class="sim-arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── US HISTORY SIMS ── -->
+  <div class="section-hd section-gap">
     <span class="section-label">US History</span>
     <span class="section-title">Regents Prep</span>
-    <span class="section-count">8 sims available</span>
+    <span class="section-count">9 sims available</span>
   </div>
 
   <div class="timeline">
@@ -231,7 +264,7 @@ footer{position:relative;z-index:5;border-top:1px solid var(--border);
 
     <div class="era">
       <div class="era-label">
-        <div class="era-date">1950s–1970s</div>
+        <div class="era-date">1865–1965</div>
         <div class="era-name">Civil Rights</div>
       </div>
       <div class="era-sims">
@@ -249,6 +282,14 @@ footer{position:relative;z-index:5;border-top:1px solid var(--border);
             <div class="sim-desc">The movement, its leaders, strategies, and the legislation that followed</div>
           </div>
           <div class="sim-tags"><span class="tag tag-new">Updated</span><span class="tag tag-vocab">Vocabulary</span></div>
+          <span class="sim-arrow">→</span>
+        </a>
+        <a class="sim-card" href="us-history/civil-rights-timeline/">
+          <div class="sim-info">
+            <div class="sim-title">Civil Rights — Reconstruction to 1965</div>
+            <div class="sim-desc">Interactive timeline, drag-and-sort activity, Regents questions, and exit ticket tracing a century of struggle</div>
+          </div>
+          <div class="sim-tags"><span class="tag tag-new">New</span><span class="tag tag-timeline">Timeline</span></div>
           <span class="sim-arrow">→</span>
         </a>
       </div>
