@@ -111,17 +111,6 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
 .setup-sub{font-family:var(--fd);font-size:18px;font-weight:300;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);text-align:center;margin-bottom:26px}
 
 /* Student info */
-.student-row{display:grid;grid-template-columns:1fr auto;gap:10px;margin-bottom:16px}
-.s-field{display:flex;flex-direction:column;gap:5px}
-.s-label{font-family:var(--fm);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
-.s-input{font-family:var(--fb);font-size:14px;background:var(--surf2);color:var(--white);
-  border:1px solid var(--border);border-radius:var(--rs);padding:9px 12px;
-  transition:border-color .15s;width:100%}
-.s-input:focus{outline:none;border-color:var(--amber)}
-.s-select{font-family:var(--fb);font-size:14px;background:var(--surf2);color:var(--white);
-  border:1px solid var(--border);border-radius:var(--rs);padding:9px 12px;
-  cursor:pointer;transition:border-color .15s;min-width:80px}
-.s-select:focus{outline:none;border-color:var(--amber)}
 
 /* Levels */
 .setup-section-label{font-family:var(--fm);font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
@@ -377,8 +366,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
   .pd-logo{font-family:'Oswald',sans-serif;font-size:18px;font-weight:700;letter-spacing:.08em}
   .pd-unit{font-size:12px;color:#666;letter-spacing:.04em;margin-top:2px}
   .pd-meta{font-size:12px;color:#666;text-align:right;line-height:1.5}
-  .pd-student-box{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;background:#f7f7f5;border:1px solid #ddd;border-radius:6px;padding:12px 16px;margin-bottom:16px}
-  .pd-field-label{font-family:'Source Code Pro',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#888;margin-bottom:2px}
+    .pd-field-label{font-family:'Source Code Pro',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#888;margin-bottom:2px}
   .pd-field-val{font-size:15px;font-weight:700;color:#111}
   .pd-section{margin-bottom:16px}
   .pd-section-title{font-family:'Oswald',sans-serif;font-size:14px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#333;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid #eee}
@@ -411,7 +399,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
   .setup-title{font-size:34px}.level-grid{grid-template-columns:repeat(2,1fr)}.diff-grid{grid-template-columns:1fr}
   .ms-cards{grid-template-columns:1fr}.ans-grid{grid-template-columns:1fr}
   .end-stats{flex-wrap:wrap}.es{min-width:80px}.hdr{padding:0 12px}
-  .student-row{grid-template-columns:1fr}.log-compare{grid-template-columns:1fr}
+  .log-compare{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -490,22 +478,18 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
     <div class="setup-title">Industrialization</div>
     <div class="setup-sub">Gilded Age · Vocabulary Study</div>
 
-    <div class="student-row">
-      <div class="s-field">
-        <div class="s-label">Student name</div>
-        <input class="s-input" id="studentName" type="text" placeholder="First and last name" oninput="validateSetup()" aria-label="Student name"/>
-      </div>
-      <div class="s-field">
-        <div class="s-label">Period</div>
-        <select class="s-select" id="periodSel" onchange="validateSetup()" aria-label="Class period">
-          <option value="">—</option>
-          <option>1</option><option>2</option><option>3</option>
-          <option>4</option><option>5</option><option>6</option>
-          <option>7</option><option>8</option><option>9</option>
-        </select>
+    
+        <!-- STUDENT DIRECTIONS -->
+    <div class="directions-box" style="background:var(--surf2,#1c1f2b);border:1px solid var(--border,#2a2a3a);border-radius:6px;padding:16px 18px;margin-bottom:20px;max-width:640px;width:100%">
+      <div style="font-family:var(--fm,'monospace');font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--dim,#888);margin-bottom:10px">How This Works</div>
+      <div style="font-size:14px;line-height:1.65;color:var(--text,#d0d7e4)">
+        <strong style="color:var(--white,#eef1f6)">Goal:</strong> Build your command of key vocabulary for Industrialization and the Gilded Age — terms you need to recognize, define, and use on the Regents.<br><br>
+        <strong style="color:var(--white,#eef1f6)">Modes:</strong> After setup, choose from three study modes — <em>Review</em> (learn definitions with cards), <em>Practice</em> (multiple-choice), or <em>Blitz</em> (timed challenge).<br><br>
+        <strong style="color:var(--white,#eef1f6)">Time:</strong> About 10–15 minutes per session. You can stop and return anytime — your progress is saved on this device.<br><br>
+        <strong style="color:var(--white,#eef1f6)">Setup:</strong> Choose your level and difficulty below, then hit <em>Start studying</em>.
       </div>
     </div>
-
+    <!-- END DIRECTIONS -->
     <div class="setup-section-label" style="margin-bottom:8px">Choose your starting level</div>
     <div class="level-grid" id="levelGrid">
       <div class="level-btn" onclick="setLevel(1)" id="lbtn-1" role="button" tabindex="0">
@@ -559,7 +543,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
       </div>
     </div>
 
-    <button class="start-btn" id="startBtn" onclick="goToModes()" disabled>Select name, period, level &amp; difficulty to begin</button>
+    <button class="start-btn" id="startBtn" onclick="goToModes()" disabled>Select level &amp; difficulty to begin</button>
   </div>
 
   <!-- ══ MODE SELECT ══ -->
@@ -913,7 +897,7 @@ const LS_KEY='edsim_industrial_v1';
 // ══════════════════════════════════════════════
 // STATE
 // ══════════════════════════════════════════════
-let studentName='',period='',level=0,difficulty='regular',timerOn=true;
+let level=0,difficulty='regular',timerOn=true;
 let currentMode=null;
 let questions=[],qIdx=0,score=0,streak=0,bestStreak=0,wrongCount=0,timeoutCount=0,qLog=[];
 let timerInt=null,timeLeft=15,answered=false;
@@ -934,14 +918,7 @@ function setStillLearning(a){const d=ls();d.stillLearning=a;saveLS(d)}
 // SETUP
 // ══════════════════════════════════════════════
 window.addEventListener('DOMContentLoaded',()=>{
-  const d=ls();
-  if(d.studentName&&d.level){
-    studentName=d.studentName;period=d.period||'';level=d.level;difficulty=d.difficulty||'regular';
-    document.getElementById('studentName').value=studentName;
-    document.getElementById('periodSel').value=period;
-    setLevel(level,true);setDiff(difficulty,true);
-    validateSetup();showSetupProgress();
-  } else {
+  const d=ls(); else {
     setDiff('regular',true);
   }
   // Keyboard nav for level/diff buttons
@@ -962,13 +939,10 @@ function setDiff(d,silent){
   document.getElementById('dbtn-'+d).classList.add('active');
   if(!silent)validateSetup();
 }
-function validateSetup(){
-  studentName=document.getElementById('studentName').value.trim();
-  period=document.getElementById('periodSel').value;
-  const btn=document.getElementById('startBtn');
-  const ok=studentName&&period&&level&&difficulty;
+function validateSetup(){  const btn=document.getElementById('startBtn');
+  const ok=level&&difficulty;
   btn.disabled=!ok;
-  btn.textContent=ok?'Start studying →':'Enter name, period, level & difficulty to begin';
+  btn.textContent=ok?'Start studying →':'Select level & difficulty to begin';
   if(ok)showSetupProgress();
 }
 function showSetupProgress(){
@@ -983,10 +957,10 @@ function showSetupProgress(){
   document.getElementById('spBlitzVal').textContent=p.blitzBest+'%';
 }
 function goToModes(){
-  const d=ls();d.studentName=studentName;d.period=period;d.level=level;d.difficulty=difficulty;saveLS(d);
-  document.getElementById('hdrInfo').textContent=studentName+' · Period '+period;
+  const d=ls();d.level=level;d.difficulty=difficulty;saveLS(d);
+  document.getElementById('hdrInfo').textContent='';
   document.getElementById('msName').textContent='Level '+level+' · '+(difficulty.charAt(0).toUpperCase()+difficulty.slice(1));
-  document.getElementById('msMeta').textContent=LEVEL_SIZES[level]+' terms · '+studentName+' · Period '+period;
+  document.getElementById('msMeta').textContent=LEVEL_SIZES[level]+' terms · '+capitalize(difficulty);
   document.getElementById('blitzQCount').textContent=BLITZ_Q[level]||10;
   updateModeLock();showScreen('modeScreen');renderModeProgress();
 }
@@ -1361,7 +1335,7 @@ function endGame(){
   btns+=`<button class="e-btn e-btn-ghost" onclick="goToModes()">Home</button>`;
   btns+=`<button class="e-btn e-btn-pdf" onclick="savePDF()">⬇ Save PDF</button>`;
   document.getElementById('endBtns').innerHTML=btns;
-  lastResult={studentName,period,level,difficulty,mode:currentMode,pct,correct,wrongCount,timeoutCount,passed,qLog:[...qLog]};
+  lastResult={level,difficulty,mode:currentMode,pct,correct,wrongCount,timeoutCount,passed,qLog:[...qLog]};
   showScreen('endScreen');
 }
 
@@ -1404,11 +1378,6 @@ function savePDF(){
       <div><div class="pd-logo">EdSim</div><div class="pd-unit">Industrialization &amp; Gilded Age · Vocabulary · Level ${r.level} · ${diffLabel}</div></div>
       <div class="pd-meta">${dateStr}<br>${modeLabel}<br>${passLabel} (${passThresh}% required)</div>
     </div>
-    <div class="pd-student-box">
-      <div class="pd-field"><div class="pd-field-label">Student</div><div class="pd-field-val">${r.studentName}</div></div>
-      <div class="pd-field"><div class="pd-field-label">Period</div><div class="pd-field-val">${r.period}</div></div>
-      <div class="pd-field"><div class="pd-field-label">Score</div><div class="pd-field-val">${r.pct}%</div></div>
-    </div>
     <div class="pd-section">
       <div class="pd-section-title">Results Summary</div>
       <div class="pd-summary-grid">
@@ -1444,14 +1413,12 @@ function closeModal(){document.getElementById('resetModal').classList.remove('op
 function doReset(){
   try{localStorage.removeItem(LS_KEY);}catch{}
   closeModal();
-  studentName='';period='';level=0;difficulty='regular';timerOn=true;currentMode=null;lastResult=null;
-  document.getElementById('studentName').value='';
-  document.getElementById('periodSel').value='';
+  level=0;difficulty='regular';timerOn=true;currentMode=null;lastResult=null;
   document.querySelectorAll('.level-btn').forEach(b=>b.classList.remove('active'));
   document.querySelectorAll('.diff-card').forEach(b=>b.classList.remove('active'));
   document.getElementById('dbtn-regular').classList.add('active');
   document.getElementById('setupProgress').style.display='none';
-  const btn=document.getElementById('startBtn');btn.disabled=true;btn.textContent='Enter name, period, level & difficulty to begin';
+  const btn=document.getElementById('startBtn');btn.disabled=true;btn.textContent='Select level & difficulty to begin';
   showScreen('setupScreen');
 }
 

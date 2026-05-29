@@ -51,18 +51,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:1;
 .setup-eye{font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.22em;text-transform:uppercase;text-align:center;margin-bottom:8px}
 .setup-title{font-family:var(--fd);font-size:48px;font-weight:900;letter-spacing:.02em;color:var(--white);text-align:center;line-height:1.05;margin-bottom:2px}
 .setup-sub{font-family:var(--fb);font-size:17px;font-style:italic;color:var(--dim);text-align:center;margin-bottom:22px}
-.student-row{display:grid;grid-template-columns:1fr auto;gap:10px;margin-bottom:14px}
-.s-field{display:flex;flex-direction:column;gap:5px}
-.s-label{font-family:var(--fm);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
-.s-input{font-family:var(--fb);font-size:15px;background:var(--surf2);color:var(--white);
-  border:1px solid var(--border);border-radius:var(--rs);padding:8px 12px;transition:border-color .15s;width:100%}
-.s-input:focus{outline:none;border-color:var(--amber-hi);box-shadow:0 0 0 3px rgba(200,150,10,.12)}
-.s-select{font-family:var(--fb);font-size:15px;background:var(--surf2);color:var(--white);
-  border:1px solid var(--border);border-radius:var(--rs);padding:8px 28px 8px 12px;
-  appearance:none;-webkit-appearance:none;cursor:pointer;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath fill='%237a6a52' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");
-  background-repeat:no-repeat;background-position:right 10px center;transition:border-color .15s;min-width:100px}
-.s-select:focus{outline:none;border-color:var(--amber-hi)}
 .setup-section-label{font-family:var(--fm);font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-bottom:8px}
 .level-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
 .level-btn{background:var(--surf);border:2px solid var(--border);border-radius:var(--r);
@@ -294,7 +282,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:1;
 .pd-logo{font-family:'Playfair Display',Georgia,serif;font-size:20px;font-weight:700;font-style:italic;color:#111}
 .pd-unit{font-family:'Source Code Pro',monospace;font-size:12px;letter-spacing:.08em;color:#555;margin-top:3px}
 .pd-meta{text-align:right;font-size:12px;color:#555;line-height:1.6}
-.pd-student-box{background:#f7f3eb;border:1px solid #ddd;border-radius:4px;padding:12px 16px;margin-bottom:18px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
 .pd-field{display:flex;flex-direction:column;gap:3px}
 .pd-field-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#888;font-family:'Source Code Pro',monospace}
 .pd-field-val{font-size:14px;font-weight:700;color:#111}
@@ -323,8 +310,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:1;
   .setup-title{font-size:34px}.level-grid{grid-template-columns:1fr}.diff-grid{grid-template-columns:1fr}
   .ms-cards{grid-template-columns:1fr}.ans-grid{grid-template-columns:1fr}
   .end-stats{flex-wrap:wrap}.es{min-width:80px}.hdr{padding:0 12px}
-  .student-row{grid-template-columns:1fr}
-}
+  }
 </style>
 </head>
 <body>
@@ -375,20 +361,17 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:1;
     <div class="setup-eye">EdSim · US History Regents</div>
     <div class="setup-title">Early Republic<br>&amp; Expansion</div>
     <div class="setup-sub">Vocabulary Study</div>
-    <div class="student-row">
-      <div class="s-field">
-        <div class="s-label">Student name</div>
-        <input class="s-input" id="studentName" type="text" placeholder="First and last name" oninput="validateSetup()"/>
-      </div>
-      <div class="s-field">
-        <div class="s-label">Period</div>
-        <select class="s-select" id="periodSel" onchange="validateSetup()">
-          <option value="">—</option>
-          <option>1</option><option>2</option><option>3</option><option>4</option>
-          <option>5</option><option>6</option><option>7</option><option>8</option><option>9</option>
-        </select>
+            <!-- STUDENT DIRECTIONS -->
+    <div class="directions-box" style="background:var(--surf2,#1c1f2b);border:1px solid var(--border,#2a2a3a);border-radius:6px;padding:16px 18px;margin-bottom:20px;max-width:640px;width:100%">
+      <div style="font-family:var(--fm,'monospace');font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--dim,#888);margin-bottom:10px">How This Works</div>
+      <div style="font-size:14px;line-height:1.65;color:var(--text,#d0d7e4)">
+        <strong style="color:var(--white,#eef1f6)">Goal:</strong> Build your command of key vocabulary for the Early Republic and Westward Expansion — terms you need to recognize, define, and use on the Regents.<br><br>
+        <strong style="color:var(--white,#eef1f6)">Modes:</strong> After setup, choose from three study modes — <em>Review</em> (learn definitions with cards), <em>Practice</em> (multiple-choice), or <em>Blitz</em> (timed challenge).<br><br>
+        <strong style="color:var(--white,#eef1f6)">Time:</strong> About 10–15 minutes per session. You can stop and return anytime — your progress is saved on this device.<br><br>
+        <strong style="color:var(--white,#eef1f6)">Setup:</strong> Choose your level and difficulty below, then hit <em>Start studying</em>.
       </div>
     </div>
+    <!-- END DIRECTIONS -->
     <div class="setup-section-label">Choose your starting level</div>
     <div class="level-grid" id="levelGrid">
       <div class="level-btn" onclick="setLevel(1)" id="lbtn-1">
@@ -434,7 +417,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:1;
         <div class="sp-row"><div class="sp-lbl">Blitz best</div><div class="sp-track"><div class="sp-fill fill-red" id="spBlitz" style="width:0%"></div></div><div class="sp-val" id="spBlitzVal">0%</div></div>
       </div>
     </div>
-    <button class="start-btn" id="startBtn" onclick="goToModes()" disabled>Select name, period &amp; level to begin</button>
+    <button class="start-btn" id="startBtn" onclick="goToModes()" disabled>Select level to begin</button>
   </div>
   <div id="modeScreen" class="mode-select" style="display:none">
     <div class="ms-header">
@@ -711,23 +694,19 @@ const TIMER_SEC=20;
 const LEVEL_COUNTS={1:15,2:25,3:33};
 const Q_COUNT=10;
 
-let studentName='',period='',level=0,difficulty='regular',timerOn=true,currentMode=null,lastResult=null;
+let level=0,difficulty='regular',timerOn=true,currentMode=null,lastResult=null;
 let progress={review:{pct:0},practice:{pct:0,passed:false},blitz:{best:0}};
 let fcDeck=[],fcIdx=0,fcFlipped=false,fcKnow=0,fcAlmost=0,fcNope=0;
 let gQueue=[],gIdx=0,gScore=0,gStreak=0,gCorrect=0,gWrong=0,gTimeout=0,qLog=[];
 let timerInterval=null,timerLeft=0,hintUsed=false;
 
-function saveLS(){try{localStorage.setItem(LS_KEY,JSON.stringify({studentName,period,level,difficulty,timerOn,progress}));}catch{}}
+function saveLS(){try{localStorage.setItem(LS_KEY,JSON.stringify({level,difficulty,timerOn,progress}));}catch{}}
 function loadLS(){
   try{
     const d=JSON.parse(localStorage.getItem(LS_KEY)||'null');
-    if(!d)return;
-    studentName=d.studentName||'';period=d.period||'';level=d.level||0;
+    if(!d)return;level=d.level||0;
     difficulty=d.difficulty||'regular';timerOn=d.timerOn!==false;
-    progress=d.progress||{review:{pct:0},practice:{pct:0,passed:false},blitz:{best:0}};
-    if(studentName)document.getElementById('studentName').value=studentName;
-    if(period)document.getElementById('periodSel').value=period;
-    if(level)document.getElementById('lbtn-'+level)?.classList.add('active');
+    progress=d.progress||{review:{pct:0},practice:{pct:0,passed:false},blitz:{best:0}};    if(level)document.getElementById('lbtn-'+level)?.classList.add('active');
     document.querySelectorAll('.diff-card').forEach(c=>c.classList.remove('active'));
     document.getElementById('dbtn-'+difficulty)?.classList.add('active');
     updateTimerBtn();validateSetup();renderSetupProgress();
@@ -746,13 +725,10 @@ function setDiff(d){
   document.getElementById('dbtn-'+d).classList.add('active');
   validateSetup();saveLS();
 }
-function validateSetup(){
-  studentName=document.getElementById('studentName').value.trim();
-  period=document.getElementById('periodSel').value;
-  const ok=studentName&&period&&level;
+function validateSetup(){  const ok=!!level;
   const btn=document.getElementById('startBtn');
   btn.disabled=!ok;
-  btn.textContent=ok?'Begin Vocabulary Study →':'Select name, period & level to begin';
+  btn.textContent=ok?'Begin Vocabulary Study →':'Select level to begin';
   renderSetupProgress();saveLS();
 }
 function renderSetupProgress(){
@@ -775,11 +751,11 @@ function defKey(){return difficulty==='challenge'?'challenge':difficulty==='supp
 function goToModes(){
   const pool=getPoolByLevel();
   const qc=Math.min(Q_COUNT,pool.length);
-  document.getElementById('msMeta').textContent=`${studentName} · Period ${period} · Level ${level} · ${capitalize(difficulty)}`;
+  document.getElementById('msMeta').textContent=`Level ${level} · ${capitalize(difficulty)}`;
   document.getElementById('reviewQCount').textContent=pool.length;
   document.getElementById('practiceQCount').textContent=qc;
   document.getElementById('blitzQCount').textContent=qc;
-  document.getElementById('hdrInfo').textContent=`${studentName} · P${period}`;
+  document.getElementById('hdrInfo').textContent='';
   const blitzCard=document.getElementById('mc-blitz');
   if(progress.practice.passed){
     blitzCard.classList.remove('locked');
@@ -1011,7 +987,7 @@ function endGame(){
   btns+=`<button class="e-btn e-btn-ghost" onclick="goToModes()">Home</button>`;
   btns+=`<button class="e-btn e-btn-amber" onclick="savePDF()">⬇ Save PDF</button>`;
   document.getElementById('endBtns').innerHTML=btns;
-  lastResult={studentName,period,level,difficulty,mode:currentMode,pct,correct:gCorrect,wrongCount:gWrong,timeoutCount:gTimeout,passed,qLog:[...qLog]};
+  lastResult={level,difficulty,mode:currentMode,pct,correct:gCorrect,wrongCount:gWrong,timeoutCount:gTimeout,passed,qLog:[...qLog]};
   showScreen('endScreen');
 }
 function toggleLogRow(i){
@@ -1040,11 +1016,6 @@ function savePDF(){
       <div><div class="pd-logo">EdSim</div><div class="pd-unit">Early Republic &amp; Expansion · Vocabulary · Level ${r.level} · ${capitalize(r.difficulty)}</div></div>
       <div class="pd-meta">${dateStr}<br>${modeLabel}<br>${passLabel} (${thresh}% required)</div>
     </div>
-    <div class="pd-student-box">
-      <div class="pd-field"><div class="pd-field-label">Student</div><div class="pd-field-val">${r.studentName}</div></div>
-      <div class="pd-field"><div class="pd-field-label">Period</div><div class="pd-field-val">${r.period}</div></div>
-      <div class="pd-field"><div class="pd-field-label">Score</div><div class="pd-field-val">${r.pct}%</div></div>
-    </div>
     <div class="pd-section">
       <div class="pd-section-title">Results Summary</div>
       <div class="pd-summary-grid">
@@ -1064,14 +1035,13 @@ function closeModal(){document.getElementById('resetModal').classList.remove('op
 function doReset(){
   try{localStorage.removeItem(LS_KEY);}catch{}
   closeModal();
-  studentName='';period='';level=0;difficulty='regular';timerOn=true;currentMode=null;lastResult=null;
+  level=0;difficulty='regular';timerOn=true;currentMode=null;lastResult=null;
   progress={review:{pct:0},practice:{pct:0,passed:false},blitz:{best:0}};
-  document.getElementById('studentName').value='';document.getElementById('periodSel').value='';
   document.querySelectorAll('.level-btn').forEach(b=>b.classList.remove('active'));
   document.querySelectorAll('.diff-card').forEach(b=>b.classList.remove('active'));
   document.getElementById('dbtn-regular').classList.add('active');
   document.getElementById('setupProgress').style.display='none';
-  const btn=document.getElementById('startBtn');btn.disabled=true;btn.textContent='Select name, period & level to begin';
+  const btn=document.getElementById('startBtn');btn.disabled=true;btn.textContent='Select level to begin';
   showScreen('setupScreen');
 }
 function showScreen(id){
