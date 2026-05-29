@@ -62,8 +62,8 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .host-body::-webkit-scrollbar{width:4px}
 .host-body::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
 
-/* Two-column game controls layout */
-.gc-cols{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}
+/* Two-column game controls layout — 40/60 split so answers panel has room */
+.gc-cols{display:grid;grid-template-columns:2fr 3fr;gap:14px;align-items:start}
 .gc-left{display:flex;flex-direction:column;gap:10px}
 .gc-right{display:flex;flex-direction:column;gap:10px}
 
@@ -95,6 +95,24 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .host-score-card.t6{border-color:var(--team6)}
 .hsc-name{font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.08em;text-transform:uppercase;margin-bottom:2px}
 .hsc-val{font-family:var(--fd);font-size:30px;line-height:1}
+.hsc-edit-btn{font-family:var(--fm);font-size:9px;color:var(--dim);background:none;border:none;
+  cursor:pointer;opacity:.5;padding:0;display:block;margin:2px auto 0;letter-spacing:.04em}
+.hsc-edit-btn:hover{opacity:1;color:var(--text)}
+.score-edit-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;
+  align-items:center;justify-content:center}
+.score-edit-modal.show{display:flex}
+.score-edit-card{background:var(--surf);border:1px solid var(--border);border-radius:12px;
+  padding:24px;width:280px;text-align:center}
+.score-edit-card h3{font-family:var(--fd);font-size:20px;letter-spacing:1px;margin-bottom:16px}
+.score-edit-card input{width:100%;background:var(--surf2);border:1px solid var(--border);
+  border-radius:var(--rs);padding:10px;color:var(--text);font-family:var(--fd);font-size:32px;
+  text-align:center;letter-spacing:2px;outline:none;margin-bottom:12px}
+.score-edit-card input:focus{border-color:var(--gold)}
+.score-edit-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.score-edit-btns button{padding:10px;border:none;border-radius:var(--rs);cursor:pointer;
+  font-family:var(--fd);font-size:16px;letter-spacing:1px}
+.sed-ok{background:var(--gold);color:#0d0f14}
+.sed-cancel{background:var(--surf3);color:var(--dim)}
 .host-score-card.t1 .hsc-val{color:var(--team1)}
 .host-score-card.t2 .hsc-val{color:var(--team2)}
 .host-score-card.t3 .hsc-val{color:var(--team3)}
@@ -464,7 +482,7 @@ function renderTeamUI(names) {
   const sc = document.getElementById('hostScoreCards');
   sc.innerHTML = '';
   names.forEach((name, i) => {
-    sc.innerHTML += `<div class="host-score-card t${i+1}"><div class="hsc-name" id="hsc-t${i+1}">${name}</div><div class="hsc-val" id="hsc-s${i+1}">0</div></div>`;
+    sc.innerHTML += `<div class="host-score-card t${i+1}"><div class="hsc-name" id="hsc-t${i+1}">${name}</div><div class="hsc-val" id="hsc-s${i+1}">0</div><button class="hsc-edit-btn" onclick="openScoreEdit(${i})" aria-label="Edit score for ${name}">✎ edit</button></div>`;
   });
   // Turn buttons
   const tb = document.getElementById('turnBtns');
@@ -488,6 +506,7 @@ let state = {
   showWordBank: false,
   wordBank: [],
   phantomCount: 5,
+  soundEvent: null,
 };
 const TEAM_COLORS = ['team1','team2','team3','team4','team5','team6'];
 const TEAM_PLACEHOLDERS = ['Patriots','Loyalists','Minutemen','Redcoats','Federalists','Rebels'];
@@ -619,36 +638,42 @@ function loadRound(idx) {
   buildAwardButtons();
 }
 
-function revealAnswer(idx) {
+function revealAnswer(idx, displayOnly = false) {
   if (state.revealed[idx]) return;
   const round = gameData.rounds[state.roundIdx];
   const pts = round.answers[idx].points * round.multiplier;
   state.revealed[idx] = true;
-  state.pot += pts;
+  if (!displayOnly) state.pot += pts;
   document.getElementById('ha-' + idx).classList.add('revealed');
-  AudioEngine.reveal();
+  state.soundEvent = 'reveal';
   updatePot();
   broadcastState();
-  if (state.revealed.every(Boolean)) {
-    AudioEngine.roundWin();
-    if (state.pot > 0 && !state.stealActive) awardPot(state.activeTurn);
+  state.soundEvent = null;
+  // Only auto-award on normal (non-steal) full reveal
+  if (!displayOnly && state.revealed.every(Boolean)) {
+    state.soundEvent = 'roundWin';
+    if (state.pot > 0) awardPot(state.activeTurn);
+    broadcastState();
+    state.soundEvent = null;
   }
 }
 
-function revealAll() {
-  gameData.rounds[state.roundIdx].answers.forEach((_, i) => { if (!state.revealed[i]) revealAnswer(i); });
+function revealAll(displayOnly = false) {
+  gameData.rounds[state.roundIdx].answers.forEach((_, i) => {
+    if (!state.revealed[i]) revealAnswer(i, displayOnly);
+  });
 }
 
 function addStrike() {
   if (state.strikes >= 3 || state.stealActive) return;
   state.strikes++;
   document.getElementById('sd' + state.strikes).classList.add('active');
-  AudioEngine.strike();
   if (state.strikes >= 3) {
     document.getElementById('stealToggle').classList.remove('off');
-    AudioEngine.steal();
   }
+  state.soundEvent = state.strikes >= 3 ? 'steal' : 'strike';
   broadcastState();
+  state.soundEvent = null;
 }
 
 function clearStrikes() {
@@ -667,8 +692,17 @@ function toggleSteal() {
 
 function resolveSteal(success) {
   const stealing = (state.activeTurn + 1) % state.teamCount;
-  if (success) { AudioEngine.stealWin(); awardPot(stealing); }
-else { AudioEngine.stealFail(); const earned = state.pot; revealAll(); state.pot = earned; awardPot(state.activeTurn); }  state.stealActive = false;
+  if (success) {
+    state.soundEvent = 'stealWin';
+    awardPot(stealing);
+  } else {
+    state.soundEvent = 'stealFail';
+    revealAll(true);
+    state.soundEvent = 'roundWin';
+    awardPot(state.activeTurn);
+  }
+  state.soundEvent = null;
+  state.stealActive = false;
   resetStealUI();
 }
 
@@ -723,9 +757,35 @@ function broadcastState() {
     stealActive: state.stealActive,
     showWordBank: state.showWordBank,
     wordBank: state.wordBank,
-    ts: Date.now()
+    soundEvent: state.soundEvent || null,
   });
 }
+
+let scoreEditTarget = -1;
+function openScoreEdit(teamIdx) {
+  scoreEditTarget = teamIdx;
+  const name = document.getElementById('hsc-t' + (teamIdx+1))?.textContent || ('Team '+(teamIdx+1));
+  document.getElementById('scoreEditTitle').textContent = 'EDIT: ' + name.toUpperCase();
+  document.getElementById('scoreEditInput').value = state.scores[teamIdx];
+  document.getElementById('scoreEditModal').classList.add('show');
+  setTimeout(() => document.getElementById('scoreEditInput').select(), 50);
+}
+function confirmScoreEdit() {
+  const val = parseInt(document.getElementById('scoreEditInput').value);
+  if (!isNaN(val) && val >= 0 && scoreEditTarget >= 0) {
+    state.scores[scoreEditTarget] = val;
+    updateScores();
+  }
+  closeScoreEdit();
+}
+function closeScoreEdit() {
+  document.getElementById('scoreEditModal').classList.remove('show');
+  scoreEditTarget = -1;
+}
+// Close modal on backdrop click
+document.addEventListener('click', e => {
+  if (e.target.id === 'scoreEditModal') closeScoreEdit();
+});
 
 function resetStealUI() {
   document.getElementById('stealToggle').textContent = 'OFFER STEAL';
@@ -818,5 +878,18 @@ document.addEventListener('keydown', e => {
   if (e.code === 'Space' && !e.target.matches('input,button,select')) { e.preventDefault(); addStrike(); }
 });
 </script>
+<!-- SCORE EDIT MODAL -->
+<div class="score-edit-modal" id="scoreEditModal">
+  <div class="score-edit-card">
+    <h3 id="scoreEditTitle">EDIT SCORE</h3>
+    <input type="number" id="scoreEditInput" min="0" max="9999"
+      onkeydown="if(event.key==='Enter')confirmScoreEdit()"/>
+    <div class="score-edit-btns">
+      <button class="sed-ok" onclick="confirmScoreEdit()">SAVE</button>
+      <button class="sed-cancel" onclick="closeScoreEdit()">CANCEL</button>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
