@@ -918,9 +918,7 @@ function setStillLearning(a){const d=ls();d.stillLearning=a;saveLS(d)}
 // SETUP
 // ══════════════════════════════════════════════
 window.addEventListener('DOMContentLoaded',()=>{
-  const d=ls(); else {
-    setDiff('regular',true);
-  }
+  setDiff('regular',true);
   // Keyboard nav for level/diff buttons
   document.querySelectorAll('.level-btn,.diff-card').forEach(el=>{
     el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();el.click();}});
@@ -960,7 +958,7 @@ function goToModes(){
   const d=ls();d.level=level;d.difficulty=difficulty;saveLS(d);
   document.getElementById('hdrInfo').textContent='';
   document.getElementById('msName').textContent='Level '+level+' · '+(difficulty.charAt(0).toUpperCase()+difficulty.slice(1));
-  document.getElementById('msMeta').textContent=LEVEL_SIZES[level]+' terms · '+capitalize(difficulty);
+  document.getElementById('msMeta').textContent=LEVEL_SIZES[level]+' terms · '+(difficulty.charAt(0).toUpperCase()+difficulty.slice(1));
   document.getElementById('blitzQCount').textContent=BLITZ_Q[level]||10;
   updateModeLock();showScreen('modeScreen');renderModeProgress();
 }

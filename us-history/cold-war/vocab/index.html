@@ -835,10 +835,8 @@ function setStillLearning(a){const d=ls();d.stillLearning=a;saveLS(d)}
 // SETUP
 // ══════════════════════════════════════════════
 window.addEventListener('DOMContentLoaded',()=>{
-  const d=ls(); else {
-    // Fresh load — pre-highlight default difficulty so nothing looks unselected
+  // Fresh load — pre-highlight default difficulty so nothing looks unselected
     setDiff('regular',true);
-  }
 });
 
 function setLevel(n,silent){
@@ -877,7 +875,7 @@ function goToModes(){
   document.getElementById('hdrInfo').textContent='';
   // Mode meta
   document.getElementById('msName').textContent='Level '+level+' · '+(difficulty.charAt(0).toUpperCase()+difficulty.slice(1));
-  document.getElementById('msMeta').textContent=LEVEL_SIZES[level]+' terms · '+capitalize(difficulty);
+  document.getElementById('msMeta').textContent=LEVEL_SIZES[level]+' terms · '+(difficulty.charAt(0).toUpperCase()+difficulty.slice(1));
   document.getElementById('blitzQCount').textContent=BLITZ_Q[level]||10;
   updateModeLock();
   showScreen('modeScreen');

@@ -889,7 +889,7 @@ function goToModes(){
   const levelLabel=level===1?'Foundation':'Full Record';
   const diffLabel=difficulty==='regular'?'Standard':(difficulty.charAt(0).toUpperCase()+difficulty.slice(1));
   document.getElementById('msName').textContent=levelLabel+' · '+diffLabel;
-  document.getElementById('msMeta').textContent=LEVEL_SIZES[level]+' terms · '+capitalize(difficulty);
+  document.getElementById('msMeta').textContent=LEVEL_SIZES[level]+' terms · '+(difficulty.charAt(0).toUpperCase()+difficulty.slice(1));
   document.getElementById('blitzQCount').textContent=BLITZ_Q[level]||10;
   document.getElementById('timerToggleBtn').style.display='none';
   showScreen('modeScreen');

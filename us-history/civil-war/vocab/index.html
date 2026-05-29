@@ -797,9 +797,7 @@ function getStillLearning(){return ls().stillLearning||[]}
 function setStillLearning(a){const d=ls();d.stillLearning=a;saveLS(d)}
 
 window.addEventListener('DOMContentLoaded',()=>{
-  const d=ls(); else {
-    setDiff('regular',true);
-  }
+  setDiff('regular',true);
 });
 
 function setLevel(n,silent){level=n;document.querySelectorAll('.level-btn').forEach(b=>b.classList.remove('active'));document.getElementById('lbtn-'+n).classList.add('active');if(!silent)validateSetup();}
@@ -820,7 +818,7 @@ function goToModes(){
   const d=ls();d.level=level;d.difficulty=difficulty;saveLS(d);
   document.getElementById('hdrInfo').textContent='';
   document.getElementById('msName').textContent='Level '+level+' · '+(difficulty.charAt(0).toUpperCase()+difficulty.slice(1));
-  document.getElementById('msMeta').textContent=LEVEL_SIZES[level]+' terms · '+capitalize(difficulty);
+  document.getElementById('msMeta').textContent=LEVEL_SIZES[level]+' terms · '+(difficulty.charAt(0).toUpperCase()+difficulty.slice(1));
   document.getElementById('blitzQCount').textContent=BLITZ_Q[level]||10;
   updateModeLock();showScreen('modeScreen');renderModeProgress();
 }
