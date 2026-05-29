@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Survey Showdown — Class Scoreboard · EdSim</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d0f14;--surf:#161922;--surf2:#1e2230;--surf3:#252a3a;
+  --border:#2e3448;--border-hi:#3d4562;
+  --text:#e8ecf4;--dim:#7a8399;--faint:#2a3048;
+  --gold:#f5c842;--gold-dim:#b89020;--gold-glow:rgba(245,200,66,0.18);
+  --green:#27c97a;--green-dim:#145c38;
+  --blue:#3a7bd5;--red:#e03e3e;
+  --team1:#3a7bd5;--team2:#e03e3e;
+  --fd:'Bebas Neue',sans-serif;--fb:'DM Sans',sans-serif;--fm:'DM Mono',monospace;
+  --r:10px;--ease:cubic-bezier(.4,0,.2,1);
+}
+html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var(--fb)}
+
+/* ══ WAITING SCREEN ══ */
+#waitScreen{
+  min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:40px 20px;
+  background-image:radial-gradient(ellipse at 30% 20%,rgba(58,123,213,0.07) 0%,transparent 55%),
+    radial-gradient(ellipse at 70% 80%,rgba(245,200,66,0.05) 0%,transparent 55%);
+}
+.wait-logo{font-family:var(--fd);font-size:72px;color:var(--gold);letter-spacing:6px;line-height:.9;
+  text-align:center;text-shadow:0 0 60px var(--gold-glow);margin-bottom:12px}
+.wait-sub{font-family:var(--fd);font-size:22px;color:var(--dim);letter-spacing:4px;text-align:center;margin-bottom:48px}
+.wait-card{background:var(--surf);border:1px solid var(--border);border-radius:16px;padding:32px;
+  max-width:440px;width:100%;text-align:center}
+.wait-icon{font-size:48px;margin-bottom:16px}
+.wait-title{font-family:var(--fd);font-size:28px;letter-spacing:2px;margin-bottom:8px}
+.wait-desc{font-size:13px;color:var(--dim);line-height:1.7;margin-bottom:24px}
+.wait-pulse{display:flex;align-items:center;justify-content:center;gap:6px;
+  font-family:var(--fm);font-size:11px;color:var(--dim);letter-spacing:.1em}
+.pulse-dot{width:7px;height:7px;border-radius:50%;background:var(--gold);
+  animation:pulse 1.4s infinite ease-in-out}
+.pulse-dot:nth-child(2){animation-delay:.2s}
+.pulse-dot:nth-child(3){animation-delay:.4s}
+@keyframes pulse{0%,80%,100%{opacity:.2;transform:scale(.8)}40%{opacity:1;transform:scale(1)}}
+.wait-home{margin-top:24px;font-family:var(--fm);font-size:10px;color:var(--dim);
+  letter-spacing:.1em;text-decoration:none;opacity:.5;transition:opacity .2s}
+.wait-home:hover{opacity:1}
+
+/* ══ SCOREBOARD SCREEN ══ */
+#boardScreen{display:none;min-height:100vh;flex-direction:column}
+#boardScreen.active{display:flex}
+
+/* Header */
+.sb-header{background:var(--surf);border-bottom:2px solid var(--border);
+  padding:12px 24px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.sb-logo{font-family:var(--fd);font-size:22px;color:var(--gold);letter-spacing:3px}
+.sb-meta{font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.08em;text-align:center}
+.sb-home{font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.1em;
+  text-decoration:none;padding:5px 10px;border:1px solid var(--border);border-radius:4px;
+  transition:all .2s}
+.sb-home:hover{color:var(--gold);border-color:var(--gold-dim)}
+
+/* Body */
+.sb-body{flex:1;display:flex;flex-direction:column;align-items:center;
+  padding:32px 20px;gap:28px;
+  background-image:radial-gradient(ellipse at 50% 0%,rgba(245,200,66,0.04) 0%,transparent 50%)}
+
+/* Scores */
+.sb-scores{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px;width:100%;max-width:960px}
+.sb-score-card{border-radius:14px;padding:24px;text-align:center;border:3px solid transparent;
+  transition:all .4s var(--ease);background:var(--surf)}
+.sb-score-card.t1{border-color:var(--team1);background:rgba(58,123,213,0.06)}
+.sb-score-card.t2{border-color:var(--team2);background:rgba(224,62,62,0.06)}
+.sb-score-card.t3{border-color:#27c97a;background:rgba(39,201,122,0.06)}
+.sb-score-card.t4{border-color:#f97316;background:rgba(249,115,22,0.06)}
+.sb-score-card.t5{border-color:#8b5cf6;background:rgba(139,92,246,0.06)}
+.sb-score-card.t6{border-color:#f5c842;background:rgba(245,200,66,0.06)}
+.sb-score-card.active-turn{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,0.3)}
+.sb-score-card.t1.active-turn{box-shadow:0 12px 40px rgba(58,123,213,0.25)}
+.sb-score-card.t2.active-turn{box-shadow:0 12px 40px rgba(224,62,62,0.25)}
+.sb-score-card.t3.active-turn{box-shadow:0 12px 40px rgba(39,201,122,0.25)}
+.sb-score-card.t4.active-turn{box-shadow:0 12px 40px rgba(249,115,22,0.25)}
+.sb-score-card.t5.active-turn{box-shadow:0 12px 40px rgba(139,92,246,0.25)}
+.sb-score-card.t6.active-turn{box-shadow:0 12px 40px rgba(245,200,66,0.25)}
+.ssc-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  margin-bottom:6px;opacity:.6}
+.t1 .ssc-label{color:var(--team1)}
+.t2 .ssc-label{color:var(--team2)}
+.t3 .ssc-label{color:#27c97a}
+.t4 .ssc-label{color:#f97316}
+.t5 .ssc-label{color:#8b5cf6}
+.t6 .ssc-label{color:#f5c842}
+.ssc-name{font-family:var(--fd);font-size:32px;letter-spacing:2px;margin-bottom:8px}
+.t1 .ssc-name{color:var(--team1)}
+.t2 .ssc-name{color:var(--team2)}
+.t3 .ssc-name{color:#27c97a}
+.t4 .ssc-name{color:#f97316}
+.t5 .ssc-name{color:#8b5cf6}
+.t6 .ssc-name{color:#f5c842}
+.ssc-score{font-family:var(--fd);font-size:80px;line-height:1;color:var(--text)}
+.ssc-turn-badge{font-family:var(--fm);font-size:10px;letter-spacing:.1em;margin-top:8px;
+  padding:3px 12px;border-radius:20px;display:inline-block;opacity:0;transition:opacity .3s}
+.t1 .ssc-turn-badge{background:rgba(58,123,213,0.2);color:var(--team1)}
+.t2 .ssc-turn-badge{background:rgba(224,62,62,0.2);color:var(--team2)}
+.t3 .ssc-turn-badge{background:rgba(39,201,122,0.2);color:#27c97a}
+.t4 .ssc-turn-badge{background:rgba(249,115,22,0.2);color:#f97316}
+.t5 .ssc-turn-badge{background:rgba(139,92,246,0.2);color:#8b5cf6}
+.t6 .ssc-turn-badge{background:rgba(245,200,66,0.2);color:#f5c842}
+.active-turn .ssc-turn-badge{opacity:1}
+
+/* Pot */
+.sb-pot{text-align:center;background:var(--faint);border-radius:var(--r);
+  padding:12px 32px;border:1px solid var(--border)}
+.pot-label{font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.12em;
+  text-transform:uppercase;margin-bottom:2px}
+.pot-val{font-family:var(--fd);font-size:42px;color:var(--gold);line-height:1}
+
+/* Question */
+.sb-question{width:100%;max-width:760px;background:var(--surf);border:1px solid var(--border);
+  border-radius:14px;padding:24px;text-align:center}
+.sq-eyebrow{font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.15em;
+  text-transform:uppercase;margin-bottom:8px}
+.sq-text{font-size:20px;font-weight:600;line-height:1.4;color:var(--text)}
+.sq-mult{display:inline-block;background:var(--gold);color:#0d0f14;font-family:var(--fd);
+  font-size:14px;padding:3px 14px;border-radius:20px;margin-top:10px;letter-spacing:1px}
+
+/* Answers revealed */
+.sb-answers{width:100%;max-width:760px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sb-answer{background:var(--surf);border:1px solid var(--border);border-radius:var(--r);
+  padding:14px 18px;display:flex;align-items:center;justify-content:space-between;
+  transition:all .4s var(--ease);min-height:52px}
+.sb-answer.revealed{background:var(--green-dim);border-color:var(--green)}
+.sa-num{font-family:var(--fd);font-size:20px;color:var(--dim);min-width:24px}
+.sb-answer.revealed .sa-num{color:var(--green)}
+.sa-text{font-size:14px;font-weight:600;flex:1;padding:0 12px;opacity:0;transition:opacity .3s .1s}
+.sb-answer.revealed .sa-text{opacity:1;color:var(--text)}
+.sa-pts{font-family:var(--fd);font-size:22px;color:var(--gold);opacity:0;transition:opacity .3s .15s}
+.sb-answer.revealed .sa-pts{opacity:1}
+
+/* Strikes */
+.sb-strikes{display:flex;gap:12px;align-items:center}
+.strike-x{width:44px;height:44px;border-radius:50%;background:var(--surf2);
+  border:2px solid var(--border);display:flex;align-items:center;justify-content:center;
+  font-size:20px;color:var(--dim);transition:all .2s}
+.strike-x.active{background:var(--red-dim);border-color:var(--red);color:var(--red)}
+
+/* Round progress */
+.sb-round{font-family:var(--fm);font-size:11px;color:var(--dim);letter-spacing:.1em;text-align:center}
+
+/* Steal banner */
+.sb-steal{width:100%;max-width:760px;background:rgba(139,92,246,0.12);border:2px solid #8b5cf6;
+  border-radius:14px;padding:16px 24px;text-align:center;display:none}
+.sb-steal.show{display:block}
+.steal-label{font-family:var(--fd);font-size:28px;letter-spacing:2px;color:#8b5cf6;margin-bottom:4px}
+.steal-desc{font-size:13px;color:var(--dim)}
+
+/* Word bank */
+.sb-wordbank{width:100%;max-width:760px}
+.wb-label{font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.15em;
+  text-transform:uppercase;margin-bottom:10px;text-align:center}
+.wb-chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.wb-chip{background:var(--surf);border:1px solid var(--border);border-radius:20px;
+  padding:8px 16px;font-size:13px;font-weight:500;color:var(--text);
+  transition:all .3s var(--ease)}
+.wb-chip.found{background:var(--green-dim);border-color:var(--green);color:var(--green);
+  text-decoration:line-through;opacity:.5}
+
+@media(max-width:600px){
+  .sb-scores{grid-template-columns:1fr}
+  .sb-answers{grid-template-columns:1fr}
+  .ssc-score{font-size:56px}
+}
+</style>
+<script src="https://cdn.ably.com/lib/ably.min-2.js"></script>
+</head>
+<body>
+
+<!-- WAITING FOR HOST -->
+<div id="waitScreen">
+  <div class="wait-logo">SURVEY<br>SHOWDOWN</div>
+  <div class="wait-sub">CLASS MODE</div>
+  <div class="wait-card">
+    <div class="wait-icon">🖥️</div>
+    <div class="wait-title">ENTER ROOM CODE</div>
+    <div class="wait-desc">
+      Ask your teacher for the 4-digit room code displayed on their screen.
+    </div>
+    <input id="roomCodeInput" type="text" maxlength="4" placeholder="0000"
+      style="width:100%;text-align:center;font-family:var(--fd);font-size:48px;
+      letter-spacing:8px;background:var(--surf2);border:2px solid var(--border);
+      border-radius:var(--r);color:var(--gold);padding:12px;margin-bottom:16px;outline:none"
+      oninput="this.value=this.value.replace(/[^0-9]/g,'')"
+      onkeydown="if(event.key==='Enter') joinRoom()"/>
+    <button onclick="joinRoom()"
+      style="width:100%;background:var(--gold);color:#0d0f14;font-family:var(--fd);
+      font-size:22px;letter-spacing:2px;border:none;border-radius:var(--r);
+      padding:14px;cursor:pointer">JOIN GAME</button>
+    <div id="joinError" style="font-family:var(--fm);font-size:11px;color:var(--red);
+      min-height:16px;margin-top:10px;letter-spacing:.04em"></div>
+    <div class="wait-pulse" id="waitPulse" style="display:none;margin-top:16px">
+      <div class="pulse-dot"></div>
+      <div class="pulse-dot"></div>
+      <div class="pulse-dot"></div>
+      <span style="margin-left:8px">Connected — waiting for host to start...</span>
+    </div>
+  </div>
+  <a class="wait-home" href="index.html">⌂ Back to Home</a>
+</div>
+
+<!-- LIVE SCOREBOARD -->
+<div id="boardScreen">
+  <div class="sb-header">
+    <a class="sb-home" href="index.html" aria-label="Home">⌂ HOME</a>
+    <div class="sb-logo">SURVEY SHOWDOWN</div>
+    <div class="sb-meta" id="sbRoundMeta">Round 1 of 6</div>
+  </div>
+
+  <div class="sb-body">
+
+    <!-- Team scores -->
+    <div class="sb-scores" id="sbScoreCards"></div>
+
+    <!-- Round pot -->
+    <div class="sb-pot">
+      <div class="pot-label">Round Pot</div>
+      <div class="pot-val" id="potVal">0</div>
+    </div>
+
+    <!-- Strikes -->
+    <div class="sb-strikes">
+      <div class="strike-x" id="sx1">✕</div>
+      <div class="strike-x" id="sx2">✕</div>
+      <div class="strike-x" id="sx3">✕</div>
+    </div>
+
+    <!-- Steal banner -->
+    <div class="sb-steal" id="stealBanner">
+      <div class="steal-label">🔥 STEAL OPPORTUNITY</div>
+      <div class="steal-desc">Opposing team — can you name one of the remaining answers?</div>
+    </div>
+
+    <!-- Question -->
+    <div class="sb-question">
+      <div class="sq-eyebrow">100 historians were surveyed...</div>
+      <div class="sq-text" id="sbQuestion">—</div>
+      <div id="sbMult" class="sq-mult" style="display:none"></div>
+    </div>
+
+    <!-- Answer slots -->
+    <div class="sb-answers" id="sbAnswers"></div>
+
+    <!-- Word bank (teacher-controlled) -->
+    <div class="sb-wordbank" id="sbWordBank" style="display:none">
+      <div class="wb-label">Word Bank</div>
+      <div class="wb-chips" id="wbChips"></div>
+    </div>
+
+    <!-- Round progress -->
+    <div class="sb-round" id="sbRoundLabel">Waiting for host...</div>
+
+  </div>
+</div>
+
+<script>
+const ABLY_KEY = 'eckTlA.wK-e1w:pii354-e-IUNVit9DO-snbCDZwdHdcnoUWx0bU1V4-A';
+let lastRoundIdx = -1;
+let answerCount = 0;
+
+async function joinRoom() {
+  const code = document.getElementById('roomCodeInput').value.trim();
+  if (code.length !== 4) {
+    document.getElementById('joinError').textContent = 'Please enter a 4-digit room code.';
+    return;
+  }
+  document.getElementById('joinError').textContent = '';
+  document.getElementById('waitPulse').style.display = 'flex';
+
+  try {
+    const ably = new Ably.Realtime({ key: ABLY_KEY });
+    const channel = ably.channels.get('feud-room-' + code);
+    channel.subscribe('state', (msg) => { applyState(msg.data); });
+    // Ping host to trigger immediate state broadcast
+    channel.publish('ready', { ts: Date.now() });
+  } catch(e) {
+    document.getElementById('joinError').textContent = 'Could not connect. Check the room code and try again.';
+    document.getElementById('waitPulse').style.display = 'none';
+  }
+}
+
+let lastTeamCount = 0;
+
+function applyState(s) {
+  // Switch from wait to board on first data
+  document.getElementById('waitScreen').style.display = 'none';
+  document.getElementById('boardScreen').classList.add('active');
+
+  // Build/rebuild score cards if team count changed
+  const tc = s.teamCount || (s.teamNames ? s.teamNames.length : 2);
+  const names = s.teamNames || [s.t1name || 'Team 1', s.t2name || 'Team 2'];
+  if (tc !== lastTeamCount) {
+    lastTeamCount = tc;
+    const wrap = document.getElementById('sbScoreCards');
+    wrap.innerHTML = '';
+    names.forEach((name, i) => {
+      wrap.innerHTML += `<div class="sb-score-card t${i+1}" id="scoreCard${i+1}">
+        <div class="ssc-label">Team ${i+1}</div>
+        <div class="ssc-name" id="t${i+1}name">${name}</div>
+        <div class="ssc-score" id="t${i+1}score">0</div>
+        <div class="ssc-turn-badge">▶ PLAYING</div>
+      </div>`;
+    });
+  }
+
+  // Team names + scores
+  names.forEach((name, i) => {
+    const n = document.getElementById('t'+(i+1)+'name');
+    const sc = document.getElementById('t'+(i+1)+'score');
+    if (n) n.textContent = name;
+    if (sc) sc.textContent = s.scores[i] || 0;
+  });
+
+  // Active turn highlight
+  for (let i = 0; i < tc; i++) {
+    const card = document.getElementById('scoreCard' + (i+1));
+    if (card) card.classList.toggle('active-turn', s.activeTurn === i);
+  }
+
+  // Pot
+  document.getElementById('potVal').textContent = s.pot;
+
+  // Strikes
+  for (let i = 1; i <= 3; i++) {
+    document.getElementById('sx' + i).classList.toggle('active', i <= s.strikes);
+  }
+
+  // Steal banner
+  document.getElementById('stealBanner').classList.toggle('show', s.stealActive);
+
+  // Round meta
+  document.getElementById('sbRoundMeta').textContent = 'Round ' + (s.roundIdx + 1) + ' of ' + s.totalRounds;
+  document.getElementById('sbRoundLabel').textContent = 'Round ' + (s.roundIdx + 1) + ' of ' + s.totalRounds;
+
+  // Question
+  document.getElementById('sbQuestion').textContent = s.question;
+  const mb = document.getElementById('sbMult');
+  if (s.multiplier > 1) { mb.textContent = '×' + s.multiplier + ' POINTS'; mb.style.display = 'inline-block'; }
+  else mb.style.display = 'none';
+
+  // Rebuild answer slots if new round
+  if (s.roundIdx !== lastRoundIdx || s.answers.length !== answerCount) {
+    lastRoundIdx = s.roundIdx;
+    answerCount = s.answers.length;
+    const wrap = document.getElementById('sbAnswers');
+    wrap.innerHTML = '';
+    s.answers.forEach((text, i) => {
+      const el = document.createElement('div');
+      el.className = 'sb-answer' + (s.revealed[i] ? ' revealed' : '');
+      el.id = 'sba-' + i;
+      el.innerHTML = `<div class="sa-num">${i + 1}</div><div class="sa-text">${text}</div><div class="sa-pts"></div>`;
+      wrap.appendChild(el);
+    });
+  } else {
+    // Just update revealed states
+    s.revealed.forEach((rev, i) => {
+      const el = document.getElementById('sba-' + i);
+      if (el) el.classList.toggle('revealed', rev);
+    });
+  }
+
+  // Word bank
+  const wbWrap = document.getElementById('sbWordBank');
+  if (s.showWordBank && s.wordBank && s.wordBank.length > 0) {
+    wbWrap.style.display = 'block';
+    const chipsEl = document.getElementById('wbChips');
+    // Rebuild if chip count changed or chips are empty
+    const existingChips = chipsEl.querySelectorAll('.wb-chip').length;
+    if (existingChips !== s.wordBank.length) {
+      chipsEl.innerHTML = '';
+      s.wordBank.forEach((chip, i) => {
+        const el = document.createElement('div');
+        el.className = 'wb-chip';
+        el.id = 'wbc-' + i;
+        el.textContent = chip.text;
+        chipsEl.appendChild(el);
+      });
+    } else {
+      // Update found state on reveal
+      const revealedTexts = s.answers.filter((_, i) => s.revealed[i]);
+      document.querySelectorAll('.wb-chip').forEach(chip => {
+        if (revealedTexts.includes(chip.textContent)) chip.classList.add('found');
+      });
+    }
+  } else {
+    wbWrap.style.display = 'none';
+    document.getElementById('wbChips').innerHTML = '';
+  }
+}
+</script>
+</body>
+</html>

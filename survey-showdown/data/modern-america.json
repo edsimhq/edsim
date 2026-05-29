@@ -1,0 +1,198 @@
+{
+  "unit": "Modern America",
+  "poll_label": "100 historians were surveyed...",
+  "rounds": [
+    {
+      "id": "r1",
+      "question": "Name a program or goal of LBJ's Great Society",
+      "multiplier": 1,
+      "answers": [
+        {
+          "text": "Medicare and Medicaid",
+          "points": 34,
+          "explanation": "This is a Great Society program \u2014 Medicare provides health insurance for seniors; Medicaid for low-income Americans."
+        },
+        {
+          "text": "Federal aid to education",
+          "points": 26,
+          "explanation": "This is a Great Society program \u2014 the Elementary and Secondary Education Act (1965) sent federal dollars to public schools for the first time."
+        },
+        {
+          "text": "War on Poverty",
+          "points": 20,
+          "explanation": "This is a Great Society program \u2014 LBJ's effort to end poverty created Head Start, food stamps, and community action programs."
+        },
+        {
+          "text": "Voting Rights Act of 1965",
+          "points": 13,
+          "explanation": "This is a Great Society achievement \u2014 it directly addressed the voting barriers that had disenfranchised Black Southerners for generations."
+        },
+        {
+          "text": "Environmental protection laws",
+          "points": 7,
+          "explanation": "This is a Great Society legacy \u2014 LBJ signed the Clean Air Act (1963) and the Wilderness Act (1964), starting the environmental movement."
+        }
+      ]
+    },
+    {
+      "id": "r2",
+      "question": "Name a cause or consequence of the September 11, 2001 attacks",
+      "multiplier": 1,
+      "answers": [
+        {
+          "text": "War on Terror declared",
+          "points": 33,
+          "explanation": "This is a consequence of 9/11 \u2014 Bush declared a global War on Terror that sent US forces to Afghanistan and later Iraq."
+        },
+        {
+          "text": "USA PATRIOT Act passed",
+          "points": 25,
+          "explanation": "This is a consequence of 9/11 \u2014 the law expanded surveillance powers, allowing the government to monitor phone calls and internet activity."
+        },
+        {
+          "text": "Invasion of Afghanistan",
+          "points": 20,
+          "explanation": "This is a consequence of 9/11 \u2014 the US invaded in October 2001 to destroy Al-Qaeda's base and remove the Taliban government."
+        },
+        {
+          "text": "Civil liberties threatened by security laws",
+          "points": 14,
+          "explanation": "This is a consequence of 9/11 \u2014 critics argued the PATRIOT Act and NSA surveillance violated 4th Amendment protections."
+        },
+        {
+          "text": "Department of Homeland Security created",
+          "points": 8,
+          "explanation": "This is a consequence of 9/11 \u2014 the new cabinet department consolidated federal agencies to coordinate domestic security."
+        }
+      ]
+    },
+    {
+      "id": "r3",
+      "question": "Name a debate over the balance between security and civil liberties",
+      "multiplier": 2,
+      "answers": [
+        {
+          "text": "PATRIOT Act allowed mass surveillance",
+          "points": 35,
+          "explanation": "This is a security vs. liberty debate \u2014 NSA collection of phone records and internet data raised 4th Amendment concerns."
+        },
+        {
+          "text": "Guantanamo Bay detention without trial",
+          "points": 26,
+          "explanation": "This is a security vs. liberty debate \u2014 detaining prisoners as 'enemy combatants' outside US legal jurisdiction was widely criticized."
+        },
+        {
+          "text": "NSA collected phone records of Americans",
+          "points": 18,
+          "explanation": "This is a security vs. liberty debate \u2014 Snowden's 2013 leaks revealed the scope of domestic surveillance under post-9/11 laws."
+        },
+        {
+          "text": "Racial profiling of Muslim Americans",
+          "points": 13,
+          "explanation": "This is a security vs. liberty debate \u2014 security policies that targeted people by religion or ethnicity raised equal protection concerns."
+        },
+        {
+          "text": "Free speech limits during wartime",
+          "points": 8,
+          "explanation": "This is a security vs. liberty debate \u2014 courts have historically permitted more speech restrictions during national emergencies."
+        }
+      ]
+    },
+    {
+      "id": "r4",
+      "question": "Name a social movement that gained momentum after the 1960s",
+      "multiplier": 2,
+      "answers": [
+        {
+          "text": "Women's rights movement",
+          "points": 32,
+          "explanation": "This is a post-1960s social movement \u2014 second-wave feminism addressed workplace equality, reproductive rights, and legal discrimination."
+        },
+        {
+          "text": "Environmental movement",
+          "points": 26,
+          "explanation": "This is a post-1960s social movement \u2014 Earth Day (1970) and the EPA were responses to growing awareness of pollution and ecological damage."
+        },
+        {
+          "text": "LGBTQ rights movement",
+          "points": 20,
+          "explanation": "This is a post-1960s social movement \u2014 from Stonewall (1969) through marriage equality (2015), the movement fought legal discrimination."
+        },
+        {
+          "text": "Disability rights movement",
+          "points": 14,
+          "explanation": "This is a post-1960s social movement \u2014 the ADA (1990) was the result of decades of activism by people with disabilities."
+        },
+        {
+          "text": "Latino civil rights movement",
+          "points": 8,
+          "explanation": "This is a post-1960s social movement \u2014 Cesar Chavez and the UFW brought attention to the exploitation of farmworkers."
+        }
+      ]
+    },
+    {
+      "id": "r5",
+      "question": "Name a way one group's struggle for equality opened doors for others",
+      "multiplier": 3,
+      "answers": [
+        {
+          "text": "Civil rights tactics used by women's movement",
+          "points": 33,
+          "explanation": "This is how one struggle opened doors for others \u2014 suffragists and feminists explicitly modeled their tactics on Black civil rights organizing."
+        },
+        {
+          "text": "Legal precedents applied across groups",
+          "points": 26,
+          "explanation": "This is how one struggle opened doors for others \u2014 Brown v. Board's equal protection reasoning was later applied to gender and disability rights."
+        },
+        {
+          "text": "14th Amendment used to expand rights",
+          "points": 20,
+          "explanation": "This is how one struggle opened doors for others \u2014 the amendment's equal protection and due process clauses became the legal foundation for multiple civil rights expansions."
+        },
+        {
+          "text": "Disability rights modeled on civil rights laws",
+          "points": 14,
+          "explanation": "This is how one struggle opened doors for others \u2014 the ADA's structure directly mirrored the Civil Rights Act of 1964."
+        },
+        {
+          "text": "LGBTQ movement drew from civil rights era",
+          "points": 7,
+          "explanation": "This is how one struggle opened doors for others \u2014 activists used the same organizing, litigation, and legislative strategies that succeeded in the 1960s."
+        }
+      ]
+    },
+    {
+      "id": "r6",
+      "question": "Name a challenge facing the United States in the post-Cold War era",
+      "multiplier": 3,
+      "answers": [
+        {
+          "text": "International terrorism",
+          "points": 35,
+          "explanation": "This is a post-Cold War challenge \u2014 non-state actors like Al-Qaeda replaced state adversaries as the primary security threat."
+        },
+        {
+          "text": "Economic globalization and job loss",
+          "points": 26,
+          "explanation": "This is a post-Cold War challenge \u2014 NAFTA and trade with China accelerated deindustrialization in American manufacturing regions."
+        },
+        {
+          "text": "Climate change and energy policy",
+          "points": 18,
+          "explanation": "This is a post-Cold War challenge \u2014 the US has struggled to balance economic growth with the scientific consensus on climate risk."
+        },
+        {
+          "text": "Immigration and border security",
+          "points": 13,
+          "explanation": "This is a post-Cold War challenge \u2014 immigration policy has been a persistent political conflict without legislative resolution."
+        },
+        {
+          "text": "Political polarization",
+          "points": 8,
+          "explanation": "This is a post-Cold War challenge \u2014 partisan division has intensified since the 1990s, making major legislation increasingly difficult."
+        }
+      ]
+    }
+  ]
+}

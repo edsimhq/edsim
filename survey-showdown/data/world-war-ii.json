@@ -1,0 +1,198 @@
+{
+  "unit": "World War II",
+  "poll_label": "100 historians were surveyed...",
+  "rounds": [
+    {
+      "id": "r1",
+      "question": "Name a reason the United States entered World War II",
+      "multiplier": 1,
+      "answers": [
+        {
+          "text": "Japanese attack on Pearl Harbor",
+          "points": 42,
+          "explanation": "This is a reason the US entered WWII \u2014 the December 7, 1941 attack on the US naval base killed 2,400 Americans and ended isolationism."
+        },
+        {
+          "text": "Germany declared war on the US",
+          "points": 24,
+          "explanation": "This is a reason the US entered WWII \u2014 Hitler declared war four days after Pearl Harbor, bringing the US into the European theater."
+        },
+        {
+          "text": "Axis threat to democracy worldwide",
+          "points": 16,
+          "explanation": "This is a reason the US entered WWII \u2014 FDR framed the war as a global struggle between fascism and democratic freedom."
+        },
+        {
+          "text": "US already supplying Allies via Lend-Lease",
+          "points": 12,
+          "explanation": "This is a reason the US entered WWII \u2014 the US was already deeply invested in Allied victory before Pearl Harbor formalized the commitment."
+        },
+        {
+          "text": "End of isolationism after Pearl Harbor",
+          "points": 6,
+          "explanation": "This is a reason the US entered WWII \u2014 the attack shattered domestic opposition to involvement that had been strong through 1941."
+        }
+      ]
+    },
+    {
+      "id": "r2",
+      "question": "Name a sacrifice Americans made on the home front during WWII",
+      "multiplier": 1,
+      "answers": [
+        {
+          "text": "Rationing of food and gas",
+          "points": 34,
+          "explanation": "This is a home front sacrifice \u2014 Americans used ration books for meat, sugar, butter, and gasoline to ensure supplies reached the military."
+        },
+        {
+          "text": "Women entered the workforce",
+          "points": 27,
+          "explanation": "This is a home front sacrifice \u2014 'Rosie the Riveter' became an icon as women took industrial jobs vacated by men who joined the military."
+        },
+        {
+          "text": "War bond drives raised money",
+          "points": 18,
+          "explanation": "This is a home front sacrifice \u2014 Americans bought billions in bonds, deferring consumption to finance the war."
+        },
+        {
+          "text": "Factories converted to war production",
+          "points": 14,
+          "explanation": "This is a home front sacrifice \u2014 auto plants switched to tanks and jeeps; appliance makers produced weapons; the entire economy mobilized."
+        },
+        {
+          "text": "Victory gardens grown at home",
+          "points": 7,
+          "explanation": "This is a home front sacrifice \u2014 families grew their own vegetables to free up commercial food for military use."
+        }
+      ]
+    },
+    {
+      "id": "r3",
+      "question": "Name a turning point or major event of World War II",
+      "multiplier": 2,
+      "answers": [
+        {
+          "text": "D-Day invasion of Normandy",
+          "points": 34,
+          "explanation": "This is a WWII turning point \u2014 the June 6, 1944 Allied landing in France opened the Western Front and began the liberation of Europe."
+        },
+        {
+          "text": "Battle of Midway in the Pacific",
+          "points": 26,
+          "explanation": "This is a WWII turning point \u2014 the June 1942 naval battle destroyed Japan's carrier fleet and shifted momentum in the Pacific."
+        },
+        {
+          "text": "Atomic bombs dropped on Japan",
+          "points": 22,
+          "explanation": "This is a WWII turning point \u2014 the bombs on Hiroshima and Nagasaki in August 1945 led directly to Japan's surrender."
+        },
+        {
+          "text": "Battle of Stalingrad",
+          "points": 11,
+          "explanation": "This is a WWII turning point \u2014 the German defeat at Stalingrad in 1943 marked the beginning of the Nazi retreat on the Eastern Front."
+        },
+        {
+          "text": "Allied invasion of North Africa",
+          "points": 7,
+          "explanation": "This is a WWII event \u2014 Operation Torch in 1942 gave the Allies experience and set the stage for the invasion of Italy."
+        }
+      ]
+    },
+    {
+      "id": "r4",
+      "question": "Name a civil liberties violation that occurred during WWII",
+      "multiplier": 2,
+      "answers": [
+        {
+          "text": "Japanese American internment",
+          "points": 44,
+          "explanation": "This is a WWII civil liberties violation \u2014 Executive Order 9066 forcibly relocated 120,000 Japanese Americans to prison camps."
+        },
+        {
+          "text": "Korematsu v. United States upheld it",
+          "points": 24,
+          "explanation": "This is a WWII civil liberties violation \u2014 the Supreme Court upheld internment; the decision was formally repudiated in 2018."
+        },
+        {
+          "text": "Executive Order 9066",
+          "points": 16,
+          "explanation": "This is a WWII civil liberties violation \u2014 FDR's order authorized the military to designate 'exclusion zones' and remove Japanese Americans."
+        },
+        {
+          "text": "Suspension of due process for citizens",
+          "points": 10,
+          "explanation": "This is a WWII civil liberties violation \u2014 Japanese Americans were imprisoned without trial, charge, or individual review."
+        },
+        {
+          "text": "Racial discrimination in the military",
+          "points": 6,
+          "explanation": "This is a WWII civil liberties issue \u2014 Black soldiers served in segregated units; the Double V campaign demanded victory over fascism and racism."
+        }
+      ]
+    },
+    {
+      "id": "r5",
+      "question": "Name an outcome or consequence of World War II",
+      "multiplier": 3,
+      "answers": [
+        {
+          "text": "United Nations was created",
+          "points": 32,
+          "explanation": "This is a WWII outcome \u2014 the UN replaced the failed League of Nations as a forum for international cooperation."
+        },
+        {
+          "text": "Start of the Cold War with USSR",
+          "points": 26,
+          "explanation": "This is a WWII outcome \u2014 wartime alliance with the Soviets dissolved quickly as competing visions for postwar Europe emerged."
+        },
+        {
+          "text": "US emerged as a superpower",
+          "points": 20,
+          "explanation": "This is a WWII outcome \u2014 the war destroyed rival economies while the US emerged stronger, becoming the dominant world power."
+        },
+        {
+          "text": "Nuremberg Trials held Nazis accountable",
+          "points": 14,
+          "explanation": "This is a WWII outcome \u2014 the trials established the precedent of prosecuting war crimes and crimes against humanity."
+        },
+        {
+          "text": "Decolonization movements spread",
+          "points": 8,
+          "explanation": "This is a WWII outcome \u2014 the war weakened European colonial powers and emboldened independence movements in Asia and Africa."
+        }
+      ]
+    },
+    {
+      "id": "r6",
+      "question": "Name a debate surrounding the decision to drop the atomic bomb",
+      "multiplier": 3,
+      "answers": [
+        {
+          "text": "Saved lives by avoiding an invasion",
+          "points": 33,
+          "explanation": "This is an argument in the atomic bomb debate \u2014 proponents said an invasion of Japan would have killed hundreds of thousands on both sides."
+        },
+        {
+          "text": "Killed hundreds of thousands of civilians",
+          "points": 27,
+          "explanation": "This is an argument in the atomic bomb debate \u2014 critics argue targeting civilian populations constituted a war crime."
+        },
+        {
+          "text": "Japan was already close to surrender",
+          "points": 18,
+          "explanation": "This is an argument in the atomic bomb debate \u2014 some historians argue Japan was seeking terms before the bombs fell."
+        },
+        {
+          "text": "Sent a message to the Soviet Union",
+          "points": 14,
+          "explanation": "This is an argument in the atomic bomb debate \u2014 some historians believe the bombs were partly intended to intimidate the USSR."
+        },
+        {
+          "text": "Started the nuclear arms race",
+          "points": 8,
+          "explanation": "This is an argument in the atomic bomb debate \u2014 the bombs launched a decades-long superpower competition in nuclear weapons."
+        }
+      ]
+    }
+  ]
+}
