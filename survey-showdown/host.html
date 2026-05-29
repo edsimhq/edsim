@@ -194,6 +194,12 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .pg-round{margin-bottom:20px;break-inside:avoid}
 .pg-round h3{font-size:15px;font-weight:700;margin-bottom:8px;padding-bottom:4px;border-bottom:2px solid #333}
 .pg-answer{display:flex;justify-content:space-between;padding:4px 0;font-size:13px;border-bottom:1px solid #eee}
+
+.award-section{margin-top:6px}
+.award-btns{display:flex;flex-direction:column;gap:6px;margin-top:6px}
+.award-btn{width:100%;padding:8px 10px;border:none;border-radius:var(--rs);font-family:var(--fd);font-size:14px;letter-spacing:.04em;cursor:pointer;transition:filter .15s;text-align:left}
+.award-btn:hover{filter:brightness(1.2)}
+.award-btn:disabled{opacity:.35;cursor:not-allowed;filter:none}
 </style>
 </head>
 <body>
@@ -276,6 +282,11 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
           <div class="host-pot">
             <div class="pot-label">Round Pot</div>
             <div class="pot-val" id="hostPot">0</div>
+
+          <!-- Award Pot -->
+          <div class="award-section">
+            <div class="pot-label" style="margin-bottom:4px">AWARD POT TO</div>
+            <div class="award-btns" id="awardBtns"></div>
           </div>
 
           <!-- Turn -->
@@ -605,6 +616,7 @@ function loadRound(idx) {
   updateScores();
   setTurn(state.activeTurn);
   resetStealUI();
+  buildAwardButtons();
 }
 
 function revealAnswer(idx) {
@@ -617,7 +629,10 @@ function revealAnswer(idx) {
   AudioEngine.reveal();
   updatePot();
   broadcastState();
-  if (state.revealed.every(Boolean)) { AudioEngine.roundWin(); }
+  if (state.revealed.every(Boolean)) {
+    AudioEngine.roundWin();
+    if (state.pot > 0) awardPot(state.activeTurn);
+  }
 }
 
 function revealAll() {
@@ -656,6 +671,33 @@ function resolveSteal(success) {
   else { AudioEngine.stealFail(); revealAll(); awardPot(state.activeTurn); }
   state.stealActive = false;
   resetStealUI();
+}
+
+function buildAwardButtons() {
+  const wrap = document.getElementById('awardBtns');
+  if (!wrap) return;
+  wrap.innerHTML = '';
+  const teamColors = ['#4a9eff','#ff6b6b','#51cf66','#ffd43b','#cc5de8','#ff922b'];
+  for (let i = 0; i < state.teamCount; i++) {
+    const el = document.getElementById('hsc-t' + (i+1));
+    const name = el ? el.textContent : 'Team ' + (i+1);
+    const btn = document.createElement('button');
+    btn.className = 'award-btn';
+    btn.id = 'award-btn-' + i;
+    btn.style.background = teamColors[i] + '22';
+    btn.style.color = teamColors[i];
+    btn.style.border = '1px solid ' + teamColors[i] + '55';
+    btn.textContent = '+ ' + name;
+    btn.onclick = () => awardPot(i);
+    wrap.appendChild(btn);
+  }
+}
+
+function refreshAwardButtons() {
+  for (let i = 0; i < state.teamCount; i++) {
+    const btn = document.getElementById('award-btn-' + i);
+    if (btn) btn.disabled = state.pot === 0;
+  }
 }
 
 function broadcastState() {
@@ -707,7 +749,7 @@ function updateScores() {
   broadcastState();
 }
 
-function updatePot() { document.getElementById('hostPot').textContent = state.pot; broadcastState(); }
+function updatePot() { document.getElementById('hostPot').textContent = state.pot; refreshAwardButtons(); broadcastState(); }
 
 function setTurn(idx) {
   state.activeTurn = idx;
