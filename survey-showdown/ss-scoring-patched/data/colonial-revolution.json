@@ -1,0 +1,198 @@
+{
+  "unit": "Colonial America & The Revolution",
+  "poll_label": "100 historians were surveyed...",
+  "rounds": [
+    {
+      "id": "r1",
+      "question": "Name a grievance colonists had against Britain",
+      "multiplier": 1,
+      "answers": [
+        {
+          "text": "Taxation without representation",
+          "points": 38,
+          "explanation": "This is a Colonial grievance \u2014 colonists had no seat in Parliament but were still taxed by Britain."
+        },
+        {
+          "text": "Quartering of British troops",
+          "points": 22,
+          "explanation": "This is a Colonial grievance \u2014 the Quartering Act forced colonists to house British soldiers in their homes."
+        },
+        {
+          "text": "Restricted manufacturing",
+          "points": 17,
+          "explanation": "This is a Colonial grievance \u2014 Britain's mercantile policy banned colonists from making finished goods to protect British manufacturers."
+        },
+        {
+          "text": "Closing of Boston Harbor",
+          "points": 13,
+          "explanation": "This is a Colonial grievance \u2014 the Intolerable Acts closed Boston Harbor to punish Massachusetts after the Tea Party."
+        },
+        {
+          "text": "Trials without juries",
+          "points": 10,
+          "explanation": "This is a Colonial grievance \u2014 the Intolerable Acts allowed accused colonists to be tried in British courts without a jury of peers."
+        }
+      ]
+    },
+    {
+      "id": "r2",
+      "question": "Name a weakness of the Articles of Confederation",
+      "multiplier": 1,
+      "answers": [
+        {
+          "text": "Congress could not collect taxes",
+          "points": 35,
+          "explanation": "This is a weakness of the Articles of Confederation \u2014 Congress had to beg states for money and had no enforcement power."
+        },
+        {
+          "text": "No executive branch",
+          "points": 28,
+          "explanation": "This is a weakness of the Articles of Confederation \u2014 there was no president or executive authority to enforce national laws."
+        },
+        {
+          "text": "No national army",
+          "points": 18,
+          "explanation": "This is a weakness of the Articles of Confederation \u2014 the federal government couldn't raise a standing army, as Shays' Rebellion exposed."
+        },
+        {
+          "text": "States had too much power",
+          "points": 12,
+          "explanation": "This is a weakness of the Articles of Confederation \u2014 states acted like independent nations, ignoring federal requests."
+        },
+        {
+          "text": "No power to regulate trade",
+          "points": 7,
+          "explanation": "This is a weakness of the Articles of Confederation \u2014 states taxed each other's goods and trade became chaotic."
+        }
+      ]
+    },
+    {
+      "id": "r3",
+      "question": "Name a reason colonists supported independence from Britain",
+      "multiplier": 2,
+      "answers": [
+        {
+          "text": "No voice in Parliament",
+          "points": 32,
+          "explanation": "This is a reason colonists supported independence \u2014 they believed taxation required representation, which Britain denied them."
+        },
+        {
+          "text": "Influence of Common Sense by Thomas Paine",
+          "points": 25,
+          "explanation": "This is a reason colonists supported independence \u2014 Paine's pamphlet argued monarchy was irrational and independence was inevitable."
+        },
+        {
+          "text": "Intolerable Acts pushed colonists away",
+          "points": 20,
+          "explanation": "This is a reason colonists supported independence \u2014 Britain's harsh response to the Tea Party radicalized moderate colonists."
+        },
+        {
+          "text": "Belief in natural rights",
+          "points": 15,
+          "explanation": "This is a reason colonists supported independence \u2014 Enlightenment ideas about life, liberty, and property underpinned the Declaration."
+        },
+        {
+          "text": "Economic independence from mercantilism",
+          "points": 8,
+          "explanation": "This is a reason colonists supported independence \u2014 breaking from Britain's mercantilist system would allow free trade."
+        }
+      ]
+    },
+    {
+      "id": "r4",
+      "question": "Name a constitutional principle the Founders built into the new government",
+      "multiplier": 2,
+      "answers": [
+        {
+          "text": "Checks and balances",
+          "points": 40,
+          "explanation": "This is a constitutional principle \u2014 each branch of government can limit the power of the other two."
+        },
+        {
+          "text": "Separation of powers",
+          "points": 28,
+          "explanation": "This is a constitutional principle \u2014 legislative, executive, and judicial powers are divided among three distinct branches."
+        },
+        {
+          "text": "Federalism",
+          "points": 16,
+          "explanation": "This is a constitutional principle \u2014 power is divided between the national government and the states."
+        },
+        {
+          "text": "Popular sovereignty",
+          "points": 10,
+          "explanation": "This is a constitutional principle \u2014 government authority comes from the consent of the governed."
+        },
+        {
+          "text": "Reserved powers for states",
+          "points": 6,
+          "explanation": "This is a constitutional principle \u2014 the 10th Amendment reserves powers not granted to the federal government to the states."
+        }
+      ]
+    },
+    {
+      "id": "r5",
+      "question": "Name a reason Antifederalists opposed ratifying the Constitution",
+      "multiplier": 3,
+      "answers": [
+        {
+          "text": "Too much power given to central government",
+          "points": 36,
+          "explanation": "This is an Antifederalist objection \u2014 they feared a strong central government would become a tyranny like Britain."
+        },
+        {
+          "text": "No Bill of Rights",
+          "points": 30,
+          "explanation": "This is an Antifederalist objection \u2014 they refused to ratify until individual liberties were explicitly protected."
+        },
+        {
+          "text": "Feared a tyrannical president",
+          "points": 16,
+          "explanation": "This is an Antifederalist objection \u2014 they worried a powerful executive would resemble a monarch."
+        },
+        {
+          "text": "States would lose too much authority",
+          "points": 12,
+          "explanation": "This is an Antifederalist objection \u2014 they valued state sovereignty and feared it would be swallowed by federal power."
+        },
+        {
+          "text": "Standing army was dangerous",
+          "points": 6,
+          "explanation": "This is an Antifederalist objection \u2014 a permanent federal army, they argued, could be used to oppress citizens."
+        }
+      ]
+    },
+    {
+      "id": "r6",
+      "question": "Name something the Bill of Rights protects American citizens from or guarantees",
+      "multiplier": 3,
+      "answers": [
+        {
+          "text": "Freedom of speech and press",
+          "points": 34,
+          "explanation": "This is a Bill of Rights protection \u2014 the 1st Amendment guarantees these civil liberties against government restriction."
+        },
+        {
+          "text": "Unreasonable search and seizure",
+          "points": 26,
+          "explanation": "This is a Bill of Rights protection \u2014 the 4th Amendment requires warrants and probable cause for searches."
+        },
+        {
+          "text": "Right to bear arms",
+          "points": 18,
+          "explanation": "This is a Bill of Rights protection \u2014 the 2nd Amendment guarantees this right, often debated in the context of militias."
+        },
+        {
+          "text": "Trial by jury",
+          "points": 14,
+          "explanation": "This is a Bill of Rights protection \u2014 the 6th and 7th Amendments guarantee jury trials in criminal and civil cases."
+        },
+        {
+          "text": "Cruel and unusual punishment",
+          "points": 8,
+          "explanation": "This is a Bill of Rights protection \u2014 the 8th Amendment prohibits excessive bail, fines, and inhumane punishments."
+        }
+      ]
+    }
+  ]
+}

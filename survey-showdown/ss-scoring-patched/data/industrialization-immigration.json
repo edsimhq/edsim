@@ -1,0 +1,198 @@
+{
+  "unit": "Industrialization & Immigration",
+  "poll_label": "100 historians were surveyed...",
+  "rounds": [
+    {
+      "id": "r1",
+      "question": "Name a cause of rapid industrialization after the Civil War",
+      "multiplier": 1,
+      "answers": [
+        {
+          "text": "Abundance of natural resources",
+          "points": 32,
+          "explanation": "This is a cause of industrialization \u2014 the US had vast iron, coal, and timber needed for factories and railroads."
+        },
+        {
+          "text": "Expansion of railroads",
+          "points": 28,
+          "explanation": "This is a cause of industrialization \u2014 railroads created a national market, moving raw materials and finished goods efficiently."
+        },
+        {
+          "text": "Large immigrant labor force",
+          "points": 20,
+          "explanation": "This is a cause of industrialization \u2014 millions of immigrants provided cheap labor for factories, mines, and construction."
+        },
+        {
+          "text": "New inventions and technology",
+          "points": 13,
+          "explanation": "This is a cause of industrialization \u2014 innovations like the Bessemer process, telephone, and electric light powered economic growth."
+        },
+        {
+          "text": "Government support for business",
+          "points": 7,
+          "explanation": "This is a cause of industrialization \u2014 high tariffs, land grants, and laissez-faire policies gave corporations enormous advantages."
+        }
+      ]
+    },
+    {
+      "id": "r2",
+      "question": "Name a problem caused by the rise of big business and trusts",
+      "multiplier": 1,
+      "answers": [
+        {
+          "text": "Elimination of competition",
+          "points": 36,
+          "explanation": "This is a problem of big business \u2014 trusts and monopolies drove out competitors, leaving consumers and workers with no alternatives."
+        },
+        {
+          "text": "Low wages and poor conditions for workers",
+          "points": 27,
+          "explanation": "This is a problem of big business \u2014 corporations maximized profits by minimizing labor costs, ignoring worker safety."
+        },
+        {
+          "text": "Corrupt political influence",
+          "points": 18,
+          "explanation": "This is a problem of big business \u2014 robber barons bribed legislators and controlled political machines at every level."
+        },
+        {
+          "text": "Price gouging consumers",
+          "points": 12,
+          "explanation": "This is a problem of big business \u2014 without competition, monopolies could charge whatever they wanted for essential goods."
+        },
+        {
+          "text": "Small businesses were destroyed",
+          "points": 7,
+          "explanation": "This is a problem of big business \u2014 Standard Oil and similar trusts used predatory pricing to eliminate smaller rivals."
+        }
+      ]
+    },
+    {
+      "id": "r3",
+      "question": "Name a reason immigrants came to the United States in the late 1800s",
+      "multiplier": 2,
+      "answers": [
+        {
+          "text": "Economic opportunity and jobs",
+          "points": 38,
+          "explanation": "This is a reason immigrants came to the US \u2014 the 'pull' of factory jobs and land was powerful compared to conditions in Europe."
+        },
+        {
+          "text": "Escape poverty and famine",
+          "points": 25,
+          "explanation": "This is a reason immigrants came to the US \u2014 famine in Ireland, poverty in Southern Italy, and persecution in Eastern Europe pushed millions out."
+        },
+        {
+          "text": "Political and religious freedom",
+          "points": 18,
+          "explanation": "This is a reason immigrants came to the US \u2014 Jews fleeing pogroms, political dissidents, and religious minorities all sought refuge."
+        },
+        {
+          "text": "Hope to eventually prosper",
+          "points": 12,
+          "explanation": "This is a reason immigrants came to the US \u2014 the promise of the American Dream, however imperfect, drew people across the Atlantic."
+        },
+        {
+          "text": "Join family already in America",
+          "points": 7,
+          "explanation": "This is a reason immigrants came to the US \u2014 chain migration meant earlier arrivals sent letters home encouraging others to follow."
+        }
+      ]
+    },
+    {
+      "id": "r4",
+      "question": "Name a response to the problems of industrialization",
+      "multiplier": 2,
+      "answers": [
+        {
+          "text": "Sherman Antitrust Act",
+          "points": 34,
+          "explanation": "This is a response to industrialization \u2014 the 1890 law gave the federal government power to break up monopolistic trusts."
+        },
+        {
+          "text": "Labor unions formed",
+          "points": 27,
+          "explanation": "This is a response to industrialization \u2014 workers organized the Knights of Labor, AFL, and others to demand better conditions."
+        },
+        {
+          "text": "Interstate Commerce Act",
+          "points": 18,
+          "explanation": "This is a response to industrialization \u2014 it created the first federal regulatory agency, aimed at controlling railroad rates."
+        },
+        {
+          "text": "Workers went on strike",
+          "points": 14,
+          "explanation": "This is a response to industrialization \u2014 major strikes like Homestead and Pullman brought national attention to labor conditions."
+        },
+        {
+          "text": "Muckrakers exposed abuses",
+          "points": 7,
+          "explanation": "This is a response to industrialization \u2014 journalists like Upton Sinclair and Ida Tarbell turned public opinion against big business."
+        }
+      ]
+    },
+    {
+      "id": "r5",
+      "question": "Name a hardship faced by immigrants arriving in the late 1800s",
+      "multiplier": 3,
+      "answers": [
+        {
+          "text": "Dangerous factory work conditions",
+          "points": 32,
+          "explanation": "This is a hardship immigrants faced \u2014 factories had no safety regulations; injuries and deaths were common and uncompensated."
+        },
+        {
+          "text": "Discrimination and nativism",
+          "points": 26,
+          "explanation": "This is a hardship immigrants faced \u2014 'old stock' Americans opposed new immigrants from Southern and Eastern Europe."
+        },
+        {
+          "text": "Overcrowded tenement housing",
+          "points": 20,
+          "explanation": "This is a hardship immigrants faced \u2014 urban slums were dangerously overcrowded, with poor sanitation and disease."
+        },
+        {
+          "text": "Language barriers",
+          "points": 14,
+          "explanation": "This is a hardship immigrants faced \u2014 non-English speakers were exploited by employers and struggled to navigate daily life."
+        },
+        {
+          "text": "Low wages and long hours",
+          "points": 8,
+          "explanation": "This is a hardship immigrants faced \u2014 12-hour days, six days a week, for poverty wages was the norm in Gilded Age factories."
+        }
+      ]
+    },
+    {
+      "id": "r6",
+      "question": "Name a tactic used by workers to improve conditions",
+      "multiplier": 3,
+      "answers": [
+        {
+          "text": "Strikes and work stoppages",
+          "points": 36,
+          "explanation": "This is a worker tactic \u2014 refusing to work was the labor movement's most powerful tool to force employer concessions."
+        },
+        {
+          "text": "Forming labor unions",
+          "points": 28,
+          "explanation": "This is a worker tactic \u2014 collective organization gave workers bargaining power they could never have had individually."
+        },
+        {
+          "text": "Collective bargaining",
+          "points": 18,
+          "explanation": "This is a worker tactic \u2014 unions negotiated wages, hours, and conditions on behalf of all workers, not just individuals."
+        },
+        {
+          "text": "Boycotts of company products",
+          "points": 12,
+          "explanation": "This is a worker tactic \u2014 consumer pressure through boycotts was used alongside strikes to hurt company profits."
+        },
+        {
+          "text": "Political lobbying for laws",
+          "points": 6,
+          "explanation": "This is a worker tactic \u2014 unions pushed for legislation like the eight-hour workday and child labor bans."
+        }
+      ]
+    }
+  ]
+}
