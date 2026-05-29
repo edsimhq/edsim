@@ -161,6 +161,28 @@ body{display:flex;flex-direction:column;align-items:center;
 .slot-pts{font-family:var(--fd);font-size:24px;color:var(--gold);flex-shrink:0;display:none}
 .slot.filled .slot-pts{display:block}
 
+/* Info button */
+.slot-info-btn{
+  width:28px;height:28px;border-radius:50%;border:1.5px solid var(--border);
+  background:transparent;color:var(--dim);font-size:13px;font-weight:700;
+  cursor:pointer;flex-shrink:0;display:none;align-items:center;justify-content:center;
+  transition:all .18s;line-height:1;padding:0;margin-left:2px;font-family:var(--fb)}
+.slot.filled .slot-info-btn,.slot.missed-reveal .slot-info-btn{display:flex}
+.slot-info-btn:hover{border-color:var(--gold-dim);color:var(--gold);background:rgba(245,200,66,0.08)}
+.slot-info-btn.open{border-color:var(--gold);color:var(--gold);background:rgba(245,200,66,0.1);transform:rotate(180deg)}
+
+/* Inline explanation panel */
+.slot-explain{
+  display:grid;grid-template-rows:0fr;
+  transition:grid-template-rows .3s var(--ease)}
+.slot-explain.open{grid-template-rows:1fr}
+.slot-explain-inner{
+  overflow:hidden;
+  font-size:12px;color:var(--dim);line-height:1.6;
+  padding:0 0 0 40px}
+.slot-explain.open .slot-explain-inner{padding:8px 12px 4px 40px}
+.slot-wrap{display:flex;flex-direction:column}
+
 /* AI panel */
 .ai-panel{background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.3);
   border-radius:var(--r);padding:13px 15px;margin-bottom:12px;display:none}
@@ -226,6 +248,18 @@ body{display:flex;flex-direction:column;align-items:center;
   .q-text{font-size:22px}
   .chip{font-size:12px;padding:7px 13px}
 }
+@media print{
+  .hdr,.end-actions,#printBtn{display:none!important}
+  body{background:white!important;color:black!important}
+  .end-wrap,.end-breakdown{color:black!important}
+  .end-title{color:#333!important;text-shadow:none!important}
+  .end-score{color:#111!important}
+  .end-accuracy span,.end-row-pts{color:#333!important}
+  .end-breakdown{border:1px solid #ccc!important;background:white!important}
+  .end-row{border-bottom:1px solid #eee!important}
+  .screen:not(.active){display:none!important}
+}
+#printHidden{display:none}
 </style>
 </head>
 <body>
@@ -254,20 +288,19 @@ body{display:flex;flex-direction:column;align-items:center;
           <option value="">— Choose a unit —</option>
         </select>
       </div>
-      <div class="field">
-        <label>Your Name</label></div>
+
     </div>
     <div class="setup-card">
       <h2>TEACHER SETTINGS</h2>
-      <p style="font-size:12px;color:var(--dim);margin-bottom:12px;line-height:1.5">When AI feedback is on, wrong answers get a brief explanation of why they don't fit this question.</p>
+      <p style="font-size:12px;color:var(--dim);margin-bottom:12px;line-height:1.5">When feedback is on, wrong answers show a brief explanation of why they don't fit this question.</p>
       <div class="toggle-row">
-        <div class="toggle-desc">AI explains wrong answers</div>
-        <label class="toggle-sw" aria-label="Toggle AI feedback">
+        <div class="toggle-desc">Show explanation on wrong answers</div>
+        <label class="toggle-sw" aria-label="Toggle feedback">
           <input type="checkbox" id="aiToggle"/>
           <span class="toggle-sl"></span>
         </label>
       </div>
-      <div class="ai-status" id="aiStatus">AI feedback: OFF</div>
+      <div class="ai-status" id="aiStatus">Feedback: OFF</div>
 
       <div style="margin-top:16px;border-top:1px solid var(--border);padding-top:14px">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
@@ -358,8 +391,7 @@ body{display:flex;flex-direction:column;align-items:center;
 <!-- END -->
 <div class="screen" id="endScreen">
   <div class="end-wrap">
-    <div class="end-title">FINAL SCORE</div>
-      <div class="end-score" id="endScore">0</div>
+    <div class="end-title">FINAL SCORE</div>    <div class="end-score" id="endScore">0</div>
     <div class="end-max" id="endMax">out of 0 possible points</div>
     <div class="end-accuracy" id="endAccuracy">Accuracy: <span>0%</span></div>
     <div class="end-breakdown">
@@ -369,6 +401,7 @@ body{display:flex;flex-direction:column;align-items:center;
     <div class="end-actions">
       <button class="end-btn primary" onclick="restartGame()">PLAY AGAIN</button>
       <button class="end-btn secondary" onclick="goSetup()">CHANGE UNIT</button>
+      <button class="end-btn secondary" onclick="printResults()" id="printBtn">🖨 Save as PDF</button>
     </div>
   </div>
 </div>
@@ -380,7 +413,6 @@ const UNITS = {"colonial-revolution":{"unit":"Colonial America & The Revolution"
 
 // ══ STATE ══
 let gameData = null;
-
 let aiEnabled = false;
 let state = {
   roundIdx: 0,
@@ -415,7 +447,7 @@ document.getElementById('unitSelect').addEventListener('change', () => {
 document.getElementById('aiToggle').addEventListener('change', e => {
   aiEnabled = e.target.checked;
   const s = document.getElementById('aiStatus');
-  s.textContent = aiEnabled ? 'AI feedback: ON' : 'AI feedback: OFF';
+  s.textContent = aiEnabled ? 'Feedback: ON' : 'Feedback: OFF';
   s.className = 'ai-status' + (aiEnabled ? ' on' : '');
 });
 
@@ -542,19 +574,44 @@ function renderSlots(round) {
   const wrap = document.getElementById('slotsWrap');
   wrap.innerHTML = '';
   round.answers.forEach((ans, i) => {
+    const pts = ans.points * round.multiplier;
+    const explanation = ans.explanation || '';
+
+    const outer = document.createElement('div');
+    outer.className = 'slot-wrap';
+    outer.id = 'slotwrap-' + i;
+
     const slot = document.createElement('div');
     slot.className = 'slot';
     slot.id = 'slot-' + i;
-    const pts = ans.points * round.multiplier;
     slot.innerHTML = `
       <div class="slot-num">${i + 1}</div>
       <div class="slot-content">
         <div class="slot-placeholder">—</div>
         <div class="slot-text"></div>
       </div>
-      <div class="slot-pts">${pts}</div>`;
-    wrap.appendChild(slot);
+      <div class="slot-pts">${pts}</div>
+      <button class="slot-info-btn" id="infobtn-${i}" aria-label="Explanation for answer ${i+1}" onclick="toggleExplain(${i})" title="Learn more">ⓘ</button>`;
+
+    const explainPanel = document.createElement('div');
+    explainPanel.className = 'slot-explain';
+    explainPanel.id = 'explain-' + i;
+    explainPanel.innerHTML = `<div class="slot-explain-inner">${explanation}</div>`;
+
+    outer.appendChild(slot);
+    if (explanation) outer.appendChild(explainPanel);
+    wrap.appendChild(outer);
   });
+}
+
+function toggleExplain(idx) {
+  const panel = document.getElementById('explain-' + idx);
+  const btn = document.getElementById('infobtn-' + idx);
+  if (!panel) return;
+  const isOpen = panel.classList.contains('open');
+  panel.classList.toggle('open', !isOpen);
+  btn.classList.toggle('open', !isOpen);
+  btn.setAttribute('aria-expanded', String(!isOpen));
 }
 
 // ══ CHIP CLICK ══
@@ -776,6 +833,7 @@ function showEndScreen() {
   AudioEngine.gameOver();
   const maxPossible = gameData.rounds.reduce((s, r) => s + r.answers.reduce((x, a) => x + a.points * r.multiplier, 0), 0);
   const accuracy = state.totalAttempts > 0 ? Math.round(state.totalCorrect / state.totalAttempts * 100) : 0;
+
   document.getElementById('endScore').textContent = state.totalScore;
   document.getElementById('endMax').textContent = 'out of ' + maxPossible + ' possible points';
   document.getElementById('endAccuracy').innerHTML = 'Accuracy: <span>' + accuracy + '%</span>';
@@ -811,6 +869,10 @@ function showScreen(id) {
 
 function restartGame() { initGame(); }
 function goSetup() { showScreen('setupScreen'); }
+
+function printResults() {
+  window.print();
+}
 </script>
 </body>
 </html>

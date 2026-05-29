@@ -15,7 +15,7 @@
   --red:#e03e3e;--red-dim:#8a1f1f;--red-glow:rgba(224,62,62,0.2);
   --green:#27c97a;--green-dim:#145c38;--green-glow:rgba(39,201,122,0.18);
   --blue:#3a7bd5;--purple:#8b5cf6;--orange:#f97316;
-  --team1:#3a7bd5;--team2:#e03e3e;
+  --team1:#3a7bd5;--team2:#e03e3e;--team3:#27c97a;--team4:#f97316;--team5:#8b5cf6;--team6:#f5c842;
   --fd:'Bebas Neue',sans-serif;--fb:'DM Sans',sans-serif;--fm:'DM Mono',monospace;
   --r:8px;--rs:4px;--ease:cubic-bezier(.4,0,.2,1);
 }
@@ -85,14 +85,22 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .start-game-btn:hover{background:#ffd84d}
 
 /* Scores */
-.host-scores{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.host-scores{display:grid;grid-template-columns:repeat(auto-fit,minmax(80px,1fr));gap:8px}
 .host-score-card{background:var(--surf2);border-radius:var(--r);padding:10px 12px;text-align:center;border:2px solid transparent}
 .host-score-card.t1{border-color:var(--team1)}
 .host-score-card.t2{border-color:var(--team2)}
+.host-score-card.t3{border-color:var(--team3)}
+.host-score-card.t4{border-color:var(--team4)}
+.host-score-card.t5{border-color:var(--team5)}
+.host-score-card.t6{border-color:var(--team6)}
 .hsc-name{font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.08em;text-transform:uppercase;margin-bottom:2px}
 .hsc-val{font-family:var(--fd);font-size:30px;line-height:1}
 .host-score-card.t1 .hsc-val{color:var(--team1)}
 .host-score-card.t2 .hsc-val{color:var(--team2)}
+.host-score-card.t3 .hsc-val{color:var(--team3)}
+.host-score-card.t4 .hsc-val{color:var(--team4)}
+.host-score-card.t5 .hsc-val{color:var(--team5)}
+.host-score-card.t6 .hsc-val{color:var(--team6)}
 
 /* Pot */
 .host-pot{text-align:center;background:var(--faint);border-radius:var(--rs);padding:8px}
@@ -100,12 +108,16 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .pot-val{font-family:var(--fd);font-size:26px;color:var(--gold)}
 
 /* Turn */
-.turn-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.turn-btns{display:grid;grid-template-columns:repeat(auto-fit,minmax(80px,1fr));gap:8px}
 .turn-btn{padding:8px;border:2px solid var(--border);border-radius:var(--rs);
   font-family:var(--fd);font-size:13px;letter-spacing:1px;cursor:pointer;background:var(--surf2);
   color:var(--dim);transition:all .2s;text-align:center}
 .turn-btn.at1{border-color:var(--team1);color:var(--team1);background:rgba(58,123,213,0.1)}
 .turn-btn.at2{border-color:var(--team2);color:var(--team2);background:rgba(224,62,62,0.1)}
+.turn-btn.at3{border-color:var(--team3);color:var(--team3);background:rgba(39,201,122,0.1)}
+.turn-btn.at4{border-color:var(--team4);color:var(--team4);background:rgba(249,115,22,0.1)}
+.turn-btn.at5{border-color:var(--team5);color:var(--team5);background:rgba(139,92,246,0.1)}
+.turn-btn.at6{border-color:var(--team6);color:var(--team6);background:rgba(245,200,66,0.1)}
 
 /* Round info */
 .round-info{background:var(--surf2);border:1px solid var(--border);border-radius:var(--r);padding:12px 14px}
@@ -226,15 +238,19 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
           <option value="">— Choose a unit —</option>
         </select>
       </div>
-      <div class="team-row">
-        <div class="hs-field">
-          <label>Team 1 Name</label>
-          <input type="text" id="t1name" placeholder="Patriots" maxlength="16"/>
-        </div>
-        <div class="hs-field">
-          <label>Team 2 Name</label>
-          <input type="text" id="t2name" placeholder="Loyalists" maxlength="16"/>
-        </div>
+      <div class="hs-field">
+        <label>Number of Teams</label>
+        <select id="teamCount" onchange="updateTeamFields()">
+          <option value="2">2 Teams</option>
+          <option value="3">3 Teams</option>
+          <option value="4">4 Teams</option>
+          <option value="5">5 Teams</option>
+          <option value="6">6 Teams</option>
+        </select>
+      </div>
+      <div id="teamNameFields" class="team-row">
+        <div class="hs-field"><label>Team 1 Name</label><input type="text" id="t1name" placeholder="Patriots" maxlength="16"/></div>
+        <div class="hs-field"><label>Team 2 Name</label><input type="text" id="t2name" placeholder="Loyalists" maxlength="16"/></div>
       </div>
       <div id="setupError" style="font-family:var(--fm);font-size:11px;color:var(--red);min-height:16px;margin-bottom:8px;letter-spacing:.04em"></div>
       <button class="start-game-btn" id="startGameBtn" onclick="startGame()">START GAME</button>
@@ -254,16 +270,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
           <!-- Scores -->
           <div>
             <div class="section-label">SCORE</div>
-            <div class="host-scores">
-              <div class="host-score-card t1">
-                <div class="hsc-name" id="hsc-t1">Team 1</div>
-                <div class="hsc-val" id="hsc-s1">0</div>
-              </div>
-              <div class="host-score-card t2">
-                <div class="hsc-name" id="hsc-t2">Team 2</div>
-                <div class="hsc-val" id="hsc-s2">0</div>
-              </div>
-            </div>
+            <div class="host-scores" id="hostScoreCards"></div>
           </div>
 
           <div class="host-pot">
@@ -274,10 +281,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
           <!-- Turn -->
           <div>
             <div class="section-label">ACTIVE TEAM</div>
-            <div class="turn-btns">
-              <button class="turn-btn" id="tb1" onclick="setTurn(0)">—</button>
-              <button class="turn-btn" id="tb2" onclick="setTurn(1)">—</button>
-            </div>
+            <div class="turn-btns" id="turnBtns"></div>
           </div>
 
           <!-- Strikes -->
@@ -431,10 +435,39 @@ function populateUnitSelect() {
   });
 }
 
+function updateTeamFields() {
+  const n = parseInt(document.getElementById('teamCount').value);
+  const wrap = document.getElementById('teamNameFields');
+  wrap.innerHTML = '';
+  for (let i = 1; i <= n; i++) {
+    const d = document.createElement('div');
+    d.className = 'hs-field';
+    d.innerHTML = `<label>Team ${i} Name</label><input type="text" id="t${i}name" placeholder="${TEAM_PLACEHOLDERS[i-1]}" maxlength="16"/>`;
+    wrap.appendChild(d);
+  }
+}
+
+function renderTeamUI(names) {
+  const n = names.length;
+  // Score cards
+  const sc = document.getElementById('hostScoreCards');
+  sc.innerHTML = '';
+  names.forEach((name, i) => {
+    sc.innerHTML += `<div class="host-score-card t${i+1}"><div class="hsc-name" id="hsc-t${i+1}">${name}</div><div class="hsc-val" id="hsc-s${i+1}">0</div></div>`;
+  });
+  // Turn buttons
+  const tb = document.getElementById('turnBtns');
+  tb.innerHTML = '';
+  names.forEach((name, i) => {
+    tb.innerHTML += `<button class="turn-btn" id="tb${i+1}" onclick="setTurn(${i})">${name}</button>`;
+  });
+}
+
 // ══ GAME STATE ══
 let gameData = null;
 let state = {
   roundIdx: 0,
+  teamCount: 2,
   scores: [0, 0],
   pot: 0,
   strikes: 0,
@@ -445,6 +478,8 @@ let state = {
   wordBank: [],
   phantomCount: 5,
 };
+const TEAM_COLORS = ['team1','team2','team3','team4','team5','team6'];
+const TEAM_PLACEHOLDERS = ['Patriots','Loyalists','Minutemen','Redcoats','Federalists','Rebels'];
 
 // ══ WORD BANK HELPERS ══
 function buildWordBank(roundIdx) {
@@ -502,8 +537,13 @@ async function startGame() {
   }
   document.getElementById('setupError').textContent = '';
   gameData = UNITS[key];
-  const t1 = document.getElementById('t1name').value.trim() || 'Patriots';
-  const t2 = document.getElementById('t2name').value.trim() || 'Loyalists';
+  const n = parseInt(document.getElementById('teamCount').value);
+  state.teamCount = n;
+  const teamNames = [];
+  for (let i = 1; i <= n; i++) {
+    const el = document.getElementById('t' + i + 'name');
+    teamNames.push((el && el.value.trim()) || TEAM_PLACEHOLDERS[i-1]);
+  }
 
   // Generate room code and init Ably
   roomCode = generateRoomCode();
@@ -511,10 +551,7 @@ async function startGame() {
   document.getElementById('hostRoomCode').textContent = roomCode;
   document.getElementById('hostRoomDisplay').style.display = 'block';
 
-  document.getElementById('hsc-t1').textContent = t1;
-  document.getElementById('hsc-t2').textContent = t2;
-  document.getElementById('tb1').textContent = t1;
-  document.getElementById('tb2').textContent = t2;
+  renderTeamUI(teamNames);
   document.getElementById('hostUnit').textContent = gameData.unit;
   document.getElementById('ri-total').textContent = gameData.rounds.length;
 
@@ -523,7 +560,7 @@ async function startGame() {
   document.getElementById('hostFooter').style.display = 'flex';
 
   state.roundIdx = 0;
-  state.scores = [0, 0];
+  state.scores = new Array(n).fill(0);
   state.pot = 0;
   state.strikes = 0;
   state.activeTurn = 0;
@@ -596,12 +633,14 @@ function addStrike() {
     document.getElementById('stealToggle').classList.remove('off');
     AudioEngine.steal();
   }
+  broadcastState();
 }
 
 function clearStrikes() {
   state.strikes = 0;
   for (let i = 1; i <= 3; i++) document.getElementById('sd' + i).classList.remove('active');
   resetStealUI();
+  broadcastState();
 }
 
 function toggleSteal() {
@@ -612,7 +651,7 @@ function toggleSteal() {
 }
 
 function resolveSteal(success) {
-  const stealing = state.activeTurn === 0 ? 1 : 0;
+  const stealing = (state.activeTurn + 1) % state.teamCount;
   if (success) { AudioEngine.stealWin(); awardPot(stealing); }
   else { AudioEngine.stealFail(); revealAll(); awardPot(state.activeTurn); }
   state.stealActive = false;
@@ -622,10 +661,14 @@ function resolveSteal(success) {
 function broadcastState() {
   if (!gameData || !ablyChannel) return;
   const round = gameData.rounds[state.roundIdx];
-  const t1 = document.getElementById('hsc-t1').textContent;
-  const t2 = document.getElementById('hsc-t2').textContent;
+  const teamNames = [];
+  for (let i = 0; i < state.teamCount; i++) {
+    const el = document.getElementById('hsc-t' + (i+1));
+    teamNames.push(el ? el.textContent : 'Team ' + (i+1));
+  }
   ablyChannel.publish('state', {
-    t1name: t1, t2name: t2,
+    teamNames,
+    teamCount: state.teamCount,
     scores: state.scores,
     pot: state.pot,
     strikes: state.strikes,
@@ -657,8 +700,10 @@ function awardPot(teamIdx) {
 }
 
 function updateScores() {
-  document.getElementById('hsc-s1').textContent = state.scores[0];
-  document.getElementById('hsc-s2').textContent = state.scores[1];
+  state.scores.forEach((s, i) => {
+    const el = document.getElementById('hsc-s' + (i+1));
+    if (el) el.textContent = s;
+  });
   broadcastState();
 }
 
@@ -666,8 +711,10 @@ function updatePot() { document.getElementById('hostPot').textContent = state.po
 
 function setTurn(idx) {
   state.activeTurn = idx;
-  document.getElementById('tb1').className = 'turn-btn' + (idx === 0 ? ' at1' : '');
-  document.getElementById('tb2').className = 'turn-btn' + (idx === 1 ? ' at2' : '');
+  for (let i = 0; i < state.teamCount; i++) {
+    const btn = document.getElementById('tb' + (i+1));
+    if (btn) btn.className = 'turn-btn' + (i === idx ? ' at' + (i+1) : '');
+  }
   broadcastState();
 }
 
@@ -675,12 +722,21 @@ function nextRound() {
   if (state.roundIdx >= gameData.rounds.length - 1) {
     // Game over
     const s = state.scores;
-    const t1 = document.getElementById('hsc-t1').textContent;
-    const t2 = document.getElementById('hsc-t2').textContent;
+    const teamNames = [];
+    for (let i = 0; i < state.teamCount; i++) {
+      const el = document.getElementById('hsc-t' + (i+1));
+      teamNames.push(el ? el.textContent : 'Team ' + (i+1));
+    }
+    const maxScore = Math.max(...s);
+    const winners = teamNames.filter((_, i) => s[i] === maxScore);
+    const sortedScores = s.map((sc, i) => `${teamNames[i]}: ${sc}`).sort((a,b) => {
+      const va = parseInt(a.split(': ')[1]); const vb = parseInt(b.split(': ')[1]);
+      return vb - va;
+    });
     let result;
-    if (s[0] > s[1]) result = `🏆 ${t1} wins — ${s[0]} to ${s[1]}`;
-    else if (s[1] > s[0]) result = `🏆 ${t2} wins — ${s[1]} to ${s[0]}`;
-    else result = `🤝 It's a tie — ${s[0]} to ${s[1]}`;
+    if (winners.length > 1) result = `🤝 Tie — ${winners.join(' & ')} with ${maxScore} pts`;
+    else result = `🏆 ${winners[0]} wins! (${maxScore} pts)
+${sortedScores.join(' · ')}`;
     document.getElementById('gameOverResult').textContent = result;
     document.getElementById('gameOverPanel').style.display = 'block';
     document.getElementById('nextRoundBtn').disabled = true;
@@ -699,6 +755,7 @@ function resetGame() {
   document.getElementById('hostSetup').style.display = 'block';
   document.getElementById('nextRoundBtn').disabled = false;
   document.getElementById('nextRoundBtn').textContent = 'Next Round →';
+  state.scores = new Array(state.teamCount).fill(0);
   gameData = null;
 }
 

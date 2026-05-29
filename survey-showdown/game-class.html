@@ -66,26 +66,46 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
   background-image:radial-gradient(ellipse at 50% 0%,rgba(245,200,66,0.04) 0%,transparent 50%)}
 
 /* Scores */
-.sb-scores{display:grid;grid-template-columns:1fr 1fr;gap:16px;width:100%;max-width:760px}
+.sb-scores{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px;width:100%;max-width:960px}
 .sb-score-card{border-radius:14px;padding:24px;text-align:center;border:3px solid transparent;
   transition:all .4s var(--ease);background:var(--surf)}
 .sb-score-card.t1{border-color:var(--team1);background:rgba(58,123,213,0.06)}
 .sb-score-card.t2{border-color:var(--team2);background:rgba(224,62,62,0.06)}
+.sb-score-card.t3{border-color:#27c97a;background:rgba(39,201,122,0.06)}
+.sb-score-card.t4{border-color:#f97316;background:rgba(249,115,22,0.06)}
+.sb-score-card.t5{border-color:#8b5cf6;background:rgba(139,92,246,0.06)}
+.sb-score-card.t6{border-color:#f5c842;background:rgba(245,200,66,0.06)}
 .sb-score-card.active-turn{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,0.3)}
 .sb-score-card.t1.active-turn{box-shadow:0 12px 40px rgba(58,123,213,0.25)}
 .sb-score-card.t2.active-turn{box-shadow:0 12px 40px rgba(224,62,62,0.25)}
+.sb-score-card.t3.active-turn{box-shadow:0 12px 40px rgba(39,201,122,0.25)}
+.sb-score-card.t4.active-turn{box-shadow:0 12px 40px rgba(249,115,22,0.25)}
+.sb-score-card.t5.active-turn{box-shadow:0 12px 40px rgba(139,92,246,0.25)}
+.sb-score-card.t6.active-turn{box-shadow:0 12px 40px rgba(245,200,66,0.25)}
 .ssc-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
   margin-bottom:6px;opacity:.6}
 .t1 .ssc-label{color:var(--team1)}
 .t2 .ssc-label{color:var(--team2)}
+.t3 .ssc-label{color:#27c97a}
+.t4 .ssc-label{color:#f97316}
+.t5 .ssc-label{color:#8b5cf6}
+.t6 .ssc-label{color:#f5c842}
 .ssc-name{font-family:var(--fd);font-size:32px;letter-spacing:2px;margin-bottom:8px}
 .t1 .ssc-name{color:var(--team1)}
 .t2 .ssc-name{color:var(--team2)}
+.t3 .ssc-name{color:#27c97a}
+.t4 .ssc-name{color:#f97316}
+.t5 .ssc-name{color:#8b5cf6}
+.t6 .ssc-name{color:#f5c842}
 .ssc-score{font-family:var(--fd);font-size:80px;line-height:1;color:var(--text)}
 .ssc-turn-badge{font-family:var(--fm);font-size:10px;letter-spacing:.1em;margin-top:8px;
   padding:3px 12px;border-radius:20px;display:inline-block;opacity:0;transition:opacity .3s}
 .t1 .ssc-turn-badge{background:rgba(58,123,213,0.2);color:var(--team1)}
 .t2 .ssc-turn-badge{background:rgba(224,62,62,0.2);color:var(--team2)}
+.t3 .ssc-turn-badge{background:rgba(39,201,122,0.2);color:#27c97a}
+.t4 .ssc-turn-badge{background:rgba(249,115,22,0.2);color:#f97316}
+.t5 .ssc-turn-badge{background:rgba(139,92,246,0.2);color:#8b5cf6}
+.t6 .ssc-turn-badge{background:rgba(245,200,66,0.2);color:#f5c842}
 .active-turn .ssc-turn-badge{opacity:1}
 
 /* Pot */
@@ -198,20 +218,7 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
   <div class="sb-body">
 
     <!-- Team scores -->
-    <div class="sb-scores">
-      <div class="sb-score-card t1" id="scoreCard1">
-        <div class="ssc-label">Team 1</div>
-        <div class="ssc-name" id="t1name">—</div>
-        <div class="ssc-score" id="t1score">0</div>
-        <div class="ssc-turn-badge">▶ PLAYING</div>
-      </div>
-      <div class="sb-score-card t2" id="scoreCard2">
-        <div class="ssc-label">Team 2</div>
-        <div class="ssc-name" id="t2name">—</div>
-        <div class="ssc-score" id="t2score">0</div>
-        <div class="ssc-turn-badge">▶ PLAYING</div>
-      </div>
-    </div>
+    <div class="sb-scores" id="sbScoreCards"></div>
 
     <!-- Round pot -->
     <div class="sb-pot">
@@ -280,20 +287,43 @@ async function joinRoom() {
   }
 }
 
+let lastTeamCount = 0;
+
 function applyState(s) {
   // Switch from wait to board on first data
   document.getElementById('waitScreen').style.display = 'none';
   document.getElementById('boardScreen').classList.add('active');
 
+  // Build/rebuild score cards if team count changed
+  const tc = s.teamCount || (s.teamNames ? s.teamNames.length : 2);
+  const names = s.teamNames || [s.t1name || 'Team 1', s.t2name || 'Team 2'];
+  if (tc !== lastTeamCount) {
+    lastTeamCount = tc;
+    const wrap = document.getElementById('sbScoreCards');
+    wrap.innerHTML = '';
+    names.forEach((name, i) => {
+      wrap.innerHTML += `<div class="sb-score-card t${i+1}" id="scoreCard${i+1}">
+        <div class="ssc-label">Team ${i+1}</div>
+        <div class="ssc-name" id="t${i+1}name">${name}</div>
+        <div class="ssc-score" id="t${i+1}score">0</div>
+        <div class="ssc-turn-badge">▶ PLAYING</div>
+      </div>`;
+    });
+  }
+
   // Team names + scores
-  document.getElementById('t1name').textContent = s.t1name;
-  document.getElementById('t2name').textContent = s.t2name;
-  document.getElementById('t1score').textContent = s.scores[0];
-  document.getElementById('t2score').textContent = s.scores[1];
+  names.forEach((name, i) => {
+    const n = document.getElementById('t'+(i+1)+'name');
+    const sc = document.getElementById('t'+(i+1)+'score');
+    if (n) n.textContent = name;
+    if (sc) sc.textContent = s.scores[i] || 0;
+  });
 
   // Active turn highlight
-  document.getElementById('scoreCard1').classList.toggle('active-turn', s.activeTurn === 0);
-  document.getElementById('scoreCard2').classList.toggle('active-turn', s.activeTurn === 1);
+  for (let i = 0; i < tc; i++) {
+    const card = document.getElementById('scoreCard' + (i+1));
+    if (card) card.classList.toggle('active-turn', s.activeTurn === i);
+  }
 
   // Pot
   document.getElementById('potVal').textContent = s.pot;

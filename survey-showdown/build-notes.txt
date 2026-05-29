@@ -2,7 +2,7 @@
 SURVEY SHOWDOWN · EdSim
 BUILD NOTES — Developer & Creator Reference
 ================================================================
-Version:      4.2
+Version:      4.3
 Built:        May 2026
 Platform:     EdSim (edsim.org)
 Hosted:       Netlify (drag-and-drop deploy, no build step)
@@ -78,7 +78,7 @@ How it works:
     and calls applyState() to re-render
 
 The Ably API key is embedded in both host.html and game-class.html.
-Key: see ABLY KEY section below.
+See ABLY KEY section below.
 
 IMPORTANT: Unlike BroadcastChannel (same-machine only), Ably
 works across devices and networks. The scoreboard does not need
@@ -130,11 +130,11 @@ Phantom count range: 0–10, default 5.
   0 phantoms = only real answers shown (easiest)
   10 phantoms = 5 real buried in 15 chips (hardest)
 
-SLIDER TIMING NOTE: The phantom slider value is read at round
-load time (inside buildBank/buildWordBank), not at game start.
-This means a teacher can adjust the slider mid-game and the
-change takes effect on the next round. This is intentional —
-it allows real-time difficulty adjustment during class.
+SLIDER TIMING: The phantom slider value is read at round load
+time (inside buildBank/buildWordBank), not at game start. This
+means adjusting the slider mid-game takes effect on the next
+round — intentional behavior that allows real-time difficulty
+adjustment during class without restarting.
 
 MINIMUM ROUND POLICY: Units must have at least 3 rounds to be
 published on EdSim. A 3-round unit has 10 phantom candidates
@@ -324,8 +324,14 @@ v4.2  AI feedback replaced with hardcoded explanations:
         - Added "explanation" field to all 330 answers across 11 units
         - Feedback is now instant, offline-capable, and zero-cost
         - Netlify Function retained but no longer called
-        - playerName input removed from game-wordbank.html (PII)
         - build-notes.txt updated to reflect Ably architecture
+v4.3  PII removal and documentation pass:
+        - playerName variable and endPlayer display element
+          removed from game-wordbank.html (no student names
+          collected or displayed)
+        - build-notes.txt updated: Ably architecture documented,
+          BroadcastChannel references corrected, slider timing
+          and game-class data loading clarified
 
 
 KNOWN LIMITATIONS
