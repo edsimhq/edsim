@@ -36,56 +36,74 @@ a live differentiation lever that doesn't exist in most edtech.
 ARCHITECTURE OVERVIEW
 ----------------------
 Survey Showdown is a fully static HTML application. No server,
-no database, no build step. All files are plain HTML/CSS/JS.
+no database, no build step. All files are plain HTML/CSS/JS
+(except the Ably real-time integration for class mode sync —
+see CLASS MODE SYNC section below).
 
 Files:
   index.html          Home page and mode selector
   host.html           Teacher dashboard (password protected)
-  game-class.html     Student scoreboard (projected view)
+  game-class.html     Student scoreboard (projected/shared view)
   game-wordbank.html  Solo mode (individual student play)
   audio.js            AudioEngine — Web Audio API sound effects
-  data/               JSON unit files (11 units, not used in v4)
+  data/               JSON unit files (11 units, reference only)
                       Note: all unit data is embedded directly
                       in host.html and game-wordbank.html as
                       const UNITS = {...}. The /data/ folder
                       contains the source JSON files for
                       reference and future use.
 
-No frameworks. No dependencies. No npm. No build pipeline.
-This is intentional — the simpler the stack, the easier it is
-for a teacher-creator to understand, modify, and maintain.
+No frameworks. No npm. No build pipeline. Ably is the only
+external dependency (loaded via CDN in game-class.html and
+host.html for real-time class mode sync).
 
 
-CLASS MODE SYNC — BROADCASTCHANNEL
-------------------------------------
-Class Mode uses the browser's built-in BroadcastChannel API to
-sync state between the teacher dashboard (host.html) and the
-student scoreboard (game-class.html).
+CLASS MODE SYNC — ABLY REAL-TIME
+----------------------------------
+Class Mode uses Ably (managed WebSocket infrastructure) to sync
+state between the teacher dashboard (host.html) and the student
+scoreboard (game-class.html). This enables cross-device sync —
+the scoreboard can run on a projector, a student's Chromebook,
+or any device with a browser.
 
 How it works:
-  - Both windows connect to BroadcastChannel('feud_scoreboard')
-  - Every state change in host.html calls broadcastState()
-  - broadcastState() posts a complete state snapshot to the channel
-  - game-class.html listens via bc.onmessage and re-renders
+  - Teacher generates (or enters) a 4-digit room code in host.html
+  - host.html connects to Ably and publishes state snapshots to
+    a channel named 'feud-room-XXXX' (where XXXX = room code)
+  - game-class.html prompts for the room code, then subscribes
+    to the same Ably channel
+  - Every state change in host.html calls broadcastState(), which
+    publishes a complete state snapshot via Ably
+  - game-class.html receives the message via channel.subscribe()
+    and calls applyState() to re-render
 
-CRITICAL LIMITATION: BroadcastChannel is same-browser,
-same-machine only. It does NOT work across devices. Both windows
-must be open on the same physical computer.
+The Ably API key is embedded in both host.html and game-class.html.
+Key: see ABLY KEY section below.
 
-This means class mode requires a single machine with HDMI or
-display output to a projector or smartboard. Teacher controls
-from their laptop; students see the projected window.
+IMPORTANT: Unlike BroadcastChannel (same-machine only), Ably
+works across devices and networks. The scoreboard does not need
+to be on the same physical machine as the teacher dashboard.
 
-This was a deliberate tradeoff. The alternative (Ably, PartyKit,
-WebSockets) requires a real-time server, third-party accounts,
-and ongoing infrastructure costs. BroadcastChannel is free,
-dependency-free, and works for the primary use case (one machine
-to projector). Cross-device support is a Phase 2 feature.
+Previous architecture (v4.0): used browser BroadcastChannel API
+(same-machine, same-browser only). Replaced with Ably in v4.1+
+to enable cross-device classroom use.
 
-FUTURE: When cross-device sync is added, replace BroadcastChannel
-with a room-code-based system (4-digit code, teacher generates,
-scoreboard joins). The broadcastState() and bc.onmessage pattern
-are designed for this swap — only the transport layer changes.
+
+ABLY KEY
+---------
+The Ably API key is embedded directly in host.html and
+game-class.html. It is a client-side publish/subscribe key
+scoped to this application only.
+
+Key location in code: const ABLY_KEY = '...'
+Ably dashboard: https://ably.com (log in to rotate or revoke)
+
+Note: The key is visible in source code. This is acceptable for
+a classroom-scale EdSim application — it controls access to a
+single pub/sub channel namespace, not sensitive data. Students
+seeing the key cannot access other rooms or extract student data.
+If the key is ever abused, rotate it in the Ably dashboard and
+update both HTML files.
 
 
 WORD BANK — PHANTOM ANSWER LOGIC
@@ -101,15 +119,22 @@ honest. A student who confuses "Containment of communism" with
 a Cold War domestic policy answer is making a meaningful error
 worth addressing, not a random guess.
 
-Phantom generation (buildWordBank in host.html):
+Phantom generation (buildBank in game-wordbank.html,
+buildWordBank in host.html):
   1. Collect all answers from rounds OTHER than current round
   2. Shuffle the pool
-  3. Take the first N answers (N = teacher's phantom count)
+  3. Take the first N answers (N = phantom slider value)
   4. Combine with 5 real answers and shuffle again
 
 Phantom count range: 0–10, default 5.
   0 phantoms = only real answers shown (easiest)
   10 phantoms = 5 real buried in 15 chips (hardest)
+
+SLIDER TIMING NOTE: The phantom slider value is read at round
+load time (inside buildBank/buildWordBank), not at game start.
+This means a teacher can adjust the slider mid-game and the
+change takes effect on the next round. This is intentional —
+it allows real-time difficulty adjustment during class.
 
 MINIMUM ROUND POLICY: Units must have at least 3 rounds to be
 published on EdSim. A 3-round unit has 10 phantom candidates
@@ -189,6 +214,27 @@ deploy or retained for a potential future "custom question"
 mode where content isn't pre-authored.
 
 
+DATA LOADING — game-class.html
+--------------------------------
+game-class.html receives ALL game data via Ably state messages
+from host.html. It does not load unit data independently, does
+not use the UNITS object, and has no JSON file upload mechanism.
+
+The complete game state (question text, answer texts, scores,
+word bank chips, round metadata) is included in every state
+snapshot that host.html publishes. game-class.html is a pure
+display layer — it renders whatever it receives.
+
+This means game-class.html has no dependency on /data/ JSON
+files and no embedded UNITS object. If a unit is updated,
+only host.html and game-wordbank.html need to be updated.
+
+Previous versions used a JSON file upload workflow in
+game-class.html. This was removed when Ably sync was
+implemented — the scoreboard now receives all data from
+the host in real time.
+
+
 UNIT DATA
 ----------
 All 11 units are embedded as a const UNITS = {...} object in
@@ -199,7 +245,8 @@ no server required, works offline.
 The /data/ folder contains the same units as individual JSON
 files. These are the source of truth for content. If a unit
 is updated, update both the JSON file AND the embedded object
-in both HTML files.
+in both HTML files (host.html and game-wordbank.html).
+game-class.html does NOT need to be updated for content changes.
 
 Units:
   colonial-revolution.json
@@ -224,7 +271,8 @@ Each unit follows this schema:
         "question": "Name a...",
         "multiplier": 1,
         "answers": [
-          { "text": "Answer text", "points": 38 },
+          { "text": "Answer text", "points": 38,
+            "explanation": "Context for wrong-answer feedback." },
           ...
         ]
       }
@@ -234,6 +282,7 @@ Each unit follows this schema:
 Points per round must sum to 100.
 Multiplier applies to all answer points for that round (1, 2, or 3).
 Answers should be ordered highest to lowest points.
+Every answer must have an explanation field (used by solo feedback).
 
 
 HOSTING
@@ -241,7 +290,6 @@ HOSTING
 Deployed on Netlify via drag-and-drop.
 URL: bucolic-sundae-f11870.netlify.app
 Custom domain: edsim.org (DNS to be configured)
-No netlify.toml required at current scale.
 No build step — files are served as-is.
 
 
@@ -262,61 +310,41 @@ v4.0  Major restructure:
         - Meta/OG tags added to index.html
         - Dead files removed (game-individual.html, fuzzy.js)
         - Deployed to Netlify
-v4.1  Infrastructure:
+v4.1  Real-time cross-device class mode:
+        - BroadcastChannel replaced with Ably WebSocket sync
+        - Room code system added (4-digit, teacher generates)
+        - game-class.html rebuilt as Ably subscriber
+        - host.html updated to publish state via Ably
+        - JSON upload removed from game-class.html (data
+          now arrives via Ably state messages from host)
         - Netlify Function added (netlify/functions/ai-feedback.js)
-        - AI feedback now works in production via server-side proxy
-        - game-wordbank.html updated to call /.netlify/functions/ai-feedback
-        - build-notes.txt updated with Ably integration plan
+        - build-notes.txt updated
 v4.2  AI feedback replaced with hardcoded explanations:
         - Removed Anthropic API call from showAIFeedback()
         - Added "explanation" field to all 330 answers across 11 units
         - Feedback is now instant, offline-capable, and zero-cost
         - Netlify Function retained but no longer called
-        - build-notes.txt updated to reflect new approach
+        - playerName input removed from game-wordbank.html (PII)
+        - build-notes.txt updated to reflect Ably architecture
 
 
 KNOWN LIMITATIONS
 ------------------
-1. Class Mode is same-machine only (BroadcastChannel constraint)
+1. Ably API key is client-side visible (acceptable for this use case)
 2. Feedback only available for pre-authored units (no dynamic AI)
 3. No user accounts — no usage tracking, no login
 4. No custom unit upload in current build (was removed in v4)
-5. Password is client-side only — not true security
+5. Host password is client-side only — not true security
 6. No mobile optimization for host.html (teacher tool, not student)
 
 
 NEXT DEVELOPMENT PRIORITIES
 -----------------------------
 1. Custom domain (edsim.org) DNS configuration — see HOSTING section
-2. Room code system for future cross-device class mode (Ably)
-3. User accounts and usage tracking (Supabase)
-4. Creator submission portal
-5. Additional simulations (Constitutional Convention, Ratification)
-
-
-ABLY — FUTURE CROSS-DEVICE CLASS MODE
----------------------------------------
-The current BroadcastChannel sync is same-machine only (see CLASS
-MODE SYNC section above). When cross-device class mode is needed
-(students on their own devices), Ably is the planned transport layer.
-
-Why Ably:
-  - Managed WebSocket infrastructure — no self-hosted server
-  - Free tier covers classroom-scale usage (200 concurrent
-    connections, 6M messages/month)
-  - Simple pub/sub API that maps directly to broadcastState()
-
-Planned implementation:
-  - Teacher generates a 4-digit room code in host.html
-  - Students visit edsim.org/join and enter the code
-  - host.html publishes state to Ably channel named by room code
-  - game-class.html (or a new student view) subscribes to same channel
-  - Replace BroadcastChannel('feud_scoreboard') with
-    ably.channels.get(roomCode) — the broadcastState() and
-    bc.onmessage pattern is designed for this exact swap
-
-Ably account: not yet created (Phase 2)
-Ably docs: https://ably.com/docs
+2. User accounts and usage tracking (Supabase)
+3. Creator submission portal
+4. Additional simulations (Constitutional Convention, Ratification)
+5. Ably key rotation policy and documentation
 
 
 ================================================================
