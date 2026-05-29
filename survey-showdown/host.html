@@ -631,7 +631,7 @@ function revealAnswer(idx) {
   broadcastState();
   if (state.revealed.every(Boolean)) {
     AudioEngine.roundWin();
-    if (state.pot > 0) awardPot(state.activeTurn);
+    if (state.pot > 0 && !state.stealActive) awardPot(state.activeTurn);
   }
 }
 
@@ -668,8 +668,7 @@ function toggleSteal() {
 function resolveSteal(success) {
   const stealing = (state.activeTurn + 1) % state.teamCount;
   if (success) { AudioEngine.stealWin(); awardPot(stealing); }
-  else { AudioEngine.stealFail(); revealAll(); awardPot(state.activeTurn); }
-  state.stealActive = false;
+else { AudioEngine.stealFail(); const earned = state.pot; revealAll(); state.pot = earned; awardPot(state.activeTurn); }  state.stealActive = false;
   resetStealUI();
 }
 
