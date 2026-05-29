@@ -59,11 +59,15 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .host-unit{font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.06em}
 
 .host-body{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:12px}
+.gc-top{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;background:var(--surf2);
+  border:1px solid var(--border);border-radius:var(--r);padding:12px 14px}
+.gc-top-section{display:flex;flex-direction:column;gap:4px}
+.gc-top-section + .gc-top-section{border-left:1px solid var(--border);padding-left:14px}
 .host-body::-webkit-scrollbar{width:4px}
 .host-body::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
 
 /* Two-column game controls layout — 40/60 split so answers panel has room */
-.gc-cols{display:grid;grid-template-columns:2fr 3fr;gap:14px;align-items:start}
+.gc-cols{display:grid;grid-template-columns:1fr 2fr;gap:14px;align-items:start}
 .gc-left{display:flex;flex-direction:column;gap:10px}
 .gc-right{display:flex;flex-direction:column;gap:10px}
 
@@ -286,25 +290,46 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 
     <!-- GAME CONTROLS (hidden until game starts) -->
     <div id="gameControls" style="display:none;flex-direction:column;gap:12px">
+      <!-- TOP STRIP: scores + word bank side by side -->
+      <div class="gc-top">
+        <div class="gc-top-section" style="flex:1;min-width:0">
+          <div class="section-label">SCORE</div>
+          <div class="host-scores" id="hostScoreCards"></div>
+        </div>
+        <div class="gc-top-section" style="min-width:220px">
+          <div class="section-label">WORD BANK ON SCOREBOARD</div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+            <span style="font-size:12px;color:var(--dim)">Show word bank</span>
+            <label class="wb-toggle-sw" aria-label="Toggle word bank">
+              <input type="checkbox" id="wbToggle" onchange="toggleWordBank()"/>
+              <span class="wb-toggle-sl"></span>
+            </label>
+          </div>
+          <div id="wbSliderWrap" style="display:none">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+              <span style="font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.06em">EASIER</span>
+              <span style="font-family:var(--fd);font-size:14px;color:var(--gold)" id="phantomCountLabel">5 phantoms</span>
+              <span style="font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.06em">HARDER</span>
+            </div>
+            <input type="range" id="phantomSlider" min="0" max="10" value="5" step="1"
+              oninput="updatePhantomCount()" style="width:100%;accent-color:var(--gold);cursor:pointer"/>
+          </div>
+        </div>
+      </div>
+
       <div class="gc-cols">
 
-        <!-- LEFT COL: scores, pot, turn, strikes, steal, word bank -->
+        <!-- LEFT COL: pot, award, turn, strikes, steal -->
         <div class="gc-left">
 
-          <!-- Scores -->
-          <div>
-            <div class="section-label">SCORE</div>
-            <div class="host-scores" id="hostScoreCards"></div>
-          </div>
-
+          <!-- Pot + Award -->
           <div class="host-pot">
             <div class="pot-label">Round Pot</div>
             <div class="pot-val" id="hostPot">0</div>
-
-          <!-- Award Pot -->
-          <div class="award-section">
-            <div class="pot-label" style="margin-bottom:4px">AWARD POT TO</div>
-            <div class="award-btns" id="awardBtns"></div>
+            <div class="award-section">
+              <div class="pot-label" style="margin-bottom:4px">AWARD POT TO</div>
+              <div class="award-btns" id="awardBtns"></div>
+            </div>
           </div>
 
           <!-- Turn -->
@@ -331,30 +356,6 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
             <div class="steal-result" id="stealResult">
               <button class="steal-res-btn win" onclick="resolveSteal(true)">STEAL ✓</button>
               <button class="steal-res-btn lose" onclick="resolveSteal(false)">MISSED ✗</button>
-            </div>
-          </div>
-
-          <!-- Word Bank -->
-          <div class="steal-section">
-            <div class="section-label" style="margin-bottom:10px">WORD BANK ON SCOREBOARD</div>
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
-              <span style="font-size:13px;color:var(--dim)">Show word bank</span>
-              <label class="wb-toggle-sw" aria-label="Toggle word bank">
-                <input type="checkbox" id="wbToggle" onchange="toggleWordBank()"/>
-                <span class="wb-toggle-sl"></span>
-              </label>
-            </div>
-            <div id="wbSliderWrap" style="display:none">
-              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
-                <span style="font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.08em">EASIER</span>
-                <span style="font-family:var(--fd);font-size:16px;color:var(--gold)" id="phantomCountLabel">5 phantoms</span>
-                <span style="font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.08em">HARDER</span>
-              </div>
-              <input type="range" id="phantomSlider" min="0" max="10" value="5" step="1"
-                oninput="updatePhantomCount()" style="width:100%;accent-color:var(--gold);cursor:pointer"/>
-              <div style="font-family:var(--fm);font-size:10px;color:var(--dim);margin-top:6px;text-align:center;letter-spacing:.06em">
-                More phantoms = harder to identify correct answers
-              </div>
             </div>
           </div>
 

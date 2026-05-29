@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Survey Showdown — Global 9 · Solo Mode · EdSim</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d0f14;--surf:#161922;--surf2:#1e2230;--surf3:#252a3a;
+  --border:#2e3448;--border-hi:#3d4562;
+  --text:#e8ecf4;--dim:#7a8399;--faint:#2a3048;
+  --gold:#f5c842;--gold-dim:#b89020;--gold-glow:rgba(245,200,66,0.22);
+  --red:#e03e3e;--red-dim:#8a1f1f;--red-glow:rgba(224,62,62,0.2);
+  --green:#27c97a;--green-dim:#145c38;--green-glow:rgba(39,201,122,0.18);
+  --blue:#3a7bd5;--purple:#8b5cf6;--orange:#f97316;
+  --fd:'Bebas Neue',sans-serif;--fb:'DM Sans',sans-serif;--fm:'DM Mono',monospace;
+  --r:8px;--rs:4px;--ease:cubic-bezier(.4,0,.2,1);
+}
+html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var(--fb)}
+body{display:flex;flex-direction:column;align-items:center;
+  background-image:radial-gradient(ellipse at 50% 0%,rgba(245,200,66,0.05) 0%,transparent 50%)}
+
+/* HEADER */
+.hdr{width:100%;max-width:860px;display:flex;align-items:center;justify-content:space-between;
+  padding:13px 20px;border-bottom:1px solid var(--border);position:sticky;top:0;
+  background:rgba(13,15,20,0.95);backdrop-filter:blur(8px);z-index:50}
+.hdr-logo{font-family:var(--fd);font-size:20px;color:var(--gold);letter-spacing:2px}
+.hdr-home{font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.1em;
+  text-decoration:none;padding:5px 10px;border:1px solid var(--border);border-radius:4px;
+  transition:all .2s;white-space:nowrap}
+.hdr-home:hover{color:var(--gold);border-color:var(--gold-dim)}
+.hdr-right{display:flex;align-items:center;gap:16px}
+.hdr-score{font-family:var(--fd);font-size:20px}
+.hdr-score span{color:var(--gold)}
+.hdr-tag{font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.1em;text-transform:uppercase}
+
+/* SCREENS */
+.screen{width:100%;max-width:860px;padding:28px 20px;display:none}
+.screen.active{display:block}
+
+/* SETUP */
+.setup-hero{text-align:center;margin-bottom:36px}
+.setup-title{font-family:var(--fd);font-size:72px;color:var(--gold);letter-spacing:4px;
+  line-height:.95;text-shadow:0 0 60px var(--gold-glow)}
+.setup-sub{font-family:var(--fm);font-size:11px;color:var(--dim);letter-spacing:.15em;
+  text-transform:uppercase;margin-top:10px}
+.setup-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:620px;margin:0 auto 16px}
+.setup-card{background:var(--surf);border:1px solid var(--border);border-radius:12px;padding:22px}
+.setup-card h2{font-family:var(--fd);font-size:20px;letter-spacing:1px;margin-bottom:14px}
+.field label{display:block;font-family:var(--fm);font-size:10px;color:var(--dim);
+  letter-spacing:.1em;text-transform:uppercase;margin-bottom:5px}
+.field select,.field input{width:100%;background:var(--surf2);border:1px solid var(--border);
+  border-radius:var(--rs);padding:9px 12px;color:var(--text);font-family:var(--fb);
+  font-size:14px;outline:none;transition:border-color .2s;margin-bottom:12px}
+.field select:focus,.field input:focus{border-color:var(--gold)}
+.field input::placeholder{color:var(--dim)}
+/* AI toggle */
+.toggle-row{display:flex;align-items:center;justify-content:space-between;gap:10px;
+  background:var(--surf2);border:1px solid var(--border);border-radius:var(--rs);padding:10px 12px}
+.toggle-desc{font-size:12px;color:var(--dim);line-height:1.45;flex:1}
+.toggle-sw{position:relative;width:42px;height:23px;flex-shrink:0}
+.toggle-sw input{opacity:0;width:0;height:0;position:absolute}
+.toggle-sl{position:absolute;inset:0;background:var(--surf3);border-radius:11px;
+  cursor:pointer;transition:background .2s;border:1px solid var(--border)}
+.toggle-sl::before{content:'';position:absolute;width:17px;height:17px;left:2px;top:2px;
+  background:var(--dim);border-radius:50%;transition:transform .2s,background .2s}
+.toggle-sw input:checked+.toggle-sl{background:rgba(139,92,246,0.3);border-color:var(--purple)}
+.toggle-sw input:checked+.toggle-sl::before{transform:translateX(19px);background:var(--purple)}
+.ai-status{font-family:var(--fm);font-size:10px;margin-top:7px;color:var(--dim)}
+.ai-status.on{color:var(--purple)}
+.big-btn{width:100%;max-width:620px;display:block;margin:0 auto;
+  background:var(--gold);color:#0d0f14;font-family:var(--fd);font-size:22px;
+  letter-spacing:2px;border:none;border-radius:var(--r);padding:13px;cursor:pointer;transition:all .2s}
+.big-btn:hover{background:#ffd84d;transform:translateY(-1px)}
+.big-btn:disabled{background:var(--surf3);color:var(--dim);cursor:not-allowed;transform:none}
+
+/* GAME SCREEN */
+.prog-wrap{margin-bottom:18px}
+.prog-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.prog-label{font-family:var(--fm);font-size:11px;color:var(--dim);letter-spacing:.08em;text-transform:uppercase}
+.prog-pips{display:flex;gap:5px}
+.prog-pip{width:30px;height:5px;border-radius:3px;background:var(--surf3);transition:background .4s}
+.prog-pip.done{background:var(--gold-dim)}
+.prog-pip.active{background:var(--gold)}
+
+/* Question card */
+.q-card{background:var(--surf);border:1px solid var(--border);border-radius:12px;
+  padding:16px 20px;margin-bottom:14px}
+.q-poll{font-family:var(--fm);font-size:10px;color:var(--gold-dim);letter-spacing:.15em;
+  text-transform:uppercase;margin-bottom:6px}
+.q-text{font-family:var(--fd);font-size:28px;color:var(--text);letter-spacing:.5px;line-height:1.15}
+.q-meta{display:flex;align-items:center;gap:10px;margin-top:8px;flex-wrap:wrap}
+.q-mult{display:inline-block;background:var(--gold);color:#0d0f14;font-family:var(--fd);
+  font-size:13px;padding:2px 11px;border-radius:20px;letter-spacing:1px}
+.q-matched{font-family:var(--fm);font-size:11px;color:var(--dim)}
+
+/* Strikes row */
+.strikes-wrap{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.strike-x{font-family:var(--fd);font-size:40px;color:var(--dim);opacity:.25;
+  transition:all .25s;line-height:1}
+.strike-x.active{color:var(--red);opacity:1;text-shadow:0 0 14px var(--red-glow);
+  animation:sxIn .3s ease}
+@keyframes sxIn{0%{transform:scale(1.6) rotate(-10deg)}100%{transform:scale(1) rotate(0)}}
+.strikes-label{font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.06em}
+
+/* Steal prompt */
+.steal-prompt{background:rgba(139,92,246,0.12);border:1px solid rgba(139,92,246,0.4);
+  border-radius:var(--r);padding:14px 16px;margin-bottom:14px;display:none;
+  animation:fadeIn .3s ease}
+.steal-prompt.show{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.steal-prompt-label{font-family:var(--fd);font-size:20px;color:var(--purple);letter-spacing:1px;margin-bottom:8px}
+.steal-prompt-desc{font-size:13px;color:var(--dim);margin-bottom:12px;line-height:1.5}
+.steal-chips{display:flex;flex-wrap:wrap;gap:7px}
+.steal-chip{background:var(--surf2);border:1.5px solid rgba(139,92,246,0.4);border-radius:20px;
+  padding:8px 16px;font-size:13px;font-weight:500;color:var(--text);cursor:pointer;
+  transition:all .18s var(--ease)}
+.steal-chip:hover{border-color:var(--purple);color:var(--purple)}
+
+/* Word bank */
+.bank-wrap{background:var(--surf);border:1px solid var(--border);border-radius:12px;
+  padding:14px 16px;margin-bottom:14px}
+.bank-label{font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.12em;
+  text-transform:uppercase;margin-bottom:10px}
+.bank-chips{display:flex;flex-wrap:wrap;gap:7px;min-height:44px}
+.chip{background:var(--surf2);border:1.5px solid var(--border);border-radius:20px;
+  padding:8px 16px;font-size:13px;font-weight:500;color:var(--text);
+  cursor:pointer;transition:all .18s var(--ease);user-select:none}
+.chip:hover{border-color:var(--gold-dim);color:var(--gold);transform:translateY(-1px)}
+.chip.selected{border-color:var(--gold);color:var(--gold);background:rgba(245,200,66,0.08)}
+.chip.shake{animation:shake .4s ease}
+@keyframes shake{
+  0%{transform:translateX(0)}15%{transform:translateX(-7px)}
+  35%{transform:translateX(7px)}55%{transform:translateX(-4px)}
+  75%{transform:translateX(4px)}100%{transform:translateX(0)}
+}
+
+/* Answer slots — pre-numbered, filled in order */
+.slots-wrap{display:grid;gap:8px;margin-bottom:14px}
+.slot{background:var(--surf);border:2px dashed var(--border);border-radius:10px;
+  padding:13px 16px;display:flex;align-items:center;gap:14px;min-height:58px;
+  transition:all .3s var(--ease)}
+.slot.filled{border-style:solid;border-color:var(--gold-dim);background:var(--surf2)}
+.slot.reveal-flash{animation:revealFlash .4s ease}
+@keyframes revealFlash{
+  0%{border-color:var(--green);background:rgba(39,201,122,0.1);transform:scale(1.01)}
+  100%{border-color:var(--gold-dim);background:var(--surf2);transform:scale(1)}
+}
+.slot.missed-reveal{border-style:solid;border-color:var(--red-dim);background:rgba(224,62,62,0.05)}
+.slot-num{font-family:var(--fd);font-size:22px;color:var(--dim);min-width:26px;flex-shrink:0}
+.slot.filled .slot-num{color:var(--gold-dim)}
+.slot.missed-reveal .slot-num{color:var(--red-dim)}
+.slot-content{flex:1}
+.slot-placeholder{font-size:12px;color:var(--faint);font-style:italic}
+.slot-text{font-family:var(--fd);font-size:20px;letter-spacing:.3px;color:var(--text);
+  display:none}
+.slot.filled .slot-text,.slot.missed-reveal .slot-text{display:block}
+.slot.filled .slot-placeholder,.slot.missed-reveal .slot-placeholder{display:none}
+.slot-pts{font-family:var(--fd);font-size:24px;color:var(--gold);flex-shrink:0;display:none}
+.slot.filled .slot-pts{display:block}
+
+/* Info button */
+.slot-info-btn{
+  width:28px;height:28px;border-radius:50%;border:1.5px solid var(--border);
+  background:transparent;color:var(--dim);font-size:13px;font-weight:700;
+  cursor:pointer;flex-shrink:0;display:none;align-items:center;justify-content:center;
+  transition:all .18s;line-height:1;padding:0;margin-left:2px;font-family:var(--fb)}
+.slot.filled .slot-info-btn,.slot.missed-reveal .slot-info-btn{display:flex}
+.slot-info-btn:hover{border-color:var(--gold-dim);color:var(--gold);background:rgba(245,200,66,0.08)}
+.slot-info-btn.open{border-color:var(--gold);color:var(--gold);background:rgba(245,200,66,0.1);transform:rotate(180deg)}
+
+/* Inline explanation panel */
+.slot-explain{
+  display:grid;grid-template-rows:0fr;
+  transition:grid-template-rows .3s var(--ease)}
+.slot-explain.open{grid-template-rows:1fr}
+.slot-explain-inner{
+  overflow:hidden;
+  font-size:12px;color:var(--dim);line-height:1.6;
+  padding:0 0 0 40px}
+.slot-explain.open .slot-explain-inner{padding:8px 12px 4px 40px}
+.slot-wrap{display:flex;flex-direction:column}
+
+/* AI panel */
+.ai-panel{background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.3);
+  border-radius:var(--r);padding:13px 15px;margin-bottom:12px;display:none}
+.ai-panel.show{display:block;animation:fadeIn .3s ease}
+.ai-panel-hdr{display:flex;align-items:center;gap:7px;margin-bottom:7px}
+.ai-panel-lbl{font-family:var(--fm);font-size:10px;color:var(--purple);letter-spacing:.1em;text-transform:uppercase}
+.ai-loading{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--dim)}
+.ai-dots span{animation:dot 1.2s infinite;display:inline-block}
+.ai-dots span:nth-child(2){animation-delay:.2s}
+.ai-dots span:nth-child(3){animation-delay:.4s}
+@keyframes dot{0%,80%,100%{opacity:.2}40%{opacity:1}}
+.ai-text{font-size:13px;color:var(--text);line-height:1.65}
+.ai-dismiss{font-family:var(--fm);font-size:10px;color:var(--dim);background:none;
+  border:none;cursor:pointer;margin-top:7px;padding:0;min-height:28px}
+.ai-dismiss:hover{color:var(--text)}
+
+/* Round complete */
+.round-complete{background:var(--surf);border:1px solid var(--border);border-radius:12px;
+  padding:22px;text-align:center;display:none;margin-bottom:14px}
+.round-complete.show{display:block;animation:fadeIn .4s ease}
+.rc-title{font-family:var(--fd);font-size:36px;color:var(--gold);letter-spacing:2px;margin-bottom:4px}
+.rc-sub{font-size:13px;color:var(--dim);margin-bottom:16px}
+.rc-sub span{color:var(--gold);font-weight:700}
+.rc-rows{display:grid;gap:5px;text-align:left;margin-bottom:18px}
+.rc-row{display:flex;align-items:center;gap:9px;padding:8px 11px;border-radius:var(--rs);font-size:13px}
+.rc-row.got{background:rgba(39,201,122,0.08);border:1px solid var(--green-dim)}
+.rc-row.missed{background:var(--surf2);border:1px solid var(--border);opacity:.5}
+.rc-icon{font-size:13px;flex-shrink:0}
+.rc-txt{flex:1;font-weight:500}
+.rc-row.got .rc-txt{color:var(--green)}
+.rc-pts{font-family:var(--fd);font-size:20px;color:var(--gold)}
+.next-btn{background:var(--gold);color:#0d0f14;font-family:var(--fd);font-size:20px;
+  letter-spacing:2px;border:none;border-radius:var(--r);padding:12px 32px;cursor:pointer;transition:all .2s}
+.next-btn:hover{background:#ffd84d}
+
+/* END */
+.end-wrap{text-align:center;padding:32px 20px}
+.end-title{font-family:var(--fd);font-size:68px;color:var(--gold);letter-spacing:4px;
+  text-shadow:0 0 50px var(--gold-glow);margin-bottom:6px}
+.end-player{font-family:var(--fm);font-size:12px;color:var(--dim);letter-spacing:.1em;margin-bottom:6px}
+.end-score{font-family:var(--fd);font-size:90px;color:var(--text);line-height:1}
+.end-max{font-family:var(--fm);font-size:12px;color:var(--dim);margin-bottom:6px}
+.end-accuracy{font-family:var(--fd);font-size:24px;margin-bottom:28px}
+.end-accuracy span{color:var(--gold)}
+.end-breakdown{background:var(--surf);border:1px solid var(--border);border-radius:12px;
+  padding:18px;max-width:440px;margin:0 auto 22px;text-align:left}
+.end-breakdown h3{font-family:var(--fd);font-size:17px;letter-spacing:1px;color:var(--dim);margin-bottom:12px}
+.end-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;
+  border-bottom:1px solid var(--border);font-size:13px}
+.end-row:last-child{border-bottom:none}
+.end-row-pts{font-family:var(--fm);color:var(--gold)}
+.end-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.end-btn{padding:11px 22px;border-radius:var(--r);font-family:var(--fd);font-size:17px;
+  letter-spacing:1px;cursor:pointer;border:none;transition:all .15s}
+.end-btn.primary{background:var(--gold);color:#0d0f14}
+.end-btn.primary:hover{background:#ffd84d}
+.end-btn.secondary{background:var(--surf);color:var(--text);border:1px solid var(--border)}
+.end-btn.secondary:hover{border-color:var(--border-hi)}
+
+@media(max-width:580px){
+  .setup-grid{grid-template-columns:1fr}
+  .setup-title{font-size:52px}
+  .q-text{font-size:22px}
+  .chip{font-size:12px;padding:7px 13px}
+}
+@media print{
+  .hdr,.end-actions,#printBtn{display:none!important}
+  body{background:white!important;color:black!important}
+  .end-wrap,.end-breakdown{color:black!important}
+  .end-title{color:#333!important;text-shadow:none!important}
+  .end-score{color:#111!important}
+  .end-accuracy span,.end-row-pts{color:#333!important}
+  .end-breakdown{border:1px solid #ccc!important;background:white!important}
+  .end-row{border-bottom:1px solid #eee!important}
+  .screen:not(.active){display:none!important}
+}
+#printHidden{display:none}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <a class="hdr-home" href="../index.html" aria-label="Home">⌂ HOME</a>
+  <div class="hdr-logo">SURVEY SHOWDOWN</div>
+  <div class="hdr-right">
+    <div class="hdr-tag">Solo Mode</div>
+    <div class="hdr-score">Score: <span id="hdrScore">0</span></div>
+  </div>
+</div>
+
+<!-- SETUP -->
+<div class="screen active" id="setupScreen">
+  <div class="setup-hero">
+    <div class="setup-title">SOLO<br>MODE</div>
+    <div class="setup-sub">EdSim · Survey Showdown</div>
+  </div>
+  <div class="setup-grid">
+    <div class="setup-card">
+      <h2>GAME SETUP</h2>
+      <div class="field">
+        <label>Question Set</label>
+        <select id="unitSelect">
+          <option value="">— Choose a unit —</option>
+        </select>
+      </div>
+
+    </div>
+    <div class="setup-card">
+      <h2>TEACHER SETTINGS</h2>
+      <p style="font-size:12px;color:var(--dim);margin-bottom:12px;line-height:1.5">When feedback is on, wrong answers show a brief explanation of why they don't fit this question.</p>
+      <div class="toggle-row">
+        <div class="toggle-desc">Show explanation on wrong answers</div>
+        <label class="toggle-sw" aria-label="Toggle feedback">
+          <input type="checkbox" id="aiToggle"/>
+          <span class="toggle-sl"></span>
+        </label>
+      </div>
+      <div class="ai-status" id="aiStatus">Feedback: OFF</div>
+
+      <div style="margin-top:16px;border-top:1px solid var(--border);padding-top:14px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+          <span style="font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.1em">DIFFICULTY</span>
+          <span style="font-family:var(--fd);font-size:16px;color:var(--gold)" id="soloPhantomLabel">5 distractors</span>
+        </div>
+        <input type="range" id="soloPhantomSlider" min="0" max="10" value="5" step="1"
+          oninput="updateSoloPhantomLabel()"
+          style="width:100%;accent-color:var(--gold);cursor:pointer"/>
+        <div style="display:flex;justify-content:space-between;margin-top:4px">
+          <span style="font-family:var(--fm);font-size:10px;color:var(--dim)">Easier</span>
+          <span style="font-family:var(--fm);font-size:10px;color:var(--dim)">Harder</span>
+        </div>
+        <div style="font-family:var(--fm);font-size:10px;color:var(--dim);margin-top:6px;line-height:1.5">
+          More distractors = harder to find the correct answers
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="big-btn" id="startBtn" disabled>CHOOSE A UNIT TO BEGIN</button>
+</div>
+
+<!-- GAME -->
+<div class="screen" id="gameScreen">
+
+  <div class="prog-wrap">
+    <div class="prog-meta">
+      <div class="prog-label" id="progLabel">Round 1 of 6</div>
+      <div class="prog-pips" id="progPips"></div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-poll" id="pollLabel">100 historians were surveyed...</div>
+    <div class="q-text" id="questionText">—</div>
+    <div class="q-meta">
+      <div id="multBadge" class="q-mult" style="display:none"></div>
+      <div class="q-matched" id="qMatched">0 / 5 found</div>
+    </div>
+  </div>
+
+  <!-- Strikes -->
+  <div class="strikes-wrap">
+    <div class="strike-x" id="sx1">✕</div>
+    <div class="strike-x" id="sx2">✕</div>
+    <div class="strike-x" id="sx3">✕</div>
+    <span class="strikes-label" id="strikesLabel">0 strikes</span>
+  </div>
+
+  <!-- Steal prompt (appears on 3 strikes) -->
+  <div class="steal-prompt" id="stealPrompt">
+    <div class="steal-prompt-label">🔥 STEAL OPPORTUNITY</div>
+    <div class="steal-prompt-desc" id="stealDesc">3 strikes! Pick one answer from the bank — if it's correct, you earn those points. Wrong and the round ends.</div>
+    <div class="steal-chips" id="stealChips"></div>
+  </div>
+
+  <!-- AI panel -->
+  <div class="ai-panel" id="aiPanel">
+    <div class="ai-panel-hdr">
+      <span>🤖</span>
+      <span class="ai-panel-lbl">Why doesn't that fit?</span>
+    </div>
+    <div id="aiPanelBody">
+      <div class="ai-loading">Thinking<span class="ai-dots"><span>.</span><span>.</span><span>.</span></span></div>
+    </div>
+    <button class="ai-dismiss" onclick="dismissAI()">Got it ✕</button>
+  </div>
+
+  <!-- Word bank -->
+  <div class="bank-wrap">
+    <div class="bank-label">Click the answers that belong to this question</div>
+    <div class="bank-chips" id="bankChips"></div>
+  </div>
+
+  <!-- Answer slots — pre-numbered, fill automatically -->
+  <div class="slots-wrap" id="slotsWrap"></div>
+
+  <!-- Round complete -->
+  <div class="round-complete" id="roundComplete">
+    <div class="rc-title" id="rcTitle">ROUND COMPLETE</div>
+    <div class="rc-sub" id="rcSub">You earned <span>0</span> points</div>
+    <div class="rc-rows" id="rcRows"></div>
+    <button class="next-btn" id="nextRoundBtn">NEXT ROUND →</button>
+  </div>
+
+</div>
+
+<!-- END -->
+<div class="screen" id="endScreen">
+  <div class="end-wrap">
+    <div class="end-title">FINAL SCORE</div>    <div class="end-score" id="endScore">0</div>
+    <div class="end-max" id="endMax">out of 0 possible points</div>
+    <div class="end-accuracy" id="endAccuracy">Accuracy: <span>0%</span></div>
+    <div class="end-breakdown">
+      <h3>ROUND BREAKDOWN</h3>
+      <div id="endBreakdown"></div>
+    </div>
+    <div class="end-actions">
+      <button class="end-btn primary" onclick="restartGame()">PLAY AGAIN</button>
+      <button class="end-btn secondary" onclick="goSetup()">CHANGE UNIT</button>
+      <button class="end-btn secondary" onclick="printResults()" id="printBtn">🖨 Save as PDF</button>
+    </div>
+  </div>
+</div>
+
+<script src="audio.js"></script>
+<script>
+// ══ ALL UNITS EMBEDDED ══
+const UNITS = {"global9-unit1":{"unit":"Global 9 — Unit 1: Ancient World","poll_label":"100 historians were surveyed...","rounds":[{"id":"r1","question":"Name a defining feature of the Neolithic Revolution","multiplier":1,"answers":[{"text":"Shift from nomadic to sedentary life","points":38,"explanation":"This is a defining feature of the Neolithic Revolution — humans stopped following herds and began staying in one place to farm."},{"text":"Domestication of animals","points":26,"explanation":"This is a defining feature of the Neolithic Revolution — humans learned to tame animals for food, labor, and materials."},{"text":"Development of irrigation systems","points":20,"explanation":"This is a defining feature of the Neolithic Revolution — controlling water allowed farming in dry regions and produced reliable harvests."},{"text":"Systematic farming of crops","points":11,"explanation":"This is a defining feature of the Neolithic Revolution — planting and harvesting replaced foraging, enabling population growth."},{"text":"Accumulation of surplus resources","points":5,"explanation":"This is a defining feature of the Neolithic Revolution — food surpluses allowed specialization of labor and the rise of complex societies."}]},{"id":"r2","question":"Name something associated with Mesopotamia","multiplier":1,"answers":[{"text":"Tigris and Euphrates Rivers","points":36,"explanation":"This is associated with Mesopotamia — the civilization flourished between these two rivers in the Fertile Crescent."},{"text":"Hammurabi's Code of laws","points":28,"explanation":"This is associated with Mesopotamia — one of the earliest written legal codes, establishing the idea of written law for all citizens."},{"text":"Fertile Crescent geography","points":18,"explanation":"This is associated with Mesopotamia — the region's rich soil and water sources made it ideal for the first civilizations."},{"text":"Cuneiform writing system","points":12,"explanation":"This is associated with Mesopotamia — Sumerian scribes pressed wedge-shaped marks into clay tablets to record information."},{"text":"First written legal framework","points":6,"explanation":"This is associated with Mesopotamia — Hammurabi's Code was the first attempt to standardize laws across a large society."}]},{"id":"r3","question":"Name something associated with the Indus Valley Civilization","multiplier":1,"answers":[{"text":"Cities of Mohenjo Daro and Harappa","points":34,"explanation":"This is associated with the Indus Valley — these planned cities featured grid layouts, drainage systems, and standardized brick construction."},{"text":"Himalayan Mountains as geographic barrier","points":26,"explanation":"This is associated with the Indus Valley — the Himalayas isolated the subcontinent from China, shaping its distinct development."},{"text":"Seasonal monsoon rains","points":20,"explanation":"This is associated with the Indus Valley — the monsoon cycle dictated agricultural timing and shaped the region's way of life."},{"text":"Advanced grid-pattern city planning","points":13,"explanation":"This is associated with the Indus Valley — the cities' remarkable urban design rivals anything in the ancient world."},{"text":"Aryan migration after its decline","points":7,"explanation":"This is associated with the Indus Valley — after the civilization declined, Aryan peoples from Central Asia moved in and shaped the region's culture."}]},{"id":"r4","question":"Name something associated with Ancient Egypt or the Huang He civilization","multiplier":2,"answers":[{"text":"Nile River as the source of life","points":37,"explanation":"This is associated with Ancient Egypt — the Nile's annual floods deposited fertile silt, making agriculture possible in the desert."},{"text":"Pharaoh held supreme religious power","points":27,"explanation":"This is associated with Ancient Egypt — the Pharaoh was considered a god-king whose authority was absolute and divine."},{"text":"Huang He flooded with yellow loess","points":18,"explanation":"This is associated with the Huang He civilization — the river's yellow silt gave it its name and fertilized the surrounding fields."},{"text":"River floods deposited fertile soil","points":12,"explanation":"This is a feature of both civilizations — predictable flooding created the agricultural abundance that supported early states."},{"text":"Civilizations organized around river systems","points":6,"explanation":"This is a feature of both civilizations — access to water for drinking and farming determined where the first cities appeared."}]},{"id":"r5","question":"Name something associated with the Abrahamic religions","multiplier":2,"answers":[{"text":"Belief in one god — monotheism","points":38,"explanation":"This is associated with the Abrahamic religions — Judaism, Christianity, and Islam all worship a single all-powerful God."},{"text":"Covenant traced back to Abraham","points":26,"explanation":"This is associated with the Abrahamic religions — all three faiths trace their origins to Abraham's covenant with God."},{"text":"Ten Commandments as moral code","points":20,"explanation":"This is associated with the Abrahamic religions — the commandments form the ethical foundation shared across all three faiths."},{"text":"Judaism, Christianity, and Islam","points":10,"explanation":"These are the three Abrahamic religions — sharing the same foundational patriarch, scripture roots, and belief in one God."},{"text":"Sacred texts guide followers","points":6,"explanation":"This is associated with the Abrahamic religions — the Torah, Bible, and Quran each serve as the primary guide for their respective faiths."}]},{"id":"r6","question":"Name something associated with Hinduism or Buddhism","multiplier":3,"answers":[{"text":"Reincarnation — cycle of rebirth","points":34,"explanation":"This is associated with both Hinduism and Buddhism — the soul is reborn into new lifetimes until it achieves liberation."},{"text":"Karma — actions affect next life","points":26,"explanation":"This is associated with both Hinduism and Buddhism — good deeds improve one's next life; bad deeds worsen it."},{"text":"Caste System — rigid social hierarchy","points":18,"explanation":"This is associated with Hinduism — social class was determined by birth and governed what roles a person could fulfill in society."},{"text":"Nirvana — Buddhist enlightenment","points":14,"explanation":"This is associated with Buddhism — Nirvana is the state of liberation from suffering and the cycle of rebirth."},{"text":"The Vedas — Hindu sacred books","points":8,"explanation":"This is associated with Hinduism — the Vedas are the oldest scriptures of the faith, containing hymns, rituals, and philosophical teachings."}]}]},"global9-unit2":{"unit":"Global 9 — Unit 2: Classical & Medieval World","poll_label":"100 historians were surveyed...","rounds":[{"id":"r1","question":"Name something associated with Ancient Greece","multiplier":1,"answers":[{"text":"Democracy developed in Athens","points":38,"explanation":"This is associated with Ancient Greece — Athens created the first democratic system where male citizens could vote and participate in government."},{"text":"Isolated city-states due to geography","points":26,"explanation":"This is associated with Ancient Greece — mountains and seas divided the region into independent city-states with distinct governments and cultures."},{"text":"Sparta was a military oligarchy","points":18,"explanation":"This is associated with Ancient Greece — Sparta's government focused on military training and was ruled by a small warrior elite."},{"text":"Peloponnesian War ended the Golden Age","points":12,"explanation":"This is associated with Ancient Greece — the devastating war between Athens and Sparta weakened both and ended Greece's classical peak."},{"text":"Mediterranean Sea shaped Greek trade","points":6,"explanation":"This is associated with Ancient Greece — access to the sea made Greece a trading civilization and spread its culture across the region."}]},{"id":"r2","question":"Name something associated with Alexander the Great or the Hellenistic World","multiplier":1,"answers":[{"text":"Conquered an empire from Europe to India","points":40,"explanation":"This is associated with Alexander the Great — his military campaigns created one of the largest empires in ancient history."},{"text":"Hellenistic Culture blended Greek and Eastern ideas","points":28,"explanation":"This is associated with the Hellenistic World — Greek language, art, and philosophy merged with Persian, Egyptian, and Indian influences."},{"text":"Spread Greek language and customs","points":16,"explanation":"This is associated with Alexander the Great — Greek became the common language of trade and culture across his empire."},{"text":"Empire fragmented after his death","points":10,"explanation":"This is associated with Alexander the Great — without a clear successor, his generals divided the empire into competing kingdoms."}]},{"id":"r3","question":"Name something associated with the Roman Empire","multiplier":1,"answers":[{"text":"Republic — citizens elected representatives","points":34,"explanation":"This is associated with Rome — the Roman Republic was an early model of representative government that influenced later democracies."},{"text":"Twelve Tables — written legal code","points":26,"explanation":"This is associated with Rome — Rome's first written laws established principles like innocent until proven guilty that survive today."},{"text":"Aqueducts brought fresh water to cities","points":20,"explanation":"This is associated with Rome — Roman engineers built massive water delivery systems that allowed large urban populations to thrive."},{"text":"Concrete made architecture last","points":13,"explanation":"This is associated with Rome — Roman concrete enabled the construction of domes, arches, and roads that still stand today."},{"text":"Controlled the Mediterranean Sea","points":7,"explanation":"This is associated with Rome — Roman naval dominance of the Mediterranean fueled its trade empire and political power."}]},{"id":"r4","question":"Name something associated with Classical India","multiplier":2,"answers":[{"text":"Ashoka spread Buddhism through edicts","points":44,"explanation":"This is associated with Classical India — the Mauryan emperor carved his Buddhist principles onto pillars and rocks across his empire."},{"text":"Gupta Empire advanced math and medicine","points":32,"explanation":"This is associated with Classical India — the Gupta Golden Age produced breakthroughs in surgery, astronomy, and mathematics."},{"text":"Concept of zero developed during Gupta era","points":24,"explanation":"This is associated with Classical India — Indian mathematicians invented the zero and the decimal system used worldwide today."}]},{"id":"r5","question":"Name something associated with Classical China","multiplier":2,"answers":[{"text":"Silk Road connected East and West trade","points":36,"explanation":"This is associated with Classical China — the Han Dynasty oversaw a network of trade routes that carried silk, spices, and ideas across Eurasia."},{"text":"Confucianism guided Han Dynasty rule","points":27,"explanation":"This is associated with Classical China — Confucian values of order, hierarchy, and filial piety became the foundation of Chinese governance."},{"text":"Mandate of Heaven justified Zhou authority","points":20,"explanation":"This is associated with Classical China — rulers claimed divine approval to rule, which could be lost if they governed unjustly."},{"text":"Shi Huangdi unified China under Legalism","points":17,"explanation":"This is associated with Classical China — the Qin emperor used strict laws and harsh punishments to unite warring states into one empire."}]},{"id":"r6","question":"Name something associated with the Byzantine Empire","multiplier":2,"answers":[{"text":"Located on the Bosporus Strait","points":36,"explanation":"This is associated with the Byzantine Empire — its capital Constantinople sat at the crossroads between Europe and Asia, controlling trade."},{"text":"Justinian's Code reorganized Roman law","points":28,"explanation":"This is associated with the Byzantine Empire — Justinian compiled centuries of Roman law into a unified code that shaped European legal systems."},{"text":"Hagia Sophia was its great church","points":18,"explanation":"This is associated with the Byzantine Empire — the magnificent domed cathedral served as the center of Eastern Orthodox Christianity."},{"text":"Great Schism split Christianity East and West","points":18,"explanation":"This is associated with the Byzantine Empire — the 1054 split divided Christianity into Roman Catholic and Eastern Orthodox branches."}]},{"id":"r7","question":"Name something associated with feudalism in Europe or Japan","multiplier":3,"answers":[{"text":"Serfs were bound to work the land","points":30,"explanation":"This is associated with European feudalism — serfs were legally tied to a lord's manor and could not leave without permission."},{"text":"Shogun held real military power in Japan","points":24,"explanation":"This is associated with Japanese feudalism — the shogun was the military dictator who ruled in place of the emperor."},{"text":"Manor was the center of medieval life","points":18,"explanation":"This is associated with European feudalism — the self-sufficient manor estate provided food, shelter, and protection for its residents."},{"text":"Chivalry governed European knights","points":14,"explanation":"This is associated with European feudalism — the code of chivalry required knights to be brave, loyal, and courteous."},{"text":"Bushido governed Japanese samurai","points":8,"explanation":"This is associated with Japanese feudalism — the samurai code demanded loyalty, honor, and willingness to die for one's lord."},{"text":"Crusades reopened trade between Europe and East","points":6,"explanation":"This is associated with European feudalism — the failed religious wars had the unintended effect of reviving contact with Eastern goods and ideas."}]}]},"global9-unit3":{"unit":"Global 9 — Unit 3: Renaissance to Revolution","poll_label":"100 historians were surveyed...","rounds":[{"id":"r1","question":"Name something associated with the West African Kingdoms","multiplier":1,"answers":[{"text":"Gold-Salt trade across the Sahara","points":42,"explanation":"This is associated with the West African Kingdoms — Mali and Songhai grew wealthy by controlling the exchange of West African gold for North African salt."},{"text":"Mansa Musa distributed gold on his hajj","points":30,"explanation":"This is associated with the West African Kingdoms — the Mali king's 1324 pilgrimage was so lavish it crashed gold prices across the Mediterranean."},{"text":"Timbuktu was a center of Islamic culture","points":28,"explanation":"This is associated with the West African Kingdoms — Timbuktu hosted universities, mosques, and scholars from across the Islamic world."}]},{"id":"r2","question":"Name something associated with the Aztec or Inca civilizations","multiplier":1,"answers":[{"text":"Tenochtitlan built on an island","points":36,"explanation":"This is associated with the Aztecs — their capital was constructed on an island in Lake Texcoco, connected to the mainland by causeways."},{"text":"Chinampas — floating gardens","points":28,"explanation":"This is associated with the Aztecs — artificial island gardens in the lake dramatically expanded agricultural output in a limited space."},{"text":"Inca used terrace farming on mountainsides","points":22,"explanation":"This is associated with the Inca — carving flat platforms into Andean slopes allowed farming at high altitudes where flat land was scarce."},{"text":"Inca maintained control through roads","points":14,"explanation":"This is associated with the Inca — an extensive road network allowed the empire to move armies, goods, and messages across the Andes."}]},{"id":"r3","question":"Name something associated with the Renaissance or Reformation","multiplier":1,"answers":[{"text":"Humanism focused on human potential","points":36,"explanation":"This is associated with the Renaissance — humanists celebrated human achievement, reason, and classical learning over purely religious concerns."},{"text":"Martin Luther posted his 95 Theses","points":28,"explanation":"This is associated with the Reformation — Luther's 1517 challenge to church corruption sparked a religious revolution across Europe."},{"text":"Printing press spread Protestant ideas","points":20,"explanation":"This is associated with the Reformation — Gutenberg's press allowed Luther's ideas to reach mass audiences faster than the Church could respond."},{"text":"Jesuits led the Catholic Counter-Reformation","points":16,"explanation":"This is associated with the Reformation — the Society of Jesus used education and missions to win back Catholics and spread the faith globally."}]},{"id":"r4","question":"Name something associated with the Scientific Revolution or Enlightenment","multiplier":2,"answers":[{"text":"Heliocentric model placed the sun at center","points":34,"explanation":"This is associated with the Scientific Revolution — Copernicus proposed and Galileo proved that the Earth orbits the sun, not the reverse."},{"text":"Newton defined the laws of gravity and motion","points":26,"explanation":"This is associated with the Scientific Revolution — Newton's Principia Mathematica described the physical laws governing the universe."},{"text":"Locke argued people are born with natural rights","points":18,"explanation":"This is associated with the Enlightenment — Locke's natural rights of life, liberty, and property directly influenced American and French revolutionaries."},{"text":"Galileo championed the heliocentric model","points":14,"explanation":"This is associated with the Scientific Revolution — Galileo's telescope observations confirmed Copernicus and led to his trial by the Church."},{"text":"Hobbes argued people need an absolute ruler","points":8,"explanation":"This is associated with the Enlightenment — Hobbes's Leviathan argued humans are naturally selfish and need a strong sovereign to maintain order."}]},{"id":"r5","question":"Name something associated with the Age of Exploration","multiplier":2,"answers":[{"text":"Columbian Exchange — global transfer of goods and disease","points":38,"explanation":"This is associated with the Age of Exploration — contact between hemispheres exchanged crops, animals, and devastating diseases that reshaped both worlds."},{"text":"Mercantilism — colonies as sources of wealth","points":26,"explanation":"This is associated with the Age of Exploration — European powers viewed colonies as suppliers of raw materials to enrich the mother country."},{"text":"Treaty of Tordesillas divided new lands","points":18,"explanation":"This is associated with the Age of Exploration — Spain and Portugal split the non-European world between them to avoid conflict."},{"text":"Cortes conquered the Aztec Empire","points":12,"explanation":"This is associated with the Age of Exploration — the Spanish conquistador used alliances with Aztec enemies and disease to defeat Tenochtitlan."},{"text":"Pizarro conquered the Inca Empire","points":6,"explanation":"This is associated with the Age of Exploration — Pizarro's small force exploited Inca civil war and disease to topple a vast empire."}]},{"id":"r6","question":"Name something associated with Absolutism","multiplier":2,"answers":[{"text":"Louis XIV centralized French power","points":40,"explanation":"This is associated with Absolutism — the Sun King removed nobles from government, built Versailles to control them, and declared 'L'état, c'est moi.'"},{"text":"Peter the Great westernized Russia","points":30,"explanation":"This is associated with Absolutism — Peter forced Russian nobles to adopt Western dress, customs, and technology to modernize his empire."},{"text":"Machiavelli advised rulers to be feared","points":20,"explanation":"This is associated with Absolutism — The Prince argued rulers should prioritize power over morality, doing whatever was necessary to maintain control."},{"text":"Peter built St. Petersburg as new capital","points":10,"explanation":"This is associated with Absolutism — Peter constructed a Western-style capital on the Baltic to symbolize Russia's new European identity."}]},{"id":"r7","question":"Name something associated with the French Revolution","multiplier":3,"answers":[{"text":"Third Estate bore all the tax burden","points":34,"explanation":"This is associated with the French Revolution — commoners paid taxes while the nobility and clergy were exempt, fueling resentment and revolt."},{"text":"Storming of the Bastille sparked the revolution","points":27,"explanation":"This is associated with the French Revolution — the July 14, 1789 attack on the royal prison became the symbol of popular uprising."},{"text":"Reign of Terror — mass executions of enemies","points":20,"explanation":"This is associated with the French Revolution — Robespierre's Committee of Public Safety executed thousands accused of opposing the revolution."},{"text":"Robespierre led the executions","points":12,"explanation":"This is associated with the French Revolution — the radical leader oversaw the Terror until he was himself guillotined in 1794."},{"text":"Napoleon seized power and ended the chaos","points":7,"explanation":"This is associated with the French Revolution — Napoleon's 1799 coup ended the revolutionary period and established a new kind of authoritarian rule."}]}]}};
+
+// ══ SETUP ══
+function populateUnits() {
+  const sel = document.getElementById('unitSelect');
+  Object.entries(UNITS).forEach(([k, d]) => {
+    const o = document.createElement('option');
+    o.value = k; o.textContent = d.unit;
+    sel.appendChild(o);
+  });
+}
+populateUnits();
+
+document.getElementById('unitSelect').addEventListener('change', () => {
+  const key = document.getElementById('unitSelect').value;
+  document.getElementById('startBtn').disabled = !key;
+  document.getElementById('startBtn').textContent = key ? 'START GAME' : 'CHOOSE A UNIT TO BEGIN';
+});
+
+document.getElementById('aiToggle').addEventListener('change', e => {
+  aiEnabled = e.target.checked;
+  const s = document.getElementById('aiStatus');
+  s.textContent = aiEnabled ? 'Feedback: ON' : 'Feedback: OFF';
+  s.className = 'ai-status' + (aiEnabled ? ' on' : '');
+});
+
+document.getElementById('startBtn').addEventListener('click', () => {
+  const key = document.getElementById('unitSelect').value;
+  if (!key) return;
+  gameData = UNITS[key];
+  initGame();
+});
+
+// ══ INIT ══
+function initGame() {
+  state.roundIdx = 0;
+  state.totalScore = 0;
+  state.totalCorrect = 0;
+  state.totalAttempts = 0;
+  state.roundScores = [];
+
+  // Build pips
+  const pips = document.getElementById('progPips');
+  pips.innerHTML = '';
+  gameData.rounds.forEach(() => {
+    const p = document.createElement('div');
+    p.className = 'prog-pip';
+    pips.appendChild(p);
+  });
+
+  showScreen('gameScreen');
+  loadRound(0);
+}
+
+// ══ LOAD ROUND ══
+function loadRound(idx) {
+  const round = gameData.rounds[idx];
+  state.strikes = 0;
+  state.foundIndices = [];
+  state.stealActive = false;
+  state.roundDone = false;
+
+  document.getElementById('hdrScore').textContent = state.totalScore;
+  document.getElementById('progLabel').textContent = 'Round ' + (idx+1) + ' of ' + gameData.rounds.length;
+  updatePips(idx);
+
+  document.getElementById('pollLabel').textContent = gameData.poll_label || '100 historians were surveyed...';
+  document.getElementById('questionText').textContent = round.question;
+  const mb = document.getElementById('multBadge');
+  if (round.multiplier > 1) { mb.textContent = '×' + round.multiplier + ' POINT ROUND'; mb.style.display = 'inline-block'; AudioEngine.multiplierStart(round.multiplier); }
+  else { mb.style.display = 'none'; AudioEngine.questionReveal(); }
+
+  updateMatched(0, round.answers.length);
+
+  // Reset strikes
+  for (let i = 1; i <= 3; i++) document.getElementById('sx' + i).classList.remove('active');
+  document.getElementById('strikesLabel').textContent = '0 strikes';
+
+  // Hide steal, AI, round complete
+  document.getElementById('stealPrompt').classList.remove('show');
+  dismissAI();
+  document.getElementById('roundComplete').classList.remove('show');
+
+  // Build bank: 5 real answers + 5 phantoms from other rounds, shuffled
+  const bank = buildBank(idx, round);
+  renderBank(bank, round);
+
+  // Build pre-numbered slots
+  renderSlots(round);
+}
+
+function updateSoloPhantomLabel() {
+  const val = parseInt(document.getElementById('soloPhantomSlider').value);
+  const label = document.getElementById('soloPhantomLabel');
+  label.textContent = val === 0 ? 'No distractors' : val === 1 ? '1 distractor' : val + ' distractors';
+}
+
+// ══ BANK BUILDER ══
+function buildBank(roundIdx, round) {
+  const phantomCount = parseInt(document.getElementById('soloPhantomSlider').value);
+  const real = round.answers.map((a, i) => ({ text: a.text, real: true, answerIdx: i }));
+
+  // Collect all answers from other rounds as pool
+  const pool = [];
+  gameData.rounds.forEach((r, ri) => {
+    if (ri === roundIdx) return;
+    r.answers.forEach(a => {
+      if (!real.some(x => x.text === a.text) && !pool.some(x => x.text === a.text)) {
+        pool.push(a.text);
+      }
+    });
+  });
+
+  // Shuffle pool and pick up to phantomCount
+  for (let i = pool.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
+  }
+  const phantoms = pool.slice(0, phantomCount).map(t => ({ text: t, real: false, answerIdx: null }));
+
+  return shuffle([...real, ...phantoms]);
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length-1; i > 0; i--) { const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+  return a;
+}
+
+// ══ RENDER ══
+function renderBank(bank, round) {
+  const el = document.getElementById('bankChips');
+  el.innerHTML = '';
+  bank.forEach(item => {
+    const chip = document.createElement('button');
+    chip.className = 'chip';
+    chip.textContent = item.text;
+    chip.dataset.real = item.real;
+    chip.dataset.answerIdx = item.answerIdx ?? '';
+    chip.setAttribute('aria-label', item.text);
+    chip.addEventListener('click', () => onChipClick(chip, item, round));
+    el.appendChild(chip);
+  });
+}
+
+function renderSlots(round) {
+  const wrap = document.getElementById('slotsWrap');
+  wrap.innerHTML = '';
+  round.answers.forEach((ans, i) => {
+    const pts = ans.points * round.multiplier;
+    const explanation = ans.explanation || '';
+
+    const outer = document.createElement('div');
+    outer.className = 'slot-wrap';
+    outer.id = 'slotwrap-' + i;
+
+    const slot = document.createElement('div');
+    slot.className = 'slot';
+    slot.id = 'slot-' + i;
+    slot.innerHTML = `
+      <div class="slot-num">${i + 1}</div>
+      <div class="slot-content">
+        <div class="slot-placeholder">—</div>
+        <div class="slot-text"></div>
+      </div>
+      <div class="slot-pts">${pts}</div>
+      <button class="slot-info-btn" id="infobtn-${i}" aria-label="Explanation for answer ${i+1}" onclick="toggleExplain(${i})" title="Learn more">ⓘ</button>`;
+
+    const explainPanel = document.createElement('div');
+    explainPanel.className = 'slot-explain';
+    explainPanel.id = 'explain-' + i;
+    explainPanel.innerHTML = `<div class="slot-explain-inner">${explanation}</div>`;
+
+    outer.appendChild(slot);
+    if (explanation) outer.appendChild(explainPanel);
+    wrap.appendChild(outer);
+  });
+}
+
+function toggleExplain(idx) {
+  const panel = document.getElementById('explain-' + idx);
+  const btn = document.getElementById('infobtn-' + idx);
+  if (!panel) return;
+  const isOpen = panel.classList.contains('open');
+  panel.classList.toggle('open', !isOpen);
+  btn.classList.toggle('open', !isOpen);
+  btn.setAttribute('aria-expanded', String(!isOpen));
+}
+
+// ══ CHIP CLICK ══
+function onChipClick(chip, item, round) {
+  if (state.roundDone || state.stealActive) return;
+  state.totalAttempts++;
+
+  if (item.real) {
+    // Correct answer
+    correctAnswer(chip, item.answerIdx, round);
+  } else {
+    // Phantom — wrong
+    wrongAnswer(chip, item, round);
+  }
+}
+
+function correctAnswer(chip, answerIdx, round) {
+  const ans = round.answers[answerIdx];
+  const pts = ans.points * round.multiplier;
+
+  state.foundIndices.push(answerIdx);
+  state.totalCorrect++;
+  state.totalScore += pts;
+  document.getElementById('hdrScore').textContent = state.totalScore;
+
+  // Fill the correct slot
+  const slot = document.getElementById('slot-' + answerIdx);
+  slot.classList.add('filled');
+  slot.querySelector('.slot-text').textContent = ans.text;
+  slot.classList.add('reveal-flash');
+
+  // Remove chip from bank
+  chip.remove();
+  dismissAI();
+  AudioEngine.reveal();
+  updateMatched(state.foundIndices.length, round.answers.length);
+
+  if (state.foundIndices.length === round.answers.length) {
+    setTimeout(() => { AudioEngine.roundWin(); endRound(round, true); }, 400);
+  }
+}
+
+function wrongAnswer(chip, item, round) {
+  // Shake chip
+  chip.classList.remove('shake');
+  void chip.offsetWidth;
+  chip.classList.add('shake');
+  setTimeout(() => chip.classList.remove('shake'), 450);
+  AudioEngine.strike();
+
+  // Add strike
+  state.strikes++;
+  const sx = document.getElementById('sx' + state.strikes);
+  if (sx) sx.classList.add('active');
+  document.getElementById('strikesLabel').textContent = state.strikes + (state.strikes === 1 ? ' strike' : ' strikes');
+
+  // AI feedback
+  if (aiEnabled) {
+    showAIFeedback(item.text, round.question, round.answers.map(a => a.text));
+  }
+
+  // 3 strikes → steal
+  if (state.strikes >= 3) {
+    setTimeout(() => triggerSteal(round), aiEnabled ? 0 : 200);
+  }
+}
+
+// ══ STEAL ══
+function triggerSteal(round) {
+  state.stealActive = true;
+  dismissAI();
+
+  // Build steal chips from remaining unfound answers
+  const remaining = round.answers.filter((_, i) => !state.foundIndices.includes(i));
+  const stealChips = document.getElementById('stealChips');
+  stealChips.innerHTML = '';
+
+  remaining.forEach((ans, _) => {
+    const realIdx = round.answers.indexOf(ans);
+    const sc = document.createElement('button');
+    sc.className = 'steal-chip';
+    sc.textContent = ans.text;
+    sc.setAttribute('aria-label', 'Steal: ' + ans.text);
+    sc.addEventListener('click', () => resolveSteal(sc, realIdx, round));
+    stealChips.appendChild(sc);
+  });
+
+  // Also include some phantoms as distractors in steal
+  const bankPhantoms = [...document.querySelectorAll('#bankChips .chip')].filter(c => c.dataset.real === 'false');
+  bankPhantoms.slice(0, 2).forEach(c => {
+    const sc = document.createElement('button');
+    sc.className = 'steal-chip';
+    sc.textContent = c.textContent;
+    sc.dataset.phantom = 'true';
+    sc.setAttribute('aria-label', 'Steal: ' + c.textContent);
+    sc.addEventListener('click', () => resolveStealPhantom(round));
+    stealChips.appendChild(sc);
+  });
+
+  // Shuffle steal chips
+  const shuffled = shuffle([...stealChips.children]);
+  stealChips.innerHTML = '';
+  shuffled.forEach(sc => stealChips.appendChild(sc));
+
+  AudioEngine.steal();
+  document.getElementById('stealPrompt').classList.add('show');
+}
+
+function resolveSteal(chip, answerIdx, round) {
+  // Correct steal
+  state.stealActive = false;
+  document.getElementById('stealPrompt').classList.remove('show');
+  AudioEngine.stealWin();
+
+  const ans = round.answers[answerIdx];
+  const pts = ans.points * round.multiplier;
+  state.foundIndices.push(answerIdx);
+  state.totalCorrect++;
+  state.totalScore += pts;
+  document.getElementById('hdrScore').textContent = state.totalScore;
+
+  const slot = document.getElementById('slot-' + answerIdx);
+  slot.classList.add('filled');
+  slot.querySelector('.slot-text').textContent = ans.text;
+  slot.classList.add('reveal-flash');
+
+  updateMatched(state.foundIndices.length, round.answers.length);
+  setTimeout(() => endRound(round, false), 600);
+}
+
+function resolveStealPhantom(round) {
+  // Wrong steal — round ends, reveal all
+  state.stealActive = false;
+  state.roundDone = true;
+  document.getElementById('stealPrompt').classList.remove('show');
+  AudioEngine.stealFail();
+  revealRemaining(round);
+  setTimeout(() => endRound(round, false), 800);
+}
+
+function revealRemaining(round) {
+  round.answers.forEach((ans, i) => {
+    if (state.foundIndices.includes(i)) return;
+    const slot = document.getElementById('slot-' + i);
+    slot.classList.add('missed-reveal');
+    slot.querySelector('.slot-text').textContent = ans.text;
+  });
+}
+
+// ══ ROUND END ══
+function endRound(round, allFound) {
+  state.roundDone = true;
+  if (allFound) AudioEngine.roundWin();
+
+  // Reveal any remaining
+  revealRemaining(round);
+
+  const roundPts = state.foundIndices.reduce((s, i) => s + round.answers[i].points * round.multiplier, 0);
+  state.roundScores.push({ q: round.question, pts: roundPts, mult: round.multiplier,
+    found: state.foundIndices.length, total: round.answers.length });
+
+  // Build summary
+  const rows = document.getElementById('rcRows');
+  rows.innerHTML = '';
+  round.answers.forEach((ans, i) => {
+    const got = state.foundIndices.includes(i);
+    const pts = ans.points * round.multiplier;
+    const row = document.createElement('div');
+    row.className = 'rc-row ' + (got ? 'got' : 'missed');
+    row.innerHTML = `<span class="rc-icon">${got ? '✓' : '—'}</span>
+      <span class="rc-txt">${ans.text}</span>
+      ${got ? `<span class="rc-pts">+${pts}</span>` : ''}`;
+    rows.appendChild(row);
+  });
+
+  document.getElementById('rcTitle').textContent = allFound ? 'ROUND COMPLETE!' : 'ROUND OVER';
+  document.getElementById('rcSub').innerHTML = `You earned <span>${roundPts}</span> points this round`;
+
+  const isLast = state.roundIdx >= gameData.rounds.length - 1;
+  document.getElementById('nextRoundBtn').textContent = isLast ? 'SEE FINAL SCORE →' : 'NEXT ROUND →';
+  document.getElementById('roundComplete').classList.add('show');
+  window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+}
+
+document.getElementById('nextRoundBtn').addEventListener('click', () => {
+  const isLast = state.roundIdx >= gameData.rounds.length - 1;
+  if (isLast) { showEndScreen(); return; }
+  state.roundIdx++;
+  document.getElementById('roundComplete').classList.remove('show');
+  loadRound(state.roundIdx);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// ══ AI FEEDBACK ══
+// Looks up the hardcoded explanation stored on the answer object in UNITS.
+// No API call, no network, no cost — works offline and instantly.
+function showAIFeedback(wrongText, question, correctAnswers) {
+  // Find the explanation by searching all rounds of the current unit
+  let explanation = null;
+  for (const round of gameData.rounds) {
+    const match = round.answers.find(a => a.text === wrongText);
+    if (match && match.explanation) {
+      explanation = match.explanation;
+      break;
+    }
+  }
+  if (!explanation) return; // No explanation available — fail silently
+
+  const panel = document.getElementById('aiPanel');
+  const body = document.getElementById('aiPanelBody');
+  body.innerHTML = `<div class="ai-text">${explanation}</div>`;
+  panel.classList.add('show');
+}
+
+function dismissAI() { document.getElementById('aiPanel').classList.remove('show'); }
+
+// ══ END SCREEN ══
+function showEndScreen() {
+  AudioEngine.gameOver();
+  const maxPossible = gameData.rounds.reduce((s, r) => s + r.answers.reduce((x, a) => x + a.points * r.multiplier, 0), 0);
+  const accuracy = state.totalAttempts > 0 ? Math.round(state.totalCorrect / state.totalAttempts * 100) : 0;
+
+  document.getElementById('endScore').textContent = state.totalScore;
+  document.getElementById('endMax').textContent = 'out of ' + maxPossible + ' possible points';
+  document.getElementById('endAccuracy').innerHTML = 'Accuracy: <span>' + accuracy + '%</span>';
+
+  const bd = document.getElementById('endBreakdown');
+  bd.innerHTML = '';
+  state.roundScores.forEach((r, i) => {
+    const row = document.createElement('div');
+    row.className = 'end-row';
+    row.innerHTML = `<span>Round ${i+1}${r.mult>1?' (×'+r.mult+')':''} — ${r.found}/${r.total} correct</span><span class="end-row-pts">${r.pts} pts</span>`;
+    bd.appendChild(row);
+  });
+
+  showScreen('endScreen');
+}
+
+// ══ UTILS ══
+function updateMatched(found, total) {
+  document.getElementById('qMatched').textContent = found + ' / ' + total + ' found';
+}
+
+function updatePips(activeIdx) {
+  document.querySelectorAll('.prog-pip').forEach((p, i) => {
+    p.className = 'prog-pip' + (i < activeIdx ? ' done' : i === activeIdx ? ' active' : '');
+  });
+}
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function restartGame() { initGame(); }
+function goSetup() { showScreen('setupScreen'); }
+
+function printResults() {
+  window.print();
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Survey Showdown — Global 9 · Host · EdSim</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d0f14;--surf:#161922;--surf2:#1e2230;--surf3:#252a3a;
+  --border:#2e3448;--border-hi:#3d4562;
+  --text:#e8ecf4;--dim:#7a8399;--faint:#2a3048;
+  --gold:#f5c842;--gold-dim:#b89020;--gold-glow:rgba(245,200,66,0.18);
+  --red:#e03e3e;--red-dim:#8a1f1f;--red-glow:rgba(224,62,62,0.2);
+  --green:#27c97a;--green-dim:#145c38;--green-glow:rgba(39,201,122,0.18);
+  --blue:#3a7bd5;--purple:#8b5cf6;--orange:#f97316;
+  --team1:#2ecc71;--team2:#f0f0f0;--team3:#27c97a;--team4:#f97316;--team5:#8b5cf6;--team6:#f5c842;
+  --fd:'Bebas Neue',sans-serif;--fb:'DM Sans',sans-serif;--fm:'DM Mono',monospace;
+  --r:8px;--rs:4px;--ease:cubic-bezier(.4,0,.2,1);
+}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:var(--fb)}
+
+/* ══ PASSWORD GATE ══ */
+#gate{
+  position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;
+  justify-content:center;z-index:100;flex-direction:column;gap:24px;
+  background-image:radial-gradient(ellipse at 50% 30%,rgba(245,200,66,0.06) 0%,transparent 60%);
+}
+.gate-logo{font-family:var(--fd);font-size:52px;color:var(--gold);letter-spacing:4px;text-align:center}
+.gate-sub{font-family:var(--fm);font-size:11px;color:var(--dim);letter-spacing:.15em;text-transform:uppercase}
+.gate-card{background:var(--surf);border:1px solid var(--border);border-radius:12px;padding:28px;width:320px}
+.gate-card h2{font-family:var(--fd);font-size:24px;letter-spacing:2px;margin-bottom:16px}
+.gate-field label{display:block;font-family:var(--fm);font-size:10px;color:var(--dim);
+  letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px}
+.gate-field input{width:100%;background:var(--surf2);border:1px solid var(--border);border-radius:var(--rs);
+  padding:10px 14px;color:var(--text);font-family:var(--fb);font-size:15px;outline:none;
+  transition:border-color .2s;margin-bottom:12px;letter-spacing:.2em}
+.gate-field input:focus{border-color:var(--gold)}
+.gate-btn{width:100%;background:var(--gold);color:#0d0f14;font-family:var(--fd);font-size:20px;
+  letter-spacing:2px;border:none;border-radius:var(--r);padding:11px;cursor:pointer;transition:all .2s}
+.gate-btn:hover{background:#ffd84d}
+.gate-error{font-family:var(--fm);font-size:11px;color:var(--red);margin-top:8px;
+  min-height:16px;letter-spacing:.04em}
+
+/* ══ HOST LAYOUT ══ */
+#hostScreen{display:none;height:100%;flex-direction:column}
+#hostScreen.active{display:flex}
+
+.host-home-btn{font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.1em;
+  text-decoration:none;padding:4px 10px;border:1px solid var(--border);border-radius:4px;
+  transition:all .2s;white-space:nowrap}
+.host-home-btn:hover{color:var(--gold);border-color:var(--gold-dim)}
+.host-header{background:var(--surf);border-bottom:2px solid var(--border);
+  padding:10px 16px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.host-logo{font-family:var(--fd);font-size:18px;color:var(--gold);letter-spacing:2px}
+.host-badge{font-family:var(--fm);font-size:10px;color:var(--dim);background:var(--faint);
+  padding:2px 10px;border-radius:20px;letter-spacing:.08em}
+.host-unit{font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.06em}
+
+.host-body{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:12px}
+.gc-top{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;background:var(--surf2);
+  border:1px solid var(--border);border-radius:var(--r);padding:12px 14px}
+.gc-top-section{display:flex;flex-direction:column;gap:4px}
+.gc-top-section + .gc-top-section{border-left:1px solid var(--border);padding-left:14px}
+.host-body::-webkit-scrollbar{width:4px}
+.host-body::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+
+/* Two-column game controls layout — 40/60 split so answers panel has room */
+.gc-cols{display:grid;grid-template-columns:1fr 2fr;gap:14px;align-items:start}
+.gc-left{display:flex;flex-direction:column;gap:10px}
+.gc-right{display:flex;flex-direction:column;gap:10px}
+
+/* Setup in host */
+.host-setup{background:var(--surf);border:1px solid var(--border);border-radius:var(--r);padding:16px}
+.host-setup h3{font-family:var(--fd);font-size:20px;letter-spacing:1px;margin-bottom:14px}
+.hs-field{margin-bottom:12px}
+.hs-field label{display:block;font-family:var(--fm);font-size:10px;color:var(--dim);
+  letter-spacing:.1em;text-transform:uppercase;margin-bottom:5px}
+.hs-field input,
+.hs-field select{width:100%;background:var(--surf2);border:1px solid var(--border);border-radius:var(--rs);
+  padding:9px 12px;color:var(--text);font-family:var(--fb);font-size:14px;outline:none;transition:border-color .2s}
+.hs-field input:focus,.hs-field select:focus{border-color:var(--gold)}
+.hs-field input::placeholder{color:var(--dim)}
+.team-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.start-game-btn{width:100%;background:var(--gold);color:#0d0f14;font-family:var(--fd);font-size:20px;
+  letter-spacing:2px;border:none;border-radius:var(--r);padding:11px;cursor:pointer;
+  transition:all .2s;margin-top:4px}
+.start-game-btn:hover{background:#ffd84d}
+
+/* Scores */
+.host-scores{display:grid;grid-template-columns:repeat(auto-fit,minmax(80px,1fr));gap:8px}
+.host-score-card{background:var(--surf2);border-radius:var(--r);padding:10px 12px;text-align:center;border:2px solid transparent}
+.host-score-card.t1{border-color:var(--team1)}
+.host-score-card.t2{border-color:var(--team2)}
+.host-score-card.t3{border-color:var(--team3)}
+.host-score-card.t4{border-color:var(--team4)}
+.host-score-card.t5{border-color:var(--team5)}
+.host-score-card.t6{border-color:var(--team6)}
+.hsc-name{font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.08em;text-transform:uppercase;margin-bottom:2px}
+.hsc-val{font-family:var(--fd);font-size:30px;line-height:1}
+.hsc-edit-btn{font-family:var(--fm);font-size:9px;color:var(--dim);background:none;border:none;
+  cursor:pointer;opacity:.5;padding:0;display:block;margin:2px auto 0;letter-spacing:.04em}
+.hsc-edit-btn:hover{opacity:1;color:var(--text)}
+.score-edit-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;
+  align-items:center;justify-content:center}
+.score-edit-modal.show{display:flex}
+.score-edit-card{background:var(--surf);border:1px solid var(--border);border-radius:12px;
+  padding:24px;width:280px;text-align:center}
+.score-edit-card h3{font-family:var(--fd);font-size:20px;letter-spacing:1px;margin-bottom:16px}
+.score-edit-card input{width:100%;background:var(--surf2);border:1px solid var(--border);
+  border-radius:var(--rs);padding:10px;color:var(--text);font-family:var(--fd);font-size:32px;
+  text-align:center;letter-spacing:2px;outline:none;margin-bottom:12px}
+.score-edit-card input:focus{border-color:var(--gold)}
+.score-edit-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.score-edit-btns button{padding:10px;border:none;border-radius:var(--rs);cursor:pointer;
+  font-family:var(--fd);font-size:16px;letter-spacing:1px}
+.sed-ok{background:var(--gold);color:#0d0f14}
+.sed-cancel{background:var(--surf3);color:var(--dim)}
+.host-score-card.t1 .hsc-val{color:var(--team1)}
+.host-score-card.t2 .hsc-val{color:var(--team2)}
+.host-score-card.t3 .hsc-val{color:var(--team3)}
+.host-score-card.t4 .hsc-val{color:var(--team4)}
+.host-score-card.t5 .hsc-val{color:var(--team5)}
+.host-score-card.t6 .hsc-val{color:var(--team6)}
+
+/* Pot */
+.host-pot{text-align:center;background:var(--faint);border-radius:var(--rs);padding:8px}
+.pot-label{font-family:var(--fm);font-size:9px;color:var(--dim);letter-spacing:.1em;text-transform:uppercase}
+.pot-val{font-family:var(--fd);font-size:26px;color:var(--gold)}
+
+/* Turn */
+.turn-btns{display:grid;grid-template-columns:repeat(auto-fit,minmax(80px,1fr));gap:8px}
+.turn-btn{padding:8px;border:2px solid var(--border);border-radius:var(--rs);
+  font-family:var(--fd);font-size:13px;letter-spacing:1px;cursor:pointer;background:var(--surf2);
+  color:var(--dim);transition:all .2s;text-align:center}
+.turn-btn.at1{border-color:var(--team1);color:var(--team1);background:rgba(46,204,113,0.1)}
+.turn-btn.at2{border-color:var(--team2);color:var(--team2);background:rgba(240,240,240,0.1)}
+.turn-btn.at3{border-color:var(--team3);color:var(--team3);background:rgba(39,201,122,0.1)}
+.turn-btn.at4{border-color:var(--team4);color:var(--team4);background:rgba(249,115,22,0.1)}
+.turn-btn.at5{border-color:var(--team5);color:var(--team5);background:rgba(139,92,246,0.1)}
+.turn-btn.at6{border-color:var(--team6);color:var(--team6);background:rgba(245,200,66,0.1)}
+
+/* Round info */
+.round-info{background:var(--surf2);border:1px solid var(--border);border-radius:var(--r);padding:12px 14px}
+.ri-label{font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
+.ri-q{font-size:13px;color:var(--text);line-height:1.5;font-weight:500}
+.ri-mult{display:inline-block;background:var(--gold);color:#0d0f14;font-family:var(--fd);
+  font-size:13px;padding:2px 10px;border-radius:20px;margin-top:6px;letter-spacing:1px}
+
+/* Answer list */
+.section-label{font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px}
+.host-answer{display:flex;align-items:center;gap:8px;background:var(--surf2);border:1px solid var(--border);
+  border-radius:var(--rs);padding:9px 12px;margin-bottom:6px;transition:all .2s}
+.host-answer.revealed{background:var(--green-dim);border-color:var(--green);opacity:.7}
+.ha-pts{font-family:var(--fd);font-size:17px;color:var(--gold);min-width:30px;text-align:right;flex-shrink:0}
+.ha-text{font-size:13px;color:var(--text);flex:1}
+.ha-revealed .ha-text{color:var(--green)}
+.ha-reveal-btn{font-family:var(--fm);font-size:10px;background:var(--gold);color:#0d0f14;
+  border:none;border-radius:3px;padding:3px 8px;cursor:pointer;flex-shrink:0;font-weight:600;min-height:28px}
+.host-answer.revealed .ha-reveal-btn{display:none}
+
+/* Strikes */
+.strikes-row{display:flex;gap:8px;align-items:center}
+.strike-dot{width:36px;height:36px;border-radius:50%;background:var(--surf2);border:2px solid var(--border);
+  color:var(--dim);font-size:16px;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center}
+.strike-dot:hover{border-color:var(--red);color:var(--red)}
+.strike-dot.active{background:var(--red-dim);border-color:var(--red);color:var(--red)}
+.clear-s{font-family:var(--fm);font-size:10px;background:none;border:1px solid var(--border);
+  border-radius:3px;padding:4px 8px;color:var(--dim);cursor:pointer;margin-left:auto;min-height:28px}
+.clear-s:hover{border-color:var(--border-hi);color:var(--text)}
+
+/* Steal */
+.steal-section{background:var(--surf2);border:1px solid var(--border);border-radius:var(--r);padding:12px 14px}
+.steal-toggle{width:100%;padding:9px;background:var(--purple);color:white;border:none;
+  border-radius:var(--rs);font-family:var(--fd);font-size:17px;letter-spacing:1px;cursor:pointer;
+  transition:all .2s;margin-bottom:8px;min-height:44px}
+.steal-toggle:hover{filter:brightness(1.15)}
+.steal-toggle.off{background:var(--surf3);color:var(--dim)}
+.steal-result{display:none;grid-template-columns:1fr 1fr;gap:8px}
+.steal-result.show{display:grid}
+.steal-res-btn{padding:8px;border:none;border-radius:var(--rs);font-family:var(--fd);font-size:15px;
+  letter-spacing:1px;cursor:pointer;transition:all .15s;min-height:44px}
+.steal-res-btn.win{background:var(--green-dim);color:var(--green)}
+.steal-res-btn.win:hover{background:var(--green);color:#0d0f14}
+.steal-res-btn.lose{background:var(--red-dim);color:var(--red)}
+.steal-res-btn.lose:hover{background:var(--red);color:white}
+
+/* Footer controls */
+.host-footer{border-top:1px solid var(--border);padding:12px 14px;display:flex;gap:8px;flex-shrink:0}
+.hf-btn{flex:1;padding:10px;border:1px solid var(--border);border-radius:var(--rs);
+  background:var(--surf2);color:var(--text);font-family:var(--fb);font-size:13px;
+  cursor:pointer;transition:all .2s;font-weight:500;min-height:44px}
+.hf-btn:hover{border-color:var(--border-hi);background:var(--surf3)}
+.hf-btn.primary{background:var(--gold);color:#0d0f14;border-color:var(--gold);font-weight:700}
+.hf-btn.primary:hover{background:#ffd84d}
+.hf-btn.danger{border-color:var(--red-dim);color:var(--red)}
+.hf-btn.danger:hover{background:var(--red-dim)}
+
+/* Word bank toggle switch */
+.wb-toggle-sw{position:relative;display:inline-block;width:42px;height:24px;cursor:pointer}
+.wb-toggle-sw input{opacity:0;width:0;height:0}
+.wb-toggle-sl{position:absolute;inset:0;background:var(--surf3);border-radius:24px;
+  transition:.25s;border:1px solid var(--border)}
+.wb-toggle-sl:before{content:'';position:absolute;width:18px;height:18px;left:2px;bottom:2px;
+  background:var(--dim);border-radius:50%;transition:.25s}
+.wb-toggle-sw input:checked + .wb-toggle-sl{background:var(--gold);border-color:var(--gold-dim)}
+.wb-toggle-sw input:checked + .wb-toggle-sl:before{transform:translateX(18px);background:#0d0f14}
+
+@media print{
+  #gate,#hostScreen{display:none!important}
+  #printGuide{display:block!important}
+}
+#printGuide{display:none}
+.pg-header{font-size:28px;font-weight:700;margin-bottom:20px}
+.pg-round{margin-bottom:20px;break-inside:avoid}
+.pg-round h3{font-size:15px;font-weight:700;margin-bottom:8px;padding-bottom:4px;border-bottom:2px solid #333}
+.pg-answer{display:flex;justify-content:space-between;padding:4px 0;font-size:13px;border-bottom:1px solid #eee}
+
+.award-section{margin-top:6px}
+.award-btns{display:flex;flex-direction:column;gap:6px;margin-top:6px}
+.award-btn{width:100%;padding:8px 10px;border:none;border-radius:var(--rs);font-family:var(--fd);font-size:14px;letter-spacing:.04em;cursor:pointer;transition:filter .15s;text-align:left}
+.award-btn:hover{filter:brightness(1.2)}
+.award-btn:disabled{opacity:.35;cursor:not-allowed;filter:none}
+</style>
+</head>
+<body>
+
+<!-- PASSWORD GATE -->
+<div id="gate">
+  <div class="gate-logo">SURVEY<br>SHOWDOWN</div>
+  <div class="gate-sub">Host Access · EdSim</div>
+  <div class="gate-card">
+    <h2>HOST LOGIN</h2>
+    <div class="gate-field">
+      <label>Password</label>
+      <input type="password" id="pwInput" placeholder="••••••••" autocomplete="off"/>
+    </div>
+    <button class="gate-btn" onclick="checkPassword()">ENTER</button>
+    <div class="gate-error" id="gateError"></div>
+  </div>
+  <a href="../index.html" style="font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.1em;text-decoration:none;margin-top:8px;opacity:.6">⌂ Back to Home</a>
+</div>
+
+<!-- HOST SCREEN -->
+<div id="hostScreen">
+  <div class="host-header">
+    <a class="host-home-btn" href="../index.html" aria-label="Home">⌂ HOME</a>
+    <div class="host-logo">SURVEY SHOWDOWN</div>
+    <div class="host-unit" id="hostUnit">—</div>
+    <div id="hostRoomDisplay" style="display:none;text-align:center">
+      <div style="font-family:var(--fm);font-size:9px;color:var(--dim);letter-spacing:.1em">ROOM CODE</div>
+      <div id="hostRoomCode" style="font-family:var(--fd);font-size:28px;color:var(--gold);letter-spacing:4px">—</div>
+    </div>
+    <div class="host-badge">HOST VIEW</div>
+  </div>
+
+  <div class="host-body">
+
+    <!-- SETUP (shown before game starts) -->
+    <div class="host-setup" id="hostSetup">
+      <h3>GAME SETUP</h3>
+      <div class="hs-field">
+        <label>Question Set</label>
+        <select id="unitSelect">
+          <option value="">— Choose a unit —</option>
+        </select>
+      </div>
+      <div class="hs-field">
+        <label>Number of Teams</label>
+        <select id="teamCount" onchange="updateTeamFields()">
+          <option value="2">2 Teams</option>
+          <option value="3">3 Teams</option>
+          <option value="4">4 Teams</option>
+          <option value="5">5 Teams</option>
+          <option value="6">6 Teams</option>
+        </select>
+      </div>
+      <div id="teamNameFields" class="team-row">
+        <div class="hs-field"><label>Team 1 Name</label><input type="text" id="t1name" placeholder="Green" maxlength="16"/></div>
+        <div class="hs-field"><label>Team 2 Name</label><input type="text" id="t2name" placeholder="White" maxlength="16"/></div>
+      </div>
+      <div id="setupError" style="font-family:var(--fm);font-size:11px;color:var(--red);min-height:16px;margin-bottom:8px;letter-spacing:.04em"></div>
+      <button class="start-game-btn" id="startGameBtn" onclick="startGame()">START GAME</button>
+      <button class="start-game-btn" onclick="window.open('game-class.html','_blank')"
+        style="margin-top:8px;background:var(--surf2);color:var(--dim);border:1px solid var(--border)">
+        🖥️ Open Student Scoreboard
+      </button>
+    </div>
+
+    <!-- GAME CONTROLS (hidden until game starts) -->
+    <div id="gameControls" style="display:none;flex-direction:column;gap:12px">
+      <!-- TOP STRIP: scores + word bank side by side -->
+      <div class="gc-top">
+        <div class="gc-top-section" style="flex:1;min-width:0">
+          <div class="section-label">SCORE</div>
+          <div class="host-scores" id="hostScoreCards"></div>
+        </div>
+        <div class="gc-top-section" style="min-width:220px">
+          <div class="section-label">WORD BANK ON SCOREBOARD</div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+            <span style="font-size:12px;color:var(--dim)">Show word bank</span>
+            <label class="wb-toggle-sw" aria-label="Toggle word bank">
+              <input type="checkbox" id="wbToggle" onchange="toggleWordBank()"/>
+              <span class="wb-toggle-sl"></span>
+            </label>
+          </div>
+          <div id="wbSliderWrap" style="display:none">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+              <span style="font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.06em">EASIER</span>
+              <span style="font-family:var(--fd);font-size:14px;color:var(--gold)" id="phantomCountLabel">5 phantoms</span>
+              <span style="font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.06em">HARDER</span>
+            </div>
+            <input type="range" id="phantomSlider" min="0" max="10" value="5" step="1"
+              oninput="updatePhantomCount()" style="width:100%;accent-color:var(--gold);cursor:pointer"/>
+          </div>
+        </div>
+      </div>
+
+      <div class="gc-cols">
+
+        <!-- LEFT COL: pot, award, turn, strikes, steal -->
+        <div class="gc-left">
+
+          <!-- Pot + Award -->
+          <div class="host-pot">
+            <div class="pot-label">Round Pot</div>
+            <div class="pot-val" id="hostPot">0</div>
+            <div class="award-section">
+              <div class="pot-label" style="margin-bottom:4px">AWARD POT TO</div>
+              <div class="award-btns" id="awardBtns"></div>
+            </div>
+          </div>
+
+          <!-- Turn -->
+          <div>
+            <div class="section-label">ACTIVE TEAM</div>
+            <div class="turn-btns" id="turnBtns"></div>
+          </div>
+
+          <!-- Strikes -->
+          <div>
+            <div class="section-label" style="margin-bottom:8px">STRIKES</div>
+            <div class="strikes-row">
+              <div class="strike-dot" id="sd1" onclick="addStrike()" role="button" aria-label="Strike 1" tabindex="0">✕</div>
+              <div class="strike-dot" id="sd2" onclick="addStrike()" role="button" aria-label="Strike 2" tabindex="0">✕</div>
+              <div class="strike-dot" id="sd3" onclick="addStrike()" role="button" aria-label="Strike 3" tabindex="0">✕</div>
+              <button class="clear-s" onclick="clearStrikes()">Clear</button>
+            </div>
+          </div>
+
+          <!-- Steal -->
+          <div class="steal-section">
+            <div class="section-label" style="margin-bottom:8px">STEAL</div>
+            <button class="steal-toggle off" id="stealToggle" onclick="toggleSteal()">OFFER STEAL</button>
+            <div class="steal-result" id="stealResult">
+              <button class="steal-res-btn win" onclick="resolveSteal(true)">STEAL ✓</button>
+              <button class="steal-res-btn lose" onclick="resolveSteal(false)">MISSED ✗</button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- RIGHT COL: round info + answers -->
+        <div class="gc-right">
+
+          <!-- Round info -->
+          <div class="round-info">
+            <div class="ri-label">Round <span id="ri-num">1</span> of <span id="ri-total">6</span></div>
+            <div class="ri-q" id="ri-q">—</div>
+            <div id="ri-mult" class="ri-mult" style="display:none"></div>
+          </div>
+
+          <!-- Answers -->
+          <div>
+            <div class="section-label">ANSWERS — click to reveal on board</div>
+            <div id="hostAnswerList"></div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- GAME OVER PANEL (hidden until last round) -->
+    <div id="gameOverPanel" style="display:none;background:var(--surf2);border:2px solid var(--gold);
+      border-radius:var(--r);padding:20px;text-align:center;margin-top:8px">
+      <div style="font-family:var(--fd);font-size:32px;color:var(--gold);letter-spacing:3px;margin-bottom:8px">GAME OVER</div>
+      <div id="gameOverResult" style="font-size:14px;color:var(--text);margin-bottom:16px"></div>
+      <button class="start-game-btn" onclick="resetGame()" style="margin-top:0">PLAY AGAIN</button>
+    </div>
+
+  </div>
+
+  <div class="host-footer" id="hostFooter" style="display:none">
+    <button class="hf-btn" onclick="revealAll()">Show All</button>
+    <button class="hf-btn primary" id="nextRoundBtn" onclick="nextRound()">Next Round →</button>
+    <button class="hf-btn danger" onclick="printGuide()">PDF Guide</button>
+  </div>
+</div>
+
+<!-- Print guide -->
+<div id="printGuide"></div>
+
+<script src="https://cdn.ably.com/lib/ably.min-2.js"></script>
+<script src="audio.js"></script>
+<script>
+// ══ PASSWORD ══
+const HOST_PASSWORD = 'feud123';
+
+// ══ ABLY REAL-TIME SYNC ══
+const ABLY_KEY = 'eckTlA.wK-e1w:pii354-e-IUNVit9DO-snbCDZwdHdcnoUWx0bU1V4-A';
+let ablyChannel = null;
+let roomCode = null;
+
+function generateRoomCode() {
+  return Math.floor(1000 + Math.random() * 9000).toString();
+}
+
+async function initAbly(code) {
+  const ably = new Ably.Realtime({ key: ABLY_KEY });
+  ablyChannel = ably.channels.get('feud-room-' + code);
+  // Listen for student "ready" pings and immediately send current state
+  ablyChannel.subscribe('ready', () => { broadcastState(); });
+}
+
+function checkPassword() {
+  const val = document.getElementById('pwInput').value;
+  if (val === HOST_PASSWORD) {
+    document.getElementById('gate').style.display = 'none';
+    document.getElementById('hostScreen').classList.add('active');
+    populateUnitSelect();
+  } else {
+    document.getElementById('gateError').textContent = 'Incorrect password.';
+    document.getElementById('pwInput').value = '';
+    document.getElementById('pwInput').focus();
+  }
+}
+
+document.getElementById('pwInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') checkPassword();
+});
+
+// ══ UNIT DATA (all units embedded) ══
+const UNITS = {"global9-unit1":{"unit":"Global 9 \u2014 Unit 1: Ancient World","poll_label":"100 historians were surveyed...","rounds":[{"id":"r1","question":"Name a defining feature of the Neolithic Revolution","multiplier":1,"answers":[{"text":"Shift from nomadic to sedentary life","points":38},{"text":"Domestication of animals","points":26},{"text":"Development of irrigation systems","points":20},{"text":"Systematic farming of crops","points":11},{"text":"Accumulation of surplus resources","points":5}]},{"id":"r2","question":"Name something associated with Mesopotamia","multiplier":1,"answers":[{"text":"Tigris and Euphrates Rivers","points":36},{"text":"Hammurabi's Code of laws","points":28},{"text":"Fertile Crescent geography","points":18},{"text":"Cuneiform writing system","points":12},{"text":"First written legal framework","points":6}]},{"id":"r3","question":"Name something associated with the Indus Valley Civilization","multiplier":1,"answers":[{"text":"Cities of Mohenjo Daro and Harappa","points":34},{"text":"Himalayan Mountains as geographic barrier","points":26},{"text":"Seasonal monsoon rains","points":20},{"text":"Advanced grid-pattern city planning","points":13},{"text":"Aryan migration after its decline","points":7}]},{"id":"r4","question":"Name something associated with Ancient Egypt or the Huang He civilization","multiplier":2,"answers":[{"text":"Nile River as the source of life","points":37},{"text":"Pharaoh held supreme religious power","points":27},{"text":"Huang He flooded with yellow loess","points":18},{"text":"River floods deposited fertile soil","points":12},{"text":"Civilizations organized around river systems","points":6}]},{"id":"r5","question":"Name something associated with the Abrahamic religions","multiplier":2,"answers":[{"text":"Belief in one god \u2014 monotheism","points":38},{"text":"Covenant traced back to Abraham","points":26},{"text":"Ten Commandments as moral code","points":20},{"text":"Judaism, Christianity, and Islam","points":10},{"text":"Sacred texts guide followers","points":6}]},{"id":"r6","question":"Name something associated with Hinduism or Buddhism","multiplier":3,"answers":[{"text":"Reincarnation \u2014 cycle of rebirth","points":34},{"text":"Karma \u2014 actions affect next life","points":26},{"text":"Caste System \u2014 rigid social hierarchy","points":18},{"text":"Nirvana \u2014 Buddhist enlightenment","points":14},{"text":"The Vedas \u2014 Hindu sacred books","points":8}]}]},"global9-unit2":{"unit":"Global 9 \u2014 Unit 2: Classical & Medieval World","poll_label":"100 historians were surveyed...","rounds":[{"id":"r1","question":"Name something associated with Ancient Greece","multiplier":1,"answers":[{"text":"Democracy developed in Athens","points":38},{"text":"Isolated city-states due to geography","points":26},{"text":"Sparta was a military oligarchy","points":18},{"text":"Peloponnesian War ended the Golden Age","points":12},{"text":"Mediterranean Sea shaped Greek trade","points":6}]},{"id":"r2","question":"Name something associated with Alexander the Great or the Hellenistic World","multiplier":1,"answers":[{"text":"Conquered an empire from Europe to India","points":42},{"text":"Hellenistic Culture blended Greek and Eastern ideas","points":30},{"text":"Spread Greek language and customs","points":18},{"text":"Empire fragmented after his death","points":10}]},{"id":"r3","question":"Name something associated with the Roman Empire","multiplier":1,"answers":[{"text":"Republic \u2014 citizens elected representatives","points":34},{"text":"Twelve Tables \u2014 written legal code","points":26},{"text":"Aqueducts brought fresh water to cities","points":20},{"text":"Concrete made architecture last","points":13},{"text":"Controlled the Mediterranean Sea","points":7}]},{"id":"r4","question":"Name something associated with Classical India","multiplier":2,"answers":[{"text":"Ashoka spread Buddhism through edicts","points":44},{"text":"Gupta Empire advanced math and medicine","points":32},{"text":"Concept of zero developed during Gupta era","points":24}]},{"id":"r5","question":"Name something associated with Classical China","multiplier":2,"answers":[{"text":"Silk Road connected East and West trade","points":36},{"text":"Confucianism guided Han Dynasty rule","points":27},{"text":"Mandate of Heaven justified Zhou authority","points":20},{"text":"Shi Huangdi unified China under Legalism","points":17}]},{"id":"r6","question":"Name something associated with the Byzantine Empire","multiplier":2,"answers":[{"text":"Located on the Bosporus Strait","points":36},{"text":"Justinian's Code reorganized Roman law","points":28},{"text":"Hagia Sophia was its great church","points":18},{"text":"Great Schism split Christianity East and West","points":18}]},{"id":"r7","question":"Name something associated with feudalism in Europe or Japan","multiplier":3,"answers":[{"text":"Serfs were bound to work the land","points":30},{"text":"Shogun held real military power in Japan","points":24},{"text":"Manor was the center of medieval life","points":18},{"text":"Chivalry governed European knights","points":14},{"text":"Bushido governed Japanese samurai","points":8},{"text":"Crusades reopened trade between Europe and East","points":6}]}]},"global9-unit3":{"unit":"Global 9 \u2014 Unit 3: Renaissance to Revolution","poll_label":"100 historians were surveyed...","rounds":[{"id":"r1","question":"Name something associated with the West African Kingdoms","multiplier":1,"answers":[{"text":"Gold-Salt trade across the Sahara","points":42},{"text":"Mansa Musa distributed gold on his hajj","points":30},{"text":"Timbuktu was a center of Islamic culture","points":28}]},{"id":"r2","question":"Name something associated with the Aztec or Inca civilizations","multiplier":1,"answers":[{"text":"Tenochtitlan built on an island","points":36},{"text":"Chinampas \u2014 floating gardens","points":28},{"text":"Inca used terrace farming on mountainsides","points":22},{"text":"Inca maintained control through roads","points":14}]},{"id":"r3","question":"Name something associated with the Renaissance or Reformation","multiplier":1,"answers":[{"text":"Humanism focused on human potential","points":36},{"text":"Martin Luther posted his 95 Theses","points":28},{"text":"Printing press spread Protestant ideas","points":20},{"text":"Jesuits led the Catholic Counter-Reformation","points":16}]},{"id":"r4","question":"Name something associated with the Scientific Revolution or Enlightenment","multiplier":2,"answers":[{"text":"Heliocentric model placed the sun at center","points":34},{"text":"Newton defined the laws of gravity and motion","points":26},{"text":"Locke argued people are born with natural rights","points":18},{"text":"Galileo championed the heliocentric model","points":14},{"text":"Hobbes argued people need an absolute ruler","points":8}]},{"id":"r5","question":"Name something associated with the Age of Exploration","multiplier":2,"answers":[{"text":"Columbian Exchange \u2014 global transfer of goods and disease","points":38},{"text":"Mercantilism \u2014 colonies as sources of wealth","points":26},{"text":"Treaty of Tordesillas divided new lands","points":18},{"text":"Cortes conquered the Aztec Empire","points":12},{"text":"Pizarro conquered the Inca Empire","points":6}]},{"id":"r6","question":"Name something associated with Absolutism","multiplier":2,"answers":[{"text":"Louis XIV centralized French power","points":40},{"text":"Peter the Great westernized Russia","points":30},{"text":"Machiavelli advised rulers to be feared","points":20},{"text":"Peter built St. Petersburg as new capital","points":10}]},{"id":"r7","question":"Name something associated with the French Revolution","multiplier":3,"answers":[{"text":"Third Estate bore all the tax burden","points":34},{"text":"Storming of the Bastille sparked the revolution","points":27},{"text":"Reign of Terror \u2014 mass executions of enemies","points":20},{"text":"Robespierre led the executions","points":12},{"text":"Napoleon seized power and ended the chaos","points":7}]}]}};
+
+function populateUnitSelect() {
+  const sel = document.getElementById('unitSelect');
+  Object.entries(UNITS).forEach(([key, data]) => {
+    const opt = document.createElement('option');
+    opt.value = key;
+    opt.textContent = data.unit;
+    sel.appendChild(opt);
+  });
+}
+
+function updateTeamFields() {
+  const n = parseInt(document.getElementById('teamCount').value);
+  const wrap = document.getElementById('teamNameFields');
+  wrap.innerHTML = '';
+  for (let i = 1; i <= n; i++) {
+    const d = document.createElement('div');
+    d.className = 'hs-field';
+    d.innerHTML = `<label>Team ${i} Name</label><input type="text" id="t${i}name" placeholder="${TEAM_PLACEHOLDERS[i-1]}" maxlength="16"/>`;
+    wrap.appendChild(d);
+  }
+}
+
+function renderTeamUI(names) {
+  const n = names.length;
+  // Score cards
+  const sc = document.getElementById('hostScoreCards');
+  sc.innerHTML = '';
+  names.forEach((name, i) => {
+    sc.innerHTML += `<div class="host-score-card t${i+1}"><div class="hsc-name" id="hsc-t${i+1}">${name}</div><div class="hsc-val" id="hsc-s${i+1}">0</div><button class="hsc-edit-btn" onclick="openScoreEdit(${i})" aria-label="Edit score for ${name}">✎ edit</button></div>`;
+  });
+  // Turn buttons
+  const tb = document.getElementById('turnBtns');
+  tb.innerHTML = '';
+  names.forEach((name, i) => {
+    tb.innerHTML += `<button class="turn-btn" id="tb${i+1}" onclick="setTurn(${i})">${name}</button>`;
+  });
+}
+
+// ══ GAME STATE ══
+let gameData = null;
+let state = {
+  roundIdx: 0,
+  teamCount: 2,
+  scores: [0, 0],
+  pot: 0,
+  strikes: 0,
+  activeTurn: 0,
+  stealActive: false,
+  revealed: [],
+  showWordBank: false,
+  wordBank: [],
+  phantomCount: 5,
+  soundEvent: null,
+};
+const TEAM_COLORS = ['team1','team2','team3','team4','team5','team6'];
+const TEAM_PLACEHOLDERS = ['Green','White','Minutemen','Redcoats','Federalists','Rebels'];
+
+// ══ WORD BANK HELPERS ══
+function buildWordBank(roundIdx) {
+  const round = gameData.rounds[roundIdx];
+  const realAnswers = round.answers.map(a => ({ text: a.text, real: true }));
+
+  // Collect all answers from other rounds as phantom pool
+  const pool = [];
+  gameData.rounds.forEach((r, i) => {
+    if (i === roundIdx) return;
+    r.answers.forEach(a => pool.push(a.text));
+  });
+
+  // Shuffle pool and pick up to phantomCount
+  for (let i = pool.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
+  }
+  const phantoms = pool.slice(0, state.phantomCount).map(t => ({ text: t, real: false }));
+
+  // Combine and shuffle
+  const bank = [...realAnswers, ...phantoms];
+  for (let i = bank.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [bank[i], bank[j]] = [bank[j], bank[i]];
+  }
+  return bank;
+}
+
+function toggleWordBank() {
+  state.showWordBank = document.getElementById('wbToggle').checked;
+  document.getElementById('wbSliderWrap').style.display = state.showWordBank ? 'block' : 'none';
+  if (state.showWordBank && gameData) {
+    state.wordBank = buildWordBank(state.roundIdx);
+  }
+  broadcastState();
+}
+
+function updatePhantomCount() {
+  state.phantomCount = parseInt(document.getElementById('phantomSlider').value);
+  const label = document.getElementById('phantomCountLabel');
+  label.textContent = state.phantomCount === 0 ? 'No phantoms' :
+    state.phantomCount === 1 ? '1 phantom' : state.phantomCount + ' phantoms';
+  if (state.showWordBank && gameData) {
+    state.wordBank = buildWordBank(state.roundIdx);
+    broadcastState();
+  }
+}
+
+async function startGame() {
+  const key = document.getElementById('unitSelect').value;
+  if (!key) {
+    document.getElementById('setupError').textContent = 'Please choose a question set first.';
+    return;
+  }
+  document.getElementById('setupError').textContent = '';
+  gameData = UNITS[key];
+  const n = parseInt(document.getElementById('teamCount').value);
+  state.teamCount = n;
+  const teamNames = [];
+  for (let i = 1; i <= n; i++) {
+    const el = document.getElementById('t' + i + 'name');
+    teamNames.push((el && el.value.trim()) || TEAM_PLACEHOLDERS[i-1]);
+  }
+
+  // Generate room code and init Ably
+  roomCode = generateRoomCode();
+  await initAbly(roomCode);
+  document.getElementById('hostRoomCode').textContent = roomCode;
+  document.getElementById('hostRoomDisplay').style.display = 'block';
+
+  renderTeamUI(teamNames);
+  document.getElementById('hostUnit').textContent = gameData.unit;
+  document.getElementById('ri-total').textContent = gameData.rounds.length;
+
+  document.getElementById('hostSetup').style.display = 'none';
+  document.getElementById('gameControls').style.display = 'flex';
+  document.getElementById('hostFooter').style.display = 'flex';
+
+  state.roundIdx = 0;
+  state.scores = new Array(n).fill(0);
+  state.pot = 0;
+  state.strikes = 0;
+  state.activeTurn = 0;
+  state.stealActive = false;
+
+  loadRound(0);
+}
+
+function loadRound(idx) {
+  const round = gameData.rounds[idx];
+  state.revealed = round.answers.map(() => false);
+  state.strikes = 0;
+  state.pot = 0;
+  state.stealActive = false;
+
+  // Rebuild word bank for new round if active
+  if (state.showWordBank) {
+    state.wordBank = buildWordBank(idx);
+  }
+
+  document.getElementById('ri-num').textContent = idx + 1;
+  document.getElementById('ri-q').textContent = round.question;
+  const mb = document.getElementById('ri-mult');
+  if (round.multiplier > 1) { mb.textContent = '×' + round.multiplier + ' POINTS'; mb.style.display = 'inline-block'; }
+  else mb.style.display = 'none';
+
+  const list = document.getElementById('hostAnswerList');
+  list.innerHTML = '';
+  round.answers.forEach((ans, i) => {
+    const row = document.createElement('div');
+    row.className = 'host-answer';
+    row.id = 'ha-' + i;
+    row.innerHTML = `
+      <div class="ha-pts">${ans.points}</div>
+      <div class="ha-text">${ans.text}</div>
+      <button class="ha-reveal-btn" onclick="revealAnswer(${i})" aria-label="Reveal ${ans.text}">REVEAL</button>`;
+    list.appendChild(row);
+  });
+
+  clearStrikes();
+  updatePot();
+  updateScores();
+  setTurn(state.activeTurn);
+  resetStealUI();
+  buildAwardButtons();
+}
+
+function revealAnswer(idx, displayOnly = false) {
+  if (state.revealed[idx]) return;
+  const round = gameData.rounds[state.roundIdx];
+  const pts = round.answers[idx].points * round.multiplier;
+  state.revealed[idx] = true;
+  if (!displayOnly) state.pot += pts;
+  document.getElementById('ha-' + idx).classList.add('revealed');
+  state.soundEvent = 'reveal';
+  updatePot();
+  broadcastState();
+  state.soundEvent = null;
+  // Only auto-award on normal (non-steal) full reveal
+  if (!displayOnly && state.revealed.every(Boolean)) {
+    state.soundEvent = 'roundWin';
+    if (state.pot > 0) awardPot(state.activeTurn);
+    broadcastState();
+    state.soundEvent = null;
+  }
+}
+
+function revealAll(displayOnly = false) {
+  gameData.rounds[state.roundIdx].answers.forEach((_, i) => {
+    if (!state.revealed[i]) revealAnswer(i, displayOnly);
+  });
+}
+
+function addStrike() {
+  if (state.strikes >= 3 || state.stealActive) return;
+  state.strikes++;
+  document.getElementById('sd' + state.strikes).classList.add('active');
+  if (state.strikes >= 3) {
+    document.getElementById('stealToggle').classList.remove('off');
+  }
+  state.soundEvent = state.strikes >= 3 ? 'steal' : 'strike';
+  broadcastState();
+  state.soundEvent = null;
+}
+
+function clearStrikes() {
+  state.strikes = 0;
+  for (let i = 1; i <= 3; i++) document.getElementById('sd' + i).classList.remove('active');
+  resetStealUI();
+  broadcastState();
+}
+
+function toggleSteal() {
+  state.stealActive = !state.stealActive;
+  document.getElementById('stealResult').classList.toggle('show', state.stealActive);
+  document.getElementById('stealToggle').textContent = state.stealActive ? 'CANCEL STEAL' : 'OFFER STEAL';
+  document.getElementById('stealToggle').classList.toggle('off', !state.stealActive);
+}
+
+function resolveSteal(success) {
+  const stealing = (state.activeTurn + 1) % state.teamCount;
+  if (success) {
+    state.soundEvent = 'stealWin';
+    awardPot(stealing);
+  } else {
+    state.soundEvent = 'stealFail';
+    revealAll(true);
+    state.soundEvent = 'roundWin';
+    awardPot(state.activeTurn);
+  }
+  state.soundEvent = null;
+  state.stealActive = false;
+  resetStealUI();
+}
+
+function buildAwardButtons() {
+  const wrap = document.getElementById('awardBtns');
+  if (!wrap) return;
+  wrap.innerHTML = '';
+  const teamColors = ['#2ecc71','#f0f0f0','#51cf66','#ffd43b','#cc5de8','#ff922b'];
+  for (let i = 0; i < state.teamCount; i++) {
+    const el = document.getElementById('hsc-t' + (i+1));
+    const name = el ? el.textContent : 'Team ' + (i+1);
+    const btn = document.createElement('button');
+    btn.className = 'award-btn';
+    btn.id = 'award-btn-' + i;
+    btn.style.background = teamColors[i] + '22';
+    btn.style.color = teamColors[i];
+    btn.style.border = '1px solid ' + teamColors[i] + '55';
+    btn.textContent = '+ ' + name;
+    btn.onclick = () => awardPot(i);
+    wrap.appendChild(btn);
+  }
+}
+
+function refreshAwardButtons() {
+  for (let i = 0; i < state.teamCount; i++) {
+    const btn = document.getElementById('award-btn-' + i);
+    if (btn) btn.disabled = state.pot === 0;
+  }
+}
+
+function broadcastState() {
+  if (!gameData || !ablyChannel) return;
+  const round = gameData.rounds[state.roundIdx];
+  const teamNames = [];
+  for (let i = 0; i < state.teamCount; i++) {
+    const el = document.getElementById('hsc-t' + (i+1));
+    teamNames.push(el ? el.textContent : 'Team ' + (i+1));
+  }
+  ablyChannel.publish('state', {
+    teamNames,
+    teamCount: state.teamCount,
+    scores: state.scores,
+    pot: state.pot,
+    strikes: state.strikes,
+    roundIdx: state.roundIdx,
+    totalRounds: gameData.rounds.length,
+    question: round.question,
+    multiplier: round.multiplier,
+    revealed: state.revealed,
+    answers: round.answers.map(a => a.text),
+    activeTurn: state.activeTurn,
+    stealActive: state.stealActive,
+    showWordBank: state.showWordBank,
+    wordBank: state.wordBank,
+    soundEvent: state.soundEvent || null,
+  });
+}
+
+let scoreEditTarget = -1;
+function openScoreEdit(teamIdx) {
+  scoreEditTarget = teamIdx;
+  const name = document.getElementById('hsc-t' + (teamIdx+1))?.textContent || ('Team '+(teamIdx+1));
+  document.getElementById('scoreEditTitle').textContent = 'EDIT: ' + name.toUpperCase();
+  document.getElementById('scoreEditInput').value = state.scores[teamIdx];
+  document.getElementById('scoreEditModal').classList.add('show');
+  setTimeout(() => document.getElementById('scoreEditInput').select(), 50);
+}
+function confirmScoreEdit() {
+  const val = parseInt(document.getElementById('scoreEditInput').value);
+  if (!isNaN(val) && val >= 0 && scoreEditTarget >= 0) {
+    state.scores[scoreEditTarget] = val;
+    updateScores();
+  }
+  closeScoreEdit();
+}
+function closeScoreEdit() {
+  document.getElementById('scoreEditModal').classList.remove('show');
+  scoreEditTarget = -1;
+}
+// Close modal on backdrop click
+document.addEventListener('click', e => {
+  if (e.target.id === 'scoreEditModal') closeScoreEdit();
+});
+
+function resetStealUI() {
+  document.getElementById('stealToggle').textContent = 'OFFER STEAL';
+  document.getElementById('stealToggle').classList.add('off');
+  document.getElementById('stealResult').classList.remove('show');
+}
+
+function awardPot(teamIdx) {
+  state.scores[teamIdx] += state.pot;
+  state.pot = 0;
+  updateScores();
+  updatePot();
+}
+
+function updateScores() {
+  state.scores.forEach((s, i) => {
+    const el = document.getElementById('hsc-s' + (i+1));
+    if (el) el.textContent = s;
+  });
+  broadcastState();
+}
+
+function updatePot() { document.getElementById('hostPot').textContent = state.pot; refreshAwardButtons(); broadcastState(); }
+
+function setTurn(idx) {
+  state.activeTurn = idx;
+  for (let i = 0; i < state.teamCount; i++) {
+    const btn = document.getElementById('tb' + (i+1));
+    if (btn) btn.className = 'turn-btn' + (i === idx ? ' at' + (i+1) : '');
+  }
+  broadcastState();
+}
+
+function nextRound() {
+  if (state.roundIdx >= gameData.rounds.length - 1) {
+    // Game over
+    const s = state.scores;
+    const teamNames = [];
+    for (let i = 0; i < state.teamCount; i++) {
+      const el = document.getElementById('hsc-t' + (i+1));
+      teamNames.push(el ? el.textContent : 'Team ' + (i+1));
+    }
+    const maxScore = Math.max(...s);
+    const winners = teamNames.filter((_, i) => s[i] === maxScore);
+    const sortedScores = s.map((sc, i) => `${teamNames[i]}: ${sc}`).sort((a,b) => {
+      const va = parseInt(a.split(': ')[1]); const vb = parseInt(b.split(': ')[1]);
+      return vb - va;
+    });
+    let result;
+    if (winners.length > 1) result = `🤝 Tie — ${winners.join(' & ')} with ${maxScore} pts`;
+    else result = `🏆 ${winners[0]} wins! (${maxScore} pts)
+${sortedScores.join(' · ')}`;
+    document.getElementById('gameOverResult').textContent = result;
+    document.getElementById('gameOverPanel').style.display = 'block';
+    document.getElementById('nextRoundBtn').disabled = true;
+    document.getElementById('nextRoundBtn').textContent = 'GAME OVER';
+    return;
+  }
+  state.roundIdx++;
+  state.activeTurn = state.roundIdx % 2;
+  loadRound(state.roundIdx);
+}
+
+function resetGame() {
+  document.getElementById('gameOverPanel').style.display = 'none';
+  document.getElementById('gameControls').style.display = 'none';
+  document.getElementById('hostFooter').style.display = 'none';
+  document.getElementById('hostSetup').style.display = 'block';
+  document.getElementById('nextRoundBtn').disabled = false;
+  document.getElementById('nextRoundBtn').textContent = 'Next Round →';
+  state.scores = new Array(state.teamCount).fill(0);
+  gameData = null;
+}
+
+function printGuide() {
+  if (!gameData) return;
+  document.getElementById('printGuide').innerHTML = `
+    <h1 class="pg-header">Survey Showdown — Teacher Guide: ${gameData.unit}</h1>
+    ${gameData.rounds.map((r, i) => `
+      <div class="pg-round">
+        <h3>Round ${i+1} ${r.multiplier > 1 ? '(×'+r.multiplier+')' : ''} — ${r.question}</h3>
+        ${r.answers.map((a, j) => `<div class="pg-answer"><span>${j+1}. ${a.text}</span><span>${a.points}pts${r.multiplier>1?' (×'+r.multiplier+'='+a.points*r.multiplier+')':''}</span></div>`).join('')}
+      </div>`).join('')}
+    <p style="margin-top:24px;font-size:11px;color:#999">EdSim · edsim.org</p>`;
+  window.print();
+}
+
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('hostScreen').classList.contains('active')) return;
+  if (e.code === 'Space' && !e.target.matches('input,button,select')) { e.preventDefault(); addStrike(); }
+});
+</script>
+<!-- SCORE EDIT MODAL -->
+<div class="score-edit-modal" id="scoreEditModal">
+  <div class="score-edit-card">
+    <h3 id="scoreEditTitle">EDIT SCORE</h3>
+    <input type="number" id="scoreEditInput" min="0" max="9999"
+      onkeydown="if(event.key==='Enter')confirmScoreEdit()"/>
+    <div class="score-edit-btns">
+      <button class="sed-ok" onclick="confirmScoreEdit()">SAVE</button>
+      <button class="sed-cancel" onclick="closeScoreEdit()">CANCEL</button>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
