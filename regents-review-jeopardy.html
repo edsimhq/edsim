@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Regents Review: Constitution & Early Republic · EdSim Category Challenge</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d0f14;--surf:#161922;--surf2:#1e2230;--surf3:#252a3a;
+  --border:#2e3448;--border-hi:#3d4562;--text:#e8ecf4;--dim:#7a8399;
+  --faint:#1a1f2e;--gold:#f5c842;--gold-dim:#b89020;
+  --gold-glow:rgba(245,200,66,0.18);--gold-glow-strong:rgba(245,200,66,0.35);
+  --red:#e03e3e;--green:#27c97a;--blue:#3a7bd5;--blue-bright:#5b99f5;
+  --fd:'Bebas Neue',sans-serif;--fb:'DM Sans',sans-serif;--fm:'DM Mono',monospace;
+  --r:8px;--rs:4px;--ease:cubic-bezier(.4,0,.2,1);
+}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:var(--fb)}
+
+/* SETUP */
+#setupScreen{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:0;z-index:200;background:var(--bg);background-image:radial-gradient(ellipse at 50% 0%,rgba(245,200,66,0.08) 0%,transparent 55%),radial-gradient(ellipse at 0% 100%,rgba(58,123,213,0.06) 0%,transparent 50%)}
+.setup-logo{font-family:var(--fd);font-size:56px;color:var(--gold);letter-spacing:6px;text-align:center;line-height:1;margin-bottom:4px;text-shadow:0 0 40px rgba(245,200,66,0.3)}
+.setup-tagline{font-family:var(--fm);font-size:11px;color:var(--dim);letter-spacing:.18em;text-transform:uppercase;text-align:center;margin-bottom:36px}
+.setup-card{background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:32px;width:500px;max-width:calc(100vw - 32px)}
+.setup-card h2{font-family:var(--fd);font-size:26px;letter-spacing:2px;color:var(--text);margin-bottom:6px}
+.setup-card p{font-family:var(--fm);font-size:11px;color:var(--dim);letter-spacing:.06em;margin-bottom:24px}
+.setup-section{margin-bottom:20px}
+.setup-label{font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px;display:block}
+.teams-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:4px}
+.team-entry{display:flex;flex-direction:column;gap:4px}
+.team-input{background:var(--surf2);border:1px solid var(--border);border-radius:var(--rs);padding:8px 12px;color:var(--text);font-family:var(--fb);font-size:14px;outline:none;transition:border-color .15s;width:100%}
+.team-input:focus{border-color:var(--gold)}
+.team-count-row{display:flex;gap:6px;flex-wrap:wrap}
+.team-count-btn{font-family:var(--fm);font-size:12px;padding:5px 13px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--dim);cursor:pointer;transition:all .15s;min-height:30px}
+.team-count-btn.active{border-color:var(--gold);color:var(--gold);background:rgba(245,200,66,0.08)}
+.setup-start{width:100%;background:var(--gold);color:#0d0f14;font-family:var(--fd);font-size:22px;letter-spacing:3px;border:none;border-radius:var(--r);padding:13px;cursor:pointer;transition:all .18s;margin-top:8px}
+.setup-start:hover{background:#ffd84d;transform:translateY(-1px)}
+
+/* GAME */
+#gameScreen{display:none;height:100%;flex-direction:column}
+#gameScreen.active{display:flex}
+.g-header{background:var(--surf);border-bottom:1px solid var(--border);padding:8px 16px;display:flex;align-items:center;gap:12px;flex-shrink:0;height:52px}
+.g-logo{font-family:var(--fd);font-size:22px;color:var(--gold);letter-spacing:3px;white-space:nowrap}
+.g-divider{width:1px;height:20px;background:var(--border)}
+.g-unit{font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.1em;text-transform:uppercase}
+.g-spacer{flex:1}
+.g-controls{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.ctrl-label{font-family:var(--fm);font-size:9px;color:var(--dim);letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}
+.mc-toggle{display:flex;align-items:center;gap:6px;cursor:pointer}
+.mc-toggle input{display:none}
+.mc-pip{width:34px;height:18px;background:var(--surf3);border:1px solid var(--border);border-radius:10px;position:relative;transition:background .2s;cursor:pointer}
+.mc-pip::after{content:'';position:absolute;width:12px;height:12px;border-radius:50%;background:var(--dim);top:2px;left:2px;transition:all .2s}
+.mc-toggle input:checked ~ .mc-pip{background:var(--gold);border-color:var(--gold-dim)}
+.mc-toggle input:checked ~ .mc-pip::after{left:18px;background:#0d0f14}
+.ctrl-btn{font-family:var(--fm);font-size:9px;letter-spacing:.08em;text-transform:uppercase;padding:5px 12px;border-radius:5px;border:1px solid var(--border);background:transparent;color:var(--dim);cursor:pointer;transition:all .15s;min-height:28px;white-space:nowrap}
+.ctrl-btn:hover{border-color:var(--gold-dim);color:var(--gold)}
+
+/* SCORES */
+.g-scores{background:var(--surf);border-bottom:1px solid var(--border);padding:8px 16px;display:flex;gap:8px;flex-wrap:nowrap;overflow-x:auto;flex-shrink:0;align-items:stretch}
+.score-card{background:var(--surf2);border:1px solid var(--border);border-radius:var(--r);padding:8px 14px;display:flex;flex-direction:column;align-items:center;gap:2px;min-width:100px;flex:1;max-width:160px;transition:all .2s;position:relative}
+.score-card.leader{border-color:var(--gold-dim);background:rgba(245,200,66,0.06)}
+.score-card.leader::after{content:'★';position:absolute;top:4px;right:6px;font-size:9px;color:var(--gold)}
+.score-name{font-family:var(--fm);font-size:9px;color:var(--dim);letter-spacing:.08em;text-transform:uppercase;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.score-pts{font-family:var(--fd);font-size:26px;color:var(--text);line-height:1;letter-spacing:1px}
+.score-pts.neg{color:var(--red)}
+@keyframes flash-green{0%,100%{color:var(--text)}50%{color:var(--green)}}
+@keyframes flash-red{0%,100%{color:var(--text)}50%{color:var(--red)}}
+.score-pts.pos-flash{animation:flash-green .4s ease}
+.score-pts.neg-flash{animation:flash-red .4s ease}
+
+/* BOARD */
+.g-main{flex:1;overflow:hidden;padding:10px 12px;display:flex;flex-direction:column}
+.g-board{flex:1;display:grid;gap:6px;overflow:hidden}
+.cat-header{background:linear-gradient(135deg,var(--blue) 0%,#1a3d6e 100%);border-radius:var(--r);display:flex;align-items:center;justify-content:center;padding:6px 8px;text-align:center;font-family:var(--fd);font-size:15px;letter-spacing:1.5px;color:#fff;text-transform:uppercase;line-height:1.15;border:1px solid rgba(255,255,255,0.08);min-height:52px}
+.clue-cell{background:linear-gradient(135deg,#1a2d5a 0%,#0f1f45 100%);border:1px solid rgba(58,123,213,0.3);border-radius:var(--r);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .18s;position:relative;overflow:hidden}
+.clue-cell::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(245,200,66,0.06) 0%,transparent 60%);opacity:0;transition:opacity .2s}
+.clue-cell:hover:not(.used)::before{opacity:1}
+.clue-cell:hover:not(.used){border-color:rgba(245,200,66,0.5);transform:translateY(-1px);box-shadow:0 4px 16px rgba(245,200,66,0.12)}
+.clue-cell.used{background:var(--faint);border-color:var(--border);cursor:default;opacity:0.4}
+.clue-cell .pts{font-family:var(--fd);font-size:clamp(18px,2.5vw,32px);color:var(--gold);letter-spacing:2px;text-shadow:0 0 20px rgba(245,200,66,0.4)}
+.clue-cell.used .pts{display:none}
+
+/* MODAL */
+#clueModal{position:fixed;inset:0;z-index:500;display:none;align-items:center;justify-content:center;background:rgba(8,10,14,0.92);backdrop-filter:blur(6px)}
+#clueModal.open{display:flex}
+.clue-panel{background:linear-gradient(160deg,#131826 0%,#0d1220 100%);border:1px solid var(--border-hi);border-radius:16px;width:min(820px,calc(100vw - 32px));max-height:calc(100vh - 80px);overflow:hidden;display:flex;flex-direction:column;box-shadow:0 32px 80px rgba(0,0,0,0.6);animation:modalIn .22s var(--ease) both}
+@keyframes modalIn{from{opacity:0;transform:scale(.95) translateY(10px)}to{opacity:1;transform:none}}
+.clue-top{background:linear-gradient(135deg,var(--blue) 0%,#1a3d6e 100%);padding:16px 24px;display:flex;align-items:center;gap:12px;flex-shrink:0}
+.clue-cat-name{font-family:var(--fd);font-size:18px;letter-spacing:2px;color:#fff;flex:1}
+.clue-pts-badge{font-family:var(--fd);font-size:24px;letter-spacing:2px;color:var(--gold);padding:4px 14px;border-radius:6px;background:rgba(0,0,0,0.3);border:1px solid rgba(245,200,66,0.3)}
+.clue-body{padding:28px 32px;flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:20px}
+.clue-text{font-family:var(--fb);font-size:clamp(16px,2.2vw,22px);color:var(--text);line-height:1.55;font-weight:500}
+.mc-options{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mc-opt{background:var(--surf2);border:1px solid var(--border);border-radius:var(--r);padding:12px 16px;cursor:pointer;transition:all .18s;font-family:var(--fb);font-size:15px;color:var(--text);display:flex;align-items:center;gap:10px}
+.mc-opt:hover:not(.revealed){border-color:var(--gold-dim);background:rgba(245,200,66,0.05)}
+.mc-opt.correct{border-color:var(--green);background:rgba(39,201,122,0.1);color:var(--green)}
+.mc-opt.wrong{border-color:var(--border);background:var(--faint);color:var(--dim);opacity:0.5}
+.mc-opt-letter{font-family:var(--fd);font-size:16px;color:var(--gold);width:20px;flex-shrink:0}
+.mc-opt.correct .mc-opt-letter{color:var(--green)}
+.mc-opt.wrong .mc-opt-letter{color:var(--dim)}
+.answer-reveal{background:rgba(245,200,66,0.06);border:1px solid rgba(245,200,66,0.25);border-radius:var(--r);padding:14px 18px}
+.answer-label{font-family:var(--fm);font-size:9px;color:var(--gold-dim);letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px}
+.answer-text{font-family:var(--fd);font-size:20px;letter-spacing:1.5px;color:var(--gold)}
+#answerRevealBlock{display:none}
+#answerRevealBlock.visible{display:block}
+.score-action-label{font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+.team-score-btns{display:flex;gap:6px;flex-wrap:wrap}
+.team-award-btn{font-family:var(--fm);font-size:10px;padding:7px 12px;border-radius:5px;border:1px solid var(--border);background:transparent;color:var(--text);cursor:pointer;transition:all .15s;white-space:nowrap;min-height:34px}
+.team-award-btn:hover{border-color:var(--green);color:var(--green);background:rgba(39,201,122,0.06)}
+.team-award-btn.penalty{color:var(--dim)}
+.team-award-btn.penalty:hover{border-color:var(--red);color:var(--red);background:rgba(224,62,62,0.06)}
+.clue-footer{border-top:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;gap:10px;flex-shrink:0;flex-wrap:wrap}
+.reveal-btn{font-family:var(--fd);font-size:16px;letter-spacing:2px;padding:9px 22px;border-radius:var(--r);cursor:pointer;transition:all .18s;border:1px solid var(--gold-dim);background:rgba(245,200,66,0.08);color:var(--gold)}
+.reveal-btn:hover{background:rgba(245,200,66,0.18)}
+.close-btn{font-family:var(--fd);font-size:16px;letter-spacing:2px;padding:9px 22px;border-radius:var(--r);cursor:pointer;transition:all .18s;border:1px solid var(--border);background:transparent;color:var(--dim)}
+.close-btn:hover{border-color:var(--border-hi);color:var(--text)}
+
+/* WINNER */
+#winnerOverlay{position:fixed;inset:0;z-index:600;display:none;align-items:center;justify-content:center;background:rgba(8,10,14,0.95);backdrop-filter:blur(10px)}
+#winnerOverlay.open{display:flex}
+.winner-panel{text-align:center;display:flex;flex-direction:column;align-items:center;gap:16px;animation:fadeUp .4s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+.winner-label{font-family:var(--fm);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+.winner-name{font-family:var(--fd);font-size:clamp(48px,8vw,96px);letter-spacing:4px;color:var(--gold);text-shadow:0 0 60px rgba(245,200,66,0.5);line-height:1}
+.winner-pts{font-family:var(--fd);font-size:clamp(24px,4vw,40px);color:var(--dim);letter-spacing:3px}
+.winner-btn{font-family:var(--fd);font-size:20px;letter-spacing:3px;padding:13px 36px;border-radius:var(--r);border:none;background:var(--gold);color:#0d0f14;cursor:pointer;margin-top:16px;transition:all .18s}
+.winner-btn:hover{background:#ffd84d;transform:translateY(-2px)}
+.conf{position:fixed;pointer-events:none;z-index:590;border-radius:50%;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(105vh) rotate(720deg);opacity:0}}
+</style>
+</head>
+<body>
+
+<div id="setupScreen">
+  <div class="setup-logo">EdSim</div>
+  <div class="setup-tagline">Category Challenge · Teacher Edition</div>
+  <div class="setup-card">
+    <h2>GAME SETUP</h2>
+    <p>Configure teams before starting the board</p>
+    <div class="setup-section">
+      <span class="setup-label">Number of teams</span>
+      <div class="team-count-row" id="teamCountRow">
+        <button class="team-count-btn" onclick="setTeamCount(2)">2</button>
+        <button class="team-count-btn active" onclick="setTeamCount(3)">3</button>
+        <button class="team-count-btn" onclick="setTeamCount(4)">4</button>
+        <button class="team-count-btn" onclick="setTeamCount(5)">5</button>
+        <button class="team-count-btn" onclick="setTeamCount(6)">6</button>
+      </div>
+    </div>
+    <div class="setup-section">
+      <span class="setup-label">Team names</span>
+      <div class="teams-grid" id="teamsGrid"></div>
+    </div>
+    <button class="setup-start" onclick="startGame()">START GAME</button>
+  </div>
+</div>
+
+<div id="gameScreen">
+  <div class="g-header">
+    <div class="g-logo">EdSim</div>
+    <div class="g-divider"></div>
+    <div class="g-unit" id="unitLabel">Regents Review: Constitution & Early Republic</div>
+    <div class="g-spacer"></div>
+    <div class="g-controls">
+      <label class="mc-toggle" title="Multiple Choice Mode">
+        <input type="checkbox" id="mcToggle" onchange="toggleMC()">
+        <div class="mc-pip"></div>
+      </label>
+      <span class="ctrl-label">MC</span>
+      <div class="g-divider"></div>
+      <button class="ctrl-btn" onclick="confirmNewGame()">↺ New Game</button>
+    </div>
+  </div>
+  <div class="g-scores" id="scoreBoard"></div>
+  <div class="g-main">
+    <div class="g-board" id="gameBoard"></div>
+  </div>
+</div>
+
+<div id="clueModal">
+  <div class="clue-panel">
+    <div class="clue-top">
+      <div class="clue-cat-name" id="modalCatName"></div>
+      <div class="clue-pts-badge" id="modalPts"></div>
+    </div>
+    <div class="clue-body">
+      <div class="clue-text" id="modalClueText"></div>
+      <div id="mcOptionsBlock"></div>
+      <div id="answerRevealBlock" class="answer-reveal">
+        <div class="answer-label">Answer</div>
+        <div class="answer-text" id="modalAnswerText"></div>
+      </div>
+      <div>
+        <div class="score-action-label">Award points to:</div>
+        <div class="team-score-btns" id="awardBtns"></div>
+      </div>
+      <div>
+        <div class="score-action-label" style="color:var(--dim)">Penalty (wrong answer):</div>
+        <div class="team-score-btns" id="penaltyBtns"></div>
+      </div>
+    </div>
+    <div class="clue-footer">
+      <button class="reveal-btn" id="revealBtn" onclick="revealAnswer()">REVEAL ANSWER</button>
+      <button class="close-btn" onclick="closeClue()">CLOSE</button>
+      <div style="flex:1"></div>
+      <span style="font-family:var(--fm);font-size:9px;color:var(--dim);letter-spacing:.08em">Teams answer out loud · Teacher marks correct/incorrect</span>
+    </div>
+  </div>
+</div>
+
+<div id="winnerOverlay">
+  <div class="winner-panel">
+    <div class="winner-label">Category Challenge Champion</div>
+    <div class="winner-name" id="winnerName"></div>
+    <div class="winner-pts" id="winnerPts"></div>
+    <button class="winner-btn" onclick="confirmNewGame()">PLAY AGAIN</button>
+  </div>
+</div>
+
+<script>
+const GAME_DATA = {"topic": "Regents Review: Constitution & Early Republic", "level_descriptions": {"supported": "Simplified clues for scaffolded play", "on_grade": "Grade-level clues", "advanced": "AP-level clues"}, "categories": [{"id": "founding_documents", "category": "Founding Documents", "clues": [{"points": 100, "clue": "This 1776 document, written mainly by Thomas Jefferson, announced that the American colonies were breaking away from Britain.", "answer": "What is the Declaration of Independence?", "wrong_answers": ["What is the Constitution?", "What is the Mayflower Compact?", "What is the Articles of Confederation?"]}, {"points": 200, "clue": "This document, written in 1787 and ratified in 1788, replaced the Articles of Confederation as the plan of government for the United States.", "answer": "What is the Constitution?", "wrong_answers": ["What is the Declaration of Independence?", "What is the Bill of Rights?", "What is the Federalist Papers?"]}, {"points": 300, "clue": "These first ten amendments to the Constitution, ratified in 1791, protect freedoms like speech, religion, and the right to a fair trial.", "answer": "What is the Bill of Rights?", "wrong_answers": ["What is the Declaration of Independence?", "What is the Magna Carta?", "What is the Preamble?"]}, {"points": 400, "clue": "Written under the pen name 'Publius,' these 85 essays by Hamilton, Madison, and Jay argued for ratification of the Constitution.", "answer": "What is the Federalist Papers?", "wrong_answers": ["What is Common Sense?", "What is the Anti-Federalist Papers?", "What is the Articles of Confederation?"]}, {"points": 500, "clue": "This failed first plan of government gave Congress no power to tax or regulate trade, and required unanimous consent to amend.", "answer": "What is the Articles of Confederation?", "wrong_answers": ["What is the Constitution?", "What is the Mayflower Compact?", "What is the Virginia Plan?"]}]}, {"id": "constitutional_principles", "category": "Constitutional Principles", "clues": [{"points": 100, "clue": "This principle divides government power among three branches \u2014 legislative, executive, and judicial \u2014 so no one branch becomes too powerful.", "answer": "What is separation of powers?", "wrong_answers": ["What is checks and balances?", "What is federalism?", "What is judicial review?"]}, {"points": 200, "clue": "Each branch of government has specific powers to limit the other two. The president can veto laws; Congress can override vetoes; the Court can strike down laws.", "answer": "What is checks and balances?", "wrong_answers": ["What is separation of powers?", "What is federalism?", "What is judicial review?"]}, {"points": 300, "clue": "This principle divides power between the national government and the state governments.", "answer": "What is federalism?", "wrong_answers": ["What is separation of powers?", "What is checks and balances?", "What is popular sovereignty?"]}, {"points": 400, "clue": "Established by Marbury v. Madison in 1803, this is the Supreme Court's power to declare laws unconstitutional.", "answer": "What is judicial review?", "wrong_answers": ["What is checks and balances?", "What is separation of powers?", "What is the elastic clause?"]}, {"points": 500, "clue": "This clause in Article I gives Congress the power to make all laws 'necessary and proper' for carrying out its listed powers \u2014 the source of implied powers.", "answer": "What is the Necessary and Proper Clause?", "wrong_answers": ["What is the Commerce Clause?", "What is the Supremacy Clause?", "What is the elastic clause?"]}]}, {"id": "american_revolution", "category": "American Revolution", "clues": [{"points": 100, "clue": "This 1773 protest against British taxation had colonists dumping an entire shipment of tea into Boston Harbor.", "answer": "What is the Boston Tea Party?", "wrong_answers": ["What is the Boston Massacre?", "What is the Stamp Act?", "What is the Intolerable Acts?"]}, {"points": 200, "clue": "This 1770 confrontation, in which British soldiers killed five colonists, was used as propaganda to turn Americans against British rule.", "answer": "What is the Boston Massacre?", "wrong_answers": ["What is the Boston Tea Party?", "What is the Battle of Lexington?", "What is the Stamp Act?"]}, {"points": 300, "clue": "Thomas Paine wrote this 1776 pamphlet arguing in plain language that independence from Britain was common sense.", "answer": "What is Common Sense?", "wrong_answers": ["What is the Federalist Papers?", "What is the Declaration of Independence?", "What is the Crisis?"]}, {"points": 400, "clue": "This Enlightenment philosopher's ideas about natural rights, the social contract, and the right to revolt most directly influenced the Declaration of Independence.", "answer": "Who is John Locke?", "wrong_answers": ["Who is Jean-Jacques Rousseau?", "Who is Montesquieu?", "Who is Thomas Hobbes?"]}, {"points": 500, "clue": "This 1783 treaty formally ended the Revolutionary War and recognized American independence, with Britain ceding all territory east of the Mississippi River.", "answer": "What is the Treaty of Paris?", "wrong_answers": ["What is the Treaty of Versailles?", "What is the Jay Treaty?", "What is the Treaty of Ghent?"]}]}, {"id": "key_founders", "category": "Key Founders", "clues": [{"points": 100, "clue": "This Virginian was the commander of the Continental Army, presided over the Constitutional Convention, and became the first president of the United States.", "answer": "Who is George Washington?", "wrong_answers": ["Who is Thomas Jefferson?", "Who is Benjamin Franklin?", "Who is John Adams?"]}, {"points": 200, "clue": "This author of the Declaration of Independence later became the third president and doubled the size of the country with the Louisiana Purchase.", "answer": "Who is Thomas Jefferson?", "wrong_answers": ["Who is James Madison?", "Who is John Adams?", "Who is Alexander Hamilton?"]}, {"points": 300, "clue": "Known as the 'Father of the Constitution,' this Virginian was the primary architect of the Constitutional Convention's framework and co-wrote the Federalist Papers.", "answer": "Who is James Madison?", "wrong_answers": ["Who is Alexander Hamilton?", "Who is Thomas Jefferson?", "Who is John Jay?"]}, {"points": 400, "clue": "This first Secretary of the Treasury argued for a strong national government, a national bank, and an economy based on manufacturing and commerce.", "answer": "Who is Alexander Hamilton?", "wrong_answers": ["Who is Thomas Jefferson?", "Who is James Madison?", "Who is John Adams?"]}, {"points": 500, "clue": "This Massachusetts lawyer and second president defended the British soldiers accused in the Boston Massacre, arguing that even unpopular defendants deserved a fair trial.", "answer": "Who is John Adams?", "wrong_answers": ["Who is Samuel Adams?", "Who is John Hancock?", "Who is James Otis?"]}]}, {"id": "early_republic", "category": "Early Republic", "clues": [{"points": 100, "clue": "In his 1796 Farewell Address, Washington warned Americans to avoid permanent alliances with foreign nations and the danger of political parties.", "answer": "What is Washington's Farewell Address?", "wrong_answers": ["What is the Monroe Doctrine?", "What is the Emancipation Proclamation?", "What is the Gettysburg Address?"]}, {"points": 200, "clue": "This 1803 Supreme Court case, decided by Chief Justice John Marshall, established the principle of judicial review.", "answer": "What is Marbury v. Madison?", "wrong_answers": ["What is McCulloch v. Maryland?", "What is Gibbons v. Ogden?", "What is Fletcher v. Peck?"]}, {"points": 300, "clue": "President Jefferson purchased this vast territory from France in 1803 for about $15 million, doubling the size of the United States.", "answer": "What is the Louisiana Purchase?", "wrong_answers": ["What is the Gadsden Purchase?", "What is the Mexican Cession?", "What is the Adams-Onis Treaty?"]}, {"points": 400, "clue": "This 1819 Supreme Court ruling established that Congress has implied powers and that states cannot tax the federal government.", "answer": "What is McCulloch v. Maryland?", "wrong_answers": ["What is Marbury v. Madison?", "What is Gibbons v. Ogden?", "What is Dartmouth College v. Woodward?"]}, {"points": 500, "clue": "Issued in 1823, this foreign policy statement declared the Western Hemisphere closed to new European colonization \u2014 a bold claim the U.S. lacked the military power to enforce alone.", "answer": "What is the Monroe Doctrine?", "wrong_answers": ["What is the Truman Doctrine?", "What is Washington's Farewell Address?", "What is the Roosevelt Corollary?"]}]}, {"id": "federalists_vs_antifederalists", "category": "Federalists vs. Antifederalists", "clues": [{"points": 100, "clue": "Federalists supported ratifying the Constitution. Antifederalists opposed it mainly because it lacked this \u2014 a list of rights protecting citizens from the new government.", "answer": "What is the Bill of Rights?", "wrong_answers": ["What is the Preamble?", "What is the elastic clause?", "What is judicial review?"]}, {"points": 200, "clue": "Alexander Hamilton, James Madison, and John Jay wrote under this pen name when publishing the Federalist Papers.", "answer": "What is Publius?", "wrong_answers": ["What is Brutus?", "What is Centinel?", "What is the Federal Farmer?"]}, {"points": 300, "clue": "In Federalist No. 51, Madison argued that this structural feature \u2014 dividing power among competing branches and levels of government \u2014 would prevent tyranny better than relying on virtuous leaders.", "answer": "What is checks and balances?", "wrong_answers": ["What is judicial review?", "What is federalism?", "What is separation of powers?"]}, {"points": 400, "clue": "Antifederalist writers used this pen name to argue that a large republic could not protect individual liberty \u2014 directly challenging Madison's argument in Federalist No. 10.", "answer": "What is Brutus?", "wrong_answers": ["What is Publius?", "What is Centinel?", "What is the Federal Farmer?"]}, {"points": 500, "clue": "In Federalist No. 10, Madison argued that this \u2014 a large republic with many competing interest groups \u2014 would actually prevent any single faction from seizing tyrannical control.", "answer": "What is an extended republic?", "wrong_answers": ["What is direct democracy?", "What is a confederation?", "What is a unitary government?"]}]}]};
+
+let teams = [];
+let teamCount = 3;
+let mcMode = false;
+let usedCells = new Set();
+let currentClue = null;
+let answerRevealed = false;
+
+const POINT_VALUES = [100, 200, 300, 400, 500];
+
+function setTeamCount(n) {
+  teamCount = n;
+  document.querySelectorAll('.team-count-btn').forEach(b => {
+    b.classList.toggle('active', parseInt(b.textContent) === n);
+  });
+  renderTeamInputs();
+}
+
+function renderTeamInputs() {
+  const grid = document.getElementById('teamsGrid');
+  const existing = Array.from(grid.querySelectorAll('.team-input')).map(i => i.value);
+  grid.innerHTML = '';
+  const defaults = ['Team 1','Team 2','Team 3','Team 4','Team 5','Team 6'];
+  for (let i = 0; i < teamCount; i++) {
+    const d = document.createElement('div');
+    d.className = 'team-entry';
+    d.innerHTML = `<span class="setup-label" style="margin-bottom:4px">Team ${i+1}</span>
+      <input class="team-input" placeholder="${defaults[i]}" value="${existing[i]||''}">`;
+    grid.appendChild(d);
+  }
+}
+
+function startGame() {
+  const inputs = document.querySelectorAll('.team-input');
+  teams = [];
+  inputs.forEach((inp, i) => {
+    teams.push({ name: inp.value.trim() || `Team ${i+1}`, score: 0 });
+  });
+  document.getElementById('setupScreen').style.display = 'none';
+  document.getElementById('gameScreen').classList.add('active');
+  renderScoreboard();
+  renderBoard();
+}
+
+function renderBoard() {
+  usedCells.clear();
+  const board = document.getElementById('gameBoard');
+  const categories = GAME_DATA.categories;
+  const numCols = categories.length;
+  const numRows = POINT_VALUES.length;
+
+  board.style.gridTemplateColumns = `repeat(${numCols}, 1fr)`;
+  board.style.gridTemplateRows = `60px repeat(${numRows}, 1fr)`;
+  board.innerHTML = '';
+
+  // Headers
+  categories.forEach(cat => {
+    const h = document.createElement('div');
+    h.className = 'cat-header';
+    h.textContent = cat.category;
+    board.appendChild(h);
+  });
+
+  // Cells — row by row
+  POINT_VALUES.forEach(pv => {
+    categories.forEach((cat, colIdx) => {
+      const clueObj = cat.clues.find(c => c.points === pv);
+      const cell = document.createElement('div');
+      const cellId = `${cat.id}_${pv}`;
+      cell.className = 'clue-cell';
+      cell.id = `cell_${cellId}`;
+      cell.innerHTML = `<span class="pts">$${pv}</span>`;
+      if (clueObj) {
+        cell.addEventListener('click', () => openClue(cat, clueObj, cellId));
+      } else {
+        cell.style.opacity = '0.15';
+        cell.style.cursor = 'default';
+      }
+      board.appendChild(cell);
+    });
+  });
+}
+
+function openClue(cat, clueObj, cellId) {
+  if (usedCells.has(cellId)) return;
+  currentClue = { cat, clueObj, cellId };
+  answerRevealed = false;
+
+  document.getElementById('modalCatName').textContent = cat.category;
+  document.getElementById('modalPts').textContent = `$${clueObj.points}`;
+  document.getElementById('modalClueText').textContent = clueObj.clue;
+
+  // MC
+  const mcBlock = document.getElementById('mcOptionsBlock');
+  mcBlock.innerHTML = '';
+  if (mcMode && clueObj.wrong_answers && clueObj.wrong_answers.length) {
+    renderMCOptions(clueObj, mcBlock);
+  }
+
+  document.getElementById('answerRevealBlock').classList.remove('visible');
+  document.getElementById('modalAnswerText').textContent = clueObj.answer;
+  renderAwardButtons(clueObj.points);
+  document.getElementById('revealBtn').style.display = '';
+  document.getElementById('clueModal').classList.add('open');
+}
+
+function renderMCOptions(clueObj, container) {
+  const correct = clueObj.answer;
+  const wrongs = clueObj.wrong_answers.slice(0, 3);
+  const options = [correct, ...wrongs];
+  shuffle(options);
+  const letters = ['A','B','C','D'];
+  const grid = document.createElement('div');
+  grid.className = 'mc-options';
+  options.forEach((opt, i) => {
+    const btn = document.createElement('div');
+    btn.className = 'mc-opt';
+    btn.dataset.isCorrect = (opt === correct);
+    btn.innerHTML = `<span class="mc-opt-letter">${letters[i]}</span><span>${opt}</span>`;
+    btn.addEventListener('click', () => {
+      if (answerRevealed) return;
+      grid.querySelectorAll('.mc-opt').forEach(b => {
+        b.classList.add('revealed');
+        b.classList.add(b.dataset.isCorrect === 'true' ? 'correct' : 'wrong');
+      });
+      revealAnswer();
+    });
+    grid.appendChild(btn);
+  });
+  container.appendChild(grid);
+}
+
+function revealAnswer() {
+  answerRevealed = true;
+  document.getElementById('answerRevealBlock').classList.add('visible');
+  document.getElementById('revealBtn').style.display = 'none';
+}
+
+function renderAwardButtons(pts) {
+  const awardBtns = document.getElementById('awardBtns');
+  const penaltyBtns = document.getElementById('penaltyBtns');
+  awardBtns.innerHTML = '';
+  penaltyBtns.innerHTML = '';
+  teams.forEach((team, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'team-award-btn';
+    btn.textContent = `✓ ${team.name} (+$${pts})`;
+    btn.addEventListener('click', () => awardTeam(i, pts));
+    awardBtns.appendChild(btn);
+
+    const pen = document.createElement('button');
+    pen.className = 'team-award-btn penalty';
+    pen.textContent = `✗ ${team.name} (−$${pts})`;
+    pen.addEventListener('click', () => awardTeam(i, -pts));
+    penaltyBtns.appendChild(pen);
+  });
+}
+
+function awardTeam(idx, pts) {
+  teams[idx].score += pts;
+  const ptEl = document.querySelector(`#scoreCard_${idx} .score-pts`);
+  if (ptEl) {
+    ptEl.textContent = `$${teams[idx].score.toLocaleString()}`;
+    ptEl.classList.remove('pos-flash','neg-flash');
+    void ptEl.offsetWidth;
+    ptEl.classList.add(pts > 0 ? 'pos-flash' : 'neg-flash');
+    ptEl.classList.toggle('neg', teams[idx].score < 0);
+  }
+  updateLeader();
+  closeClue();
+}
+
+function closeClue() {
+  if (!currentClue) return;
+  usedCells.add(currentClue.cellId);
+  const cellEl = document.getElementById(`cell_${currentClue.cellId}`);
+  if (cellEl) cellEl.classList.add('used');
+  document.getElementById('clueModal').classList.remove('open');
+  currentClue = null;
+  checkBoardComplete();
+}
+
+function checkBoardComplete() {
+  const total = GAME_DATA.categories.length * POINT_VALUES.length;
+  if (usedCells.size >= total) setTimeout(showWinner, 600);
+}
+
+function renderScoreboard() {
+  const sb = document.getElementById('scoreBoard');
+  sb.innerHTML = '';
+  teams.forEach((team, i) => {
+    const card = document.createElement('div');
+    card.className = 'score-card';
+    card.id = `scoreCard_${i}`;
+    card.innerHTML = `<div class="score-name">${team.name}</div><div class="score-pts">$0</div>`;
+    sb.appendChild(card);
+  });
+}
+
+function updateLeader() {
+  const maxScore = Math.max(...teams.map(t => t.score));
+  teams.forEach((_, i) => {
+    const card = document.getElementById(`scoreCard_${i}`);
+    if (card) card.classList.toggle('leader', teams[i].score === maxScore && maxScore > 0);
+  });
+}
+
+function toggleMC() {
+  mcMode = document.getElementById('mcToggle').checked;
+}
+
+function confirmNewGame() {
+  if (confirm('Start a new game? All scores will be reset.')) newGame();
+}
+
+function newGame() {
+  teams.forEach(t => t.score = 0);
+  renderScoreboard();
+  usedCells.clear();
+  renderBoard();
+  document.getElementById('winnerOverlay').classList.remove('open');
+  document.getElementById('clueModal').classList.remove('open');
+  currentClue = null;
+}
+
+function showWinner() {
+  const maxScore = Math.max(...teams.map(t => t.score));
+  const winners = teams.filter(t => t.score === maxScore);
+  document.getElementById('winnerName').textContent = winners.map(t => t.name).join(' & ');
+  document.getElementById('winnerPts').textContent = `$${maxScore.toLocaleString()}`;
+  document.getElementById('winnerOverlay').classList.add('open');
+  spawnConfetti();
+}
+
+function spawnConfetti() {
+  const colors = ['#f5c842','#27c97a','#3a7bd5','#e03e3e','#8b5cf6','#f97316'];
+  for (let i = 0; i < 80; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'conf';
+    const size = 6 + Math.random() * 10;
+    dot.style.cssText = `width:${size}px;height:${size}px;left:${Math.random()*100}vw;top:-20px;background:${colors[Math.floor(Math.random()*colors.length)]};animation-duration:${2+Math.random()*2}s;animation-delay:${Math.random()*1.5}s;opacity:${0.7+Math.random()*0.3}`;
+    document.body.appendChild(dot);
+    setTimeout(() => dot.remove(), 5000);
+  }
+}
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+renderTeamInputs();
+</script>
+</body>
+</html>
