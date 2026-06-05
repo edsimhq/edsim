@@ -1,0 +1,641 @@
+{
+  "topic": "Civil Rights Movement",
+  "categories": [
+    {
+      "id": "legal_foundations",
+      "title": "Legal Foundations",
+      "clues": [
+        {
+          "value": 200,
+          "wrong_answers": [
+            "What is Brown v. Board of Education?",
+            "What is the Civil Rights Act of 1964?",
+            "What is the 14th Amendment?"
+          ],
+          "supported": {
+            "clue": "This 1896 Supreme Court ruling said that 'separate but equal' facilities for Black and white Americans were constitutional \u2014 giving legal approval to segregation for the next 58 years.",
+            "answer": "What is Plessy v. Ferguson?"
+          },
+          "on_grade": {
+            "clue": "This 1896 ruling established the 'separate but equal' doctrine that provided constitutional cover for Jim Crow segregation \u2014 holding that Louisiana's separate railway car law did not violate the 14th Amendment.",
+            "answer": "What is Plessy v. Ferguson?"
+          },
+          "advanced": {
+            "clue": "Plessy's 'separate but equal' fiction rested on an obvious empirical lie \u2014 separate facilities were never equal \u2014 and Justice Harlan's lone dissent arguing the Constitution is 'color-blind' became the foundation for the NAACP's successful challenge five decades later.",
+            "answer": "What is Plessy v. Ferguson?"
+          }
+        },
+        {
+          "value": 400,
+          "wrong_answers": [
+            "What is Plessy v. Ferguson?",
+            "What is the Civil Rights Act of 1964?",
+            "What is Sweatt v. Painter?"
+          ],
+          "supported": {
+            "clue": "In 1954, the Supreme Court unanimously ruled that segregated public schools violated the Constitution \u2014 overturning the 'separate but equal' doctrine and setting off a decade of resistance in the South.",
+            "answer": "What is Brown v. Board of Education?"
+          },
+          "on_grade": {
+            "clue": "Chief Justice Warren's unanimous 1954 ruling \u2014 that 'separate educational facilities are inherently unequal' \u2014 reversed Plessy v. Ferguson, relied on social science evidence about segregation's psychological damage, and launched both the Civil Rights Movement and massive Southern resistance.",
+            "answer": "What is Brown v. Board of Education?"
+          },
+          "advanced": {
+            "clue": "Brown's reliance on Kenneth Clark's doll studies \u2014 showing Black children preferred white dolls \u2014 was criticized as sociological rather than constitutional reasoning, but Thurgood Marshall accepted the risk because the legal argument alone had failed in lower courts, making the psychological evidence necessary to persuade a reluctant Warren.",
+            "answer": "What is Brown v. Board of Education?"
+          }
+        },
+        {
+          "value": 600,
+          "wrong_answers": [
+            "What is Brown v. Board?",
+            "What is the Civil Rights Act of 1964?",
+            "What is Plessy v. Ferguson?"
+          ],
+          "supported": {
+            "clue": "After Brown, President Eisenhower sent federal troops to Little Rock, Arkansas in 1957 to protect nine Black students trying to attend a previously all-white high school after the governor used the National Guard to block them.",
+            "answer": "What is the Little Rock Crisis?"
+          },
+          "on_grade": {
+            "clue": "Governor Faubus's use of the Arkansas National Guard to prevent nine Black students from entering Central High School in 1957 forced Eisenhower \u2014 personally unenthusiastic about desegregation \u2014 to send the 101st Airborne to enforce the federal court order.",
+            "answer": "What is the Little Rock Crisis?"
+          },
+          "advanced": {
+            "clue": "Eisenhower's intervention at Little Rock was motivated by federal authority rather than civil rights conviction \u2014 he told aides he personally agreed with Faubus but could not allow a governor to defy a federal court order, making the crisis a test of constitutional supremacy rather than racial justice.",
+            "answer": "What is the Little Rock Crisis?"
+          }
+        },
+        {
+          "value": 800,
+          "wrong_answers": [
+            "What is Plessy v. Ferguson?",
+            "What is Brown v. Board?",
+            "What is Sweatt v. Painter?"
+          ],
+          "supported": {
+            "clue": "Southern state legislatures passed hundreds of laws between 1877 and the 1960s requiring separation of Black and white Americans in schools, restaurants, trains, and other public places. These laws enforced white supremacy through legal mandate.",
+            "answer": "What are Jim Crow laws?"
+          },
+          "on_grade": {
+            "clue": "These state and local segregation laws \u2014 mandating racial separation in public accommodations, transportation, schools, and even cemeteries \u2014 were enforced by law and by violence, creating a totalitarian racial system in the South that the Civil Rights Movement worked to dismantle.",
+            "answer": "What are Jim Crow laws?"
+          },
+          "advanced": {
+            "clue": "Jim Crow was not merely Southern \u2014 Northern cities maintained de facto segregation through restrictive housing covenants, discriminatory lending, and school district boundaries, revealing that legal segregation in the South was the visible tip of a national system of racial stratification.",
+            "answer": "What are Jim Crow laws?"
+          }
+        },
+        {
+          "value": 1000,
+          "wrong_answers": [
+            "What is the Civil Rights Act of 1964?",
+            "What is the Voting Rights Act of 1965?",
+            "What is the 15th Amendment?"
+          ],
+          "supported": {
+            "clue": "Southern states used literacy tests, poll taxes, and the threat of violence to prevent Black citizens from voting \u2014 even though the 15th Amendment had theoretically guaranteed their right to vote since 1870.",
+            "answer": "What is disenfranchisement?"
+          },
+          "on_grade": {
+            "clue": "Through literacy tests, poll taxes, grandfather clauses, white primaries, and outright violence, Southern states had reduced Black voter registration to near zero by the early 20th century \u2014 maintaining white political supremacy despite the 15th Amendment.",
+            "answer": "What is disenfranchisement?"
+          },
+          "advanced": {
+            "clue": "The Supreme Court's consistent deference to facially neutral voting restrictions \u2014 allowing literacy tests and poll taxes despite their obviously discriminatory application \u2014 made federal legislation rather than litigation the only viable path to protecting Black voting rights, a lesson that shaped the Voting Rights Act's design.",
+            "answer": "What is disenfranchisement?"
+          }
+        }
+      ]
+    },
+    {
+      "id": "nonviolent_resistance",
+      "title": "Nonviolent Resistance",
+      "clues": [
+        {
+          "value": 200,
+          "wrong_answers": [
+            "What is the March on Washington?",
+            "What is the Freedom Rides?",
+            "What is the Birmingham Campaign?"
+          ],
+          "supported": {
+            "clue": "In 1955, Rosa Parks refused to give up her seat on a Montgomery, Alabama bus to a white passenger. Her arrest sparked a 381-day boycott that ended bus segregation in Montgomery and launched Martin Luther King Jr. to national prominence.",
+            "answer": "What is the Montgomery Bus Boycott?"
+          },
+          "on_grade": {
+            "clue": "This 381-day boycott \u2014 organized after Rosa Parks's arrest and led by the 26-year-old Dr. King \u2014 bankrupted the Montgomery bus system, ended bus segregation, and demonstrated that nonviolent mass action could defeat institutionalized racism.",
+            "answer": "What is the Montgomery Bus Boycott?"
+          },
+          "advanced": {
+            "clue": "Parks's arrest was not spontaneous \u2014 the NAACP had been looking for the right test case and had passed on other candidates; Parks was chosen partly because she was a secretary of the NAACP with an unblemished record and the discipline to endure the legal ordeal without giving opponents grounds to discredit her.",
+            "answer": "What is the Montgomery Bus Boycott?"
+          }
+        },
+        {
+          "value": 400,
+          "wrong_answers": [
+            "What is the Montgomery Bus Boycott?",
+            "What is the Freedom Rides?",
+            "What is the March on Washington?"
+          ],
+          "supported": {
+            "clue": "In 1960, Black college students sat at whites-only lunch counters in Greensboro, North Carolina and refused to leave when denied service. Their nonviolent protest spread to other cities and forced many businesses to desegregate.",
+            "answer": "What are the sit-ins?"
+          },
+          "on_grade": {
+            "clue": "Beginning in Greensboro in February 1960, these nonviolent protests \u2014 in which Black students occupied 'whites-only' lunch counters and endured harassment without retaliation \u2014 spread to 54 cities within weeks and led to the formation of SNCC.",
+            "answer": "What are the sit-ins?"
+          },
+          "advanced": {
+            "clue": "The sit-in movement's genius was economic \u2014 it targeted businesses dependent on Black customers who could choose to shop elsewhere, making desegregation economically rational for store owners, and its spread via student networks demonstrated that the movement could organize without traditional civil rights leadership.",
+            "answer": "What are the sit-ins?"
+          }
+        },
+        {
+          "value": 600,
+          "wrong_answers": [
+            "What is the sit-in movement?",
+            "What is the Montgomery Bus Boycott?",
+            "What is the March on Washington?"
+          ],
+          "supported": {
+            "clue": "In 1961, Black and white activists rode interstate buses together into the Deep South to test whether Southern states would obey Supreme Court rulings desegregating bus terminals. Mobs attacked and burned their buses, and the riders were beaten.",
+            "answer": "What are the Freedom Rides?"
+          },
+          "on_grade": {
+            "clue": "These 1961 interracial bus journeys \u2014 deliberately provoking violence to force federal intervention \u2014 resulted in beatings by white mobs and the bombing of a bus in Alabama, forcing the Kennedy administration to issue desegregation orders for interstate travel facilities.",
+            "answer": "What are the Freedom Rides?"
+          },
+          "advanced": {
+            "clue": "The Freedom Riders' strategy was to provoke a Southern overreaction that would force federal intervention \u2014 the Kennedy administration desperately wanted the riders to stop because the violence was embarrassing internationally during the Cold War, making civil rights partly a foreign policy problem.",
+            "answer": "What are the Freedom Rides?"
+          }
+        },
+        {
+          "value": 800,
+          "wrong_answers": [
+            "What is Selma?",
+            "What is the Freedom Rides?",
+            "What is the sit-ins?"
+          ],
+          "supported": {
+            "clue": "In August 1963, more than 250,000 people gathered in Washington, D.C. to demand civil rights legislation. It was here that Dr. King delivered his famous 'I Have a Dream' speech.",
+            "answer": "What is the March on Washington?"
+          },
+          "on_grade": {
+            "clue": "This August 1963 demonstration \u2014 the largest in Washington history to that point \u2014 united civil rights organizations to demand passage of civil rights legislation and produced King's 'I Have a Dream' speech, the most celebrated address of the movement.",
+            "answer": "What is the March on Washington?"
+          },
+          "advanced": {
+            "clue": "King's 'I Have a Dream' peroration was not in his prepared text \u2014 he improvised it after Mahalia Jackson called out 'Tell them about the dream, Martin!' \u2014 and the speech's soaring rhetoric ultimately overshadowed the march's economic demands for jobs and a minimum wage, shaping how the movement was remembered.",
+            "answer": "What is the March on Washington?"
+          }
+        },
+        {
+          "value": 1000,
+          "wrong_answers": [
+            "What is the March on Washington?",
+            "What is the Freedom Rides?",
+            "What is the Montgomery Bus Boycott?"
+          ],
+          "supported": {
+            "clue": "Dr. King wrote this famous letter from a jail cell in Birmingham in 1963, responding to white ministers who called his demonstrations 'unwise and untimely.' He defended the urgency of civil rights and the necessity of nonviolent direct action.",
+            "answer": "What is the Letter from Birmingham Jail?"
+          },
+          "on_grade": {
+            "clue": "Written in the margins of a newspaper, King's 1963 response to white clergymen who urged patience \u2014 arguing that the 'white moderate' who preferred order to justice was a greater obstacle than the outright segregationist \u2014 is the movement's most powerful philosophical statement.",
+            "answer": "What is the Letter from Birmingham Jail?"
+          },
+          "advanced": {
+            "clue": "King's Letter performed multiple political functions simultaneously \u2014 it answered the white moderate critics, it disciplined Black militants by defending nonviolence on principled rather than merely tactical grounds, and it articulated a theory of civil disobedience grounded in natural law that gave the movement moral authority beyond American law.",
+            "answer": "What is the Letter from Birmingham Jail?"
+          }
+        }
+      ]
+    },
+    {
+      "id": "legislation",
+      "title": "Laws & Legislation",
+      "clues": [
+        {
+          "value": 200,
+          "wrong_answers": [
+            "What is the Voting Rights Act of 1965?",
+            "What is the Civil Rights Act of 1957?",
+            "What is the Fair Housing Act?"
+          ],
+          "supported": {
+            "clue": "This landmark 1964 law banned racial discrimination in public places like restaurants, hotels, and theaters, and made it illegal for employers to discriminate based on race, religion, or gender.",
+            "answer": "What is the Civil Rights Act of 1964?"
+          },
+          "on_grade": {
+            "clue": "This landmark legislation banned discrimination in public accommodations, prohibited employment discrimination based on race, religion, sex, or national origin, and created the EEOC to enforce its provisions \u2014 transforming the legal landscape of American life.",
+            "answer": "What is the Civil Rights Act of 1964?"
+          },
+          "advanced": {
+            "clue": "The Civil Rights Act's inclusion of 'sex' as a protected category was added by Virginia segregationist Howard Smith in hopes that it would sink the bill \u2014 his strategy backfired when the bill passed anyway, accidentally creating the legal foundation for women's employment rights.",
+            "answer": "What is the Civil Rights Act of 1964?"
+          }
+        },
+        {
+          "value": 400,
+          "wrong_answers": [
+            "What is the Civil Rights Act of 1964?",
+            "What is the 15th Amendment?",
+            "What is the 24th Amendment?"
+          ],
+          "supported": {
+            "clue": "This 1965 law banned the literacy tests and other tricks that Southern states used to prevent Black people from voting \u2014 and gave the federal government the power to monitor elections in states with a history of discrimination.",
+            "answer": "What is the Voting Rights Act of 1965?"
+          },
+          "on_grade": {
+            "clue": "This 1965 legislation \u2014 passed after televised images of Selma's 'Bloody Sunday' \u2014 suspended literacy tests in discriminatory states, provided federal election oversight, and required preclearance for changes to voting laws in covered jurisdictions.",
+            "answer": "What is the Voting Rights Act of 1965?"
+          },
+          "advanced": {
+            "clue": "The Voting Rights Act's Section 5 preclearance requirement \u2014 struck down by the Supreme Court in Shelby County v. Holder (2013) \u2014 was its most effective provision, requiring covered states to prove new voting laws were non-discriminatory before implementing them; its removal produced an immediate wave of restrictive voting laws.",
+            "answer": "What is the Voting Rights Act of 1965?"
+          }
+        },
+        {
+          "value": 600,
+          "wrong_answers": [
+            "What is the Civil Rights Act of 1964?",
+            "What is the 15th Amendment?",
+            "What is the Fair Housing Act?"
+          ],
+          "supported": {
+            "clue": "Ratified in 1964, this amendment eliminated the poll tax in federal elections \u2014 removing one of the main tools Southern states used to prevent poor Black citizens from voting.",
+            "answer": "What is the 24th Amendment?"
+          },
+          "on_grade": {
+            "clue": "This 1964 amendment abolished the poll tax in federal elections \u2014 a fee that effectively disenfranchised poor Black and white voters in Southern states \u2014 though states retained the ability to charge poll taxes in state elections until Harper v. Virginia Board of Elections (1966) struck them down.",
+            "answer": "What is the 24th Amendment?"
+          },
+          "advanced": {
+            "clue": "The poll tax's abolition illustrates the incremental nature of civil rights progress \u2014 it addressed only one of many disenfranchisement tools, and Southern states immediately shifted to other mechanisms; genuine voting rights protection required the Voting Rights Act's broader federal enforcement framework the following year.",
+            "answer": "What is the 24th Amendment?"
+          }
+        },
+        {
+          "value": 800,
+          "wrong_answers": [
+            "What is the Civil Rights Act of 1964?",
+            "What is the Voting Rights Act?",
+            "What is the 14th Amendment?"
+          ],
+          "supported": {
+            "clue": "President Eisenhower used his executive power in 1948 to end racial segregation in the U.S. military \u2014 ordering that Black and white soldiers serve together in the same units.",
+            "answer": "What is Executive Order 9981?"
+          },
+          "on_grade": {
+            "clue": "Truman's 1948 executive order desegregating the armed forces \u2014 issued partly in response to Black veteran activism and partly for Cold War optics \u2014 desegregated the military faster and more effectively than Congress could have legislated, demonstrating the presidency's power as a civil rights tool.",
+            "answer": "What is Executive Order 9981?"
+          },
+          "advanced": {
+            "clue": "Truman's desegregation order was politically calculated as well as principled \u2014 his civil rights committee's report 'To Secure These Rights' identified civil rights as a Cold War imperative, since Soviet propaganda exploited American racism to undermine U.S. claims to democratic leadership.",
+            "answer": "What is Executive Order 9981?"
+          }
+        },
+        {
+          "value": 1000,
+          "wrong_answers": [
+            "What is the Civil Rights Act of 1964?",
+            "What is the Voting Rights Act?",
+            "What is the 24th Amendment?"
+          ],
+          "supported": {
+            "clue": "This 1968 law banned racial discrimination in the sale and rental of housing \u2014 attempting to address the residential segregation that persisted in Northern cities even after the Civil Rights Act addressed public accommodations.",
+            "answer": "What is the Fair Housing Act?"
+          },
+          "on_grade": {
+            "clue": "Passed in the week after King's assassination, this 1968 legislation banned racial discrimination in housing sales and rentals \u2014 addressing the residential segregation that perpetuated school segregation and economic inequality in cities across the country.",
+            "answer": "What is the Fair Housing Act?"
+          },
+          "advanced": {
+            "clue": "The Fair Housing Act has been the least enforced of the major civil rights laws \u2014 private discrimination is difficult to detect and prove, federal enforcement has been episodic, and the structural mechanisms of residential segregation (exclusionary zoning, historic redlining's long-term effects) are largely beyond its reach.",
+            "answer": "What is the Fair Housing Act?"
+          }
+        }
+      ]
+    },
+    {
+      "id": "leaders_organizations",
+      "title": "Leaders & Organizations",
+      "clues": [
+        {
+          "value": 200,
+          "wrong_answers": [
+            "Who is John Lewis?",
+            "Who is Thurgood Marshall?",
+            "Who is Medgar Evers?"
+          ],
+          "supported": {
+            "clue": "This Baptist minister from Atlanta became the most important leader of the Civil Rights Movement \u2014 leading the Montgomery Bus Boycott, organizing the Southern Christian Leadership Conference, and delivering the 'I Have a Dream' speech.",
+            "answer": "Who is Martin Luther King Jr.?"
+          },
+          "on_grade": {
+            "clue": "As the movement's most visible leader, King synthesized Gandhi's nonviolent resistance with Christian social ethics \u2014 building a movement that used moral confrontation to expose the brutality of segregation and build political pressure for federal legislation.",
+            "answer": "Who is Martin Luther King Jr.?"
+          },
+          "advanced": {
+            "clue": "King's public persona as a moderate consensus-builder obscured more radical economic views \u2014 his later opposition to the Vietnam War and his Poor People's Campaign for economic redistribution reflected a systemic critique of American capitalism that made him far more threatening to the establishment than the 'I Have a Dream' mythology suggests.",
+            "answer": "Who is Martin Luther King Jr.?"
+          }
+        },
+        {
+          "value": 400,
+          "wrong_answers": [
+            "Who is Martin Luther King Jr.?",
+            "Who is Stokely Carmichael?",
+            "Who is Roy Wilkins?"
+          ],
+          "supported": {
+            "clue": "This minister and activist argued that Black Americans should control their own communities and economic destiny \u2014 rejecting integration as the goal and instead demanding Black political and economic power. His 'By any means necessary' philosophy contrasted with King's nonviolence.",
+            "answer": "Who is Malcolm X?"
+          },
+          "on_grade": {
+            "clue": "Malcolm X's Black nationalism \u2014 advocating self-defense, Black economic autonomy, and separation rather than integration \u2014 challenged King's nonviolent integrationism and gave white moderates a reason to negotiate with King rather than face a more radical alternative.",
+            "answer": "Who is Malcolm X?"
+          },
+          "advanced": {
+            "clue": "Malcolm X's intellectual evolution \u2014 from Black separatist to pan-African humanist after his pilgrimage to Mecca \u2014 was cut short by his assassination; his later writings suggest he was moving toward a more nuanced politics that retained Black solidarity while rejecting racial essentialism.",
+            "answer": "Who is Malcolm X?"
+          }
+        },
+        {
+          "value": 600,
+          "wrong_answers": [
+            "What is the Southern Christian Leadership Conference?",
+            "What is SNCC?",
+            "What is CORE?"
+          ],
+          "supported": {
+            "clue": "Founded in 1909, this organization used legal challenges and lobbying to fight for Black civil rights \u2014 winning the Brown v. Board of Education case and eventually the Civil Rights Act. It is the oldest and largest civil rights organization in the United States.",
+            "answer": "What is the NAACP?"
+          },
+          "on_grade": {
+            "clue": "The NAACP's legal strategy \u2014 building a decades-long series of court victories that culminated in Brown \u2014 was the patient infrastructure on which the direct-action movement built; without the NAACP's legal victories establishing constitutional principle, direct action would have had no law to enforce.",
+            "answer": "What is the NAACP?"
+          },
+          "advanced": {
+            "clue": "By the early 1960s the NAACP faced a generational challenge from SNCC and CORE \u2014 younger activists who saw the legal approach as too slow and the NAACP leadership as too cautious \u2014 reflecting the movement's internal debate between institutional and confrontational strategies.",
+            "answer": "What is the NAACP?"
+          }
+        },
+        {
+          "value": 800,
+          "wrong_answers": [
+            "What is the NAACP?",
+            "What is CORE?",
+            "What is the Urban League?"
+          ],
+          "supported": {
+            "clue": "Young people \u2014 mostly Black college students \u2014 formed this organization in 1960 to coordinate sit-ins and other direct-action protests. It was more militant than the NAACP and emphasized the importance of young people leading the movement.",
+            "answer": "What is SNCC (Student Nonviolent Coordinating Committee)?"
+          },
+          "on_grade": {
+            "clue": "Founded in 1960 to coordinate student direct-action protests, SNCC's grassroots organizing in the Deep South \u2014 in Mississippi and Alabama \u2014 was among the most dangerous and consequential civil rights work of the decade, registering voters and organizing communities under constant threat of violence.",
+            "answer": "What is SNCC (Student Nonviolent Coordinating Committee)?"
+          },
+          "advanced": {
+            "clue": "SNCC's evolution from nonviolent direct action to Black Power under Stokely Carmichael's leadership in 1966 reflected the cumulative frustration of activists who had endured years of violence with minimal federal protection \u2014 the movement's internal radicalization was a rational response to the limits of nonviolent strategy against unreconstructed white supremacy.",
+            "answer": "What is SNCC (Student Nonviolent Coordinating Committee)?"
+          }
+        },
+        {
+          "value": 1000,
+          "wrong_answers": [
+            "Who is Martin Luther King Jr.?",
+            "Who is John Lewis?",
+            "Who is James Lawson?"
+          ],
+          "supported": {
+            "clue": "This lawyer spent decades fighting segregation in court, winning the Brown v. Board of Education case, and later became the first Black justice on the Supreme Court \u2014 appointed by President Johnson in 1967.",
+            "answer": "Who is Thurgood Marshall?"
+          },
+          "on_grade": {
+            "clue": "As the NAACP's chief legal counsel, Marshall argued the Brown v. Board case and 32 Supreme Court cases overall \u2014 winning 29 \u2014 before becoming the first Black Supreme Court Justice, appointed by LBJ in 1967.",
+            "answer": "Who is Thurgood Marshall?"
+          },
+          "advanced": {
+            "clue": "Marshall's Supreme Court confirmation hearings in 1967 were a preview of later confirmation battles \u2014 Southern senators questioned him for hours on arcane legal points in hopes of exposing ignorance, and he outmaneuvered them all, demonstrating the jurisprudential depth that made him the greatest civil rights lawyer of the 20th century.",
+            "answer": "Who is Thurgood Marshall?"
+          }
+        }
+      ]
+    },
+    {
+      "id": "black_power_beyond",
+      "title": "Black Power & Beyond",
+      "clues": [
+        {
+          "value": 200,
+          "wrong_answers": [
+            "Who is Martin Luther King Jr.?",
+            "Who is SNCC?",
+            "Who is Stokely Carmichael?"
+          ],
+          "supported": {
+            "clue": "After years of nonviolent protest met with violence and slow progress, some Black activists in the late 1960s called for a new approach \u2014 demanding Black political control, economic power, and cultural pride rather than integration into white society.",
+            "answer": "What is the Black Power movement?"
+          },
+          "on_grade": {
+            "clue": "Emerging in the mid-1960s, this movement \u2014 associated with figures like Stokely Carmichael, the Black Panther Party, and Malcolm X \u2014 rejected integration as the goal and demanded Black political autonomy, economic self-sufficiency, and armed self-defense.",
+            "answer": "What is the Black Power movement?"
+          },
+          "advanced": {
+            "clue": "Black Power was not a unified ideology but a cluster of responses to the Civil Rights Movement's limits \u2014 ranging from Carmichael's electoral politics to the Panthers' community programs and armed self-defense to cultural nationalists' Afrocentrism \u2014 united by rejection of white-defined integration as the measure of progress.",
+            "answer": "What is the Black Power movement?"
+          }
+        },
+        {
+          "value": 400,
+          "wrong_answers": [
+            "What is the NAACP?",
+            "What is SNCC?",
+            "What is the Urban League?"
+          ],
+          "supported": {
+            "clue": "Founded in Oakland in 1966, this organization combined community service programs \u2014 free breakfast for children, health clinics \u2014 with armed self-defense and confrontational rhetoric that made the FBI declare them the greatest threat to internal security.",
+            "answer": "What is the Black Panther Party?"
+          },
+          "on_grade": {
+            "clue": "The Black Panther Party \u2014 founded in 1966 by Huey Newton and Bobby Seale in Oakland \u2014 combined community programs (free breakfast, health clinics) with armed self-defense and radical politics, provoking an FBI counterintelligence campaign that systematically dismantled the organization.",
+            "answer": "What is the Black Panther Party?"
+          },
+          "advanced": {
+            "clue": "COINTELPRO's targeting of the Panthers \u2014 including forged letters to provoke gang violence, fabricated evidence, and the assassination of Fred Hampton by Chicago police \u2014 demonstrated that the federal government was willing to use extra-legal means to suppress Black radical organizations, complicating the narrative of orderly civil rights progress.",
+            "answer": "What is the Black Panther Party?"
+          }
+        },
+        {
+          "value": 600,
+          "wrong_answers": [
+            "What is the March on Washington?",
+            "What is the Poor People's Campaign?",
+            "What is the Black Power movement?"
+          ],
+          "supported": {
+            "clue": "In 1965 and 1967, major race riots erupted in Watts (Los Angeles) and Detroit \u2014 revealing that Northern Black Americans faced poverty, police brutality, and discrimination despite the civil rights legislation that had focused on the South.",
+            "answer": "What are the urban riots of the 1960s?"
+          },
+          "on_grade": {
+            "clue": "The Watts riot (1965) and Detroit riot (1967) \u2014 among dozens of urban uprisings that decade \u2014 revealed the Civil Rights Act's limits in addressing Northern poverty, residential segregation, and police brutality, shifting the movement's focus from Southern legal segregation to economic inequality.",
+            "answer": "What are the urban riots of the 1960s?"
+          },
+          "advanced": {
+            "clue": "The Kerner Commission's 1968 report \u2014 that 'white racism' was the fundamental cause of urban unrest, that America was 'moving toward two societies, one black, one white \u2014 separate and unequal' \u2014 was the most honest government self-assessment of structural racism in American history, and was immediately ignored by President Johnson who had commissioned it.",
+            "answer": "What are the urban riots of the 1960s?"
+          }
+        },
+        {
+          "value": 800,
+          "wrong_answers": [
+            "What is the Civil Rights Act of 1964?",
+            "What is the March on Washington?",
+            "What is the Great Society?"
+          ],
+          "supported": {
+            "clue": "After achieving legal equality through the Civil Rights Act and Voting Rights Act, Dr. King turned his attention to poverty \u2014 organizing a multiracial coalition of poor Americans to march on Washington and demand economic justice before he was assassinated in 1968.",
+            "answer": "What is the Poor People's Campaign?"
+          },
+          "on_grade": {
+            "clue": "King's final campaign \u2014 bringing poor people of all races to Washington to demand economic rights \u2014 reflected his conviction that legal equality without economic equality was insufficient, and his assassination while supporting striking Memphis sanitation workers embodied the campaign's principles.",
+            "answer": "What is the Poor People's Campaign?"
+          },
+          "advanced": {
+            "clue": "The Poor People's Campaign represented King's most radical challenge \u2014 demanding a guaranteed income and full employment as rights, not charity \u2014 and its failure after his assassination marked the limits of the civil rights coalition when economic redistribution rather than legal equality was on the agenda.",
+            "answer": "What is the Poor People's Campaign?"
+          }
+        },
+        {
+          "value": 1000,
+          "wrong_answers": [
+            "What is the Selma to Montgomery March?",
+            "What is Freedom Summer?",
+            "What is the March on Washington?"
+          ],
+          "supported": {
+            "clue": "In March 1965, civil rights marchers were beaten by state troopers as they tried to cross a bridge in Selma, Alabama. The brutal images broadcast on television shocked the nation and led directly to the passage of the Voting Rights Act.",
+            "answer": "What is Bloody Sunday?"
+          },
+          "on_grade": {
+            "clue": "State troopers' televised attack on peaceful marchers crossing the Edmund Pettus Bridge in Selma in March 1965 \u2014 'Bloody Sunday' \u2014 produced the national outrage that gave LBJ the political opportunity to push the Voting Rights Act through Congress within months.",
+            "answer": "What is Bloody Sunday?"
+          },
+          "advanced": {
+            "clue": "Bloody Sunday was strategically provoked \u2014 SNCC and SCLC chose Selma precisely because Sheriff Jim Clark was known to react violently to protests, calculating that his brutality would generate the televised images needed to force federal action; the strategy worked, but it required marchers to absorb real violence.",
+            "answer": "What is Bloody Sunday?"
+          }
+        }
+      ]
+    },
+    {
+      "id": "freedom_summer_selma",
+      "title": "Freedom Summer & Selma",
+      "clues": [
+        {
+          "value": 200,
+          "wrong_answers": [
+            "What is COFO?",
+            "What is SNCC?",
+            "What is the Voter Education Project?"
+          ],
+          "supported": {
+            "clue": "In 1964, hundreds of student volunteers \u2014 mostly white Northern college students \u2014 went to Mississippi to help register Black voters. Three civil rights workers were murdered by the Klan with help from local police, shocking the nation.",
+            "answer": "What is Freedom Summer?"
+          },
+          "on_grade": {
+            "clue": "This 1964 campaign brought nearly 1,000 mostly white student volunteers to Mississippi to register Black voters \u2014 and the murders of Chaney, Goodman, and Schwerner by Klansmen with local police complicity generated national outrage that built pressure for the Voting Rights Act.",
+            "answer": "What is Freedom Summer?"
+          },
+          "advanced": {
+            "clue": "Freedom Summer's strategic logic was deliberately provocative \u2014 SNCC brought white Northern students knowing their murders would generate media attention that Black deaths alone had not, a calculation that was both politically effective and morally troubling, reflecting the movement's necessity of tailoring its message to white public opinion.",
+            "answer": "What is Freedom Summer?"
+          }
+        },
+        {
+          "value": 400,
+          "wrong_answers": [
+            "What is the NAACP?",
+            "What is SNCC?",
+            "What is CORE?"
+          ],
+          "supported": {
+            "clue": "Black Mississippians formed their own political party in 1964 and sent a delegation to the Democratic National Convention, challenging the all-white regular Mississippi delegation. President Johnson refused to seat them, dealing a blow to civil rights activists' faith in the Democratic Party.",
+            "answer": "What is the Mississippi Freedom Democratic Party?"
+          },
+          "on_grade": {
+            "clue": "This parallel political party \u2014 formed after Mississippi's Democratic Party excluded Black voters \u2014 sent an integrated delegation to the 1964 DNC demanding recognition; LBJ's refusal to seat them disillusioned many SNCC workers and accelerated the movement's turn toward independent political power.",
+            "answer": "What is the Mississippi Freedom Democratic Party?"
+          },
+          "advanced": {
+            "clue": "The MFDP challenge exposed the Democratic Party's internal contradiction \u2014 it needed Southern white votes and Black Northern votes simultaneously, and LBJ's compromise offering two at-large seats (which the MFDP rejected) satisfied neither, beginning the realignment that would eventually fracture the New Deal coalition.",
+            "answer": "What is the Mississippi Freedom Democratic Party?"
+          }
+        },
+        {
+          "value": 600,
+          "wrong_answers": [
+            "What is the Selma Campaign?",
+            "What is the March on Washington?",
+            "What is the Selma to Montgomery March?"
+          ],
+          "supported": {
+            "clue": "In March 1965, state troopers attacked peaceful marchers on a bridge in Selma, Alabama with clubs and tear gas. Television cameras captured the violence and broadcast it nationwide, creating immediate public pressure for voting rights legislation.",
+            "answer": "What is Bloody Sunday?"
+          },
+          "on_grade": {
+            "clue": "State troopers' televised attack on peaceful marchers at the Edmund Pettus Bridge \u2014 clubs, tear gas, and mounted police against men, women, and children \u2014 produced immediate national outrage and gave LBJ the political opening to deliver his 'We Shall Overcome' address to Congress.",
+            "answer": "What is Bloody Sunday?"
+          },
+          "advanced": {
+            "clue": "The march from Selma to Montgomery was strategically chosen \u2014 Dallas County's Sheriff Jim Clark had a documented record of violent overreaction, and SCLC calculated that his brutality would produce the televised images needed to force federal action, a strategy that required real people to absorb real violence.",
+            "answer": "What is Bloody Sunday?"
+          }
+        },
+        {
+          "value": 800,
+          "wrong_answers": [
+            "What is the Student Nonviolent Coordinating Committee?",
+            "What is CORE?",
+            "What is the SCLC?"
+          ],
+          "supported": {
+            "clue": "After years of nonviolent organizing and continued violence against Black communities, some young activists began to question whether integration into white society was even the goal \u2014 and whether nonviolence was the appropriate strategy against violent oppression.",
+            "answer": "What is the shift toward Black Power?"
+          },
+          "on_grade": {
+            "clue": "By 1966, frustration with the limits of nonviolent integration strategy \u2014 symbolized by Stokely Carmichael's Black Power call during the Meredith March \u2014 reflected SNCC and CORE's conclusion that legal rights without economic and political power left Black communities still subordinate.",
+            "answer": "What is the shift toward Black Power?"
+          },
+          "advanced": {
+            "clue": "The nonviolent-to-Black Power shift was not simply radicalization \u2014 it reflected a genuine strategic debate about whether integration into a racist society constituted liberation, and whether Black people needed autonomous institutions before they could engage white society from a position of equal power rather than supplication.",
+            "answer": "What is the shift toward Black Power?"
+          }
+        },
+        {
+          "value": 1000,
+          "wrong_answers": [
+            "What is the Voting Rights Act of 1965?",
+            "What is the Civil Rights Act of 1964?",
+            "What is Executive Order 11063?"
+          ],
+          "supported": {
+            "clue": "After Bloody Sunday and LBJ's 'We Shall Overcome' speech to Congress, the Voting Rights Act was passed in August 1965 \u2014 and within months, Black voter registration in the South surged dramatically.",
+            "answer": "What is the impact of the Voting Rights Act?"
+          },
+          "on_grade": {
+            "clue": "The Voting Rights Act's immediate impact was dramatic \u2014 Black voter registration in Mississippi rose from 6.7% in 1964 to 59.8% by 1967, and the number of Black elected officials in the South grew from fewer than 100 in 1965 to over 700 by 1970.",
+            "answer": "What is the impact of the Voting Rights Act?"
+          },
+          "advanced": {
+            "clue": "The Voting Rights Act's success was both a triumph and a marker of the movement's limits \u2014 it transformed Southern politics by enfranchising millions, but the economic inequality that King identified in his final years proved far more resistant to legislative remedy than legal segregation and disenfranchisement.",
+            "answer": "What is the impact of the Voting Rights Act?"
+          }
+        }
+      ]
+    }
+  ]
+}

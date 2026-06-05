@@ -1,0 +1,641 @@
+{
+  "topic": "Cold War",
+  "categories": [
+    {
+      "id": "walls_barriers",
+      "title": "Walls & Barriers",
+      "clues": [
+        {
+          "value": 200,
+          "supported": {
+            "clue": "Winston Churchill gave a speech in 1946 saying a curtain had fallen across Europe, separating free countries from ones controlled by the Soviet Union.",
+            "answer": "What is the Iron Curtain?"
+          },
+          "on_grade": {
+            "clue": "Churchill coined this phrase in 1946 to describe the political division of Europe \u2014 democratic nations to the west, Soviet-controlled states to the east.",
+            "answer": "What is the Iron Curtain?"
+          },
+          "advanced": {
+            "clue": "Churchill's 1946 Fulton, Missouri speech introduced this metaphor, warning that a barrier now stretched from the Baltic to the Adriatic separating democratic Europe from Soviet-dominated satellite states.",
+            "answer": "What is the Iron Curtain?"
+          },
+          "wrong_answers": [
+            "What is the Berlin Wall?",
+            "What is the Warsaw Pact?",
+            "What is the Maginot Line?"
+          ]
+        },
+        {
+          "value": 400,
+          "supported": {
+            "clue": "This wall went up overnight in 1961, suddenly separating families in a divided German city. People who tried to cross it could be shot.",
+            "answer": "What is the Berlin Wall?"
+          },
+          "on_grade": {
+            "clue": "Built overnight in August 1961, this physical structure divided a German city and became the most powerful symbol of Cold War division \u2014 until crowds tore it down in 1989.",
+            "answer": "What is the Berlin Wall?"
+          },
+          "advanced": {
+            "clue": "East Germany built this barrier in 1961 to stop the hemorrhage of over 3.5 million citizens who had fled to the West since 1949 \u2014 and its fall in 1989 happened not by government plan but because a spokesman accidentally announced new travel rules effective 'immediately.'",
+            "answer": "What is the Berlin Wall?"
+          },
+          "wrong_answers": [
+            "What is the Iron Curtain?",
+            "What is the 38th parallel?",
+            "What is the Maginot Line?"
+          ]
+        },
+        {
+          "value": 600,
+          "supported": {
+            "clue": "This invisible line cuts the Korean peninsula in half. North of it is communist. South of it is democratic. It became the border after World War II.",
+            "answer": "What is the 38th parallel?"
+          },
+          "on_grade": {
+            "clue": "When North Korean forces crossed this geographic line in June 1950, it triggered the first military response ever authorized by the United Nations.",
+            "answer": "What is the 38th parallel?"
+          },
+          "advanced": {
+            "clue": "Two American colonels chose this latitude line in a single night in 1945 as a temporary postwar boundary \u2014 an improvised decision that became one of the most militarized and consequential borders in modern history.",
+            "answer": "What is the 38th parallel?"
+          },
+          "wrong_answers": [
+            "What is the DMZ?",
+            "What is the Iron Curtain?",
+            "What is the 17th parallel?"
+          ]
+        },
+        {
+          "value": 800,
+          "supported": {
+            "clue": "In 1948, the Soviet Union blocked all roads and railroads into the western part of Berlin, trying to force the Allies out of the city.",
+            "answer": "What is the Berlin Blockade?"
+          },
+          "on_grade": {
+            "clue": "Rather than risk direct military confrontation during this 1948 Soviet action, Truman authorized a massive airlift that delivered over two million tons of supplies before the Soviets finally backed down.",
+            "answer": "What is the Berlin Blockade?"
+          },
+          "advanced": {
+            "clue": "Stalin's gamble that cutting off ground access to West Berlin would force Western withdrawal backfired spectacularly \u2014 the Allied response transformed former enemies into committed democratic allies and accelerated the formation of NATO.",
+            "answer": "What is the Berlin Blockade?"
+          },
+          "wrong_answers": [
+            "What is the Berlin Airlift?",
+            "What is the Marshall Plan?",
+            "What is the Cuban Missile Crisis?"
+          ]
+        },
+        {
+          "value": 1000,
+          "supported": {
+            "clue": "After World War II, the Soviet Union refused to leave Eastern Europe \u2014 instead keeping its army there and installing communist governments in countries like Poland, Hungary, and Czechoslovakia.",
+            "answer": "What is the Soviet occupation of Eastern Europe?"
+          },
+          "on_grade": {
+            "clue": "The 1948 communist coup in Czechoslovakia \u2014 the last Eastern European democracy \u2014 shocked Western governments and directly accelerated the formation of NATO.",
+            "answer": "What is the Soviet occupation of Eastern Europe?"
+          },
+          "advanced": {
+            "clue": "By installing loyal communist regimes across Eastern Europe, Stalin converted the wartime buffer zone he demanded at Yalta into a permanent empire \u2014 making the Cold War's European fault line a defining feature of international politics for four decades.",
+            "answer": "What is the Soviet occupation of Eastern Europe?"
+          },
+          "wrong_answers": [
+            "What is the Iron Curtain?",
+            "What is the Berlin Wall?",
+            "What is the Warsaw Pact?"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hot_spots",
+      "title": "Hot Spots",
+      "clues": [
+        {
+          "value": 200,
+          "supported": {
+            "clue": "The United States flew food and supplies into West Berlin around the clock for nearly a year after the Soviets blocked all roads into the city.",
+            "answer": "What is the Berlin Airlift?"
+          },
+          "on_grade": {
+            "clue": "This massive logistical operation \u2014 over 200,000 flights in eleven months \u2014 showed the U.S. would sustain enormous cost rather than abandon its commitment to a divided city deep inside Soviet-controlled territory.",
+            "answer": "What is the Berlin Airlift?"
+          },
+          "advanced": {
+            "clue": "Planes landed at Tempelhof Airport every three minutes at this operation's peak \u2014 and its success had an unintended consequence: it transformed West Berliners from defeated enemies into America's most committed democratic allies.",
+            "answer": "What is the Berlin Airlift?"
+          },
+          "wrong_answers": [
+            "What is the Marshall Plan?",
+            "What is Operation Overlord?",
+            "What is the Berlin Wall?"
+          ]
+        },
+        {
+          "value": 400,
+          "supported": {
+            "clue": "The United States sent soldiers to help South Korea fight against communist North Korea from 1950 to 1953. It ended in a tie, not a victory.",
+            "answer": "What is the Korean War?"
+          },
+          "on_grade": {
+            "clue": "Often called 'The Forgotten War,' this 1950-1953 conflict ended in an armistice rather than a peace treaty \u2014 leaving the peninsula divided near the same line where the fighting began.",
+            "answer": "What is the Korean War?"
+          },
+          "advanced": {
+            "clue": "Truman's decision to intervene without a formal declaration of war established the troubling precedent of presidential war powers \u2014 and his firing of General MacArthur for insubordination defined the principle of civilian control of the military.",
+            "answer": "What is the Korean War?"
+          },
+          "wrong_answers": [
+            "What is the Vietnam War?",
+            "What is World War II?",
+            "What is the Gulf War?"
+          ]
+        },
+        {
+          "value": 600,
+          "supported": {
+            "clue": "In 1961, a group of Cuban exiles trained by the CIA tried to invade Cuba and overthrow Fidel Castro. The mission failed completely and embarrassed the Kennedy administration.",
+            "answer": "What is the Bay of Pigs invasion?"
+          },
+          "on_grade": {
+            "clue": "This failed 1961 CIA-backed invasion of Cuba \u2014 planned under Eisenhower but launched by Kennedy \u2014 strengthened Castro's hold on power and pushed Cuba closer to the Soviet Union.",
+            "answer": "What is the Bay of Pigs invasion?"
+          },
+          "advanced": {
+            "clue": "Kennedy's last-minute decision to cancel U.S. air support doomed the exile brigade at this Cuban landing site \u2014 and the humiliation directly contributed to Khrushchev's belief that Kennedy was weak, a miscalculation that fed into the missile crisis the following year.",
+            "answer": "What is the Bay of Pigs invasion?"
+          },
+          "wrong_answers": [
+            "What is the Cuban Missile Crisis?",
+            "What is Operation Mongoose?",
+            "What is d\u00e9tente?"
+          ]
+        },
+        {
+          "value": 800,
+          "supported": {
+            "clue": "For 13 days in 1962, the world came close to nuclear war after the U.S. discovered Soviet nuclear missiles being installed just 90 miles from Florida.",
+            "answer": "What is the Cuban Missile Crisis?"
+          },
+          "on_grade": {
+            "clue": "President Kennedy chose a naval blockade over an airstrike during this 1962 standoff \u2014 giving Khrushchev time to back down and remove the missiles without either side firing a shot.",
+            "answer": "What is the Cuban Missile Crisis?"
+          },
+          "advanced": {
+            "clue": "Declassified documents revealed this crisis was even more dangerous than either government admitted \u2014 a Soviet submarine in the blockade zone nearly launched a nuclear torpedo, stopped only when one officer overruled the captain's order to fire.",
+            "answer": "What is the Cuban Missile Crisis?"
+          },
+          "wrong_answers": [
+            "What is the Bay of Pigs invasion?",
+            "What is the Berlin Crisis?",
+            "What is the Korean War?"
+          ]
+        },
+        {
+          "value": 1000,
+          "supported": {
+            "clue": "The United States sent soldiers to Southeast Asia to stop communism from spreading from North to South. It became one of the longest and most controversial wars in American history.",
+            "answer": "What is the Vietnam War?"
+          },
+          "on_grade": {
+            "clue": "Growing antiwar protest \u2014 fueled by televised combat footage, the military draft, and rising casualties \u2014 fractured American society and eroded public trust in the government during this conflict.",
+            "answer": "What is the Vietnam War?"
+          },
+          "advanced": {
+            "clue": "The War Powers Resolution of 1973 \u2014 passed over Nixon's veto in direct response to this conflict \u2014 attempted to restore congressional authority over military commitments by requiring presidential notification within 48 hours of troop deployments.",
+            "answer": "What is the Vietnam War?"
+          },
+          "wrong_answers": [
+            "What is the Korean War?",
+            "What is the Gulf War?",
+            "What is the Iranian hostage crisis?"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "arms_race",
+      "title": "The Arms Race",
+      "clues": [
+        {
+          "value": 200,
+          "supported": {
+            "clue": "The U.S. and Soviet Union built thousands of nuclear weapons but never used them \u2014 because both sides knew that launching a first strike would guarantee their own destruction.",
+            "answer": "What is mutual assured destruction (MAD)?"
+          },
+          "on_grade": {
+            "clue": "This Cold War nuclear paradox held that the more weapons each superpower built, the safer both were \u2014 because the certainty of total retaliation made a first strike completely irrational.",
+            "answer": "What is mutual assured destruction (MAD)?"
+          },
+          "advanced": {
+            "clue": "MAD's stability depended as much on individual human judgment as on strategic logic \u2014 a 1983 Soviet early-warning false alarm was classified as a malfunction by a single officer rather than triggering a counterlaunch that could have ended civilization.",
+            "answer": "What is mutual assured destruction (MAD)?"
+          },
+          "wrong_answers": [
+            "What is containment?",
+            "What is brinkmanship?",
+            "What is d\u00e9tente?"
+          ]
+        },
+        {
+          "value": 400,
+          "supported": {
+            "clue": "In 1957, the Soviet Union shocked the world by launching the first object ever to orbit the Earth. Americans were scared they were falling behind in technology.",
+            "answer": "What is Sputnik?"
+          },
+          "on_grade": {
+            "clue": "The Soviet launch of this satellite in 1957 triggered a crisis of American confidence \u2014 directly leading to the creation of NASA and passage of the National Defense Education Act.",
+            "answer": "What is Sputnik?"
+          },
+          "advanced": {
+            "clue": "Eisenhower's muted public response to this launch masked genuine private alarm \u2014 declassified documents later revealed the U.S. had known the Soviets were close but badly underestimated the psychological impact their success would have on American public opinion.",
+            "answer": "What is Sputnik?"
+          },
+          "wrong_answers": [
+            "What is Explorer 1?",
+            "What is Vostok 1?",
+            "What is the Apollo program?"
+          ]
+        },
+        {
+          "value": 600,
+          "supported": {
+            "clue": "The U.S. and Soviet Union competed to put satellites, animals, and then humans into outer space \u2014 and eventually to land on the Moon first.",
+            "answer": "What is the Space Race?"
+          },
+          "on_grade": {
+            "clue": "This superpower competition for dominance beyond Earth's atmosphere produced NASA, accelerated computer technology, and culminated in the 1969 Apollo 11 Moon landing.",
+            "answer": "What is the Space Race?"
+          },
+          "advanced": {
+            "clue": "Though framed as scientific achievement, this technological competition was fundamentally a demonstration of military capability \u2014 the same rockets that could put a satellite into orbit could deliver a nuclear warhead across continents.",
+            "answer": "What is the Space Race?"
+          },
+          "wrong_answers": [
+            "What is the Arms Race?",
+            "What is the Cold War?",
+            "What is the Nuclear Race?"
+          ]
+        },
+        {
+          "value": 800,
+          "supported": {
+            "clue": "Secretary of State Dulles said the U.S. would go right to the edge of nuclear war to make the Soviets back down. This risky strategy was named after a dangerous place on a cliff.",
+            "answer": "What is brinkmanship?"
+          },
+          "on_grade": {
+            "clue": "Eisenhower's nuclear strategy of threatening 'massive retaliation' for any Soviet aggression \u2014 going to the brink of war to deter conflict \u2014 was cheaper than maintaining large conventional forces but terrified allies and adversaries alike.",
+            "answer": "What is brinkmanship?"
+          },
+          "advanced": {
+            "clue": "Dulles' doctrine rested on a credibility problem that critics called the 'balance of terror' \u2014 if the U.S. threatened nuclear war over every Soviet provocation, allies questioned whether Washington would really incinerate civilization over a border skirmish.",
+            "answer": "What is brinkmanship?"
+          },
+          "wrong_answers": [
+            "What is containment?",
+            "What is massive retaliation?",
+            "What is d\u00e9tente?"
+          ]
+        },
+        {
+          "value": 1000,
+          "supported": {
+            "clue": "In 1972, the U.S. and Soviet Union signed the first major agreement to limit the number of nuclear missiles each side could have.",
+            "answer": "What is SALT I?"
+          },
+          "on_grade": {
+            "clue": "Signed by Nixon and Brezhnev in 1972, this arms control agreement froze the number of intercontinental ballistic missiles and submarine-launched ballistic missiles each superpower could possess.",
+            "answer": "What is SALT I?"
+          },
+          "advanced": {
+            "clue": "SALT I froze launcher numbers but did not limit MIRVs \u2014 missiles with multiple independently targetable warheads \u2014 a loophole that allowed both superpowers to dramatically increase actual nuclear firepower while technically complying with the treaty.",
+            "answer": "What is SALT I?"
+          },
+          "wrong_answers": [
+            "What is the Nuclear Test Ban Treaty?",
+            "What is START?",
+            "What is d\u00e9tente?"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "us_policy",
+      "title": "U.S. Policy & Strategy",
+      "clues": [
+        {
+          "value": 200,
+          "supported": {
+            "clue": "This was America's main Cold War plan: don't try to take back communist countries, just stop communism from spreading to new ones.",
+            "answer": "What is containment?"
+          },
+          "on_grade": {
+            "clue": "First formally articulated in George Kennan's anonymous 1947 'X Article,' this Cold War strategy held that rollback was unnecessary \u2014 Soviet expansion simply had to be blocked.",
+            "answer": "What is containment?"
+          },
+          "advanced": {
+            "clue": "Kennan himself later disowned the military interpretation of his strategy \u2014 he intended patient political and economic pressure, not global military commitments, and spent decades arguing that NSC-68's massive rearmament distorted his original concept.",
+            "answer": "What is containment?"
+          },
+          "wrong_answers": [
+            "What is isolationism?",
+            "What is d\u00e9tente?",
+            "What is the domino theory?"
+          ]
+        },
+        {
+          "value": 400,
+          "supported": {
+            "clue": "In 1947, President Truman asked Congress for money to help Greece and Turkey fight communism. He said the U.S. must help free people everywhere resist communist takeover.",
+            "answer": "What is the Truman Doctrine?"
+          },
+          "on_grade": {
+            "clue": "Truman's 1947 speech to Congress \u2014 requesting aid for Greece and Turkey \u2014 established the principle that the United States would support free peoples resisting communist subjugation anywhere in the world.",
+            "answer": "What is the Truman Doctrine?"
+          },
+          "advanced": {
+            "clue": "By framing the request in universal terms \u2014 free peoples everywhere, not just Greece and Turkey \u2014 Truman transformed a specific regional crisis into an open-ended global commitment that would justify intervention for decades.",
+            "answer": "What is the Truman Doctrine?"
+          },
+          "wrong_answers": [
+            "What is the Marshall Plan?",
+            "What is the Monroe Doctrine?",
+            "What is the Eisenhower Doctrine?"
+          ]
+        },
+        {
+          "value": 600,
+          "supported": {
+            "clue": "The U.S. gave billions of dollars to help Western European countries rebuild their economies after World War II, hoping to prevent poverty from making them turn to communism.",
+            "answer": "What is the Marshall Plan?"
+          },
+          "on_grade": {
+            "clue": "Launched in 1948, this U.S. program rebuilt war-devastated Western European economies \u2014 Secretary Marshall deliberately framed it as being against hunger and chaos rather than against the Soviet Union.",
+            "answer": "What is the Marshall Plan?"
+          },
+          "advanced": {
+            "clue": "Marshall deliberately invited Soviet participation \u2014 knowing Stalin would refuse \u2014 to give wavering nations political cover to accept American aid without appearing anti-Soviet, and France and Britain received the largest shares of the program.",
+            "answer": "What is the Marshall Plan?"
+          },
+          "wrong_answers": [
+            "What is the Truman Doctrine?",
+            "What is NATO?",
+            "What is the Berlin Airlift?"
+          ]
+        },
+        {
+          "value": 800,
+          "supported": {
+            "clue": "American leaders believed that if one country became communist, its neighbors would fall next \u2014 like a row of dominoes tipping over one after another.",
+            "answer": "What is the domino theory?"
+          },
+          "on_grade": {
+            "clue": "Eisenhower first used this analogy in 1954 to explain why a communist victory in Indochina was unacceptable \u2014 arguing that falling nations would pull down their neighbors in sequence.",
+            "answer": "What is the domino theory?"
+          },
+          "advanced": {
+            "clue": "The historical record largely disproved this theory \u2014 Vietnam's fall in 1975 did not produce the predicted cascade of communist takeovers across Southeast Asia, suggesting Cold War strategists badly underestimated the independence of regional political movements.",
+            "answer": "What is the domino theory?"
+          },
+          "wrong_answers": [
+            "What is containment?",
+            "What is brinkmanship?",
+            "What is the Truman Doctrine?"
+          ]
+        },
+        {
+          "value": 1000,
+          "supported": {
+            "clue": "President Nixon surprised the world by visiting communist China in 1972, trying to use this new friendship to put pressure on the Soviet Union.",
+            "answer": "What is Nixon's opening to China?"
+          },
+          "on_grade": {
+            "clue": "Nixon's 1972 visit to the People's Republic of China \u2014 a country the U.S. had refused to officially recognize since 1949 \u2014 was a major Cold War realignment that exploited the Sino-Soviet split to America's strategic advantage.",
+            "answer": "What is Nixon's opening to China?"
+          },
+          "advanced": {
+            "clue": "Kissinger's secret 1971 trip to Beijing laid the groundwork for Nixon's visit \u2014 the strategic logic being that improving U.S.-China relations would force the Soviet Union to moderate its behavior, since Moscow now faced potential encirclement by two hostile powers.",
+            "answer": "What is Nixon's opening to China?"
+          },
+          "wrong_answers": [
+            "What is d\u00e9tente?",
+            "What is the Nixon Doctrine?",
+            "What is SALT I?"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fear_at_home",
+      "title": "Fear at Home",
+      "clues": [
+        {
+          "value": 200,
+          "supported": {
+            "clue": "Many Americans were afraid that communist spies were secretly living in the United States, working to destroy the country from the inside.",
+            "answer": "What is the Red Scare?"
+          },
+          "on_grade": {
+            "clue": "This widespread fear that Soviet spies had infiltrated the U.S. government, military, and Hollywood gripped Americans in the late 1940s and early 1950s.",
+            "answer": "What is the (Second) Red Scare?"
+          },
+          "advanced": {
+            "clue": "The Second Red Scare was partially justified by real espionage \u2014 the Venona decrypts later confirmed Soviet agents had penetrated the Manhattan Project and State Department \u2014 though the political response far exceeded what the actual threat warranted.",
+            "answer": "What is the (Second) Red Scare?"
+          },
+          "wrong_answers": [
+            "What is McCarthyism?",
+            "What is the Cold War?",
+            "What is the Arms Race?"
+          ]
+        },
+        {
+          "value": 400,
+          "supported": {
+            "clue": "This senator from Wisconsin claimed he had a list of communists secretly working inside the U.S. government. Many believed him even though he never proved his charges.",
+            "answer": "Who is Joseph McCarthy?"
+          },
+          "on_grade": {
+            "clue": "This senator's genius was weaponizing accusation itself \u2014 by the time his targets could disprove his charges, the publicity had already destroyed their careers.",
+            "answer": "Who is Joseph McCarthy?"
+          },
+          "advanced": {
+            "clue": "Historians distinguish between the broader Second Red Scare \u2014 HUAC investigations, loyalty oaths, Hollywood blacklists \u2014 and the phenomenon named after this senator, whose innovation was making the act of accusation itself politically irresistible and career-ending.",
+            "answer": "Who is Joseph McCarthy?"
+          },
+          "wrong_answers": [
+            "What is J. Edgar Hoover?",
+            "What is Richard Nixon?",
+            "What is Alger Hiss?"
+          ]
+        },
+        {
+          "value": 600,
+          "supported": {
+            "clue": "This congressional committee investigated Americans accused of communist ties, particularly targeting writers, directors, and actors in Hollywood.",
+            "answer": "What is HUAC?"
+          },
+          "on_grade": {
+            "clue": "This committee's Hollywood investigations produced a blacklist of writers, directors, and actors who were refused employment after refusing to cooperate \u2014 or after being named by cooperative witnesses.",
+            "answer": "What is HUAC?"
+          },
+          "advanced": {
+            "clue": "The Hollywood Ten \u2014 screenwriters and directors who refused to testify before this committee on First Amendment grounds \u2014 were imprisoned for contempt of Congress, and the resulting blacklist drove dozens of careers underground for over a decade.",
+            "answer": "What is HUAC?"
+          },
+          "wrong_answers": [
+            "What is the Senate Judiciary Committee?",
+            "What is the Hollywood blacklist?",
+            "What is the Loyalty Review Board?"
+          ]
+        },
+        {
+          "value": 800,
+          "supported": {
+            "clue": "This husband-and-wife couple was convicted of passing nuclear secrets to the Soviet Union and was executed in 1953 \u2014 the only American civilians ever put to death for espionage during the Cold War.",
+            "answer": "Who are Julius and Ethel Rosenberg?"
+          },
+          "on_grade": {
+            "clue": "The 1953 execution of this couple \u2014 convicted of passing atomic bomb secrets to the Soviets \u2014 divided Americans between those who saw justice served and those who believed the trial was tainted by Cold War hysteria.",
+            "answer": "Who are Julius and Ethel Rosenberg?"
+          },
+          "advanced": {
+            "clue": "Venona decrypts confirmed Julius Rosenberg's guilt \u2014 but historians continue to debate whether Ethel's role was significant enough to warrant execution, or whether she was prosecuted primarily to pressure her husband into naming accomplices.",
+            "answer": "Who are Julius and Ethel Rosenberg?"
+          },
+          "wrong_answers": [
+            "What is Alger Hiss?",
+            "What is Klaus Fuchs?",
+            "What is the Hollywood Ten?"
+          ]
+        },
+        {
+          "value": 1000,
+          "supported": {
+            "clue": "McCarthy's downfall came during televised 1954 hearings when an army lawyer asked him in front of millions of viewers: 'Have you no sense of decency?'",
+            "answer": "What are the Army-McCarthy Hearings?"
+          },
+          "on_grade": {
+            "clue": "When McCarthy extended his communist hunt to the U.S. Army, the Army's chief counsel Joseph Welch delivered a nationally televised rebuke that collapsed McCarthy's public support almost overnight.",
+            "answer": "What are the Army-McCarthy Hearings?"
+          },
+          "advanced": {
+            "clue": "The Army-McCarthy hearings demonstrated television's emerging power to shape political reality \u2014 McCarthy's bullying tactics, devastating in a committee room, looked monstrous broadcast into American living rooms, and his Senate censure followed within months.",
+            "answer": "What are the Army-McCarthy Hearings?"
+          },
+          "wrong_answers": [
+            "What are the HUAC Hollywood hearings?",
+            "What is the censure of McCarthy?",
+            "What is the Rosenberg trial?"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "alliances_agreements",
+      "title": "Alliances & Agreements",
+      "clues": [
+        {
+          "value": 200,
+          "supported": {
+            "clue": "The U.S. and Western European countries formed this military alliance in 1949. They agreed that an attack on any one of them would be treated as an attack on all of them.",
+            "answer": "What is NATO?"
+          },
+          "on_grade": {
+            "clue": "The formation of this 1949 Western military alliance marked the first time the United States committed to a permanent peacetime military alliance \u2014 a historic departure from Washington's warning against entangling alliances.",
+            "answer": "What is NATO?"
+          },
+          "advanced": {
+            "clue": "Article 5's collective defense clause was first invoked not against the Soviet threat it was designed to deter, but on September 12, 2001 \u2014 transforming a Cold War institution into the legal foundation for the international response to the 9/11 attacks.",
+            "answer": "What is NATO?"
+          },
+          "wrong_answers": [
+            "What is the United Nations?",
+            "What is the Warsaw Pact?",
+            "What is SEATO?"
+          ]
+        },
+        {
+          "value": 400,
+          "supported": {
+            "clue": "In response to NATO, the Soviet Union created its own military alliance with the communist countries of Eastern Europe in 1955.",
+            "answer": "What is the Warsaw Pact?"
+          },
+          "on_grade": {
+            "clue": "This 1955 Soviet-led military alliance bound the communist states of Eastern Europe together \u2014 and was invoked to justify crushing the Hungarian Revolution in 1956 and the Prague Spring in 1968.",
+            "answer": "What is the Warsaw Pact?"
+          },
+          "advanced": {
+            "clue": "Unlike NATO \u2014 a genuine alliance of sovereign states \u2014 this pact functioned primarily as a mechanism for Soviet control of Eastern European militaries, ensuring no satellite state could develop independent capability that might challenge Moscow.",
+            "answer": "What is the Warsaw Pact?"
+          },
+          "wrong_answers": [
+            "What is NATO?",
+            "What is the United Nations?",
+            "What is SEATO?"
+          ]
+        },
+        {
+          "value": 600,
+          "supported": {
+            "clue": "In the 1970s, the U.S. and Soviet Union tried to reduce tensions. They signed nuclear weapons agreements and increased trade. This period was called by a French word meaning 'relaxation.'",
+            "answer": "What is d\u00e9tente?"
+          },
+          "on_grade": {
+            "clue": "Nixon and Kissinger's strategy of managed superpower competition produced this era of reduced Cold War tensions \u2014 including SALT I, increased trade, and Nixon's historic opening to China.",
+            "answer": "What is d\u00e9tente?"
+          },
+          "advanced": {
+            "clue": "Reagan rejected this framework entirely, believing it had legitimized Soviet power rather than constrained it \u2014 his alternative combined massive defense spending designed to bankrupt the Soviet economy with direct ideological confrontation through the Reagan Doctrine.",
+            "answer": "What is d\u00e9tente?"
+          },
+          "wrong_answers": [
+            "What is containment?",
+            "What is isolationism?",
+            "What is brinkmanship?"
+          ]
+        },
+        {
+          "value": 800,
+          "supported": {
+            "clue": "Signed in 1975 by 35 nations, this agreement recognized Europe's post-WWII borders but also required all signers to respect human rights \u2014 a clause the Soviets later came to regret.",
+            "answer": "What are the Helsinki Accords?"
+          },
+          "on_grade": {
+            "clue": "This 1975 agreement recognized Soviet-drawn European borders in exchange for Soviet commitment to human rights \u2014 a provision that emboldened dissidents across Eastern Europe and gave Western governments a tool to criticize Soviet practices.",
+            "answer": "What are the Helsinki Accords?"
+          },
+          "advanced": {
+            "clue": "The human rights provisions of this agreement proved a strategic blunder for the Soviets \u2014 the 'Helsinki Effect' empowered dissident movements like Charter 77 in Czechoslovakia and Solidarity in Poland, contributing directly to the collapse of communist regimes in 1989.",
+            "answer": "What are the Helsinki Accords?"
+          },
+          "wrong_answers": [
+            "What is the SALT I treaty?",
+            "What is the Camp David Accords?",
+            "What is the Nuclear Test Ban Treaty?"
+          ]
+        },
+        {
+          "value": 1000,
+          "supported": {
+            "clue": "This international organization was created after World War II to prevent future wars. Its Security Council can authorize military action \u2014 but only if the five permanent members all agree.",
+            "answer": "What is the United Nations?"
+          },
+          "on_grade": {
+            "clue": "The UN Security Council was able to authorize force in Korea in 1950 only because the Soviet Union happened to be boycotting the body \u2014 a mistake Moscow never repeated, instead using its veto to block future authorizations.",
+            "answer": "What is the United Nations?"
+          },
+          "advanced": {
+            "clue": "The structural tension in this organization \u2014 between the universalist aspirations of the General Assembly and the great-power veto in the Security Council \u2014 reflects the contradiction embedded at its founding: collective security requires the cooperation of the very powers most likely to cause conflict.",
+            "answer": "What is the United Nations?"
+          },
+          "wrong_answers": [
+            "What is NATO?",
+            "What is the League of Nations?",
+            "What is the Warsaw Pact?"
+          ]
+        }
+      ]
+    }
+  ]
+}

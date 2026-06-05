@@ -1,0 +1,641 @@
+{
+  "topic": "Great Depression & New Deal",
+  "categories": [
+    {
+      "id": "causes_depression",
+      "title": "Causes of the Crash",
+      "clues": [
+        {
+          "value": 200,
+          "wrong_answers": [
+            "What is the stock market crash?",
+            "What is the Dust Bowl?",
+            "What is overproduction?"
+          ],
+          "supported": {
+            "clue": "Banks failed, factories closed, and millions lost their jobs after the economy collapsed in the late 1920s and 1930s. Historians point to several causes working together to create the worst economic crisis in American history.",
+            "answer": "What are the causes of the Great Depression?"
+          },
+          "on_grade": {
+            "clue": "The Great Depression resulted from multiple converging factors: stock market speculation, bank failures, overproduction, falling farm prices, and the contraction of credit and international trade \u2014 all interacting to produce a decade-long economic collapse.",
+            "answer": "What are the causes of the Great Depression?"
+          },
+          "advanced": {
+            "clue": "Friedman and Schwartz's Monetary History of the United States argued the Depression was primarily caused by the Federal Reserve's failure to prevent a 30% contraction of the money supply \u2014 a monetarist interpretation that displaced Keynesian demand-collapse explanations and influenced Federal Reserve policy in 2008.",
+            "answer": "What are the causes of the Great Depression?"
+          }
+        },
+        {
+          "value": 400,
+          "wrong_answers": [
+            "What is the bank run?",
+            "What is the Dust Bowl?",
+            "What is the Smoot-Hawley Tariff?"
+          ],
+          "supported": {
+            "clue": "In October 1929, stock prices collapsed after years of speculation. Millions of investors lost their savings overnight. Many had borrowed money to buy stocks \u2014 and now they couldn't pay it back.",
+            "answer": "What is the Stock Market Crash of 1929?"
+          },
+          "on_grade": {
+            "clue": "This October 1929 collapse \u2014 triggered by panic selling after years of speculative excess \u2014 wiped out billions in paper wealth, devastated consumer confidence, and began the cascading banking failures and credit contraction that deepened into the Great Depression.",
+            "answer": "What is the Stock Market Crash of 1929?"
+          },
+          "advanced": {
+            "clue": "The crash was a symptom of deeper structural problems rather than the Depression's primary cause \u2014 the stock market recovered partially in early 1930, and the Depression's full severity resulted from the subsequent banking crises and policy failures, particularly the Fed's contractionary response and Smoot-Hawley's destruction of trade.",
+            "answer": "What is the Stock Market Crash of 1929?"
+          }
+        },
+        {
+          "value": 600,
+          "wrong_answers": [
+            "What is the New Deal?",
+            "What is the Federal Reserve?",
+            "What is the Social Security Act?"
+          ],
+          "supported": {
+            "clue": "When people heard their banks might fail, they rushed to withdraw all their money at once. This caused the banks to actually fail \u2014 because banks never keep all their customers' money on hand.",
+            "answer": "What is a bank run?"
+          },
+          "on_grade": {
+            "clue": "These panics \u2014 in which depositors simultaneously withdrew funds fearing bank insolvency \u2014 became self-fulfilling prophecies, causing otherwise solvent banks to fail and spreading financial collapse from weak institutions to healthy ones through contagion.",
+            "answer": "What is a bank run?"
+          },
+          "advanced": {
+            "clue": "The banking crisis of 1930\u20131933 destroyed over 9,000 banks and eliminated one-third of the money supply \u2014 Bernanke's research showing that banking collapse (not just credit contraction) was the mechanism transmitting the crash into depression directly informed his decision to rescue financial institutions in 2008.",
+            "answer": "What is a bank run?"
+          }
+        },
+        {
+          "value": 800,
+          "wrong_answers": [
+            "What is the New Deal?",
+            "What is Keynesian economics?",
+            "What is the Federal Reserve?"
+          ],
+          "supported": {
+            "clue": "Congress passed a law in 1930 raising tariffs on imported goods to protect American businesses. Instead, other countries retaliated with their own tariffs, and international trade collapsed \u2014 making the Depression worse worldwide.",
+            "answer": "What is the Smoot-Hawley Tariff?"
+          },
+          "on_grade": {
+            "clue": "This 1930 tariff \u2014 raising duties on over 20,000 imported goods \u2014 triggered retaliatory tariffs from trading partners, causing international trade to collapse by 65% between 1929 and 1932 and turning a national recession into a global depression.",
+            "answer": "What is the Smoot-Hawley Tariff?"
+          },
+          "advanced": {
+            "clue": "Smoot-Hawley's actual economic impact is debated \u2014 U.S. exports were only 7% of GDP, limiting direct damage \u2014 but its symbolic destruction of international economic cooperation and the retaliatory spiral it triggered made global coordination of recovery nearly impossible through the early 1930s.",
+            "answer": "What is the Smoot-Hawley Tariff?"
+          }
+        },
+        {
+          "value": 1000,
+          "wrong_answers": [
+            "What is the Gold Standard?",
+            "What is the Great Migration?",
+            "What is the Smoot-Hawley Tariff?"
+          ],
+          "supported": {
+            "clue": "A severe drought combined with decades of poor farming practices turned the Great Plains into a wasteland in the 1930s. Massive dust storms destroyed crops and forced hundreds of thousands of families to abandon their farms.",
+            "answer": "What is the Dust Bowl?"
+          },
+          "on_grade": {
+            "clue": "This 1930s ecological disaster \u2014 combining severe drought with the consequences of decades of over-plowing that removed drought-resistant native grasses \u2014 created massive dust storms that destroyed farms across Oklahoma, Kansas, and Texas and drove 300,000 migrants west.",
+            "answer": "What is the Dust Bowl?"
+          },
+          "advanced": {
+            "clue": "The Dust Bowl was not purely natural \u2014 it resulted from the Homestead Act's encouragement of farming on marginal land unsuitable for traditional agriculture, compounded by World War I's wheat price incentives that caused massive plowing of the southern plains, making an environmental catastrophe out of a natural drought.",
+            "answer": "What is the Dust Bowl?"
+          }
+        }
+      ]
+    },
+    {
+      "id": "hoover_response",
+      "title": "Hoover's Response",
+      "clues": [
+        {
+          "value": 200,
+          "wrong_answers": [
+            "What is the New Deal?",
+            "What is Keynesian economics?",
+            "What is deficit spending?"
+          ],
+          "supported": {
+            "clue": "President Hoover believed the government should not directly help unemployed Americans \u2014 saying that private charity and local governments should take care of the poor, and that people should solve their own problems.",
+            "answer": "What is rugged individualism?"
+          },
+          "on_grade": {
+            "clue": "Hoover's philosophy \u2014 that direct federal relief would undermine individual initiative and the voluntary spirit that had made America great \u2014 led him to resist federal unemployment assistance even as breadlines and shantytowns spread across the country.",
+            "answer": "What is rugged individualism?"
+          },
+          "advanced": {
+            "clue": "Hoover's 'rugged individualism' was not pure laissez-faire \u2014 he used the federal government actively to organize voluntary cooperation and signed the Reconstruction Finance Corporation into law \u2014 but his principled opposition to direct relief left him politically unable to respond adequately to the scale of mass unemployment.",
+            "answer": "What is rugged individualism?"
+          }
+        },
+        {
+          "value": 400,
+          "wrong_answers": [
+            "What is Coxey's Army?",
+            "What is the Adjusted Compensation Certificate?",
+            "What is the National Recovery Administration?"
+          ],
+          "supported": {
+            "clue": "In 1932, thousands of World War I veterans camped in Washington demanding early payment of bonuses they were owed. Hoover ordered the Army to drive them out \u2014 soldiers used tear gas and bayonets against the veterans and burned their camp.",
+            "answer": "What is the Bonus Army?"
+          },
+          "on_grade": {
+            "clue": "When Hoover ordered General MacArthur to disperse this encampment of 20,000 WWI veterans demanding early payment of service bonuses, the resulting images of soldiers attacking veterans destroyed Hoover's political standing and symbolized his administration's failures.",
+            "answer": "What is the Bonus Army?"
+          },
+          "advanced": {
+            "clue": "MacArthur exceeded Hoover's orders \u2014 Hoover directed dispersal of the main encampment but MacArthur pursued veterans across the Anacostia River and burned their entire camp, with Eisenhower (then his aide) later recalling that MacArthur's disobedience was a defining moment in his assessment of his commander's judgment.",
+            "answer": "What is the Bonus Army?"
+          }
+        },
+        {
+          "value": 600,
+          "wrong_answers": [
+            "What is the Public Works Administration?",
+            "What is the Reconstruction Finance Corporation?",
+            "What is the Federal Reserve?"
+          ],
+          "supported": {
+            "clue": "Unemployed men and their families built shacks out of cardboard and scrap metal in parks and empty lots across American cities. People sarcastically named these desperate communities after the president they blamed for their poverty.",
+            "answer": "What are Hoovervilles?"
+          },
+          "on_grade": {
+            "clue": "These Depression-era shantytowns \u2014 named mockingly after the president \u2014 appeared in cities nationwide as families evicted from their homes created makeshift communities of cardboard, scrap metal, and salvaged materials, the visible face of Hoover's failed economic response.",
+            "answer": "What are Hoovervilles?"
+          },
+          "advanced": {
+            "clue": "Hoovervilles were powerful political symbols \u2014 they were not merely the result of economic collapse but of specific policy choices, and their naming reflected a public judgment that Hoover's ideology had caused preventable suffering, making him perhaps the most scapegoated president in American history.",
+            "answer": "What are Hoovervilles?"
+          }
+        },
+        {
+          "value": 800,
+          "wrong_answers": [
+            "What is the Federal Deposit Insurance Corporation?",
+            "What is the Public Works Administration?",
+            "What is the Agricultural Adjustment Administration?"
+          ],
+          "supported": {
+            "clue": "Hoover created this federal agency in 1932 to make loans to banks, railroads, and other large businesses \u2014 believing that helping businesses would eventually help workers. Critics said it was helping rich institutions while ignoring starving people.",
+            "answer": "What is the Reconstruction Finance Corporation?"
+          },
+          "on_grade": {
+            "clue": "Hoover's 1932 agency to provide emergency loans to banks, railroads, and insurance companies \u2014 the first peacetime use of large-scale federal intervention in the economy \u2014 was criticized as 'relief for millionaires' while ordinary Americans went without direct assistance.",
+            "answer": "What is the Reconstruction Finance Corporation?"
+          },
+          "advanced": {
+            "clue": "The RFC was actually continued and expanded dramatically under FDR \u2014 it became one of the New Deal's most effective instruments, ultimately lending $50 billion \u2014 illustrating that the difference between Hoover and FDR was less about willingness to use federal power than about its direction and the communication of empathy.",
+            "answer": "What is the Reconstruction Finance Corporation?"
+          }
+        },
+        {
+          "value": 1000,
+          "wrong_answers": [
+            "What is the New Deal?",
+            "What is the Fair Deal?",
+            "What is the Great Society?"
+          ],
+          "supported": {
+            "clue": "The 1932 election was a landslide defeat for Hoover. FDR won 42 of 48 states \u2014 Americans were desperate for a change and willing to give the new president whatever he asked for to end their suffering.",
+            "answer": "What is the Election of 1932?"
+          },
+          "on_grade": {
+            "clue": "FDR's crushing victory over Hoover \u2014 winning 42 states and 57% of the popular vote \u2014 gave Democrats overwhelming congressional majorities and a mandate for dramatic action, creating the political conditions for the New Deal's first hundred days.",
+            "answer": "What is the Election of 1932?"
+          },
+          "advanced": {
+            "clue": "The 1932 election realigned American politics for a generation \u2014 creating the New Deal coalition of labor, urban immigrants, Southern whites, and Black Northern voters that dominated the Democratic Party until the civil rights realignment of the 1960s; it was as consequential a political earthquake as 1860 or 1980.",
+            "answer": "What is the Election of 1932?"
+          }
+        }
+      ]
+    },
+    {
+      "id": "new_deal_programs",
+      "title": "New Deal Programs",
+      "clues": [
+        {
+          "value": 200,
+          "wrong_answers": [
+            "What is the Three R's?",
+            "What is the Civilian Conservation Corps?",
+            "What is the Agricultural Adjustment Act?"
+          ],
+          "supported": {
+            "clue": "FDR's New Deal programs were organized around three goals: providing immediate help to the suffering (relief), getting the economy moving again (recovery), and making changes to prevent another depression (reform).",
+            "answer": "What are the Three R's: Relief, Recovery, Reform?"
+          },
+          "on_grade": {
+            "clue": "FDR organized his New Deal around these three goals \u2014 immediate relief for the unemployed and hungry, economic recovery through government spending and intervention, and structural reforms to prevent future depressions through banking regulation and social insurance.",
+            "answer": "What are the Three R's: Relief, Recovery, Reform?"
+          },
+          "advanced": {
+            "clue": "The Three R's framework obscures important tensions within the New Deal \u2014 relief and recovery sometimes conflicted (paying workers more raised business costs), and reform was often watered down by the political necessity of maintaining Southern Democratic support in Congress.",
+            "answer": "What are the Three R's: Relief, Recovery, Reform?"
+          }
+        },
+        {
+          "value": 400,
+          "wrong_answers": [
+            "What is the Public Works Administration?",
+            "What is the Work Progress Administration?",
+            "What is the National Recovery Administration?"
+          ],
+          "supported": {
+            "clue": "This New Deal program employed young men in conservation work \u2014 planting trees, building trails, and fighting forest fires in national parks and forests. It kept them fed and out of cities while preserving natural resources.",
+            "answer": "What is the Civilian Conservation Corps?"
+          },
+          "on_grade": {
+            "clue": "This New Deal agency employed 3 million young men in conservation work \u2014 reforestation, trail building, flood control \u2014 providing income and structure for unemployed youth while accomplishing environmental projects that private industry would not fund.",
+            "answer": "What is the Civilian Conservation Corps?"
+          },
+          "advanced": {
+            "clue": "The CCC was racially segregated by policy \u2014 Black enrollees served in separate camps, often under white supervisors, and faced discrimination in assignments and advancement \u2014 illustrating how New Deal programs were designed to maintain racial hierarchy as a condition of Southern Democratic support.",
+            "answer": "What is the Civilian Conservation Corps?"
+          }
+        },
+        {
+          "value": 600,
+          "wrong_answers": [
+            "What is the Civilian Conservation Corps?",
+            "What is the Agricultural Adjustment Act?",
+            "What is the National Recovery Administration?"
+          ],
+          "supported": {
+            "clue": "This New Deal agency hired millions of unemployed Americans to build post offices, bridges, schools, and airports \u2014 and also employed writers, artists, and musicians to create public art, theater, and history projects.",
+            "answer": "What is the Works Progress Administration?"
+          },
+          "on_grade": {
+            "clue": "This massive New Deal agency \u2014 employing 8.5 million Americans at its peak \u2014 built public infrastructure while its Federal Arts, Writers', and Theater Projects employed creative workers and produced enduring cultural documentation of Depression-era America.",
+            "answer": "What is the Works Progress Administration?"
+          },
+          "advanced": {
+            "clue": "The WPA's arts projects were politically controversial \u2014 the Federal Theatre Project's productions were considered too radical by conservatives, and Congress defunded it in 1939 \u2014 but they produced some of the most significant American art, photography, and oral history of the 20th century.",
+            "answer": "What is the Works Progress Administration?"
+          }
+        },
+        {
+          "value": 800,
+          "wrong_answers": [
+            "What is the Federal Deposit Insurance Corporation?",
+            "What is the Securities and Exchange Commission?",
+            "What is the Glass-Steagall Act?"
+          ],
+          "supported": {
+            "clue": "FDR's first action as president was to declare a bank holiday \u2014 closing all banks temporarily \u2014 and then creating a government agency to guarantee that people's bank deposits would be safe, so people would stop withdrawing all their money.",
+            "answer": "What is the FDIC (Federal Deposit Insurance Corporation)?"
+          },
+          "on_grade": {
+            "clue": "Created by the Banking Act of 1933, this agency insured bank deposits up to $5,000 (later raised dramatically) \u2014 eliminating the incentive for bank runs by guaranteeing depositors wouldn't lose their savings if a bank failed, and stabilizing the banking system.",
+            "answer": "What is the FDIC (Federal Deposit Insurance Corporation)?"
+          },
+          "advanced": {
+            "clue": "Deposit insurance was actually Hoover's idea, which he rejected as unsound because it would reduce banks' incentive to be prudent \u2014 his economic logic was correct but politically irrelevant; FDR adopted it and it proved so effective at preventing bank panics that it fundamentally changed banking stability for the next 75 years.",
+            "answer": "What is the FDIC (Federal Deposit Insurance Corporation)?"
+          }
+        },
+        {
+          "value": 1000,
+          "wrong_answers": [
+            "What is the Medicare Act?",
+            "What is the GI Bill?",
+            "What is the New Deal?"
+          ],
+          "supported": {
+            "clue": "This 1935 law created a system of retirement benefits for elderly Americans, unemployment insurance for workers who lost their jobs, and aid for disabled people and widows with children.",
+            "answer": "What is the Social Security Act?"
+          },
+          "on_grade": {
+            "clue": "This landmark 1935 legislation established old-age insurance, unemployment compensation, and aid to dependent children \u2014 creating the foundation of the American social safety net and establishing the principle that government bore responsibility for citizens' economic security.",
+            "answer": "What is the Social Security Act?"
+          },
+          "advanced": {
+            "clue": "Social Security's structure as an insurance program rather than welfare \u2014 with workers paying into a system from which they drew benefits \u2014 was a deliberate political choice by FDR: 'With those taxes in there, no damn politician can ever scrap my social security program.'",
+            "answer": "What is the Social Security Act?"
+          }
+        }
+      ]
+    },
+    {
+      "id": "critics_legacy",
+      "title": "Critics & Legacy",
+      "clues": [
+        {
+          "value": 200,
+          "wrong_answers": [
+            "What is Huey Long?",
+            "What is Father Coughlin?",
+            "What is the American Liberty League?"
+          ],
+          "supported": {
+            "clue": "Not everyone supported the New Deal. Some businessmen said it gave the government too much power over the economy. Some leftists said it didn't go far enough in helping poor people. Some populists wanted even more radical redistribution.",
+            "answer": "What are critics of the New Deal?"
+          },
+          "on_grade": {
+            "clue": "The New Deal faced critics from multiple directions \u2014 conservatives who saw it as unconstitutional federal overreach, business leaders who feared government economic management, and populists like Huey Long who demanded more radical redistribution.",
+            "answer": "What are critics of the New Deal?"
+          },
+          "advanced": {
+            "clue": "The New Deal's most serious intellectual critics were on the left \u2014 economists like Alvin Hansen argued that FDR's deficit spending was too timid and too interrupted (especially in 1937's premature austerity) to cure the Depression, a judgment supported by the fact that only WWII military spending finally ended mass unemployment.",
+            "answer": "What are critics of the New Deal?"
+          }
+        },
+        {
+          "value": 400,
+          "wrong_answers": [
+            "What is the National Recovery Administration?",
+            "What is the Schechter Poultry case?",
+            "What is the Butler decision?"
+          ],
+          "supported": {
+            "clue": "After the Supreme Court struck down several New Deal programs, FDR proposed adding up to six new justices \u2014 one for each justice over 70. Congress refused, but the Court began upholding New Deal laws anyway.",
+            "answer": "What is FDR's court-packing plan?"
+          },
+          "on_grade": {
+            "clue": "FDR's 1937 plan to add up to six justices \u2014 one for each sitting justice over 70 \u2014 was defeated in Congress but may have achieved its goal anyway, as Justice Roberts's vote shift ('the switch in time that saved nine') produced a Court majority for New Deal programs.",
+            "answer": "What is FDR's court-packing plan?"
+          },
+          "advanced": {
+            "clue": "Scholars debate whether Roberts's 'switch' was actually caused by court-packing pressure \u2014 his change in West Coast Hotel was voted on before the plan was announced \u2014 but the political story resonated and the episode permanently damaged FDR's reputation for constitutional fidelity.",
+            "answer": "What is FDR's court-packing plan?"
+          }
+        },
+        {
+          "value": 600,
+          "wrong_answers": [
+            "What is Eleanor Roosevelt?",
+            "What is Frances Perkins?",
+            "What is Molly Dewson?"
+          ],
+          "supported": {
+            "clue": "The president's wife broke all previous expectations for a First Lady \u2014 traveling the country, writing a newspaper column, advocating for civil rights and the poor, and serving as FDR's eyes and ears when he could not travel easily due to his disability.",
+            "answer": "Who is Eleanor Roosevelt?"
+          },
+          "on_grade": {
+            "clue": "As the most activist First Lady in American history to that point, Eleanor Roosevelt shaped the New Deal's social justice dimensions \u2014 advocating for Black Americans, poor women, and the unemployed, and serving as FDR's conscience and political intelligence on domestic conditions.",
+            "answer": "Who is Eleanor Roosevelt?"
+          },
+          "advanced": {
+            "clue": "Eleanor Roosevelt's influence was complicated by the limits of her position \u2014 she pushed FDR on anti-lynching legislation and opposed Japanese internment but could not override his political calculations, illustrating how even an exceptionally influential presidential spouse operates through persuasion rather than power.",
+            "answer": "Who is Eleanor Roosevelt?"
+          }
+        },
+        {
+          "value": 800,
+          "wrong_answers": [
+            "What is the New Deal?",
+            "What is Keynesian economics?",
+            "What is supply-side economics?"
+          ],
+          "supported": {
+            "clue": "The Depression finally ended when the United States entered World War II and massive government military spending put millions of Americans back to work. The New Deal had helped, but it took wartime production to fully end unemployment.",
+            "answer": "What is the legacy of the New Deal?"
+          },
+          "on_grade": {
+            "clue": "The New Deal's programs stabilized the banking system, provided relief, and created lasting institutions \u2014 but full recovery came only with WWII military spending, suggesting the New Deal's deficit spending was too modest to cure the Depression through fiscal stimulus alone.",
+            "answer": "What is the legacy of the New Deal?"
+          },
+          "advanced": {
+            "clue": "The New Deal's most consequential legacy was institutional and political rather than economic \u2014 it established the administrative state, the social safety net, and the expectation that government would manage the economy, creating the framework within which American political debate has occurred ever since.",
+            "answer": "What is the legacy of the New Deal?"
+          }
+        },
+        {
+          "value": 1000,
+          "wrong_answers": [
+            "What is the Marshall Plan?",
+            "What is the Lend-Lease Act?",
+            "What is the Monroe Doctrine?"
+          ],
+          "supported": {
+            "clue": "FDR announced that the United States would be a 'good neighbor' to Latin American countries \u2014 pulling American troops out of the Caribbean and promising not to interfere in the internal affairs of other nations in the Western Hemisphere.",
+            "answer": "What is the Good Neighbor Policy?"
+          },
+          "on_grade": {
+            "clue": "FDR's 1933 policy formally renounced the Roosevelt Corollary's claim of U.S. right to intervene in Latin American affairs \u2014 withdrawing troops from Haiti and Nicaragua and pledging non-intervention \u2014 reversing decades of American gunboat diplomacy.",
+            "answer": "What is the Good Neighbor Policy?"
+          },
+          "advanced": {
+            "clue": "The Good Neighbor Policy was pragmatic as well as principled \u2014 with fascism rising in Europe, FDR needed Latin American cooperation and knew that continued intervention alienated potential allies; the policy's retreat from intervention made Hemispheric solidarity more achievable but also allowed authoritarian regimes the U.S. had previously controlled to consolidate power.",
+            "answer": "What is the Good Neighbor Policy?"
+          }
+        }
+      ]
+    },
+    {
+      "id": "depression_life",
+      "title": "Life in the Depression",
+      "clues": [
+        {
+          "value": 200,
+          "wrong_answers": [
+            "What is the Okie migration?",
+            "What is the Great Migration?",
+            "What is suburbanization?"
+          ],
+          "supported": {
+            "clue": "Thousands of farm families driven out of the Dust Bowl \u2014 many from Oklahoma \u2014 packed their belongings into cars and drove to California, hoping to find work. John Steinbeck wrote about their journey in 'The Grapes of Wrath.'",
+            "answer": "What is the Dust Bowl migration?"
+          },
+          "on_grade": {
+            "clue": "The exodus of 300,000 Dust Bowl migrants \u2014 many from Oklahoma, called 'Okies' \u2014 to California was immortalized by Steinbeck's The Grapes of Wrath, and revealed how ecological and economic collapse combined to uproot rural communities.",
+            "answer": "What is the Dust Bowl migration?"
+          },
+          "advanced": {
+            "clue": "Steinbeck's migrants faced a racialized reception in California \u2014 they were white but treated as racially other, subject to labor exploitation and residential segregation that mirrored the treatment of Mexican farmworkers, revealing how economic desperation could displace even race-based privilege.",
+            "answer": "What is the Dust Bowl migration?"
+          }
+        },
+        {
+          "value": 400,
+          "wrong_answers": [
+            "What is the bank holiday?",
+            "What is the fireside chat?",
+            "What is the New Deal?"
+          ],
+          "supported": {
+            "clue": "FDR gave regular radio talks directly to the American people, speaking in simple, reassuring language about what the government was doing and why. These talks helped rebuild public confidence during the Depression.",
+            "answer": "What are the fireside chats?"
+          },
+          "on_grade": {
+            "clue": "FDR's regular radio addresses \u2014 delivered in conversational language that made Americans feel the president was speaking directly to them in their living rooms \u2014 were a master class in political communication that helped restore confidence and build public support for New Deal programs.",
+            "answer": "What are the fireside chats?"
+          },
+          "advanced": {
+            "clue": "The fireside chats were strategic as well as communicative \u2014 FDR used them selectively, only when he had something specific to explain or needed to build pressure on Congress, recognizing that overuse would dilute their impact; his mastery of radio shaped political communication for the television age.",
+            "answer": "What are the fireside chats?"
+          }
+        },
+        {
+          "value": 600,
+          "wrong_answers": [
+            "What is the bank holiday?",
+            "What is the fireside chat?",
+            "What is the Bonus Army?"
+          ],
+          "supported": {
+            "clue": "Unemployment reached 25% during the Great Depression \u2014 one in four American workers had no job. Breadlines, soup kitchens, and apple sellers on street corners became common sights in American cities.",
+            "answer": "What is mass unemployment?"
+          },
+          "on_grade": {
+            "clue": "At its peak in 1933, unemployment reached 25% \u2014 13 million Americans out of work \u2014 with another 25% underemployed; the psychological and social consequences of prolonged joblessness included rising suicide rates, falling birth rates, and profound challenges to masculine identity built around breadwinning.",
+            "answer": "What is mass unemployment?"
+          },
+          "advanced": {
+            "clue": "Depression-era unemployment was structurally unlike cyclical recessions \u2014 the sheer duration (over a decade) and breadth meant that social support networks collapsed, savings were exhausted, and the normal mechanisms of economic recovery failed to operate, requiring structural interventions rather than patience.",
+            "answer": "What is mass unemployment?"
+          }
+        },
+        {
+          "value": 800,
+          "wrong_answers": [
+            "What is minstrelsy?",
+            "What is jazz?",
+            "What is the Harlem Renaissance?"
+          ],
+          "supported": {
+            "clue": "Despite severe poverty, Americans found entertainment in radio, movies, and music during the Depression. Escapist films about glamorous stars and catchy songs helped people forget their troubles for a few hours.",
+            "answer": "What is Depression-era popular culture?"
+          },
+          "on_grade": {
+            "clue": "Depression-era Americans sought relief in affordable entertainment \u2014 radio serials, Hollywood musicals and gangster films, swing music \u2014 that offered escape from poverty while also reflecting anxieties about economic helplessness, crime, and the collapse of social order.",
+            "answer": "What is Depression-era popular culture?"
+          },
+          "advanced": {
+            "clue": "New Deal arts programs \u2014 the Federal Theatre, Federal Art, and Federal Writers Projects \u2014 deliberately used culture as social medicine, employing artists to document American life and creating public art that affirmed democratic values; their cancellation by the conservative Congress of 1939 reflected both their political impact and their vulnerability.",
+            "answer": "What is Depression-era popular culture?"
+          }
+        },
+        {
+          "value": 1000,
+          "wrong_answers": [
+            "What is the New Deal?",
+            "What is the Progressive Era?",
+            "What is the Fair Deal?"
+          ],
+          "supported": {
+            "clue": "The Great Depression and New Deal permanently changed what Americans expected from their government \u2014 that it would protect them from economic catastrophe, regulate banks and businesses, and provide a safety net of Social Security and unemployment insurance.",
+            "answer": "What is the expanded role of government?"
+          },
+          "on_grade": {
+            "clue": "The Depression-era transformation of the federal government's role \u2014 from passive economic bystander to active manager of economic stability \u2014 created expectations of government responsibility for citizens' welfare that permanently enlarged the scope of acceptable federal action.",
+            "answer": "What is the expanded role of government?"
+          },
+          "advanced": {
+            "clue": "The New Deal's most lasting legacy was ideological \u2014 it shifted the burden of proof in American political debate from those who wanted government to act to those who wanted it to refrain, creating the 'liberal consensus' that defined mainstream politics until Reagan successfully challenged it in 1980.",
+            "answer": "What is the expanded role of government?"
+          }
+        }
+      ]
+    },
+    {
+      "id": "art_culture_depression",
+      "title": "The Arts & New Deal",
+      "clues": [
+        {
+          "value": 200,
+          "wrong_answers": [
+            "What is the Federal Art Project?",
+            "What is the Federal Music Project?",
+            "What is the Federal Theatre Project?"
+          ],
+          "supported": {
+            "clue": "The WPA employed writers to document American life \u2014 creating state guidebooks, interviewing former enslaved people, and collecting folklore. This massive documentation project preserved voices and stories that would otherwise have been lost.",
+            "answer": "What is the Federal Writers' Project?"
+          },
+          "on_grade": {
+            "clue": "This New Deal agency employed unemployed writers \u2014 including Richard Wright, Ralph Ellison, and Saul Bellow \u2014 to produce state guidebooks, record oral histories of former slaves, and document American folklore in a massive preservation effort.",
+            "answer": "What is the Federal Writers' Project?"
+          },
+          "advanced": {
+            "clue": "The Slave Narratives collected by the Federal Writers' Project \u2014 interviews with over 2,300 formerly enslaved people \u2014 became the most important primary source collection for understanding slavery from the enslaved perspective, though the interviews' reliability is complicated by the power dynamics between Black interviewees and mostly white interviewers.",
+            "answer": "What is the Federal Writers' Project?"
+          }
+        },
+        {
+          "value": 400,
+          "wrong_answers": [
+            "What is the New Deal?",
+            "What is Dorothea Lange?",
+            "What is the Farm Security Administration?"
+          ],
+          "supported": {
+            "clue": "Dorothea Lange and other government photographers documented the suffering of migrant workers and Depression victims \u2014 creating iconic images that built public support for New Deal programs and put a human face on economic statistics.",
+            "answer": "What is Documentary photography?"
+          },
+          "on_grade": {
+            "clue": "Farm Security Administration photographers \u2014 including Dorothea Lange and Walker Evans \u2014 created the visual record of the Depression that defined how Americans remembered it, producing images like 'Migrant Mother' that combined artistic quality with political advocacy.",
+            "answer": "What is Documentary photography?"
+          },
+          "advanced": {
+            "clue": "Dorothea Lange's 'Migrant Mother' is both a powerful documentary image and a constructed one \u2014 Lange took seven shots and selected the most aesthetically powerful, and the subject Florence Owens Thompson later expressed ambivalence about being reduced to an icon of suffering, raising questions about documentary photography's ethics.",
+            "answer": "What is Documentary photography?"
+          }
+        },
+        {
+          "value": 600,
+          "wrong_answers": [
+            "What is John Steinbeck?",
+            "What is F. Scott Fitzgerald?",
+            "What is Ernest Hemingway?"
+          ],
+          "supported": {
+            "clue": "This author wrote 'The Grapes of Wrath' in 1939 \u2014 following an Oklahoma farm family forced off their land by drought and debt, migrating to California hoping for a better life. The novel won the Pulitzer Prize and helped build sympathy for migrant workers.",
+            "answer": "Who is John Steinbeck?"
+          },
+          "on_grade": {
+            "clue": "Steinbeck's 1939 novel \u2014 following the Joad family's migration from the Dust Bowl to California \u2014 created the definitive literary portrait of the Depression's human cost and built public sympathy for migrant farmworkers that influenced New Deal agricultural policy.",
+            "answer": "Who is John Steinbeck?"
+          },
+          "advanced": {
+            "clue": "The Grapes of Wrath was condemned in California \u2014 burned by Kern County and labeled communist propaganda by agricultural interests \u2014 because its indictment of corporate farming and labor exploitation was politically inconvenient; its literary power derived from the same documentary research that made it a political threat.",
+            "answer": "Who is John Steinbeck?"
+          }
+        },
+        {
+          "value": 800,
+          "wrong_answers": [
+            "What is the WPA murals?",
+            "What is regionalism?",
+            "What is American Scene painting?"
+          ],
+          "supported": {
+            "clue": "The WPA's Federal Art Project hired unemployed artists to create murals in post offices, schools, and other public buildings across the country \u2014 bringing art to communities that had never had access to it and celebrating American workers and history.",
+            "answer": "What is the Federal Art Project?"
+          },
+          "on_grade": {
+            "clue": "This New Deal program employed over 10,000 visual artists to create murals, sculptures, and prints for public buildings nationwide \u2014 democratizing access to art while providing income to artists and establishing the precedent of federal arts support.",
+            "answer": "What is the Federal Art Project?"
+          },
+          "advanced": {
+            "clue": "WPA murals became politically contested \u2014 Mexican muralists' influence introduced social realist content that conservative congressmen attacked as communist, and the program was defunded by the conservative Congress of 1939 precisely because its art depicted workers, unions, and racial equality in ways that challenged the status quo.",
+            "answer": "What is the Federal Art Project?"
+          }
+        },
+        {
+          "value": 1000,
+          "wrong_answers": [
+            "What is the Federal Writers' Project?",
+            "What is Dorothea Lange?",
+            "What is Federal Theatre Project?"
+          ],
+          "supported": {
+            "clue": "The Federal Theatre Project employed actors, directors, and playwrights to create affordable live theater for communities across America \u2014 including the 'Living Newspapers' that dramatized current events. Congress killed it in 1939, saying it was too politically radical.",
+            "answer": "What is the Federal Theatre Project?"
+          },
+          "on_grade": {
+            "clue": "This New Deal agency \u2014 employing 12,000 theater workers and reaching 25 million Americans with affordable productions \u2014 was defunded by the House Un-American Activities Committee in 1939 for presenting plays about labor rights, racial equality, and social justice that conservatives labeled communist propaganda.",
+            "answer": "What is the Federal Theatre Project?"
+          },
+          "advanced": {
+            "clue": "The Federal Theatre's 'Living Newspaper' format \u2014 dramatizing news stories about housing, utilities, and labor \u2014 was genuinely innovative theater but also genuinely political, and its cancellation by HUAC established the pattern of cultural censorship that would expand dramatically in the McCarthy era.",
+            "answer": "What is the Federal Theatre Project?"
+          }
+        }
+      ]
+    }
+  ]
+}

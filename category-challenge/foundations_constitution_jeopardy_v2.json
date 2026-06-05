@@ -1,0 +1,641 @@
+{
+  "topic": "Foundations & Constitution",
+  "categories": [
+    {
+      "id": "enlightenment_origins",
+      "title": "Enlightenment Origins",
+      "clues": [
+        {
+          "value": 200,
+          "wrong_answers": [
+            "What is the Magna Carta?",
+            "What is the divine right of kings?",
+            "What is mercantilism?"
+          ],
+          "supported": {
+            "clue": "John Locke said people are born with rights to life, liberty, and property \u2014 and that people agree to be governed. If the government breaks that agreement, people can replace it.",
+            "answer": "What is the social contract?"
+          },
+          "on_grade": {
+            "clue": "This Enlightenment idea held that governments derive their authority from the consent of the governed \u2014 and that citizens have the right to overthrow a government that fails to protect their natural rights.",
+            "answer": "What is the social contract?"
+          },
+          "advanced": {
+            "clue": "Thomas Jefferson drew directly on Locke's Second Treatise when drafting the Declaration \u2014 substituting 'pursuit of happiness' for 'property' in the natural rights triad, a philosophical choice that has generated debate about the founders' intentions ever since.",
+            "answer": "What is the social contract?"
+          }
+        },
+        {
+          "value": 400,
+          "wrong_answers": [
+            "What is the Constitution?",
+            "What is the Mayflower Compact?",
+            "What is the Articles of Confederation?"
+          ],
+          "supported": {
+            "clue": "Written mostly by Thomas Jefferson in 1776, this document listed the colonists' complaints against the king and announced that the colonies were breaking away from Britain.",
+            "answer": "What is the Declaration of Independence?"
+          },
+          "on_grade": {
+            "clue": "This 1776 document announced American independence and grounded its argument in Enlightenment principles \u2014 asserting that 'all men are created equal' and that governments derive their just powers from the consent of the governed.",
+            "answer": "What is the Declaration of Independence?"
+          },
+          "advanced": {
+            "clue": "Though celebrated as a universal statement of human rights, this document was written by a slaveholder \u2014 a contradiction that Abraham Lincoln would later call 'a rebuke and a stumbling-block to the very harbingers of re-appearing tyranny and oppression.'",
+            "answer": "What is the Declaration of Independence?"
+          }
+        },
+        {
+          "value": 600,
+          "wrong_answers": [
+            "What is the Declaration of Independence?",
+            "What is the Articles of Confederation?",
+            "What is the Northwest Ordinance?"
+          ],
+          "supported": {
+            "clue": "Written by James Madison, Alexander Hamilton, and John Jay, these 85 essays were published in newspapers to persuade New Yorkers to ratify the new Constitution.",
+            "answer": "What are the Federalist Papers?"
+          },
+          "on_grade": {
+            "clue": "These essays, written under the pen name 'Publius,' remain the most authoritative source for understanding the original intent of the Constitution \u2014 particularly Federalist No. 10 on factions and No. 51 on checks and balances.",
+            "answer": "What are the Federalist Papers?"
+          },
+          "advanced": {
+            "clue": "Federalist No. 10 argued that a large republic would actually control factions better than a small one \u2014 directly refuting Montesquieu's influential claim that republican government could only work in small territories.",
+            "answer": "What are the Federalist Papers?"
+          }
+        },
+        {
+          "value": 800,
+          "wrong_answers": [
+            "What are the Federalists?",
+            "What is the Constitutional Convention?",
+            "What is the Articles of Confederation?"
+          ],
+          "supported": {
+            "clue": "People who opposed the new Constitution worried it gave too much power to the national government and didn't protect individual rights. They demanded a Bill of Rights before they would agree to ratify it.",
+            "answer": "Who are the Anti-Federalists?"
+          },
+          "on_grade": {
+            "clue": "This group opposed ratification of the Constitution, arguing it created a dangerously powerful central government and lacked protections for individual liberties \u2014 their pressure directly produced the Bill of Rights.",
+            "answer": "Who are the Anti-Federalists?"
+          },
+          "advanced": {
+            "clue": "Anti-Federalist writers like Brutus and the Federal Farmer proved prescient in warning that a strong federal judiciary would eventually assert supremacy over state courts \u2014 a concern validated within two decades by Marbury v. Madison and McCulloch v. Maryland.",
+            "answer": "Who are the Anti-Federalists?"
+          }
+        },
+        {
+          "value": 1000,
+          "wrong_answers": [
+            "What is the Declaration of Independence?",
+            "What is the Emancipation Proclamation?",
+            "What is the Articles of Confederation?"
+          ],
+          "supported": {
+            "clue": "Added to the Constitution in 1791, these first ten amendments guarantee basic rights like freedom of speech, religion, and the press \u2014 and were added to win support from states that feared a too-powerful federal government.",
+            "answer": "What is the Bill of Rights?"
+          },
+          "on_grade": {
+            "clue": "Ratified in 1791, these first ten amendments to the Constitution protect individual liberties from federal government overreach \u2014 including freedom of speech, religion, press, assembly, and protection against unreasonable searches.",
+            "answer": "What is the Bill of Rights?"
+          },
+          "advanced": {
+            "clue": "Madison originally opposed a separate bill of rights as unnecessary and even dangerous \u2014 fearing that enumerating specific rights might imply others were not protected \u2014 but reversed course to secure ratification, drafting the amendments himself from state convention proposals.",
+            "answer": "What is the Bill of Rights?"
+          }
+        }
+      ]
+    },
+    {
+      "id": "constitutional_structure",
+      "title": "Constitutional Structure",
+      "clues": [
+        {
+          "value": 200,
+          "wrong_answers": [
+            "What is federalism?",
+            "What is the Bill of Rights?",
+            "What is judicial review?"
+          ],
+          "supported": {
+            "clue": "The Constitution divides the government into three branches: legislative (Congress), executive (President), and judicial (courts). No one branch has all the power.",
+            "answer": "What is separation of powers?"
+          },
+          "on_grade": {
+            "clue": "This constitutional principle divides governmental authority among three distinct branches \u2014 legislative, executive, and judicial \u2014 to prevent any single person or group from accumulating too much power.",
+            "answer": "What is separation of powers?"
+          },
+          "advanced": {
+            "clue": "Madison drew directly on Montesquieu's Spirit of the Laws in designing this structural principle, though he modified the French philosopher's model by giving each branch partial control over the others rather than keeping them fully independent.",
+            "answer": "What is separation of powers?"
+          }
+        },
+        {
+          "value": 400,
+          "wrong_answers": [
+            "What is separation of powers?",
+            "What is federalism?",
+            "What is judicial review?"
+          ],
+          "supported": {
+            "clue": "Each branch of government has the power to limit the other two. Congress can override a presidential veto. The President can veto laws. Courts can strike down laws that violate the Constitution.",
+            "answer": "What are checks and balances?"
+          },
+          "on_grade": {
+            "clue": "This system ensures that no branch of government can act without some form of oversight from the others \u2014 through mechanisms like the presidential veto, congressional override, Senate confirmation, and judicial review.",
+            "answer": "What are checks and balances?"
+          },
+          "advanced": {
+            "clue": "Madison argued in Federalist No. 51 that this system works not because leaders are virtuous, but because 'ambition must be made to counteract ambition' \u2014 structuring government so that self-interest itself prevents tyranny.",
+            "answer": "What are checks and balances?"
+          }
+        },
+        {
+          "value": 600,
+          "wrong_answers": [
+            "What is separation of powers?",
+            "What is the elastic clause?",
+            "What is due process?"
+          ],
+          "supported": {
+            "clue": "In this 1803 Supreme Court case, Chief Justice John Marshall declared that the Supreme Court has the power to strike down laws that violate the Constitution. This power is now used regularly by the Court.",
+            "answer": "What is judicial review?"
+          },
+          "on_grade": {
+            "clue": "Established in Marbury v. Madison (1803), this principle \u2014 not explicitly written in the Constitution \u2014 gives the Supreme Court the authority to declare acts of Congress or the President unconstitutional.",
+            "answer": "What is judicial review?"
+          },
+          "advanced": {
+            "clue": "Marshall's opinion in Marbury was a masterpiece of political maneuvering \u2014 he ruled against his own Federalist ally to avoid a confrontation Jefferson could win, while establishing the far more consequential power that would define the Court's role for two centuries.",
+            "answer": "What is judicial review?"
+          }
+        },
+        {
+          "value": 800,
+          "wrong_answers": [
+            "What is judicial review?",
+            "What is the elastic clause?",
+            "What is states' rights?"
+          ],
+          "supported": {
+            "clue": "In this case, the Supreme Court ruled that a state could not tax a federal bank \u2014 establishing that when federal and state laws conflict, the federal law wins.",
+            "answer": "What is McCulloch v. Maryland?"
+          },
+          "on_grade": {
+            "clue": "This 1819 Supreme Court ruling established two critical precedents: that Congress has implied powers beyond those explicitly listed, and that federal law is supreme over conflicting state law.",
+            "answer": "What is McCulloch v. Maryland?"
+          },
+          "advanced": {
+            "clue": "Marshall's opinion introduced the doctrine of implied powers by interpreting the Necessary and Proper Clause expansively \u2014 ruling that 'necessary' meant 'useful,' not 'indispensable,' a reading that dramatically broadened congressional authority.",
+            "answer": "What is McCulloch v. Maryland?"
+          }
+        },
+        {
+          "value": 1000,
+          "wrong_answers": [
+            "What is a constitutional convention?",
+            "What is the elastic clause?",
+            "What is executive privilege?"
+          ],
+          "supported": {
+            "clue": "Changing the Constitution is difficult on purpose. A change must be proposed by two-thirds of Congress (or a convention), then approved by three-fourths of the states.",
+            "answer": "What is the amendment process?"
+          },
+          "on_grade": {
+            "clue": "The framers made this process deliberately difficult \u2014 requiring supermajority approval at both the proposal and ratification stages \u2014 to prevent temporary majorities from easily altering the nation's fundamental law.",
+            "answer": "What is the amendment process?"
+          },
+          "advanced": {
+            "clue": "The difficulty of this process has had a paradoxical effect: it has pushed constitutional change into the courts, with the Supreme Court reinterpreting existing text rather than new amendments supplying most of the Constitution's evolution over two centuries.",
+            "answer": "What is the amendment process?"
+          }
+        }
+      ]
+    },
+    {
+      "id": "constitutional_convention",
+      "title": "Philadelphia, 1787",
+      "clues": [
+        {
+          "value": 200,
+          "wrong_answers": [
+            "What is the Declaration of Independence?",
+            "What is the Bill of Rights?",
+            "What is the Articles of Confederation?"
+          ],
+          "supported": {
+            "clue": "Delegates from the states met in Philadelphia in 1787 to fix the weak national government. Instead of fixing the old system, they wrote an entirely new Constitution.",
+            "answer": "What is the Constitutional Convention?"
+          },
+          "on_grade": {
+            "clue": "Called to revise the Articles of Confederation, this 1787 gathering in Philadelphia produced an entirely new framework of government \u2014 drafted in secret over a sweltering summer by 55 delegates.",
+            "answer": "What is the Constitutional Convention?"
+          },
+          "advanced": {
+            "clue": "The delegates exceeded their mandate from Congress \u2014 which had authorized only revision of the Articles \u2014 by drafting an entirely new Constitution and bypassing the Articles' unanimous-consent amendment requirement with a new ratification process.",
+            "answer": "What is the Constitutional Convention?"
+          }
+        },
+        {
+          "value": 400,
+          "wrong_answers": [
+            "What is the Virginia Plan?",
+            "What is the New Jersey Plan?",
+            "What is the Electoral College?"
+          ],
+          "supported": {
+            "clue": "At the Constitutional Convention, large states and small states disagreed about representation in Congress. This agreement gave large states proportional representation in the House and equal representation (2 senators) to every state in the Senate.",
+            "answer": "What is the Great Compromise?"
+          },
+          "on_grade": {
+            "clue": "This agreement resolved the deadlock between large and small states at the Constitutional Convention by creating a bicameral legislature \u2014 a House with proportional representation and a Senate with equal representation for each state.",
+            "answer": "What is the Great Compromise?"
+          },
+          "advanced": {
+            "clue": "The equal Senate representation secured by small states in this compromise has had enduring consequences \u2014 giving Wyoming the same two votes as California, a structural counter-majoritarian feature that the framers accepted to achieve ratification.",
+            "answer": "What is the Great Compromise?"
+          }
+        },
+        {
+          "value": 600,
+          "wrong_answers": [
+            "What is the Great Compromise?",
+            "What is the Electoral College?",
+            "What is the Missouri Compromise?"
+          ],
+          "supported": {
+            "clue": "Southern states wanted enslaved people to count toward their population for representation in Congress, but not for taxation. Northern states disagreed. The compromise counted each enslaved person as three-fifths of a person.",
+            "answer": "What is the Three-Fifths Compromise?"
+          },
+          "on_grade": {
+            "clue": "This compromise counted enslaved people as three-fifths of a person for purposes of congressional representation and taxation \u2014 giving southern states significantly more political power in the House while avoiding a direct confrontation over slavery.",
+            "answer": "What is the Three-Fifths Compromise?"
+          },
+          "advanced": {
+            "clue": "This provision gave the slaveholding South a substantial bonus in House seats and Electoral College votes \u2014 historians estimate it gave Virginia alone about a dozen extra representatives, contributing directly to the domination of the early presidency by southern slaveholders.",
+            "answer": "What is the Three-Fifths Compromise?"
+          }
+        },
+        {
+          "value": 800,
+          "wrong_answers": [
+            "What is checks and balances?",
+            "What is separation of powers?",
+            "What is popular sovereignty?"
+          ],
+          "supported": {
+            "clue": "The Constitution divides power between the national government and state governments. Each level has its own powers, and some powers are shared.",
+            "answer": "What is federalism?"
+          },
+          "on_grade": {
+            "clue": "This system divides governmental authority between a national government and the states \u2014 with some powers exclusive to each level, some concurrent, and the Tenth Amendment reserving to states all powers not delegated to the federal government.",
+            "answer": "What is federalism?"
+          },
+          "advanced": {
+            "clue": "The Constitution created a federal system that was genuinely novel \u2014 neither a confederation of sovereign states nor a unitary national government, but a compound republic in which both levels governed individuals directly rather than through each other.",
+            "answer": "What is federalism?"
+          }
+        },
+        {
+          "value": 1000,
+          "wrong_answers": [
+            "What is the veto?",
+            "What is executive privilege?",
+            "What is the elastic clause?"
+          ],
+          "supported": {
+            "clue": "The president can reject a bill passed by Congress. Congress can override this rejection with a two-thirds vote in both houses.",
+            "answer": "What is the presidential veto?"
+          },
+          "on_grade": {
+            "clue": "This constitutional power allows the president to reject legislation passed by Congress \u2014 and while Congress can override it with a two-thirds supermajority in both chambers, successful overrides are rare.",
+            "answer": "What is the presidential veto?"
+          },
+          "advanced": {
+            "clue": "The framers debated whether to give the executive an absolute veto \u2014 as the British Crown possessed \u2014 or a qualified one subject to legislative override; the compromise qualified veto reflected their fear of both executive tyranny and legislative excess.",
+            "answer": "What is the presidential veto?"
+          }
+        }
+      ]
+    },
+    {
+      "id": "civil_liberties",
+      "title": "Civil Liberties & Rights",
+      "clues": [
+        {
+          "value": 200,
+          "wrong_answers": [
+            "What is the 14th Amendment?",
+            "What is due process?",
+            "What is habeas corpus?"
+          ],
+          "supported": {
+            "clue": "The First Amendment protects your right to say what you think, practice your religion, and peacefully protest. The government cannot make a law taking these rights away.",
+            "answer": "What are First Amendment freedoms?"
+          },
+          "on_grade": {
+            "clue": "This constitutional amendment protects freedom of speech, religion, press, assembly, and petition \u2014 limiting Congress's ability to restrict expression or establish an official religion.",
+            "answer": "What is the First Amendment?"
+          },
+          "advanced": {
+            "clue": "The First Amendment's two religion clauses \u2014 Establishment and Free Exercise \u2014 have generated persistent constitutional tension: the government may neither promote religion nor burden its practice, a balance the Court has struggled to define consistently across two centuries.",
+            "answer": "What is the First Amendment?"
+          }
+        },
+        {
+          "value": 400,
+          "wrong_answers": [
+            "What is the First Amendment?",
+            "What is due process?",
+            "What is the Patriot Act?"
+          ],
+          "supported": {
+            "clue": "During wartime, the government has sometimes limited the rights of Americans. During World War I, people who spoke against the draft were arrested. During World War II, Japanese Americans were forced into internment camps.",
+            "answer": "What are civil liberties in wartime?"
+          },
+          "on_grade": {
+            "clue": "Throughout American history, national security crises have led the government to restrict civil liberties \u2014 from the Alien and Sedition Acts to Civil War suspension of habeas corpus to Japanese American internment to post-9/11 surveillance.",
+            "answer": "What are civil liberties in wartime?"
+          },
+          "advanced": {
+            "clue": "The Supreme Court's 1944 Korematsu decision \u2014 upholding Japanese American internment \u2014 was formally repudiated by the Court in 2018 in Trump v. Hawaii, though the majority simultaneously used Korematsu-like reasoning in a travel ban case.",
+            "answer": "What are civil liberties in wartime?"
+          }
+        },
+        {
+          "value": 600,
+          "wrong_answers": [
+            "What is a vote of no confidence?",
+            "What is a recall election?",
+            "What is executive privilege?"
+          ],
+          "supported": {
+            "clue": "The Constitution gives the House of Representatives the power to charge the president with serious crimes or abuse of power. The Senate then holds a trial. If convicted, the president is removed from office.",
+            "answer": "What is impeachment?"
+          },
+          "on_grade": {
+            "clue": "This constitutional process allows the House to charge a president (or other official) with 'high crimes and misdemeanors' \u2014 with the Senate conducting the trial and requiring a two-thirds vote to convict and remove.",
+            "answer": "What is impeachment?"
+          },
+          "advanced": {
+            "clue": "The vague constitutional standard of 'high crimes and misdemeanors' has been interpreted differently in each of the four presidential impeachment proceedings \u2014 reflecting the reality that impeachment is ultimately a political rather than a strictly legal process.",
+            "answer": "What is impeachment?"
+          }
+        },
+        {
+          "value": 800,
+          "wrong_answers": [
+            "What is impeachment?",
+            "What is the War Powers Resolution?",
+            "What is executive privilege?"
+          ],
+          "supported": {
+            "clue": "The Constitution makes the president the commander in chief of the military. But only Congress can declare war. This has caused conflicts over who really controls America's military.",
+            "answer": "What is the war powers debate?"
+          },
+          "on_grade": {
+            "clue": "The Constitution divides military authority \u2014 making the president commander in chief while giving Congress the sole power to declare war \u2014 a tension that has been tested in every major conflict since Korea.",
+            "answer": "What is the war powers debate?"
+          },
+          "advanced": {
+            "clue": "The War Powers Resolution of 1973 attempted to restore congressional authority by requiring notification within 48 hours of troop deployment and limiting unauthorized engagements to 60 days \u2014 but every president since Nixon has disputed its constitutionality.",
+            "answer": "What is the war powers debate?"
+          }
+        },
+        {
+          "value": 1000,
+          "wrong_answers": [
+            "What is the impeachment of Andrew Johnson?",
+            "What is Marbury v. Madison?",
+            "What is the 22nd Amendment?"
+          ],
+          "supported": {
+            "clue": "In 1937, FDR was frustrated that the Supreme Court was striking down his New Deal programs. He proposed adding up to six new justices to the Court \u2014 one for every justice over age 70. Congress refused.",
+            "answer": "What is FDR's court-packing plan?"
+          },
+          "on_grade": {
+            "clue": "After the Supreme Court struck down several New Deal programs, FDR proposed legislation allowing him to appoint additional justices for each member over 70 \u2014 widely seen as an attempt to dilute conservative opposition on the Court.",
+            "answer": "What is FDR's court-packing plan?"
+          },
+          "advanced": {
+            "clue": "FDR's plan failed in Congress but may have succeeded in its real goal \u2014 the 'switch in time that saved nine' saw Justice Owen Roberts shift his votes to uphold New Deal legislation, ending the constitutional crisis without any new appointments.",
+            "answer": "What is FDR's court-packing plan?"
+          }
+        }
+      ]
+    },
+    {
+      "id": "founders_framers",
+      "title": "Founders & Framers",
+      "clues": [
+        {
+          "value": 200,
+          "wrong_answers": [
+            "Who is Thomas Jefferson?",
+            "Who is Alexander Hamilton?",
+            "Who is John Adams?"
+          ],
+          "supported": {
+            "clue": "Known as the 'Father of the Constitution,' this Virginian was the primary architect of the document's structure and co-authored the Federalist Papers.",
+            "answer": "Who is James Madison?"
+          },
+          "on_grade": {
+            "clue": "This Virginia delegate arrived at the Constitutional Convention with a fully drafted plan for a new national government \u2014 and his Virginia Plan became the starting point for all subsequent debate.",
+            "answer": "Who is James Madison?"
+          },
+          "advanced": {
+            "clue": "Madison's shift from the Constitution's chief architect to leading opponent of Hamilton's nationalist program illustrates how the founding era's coalitions fractured almost immediately \u2014 the same man who wrote Federalist No. 51 later argued for states' rights in the Virginia Resolutions.",
+            "answer": "Who is James Madison?"
+          }
+        },
+        {
+          "value": 400,
+          "wrong_answers": [
+            "Who is James Madison?",
+            "Who is Benjamin Franklin?",
+            "Who is John Jay?"
+          ],
+          "supported": {
+            "clue": "This New York lawyer and first Secretary of the Treasury believed in a strong national government, a national bank, and manufacturing. He co-wrote the Federalist Papers and was killed in a duel with Aaron Burr.",
+            "answer": "Who is Alexander Hamilton?"
+          },
+          "on_grade": {
+            "clue": "As the first Secretary of the Treasury, this Founder built the economic foundations of the new republic \u2014 establishing the national bank, assuming state debts, and championing manufacturing over Jefferson's agrarian vision.",
+            "answer": "Who is Alexander Hamilton?"
+          },
+          "advanced": {
+            "clue": "Hamilton's financial program was more than economic policy \u2014 it was a political strategy to bind wealthy creditors to the federal government by giving them a stake in its success, creating a national economic interest that could counterbalance state loyalties.",
+            "answer": "Who is Alexander Hamilton?"
+          }
+        },
+        {
+          "value": 600,
+          "wrong_answers": [
+            "Who is Alexander Hamilton?",
+            "Who is James Madison?",
+            "Who is John Adams?"
+          ],
+          "supported": {
+            "clue": "The first president warned Americans in his Farewell Address to avoid political parties and permanent alliances with foreign nations.",
+            "answer": "Who is George Washington?"
+          },
+          "on_grade": {
+            "clue": "Washington's Farewell Address warned against 'the baneful effects of the spirit of party' and urged the nation to avoid permanent foreign alliances \u2014 advice that shaped American foreign policy for over a century.",
+            "answer": "Who is George Washington?"
+          },
+          "advanced": {
+            "clue": "Washington's decision to serve only two terms established a precedent that held for 150 years \u2014 broken only by FDR's third and fourth terms \u2014 and was eventually codified in the 22nd Amendment, making his voluntary restraint a constitutional requirement.",
+            "answer": "Who is George Washington?"
+          }
+        },
+        {
+          "value": 800,
+          "wrong_answers": [
+            "Who is John Adams?",
+            "Who is George Washington?",
+            "Who is James Monroe?"
+          ],
+          "supported": {
+            "clue": "Author of the Declaration of Independence, this Virginian became the third president. He believed in states' rights and an agrarian republic, and doubled the size of the country with the Louisiana Purchase.",
+            "answer": "Who is Thomas Jefferson?"
+          },
+          "on_grade": {
+            "clue": "As the third president, this founder faced a contradiction between his strict-constructionist principles and the practical opportunities of power \u2014 most dramatically when he purchased Louisiana without the constitutional authority he claimed to require.",
+            "answer": "Who is Thomas Jefferson?"
+          },
+          "advanced": {
+            "clue": "Jefferson's presidency illustrates the tension between constitutional theory and political reality \u2014 the man who argued most forcefully for limited federal power used executive authority more aggressively than his Federalist predecessors when it served national interests.",
+            "answer": "Who is Thomas Jefferson?"
+          }
+        },
+        {
+          "value": 1000,
+          "wrong_answers": [
+            "What is John Adams?",
+            "What is Benjamin Franklin?",
+            "What is Roger Sherman?"
+          ],
+          "supported": {
+            "clue": "Under the original Constitution, the presidential candidate with the most electoral votes became president and the runner-up became vice president. This created a problem when Jefferson and Burr tied in 1800, leading to the 12th Amendment.",
+            "answer": "What is the Electoral College?"
+          },
+          "on_grade": {
+            "clue": "This constitutional mechanism was designed by the framers as a buffer between direct popular vote and the presidency \u2014 giving each state electoral votes equal to its congressional representation, with the winner determined by a majority of electors.",
+            "answer": "What is the Electoral College?"
+          },
+          "advanced": {
+            "clue": "The framers designed this system partly to give small states disproportionate influence and partly out of distrust of direct democracy \u2014 concerns that remain live in contemporary debates, as five presidents have won office while losing the popular vote.",
+            "answer": "What is the Electoral College?"
+          }
+        }
+      ]
+    },
+    {
+      "id": "federalism_in_practice",
+      "title": "Federalism in Practice",
+      "clues": [
+        {
+          "value": 200,
+          "wrong_answers": [
+            "What is the Whiskey Rebellion?",
+            "What is the XYZ Affair?",
+            "What is the Missouri Compromise?"
+          ],
+          "supported": {
+            "clue": "In 1798, President Adams signed laws making it illegal to criticize the government and making it harder for immigrants to become citizens. Jefferson and Madison said these laws were unconstitutional.",
+            "answer": "What are the Alien and Sedition Acts?"
+          },
+          "on_grade": {
+            "clue": "These 1798 laws \u2014 which criminalized criticism of the federal government and extended the residency requirement for citizenship \u2014 were seen by Jefferson and Madison as unconstitutional violations of the First Amendment.",
+            "answer": "What are the Alien and Sedition Acts?"
+          },
+          "advanced": {
+            "clue": "Jefferson and Madison's response to these laws \u2014 the Kentucky and Virginia Resolutions asserting state authority to nullify unconstitutional federal acts \u2014 planted the seeds of the nullification doctrine that would nearly destroy the Union three decades later.",
+            "answer": "What are the Alien and Sedition Acts?"
+          }
+        },
+        {
+          "value": 400,
+          "wrong_answers": [
+            "What is the Alien and Sedition Acts?",
+            "What is the Missouri Compromise?",
+            "What is the nullification crisis?"
+          ],
+          "supported": {
+            "clue": "In 1800, John Adams peacefully handed the presidency to his rival Thomas Jefferson after losing the election. This was remarkable \u2014 it was the first time in history that one political party peacefully gave power to another.",
+            "answer": "What is the Election of 1800?"
+          },
+          "on_grade": {
+            "clue": "Often called the 'Revolution of 1800,' this election marked the first peaceful transfer of power between opposing political parties in a democratic republic \u2014 a precedent that distinguished American democracy from most governments of the era.",
+            "answer": "What is the Election of 1800?"
+          },
+          "advanced": {
+            "clue": "The election's resolution required the House of Representatives to break a tie between Jefferson and Burr through 36 ballots \u2014 a constitutional crisis that revealed a flaw in the original electoral design and led directly to the 12th Amendment.",
+            "answer": "What is the Election of 1800?"
+          }
+        },
+        {
+          "value": 600,
+          "wrong_answers": [
+            "What is the Tariff of Abominations?",
+            "What is the Missouri Compromise?",
+            "What is states' rights?"
+          ],
+          "supported": {
+            "clue": "South Carolina said it had the right to refuse to follow a federal tariff law it believed was unfair. President Jackson threatened to send troops if South Carolina tried to leave the Union.",
+            "answer": "What is the nullification crisis?"
+          },
+          "on_grade": {
+            "clue": "This 1832\u20131833 confrontation \u2014 in which South Carolina claimed the right to void a federal tariff within its borders \u2014 tested the question of whether states could nullify federal law and nearly brought the nation to the brink of civil war.",
+            "answer": "What is the nullification crisis?"
+          },
+          "advanced": {
+            "clue": "The crisis exposed the fundamental constitutional ambiguity that would eventually produce the Civil War: John C. Calhoun's doctrine of nullification was a logical extension of Jefferson's Kentucky Resolutions, but Jackson correctly identified it as incompatible with nationhood.",
+            "answer": "What is the nullification crisis?"
+          }
+        },
+        {
+          "value": 800,
+          "wrong_answers": [
+            "What is nullification?",
+            "What is the Adams-Onis Treaty?",
+            "What is Manifest Destiny?"
+          ],
+          "supported": {
+            "clue": "In 1823, President Monroe warned European nations not to try to colonize or interfere with countries in North or South America. The United States would consider any such attempt a threat to its security.",
+            "answer": "What is the Monroe Doctrine?"
+          },
+          "on_grade": {
+            "clue": "This 1823 presidential declaration warned European powers against further colonization or interference in the Western Hemisphere \u2014 establishing a foundational principle of American foreign policy that presidents would invoke for over a century.",
+            "answer": "What is the Monroe Doctrine?"
+          },
+          "advanced": {
+            "clue": "Monroe's doctrine was more aspirational than enforceable in 1823 \u2014 it was the British Navy, not U.S. power, that actually prevented European intervention in Latin America \u2014 but it set a rhetorical precedent that later presidents would use to justify intervention throughout the hemisphere.",
+            "answer": "What is the Monroe Doctrine?"
+          }
+        },
+        {
+          "value": 1000,
+          "wrong_answers": [
+            "What is the Homestead Act?",
+            "What is the Emancipation Proclamation?",
+            "What is the Sherman Antitrust Act?"
+          ],
+          "supported": {
+            "clue": "President Lincoln suspended the right of people to go before a judge and challenge their imprisonment during the Civil War. The Supreme Court later said he did not have this power.",
+            "answer": "What is the suspension of habeas corpus?"
+          },
+          "on_grade": {
+            "clue": "Lincoln's suspension of habeas corpus during the Civil War \u2014 allowing indefinite military detention without trial \u2014 prompted Chief Justice Taney to declare it unconstitutional, which Lincoln effectively ignored, illustrating the limits of judicial power in crisis.",
+            "answer": "What is the suspension of habeas corpus?"
+          },
+          "advanced": {
+            "clue": "Lincoln justified his suspension as a military necessity under his commander-in-chief authority, arguing that it was better to violate one law to save the government than to lose the government that gave all laws their force \u2014 a utilitarian constitutional argument still debated by scholars.",
+            "answer": "What is the suspension of habeas corpus?"
+          }
+        }
+      ]
+    }
+  ]
+}

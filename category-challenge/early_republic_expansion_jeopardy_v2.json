@@ -1,0 +1,641 @@
+{
+  "topic": "Early Republic & Expansion",
+  "categories": [
+    {
+      "id": "new_nation",
+      "title": "The New Nation",
+      "clues": [
+        {
+          "value": 200,
+          "wrong_answers": [
+            "What is the Monroe Doctrine?",
+            "What is the Emancipation Proclamation?",
+            "What is the Articles of Confederation?"
+          ],
+          "supported": {
+            "clue": "In his 1796 Farewell Address, the first president warned Americans to avoid political parties and permanent alliances with foreign nations.",
+            "answer": "Who is George Washington?"
+          },
+          "on_grade": {
+            "clue": "Washington's Farewell Address warned against 'the baneful effects of the spirit of party' and urged the nation to avoid permanent foreign alliances \u2014 shaping U.S. foreign policy for generations.",
+            "answer": "Who is George Washington?"
+          },
+          "advanced": {
+            "clue": "Washington's Farewell Address was as much a partisan document as a statesmanlike one \u2014 written largely by Hamilton, it was a pointed critique of the Jeffersonian Republican opposition that had challenged his second term.",
+            "answer": "Who is George Washington?"
+          }
+        },
+        {
+          "value": 400,
+          "wrong_answers": [
+            "What is the Whiskey Rebellion?",
+            "What is the XYZ Affair?",
+            "What is the Embargo Act?"
+          ],
+          "supported": {
+            "clue": "In 1800, President Adams peacefully handed power to his rival Thomas Jefferson after losing the election \u2014 the first time in history that one political party peacefully gave power to another.",
+            "answer": "What is the Election of 1800?"
+          },
+          "on_grade": {
+            "clue": "Called the 'Revolution of 1800,' this election marked the first peaceful transfer of power between opposing political parties in a democratic republic \u2014 a milestone that distinguished American democracy from most governments of the era.",
+            "answer": "What is the Election of 1800?"
+          },
+          "advanced": {
+            "clue": "The election required 36 House ballots to resolve a tie between Jefferson and Burr \u2014 a constitutional crisis that revealed a fatal flaw in the original electoral design and led directly to the 12th Amendment.",
+            "answer": "What is the Election of 1800?"
+          }
+        },
+        {
+          "value": 600,
+          "wrong_answers": [
+            "What is the XYZ Affair?",
+            "What is the Monroe Doctrine?",
+            "What is the Missouri Compromise?"
+          ],
+          "supported": {
+            "clue": "When Britain and France seized American ships during their wars, President Jefferson refused to trade with either country, hoping economic pressure would force them to respect American neutrality. It badly hurt the American economy instead.",
+            "answer": "What is the Embargo Act?"
+          },
+          "on_grade": {
+            "clue": "Jefferson's 1807 embargo \u2014 banning all American exports to force British and French respect for neutral shipping rights \u2014 proved economically devastating to New England merchants and was repealed after 15 months as a failed experiment in economic coercion.",
+            "answer": "What is the Embargo Act?"
+          },
+          "advanced": {
+            "clue": "The embargo's failure exposed the limits of Jefferson's theory of 'peaceable coercion' \u2014 the assumption that European powers dependent on American trade would change their naval policies rather than endure economic pain that, in practice, fell hardest on Americans themselves.",
+            "answer": "What is the Embargo Act?"
+          }
+        },
+        {
+          "value": 800,
+          "wrong_answers": [
+            "What is the Embargo Act?",
+            "What is the Monroe Doctrine?",
+            "What is the Adams-Onis Treaty?"
+          ],
+          "supported": {
+            "clue": "The United States fought Britain again in 1812 over impressment of American sailors and interference with trade. The war ended in a tie but produced a surge of American national pride.",
+            "answer": "What is the War of 1812?"
+          },
+          "on_grade": {
+            "clue": "This conflict with Britain \u2014 sparked by impressment of American sailors, interference with trade, and British support for Native American resistance \u2014 ended with the Treaty of Ghent restoring prewar boundaries and producing a wave of American nationalism.",
+            "answer": "What is the War of 1812?"
+          },
+          "advanced": {
+            "clue": "The war's most famous battle \u2014 Jackson's victory at New Orleans \u2014 was fought after the peace treaty was signed, yet it shaped the conflict's legacy more than any actual military result, launching Jackson to national fame and sustaining a myth of American triumph.",
+            "answer": "What is the War of 1812?"
+          }
+        },
+        {
+          "value": 1000,
+          "wrong_answers": [
+            "What is the Alien and Sedition Acts?",
+            "What is the Nullification Crisis?",
+            "What is the Missouri Compromise?"
+          ],
+          "supported": {
+            "clue": "In 1823, President Monroe warned European countries to stay out of North and South America. He said the Western Hemisphere was closed to new European colonization.",
+            "answer": "What is the Monroe Doctrine?"
+          },
+          "on_grade": {
+            "clue": "This 1823 doctrine warned European powers against further colonization or interference in the Western Hemisphere \u2014 establishing a foundational principle of American foreign policy invoked by presidents for over a century.",
+            "answer": "What is the Monroe Doctrine?"
+          },
+          "advanced": {
+            "clue": "In 1823, the British actually proposed a joint Anglo-American declaration \u2014 Secretary Adams convinced Monroe to issue it unilaterally instead, transforming what might have been a British policy into an American one, though British naval power was what actually enforced it.",
+            "answer": "What is the Monroe Doctrine?"
+          }
+        }
+      ]
+    },
+    {
+      "id": "expansion_west",
+      "title": "Expanding West",
+      "clues": [
+        {
+          "value": 200,
+          "wrong_answers": [
+            "What is the Homestead Act?",
+            "What is the Gadsden Purchase?",
+            "What is the Adams-Onis Treaty?"
+          ],
+          "supported": {
+            "clue": "In 1803, President Jefferson bought a huge piece of land from France \u2014 doubling the size of the United States overnight for about 15 million dollars.",
+            "answer": "What is the Louisiana Purchase?"
+          },
+          "on_grade": {
+            "clue": "Jefferson's 1803 purchase of 828,000 square miles from Napoleon's France \u2014 at roughly 4 cents per acre \u2014 doubled the size of the United States and opened the trans-Mississippi West to American settlement.",
+            "answer": "What is the Louisiana Purchase?"
+          },
+          "advanced": {
+            "clue": "The Louisiana Purchase posed a constitutional crisis for Jefferson, who believed strictly that the federal government could only do what the Constitution explicitly permitted \u2014 yet he completed the purchase without constitutional authority, justifying it as executive necessity.",
+            "answer": "What is the Louisiana Purchase?"
+          }
+        },
+        {
+          "value": 400,
+          "wrong_answers": [
+            "What is the Louisiana Purchase?",
+            "What is the Gadsden Purchase?",
+            "What is the Homestead Act?"
+          ],
+          "supported": {
+            "clue": "Many Americans in the 1800s believed it was God's plan \u2014 their destiny \u2014 for the United States to expand all the way to the Pacific Ocean, spreading democracy across the continent.",
+            "answer": "What is Manifest Destiny?"
+          },
+          "on_grade": {
+            "clue": "This 1840s belief that American expansion across the continent was both inevitable and divinely ordained provided the ideological justification for westward expansion \u2014 and for the displacement of Native peoples and war with Mexico that expansion required.",
+            "answer": "What is Manifest Destiny?"
+          },
+          "advanced": {
+            "clue": "Manifest Destiny was never a neutral description of expansion \u2014 it was a racialized ideology that cast Anglo-American settlers as bearers of civilization and Native peoples and Mexicans as obstacles to be removed, providing moral cover for conquest and dispossession.",
+            "answer": "What is Manifest Destiny?"
+          }
+        },
+        {
+          "value": 600,
+          "wrong_answers": [
+            "What is Manifest Destiny?",
+            "What is the Homestead Act?",
+            "What is the Gadsden Purchase?"
+          ],
+          "supported": {
+            "clue": "The United States fought Mexico from 1846 to 1848 and won. Mexico had to give up California and the Southwest \u2014 about half of its territory \u2014 as a result.",
+            "answer": "What is the Mexican-American War?"
+          },
+          "on_grade": {
+            "clue": "This 1846\u20131848 conflict \u2014 triggered by a disputed Texas border \u2014 ended with Mexico ceding California and the entire Southwest in the Treaty of Guadalupe Hidalgo, adding more territory than any acquisition except the Louisiana Purchase.",
+            "answer": "What is the Mexican-American War?"
+          },
+          "advanced": {
+            "clue": "Ulysses Grant called this 'one of the most unjust wars ever waged' \u2014 and the massive territorial acquisition it produced immediately reopened the slavery question by forcing Congress to decide whether slavery would expand into the new territories.",
+            "answer": "What is the Mexican-American War?"
+          }
+        },
+        {
+          "value": 800,
+          "wrong_answers": [
+            "What is Manifest Destiny?",
+            "What is the Mexican-American War?",
+            "What is the Missouri Compromise?"
+          ],
+          "supported": {
+            "clue": "The government passed a law in 1862 offering 160 acres of free land to any American willing to settle the Great Plains and farm it for five years.",
+            "answer": "What is the Homestead Act?"
+          },
+          "on_grade": {
+            "clue": "This 1862 law offered 160 acres of public land to settlers willing to farm it for five years \u2014 accelerating settlement of the Great Plains, displacing Native peoples, and transforming the West into the nation's agricultural heartland.",
+            "answer": "What is the Homestead Act?"
+          },
+          "advanced": {
+            "clue": "The Homestead Act's promise of free land was largely undermined by its implementation \u2014 much of the best land was acquired by railroads and speculators rather than small farmers, and the 160-acre plots were too small for viable Great Plains farming without irrigation.",
+            "answer": "What is the Homestead Act?"
+          }
+        },
+        {
+          "value": 1000,
+          "wrong_answers": [
+            "What is Manifest Destiny?",
+            "What is Social Darwinism?",
+            "What is the Homestead Act?"
+          ],
+          "supported": {
+            "clue": "Historian Frederick Jackson Turner argued in 1893 that the American frontier had shaped the American character \u2014 making Americans democratic, independent, and innovative. He worried about what would happen now that the frontier was closed.",
+            "answer": "What is the Frontier Thesis?"
+          },
+          "on_grade": {
+            "clue": "Turner's 1893 essay argued that the existence of free western land had been the defining force in shaping American democracy and character \u2014 and that the census declaration of a closed frontier posed a profound challenge to American identity.",
+            "answer": "What is the Frontier Thesis?"
+          },
+          "advanced": {
+            "clue": "Turner's thesis was enormously influential but historically problematic \u2014 it erased Native peoples from the story of the West, treated 'free land' as if it were uninhabited, and provided ideological justification for overseas expansion once the continental frontier was exhausted.",
+            "answer": "What is the Frontier Thesis?"
+          }
+        }
+      ]
+    },
+    {
+      "id": "native_removal",
+      "title": "Native Peoples & Removal",
+      "clues": [
+        {
+          "value": 200,
+          "wrong_answers": [
+            "What is the Homestead Act?",
+            "What is Manifest Destiny?",
+            "What is the Missouri Compromise?"
+          ],
+          "supported": {
+            "clue": "President Jackson signed a law in 1830 forcing the Cherokee, Creek, and other Native nations to leave their homelands in the Southeast and move west of the Mississippi River.",
+            "answer": "What is the Indian Removal Act?"
+          },
+          "on_grade": {
+            "clue": "This 1830 law authorized the forced relocation of the Five Civilized Tribes from the Southeast to territory west of the Mississippi \u2014 despite Supreme Court rulings that their treaties with the United States were legally binding.",
+            "answer": "What is the Indian Removal Act?"
+          },
+          "advanced": {
+            "clue": "The Indian Removal Act was passed despite Chief Justice Marshall's ruling in Worcester v. Georgia that Georgia had no authority over Cherokee territory \u2014 Jackson's reported response, 'Marshall has made his decision, now let him enforce it,' revealed the limits of judicial power against executive will.",
+            "answer": "What is the Indian Removal Act?"
+          }
+        },
+        {
+          "value": 400,
+          "wrong_answers": [
+            "What is the Long Walk?",
+            "What is the Indian Removal Act?",
+            "What is Manifest Destiny?"
+          ],
+          "supported": {
+            "clue": "Between 1838 and 1839, U.S. soldiers forced the Cherokee Nation to march over 1,000 miles from their Georgia homeland to Oklahoma. Thousands died along the way from cold, disease, and starvation.",
+            "answer": "What is the Trail of Tears?"
+          },
+          "on_grade": {
+            "clue": "This forced relocation of the Cherokee Nation in 1838\u20131839 \u2014 conducted by U.S. troops under President Van Buren \u2014 killed an estimated 4,000 of the 15,000 Cherokee who made the journey, and became a symbol of U.S. policy toward Native peoples.",
+            "answer": "What is the Trail of Tears?"
+          },
+          "advanced": {
+            "clue": "The Cherokee had done everything the United States asked \u2014 adopting written law, a constitution, farming, and Christianity \u2014 yet their compliance with American 'civilization' standards did not protect them from removal, revealing that dispossession was about land, not culture.",
+            "answer": "What is the Trail of Tears?"
+          }
+        },
+        {
+          "value": 600,
+          "wrong_answers": [
+            "What is the Trail of Tears?",
+            "What is the Indian Removal Act?",
+            "What is the Homestead Act?"
+          ],
+          "supported": {
+            "clue": "The Supreme Court ruled in 1832 that Georgia had no right to take Cherokee land because the Cherokee Nation was a separate nation with its own government and treaty rights. President Jackson ignored this ruling.",
+            "answer": "What is Worcester v. Georgia?"
+          },
+          "on_grade": {
+            "clue": "Marshall's ruling in this 1832 case held that the Cherokee Nation was a 'distinct community' with territorial boundaries that Georgia could not legally cross \u2014 but with no enforcement mechanism, the decision was effectively nullified by Jackson's refusal to act on it.",
+            "answer": "What is Worcester v. Georgia?"
+          },
+          "advanced": {
+            "clue": "Worcester v. Georgia is often cited as proof of judicial weakness \u2014 but it also established the foundational legal principle that Native nations possess a degree of sovereignty that state governments cannot override, a precedent still applied in federal Indian law today.",
+            "answer": "What is Worcester v. Georgia?"
+          }
+        },
+        {
+          "value": 800,
+          "wrong_answers": [
+            "What is the Trail of Tears?",
+            "What is Manifest Destiny?",
+            "What is the Homestead Act?"
+          ],
+          "supported": {
+            "clue": "President Jackson said that the Bank of the United States favored wealthy Eastern merchants over ordinary Americans. He vetoed the bill to renew the bank's charter, calling it unconstitutional and unfair.",
+            "answer": "What is the Bank War?"
+          },
+          "on_grade": {
+            "clue": "Jackson's veto of the Second Bank of the United States in 1832 \u2014 framed as a defense of the common man against privileged elites \u2014 became a defining moment of Jacksonian Democracy and reshaped American politics around class conflict.",
+            "answer": "What is the Bank War?"
+          },
+          "advanced": {
+            "clue": "Jackson's bank veto message was a revolutionary political document \u2014 it claimed presidential authority to independently judge constitutionality despite the Supreme Court's contrary ruling in McCulloch, asserting a coordinate theory of constitutional interpretation still debated by scholars.",
+            "answer": "What is the Bank War?"
+          }
+        },
+        {
+          "value": 1000,
+          "wrong_answers": [
+            "What is the Bank War?",
+            "What is the Missouri Compromise?",
+            "What is the nullification crisis?"
+          ],
+          "supported": {
+            "clue": "Andrew Jackson said he spoke for ordinary white men, not the wealthy elite. He expanded voting rights for white men without property and believed the president represented all the people.",
+            "answer": "What is Jacksonian Democracy?"
+          },
+          "on_grade": {
+            "clue": "Jackson's political philosophy celebrated the 'common man' \u2014 expanding white male suffrage, attacking entrenched privilege, and asserting a strong presidency as the direct voice of the people against a corrupt elite.",
+            "answer": "What is Jacksonian Democracy?"
+          },
+          "advanced": {
+            "clue": "Jacksonian Democracy's celebration of the 'common man' was racially bounded \u2014 its expansion of political rights for white men came simultaneously with Indian removal, the entrenchment of slavery, and the exclusion of women and free Black Americans from political participation.",
+            "answer": "What is Jacksonian Democracy?"
+          }
+        }
+      ]
+    },
+    {
+      "id": "sectional_tensions",
+      "title": "Sectional Tensions",
+      "clues": [
+        {
+          "value": 200,
+          "wrong_answers": [
+            "What is the Compromise of 1850?",
+            "What is the Kansas-Nebraska Act?",
+            "What is the nullification crisis?"
+          ],
+          "supported": {
+            "clue": "In 1820, Congress made a deal to keep the balance between slave states and free states. Missouri entered as a slave state, Maine entered as a free state, and slavery was banned north of a certain line.",
+            "answer": "What is the Missouri Compromise?"
+          },
+          "on_grade": {
+            "clue": "This 1820 agreement admitted Missouri as a slave state and Maine as a free state to maintain the Senate balance, while banning slavery north of the 36\u00b030' line in the Louisiana Territory \u2014 postponing the slavery crisis for a generation.",
+            "answer": "What is the Missouri Compromise?"
+          },
+          "advanced": {
+            "clue": "Thomas Jefferson called the Missouri crisis 'a fireball in the night' \u2014 recognizing that the debate over slavery's expansion into new territories was the unresolved contradiction at the heart of the republic that would eventually consume it.",
+            "answer": "What is the Missouri Compromise?"
+          }
+        },
+        {
+          "value": 400,
+          "wrong_answers": [
+            "What is the Missouri Compromise?",
+            "What is the Compromise of 1850?",
+            "What is popular sovereignty?"
+          ],
+          "supported": {
+            "clue": "South Carolina claimed the right to refuse to follow a federal tariff law it considered unfair \u2014 arguing that states could nullify federal laws within their borders. President Jackson threatened military force.",
+            "answer": "What is the Nullification Crisis?"
+          },
+          "on_grade": {
+            "clue": "This 1832\u20131833 confrontation tested whether states could void federal law within their borders \u2014 a doctrine Calhoun championed and Jackson crushed, though the underlying tension between states' rights and federal supremacy remained unresolved.",
+            "answer": "What is the Nullification Crisis?"
+          },
+          "advanced": {
+            "clue": "The crisis exposed the logical endpoint of the compact theory of the Constitution \u2014 if states were sovereign parties to a compact, they could logically nullify federal overreach, a position incompatible with nationhood that would resurface as the justification for secession.",
+            "answer": "What is the Nullification Crisis?"
+          }
+        },
+        {
+          "value": 600,
+          "wrong_answers": [
+            "What is popular sovereignty?",
+            "What is the Compromise of 1850?",
+            "What is the Dred Scott decision?"
+          ],
+          "supported": {
+            "clue": "Stephen Douglas proposed letting settlers in Kansas and Nebraska vote on whether to allow slavery \u2014 undoing the Missouri Compromise line. Violence broke out between pro-slavery and anti-slavery settlers in what became known as 'Bleeding Kansas.'",
+            "answer": "What is the Kansas-Nebraska Act?"
+          },
+          "on_grade": {
+            "clue": "This 1854 law replaced the Missouri Compromise with popular sovereignty in the Kansas and Nebraska territories \u2014 triggering a wave of pro- and anti-slavery settlers competing for control and producing the armed conflict known as Bleeding Kansas.",
+            "answer": "What is the Kansas-Nebraska Act?"
+          },
+          "advanced": {
+            "clue": "The Kansas-Nebraska Act destroyed the Second Party System \u2014 it split the Whigs, divided the Democrats along sectional lines, and created the conditions for the Republican Party's rise, making a purely sectional presidential election like 1860 almost inevitable.",
+            "answer": "What is the Kansas-Nebraska Act?"
+          }
+        },
+        {
+          "value": 800,
+          "wrong_answers": [
+            "What is the Missouri Compromise?",
+            "What is the Compromise of 1850?",
+            "What is popular sovereignty?"
+          ],
+          "supported": {
+            "clue": "This 1857 Supreme Court ruling said that Dred Scott, an enslaved man who had lived in a free state, was still property \u2014 not a citizen \u2014 and that Congress had no power to ban slavery in the territories.",
+            "answer": "What is the Dred Scott decision?"
+          },
+          "on_grade": {
+            "clue": "Chief Justice Taney's ruling held that Black Americans were not citizens, that Scott's residence in free territory did not make him free, and that Congress lacked constitutional authority to ban slavery from the territories \u2014 effectively declaring the Missouri Compromise unconstitutional.",
+            "answer": "What is the Dred Scott decision?"
+          },
+          "advanced": {
+            "clue": "Taney intended Dred Scott to permanently settle the slavery question in favor of the South \u2014 instead it radicalized Northern opinion, destroyed Stephen Douglas's popular sovereignty doctrine, and made the Republican Party's moderate anti-slavery platform the only viable Northern position.",
+            "answer": "What is the Dred Scott decision?"
+          }
+        },
+        {
+          "value": 1000,
+          "wrong_answers": [
+            "What is the Kansas-Nebraska Act?",
+            "What is the Dred Scott decision?",
+            "What is the Compromise of 1850?"
+          ],
+          "supported": {
+            "clue": "When Abraham Lincoln was elected president in 1860, seven Southern states left the Union before he even took office. They formed their own country \u2014 the Confederate States of America.",
+            "answer": "What is secession?"
+          },
+          "on_grade": {
+            "clue": "Lincoln's election in 1860 \u2014 without a single Southern electoral vote \u2014 triggered the secession of seven Deep South states before his inauguration, as Southern leaders concluded that the Republican Party's anti-slavery-expansion platform threatened the survival of their social order.",
+            "answer": "What is secession?"
+          },
+          "advanced": {
+            "clue": "The secessionists' argument \u2014 that states retained the sovereign right to leave the Union \u2014 was constitutionally contested but logically consistent with the compact theory of government that Jefferson and Madison had articulated in the Kentucky and Virginia Resolutions.",
+            "answer": "What is secession?"
+          }
+        }
+      ]
+    },
+    {
+      "id": "jacksonian_age",
+      "title": "Age of Jackson",
+      "clues": [
+        {
+          "value": 200,
+          "wrong_answers": [
+            "What is Manifest Destiny?",
+            "What is the Monroe Doctrine?",
+            "What is the Homestead Act?"
+          ],
+          "supported": {
+            "clue": "Andrew Jackson expanded voting rights for white men who didn't own property, making American democracy broader \u2014 but only for white men, while excluding women, enslaved people, and Native Americans.",
+            "answer": "What is expanded white male suffrage?"
+          },
+          "on_grade": {
+            "clue": "The Jacksonian era saw most states abolish property requirements for white male voters \u2014 dramatically expanding the electorate while simultaneously tightening restrictions on Black voters and excluding women entirely.",
+            "answer": "What is expanded white male suffrage?"
+          },
+          "advanced": {
+            "clue": "The democratization of the 1820s\u20131830s was explicitly racialized \u2014 as property requirements for white men fell, several northern states that had allowed free Black voting moved to restrict or eliminate it, tying democratic expansion to racial exclusion.",
+            "answer": "What is expanded white male suffrage?"
+          }
+        },
+        {
+          "value": 400,
+          "wrong_answers": [
+            "What is a caucus?",
+            "What is the Electoral College?",
+            "What is the merit system?"
+          ],
+          "supported": {
+            "clue": "When Jackson became president, he replaced many government workers with his own political supporters \u2014 arguing that rotation in office was democratic and that government jobs shouldn't belong permanently to one group.",
+            "answer": "What is the spoils system?"
+          },
+          "on_grade": {
+            "clue": "Jackson's practice of replacing federal officeholders with loyal political supporters \u2014 justified as democratizing government and preventing entrenched bureaucracy \u2014 established the patronage system that would define American politics until civil service reform.",
+            "answer": "What is the spoils system?"
+          },
+          "advanced": {
+            "clue": "Jackson defended the spoils system as democratically virtuous \u2014 arguing government jobs were simple enough for any citizen and that permanent officeholders became corrupt \u2014 but critics correctly predicted it would produce incompetent and corrupt administration, as the Pendleton Act of 1883 eventually acknowledged.",
+            "answer": "What is the spoils system?"
+          }
+        },
+        {
+          "value": 600,
+          "wrong_answers": [
+            "What is the Whig Party?",
+            "What is the Democratic Party?",
+            "What is the Republican Party?"
+          ],
+          "supported": {
+            "clue": "Henry Clay proposed a plan to grow the American economy: use tariffs to protect American factories, build roads and canals with federal money, and maintain a national bank to stabilize the currency.",
+            "answer": "What is the American System?"
+          },
+          "on_grade": {
+            "clue": "Henry Clay's economic program called for protective tariffs to fund internal improvements \u2014 roads, canals, and harbors \u2014 and a national bank to provide stable currency, linking all sections of the country in a national market economy.",
+            "answer": "What is the American System?"
+          },
+          "advanced": {
+            "clue": "Clay's program represented a Hamiltonian vision of active federal economic management that Jackson rejected as unconstitutional favoritism \u2014 their conflict defined the era's central debate about the proper scope of federal power in economic development.",
+            "answer": "What is the American System?"
+          }
+        },
+        {
+          "value": 800,
+          "wrong_answers": [
+            "What is the Bank War?",
+            "What is the nullification crisis?",
+            "What is the Tariff of Abominations?"
+          ],
+          "supported": {
+            "clue": "Congress passed a very high tariff in 1828 that hurt Southern farmers who had to pay more for manufactured goods. Southerners called it the 'Tariff of Abominations' and felt the North was using federal power against them.",
+            "answer": "What is the Tariff of 1828?"
+          },
+          "on_grade": {
+            "clue": "This 1828 tariff \u2014 which raised duties on imported manufactured goods to protect Northern industry \u2014 infuriated Southern planters who paid higher prices for goods while seeing their export markets threatened by British retaliation, sparking the nullification crisis.",
+            "answer": "What is the Tariff of 1828?"
+          },
+          "advanced": {
+            "clue": "The 'Tariff of Abominations' was partly the result of political miscalculation \u2014 Jackson's supporters in Congress designed it to be so extreme that New England would reject it, but it passed with Northern votes, leaving Southerners enraged and Calhoun reaching for nullification.",
+            "answer": "What is the Tariff of 1828?"
+          }
+        },
+        {
+          "value": 1000,
+          "wrong_answers": [
+            "What is Manifest Destiny?",
+            "What is the Monroe Doctrine?",
+            "What is the Homestead Act?"
+          ],
+          "supported": {
+            "clue": "This historian argued in 1893 that the American frontier \u2014 the experience of conquering wild land \u2014 had shaped the American character, making Americans democratic, self-reliant, and innovative.",
+            "answer": "Who is Frederick Jackson Turner?"
+          },
+          "on_grade": {
+            "clue": "Turner's 1893 'Frontier Thesis' argued that the availability of free western land had been the defining influence on American democracy \u2014 and that the frontier's closing posed an existential challenge to American institutions.",
+            "answer": "Who is Frederick Jackson Turner?"
+          },
+          "advanced": {
+            "clue": "Turner's thesis was immediately embraced as historical justification for overseas imperialism \u2014 if continental expansion had made America great, then the logic extended naturally to Cuba, the Philippines, and beyond \u2014 though Turner himself was ambivalent about this application.",
+            "answer": "Who is Frederick Jackson Turner?"
+          }
+        }
+      ]
+    },
+    {
+      "id": "diplomacy_foreign",
+      "title": "Diplomacy & Foreign Affairs",
+      "clues": [
+        {
+          "value": 200,
+          "wrong_answers": [
+            "What is the Embargo Act?",
+            "What is the Monroe Doctrine?",
+            "What is Manifest Destiny?"
+          ],
+          "supported": {
+            "clue": "France seized American ships and demanded bribes before it would negotiate with American diplomats in 1797. Americans were outraged and nearly went to war with France.",
+            "answer": "What is the XYZ Affair?"
+          },
+          "on_grade": {
+            "clue": "This 1797 incident \u2014 in which French agents demanded bribes before allowing American diplomats to negotiate \u2014 nearly triggered war with France and produced the rallying cry 'Millions for defense, but not one cent for tribute.'",
+            "answer": "What is the XYZ Affair?"
+          },
+          "advanced": {
+            "clue": "The XYZ Affair strengthened the Federalists politically in the short term, but Adams's decision to pursue peace with France over Hamilton's wishes for war ultimately split the Federalist Party and contributed to Jefferson's victory in 1800.",
+            "answer": "What is the XYZ Affair?"
+          }
+        },
+        {
+          "value": 400,
+          "wrong_answers": [
+            "What is the XYZ Affair?",
+            "What is the Monroe Doctrine?",
+            "What is the Adams-Onis Treaty?"
+          ],
+          "supported": {
+            "clue": "Britain was forcing American sailors into the Royal Navy \u2014 a practice called impressment. This, along with interference with American trade, were major causes of the War of 1812.",
+            "answer": "What is impressment?"
+          },
+          "on_grade": {
+            "clue": "Britain's practice of stopping American ships and seizing sailors it claimed were British subjects \u2014 regardless of their citizenship \u2014 was among the most provocative violations of American sovereignty in the years before the War of 1812.",
+            "answer": "What is impressment?"
+          },
+          "advanced": {
+            "clue": "Impressment was the most emotionally powerful grievance driving the War of 1812, but it masked a deeper British contempt for American neutral rights \u2014 the Royal Navy considered the Atlantic its domain and American neutrality an inconvenient legal technicality during an existential struggle with Napoleon.",
+            "answer": "What is impressment?"
+          }
+        },
+        {
+          "value": 600,
+          "wrong_answers": [
+            "What is the Louisiana Purchase?",
+            "What is the Gadsden Purchase?",
+            "What is Manifest Destiny?"
+          ],
+          "supported": {
+            "clue": "In 1819, the United States purchased Florida from Spain and settled the boundary between U.S. and Spanish territory all the way to the Pacific Ocean.",
+            "answer": "What is the Adams-Onis Treaty?"
+          },
+          "on_grade": {
+            "clue": "This 1819 agreement with Spain transferred Florida to the United States and drew a transcontinental boundary from the Gulf of Mexico to the Pacific \u2014 establishing American claims to the Pacific Northwest while settling outstanding disputes with Spain.",
+            "answer": "What is the Adams-Onis Treaty?"
+          },
+          "advanced": {
+            "clue": "Secretary Adams negotiated this treaty against fierce opposition from Clay and others who wanted to press for Texas \u2014 Adams correctly calculated that securing Florida and a clear transcontinental line was more achievable and strategically valuable than overreaching for territory Spain might fight to keep.",
+            "answer": "What is the Adams-Onis Treaty?"
+          }
+        },
+        {
+          "value": 800,
+          "wrong_answers": [
+            "What is the Monroe Doctrine?",
+            "What is the Embargo Act?",
+            "What is the XYZ Affair?"
+          ],
+          "supported": {
+            "clue": "President Polk used a border dispute with Mexico to ask Congress to declare war in 1846. Critics, including a young congressman named Abraham Lincoln, accused him of manufacturing a cause for war.",
+            "answer": "What is the Mexican-American War?"
+          },
+          "on_grade": {
+            "clue": "Polk's claim that Mexican troops had 'shed American blood on American soil' to trigger the war was disputed by Whig opponents who argued the incident occurred on disputed territory \u2014 a controversy that Abraham Lincoln pursued in the 'spot resolutions.'",
+            "answer": "What is the Mexican-American War?"
+          },
+          "advanced": {
+            "clue": "The war's outcome \u2014 the Mexican Cession adding 500,000 square miles \u2014 immediately reignited the slavery expansion debate through the Wilmot Proviso, proving that territorial acquisition in the 1840s could not be separated from the slavery question.",
+            "answer": "What is the Mexican-American War?"
+          }
+        },
+        {
+          "value": 1000,
+          "wrong_answers": [
+            "What is Manifest Destiny?",
+            "What is the Monroe Doctrine?",
+            "What is the Adams-Onis Treaty?"
+          ],
+          "supported": {
+            "clue": "Texas declared independence from Mexico in 1836 and asked to join the United States. It was finally admitted in 1845, which helped cause the Mexican-American War.",
+            "answer": "What is the annexation of Texas?"
+          },
+          "on_grade": {
+            "clue": "Texas's annexation in 1845 \u2014 after nearly a decade as an independent republic \u2014 was bitterly contested in Congress because it would add a large slave state and risked war with Mexico, which still claimed Texas as its territory.",
+            "answer": "What is the annexation of Texas?"
+          },
+          "advanced": {
+            "clue": "The delay in annexing Texas \u2014 from independence in 1836 to statehood in 1845 \u2014 reflected the slavery controversy: Northern congressmen feared adding slave territory, while Southerners saw Texas as essential to maintaining political balance and expanding the slave-labor economy.",
+            "answer": "What is the annexation of Texas?"
+          }
+        }
+      ]
+    }
+  ]
+}

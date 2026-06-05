@@ -1,0 +1,641 @@
+{
+  "topic": "Civil War & Reconstruction",
+  "categories": [
+    {
+      "id": "road_to_war",
+      "title": "Road to War",
+      "clues": [
+        {
+          "value": 200,
+          "wrong_answers": [
+            "What is the Missouri Compromise?",
+            "What is the Compromise of 1850?",
+            "What is the Emancipation Proclamation?"
+          ],
+          "supported": {
+            "clue": "By 1860, the North and South had very different economies and views on slavery. The South depended on enslaved labor for its cotton economy. The North was industrializing. These differences pulled the country apart.",
+            "answer": "What is sectionalism?"
+          },
+          "on_grade": {
+            "clue": "The deepening divide between the agricultural, slave-based Southern economy and the industrializing, free-labor North \u2014 over tariffs, territorial expansion, and slavery's moral status \u2014 created the sectional tensions that made civil war increasingly inevitable through the 1850s.",
+            "answer": "What is sectionalism?"
+          },
+          "advanced": {
+            "clue": "Historians debate whether the Civil War was 'irrepressible' \u2014 the product of structural economic and social differences \u2014 or whether political failures in the 1850s turned a manageable conflict into an existential one; what's clear is that the collapse of the Second Party System removed the institutional buffers that had contained sectional conflict for decades.",
+            "answer": "What is sectionalism?"
+          }
+        },
+        {
+          "value": 400,
+          "wrong_answers": [
+            "What is the Missouri Compromise?",
+            "What is the Compromise of 1850?",
+            "What is the Kansas-Nebraska Act?"
+          ],
+          "supported": {
+            "clue": "When Abraham Lincoln won the 1860 presidential election without a single Southern electoral vote, seven Southern states left the Union before he even took office, forming the Confederate States of America.",
+            "answer": "What is the Election of 1860?"
+          },
+          "on_grade": {
+            "clue": "Lincoln's victory in this four-way race \u2014 carrying the North entirely on a platform opposing slavery's expansion \u2014 triggered the secession of seven Deep South states, as Southern leaders concluded coexistence with a Republican president was impossible.",
+            "answer": "What is the Election of 1860?"
+          },
+          "advanced": {
+            "clue": "The election's four-way split \u2014 with Douglas running on popular sovereignty, Breckinridge on a federal slave code, Bell on the Constitution, and Lincoln on non-extension \u2014 illustrated how thoroughly the slavery question had destroyed the national party system that had held the Union together.",
+            "answer": "What is the Election of 1860?"
+          }
+        },
+        {
+          "value": 600,
+          "wrong_answers": [
+            "What is the Battle of Bull Run?",
+            "What is the Emancipation Proclamation?",
+            "What is Fort Sumter?"
+          ],
+          "supported": {
+            "clue": "The Civil War began in April 1861 when Confederate forces fired on a U.S. military fort in South Carolina. Lincoln called this an act of rebellion and asked for 75,000 volunteers to put it down.",
+            "answer": "What is the attack on Fort Sumter?"
+          },
+          "on_grade": {
+            "clue": "The Confederate attack on this federal installation in Charleston Harbor in April 1861 transformed secession from a political crisis into armed rebellion \u2014 forcing border states to choose sides and giving Lincoln the incident he needed to mobilize the North.",
+            "answer": "What is the attack on Fort Sumter?"
+          },
+          "advanced": {
+            "clue": "Lincoln maneuvered Confederate President Davis into firing the first shot \u2014 by announcing he would resupply the fort with provisions but not weapons, Davis faced either allowing a federal military presence in Confederate territory or attacking first and giving the Union the moral high ground.",
+            "answer": "What is the attack on Fort Sumter?"
+          }
+        },
+        {
+          "value": 800,
+          "wrong_answers": [
+            "What is popular sovereignty?",
+            "What is the Three-Fifths Compromise?",
+            "What is the Fugitive Slave Act?"
+          ],
+          "supported": {
+            "clue": "Lincoln said the war was being fought to preserve the Union, not to end slavery. He wanted to keep border states like Maryland and Kentucky from joining the Confederacy by not threatening slavery where it already existed.",
+            "answer": "What is Lincoln's war aim?"
+          },
+          "on_grade": {
+            "clue": "Lincoln's stated war aim \u2014 preserving the Union rather than abolishing slavery \u2014 was a careful political calculation to keep border states loyal and maintain support in the North, where many were unwilling to fight for emancipation but willing to fight for the Union.",
+            "answer": "What is Lincoln's war aim?"
+          },
+          "advanced": {
+            "clue": "Lincoln's famous letter to Horace Greeley \u2014 'If I could save the Union without freeing any slave, I would do it' \u2014 is often quoted without its context: Lincoln had already secretly drafted the Emancipation Proclamation and was managing public expectations while waiting for a Union military victory to announce it.",
+            "answer": "What is Lincoln's war aim?"
+          }
+        },
+        {
+          "value": 1000,
+          "wrong_answers": [
+            "What is the Battle of Gettysburg?",
+            "What is the Battle of Antietam?",
+            "What is Sherman's March?"
+          ],
+          "supported": {
+            "clue": "Lincoln's second inaugural address in 1865 said the war was God's punishment for slavery and called for reconciliation with the South: 'With malice toward none, with charity for all.'",
+            "answer": "What is Lincoln's Second Inaugural Address?"
+          },
+          "on_grade": {
+            "clue": "This 1865 speech \u2014 delivered as Union victory was near \u2014 acknowledged slavery as the war's cause, invoked divine judgment on both North and South for its existence, and called for national reconciliation rather than punitive peace.",
+            "answer": "What is Lincoln's Second Inaugural Address?"
+          },
+          "advanced": {
+            "clue": "Lincoln's theological interpretation of the war \u2014 that both sides bore responsibility for slavery and were being punished \u2014 was radical in its moral equivalence, implying that Northern complicity in the slave trade and Fugitive Slave enforcement made the North as guilty as the South.",
+            "answer": "What is Lincoln's Second Inaugural Address?"
+          }
+        }
+      ]
+    },
+    {
+      "id": "emancipation",
+      "title": "Emancipation & Freedom",
+      "clues": [
+        {
+          "value": 200,
+          "wrong_answers": [
+            "What is the 13th Amendment?",
+            "What is the Freedmen's Bureau?",
+            "What is the Civil Rights Act of 1866?"
+          ],
+          "supported": {
+            "clue": "On January 1, 1863, President Lincoln declared that all enslaved people in Confederate states were free. This did not immediately free anyone, but it changed the war's purpose.",
+            "answer": "What is the Emancipation Proclamation?"
+          },
+          "on_grade": {
+            "clue": "Lincoln's executive order declared enslaved people in Confederate-controlled states 'forever free' \u2014 it changed the war's character from a fight for Union to a fight against slavery, invited Black men to serve in the Union Army, and discouraged European recognition of the Confederacy.",
+            "answer": "What is the Emancipation Proclamation?"
+          },
+          "advanced": {
+            "clue": "The Proclamation was carefully crafted to exempt the border states and Union-occupied Confederate territory \u2014 freeing slaves only where Lincoln had no authority to enforce it \u2014 a limitation that reflected its nature as a war measure rather than a moral declaration, requiring the 13th Amendment to complete abolition.",
+            "answer": "What is the Emancipation Proclamation?"
+          }
+        },
+        {
+          "value": 400,
+          "wrong_answers": [
+            "What is the Emancipation Proclamation?",
+            "What is the 14th Amendment?",
+            "What is the Freedmen's Bureau?"
+          ],
+          "supported": {
+            "clue": "Ratified in 1865, this amendment permanently abolished slavery throughout the United States \u2014 completing what the Emancipation Proclamation had only partially done.",
+            "answer": "What is the 13th Amendment?"
+          },
+          "on_grade": {
+            "clue": "Ratified in December 1865, this amendment abolished slavery and involuntary servitude throughout the United States \u2014 except as punishment for crime, a loophole that critics argue enabled the convict leasing system that effectively re-enslaved many Black Southerners.",
+            "answer": "What is the 13th Amendment?"
+          },
+          "advanced": {
+            "clue": "The 'punishment for crime' exception to this amendment became the legal foundation for convict leasing \u2014 states arrested Black men on minor charges, sentenced them to hard labor, and leased them to plantations and mines in conditions critics described as worse than slavery.",
+            "answer": "What is the 13th Amendment?"
+          }
+        },
+        {
+          "value": 600,
+          "wrong_answers": [
+            "What is the Emancipation Proclamation?",
+            "What is the 13th Amendment?",
+            "What is the Civil Rights Act of 1875?"
+          ],
+          "supported": {
+            "clue": "Ratified in 1868, this amendment made anyone born or naturalized in the United States a citizen \u2014 directly overturning the Dred Scott decision \u2014 and guaranteed equal protection under the law.",
+            "answer": "What is the 14th Amendment?"
+          },
+          "on_grade": {
+            "clue": "This 1868 amendment defined national citizenship (overturning Dred Scott), required states to provide equal protection and due process, and reduced representation for states that denied voting rights \u2014 creating the constitutional foundation for nearly all subsequent civil rights litigation.",
+            "answer": "What is the 14th Amendment?"
+          },
+          "advanced": {
+            "clue": "The 14th Amendment's equal protection clause was largely dormant for its first 80 years \u2014 courts applied it primarily to protect corporations \u2014 before Brown v. Board of Education and subsequent decisions transformed it into the primary constitutional weapon against racial discrimination.",
+            "answer": "What is the 14th Amendment?"
+          }
+        },
+        {
+          "value": 800,
+          "wrong_answers": [
+            "What is the 14th Amendment?",
+            "What is the Emancipation Proclamation?",
+            "What is the Civil Rights Act of 1866?"
+          ],
+          "supported": {
+            "clue": "Ratified in 1870, this amendment gave Black men the right to vote \u2014 though Southern states quickly used literacy tests, poll taxes, and violence to prevent them from actually voting.",
+            "answer": "What is the 15th Amendment?"
+          },
+          "on_grade": {
+            "clue": "This amendment prohibited denying the vote on the basis of race, color, or previous servitude \u2014 but its enforcement collapsed after 1877, and Southern states developed poll taxes, literacy tests, grandfather clauses, and violence to effectively disfranchise Black voters for nearly a century.",
+            "answer": "What is the 15th Amendment?"
+          },
+          "advanced": {
+            "clue": "The 15th Amendment's narrow wording \u2014 prohibiting only race-based denial of the vote, not literacy tests or poll taxes \u2014 was a deliberate compromise that allowed Northern states to maintain their own discriminatory voting requirements while appearing to protect Black voting rights.",
+            "answer": "What is the 15th Amendment?"
+          }
+        },
+        {
+          "value": 1000,
+          "wrong_answers": [
+            "What is the Contraband camps?",
+            "What is the 14th Amendment?",
+            "What is the Civil Rights Act of 1875?"
+          ],
+          "supported": {
+            "clue": "Established in 1865, this federal agency provided food, clothing, medical care, and schools for formerly enslaved people and poor white Southerners during Reconstruction.",
+            "answer": "What is the Freedmen's Bureau?"
+          },
+          "on_grade": {
+            "clue": "This 1865 federal agency \u2014 the first major government social welfare program \u2014 provided food, medical care, legal assistance, and education to four million formerly enslaved people during Reconstruction, operating with chronically inadequate resources.",
+            "answer": "What is the Freedmen's Bureau?"
+          },
+          "advanced": {
+            "clue": "The Freedmen's Bureau's greatest lasting achievement was education \u2014 it established over 1,000 schools and laid the groundwork for historically Black colleges \u2014 but its failure to distribute land ('forty acres and a mule') left freedpeople economically dependent on their former enslavers.",
+            "answer": "What is the Freedmen's Bureau?"
+          }
+        }
+      ]
+    },
+    {
+      "id": "reconstruction_politics",
+      "title": "Reconstruction Politics",
+      "clues": [
+        {
+          "value": 200,
+          "wrong_answers": [
+            "What is Radical Reconstruction?",
+            "What is Johnson's Reconstruction plan?",
+            "What is the Compromise of 1877?"
+          ],
+          "supported": {
+            "clue": "After the war, Congress and President Johnson disagreed sharply about how to bring Southern states back into the Union. Johnson wanted easy terms; Radical Republicans in Congress wanted to protect the rights of freed people.",
+            "answer": "What are the competing Reconstruction plans?"
+          },
+          "on_grade": {
+            "clue": "The contest between Johnson's lenient plan \u2014 quick restoration of Southern states with minimal conditions \u2014 and the Radical Republican program requiring military occupation, Black suffrage, and civil rights guarantees defined Reconstruction politics from 1865 to 1877.",
+            "answer": "What are the competing Reconstruction plans?"
+          },
+          "advanced": {
+            "clue": "Lincoln's '10 percent plan' was itself a moderate position designed to undermine Confederate resolve by offering easy terms \u2014 the Radical Wade-Davis Bill, which Lincoln pocket-vetoed, reflected Congress's insistence that Reconstruction required a more fundamental social revolution.",
+            "answer": "What are the competing Reconstruction plans?"
+          }
+        },
+        {
+          "value": 400,
+          "wrong_answers": [
+            "What is the Reconstruction Acts?",
+            "What is the Civil Rights Act of 1866?",
+            "What is the 15th Amendment?"
+          ],
+          "supported": {
+            "clue": "The House of Representatives voted to impeach President Johnson in 1868 for violating the Tenure of Office Act. He was acquitted in the Senate by one vote and remained president.",
+            "answer": "What is the impeachment of Andrew Johnson?"
+          },
+          "on_grade": {
+            "clue": "Johnson's impeachment \u2014 technically for violating the Tenure of Office Act by firing Secretary Stanton \u2014 was really a political confrontation between the president and Radical Republicans over control of Reconstruction, resolved when seven Republicans voted to acquit.",
+            "answer": "What is the impeachment of Andrew Johnson?"
+          },
+          "advanced": {
+            "clue": "The seven Republican senators who voted to acquit Johnson \u2014 sacrificing their political careers to do so \u2014 believed that removing a president for purely political disagreements would permanently damage the constitutional separation of powers, a judgment that still frames debates about impeachment's proper scope.",
+            "answer": "What is the impeachment of Andrew Johnson?"
+          }
+        },
+        {
+          "value": 600,
+          "wrong_answers": [
+            "What is sharecropping?",
+            "What is the Freedmen's Bureau?",
+            "What is the Civil Rights Act of 1875?"
+          ],
+          "supported": {
+            "clue": "After slavery ended, many Southern states passed laws that severely limited the rights of Black people \u2014 preventing them from owning land, carrying weapons, or moving freely. These laws tried to recreate the conditions of slavery without using the word.",
+            "answer": "What are the Black Codes?"
+          },
+          "on_grade": {
+            "clue": "These laws, passed by Southern legislatures in 1865\u20131866, restricted Black freedom of movement, labor contracts, and legal rights \u2014 effectively recreating the conditions of slavery while technically complying with the 13th Amendment, and provoking Congress to pass the Reconstruction Acts.",
+            "answer": "What are the Black Codes?"
+          },
+          "advanced": {
+            "clue": "The Black Codes were the South's opening bid in a century-long negotiation over the terms of emancipation \u2014 they were struck down by Reconstruction legislation but their successors, Jim Crow laws, achieved largely the same ends through constitutional mechanisms that survived federal scrutiny.",
+            "answer": "What are the Black Codes?"
+          }
+        },
+        {
+          "value": 800,
+          "wrong_answers": [
+            "What is the Black Codes?",
+            "What is the 14th Amendment?",
+            "What is tenant farming?"
+          ],
+          "supported": {
+            "clue": "After the Civil War, many formerly enslaved people worked land as tenant farmers, giving half or more of their crops to landowners as rent. This system kept most Black Southerners trapped in poverty and debt.",
+            "answer": "What is sharecropping?"
+          },
+          "on_grade": {
+            "clue": "This labor system \u2014 in which freedpeople farmed land owned by whites in exchange for a share of the crop \u2014 trapped most Black Southerners in a cycle of debt and poverty that functioned as economic bondage even after legal slavery had ended.",
+            "answer": "What is sharecropping?"
+          },
+          "advanced": {
+            "clue": "Sharecropping emerged because land redistribution failed \u2014 without the promised 'forty acres,' freedpeople had no economic independence, and landowners held all the leverage in labor negotiations, creating a system of debt peonage that courts eventually ruled violated the 13th Amendment but rarely prosecuted.",
+            "answer": "What is sharecropping?"
+          }
+        },
+        {
+          "value": 1000,
+          "wrong_answers": [
+            "What is the Election of 1876?",
+            "What is the Compromise of 1850?",
+            "What is the Black Codes?"
+          ],
+          "supported": {
+            "clue": "In 1877, Republicans and Democrats made a deal that gave Hayes the disputed presidency in exchange for removing the last federal troops from the South. This ended Reconstruction and left Black Southerners without federal protection.",
+            "answer": "What is the Compromise of 1877?"
+          },
+          "on_grade": {
+            "clue": "This backroom deal resolved the disputed 1876 election by giving Hayes the presidency in exchange for withdrawing federal troops from the South \u2014 effectively ending Reconstruction and leaving Black Southerners at the mercy of state governments dominated by white supremacists.",
+            "answer": "What is the Compromise of 1877?"
+          },
+          "advanced": {
+            "clue": "The Compromise of 1877 is the moment when the federal government formally abandoned its commitment to Black citizenship \u2014 a retreat that historian C. Vann Woodward called 'the Great Betrayal,' whose consequences in disenfranchisement, lynching, and Jim Crow lasted until the second Reconstruction of the 1960s.",
+            "answer": "What is the Compromise of 1877?"
+          }
+        }
+      ]
+    },
+    {
+      "id": "white_resistance",
+      "title": "Resistance & Redemption",
+      "clues": [
+        {
+          "value": 200,
+          "wrong_answers": [
+            "What is the Black Codes?",
+            "What is sharecropping?",
+            "What is Jim Crow?"
+          ],
+          "supported": {
+            "clue": "Founded in 1865 by Confederate veterans, this white supremacist terrorist organization used violence, murder, and intimidation to prevent Black people from voting or exercising their rights in the South.",
+            "answer": "What is the Ku Klux Klan?"
+          },
+          "on_grade": {
+            "clue": "This terrorist organization \u2014 founded by former Confederates in 1865 \u2014 used systematic violence, murder, and intimidation to suppress Black political participation and restore white supremacy throughout the South during Reconstruction.",
+            "answer": "What is the Ku Klux Klan?"
+          },
+          "advanced": {
+            "clue": "The Klan's first incarnation was suppressed by the Force Acts of 1870\u20131871 and federal prosecution \u2014 demonstrating that federal will could protect Black rights \u2014 making the Compromise of 1877's withdrawal of federal enforcement all the more catastrophic for Black Southerners.",
+            "answer": "What is the Ku Klux Klan?"
+          }
+        },
+        {
+          "value": 400,
+          "wrong_answers": [
+            "What is the Ku Klux Klan?",
+            "What is sharecropping?",
+            "What is disenfranchisement?"
+          ],
+          "supported": {
+            "clue": "After Reconstruction ended, Southern states passed laws creating separate \u2014 and unequal \u2014 schools, restaurants, trains, and other facilities for Black and white people. These segregation laws lasted until the 1960s.",
+            "answer": "What are Jim Crow laws?"
+          },
+          "on_grade": {
+            "clue": "These state and local laws \u2014 enacted across the South after Reconstruction \u2014 mandated racial segregation in virtually every aspect of public life, enforced by the threat of violence and sustained by the Supreme Court's 1896 Plessy v. Ferguson ruling.",
+            "answer": "What are Jim Crow laws?"
+          },
+          "advanced": {
+            "clue": "Jim Crow was not simply Southern custom translated into law \u2014 it was a deliberate legal architecture constructed in the 1880s\u20131890s to replace the social control lost with slavery, using law to signal Black inferiority and punish any challenge to the racial hierarchy.",
+            "answer": "What are Jim Crow laws?"
+          }
+        },
+        {
+          "value": 600,
+          "wrong_answers": [
+            "What is the 15th Amendment?",
+            "What is the Civil Rights Act of 1875?",
+            "What is the Freedmen's Bureau?"
+          ],
+          "supported": {
+            "clue": "In 1896, the Supreme Court ruled that 'separate but equal' facilities for Black and white Americans were constitutional \u2014 giving legal approval to segregation across the South for the next 58 years.",
+            "answer": "What is Plessy v. Ferguson?"
+          },
+          "on_grade": {
+            "clue": "This Supreme Court decision upheld Louisiana's separate railway car law, establishing the 'separate but equal' doctrine that provided constitutional cover for Jim Crow segregation until Brown v. Board of Education overturned it in 1954.",
+            "answer": "What is Plessy v. Ferguson?"
+          },
+          "advanced": {
+            "clue": "Justice Harlan's lone dissent in Plessy \u2014 arguing that 'our Constitution is color-blind' \u2014 became the foundational text for the NAACP's legal strategy five decades later; the majority opinion was written by a justice who had been a member of the Know-Nothing Party.",
+            "answer": "What is Plessy v. Ferguson?"
+          }
+        },
+        {
+          "value": 800,
+          "wrong_answers": [
+            "What is Plessy v. Ferguson?",
+            "What is the Civil Rights Act of 1875?",
+            "What are the Black Codes?"
+          ],
+          "supported": {
+            "clue": "Southern states used literacy tests, poll taxes, and grandfather clauses to prevent Black men from voting \u2014 even though the 15th Amendment gave them that right. Violence and threats were used against anyone who tried.",
+            "answer": "What is disenfranchisement?"
+          },
+          "on_grade": {
+            "clue": "Through literacy tests, poll taxes, grandfather clauses, white primaries, and outright violence, Southern states systematically eliminated Black political participation after Reconstruction \u2014 reducing Black voter registration in Mississippi from 90% in 1867 to 6% by 1892.",
+            "answer": "What is disenfranchisement?"
+          },
+          "advanced": {
+            "clue": "The Supreme Court's rulings in Williams v. Mississippi (1898) and Giles v. Harris (1903) effectively permitted disenfranchisement by upholding facially neutral laws whose discriminatory application was obvious \u2014 establishing a pattern of judicial deference to racial exclusion that persisted until the Voting Rights Act of 1965.",
+            "answer": "What is disenfranchisement?"
+          }
+        },
+        {
+          "value": 1000,
+          "wrong_answers": [
+            "What is Plessy v. Ferguson?",
+            "What is disenfranchisement?",
+            "What is the Compromise of 1877?"
+          ],
+          "supported": {
+            "clue": "The period after Reconstruction when Southern Democrats took back control of state governments and reversed Black civil and political gains. They called this 'redeeming' the South from Republican rule.",
+            "answer": "What is the Redeemer movement?"
+          },
+          "on_grade": {
+            "clue": "This political movement \u2014 in which conservative white Democrats systematically dismantled Reconstruction governments, disenfranchised Black voters, and restored white supremacist rule \u2014 reclaimed the South through violence, fraud, and the withdrawal of federal enforcement.",
+            "answer": "What is the Redeemer movement?"
+          },
+          "advanced": {
+            "clue": "The Redeemers' success demonstrated that constitutional amendments could be rendered meaningless without sustained federal enforcement \u2014 a lesson that shaped the design of the Civil Rights Act of 1964 and Voting Rights Act of 1965, which included strong federal oversight mechanisms to prevent a repeat.",
+            "answer": "What is the Redeemer movement?"
+          }
+        }
+      ]
+    },
+    {
+      "id": "military_war",
+      "title": "The War Itself",
+      "clues": [
+        {
+          "value": 200,
+          "wrong_answers": [
+            "What is the Battle of Antietam?",
+            "What is the Siege of Vicksburg?",
+            "What is Sherman's March?"
+          ],
+          "supported": {
+            "clue": "This July 1863 battle in Pennsylvania was the turning point of the Civil War. Lee's Confederate army invaded the North but was defeated. He never invaded the North again.",
+            "answer": "What is the Battle of Gettysburg?"
+          },
+          "on_grade": {
+            "clue": "This three-day battle in Pennsylvania in July 1863 \u2014 the largest battle ever fought in North America \u2014 repulsed Lee's second invasion of the North and, combined with the fall of Vicksburg the same day, marked the definitive turning point of the war.",
+            "answer": "What is the Battle of Gettysburg?"
+          },
+          "advanced": {
+            "clue": "Gettysburg is remembered for Pickett's Charge \u2014 a frontal assault on fortified Union positions that destroyed a third of the attacking force \u2014 but Lee's decision to attack at all on the third day, against Longstreet's advice, remains the most debated command decision of the war.",
+            "answer": "What is the Battle of Gettysburg?"
+          }
+        },
+        {
+          "value": 400,
+          "wrong_answers": [
+            "What is the Battle of Gettysburg?",
+            "What is the Battle of Bull Run?",
+            "What is the Battle of Shiloh?"
+          ],
+          "supported": {
+            "clue": "This September 1862 battle in Maryland was the bloodiest single day in American history, with about 23,000 casualties. It was enough of a Union victory for Lincoln to announce the Emancipation Proclamation.",
+            "answer": "What is the Battle of Antietam?"
+          },
+          "on_grade": {
+            "clue": "This September 1862 battle \u2014 the bloodiest single day in American military history with nearly 23,000 casualties \u2014 halted Lee's first invasion of the North and gave Lincoln the Union victory he needed to issue the Emancipation Proclamation.",
+            "answer": "What is the Battle of Antietam?"
+          },
+          "advanced": {
+            "clue": "McClellan's failure to pursue Lee's battered army after Antietam \u2014 when he had numerical superiority and Lee had his back to the Potomac \u2014 infuriated Lincoln and confirmed his suspicion that McClellan's caution made him unfit for command, leading to his replacement two months later.",
+            "answer": "What is the Battle of Antietam?"
+          }
+        },
+        {
+          "value": 600,
+          "wrong_answers": [
+            "What is the Battle of Antietam?",
+            "What is the Battle of Gettysburg?",
+            "What is the Anaconda Plan?"
+          ],
+          "supported": {
+            "clue": "General Sherman's Union army marched 300 miles through Georgia in 1864, destroying everything of military value \u2014 railroads, factories, and farms \u2014 to break the South's will to fight.",
+            "answer": "What is Sherman's March to the Sea?"
+          },
+          "on_grade": {
+            "clue": "Sherman's 1864 campaign through Georgia \u2014 cutting a 60-mile-wide swath of destruction from Atlanta to Savannah \u2014 pioneered total war by targeting the Confederate economy and civilian morale rather than just the opposing army.",
+            "answer": "What is Sherman's March to the Sea?"
+          },
+          "advanced": {
+            "clue": "Sherman's strategy \u2014 he called it making Georgia 'howl' \u2014 was a deliberate application of the theory that Confederate civilians bore responsibility for the war and that destroying their economic base would shorten the conflict, anticipating the strategic bombing doctrine of World War II.",
+            "answer": "What is Sherman's March to the Sea?"
+          }
+        },
+        {
+          "value": 800,
+          "wrong_answers": [
+            "What is the Battle of Gettysburg?",
+            "What is Sherman's March?",
+            "What is the Emancipation Proclamation?"
+          ],
+          "supported": {
+            "clue": "Nearly 180,000 Black men served in the Union Army during the Civil War. They fought in segregated units under mostly white officers and were paid less than white soldiers, but their service helped win the war.",
+            "answer": "What are the United States Colored Troops?"
+          },
+          "on_grade": {
+            "clue": "Nearly 180,000 Black soldiers served in the Union Army \u2014 making up roughly 10% of its total strength \u2014 enduring unequal pay, discriminatory treatment, and the Confederate policy of executing captured Black soldiers rather than taking them prisoner.",
+            "answer": "What are the United States Colored Troops?"
+          },
+          "advanced": {
+            "clue": "The performance of Black troops \u2014 particularly at Fort Wagner, the Crater, and in the final campaigns \u2014 demolished the Confederate argument that Black men would not fight, and their service gave Frederick Douglass his most powerful argument for Black citizenship: 'Once let the Black man get upon his person the brass letters U.S., and there is no power on earth which can deny that he has earned the right to citizenship.'",
+            "answer": "What are the United States Colored Troops?"
+          }
+        },
+        {
+          "value": 1000,
+          "wrong_answers": [
+            "What is the Battle of Gettysburg?",
+            "What is the Emancipation Proclamation?",
+            "What is the Reconstruction Acts?"
+          ],
+          "supported": {
+            "clue": "On April 9, 1865, Confederate General Robert E. Lee surrendered to Union General Ulysses S. Grant at a courthouse in Virginia. Grant allowed Confederate soldiers to go home and keep their horses.",
+            "answer": "What is Appomattox Court House?"
+          },
+          "on_grade": {
+            "clue": "Lee's surrender to Grant at this Virginia courthouse in April 1865 effectively ended the Civil War \u2014 and Grant's generous terms, allowing Confederate soldiers to keep their horses and return home, reflected Lincoln's desire for reconciliation over punishment.",
+            "answer": "What is Appomattox Court House?"
+          },
+          "advanced": {
+            "clue": "Grant's magnanimous terms at Appomattox \u2014 no punishment, no trials for treason, soldiers permitted to keep their horses \u2014 were Lincoln's policy implemented, but they also established the precedent that Confederate leaders would face no legal consequences, allowing the myth of the 'Lost Cause' to flourish unchallenged.",
+            "answer": "What is Appomattox Court House?"
+          }
+        }
+      ]
+    },
+    {
+      "id": "memory_legacy",
+      "title": "Memory & Legacy",
+      "clues": [
+        {
+          "value": 200,
+          "wrong_answers": [
+            "What is the Dunning School?",
+            "What is abolitionism?",
+            "What is the Redeemer mythology?"
+          ],
+          "supported": {
+            "clue": "After the war, many Southerners promoted the idea that the Confederacy had fought for 'states' rights' and honor \u2014 not slavery. This myth downplayed slavery's role and glorified Confederate leaders.",
+            "answer": "What is the Lost Cause?"
+          },
+          "on_grade": {
+            "clue": "This post-war ideology \u2014 portraying the Confederacy as a noble cause fighting for states' rights rather than slavery \u2014 shaped how the war was remembered in the South and influenced the erection of Confederate monuments across the country in the early 20th century.",
+            "answer": "What is the Lost Cause?"
+          },
+          "advanced": {
+            "clue": "The Lost Cause mythology was not a neutral remembrance but a political project \u2014 it shaped textbooks, public monuments, and Southern political culture to rehabilitate the Confederacy, discredit Reconstruction, and resist Black civil rights by denying that racial subjugation had been the war's purpose.",
+            "answer": "What is the Lost Cause?"
+          }
+        },
+        {
+          "value": 400,
+          "wrong_answers": [
+            "What is the United Confederate Veterans?",
+            "What is the Sons of Confederate Veterans?",
+            "What is the Daughters of the Confederacy?"
+          ],
+          "supported": {
+            "clue": "After Reconstruction, Southern states built hundreds of statues of Confederate generals and named schools and streets after Confederate leaders. Many of these were built during periods of racial conflict, not immediately after the war.",
+            "answer": "What are Confederate monuments?"
+          },
+          "on_grade": {
+            "clue": "The wave of Confederate monument construction \u2014 peaking in the 1910s\u20131920s and again in the 1950s\u20131960s \u2014 coincided with periods of racial tension and civil rights activism, suggesting the monuments functioned as assertions of white supremacy rather than simple historical commemoration.",
+            "answer": "What are Confederate monuments?"
+          },
+          "advanced": {
+            "clue": "Confederate monument placement in courthouses and public squares \u2014 rather than cemeteries or battlefields \u2014 was a deliberate statement about political power rather than historical remembrance; the timing of their construction during Jim Crow and the civil rights era confirmed their function as symbols of racial hierarchy rather than grief.",
+            "answer": "What are Confederate monuments?"
+          }
+        },
+        {
+          "value": 600,
+          "wrong_answers": [
+            "What is the Gettysburg Address?",
+            "What is Lincoln's Second Inaugural?",
+            "What is the Emancipation Proclamation?"
+          ],
+          "supported": {
+            "clue": "Abraham Lincoln was shot at a theater in Washington just five days after the war ended. His death turned him into a martyr \u2014 a symbol of the Union's sacrifices and the unfinished work of freedom.",
+            "answer": "What is Lincoln's assassination?"
+          },
+          "on_grade": {
+            "clue": "Lincoln's assassination by John Wilkes Booth on April 14, 1865 \u2014 five days after Lee's surrender \u2014 transformed him into a national martyr and removed the one leader who might have balanced justice with reconciliation in Reconstruction's crucial early months.",
+            "answer": "What is Lincoln's assassination?"
+          },
+          "advanced": {
+            "clue": "Lincoln's death changed Reconstruction's political calculus \u2014 his successor Johnson shared none of Lincoln's skill or moral authority, and the martyred Lincoln became an image that Radical Republicans wielded against Johnson's lenient policies, making the assassination paradoxically a driver of the harsher Reconstruction that followed.",
+            "answer": "What is Lincoln's assassination?"
+          }
+        },
+        {
+          "value": 800,
+          "wrong_answers": [
+            "What is Reconstruction?",
+            "What is the Lost Cause?",
+            "What is the Civil Rights Movement?"
+          ],
+          "supported": {
+            "clue": "Historians have debated for 150 years whether Reconstruction was a failure or a promising beginning cut short. Recent scholarship emphasizes that it was undermined by white supremacist violence rather than failing on its own.",
+            "answer": "What is the historiography of Reconstruction?"
+          },
+          "on_grade": {
+            "clue": "The historical interpretation of Reconstruction shifted dramatically in the 20th century \u2014 from the Dunning School's view of it as a corrupt 'tragic era' to W.E.B. Du Bois's and later historians' argument that it was a genuine democratic revolution destroyed by racial violence.",
+            "answer": "What is the historiography of Reconstruction?"
+          },
+          "advanced": {
+            "clue": "The Dunning School's interpretation \u2014 that Reconstruction was a corrupt imposition of ignorant Black rule on the South \u2014 dominated American historical consciousness for 60 years, shaping Birth of a Nation, school textbooks, and public memory in ways that legitimized segregation and made the Civil Rights Movement harder.",
+            "answer": "What is the historiography of Reconstruction?"
+          }
+        },
+        {
+          "value": 1000,
+          "wrong_answers": [
+            "What is the Freedmen's Bureau?",
+            "What is Reconstruction?",
+            "What is the 14th Amendment?"
+          ],
+          "supported": {
+            "clue": "The Civil War and Reconstruction settled two fundamental questions about America: that the United States was one nation that could not be divided, and that slavery was permanently abolished. Everything else \u2014 equality, voting rights \u2014 remained contested.",
+            "answer": "What is the legacy of the Civil War?"
+          },
+          "on_grade": {
+            "clue": "The Civil War settled the questions of national unity and slavery's abolition but left others unresolved \u2014 the meaning of Black citizenship, the balance of federal and state power, and the conditions of freedom \u2014 that would require another century of struggle to address.",
+            "answer": "What is the legacy of the Civil War?"
+          },
+          "advanced": {
+            "clue": "Du Bois identified the war's unresolved legacy as the 'unfinished revolution' \u2014 the legal framework of Black citizenship was established in the Reconstruction amendments but immediately undermined, requiring the second Reconstruction of the 1960s to partially fulfill, and some argue remains incomplete today.",
+            "answer": "What is the legacy of the Civil War?"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,641 @@
+{
+  "topic": "Landmark Supreme Court Cases",
+  "categories": [
+    {
+      "id": "founding_era",
+      "title": "Founding Era Cases",
+      "clues": [
+        {
+          "value": 200,
+          "wrong_answers": [
+            "What is McCulloch v. Maryland?",
+            "What is Gibbons v. Ogden?",
+            "What is Fletcher v. Peck?"
+          ],
+          "supported": {
+            "clue": "In 1803, Chief Justice John Marshall declared that the Supreme Court has the power to strike down laws that violate the Constitution \u2014 a power the Constitution never explicitly mentions but that Marshall argued was implied.",
+            "answer": "What is Marbury v. Madison?"
+          },
+          "on_grade": {
+            "clue": "This 1803 case established judicial review \u2014 the Supreme Court's power to declare acts of Congress unconstitutional \u2014 making it the foundational precedent for the Court's role as the final interpreter of the Constitution.",
+            "answer": "What is Marbury v. Madison?"
+          },
+          "advanced": {
+            "clue": "Marshall's opinion was a masterpiece of political maneuvering \u2014 he ruled against his own Federalist ally Marbury to avoid a confrontation Jefferson could win by ignoring an order to deliver the commission, while simultaneously claiming the far more consequential power of judicial review that Jefferson could not reverse.",
+            "answer": "What is Marbury v. Madison?"
+          }
+        },
+        {
+          "value": 400,
+          "wrong_answers": [
+            "What is Marbury v. Madison?",
+            "What is Gibbons v. Ogden?",
+            "What is Dartmouth College v. Woodward?"
+          ],
+          "supported": {
+            "clue": "In 1819, the Supreme Court ruled that Maryland could not tax the national bank \u2014 establishing that when state and federal laws conflict, federal law wins, and that Congress has powers beyond those explicitly listed in the Constitution.",
+            "answer": "What is McCulloch v. Maryland?"
+          },
+          "on_grade": {
+            "clue": "This 1819 ruling established two critical precedents: that the 'necessary and proper' clause gives Congress implied powers beyond those explicitly listed, and that states cannot tax or obstruct federal institutions \u2014 cementing federal supremacy.",
+            "answer": "What is McCulloch v. Maryland?"
+          },
+          "advanced": {
+            "clue": "Marshall's reading of 'necessary' as 'useful' rather than 'indispensable' in McCulloch dramatically expanded congressional authority \u2014 and his assertion that 'the power to tax involves the power to destroy' established the federal immunity doctrine that still governs intergovernmental taxation today.",
+            "answer": "What is McCulloch v. Maryland?"
+          }
+        },
+        {
+          "value": 600,
+          "wrong_answers": [
+            "What is Cherokee Nation v. Georgia?",
+            "What is Johnson v. M'Intosh?",
+            "What is the Indian Removal Act?"
+          ],
+          "supported": {
+            "clue": "In 1832, the Supreme Court ruled that Georgia had no authority over Cherokee territory \u2014 that the Cherokee Nation was a separate nation with treaty rights that Georgia could not override. President Jackson reportedly refused to enforce the ruling.",
+            "answer": "What is Worcester v. Georgia?"
+          },
+          "on_grade": {
+            "clue": "Marshall's ruling that the Cherokee Nation was a 'distinct community' whose territory Georgia had no legal authority to enter established the foundational principle of Native sovereignty \u2014 though Jackson's refusal to enforce it made it a moral rather than practical victory.",
+            "answer": "What is Worcester v. Georgia?"
+          },
+          "advanced": {
+            "clue": "Worcester v. Georgia established two enduring but contradictory legal principles: that Native nations possess inherent sovereignty the states cannot override, and that this sovereignty is ultimately dependent on federal goodwill for enforcement \u2014 the 'trust relationship' that has defined federal Indian law ever since.",
+            "answer": "What is Worcester v. Georgia?"
+          }
+        },
+        {
+          "value": 800,
+          "wrong_answers": [
+            "What is Worcester v. Georgia?",
+            "What is Prigg v. Pennsylvania?",
+            "What is Scott v. Sandford?"
+          ],
+          "supported": {
+            "clue": "In this 1857 decision, Chief Justice Taney ruled that a Black man who had lived in a free state was still enslaved \u2014 and that Black Americans were not citizens and had no right to sue in federal court. Congress, he said, had no power to ban slavery from territories.",
+            "answer": "What is Dred Scott v. Sandford?"
+          },
+          "on_grade": {
+            "clue": "Taney's 1857 ruling \u2014 that Black Americans were not citizens, that Scott's residence in free territory conferred no freedom, and that Congress lacked authority to ban slavery from territories \u2014 was intended to permanently settle the slavery question but instead radicalized Northern opinion.",
+            "answer": "What is Dred Scott v. Sandford?"
+          },
+          "advanced": {
+            "clue": "Taney's attempt to use Dred Scott to constitutionally entrench slavery backfired catastrophically \u2014 by destroying the Missouri Compromise and popular sovereignty, it eliminated the compromise mechanisms that had contained sectional conflict, making Lincoln's Republican platform the only viable Northern position and the Civil War nearly inevitable.",
+            "answer": "What is Dred Scott v. Sandford?"
+          }
+        },
+        {
+          "value": 1000,
+          "wrong_answers": [
+            "What is Dred Scott v. Sandford?",
+            "What is Cherokee Nation v. Georgia?",
+            "What is Barron v. Baltimore?"
+          ],
+          "supported": {
+            "clue": "In 1896, the Supreme Court ruled that 'separate but equal' railroad cars did not violate the 14th Amendment's equal protection clause \u2014 giving constitutional approval to racial segregation that lasted until 1954.",
+            "answer": "What is Plessy v. Ferguson?"
+          },
+          "on_grade": {
+            "clue": "This 1896 ruling \u2014 upholding Louisiana's separate railway car law and establishing the 'separate but equal' doctrine \u2014 provided constitutional cover for Jim Crow segregation for 58 years, until Brown v. Board of Education reversed it.",
+            "answer": "What is Plessy v. Ferguson?"
+          },
+          "advanced": {
+            "clue": "Justice Harlan's lone dissent \u2014 'Our Constitution is color-blind and neither knows nor tolerates classes among citizens' \u2014 was written by a former slaveholder who had opposed the 14th Amendment, illustrating that constitutional evolution sometimes runs ahead of personal biography.",
+            "answer": "What is Plessy v. Ferguson?"
+          }
+        }
+      ]
+    },
+    {
+      "id": "civil_liberties_war",
+      "title": "Civil Liberties & War",
+      "clues": [
+        {
+          "value": 200,
+          "wrong_answers": [
+            "What is Abrams v. United States?",
+            "What is Gitlow v. New York?",
+            "What is Brandenburg v. Ohio?"
+          ],
+          "supported": {
+            "clue": "In 1919, the Supreme Court upheld the conviction of a man who mailed antiwar leaflets to draft-age men \u2014 ruling that speech creating a 'clear and present danger' could be restricted, even in peacetime if the danger was close enough.",
+            "answer": "What is Schenck v. United States?"
+          },
+          "on_grade": {
+            "clue": "Justice Holmes's 1919 opinion introduced the 'clear and present danger' test \u2014 ruling that speech could be restricted when it posed an immediate threat to national security, upholding the conviction of an antiwar activist for distributing anti-draft leaflets.",
+            "answer": "What is Schenck v. United States?"
+          },
+          "advanced": {
+            "clue": "Holmes introduced 'clear and present danger' as a limiting principle on speech restriction, but quickly regretted how broadly lower courts applied it \u2014 his dissents in Abrams and Gitlow developed a more protective 'marketplace of ideas' framework that eventually became the basis for modern First Amendment law.",
+            "answer": "What is Schenck v. United States?"
+          }
+        },
+        {
+          "value": 400,
+          "wrong_answers": [
+            "What is Ex Parte Milligan?",
+            "What is Hirabayashi v. United States?",
+            "What is Ex Parte Quirin?"
+          ],
+          "supported": {
+            "clue": "In 1944, the Supreme Court upheld the forced relocation of Japanese Americans to internment camps during World War II \u2014 ruling that military necessity could justify racial discrimination, though the decision has since been widely condemned.",
+            "answer": "What is Korematsu v. United States?"
+          },
+          "on_grade": {
+            "clue": "This 1944 ruling \u2014 upholding the constitutionality of Japanese American internment as a wartime military necessity \u2014 was formally repudiated by the Supreme Court in 2018, and has become the paradigmatic example of judicial failure in the face of wartime hysteria.",
+            "answer": "What is Korematsu v. United States?"
+          },
+          "advanced": {
+            "clue": "Korematsu's repudiation in Trump v. Hawaii (2018) came in an opinion that simultaneously appeared to endorse similar reasoning in upholding the travel ban \u2014 the Court's formal rejection of a case as 'gravely wrong' while applying its logic illustrated the difficulty of genuinely overcoming the precedent's underlying approach.",
+            "answer": "What is Korematsu v. United States?"
+          }
+        },
+        {
+          "value": 600,
+          "wrong_answers": [
+            "What is Tinker v. Des Moines?",
+            "What is New York Times v. Sullivan?",
+            "What is Brandenburg v. Ohio?"
+          ],
+          "supported": {
+            "clue": "In 1962, the Supreme Court ruled that school-sponsored prayer in public schools violated the First Amendment's Establishment Clause \u2014 even if the prayer was nonsectarian and students weren't required to participate.",
+            "answer": "What is Engel v. Vitale?"
+          },
+          "on_grade": {
+            "clue": "This 1962 ruling \u2014 that a state-composed nondenominational prayer recited in New York public schools violated the Establishment Clause \u2014 was one of the most controversial decisions in Court history, generating a massive backlash that continues to shape debates about religion in public life.",
+            "answer": "What is Engel v. Vitale?"
+          },
+          "advanced": {
+            "clue": "Engel established that government-sponsored religious activity in public schools violates the Establishment Clause regardless of its denominational neutrality or voluntariness \u2014 the Court reasoned that the state's composing of a prayer was itself an establishment of religion, not merely an accommodation of it.",
+            "answer": "What is Engel v. Vitale?"
+          }
+        },
+        {
+          "value": 800,
+          "wrong_answers": [
+            "What is Hazelwood School District v. Kuhlmeier?",
+            "What is Bethel School District v. Fraser?",
+            "What is Morse v. Frederick?"
+          ],
+          "supported": {
+            "clue": "In 1969, the Supreme Court ruled that public school students had the right to wear black armbands to protest the Vietnam War \u2014 saying that students do not 'shed their constitutional rights at the schoolhouse gate.'",
+            "answer": "What is Tinker v. Des Moines?"
+          },
+          "on_grade": {
+            "clue": "This 1969 ruling \u2014 protecting students' right to wear black armbands as silent antiwar protest \u2014 established that students retain First Amendment rights in school, subject only to restriction when expression would 'materially and substantially disrupt' school operations.",
+            "answer": "What is Tinker v. Des Moines?"
+          },
+          "advanced": {
+            "clue": "Tinker's 'material and substantial disruption' standard has been narrowed by subsequent rulings \u2014 Bethel, Hazelwood, and Morse \u2014 but remains the foundational student speech precedent; Justice Thomas has called for overruling it entirely, arguing students have no First Amendment rights in compulsory education settings.",
+            "answer": "What is Tinker v. Des Moines?"
+          }
+        },
+        {
+          "value": 1000,
+          "wrong_answers": [
+            "What is Tinker v. Des Moines?",
+            "What is Safford Unified School District v. Redding?",
+            "What is Engel v. Vitale?"
+          ],
+          "supported": {
+            "clue": "In 1985, the Supreme Court ruled that school officials can search students' belongings if they have 'reasonable suspicion' \u2014 a lower standard than the 'probable cause' the police need to search adults.",
+            "answer": "What is New Jersey v. T.L.O.?"
+          },
+          "on_grade": {
+            "clue": "This 1985 ruling \u2014 allowing school officials to search a student's purse based on 'reasonable suspicion' rather than the more demanding 'probable cause' standard \u2014 balanced students' privacy rights against schools' need to maintain order, establishing the constitutional framework for all subsequent student search cases.",
+            "answer": "What is New Jersey v. T.L.O.?"
+          },
+          "advanced": {
+            "clue": "T.L.O.'s 'reasonable suspicion' standard has been progressively weakened in the school context by Vernonia (random drug testing of athletes) and Board of Education v. Earls (suspicionless testing of all extracurricular participants), reflecting the Court's willingness to defer to school authority as drug and safety concerns intensified.",
+            "answer": "What is New Jersey v. T.L.O.?"
+          }
+        }
+      ]
+    },
+    {
+      "id": "criminal_procedure",
+      "title": "Criminal Procedure",
+      "clues": [
+        {
+          "value": 200,
+          "wrong_answers": [
+            "What is Miranda v. Arizona?",
+            "What is Mapp v. Ohio?",
+            "What is Escobedo v. Illinois?"
+          ],
+          "supported": {
+            "clue": "In 1963, the Supreme Court ruled that anyone accused of a crime who cannot afford a lawyer must be provided one for free \u2014 that the right to counsel is so fundamental that without it a fair trial is impossible.",
+            "answer": "What is Gideon v. Wainwright?"
+          },
+          "on_grade": {
+            "clue": "This 1963 ruling \u2014 that states must provide attorneys to defendants too poor to hire one \u2014 overturned Betts v. Brady and established that the Sixth Amendment right to counsel is so fundamental it is incorporated against the states through the 14th Amendment.",
+            "answer": "What is Gideon v. Wainwright?"
+          },
+          "advanced": {
+            "clue": "Gideon's handwritten petition from a Florida prison cell produced one of the most consequential unanimous decisions in Court history \u2014 but the right it established has been chronically underfunded, with public defenders often handling hundreds of cases simultaneously, making the constitutional promise and its practical reality two different things.",
+            "answer": "What is Gideon v. Wainwright?"
+          }
+        },
+        {
+          "value": 400,
+          "wrong_answers": [
+            "What is Gideon v. Wainwright?",
+            "What is Escobedo v. Illinois?",
+            "What is Massiah v. United States?"
+          ],
+          "supported": {
+            "clue": "In 1966, the Supreme Court ruled that police must inform suspects of their rights before questioning \u2014 including the right to remain silent and the right to an attorney. These warnings are now read by police in every arrest in America.",
+            "answer": "What is Miranda v. Arizona?"
+          },
+          "on_grade": {
+            "clue": "This 1966 ruling required police to inform suspects of their Fifth Amendment right against self-incrimination and Sixth Amendment right to counsel before custodial interrogation \u2014 creating the 'Miranda warnings' that became a fixture of American law enforcement and popular culture.",
+            "answer": "What is Miranda v. Arizona?"
+          },
+          "advanced": {
+            "clue": "Miranda was controversial but has proven remarkably durable \u2014 the Rehnquist Court's 2000 decision in Dickerson v. United States upheld it as a 'constitutional rule' that Congress could not override by statute, despite Rehnquist himself having been a Miranda critic, suggesting the warnings had become too embedded in law enforcement practice to eliminate.",
+            "answer": "What is Miranda v. Arizona?"
+          }
+        },
+        {
+          "value": 600,
+          "wrong_answers": [
+            "What is Gideon v. Wainwright?",
+            "What is Miranda v. Arizona?",
+            "What is Katz v. United States?"
+          ],
+          "supported": {
+            "clue": "In 1961, the Supreme Court ruled that evidence obtained by police through an illegal search cannot be used in court \u2014 applying the 'exclusionary rule' to state courts for the first time.",
+            "answer": "What is Mapp v. Ohio?"
+          },
+          "on_grade": {
+            "clue": "This 1961 ruling \u2014 incorporating the Fourth Amendment's exclusionary rule against the states \u2014 held that evidence obtained through unconstitutional searches is inadmissible in state criminal trials, giving the right against unreasonable searches real enforcement teeth.",
+            "answer": "What is Mapp v. Ohio?"
+          },
+          "advanced": {
+            "clue": "The exclusionary rule's underlying rationale \u2014 deterring police misconduct by removing the incentive to violate constitutional rights \u2014 has been progressively limited by 'good faith' and 'inevitable discovery' exceptions; critics argue it punishes the prosecution for police misconduct while defenders contend alternatives have proven ineffective.",
+            "answer": "What is Mapp v. Ohio?"
+          }
+        },
+        {
+          "value": 800,
+          "wrong_answers": [
+            "What is Miranda v. Arizona?",
+            "What is Gideon v. Wainwright?",
+            "What is Katz v. United States?"
+          ],
+          "supported": {
+            "clue": "In 1968, the Supreme Court ruled that police officers can briefly stop and frisk a person they reasonably suspect of criminal activity \u2014 even without the 'probable cause' usually required for a search or arrest.",
+            "answer": "What is Terry v. Ohio?"
+          },
+          "on_grade": {
+            "clue": "This 1968 ruling \u2014 allowing police to briefly detain and pat down a suspect based on 'reasonable articulable suspicion' rather than probable cause \u2014 created the legal framework for stop-and-frisk policing that has been applied disproportionately against Black and Latino pedestrians in American cities.",
+            "answer": "What is Terry v. Ohio?"
+          },
+          "advanced": {
+            "clue": "Terry's 'reasonable suspicion' standard has proven difficult to apply in a racially neutral way \u2014 empirical studies consistently show that Black and Latino individuals are stopped far more frequently relative to crime rates, a disparity the Court's 1996 Whren v. United States decision made harder to challenge by ruling that racial motivation behind a stop is irrelevant if there was a legitimate legal basis.",
+            "answer": "What is Terry v. Ohio?"
+          }
+        },
+        {
+          "value": 1000,
+          "wrong_answers": [
+            "What is Miranda v. Arizona?",
+            "What is Mapp v. Ohio?",
+            "What is Gideon v. Wainwright?"
+          ],
+          "supported": {
+            "clue": "In 1961, the Supreme Court ruled that the government cannot force people to testify against themselves \u2014 applying the Fifth Amendment protection against self-incrimination to state criminal proceedings as well as federal ones.",
+            "answer": "What is Malloy v. Hogan?"
+          },
+          "on_grade": {
+            "clue": "The Fourth, Fifth, Sixth, and Eighth Amendments were originally applied only to the federal government \u2014 the Supreme Court used this process of applying Bill of Rights protections to state governments through the 14th Amendment's due process clause, transforming the relationship between citizens and state criminal justice systems.",
+            "answer": "What is incorporation of the Bill of Rights?"
+          },
+          "advanced": {
+            "clue": "The incorporation doctrine \u2014 applying Bill of Rights provisions to the states selectively through the 14th Amendment's due process clause \u2014 was 'selective' precisely because the Court chose which rights were 'fundamental to ordered liberty,' giving judges significant discretion in determining which constitutional protections Americans could rely on against state governments.",
+            "answer": "What is incorporation of the Bill of Rights?"
+          }
+        }
+      ]
+    },
+    {
+      "id": "equality_rights",
+      "title": "Civil Rights & Equality",
+      "clues": [
+        {
+          "value": 200,
+          "wrong_answers": [
+            "What is Plessy v. Ferguson?",
+            "What is Sweatt v. Painter?",
+            "What is McLaurin v. Oklahoma?"
+          ],
+          "supported": {
+            "clue": "In 1954, the Supreme Court unanimously ruled that segregated public schools were unconstitutional \u2014 overturning the 'separate but equal' doctrine and triggering a massive resistance campaign in the South.",
+            "answer": "What is Brown v. Board of Education?"
+          },
+          "on_grade": {
+            "clue": "Chief Justice Warren's unanimous 1954 opinion \u2014 that 'separate educational facilities are inherently unequal' \u2014 reversed Plessy v. Ferguson and launched both the Civil Rights Movement and Southern massive resistance, making the Supreme Court the central battleground of racial equality.",
+            "answer": "What is Brown v. Board of Education?"
+          },
+          "advanced": {
+            "clue": "Brown's immediate implementation was deliberately vague \u2014 'with all deliberate speed' in Brown II \u2014 and Warren privately acknowledged he accepted the ambiguity to secure unanimity; the result was decades of Southern defiance and foot-dragging, suggesting the opinion's moral clarity was not matched by its practical enforcement mechanism.",
+            "answer": "What is Brown v. Board of Education?"
+          }
+        },
+        {
+          "value": 400,
+          "wrong_answers": [
+            "What is Pace v. Alabama?",
+            "What is Shelley v. Kraemer?",
+            "What is Palmore v. Sidoti?"
+          ],
+          "supported": {
+            "clue": "In 1967, the Supreme Court struck down Virginia's law banning marriage between people of different races \u2014 ruling that marriage is a fundamental right that cannot be restricted based on race.",
+            "answer": "What is Loving v. Virginia?"
+          },
+          "on_grade": {
+            "clue": "This 1967 unanimous ruling struck down Virginia's anti-miscegenation law \u2014 invalidating similar laws in 16 states \u2014 and established that marriage is a fundamental right that cannot be denied based on race under the 14th Amendment.",
+            "answer": "What is Loving v. Virginia?"
+          },
+          "advanced": {
+            "clue": "Loving's reasoning \u2014 that marriage is a 'basic civil right' whose restriction based on race violated both equal protection and due process \u2014 became the template for Obergefell v. Hodges (2015), which used identical framework to establish same-sex marriage rights, illustrating how constitutional precedents migrate across contexts.",
+            "answer": "What is Loving v. Virginia?"
+          }
+        },
+        {
+          "value": 600,
+          "wrong_answers": [
+            "What is Grutter v. Bollinger?",
+            "What is Regents of UC v. Bakke?",
+            "What is Heart of Atlanta Motel v. United States?"
+          ],
+          "supported": {
+            "clue": "In 1978, the Supreme Court ruled that universities could consider race as one factor in admissions to achieve a diverse student body \u2014 but could not use rigid racial quotas that reserved a specific number of spots for minority applicants.",
+            "answer": "What is Regents of University of California v. Bakke?"
+          },
+          "on_grade": {
+            "clue": "Justice Powell's controlling opinion in this 1978 case struck down UC Davis's rigid racial quota system while permitting race-conscious admissions as one factor among many to achieve 'the educational benefits of diversity' \u2014 a compromise that shaped affirmative action policy for 45 years.",
+            "answer": "What is Regents of University of California v. Bakke?"
+          },
+          "advanced": {
+            "clue": "Powell's 'diversity rationale' for affirmative action \u2014 grounding it in educational benefit rather than remediation for past discrimination \u2014 was strategically chosen to attract a majority but later created legal vulnerability, as the Court's 2023 Students for Fair Admissions decision found that diversity goals lacked the 'measurable objectives' required to justify racial classifications.",
+            "answer": "What is Regents of University of California v. Bakke?"
+          }
+        },
+        {
+          "value": 800,
+          "wrong_answers": [
+            "What is Lawrence v. Texas?",
+            "What is Romer v. Evans?",
+            "What is Obergefell v. Hodges?"
+          ],
+          "supported": {
+            "clue": "In 1973, the Supreme Court ruled that the Constitution protects a woman's right to an abortion \u2014 finding that the right to privacy includes decisions about pregnancy. This decision was overturned in 2022.",
+            "answer": "What is Roe v. Wade?"
+          },
+          "on_grade": {
+            "clue": "This 1973 ruling \u2014 establishing a constitutional right to abortion under the 14th Amendment's privacy protections \u2014 was overturned by Dobbs v. Jackson Women's Health Organization in 2022, which held that abortion rights were not deeply rooted in American history and tradition.",
+            "answer": "What is Roe v. Wade?"
+          },
+          "advanced": {
+            "clue": "Roe's doctrinal foundation \u2014 grounding abortion rights in 'privacy' implied from the 14th Amendment's liberty clause rather than the Equal Protection Clause's sex equality principles \u2014 was always vulnerable to the criticism that it lacked textual basis; Justice Ginsburg argued that an equality-based approach would have been more constitutionally defensible.",
+            "answer": "What is Roe v. Wade?"
+          }
+        },
+        {
+          "value": 1000,
+          "wrong_answers": [
+            "What is Roe v. Wade?",
+            "What is Planned Parenthood v. Casey?",
+            "What is Lawrence v. Texas?"
+          ],
+          "supported": {
+            "clue": "In 1965, the Supreme Court ruled that married couples have a constitutional right to use contraception \u2014 finding that the Bill of Rights contains a 'right to privacy' even though those words never appear in the Constitution.",
+            "answer": "What is Griswold v. Connecticut?"
+          },
+          "on_grade": {
+            "clue": "This 1965 ruling \u2014 finding a constitutional right to privacy protecting married couples' contraceptive choices in the 'penumbras and emanations' of the Bill of Rights \u2014 established the privacy doctrine that underpinned Roe v. Wade and remains foundational to substantive due process jurisprudence.",
+            "answer": "What is Griswold v. Connecticut?"
+          },
+          "advanced": {
+            "clue": "Justice Douglas's 'penumbras and emanations' language in Griswold was constitutional innovation without clear textual support \u2014 and the dissents by Black and Stewart (calling it bad policy but not unconstitutional) anticipated the originalist critique that the privacy doctrine was judicial legislation rather than constitutional interpretation.",
+            "answer": "What is Griswold v. Connecticut?"
+          }
+        }
+      ]
+    },
+    {
+      "id": "executive_power",
+      "title": "Executive Power",
+      "clues": [
+        {
+          "value": 200,
+          "wrong_answers": [
+            "What is Clinton v. Jones?",
+            "What is Morrison v. Olson?",
+            "What is Humphrey's Executor v. United States?"
+          ],
+          "supported": {
+            "clue": "In 1974, the Supreme Court unanimously ruled that President Nixon had to hand over his White House tape recordings to investigators \u2014 establishing that even the president is not above the law and cannot use executive privilege to hide evidence of crimes.",
+            "answer": "What is United States v. Nixon?"
+          },
+          "on_grade": {
+            "clue": "This unanimous 1974 ruling \u2014 that Nixon could not withhold subpoenaed tape recordings through executive privilege \u2014 established that the president is subject to judicial process and that executive privilege cannot be used to obstruct a criminal investigation.",
+            "answer": "What is United States v. Nixon?"
+          },
+          "advanced": {
+            "clue": "The Court's careful opinion recognized a legitimate constitutional executive privilege for the first time while simultaneously limiting it \u2014 ruling that generalized confidentiality interests must yield to specific evidentiary needs in a criminal proceeding, a balance that left the privilege's scope deliberately ambiguous for future presidents to litigate.",
+            "answer": "What is United States v. Nixon?"
+          }
+        },
+        {
+          "value": 400,
+          "wrong_answers": [
+            "What is United States v. Nixon?",
+            "What is Clinton v. Jones?",
+            "What is Trump v. Vance?"
+          ],
+          "supported": {
+            "clue": "In 1952, the Supreme Court ruled that President Truman did not have the authority to seize steel mills during the Korean War \u2014 even though he argued military necessity required it. The president cannot act without congressional authorization in domestic affairs.",
+            "answer": "What is Youngstown Sheet & Tube Co. v. Sawyer?"
+          },
+          "on_grade": {
+            "clue": "This 1952 ruling \u2014 striking down Truman's seizure of steel mills to avert a strike during the Korean War \u2014 established that the president cannot act in domestic affairs without congressional authorization, and Justice Jackson's three-zone framework became the definitive analysis of presidential power.",
+            "answer": "What is Youngstown Sheet & Tube Co. v. Sawyer?"
+          },
+          "advanced": {
+            "clue": "Jackson's concurrence in Youngstown \u2014 categorizing presidential power into three zones based on whether Congress authorized, was silent, or opposed the action \u2014 has been the Court's framework for evaluating executive power claims ever since, applied in cases from the war on terror surveillance programs to the DACA litigation.",
+            "answer": "What is Youngstown Sheet & Tube Co. v. Sawyer?"
+          }
+        },
+        {
+          "value": 600,
+          "wrong_answers": [
+            "What is Marbury v. Madison?",
+            "What is McCulloch v. Maryland?",
+            "What is Humphrey's Executor v. United States?"
+          ],
+          "supported": {
+            "clue": "In 1819, Chief Justice Marshall ruled that the federal government has powers implied by the Constitution even if not explicitly stated \u2014 and that the Constitution must be interpreted broadly to allow the government to carry out its responsibilities.",
+            "answer": "What is the doctrine of implied powers?"
+          },
+          "on_grade": {
+            "clue": "McCulloch v. Maryland established that Congress has implied powers derived from the 'necessary and proper' clause \u2014 powers not explicitly listed but reasonably inferred from enumerated powers \u2014 dramatically expanding the potential scope of federal authority.",
+            "answer": "What is the doctrine of implied powers?"
+          },
+          "advanced": {
+            "clue": "Marshall's 'loose construction' of necessary and proper in McCulloch represented a fundamental choice about constitutional interpretation \u2014 his rejection of the strict construction that would have limited Congress to explicitly enumerated powers set the trajectory for federal power expansion that Hamilton had envisioned and Jefferson had feared.",
+            "answer": "What is the doctrine of implied powers?"
+          }
+        },
+        {
+          "value": 800,
+          "wrong_answers": [
+            "What is United States v. Nixon?",
+            "What is Youngstown Sheet & Tube?",
+            "What is Nixon v. Fitzgerald?"
+          ],
+          "supported": {
+            "clue": "After President Nixon resigned, his successor Gerald Ford gave him a full pardon for any crimes he might have committed as president. The Supreme Court was never asked to rule on whether this pardon was constitutional.",
+            "answer": "What is the Nixon pardon?"
+          },
+          "on_grade": {
+            "clue": "Ford's 1974 pardon of Nixon \u2014 before any charges were filed \u2014 demonstrated the breadth of the pardon power, which the Supreme Court has held is essentially unreviewable and can precede both charges and conviction, raising questions about accountability the Court has never had to definitively resolve.",
+            "answer": "What is the Nixon pardon?"
+          },
+          "advanced": {
+            "clue": "The Nixon pardon's constitutional questions \u2014 whether a president can pardon himself, whether a pardon can precede indictment, and whether the pardon power has any limits \u2014 have never been resolved by the Court, making it one of the most consequential unlitigated constitutional questions in American history.",
+            "answer": "What is the Nixon pardon?"
+          }
+        },
+        {
+          "value": 1000,
+          "wrong_answers": [
+            "What is United States v. Nixon?",
+            "What is Cheney v. United States District Court?",
+            "What is Trump v. United States?"
+          ],
+          "supported": {
+            "clue": "In 1997, the Supreme Court ruled that a sitting president can be sued in civil court for actions taken before taking office \u2014 rejecting Bill Clinton's claim that he was immune from civil lawsuits while serving as president.",
+            "answer": "What is Clinton v. Jones?"
+          },
+          "on_grade": {
+            "clue": "This 1997 unanimous ruling \u2014 that a sitting president has no immunity from civil lawsuits for conduct unrelated to official duties \u2014 rejected Clinton's claim of temporary immunity and cleared the way for the lawsuit that eventually led to his impeachment.",
+            "answer": "What is Clinton v. Jones?"
+          },
+          "advanced": {
+            "clue": "The Court's unanimous confidence in Clinton v. Jones that civil litigation would not unduly burden the presidency proved empirically wrong \u2014 the Jones lawsuit consumed enormous presidential attention and produced the perjury trap that led to impeachment, a consequence the justices dismissed too quickly in their opinion.",
+            "answer": "What is Clinton v. Jones?"
+          }
+        }
+      ]
+    },
+    {
+      "id": "free_expression",
+      "title": "Free Expression",
+      "clues": [
+        {
+          "value": 200,
+          "wrong_answers": [
+            "What is Abrams v. United States?",
+            "What is Near v. Minnesota?",
+            "What is Chaplinsky v. New Hampshire?"
+          ],
+          "supported": {
+            "clue": "In 1925, the Supreme Court ruled that the First Amendment's protection of free speech applies to state governments as well as the federal government \u2014 a major expansion of civil liberties protections.",
+            "answer": "What is Gitlow v. New York?"
+          },
+          "on_grade": {
+            "clue": "This 1925 ruling \u2014 upholding a socialist's conviction but holding that the First Amendment is incorporated against the states through the 14th Amendment \u2014 made the federal Bill of Rights applicable to state speech restrictions for the first time.",
+            "answer": "What is Gitlow v. New York?"
+          },
+          "advanced": {
+            "clue": "Gitlow's paradox \u2014 incorporating the First Amendment while upholding the conviction under it \u2014 illustrated how the same decision can simultaneously expand constitutional protection in principle while restricting it in practice, a tension that drove Holmes and Brandeis's famous dissents arguing for much stronger speech protection.",
+            "answer": "What is Gitlow v. New York?"
+          }
+        },
+        {
+          "value": 400,
+          "wrong_answers": [
+            "What is Near v. Minnesota?",
+            "What is New York Times v. Sullivan?",
+            "What is Hazelwood v. Kuhlmeier?"
+          ],
+          "supported": {
+            "clue": "In 1971, the Supreme Court refused to let the government stop the New York Times and Washington Post from publishing a secret Pentagon report about the Vietnam War \u2014 ruling that prior restraint of the press requires the government to meet a very high burden.",
+            "answer": "What is New York Times Co. v. United States?"
+          },
+          "on_grade": {
+            "clue": "This 1971 ruling \u2014 allowing publication of the classified Pentagon Papers over the Nixon administration's objections \u2014 established that prior restraint of the press carries a 'heavy presumption against its constitutional validity' that the government had failed to meet.",
+            "answer": "What is New York Times Co. v. United States?"
+          },
+          "advanced": {
+            "clue": "The Pentagon Papers ruling was nine separate opinions with no majority rationale \u2014 each justice wrote separately \u2014 making it precedent for the result (no prior restraint here) but not for a coherent standard, leaving the boundaries of permissible prior restraint as contested as before the case.",
+            "answer": "What is New York Times Co. v. United States?"
+          }
+        },
+        {
+          "value": 600,
+          "wrong_answers": [
+            "What is Near v. Minnesota?",
+            "What is New York Times Co. v. United States?",
+            "What is Hazelwood v. Kuhlmeier?"
+          ],
+          "supported": {
+            "clue": "In 1989, the Supreme Court ruled that burning the American flag as a political protest is protected by the First Amendment \u2014 that the government cannot punish someone for expressing an idea that others find offensive, even if the expression is a deeply offensive act.",
+            "answer": "What is Texas v. Johnson?"
+          },
+          "on_grade": {
+            "clue": "This 1989 ruling \u2014 that Gregory Johnson's conviction for burning an American flag violated the First Amendment \u2014 established that the government cannot prohibit expression of an idea simply because society finds it offensive, even when the medium is a revered national symbol.",
+            "answer": "What is Texas v. Johnson?"
+          },
+          "advanced": {
+            "clue": "Justice Brennan's majority opinion in Texas v. Johnson contained one of the most quoted passages in First Amendment law: 'If there is a bedrock principle underlying the First Amendment, it is that government may not prohibit the expression of an idea simply because society finds the idea itself offensive or disagreeable.'",
+            "answer": "What is Texas v. Johnson?"
+          }
+        },
+        {
+          "value": 800,
+          "wrong_answers": [
+            "What is Buckley v. Valeo?",
+            "What is McConnell v. FEC?",
+            "What is Austin v. Michigan Chamber of Commerce?"
+          ],
+          "supported": {
+            "clue": "In 2010, the Supreme Court ruled that the government cannot limit political spending by corporations, unions, or other organizations \u2014 saying that money spent on political ads is protected speech under the First Amendment.",
+            "answer": "What is Citizens United v. FEC?"
+          },
+          "on_grade": {
+            "clue": "This 2010 ruling \u2014 striking down limits on independent political expenditures by corporations and unions as violations of the First Amendment \u2014 held that political speech does not lose constitutional protection simply because its source is a corporation rather than an individual.",
+            "answer": "What is Citizens United v. FEC?"
+          },
+          "advanced": {
+            "clue": "Citizens United built on Buckley v. Valeo's equation of money with speech and corporations with persons \u2014 premises both philosophically contested and historically constructed; the ruling's effect was to unleash 'dark money' through 501(c)(4) organizations that could spend unlimited amounts without disclosing donors.",
+            "answer": "What is Citizens United v. FEC?"
+          }
+        },
+        {
+          "value": 1000,
+          "wrong_answers": [
+            "What is Engel v. Vitale?",
+            "What is Lemon v. Kurtzman?",
+            "What is Everson v. Board of Education?"
+          ],
+          "supported": {
+            "clue": "The Supreme Court has developed a three-part test to determine whether a government action violates the First Amendment's prohibition on laws 'establishing' religion \u2014 asking whether it has a secular purpose, whether it advances or inhibits religion, and whether it creates excessive government-religion entanglement.",
+            "answer": "What is the Lemon test?"
+          },
+          "on_grade": {
+            "clue": "Established in Lemon v. Kurtzman (1971), this three-part Establishment Clause test \u2014 requiring secular purpose, neutral effect, and no excessive entanglement between government and religion \u2014 governed church-state cases for decades before the Court moved toward a less restrictive 'historical practices and understandings' approach.",
+            "answer": "What is the Lemon test?"
+          },
+          "advanced": {
+            "clue": "The Lemon test was effectively overruled in Kennedy v. Bremerton School District (2022), where the Court replaced it with a 'historical practices and understandings' approach \u2014 a shift toward original meaning analysis that critics argue will permit significantly more government entanglement with religion than the Establishment Clause's framers intended.",
+            "answer": "What is the Lemon test?"
+          }
+        }
+      ]
+    }
+  ]
+}

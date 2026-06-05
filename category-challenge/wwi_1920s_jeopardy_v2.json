@@ -1,0 +1,641 @@
+{
+  "topic": "WWI & 1920s",
+  "categories": [
+    {
+      "id": "causes_wwi",
+      "title": "Causes & Entry",
+      "clues": [
+        {
+          "value": 200,
+          "wrong_answers": [
+            "What is the MAIN causes?",
+            "What is nationalism?",
+            "What is imperialism?"
+          ],
+          "supported": {
+            "clue": "World War I had four main causes remembered by the acronym MAIN: Militarism (arms build-up), Alliances (entangling agreements), Imperialism (competition for colonies), and Nationalism (extreme national pride).",
+            "answer": "What are the MAIN causes of WWI?"
+          },
+          "on_grade": {
+            "clue": "These four interconnected forces \u2014 military buildup, a web of alliances that turned a local assassination into a world war, imperial competition, and nationalist movements \u2014 created the conditions that made WWI both likely and catastrophically total.",
+            "answer": "What are the MAIN causes of WWI?"
+          },
+          "advanced": {
+            "clue": "Historians debate which MAIN factor was most decisive \u2014 Fischer's 'war guilt' thesis blames German militarist aggression, while others emphasize the alliance system's automatic escalation mechanism that dragged in nations that had little stake in the original Austro-Serbian dispute.",
+            "answer": "What are the MAIN causes of WWI?"
+          }
+        },
+        {
+          "value": 400,
+          "wrong_answers": [
+            "What is the sinking of the Lusitania?",
+            "What is the Sussex Pledge?",
+            "What is unrestricted submarine warfare?"
+          ],
+          "supported": {
+            "clue": "Germany sent a secret telegram to Mexico in 1917 asking it to attack the United States in exchange for help recovering Texas, New Mexico, and Arizona. When the British intercepted it and shared it with America, public opinion shifted toward entering the war.",
+            "answer": "What is the Zimmermann Telegram?"
+          },
+          "on_grade": {
+            "clue": "This intercepted 1917 German diplomatic cable \u2014 proposing a military alliance with Mexico against the United States in exchange for returning Texas, New Mexico, and Arizona \u2014 outraged American public opinion and helped push Congress toward declaring war.",
+            "answer": "What is the Zimmermann Telegram?"
+          },
+          "advanced": {
+            "clue": "The Zimmermann Telegram was effective British propaganda as much as genuine German strategy \u2014 Germany had no realistic plan to help Mexico invade the U.S., but the telegram's publication in American newspapers transformed the abstract submarine warfare debate into a direct territorial threat.",
+            "answer": "What is the Zimmermann Telegram?"
+          }
+        },
+        {
+          "value": 600,
+          "wrong_answers": [
+            "What is the Zimmermann Telegram?",
+            "What is isolationism?",
+            "What is the Monroe Doctrine?"
+          ],
+          "supported": {
+            "clue": "When World War I began in 1914, President Wilson said America would stay neutral and trade with both sides. But German submarines attacked American ships, and by 1917 the U.S. joined the war on the Allied side.",
+            "answer": "What is U.S. neutrality?"
+          },
+          "on_grade": {
+            "clue": "Wilson's policy of neutrality \u2014 and his insistence on freedom of the seas for American trade \u2014 became increasingly untenable as Germany's unrestricted submarine warfare directly threatened American lives and commerce, ultimately bringing the U.S. into the war.",
+            "answer": "What is U.S. neutrality?"
+          },
+          "advanced": {
+            "clue": "Wilson's neutrality was never truly neutral \u2014 American banks lent billions to the Allies, American factories supplied Allied armies, and Wilson's interpretation of 'freedom of the seas' effectively favored Britain, whose naval blockade of Germany he tacitly accepted while protesting German submarine responses.",
+            "answer": "What is U.S. neutrality?"
+          }
+        },
+        {
+          "value": 800,
+          "wrong_answers": [
+            "What is the Treaty of Versailles?",
+            "What is the armistice?",
+            "What is mobilization?"
+          ],
+          "supported": {
+            "clue": "When America entered World War I, the government had to quickly organize millions of men for military service. Congress passed a law requiring men to register for a military draft.",
+            "answer": "What is the Selective Service Act?"
+          },
+          "on_grade": {
+            "clue": "This 1917 law authorized the military draft \u2014 registering nearly 24 million men and inducting 2.8 million \u2014 mobilizing American manpower for the war on a scale that required the federal government to dramatically expand its administrative capacity.",
+            "answer": "What is the Selective Service Act?"
+          },
+          "advanced": {
+            "clue": "The draft's implementation reflected racial hierarchy \u2014 Black soldiers served in segregated units under mostly white officers, were assigned to labor battalions disproportionately, and faced the bitter irony of fighting for democracy abroad while denied it at home.",
+            "answer": "What is the Selective Service Act?"
+          }
+        },
+        {
+          "value": 1000,
+          "wrong_answers": [
+            "What is the Zimmermann Telegram?",
+            "What is unrestricted submarine warfare?",
+            "What is the assassination of Archduke Franz Ferdinand?"
+          ],
+          "supported": {
+            "clue": "In 1915, a German submarine sank this British passenger ship, killing 1,198 people including 128 Americans. It shocked American public opinion and pushed the country closer to war.",
+            "answer": "What is the sinking of the Lusitania?"
+          },
+          "on_grade": {
+            "clue": "Germany's 1915 sinking of this British ocean liner \u2014 killing 1,198 passengers including 128 Americans \u2014 outraged American public opinion and nearly brought the U.S. into the war two years early, until Germany temporarily suspended unrestricted submarine warfare.",
+            "answer": "What is the sinking of the Lusitania?"
+          },
+          "advanced": {
+            "clue": "The Lusitania was carrying war munitions as well as passengers \u2014 a fact Germany used to justify the attack \u2014 but the legal and moral question of targeting civilian ships carrying contraband was precisely the ambiguity that submarine warfare exploited, and Wilson's diplomatic response established the expectation of unrestricted passenger safety that Germany ultimately violated again in 1917.",
+            "answer": "What is the sinking of the Lusitania?"
+          }
+        }
+      ]
+    },
+    {
+      "id": "home_front",
+      "title": "The Home Front",
+      "clues": [
+        {
+          "value": 200,
+          "wrong_answers": [
+            "What is the War Industries Board?",
+            "What is the Espionage Act?",
+            "What is the Sedition Act?"
+          ],
+          "supported": {
+            "clue": "The government created a huge propaganda machine during World War I to convince Americans to support the war, buy war bonds, save food, and report suspicious neighbors. Posters, movies, and speeches all pushed the same patriotic message.",
+            "answer": "What is the Committee on Public Information?"
+          },
+          "on_grade": {
+            "clue": "This federal agency \u2014 headed by journalist George Creel \u2014 organized the largest propaganda campaign in American history, using posters, films, pamphlets, and 'Four-Minute Men' speakers to build public support for the war and demonize Germany.",
+            "answer": "What is the Committee on Public Information?"
+          },
+          "advanced": {
+            "clue": "The CPI's methods \u2014 emotional manipulation, enemy dehumanization, suppression of dissent \u2014 were so effective that Creel's techniques became a textbook for 20th-century propaganda, studied by both democratic governments and authoritarian ones seeking to mobilize mass opinion.",
+            "answer": "What is the Committee on Public Information?"
+          }
+        },
+        {
+          "value": 400,
+          "wrong_answers": [
+            "What is the Sedition Act?",
+            "What is the Palmer Raids?",
+            "What is the Committee on Public Information?"
+          ],
+          "supported": {
+            "clue": "During World War I, it became a crime to speak against the draft or criticize the government. Eugene Debs was sentenced to 10 years in prison for giving an anti-war speech.",
+            "answer": "What is the Espionage Act?"
+          },
+          "on_grade": {
+            "clue": "This 1917 law \u2014 which criminalized obstruction of military recruitment and transmission of information helpful to the enemy \u2014 was used to prosecute over 2,000 antiwar activists, including socialist Eugene Debs, who received a 10-year sentence for an antiwar speech.",
+            "answer": "What is the Espionage Act?"
+          },
+          "advanced": {
+            "clue": "The Supreme Court's unanimous 1919 ruling in Schenck v. United States upholding the Espionage Act \u2014 with Holmes's 'clear and present danger' test \u2014 provided constitutional cover for wartime speech suppression but also planted the seed for the more protective free speech doctrine Holmes himself developed in later dissents.",
+            "answer": "What is the Espionage Act?"
+          }
+        },
+        {
+          "value": 600,
+          "wrong_answers": [
+            "What is the Espionage Act?",
+            "What is McCarthyism?",
+            "What is the Palmer Raids?"
+          ],
+          "supported": {
+            "clue": "After World War I, Americans feared communist revolution at home. The government arrested and deported thousands of suspected radicals \u2014 mostly immigrants \u2014 in raids led by Attorney General A. Mitchell Palmer.",
+            "answer": "What is the Red Scare of 1919?"
+          },
+          "on_grade": {
+            "clue": "This 1919\u20131920 period of anti-radical hysteria \u2014 triggered by a wave of bombings and inspired by the Russian Revolution \u2014 produced mass arrests of suspected communists and anarchists, culminating in the Palmer Raids that deported hundreds of immigrants without due process.",
+            "answer": "What is the Red Scare of 1919?"
+          },
+          "advanced": {
+            "clue": "The Red Scare demonstrated how wartime civil liberties erosion extended into peacetime \u2014 the surveillance apparatus, deportation powers, and legal precedents created during WWI were immediately redirected against domestic radicals, establishing a pattern repeated in the Cold War McCarthy era.",
+            "answer": "What is the Red Scare of 1919?"
+          }
+        },
+        {
+          "value": 800,
+          "wrong_answers": [
+            "What is the Red Scare?",
+            "What is the Espionage Act?",
+            "What is nativism?"
+          ],
+          "supported": {
+            "clue": "During and after World War I, hundreds of thousands of Black Americans moved from the South to Northern cities like Chicago and Detroit to work in factories and escape Jim Crow. This massive population shift is called the Great Migration.",
+            "answer": "What is the Great Migration?"
+          },
+          "on_grade": {
+            "clue": "Accelerated by wartime labor demand in Northern factories, the Great Migration brought over half a million Black Southerners north during the war decade \u2014 creating Northern Black communities with political voice while generating racial tensions that exploded in the 1919 race riots.",
+            "answer": "What is the Great Migration?"
+          },
+          "advanced": {
+            "clue": "The 1919 'Red Summer' \u2014 25 race riots in cities across the country, the worst in Chicago \u2014 revealed the Great Migration's paradox: Black Americans had escaped Southern racial violence only to encounter Northern racial violence, as white workers competed for jobs and housing in rapidly changing cities.",
+            "answer": "What is the Great Migration?"
+          }
+        },
+        {
+          "value": 1000,
+          "wrong_answers": [
+            "What is the New Negro movement?",
+            "What is the Great Migration?",
+            "What is jazz music?"
+          ],
+          "supported": {
+            "clue": "During the 1920s, Black artists, writers, and musicians in Harlem created an explosion of cultural achievement \u2014 celebrating Black identity and challenging racism through poetry, novels, painting, and music.",
+            "answer": "What is the Harlem Renaissance?"
+          },
+          "on_grade": {
+            "clue": "This 1920s flowering of Black artistic and intellectual achievement \u2014 centered in Harlem but felt nationally \u2014 produced writers like Langston Hughes and Zora Neale Hurston, artists like Aaron Douglas, and a cultural movement that asserted Black identity and humanity against racist dehumanization.",
+            "answer": "What is the Harlem Renaissance?"
+          },
+          "advanced": {
+            "clue": "The Harlem Renaissance's cultural politics were contested internally \u2014 Du Bois argued art should serve racial uplift and be judged by its political impact, while younger writers like Hughes insisted on representing all aspects of Black life, including poverty and sexuality, without filtering for white or bourgeois Black approval.",
+            "answer": "What is the Harlem Renaissance?"
+          }
+        }
+      ]
+    },
+    {
+      "id": "peace_aftermath",
+      "title": "Peace & Aftermath",
+      "clues": [
+        {
+          "value": 200,
+          "wrong_answers": [
+            "What is the Treaty of Versailles?",
+            "What is the League of Nations?",
+            "What is the Fourteen Points?"
+          ],
+          "supported": {
+            "clue": "President Wilson proposed 14 principles for a fair peace after World War I \u2014 including freedom of the seas, self-determination for all peoples, and a League of Nations to prevent future wars. The other Allied powers largely ignored them.",
+            "answer": "What are Wilson's Fourteen Points?"
+          },
+          "on_grade": {
+            "clue": "Wilson's peace program \u2014 calling for open diplomacy, freedom of the seas, self-determination, arms reduction, and a League of Nations \u2014 represented a liberal internationalist vision that the Allied powers largely rejected at Versailles in favor of punishing Germany.",
+            "answer": "What are Wilson's Fourteen Points?"
+          },
+          "advanced": {
+            "clue": "Wilson's Fourteen Points created expectations he could not deliver \u2014 the colonial peoples of Africa and Asia who heard his self-determination rhetoric and hoped it applied to them were bitterly disappointed when Versailles parceled out German and Ottoman colonies to France and Britain, a betrayal that helped fuel 20th-century anti-colonial movements.",
+            "answer": "What are Wilson's Fourteen Points?"
+          }
+        },
+        {
+          "value": 400,
+          "wrong_answers": [
+            "What are the Fourteen Points?",
+            "What is self-determination?",
+            "What is the armistice?"
+          ],
+          "supported": {
+            "clue": "The peace treaty ending World War I punished Germany severely \u2014 forcing it to accept full blame for the war, pay enormous reparations, give up territory, and dramatically reduce its military. These harsh terms helped create the conditions for World War II.",
+            "answer": "What is the Treaty of Versailles?"
+          },
+          "on_grade": {
+            "clue": "This 1919 peace settlement imposed the 'war guilt' clause on Germany, demanded enormous reparations, stripped Germany of territory and colonies, and limited its military \u2014 creating economic desperation and national humiliation that Adolf Hitler would exploit two decades later.",
+            "answer": "What is the Treaty of Versailles?"
+          },
+          "advanced": {
+            "clue": "Keynes's Economic Consequences of the Peace (1919) correctly predicted that Versailles's reparations demands were economically impossible to fulfill and would destabilize European economies \u2014 his forecast proved accurate, though historians still debate whether more lenient terms would actually have prevented Hitler's rise.",
+            "answer": "What is the Treaty of Versailles?"
+          }
+        },
+        {
+          "value": 600,
+          "wrong_answers": [
+            "What is the Treaty of Versailles?",
+            "What is isolationism?",
+            "What is the Monroe Doctrine?"
+          ],
+          "supported": {
+            "clue": "Wilson proposed creating an international organization where nations could resolve disputes peacefully instead of going to war. But the Senate refused to join, fearing it would drag America into future European conflicts.",
+            "answer": "What is the League of Nations?"
+          },
+          "on_grade": {
+            "clue": "Wilson's proposed international peacekeeping organization \u2014 his greatest priority at Versailles \u2014 was rejected by the U.S. Senate, which refused to ratify the treaty under Article X's collective security commitment, leaving the League without American participation.",
+            "answer": "What is the League of Nations?"
+          },
+          "advanced": {
+            "clue": "The Senate's rejection was driven by two different groups \u2014 'reservationists' led by Lodge who wanted treaty amendments, and 'irreconcilables' who opposed any League \u2014 and Wilson's refusal to compromise with the reservationists doomed ratification, a political failure historians debate as much as a policy one.",
+            "answer": "What is the League of Nations?"
+          }
+        },
+        {
+          "value": 800,
+          "wrong_answers": [
+            "What is the League of Nations?",
+            "What is neutrality?",
+            "What is the Monroe Doctrine?"
+          ],
+          "supported": {
+            "clue": "After World War I, most Americans wanted to stay out of European affairs. The Senate rejected the League of Nations, and Congress passed immigration restrictions \u2014 reflecting a desire to withdraw from the world.",
+            "answer": "What is isolationism?"
+          },
+          "on_grade": {
+            "clue": "This post-WWI foreign policy stance \u2014 rejecting the League of Nations, limiting immigration, and avoiding European entanglements \u2014 reflected war weariness and disillusionment with Wilson's internationalist vision, shaping American foreign policy through the 1930s.",
+            "answer": "What is isolationism?"
+          },
+          "advanced": {
+            "clue": "Post-WWI isolationism was a genuine popular sentiment rather than elite imposition \u2014 the Senate reflected public opinion that the war had been a mistake, that European powers were untrustworthy partners, and that American security was better served by distance than engagement, a view that persisted until Pearl Harbor.",
+            "answer": "What is isolationism?"
+          }
+        },
+        {
+          "value": 1000,
+          "wrong_answers": [
+            "What is the Espionage Act?",
+            "What is Abrams v. United States?",
+            "What is the Palmer Raids?"
+          ],
+          "supported": {
+            "clue": "The Supreme Court ruled in 1919 that the government could limit free speech during wartime if the speech created a 'clear and present danger.' This was used to uphold the conviction of an antiwar activist for distributing leaflets against the draft.",
+            "answer": "What is Schenck v. United States?"
+          },
+          "on_grade": {
+            "clue": "In this 1919 decision, Justice Holmes established the 'clear and present danger' test \u2014 ruling that the government could restrict speech that posed an immediate threat to national security, upholding the conviction of an antiwar activist for distributing anti-draft leaflets.",
+            "answer": "What is Schenck v. United States?"
+          },
+          "advanced": {
+            "clue": "Holmes introduced the 'clear and present danger' test as a limiting principle \u2014 meaning speech should be protected unless it posed an immediate, serious threat \u2014 but subsequent decisions applied it more broadly than Holmes intended, prompting him and Brandeis to develop a more speech-protective dissenting tradition in Abrams and Gitlow.",
+            "answer": "What is Schenck v. United States?"
+          }
+        }
+      ]
+    },
+    {
+      "id": "roaring_twenties",
+      "title": "Roaring Twenties",
+      "clues": [
+        {
+          "value": 200,
+          "wrong_answers": [
+            "What is the Jazz Age?",
+            "What is the Harlem Renaissance?",
+            "What is the Lost Generation?"
+          ],
+          "supported": {
+            "clue": "In the 1920s, Americans bought cars, radios, and refrigerators on credit \u2014 the first mass consumer culture. Advertising told people that buying things was the path to happiness and success.",
+            "answer": "What is consumer culture?"
+          },
+          "on_grade": {
+            "clue": "The 1920s saw the birth of mass consumer culture \u2014 installment buying, national advertising, chain stores, and mass-produced goods transformed Americans from producers into consumers, defining a new American identity around purchasing power.",
+            "answer": "What is consumer culture?"
+          },
+          "advanced": {
+            "clue": "The 1920s consumer revolution was built on credit \u2014 installment buying allowed Americans to purchase goods before they could afford them, creating the consumer economy that generated prosperity in the '20s and magnified collapse in the '30s when credit contracted and consumers could no longer sustain demand.",
+            "answer": "What is consumer culture?"
+          }
+        },
+        {
+          "value": 400,
+          "wrong_answers": [
+            "What is the 18th Amendment?",
+            "What is organized crime?",
+            "What is the Volstead Act?"
+          ],
+          "supported": {
+            "clue": "The 18th Amendment made it illegal to make, sell, or transport alcohol. Instead of stopping drinking, Prohibition created a huge illegal alcohol industry run by organized crime, with gangsters like Al Capone becoming rich and powerful.",
+            "answer": "What is Prohibition?"
+          },
+          "on_grade": {
+            "clue": "Prohibition's unintended consequence was the rise of organized crime \u2014 bootlegging syndicates like Al Capone's Chicago Outfit made enormous profits supplying illegal alcohol, corrupted police and politicians, and established criminal networks that persisted long after repeal.",
+            "answer": "What is Prohibition?"
+          },
+          "advanced": {
+            "clue": "Prohibition actually reduced alcohol consumption significantly in its early years \u2014 deaths from cirrhosis fell and arrests for drunkenness declined \u2014 but its selective enforcement (wealthy clubs could get alcohol easily; working-class saloons could not) created the class resentment and organized crime problems that doomed it politically.",
+            "answer": "What is Prohibition?"
+          }
+        },
+        {
+          "value": 600,
+          "wrong_answers": [
+            "What is the Social Gospel movement?",
+            "What is Fundamentalism?",
+            "What is the Know-Nothing movement?"
+          ],
+          "supported": {
+            "clue": "In 1925, a Tennessee biology teacher was put on trial for teaching evolution in a public school. William Jennings Bryan prosecuted the case. Clarence Darrow defended the teacher. The trial revealed deep tensions between modern science and traditional religious belief.",
+            "answer": "What is the Scopes Trial?"
+          },
+          "on_grade": {
+            "clue": "This 1925 Tennessee trial \u2014 pitting evolutionist Clarence Darrow against fundamentalist William Jennings Bryan \u2014 became a national spectacle symbolizing the clash between scientific modernism and religious traditionalism in 1920s America.",
+            "answer": "What is the Scopes Trial?"
+          },
+          "advanced": {
+            "clue": "The Scopes Trial's lasting significance was cultural rather than legal \u2014 Darrow's devastating cross-examination of Bryan on the literal truth of the Bible exposed fundamentalism's intellectual vulnerability, shifting educated opinion, though Tennessee's anti-evolution law remained on the books until 1967.",
+            "answer": "What is the Scopes Trial?"
+          }
+        },
+        {
+          "value": 800,
+          "wrong_answers": [
+            "What is the Emergency Quota Act?",
+            "What is the Chinese Exclusion Act?",
+            "What is the Alien and Sedition Acts?"
+          ],
+          "supported": {
+            "clue": "Congress passed laws in 1921 and 1924 severely limiting how many immigrants could come to the United States \u2014 especially from Southern and Eastern Europe. The laws were based on racist theories about which people were 'desirable.'",
+            "answer": "What are the Immigration Restriction Acts?"
+          },
+          "on_grade": {
+            "clue": "The Emergency Quota Act (1921) and National Origins Act (1924) used national-origin quotas based on the 1890 census to drastically limit immigration from Southern and Eastern Europe while virtually banning Asian immigration \u2014 enshrining racial hierarchy in federal law.",
+            "answer": "What are the Immigration Restriction Acts?"
+          },
+          "advanced": {
+            "clue": "The 1924 Act's quotas were calibrated using the 1890 census \u2014 before the 'new immigration' peak \u2014 specifically to minimize Southern and Eastern European immigration; the eugenicist framework embedded in the law remained official U.S. immigration policy until the Immigration and Nationality Act of 1965.",
+            "answer": "What are the Immigration Restriction Acts?"
+          }
+        },
+        {
+          "value": 1000,
+          "wrong_answers": [
+            "What is the Harlem Renaissance?",
+            "What is consumer culture?",
+            "What is the Lost Generation?"
+          ],
+          "supported": {
+            "clue": "President Harding promised to return America to 'normalcy' after WWI \u2014 meaning less government involvement in the economy, lower taxes for the wealthy, and a return to Republican pro-business policies.",
+            "answer": "What is the Return to Normalcy?"
+          },
+          "on_grade": {
+            "clue": "Harding's 1920 campaign promise of 'return to normalcy' \u2014 rejecting Wilson's internationalism and wartime government expansion \u2014 reflected widespread desire for stable, familiar government after the upheavals of war, and set the tone for Republican dominance throughout the decade.",
+            "answer": "What is the Return to Normalcy?"
+          },
+          "advanced": {
+            "clue": "'Normalcy' was as much a policy program as a mood \u2014 the Harding-Coolidge-Hoover administrations cut income taxes dramatically, reduced regulation, raised tariffs, and weakened antitrust enforcement, creating the conditions for the prosperity and inequality of the 1920s and the catastrophic collapse that followed.",
+            "answer": "What is the Return to Normalcy?"
+          }
+        }
+      ]
+    },
+    {
+      "id": "social_cultural_twenties",
+      "title": "Culture & Society",
+      "clues": [
+        {
+          "value": 200,
+          "wrong_answers": [
+            "What is the consumer culture?",
+            "What is the Harlem Renaissance?",
+            "What is nativism?"
+          ],
+          "supported": {
+            "clue": "Young women in the 1920s challenged traditional gender roles \u2014 wearing shorter skirts, cutting their hair, driving cars, and going out without chaperones. They were called 'flappers' and represented a new, freer American woman.",
+            "answer": "What is the flapper?"
+          },
+          "on_grade": {
+            "clue": "The flapper \u2014 with her bobbed hair, short skirts, and rejection of Victorian gender norms \u2014 became the iconic symbol of 1920s cultural change, representing women's expanding social freedom and participation in public life after suffrage.",
+            "answer": "What is the flapper?"
+          },
+          "advanced": {
+            "clue": "The flapper's cultural significance was contested \u2014 conservatives saw moral collapse, while feminists debated whether sexual liberation was genuine emancipation or a new form of objectification; the figure captured the decade's broader tension between freedom and exploitation in consumer culture.",
+            "answer": "What is the flapper?"
+          }
+        },
+        {
+          "value": 400,
+          "wrong_answers": [
+            "What is the jazz music?",
+            "What is the Harlem Renaissance?",
+            "What is the radio?"
+          ],
+          "supported": {
+            "clue": "African American musicians created this new style of music in New Orleans, and it spread across the country in the 1920s. Its improvisation and energy made it both exciting and controversial.",
+            "answer": "What is jazz?"
+          },
+          "on_grade": {
+            "clue": "Jazz \u2014 born in New Orleans's Black musical culture and spread nationally by the Great Migration, radio, and phonograph records \u2014 became the defining sound of the 1920s and a vehicle for Black artistic expression that both integrated and disturbed white American culture.",
+            "answer": "What is jazz?"
+          },
+          "advanced": {
+            "clue": "Jazz's cultural politics were complex \u2014 white appropriation of Black musical forms was commercially profitable for white musicians while Black originators were often excluded from mainstream venues; the music simultaneously challenged racial boundaries and was used to reinforce them.",
+            "answer": "What is jazz?"
+          }
+        },
+        {
+          "value": 600,
+          "wrong_answers": [
+            "What is the KKK?",
+            "What is nativism?",
+            "What is the Red Scare?"
+          ],
+          "supported": {
+            "clue": "The original Ku Klux Klan from Reconstruction was revived in 1915 and grew to four million members in the 1920s \u2014 targeting not just Black Americans but also Catholics, Jews, and immigrants, and gaining significant political power in several states.",
+            "answer": "What is the Second Ku Klux Klan?"
+          },
+          "on_grade": {
+            "clue": "Revived in 1915 and inspired by the film Birth of a Nation, the Second Klan reached 4 million members by 1924 \u2014 expanding its targets beyond Black Americans to include Catholics, Jews, and immigrants, electing politicians across the North and Midwest.",
+            "answer": "What is the Second Ku Klux Klan?"
+          },
+          "advanced": {
+            "clue": "The Second Klan's geography revealed its character \u2014 its greatest strength was in Indiana, Ohio, and Oregon, not the deep South, demonstrating that 1920s nativism was a national rather than regional phenomenon, driven by anxiety about immigration and cultural change as much as race.",
+            "answer": "What is the Second Ku Klux Klan?"
+          }
+        },
+        {
+          "value": 800,
+          "wrong_answers": [
+            "What is the automobile?",
+            "What is the radio?",
+            "What is the stock market?"
+          ],
+          "supported": {
+            "clue": "Mass production techniques pioneered by Henry Ford made automobiles affordable for ordinary Americans \u2014 transforming transportation, creating suburbs, and changing how Americans lived, worked, and socialized.",
+            "answer": "What is the automobile age?"
+          },
+          "on_grade": {
+            "clue": "Ford's assembly line and the $5 workday made car ownership possible for working-class Americans, transforming the country \u2014 creating suburban development, roadside commerce, oil industry growth, and a new freedom of movement that reshaped American culture.",
+            "answer": "What is the automobile age?"
+          },
+          "advanced": {
+            "clue": "The automobile's social consequences were enormous and contradictory \u2014 it enabled suburban flight and urban disinvestment, accelerated the destruction of Black neighborhoods through highway construction, created car-dependent sprawl, and paradoxically enabled both greater freedom and greater inequality in access to opportunity.",
+            "answer": "What is the automobile age?"
+          }
+        },
+        {
+          "value": 1000,
+          "wrong_answers": [
+            "What is the automobile?",
+            "What is the jazz music?",
+            "What is the consumer culture?"
+          ],
+          "supported": {
+            "clue": "In the 1920s, radio broadcasting spread across the country, allowing millions of Americans to hear the same music, news, and entertainment at the same time \u2014 creating the first truly national popular culture.",
+            "answer": "What is the radio?"
+          },
+          "on_grade": {
+            "clue": "The rapid spread of commercial radio broadcasting in the 1920s \u2014 from 30 stations in 1922 to 600 by 1930 \u2014 created the first mass medium capable of reaching millions simultaneously, standardizing popular culture and laying the foundation for the age of mass media.",
+            "answer": "What is the radio?"
+          },
+          "advanced": {
+            "clue": "Radio's political implications became clear in the 1930s when FDR's 'fireside chats' demonstrated that a president could speak directly to citizens over the heads of hostile newspapers \u2014 a development that transformed political communication and gave executives an unprecedented advantage over legislatures in shaping public opinion.",
+            "answer": "What is the radio?"
+          }
+        }
+      ]
+    },
+    {
+      "id": "war_on_battlefield",
+      "title": "War on the Western Front",
+      "clues": [
+        {
+          "value": 200,
+          "wrong_answers": [
+            "What is the Schlieffen Plan?",
+            "What is the Christmas Truce?",
+            "What is the Battle of Verdun?"
+          ],
+          "supported": {
+            "clue": "World War I was unlike any previous war \u2014 soldiers dug miles of trenches and faced each other across 'no man's land' in a grinding stalemate that killed millions for tiny gains of territory.",
+            "answer": "What is trench warfare?"
+          },
+          "on_grade": {
+            "clue": "The Western Front's network of trenches \u2014 stretching from Belgium to Switzerland \u2014 created a technological stalemate in which machine guns, artillery, and barbed wire made offensive advance catastrophically costly, producing years of attrition rather than decisive movement.",
+            "answer": "What is trench warfare?"
+          },
+          "advanced": {
+            "clue": "Trench warfare represented the failure of Clausewitzian doctrine to account for the defensive advantage created by industrial weapons \u2014 the generals' insistence on offensive tactics against machine guns and artillery produced the killing fields of the Somme and Verdun before the tank and infiltration tactics finally restored battlefield mobility.",
+            "answer": "What is trench warfare?"
+          }
+        },
+        {
+          "value": 400,
+          "wrong_answers": [
+            "What is the Battle of the Marne?",
+            "What is the Battle of Verdun?",
+            "What is the Battle of the Somme?"
+          ],
+          "supported": {
+            "clue": "Germany's unrestricted submarine warfare threatened to cut off Britain from supplies and food. The U.S. Navy helped protect Allied shipping by escorting convoys across the Atlantic \u2014 one of America's most important contributions to winning the war.",
+            "answer": "What is the convoy system?"
+          },
+          "on_grade": {
+            "clue": "The Allied convoy system \u2014 grouping merchant ships under naval escort rather than sailing independently \u2014 dramatically reduced losses to German U-boats and helped ensure the steady supply of food, munitions, and eventually American troops that sustained the Allied war effort.",
+            "answer": "What is the convoy system?"
+          },
+          "advanced": {
+            "clue": "Britain initially resisted the convoy system due to naval doctrine that large convoys presented better targets \u2014 American naval pressure overcame this resistance, and the shift to convoys reduced merchant ship sinkings by 80%, illustrating how institutional culture can delay adoption of effective tactics even under existential pressure.",
+            "answer": "What is the convoy system?"
+          }
+        },
+        {
+          "value": 600,
+          "wrong_answers": [
+            "What is the Battle of the Somme?",
+            "What is the Battle of Passchendaele?",
+            "What is the Second Battle of the Marne?"
+          ],
+          "supported": {
+            "clue": "In 1918, Germany launched a massive offensive hoping to win before American troops arrived in force. When it failed, Germany quickly collapsed \u2014 signing an armistice in November 1918 that ended the war.",
+            "answer": "What is the Spring Offensive?"
+          },
+          "on_grade": {
+            "clue": "Germany's 1918 Spring Offensive \u2014 using new stormtrooper infiltration tactics to break through Allied lines \u2014 achieved tactical success but exhausted Germany's last reserves; when the Allies counterattacked in the Hundred Days Offensive, German collapse was rapid.",
+            "answer": "What is the Spring Offensive?"
+          },
+          "advanced": {
+            "clue": "The 'stab in the back' myth \u2014 that Germany's military was undefeated but betrayed by revolutionaries at home \u2014 was enabled partly by the Spring Offensive's initial success and the armistice's timing before Allied armies reached German soil, giving demagogues like Hitler a foundation for nationalist grievance.",
+            "answer": "What is the Spring Offensive?"
+          }
+        },
+        {
+          "value": 800,
+          "wrong_answers": [
+            "What is the tank?",
+            "What is the machine gun?",
+            "What is the airplane?"
+          ],
+          "supported": {
+            "clue": "Both sides used poisonous gas as a weapon in WWI \u2014 chlorine and mustard gas caused terrible suffering and became symbols of the war's brutality. Chemical weapons were banned by international treaty after the war.",
+            "answer": "What is chemical warfare?"
+          },
+          "on_grade": {
+            "clue": "The introduction of poison gas at Ypres in 1915 \u2014 first chlorine, then phosgene and mustard gas \u2014 represented a new category of warfare so horrifying that the 1925 Geneva Protocol banned its use, though the prohibition held imperfectly in subsequent conflicts.",
+            "answer": "What is chemical warfare?"
+          },
+          "advanced": {
+            "clue": "Chemical weapons killed relatively few soldiers compared to artillery \u2014 which caused 60% of WWI casualties \u2014 but their psychological impact was disproportionate; the fear of gas attacks and the need for constant vigilance added a dimension of sustained terror that conventional weapons didn't produce.",
+            "answer": "What is chemical warfare?"
+          }
+        },
+        {
+          "value": 1000,
+          "wrong_answers": [
+            "What is the Battle of the Marne?",
+            "What is Gallipoli?",
+            "What is the Battle of Verdun?"
+          ],
+          "supported": {
+            "clue": "In 1916, Britain and France launched a massive offensive along the Somme River in France, hoping to break through German lines. On the first day alone, the British suffered 57,000 casualties \u2014 one of the bloodiest days in military history.",
+            "answer": "What is the Battle of the Somme?"
+          },
+          "on_grade": {
+            "clue": "This 1916 Allied offensive \u2014 intended to relieve pressure on Verdun and break the Western Front stalemate \u2014 produced 57,000 British casualties on its first day and over a million total casualties across five months, becoming the defining symbol of WWI's industrial slaughter.",
+            "answer": "What is the Battle of the Somme?"
+          },
+          "advanced": {
+            "clue": "The Somme's catastrophic first day resulted partly from false confidence that artillery had destroyed German defenses \u2014 the deep German dugouts had protected defenders who emerged to meet the advancing British infantry at 7:30 AM walking in lines, a tactical rigidity that reflected both communication limitations and misplaced faith in firepower.",
+            "answer": "What is the Battle of the Somme?"
+          }
+        }
+      ]
+    }
+  ]
+}

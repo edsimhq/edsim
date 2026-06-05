@@ -1,0 +1,641 @@
+{
+  "topic": "Progressive Era",
+  "categories": [
+    {
+      "id": "reformers_muckrakers",
+      "title": "Reformers & Muckrakers",
+      "clues": [
+        {
+          "value": 200,
+          "wrong_answers": [
+            "Who is Jacob Riis?",
+            "Who is Upton Sinclair?",
+            "Who is Ida Tarbell?"
+          ],
+          "supported": {
+            "clue": "These journalists and writers exposed corruption, dangerous conditions, and injustice in American society \u2014 using their investigative reporting to shock the public into demanding reform.",
+            "answer": "What are muckrakers?"
+          },
+          "on_grade": {
+            "clue": "These Progressive Era investigative journalists \u2014 named by Theodore Roosevelt after a character who could only look downward \u2014 used detailed reporting on corporate corruption, political machines, and social injustice to build public demand for reform.",
+            "answer": "What are muckrakers?"
+          },
+          "advanced": {
+            "clue": "The muckrakers pioneered modern investigative journalism but also illustrated its limits \u2014 their expos\u00e9s created outrage and sometimes legislation, but left structural power largely intact; Ida Tarbell broke up Standard Oil yet Rockefeller's personal fortune increased afterward.",
+            "answer": "What are muckrakers?"
+          }
+        },
+        {
+          "value": 400,
+          "wrong_answers": [
+            "Who is Jacob Riis?",
+            "Who is Lincoln Steffens?",
+            "Who is Ray Stannard Baker?"
+          ],
+          "supported": {
+            "clue": "This journalist spent years researching Standard Oil's illegal business practices and wrote a devastating expos\u00e9 that helped lead to the Supreme Court breaking up the company in 1911.",
+            "answer": "Who is Ida Tarbell?"
+          },
+          "on_grade": {
+            "clue": "This investigative journalist's meticulous 1904 History of the Standard Oil Company documented Rockefeller's use of secret railroad rebates, industrial espionage, and predatory pricing \u2014 contributing directly to the Supreme Court's 1911 breakup of the trust.",
+            "answer": "Who is Ida Tarbell?"
+          },
+          "advanced": {
+            "clue": "Tarbell's investigation was personal as well as professional \u2014 her father's oil business had been destroyed by Standard Oil's tactics \u2014 yet her work was scrupulously documented and factual, establishing a standard of evidence-based muckraking that separated it from mere sensationalism.",
+            "answer": "Who is Ida Tarbell?"
+          }
+        },
+        {
+          "value": 600,
+          "wrong_answers": [
+            "Who is Ida Tarbell?",
+            "Who is Lincoln Steffens?",
+            "Who is Jacob Riis?"
+          ],
+          "supported": {
+            "clue": "This author's 1906 novel about the meatpacking industry was meant to expose the exploitation of immigrant workers, but readers were more horrified by the descriptions of unsanitary meat processing \u2014 leading to food safety legislation.",
+            "answer": "Who is Upton Sinclair?"
+          },
+          "on_grade": {
+            "clue": "Sinclair's The Jungle aimed to create sympathy for immigrant meatpacking workers but instead sparked public outrage about food contamination \u2014 leading to the Pure Food and Drug Act and Meat Inspection Act of 1906, illustrating how reform can succeed for the wrong reasons.",
+            "answer": "Who is Upton Sinclair?"
+          },
+          "advanced": {
+            "clue": "Sinclair's famous complaint \u2014 'I aimed at the public's heart and by accident hit it in the stomach' \u2014 captures the essential irony of Progressive reform: the public was moved to action by consumer self-interest rather than worker solidarity, producing food safety laws while leaving labor conditions largely unchanged.",
+            "answer": "Who is Upton Sinclair?"
+          }
+        },
+        {
+          "value": 800,
+          "wrong_answers": [
+            "What is the settlement house movement?",
+            "Who is Florence Kelley?",
+            "Who is Crystal Eastman?"
+          ],
+          "supported": {
+            "clue": "This reformer opened Hull House in Chicago in 1889, providing services to poor immigrants and becoming the most famous social worker in America. She later won the Nobel Peace Prize for her antiwar work.",
+            "answer": "Who is Jane Addams?"
+          },
+          "on_grade": {
+            "clue": "As founder of Hull House and leader of the settlement house movement, this reformer combined direct social service with systematic research and political advocacy \u2014 becoming the leading voice for labor legislation, women's suffrage, and peace in the Progressive Era.",
+            "answer": "Who is Jane Addams?"
+          },
+          "advanced": {
+            "clue": "Addams's Nobel Peace Prize (1931) came despite \u2014 or because of \u2014 her sustained opposition to World War I, for which she was vilified as a traitor during the war; her anti-militarism was consistent with her broader social vision that war diverted resources from human welfare.",
+            "answer": "Who is Jane Addams?"
+          }
+        },
+        {
+          "value": 1000,
+          "wrong_answers": [
+            "What is the muckrakers?",
+            "What is the settlement house movement?",
+            "What is the temperance movement?"
+          ],
+          "supported": {
+            "clue": "Some religious leaders argued that Christian values required addressing poverty, child labor, and inequality \u2014 not just saving individual souls, but reforming the social conditions that created suffering.",
+            "answer": "What is the Social Gospel movement?"
+          },
+          "on_grade": {
+            "clue": "This religious reform movement argued that Christian ethics demanded attention to social problems \u2014 poverty, labor exploitation, slum conditions \u2014 as well as individual salvation, providing theological grounding for Progressive Era activism.",
+            "answer": "What is the Social Gospel movement?"
+          },
+          "advanced": {
+            "clue": "The Social Gospel's tension between individual salvation and social transformation anticipated the 20th century's broader debate between liberal and liberation theology \u2014 its leading figures like Walter Rauschenbusch argued that sin was structural as well as personal, requiring collective as well as individual redemption.",
+            "answer": "What is the Social Gospel movement?"
+          }
+        }
+      ]
+    },
+    {
+      "id": "roosevelt_progressivism",
+      "title": "TR & Trust-Busting",
+      "clues": [
+        {
+          "value": 200,
+          "wrong_answers": [
+            "Who is William Howard Taft?",
+            "Who is Woodrow Wilson?",
+            "Who is William Jennings Bryan?"
+          ],
+          "supported": {
+            "clue": "This president used the Sherman Antitrust Act to break up business monopolies, earning the nickname 'The Trust Buster.' He also created national parks and regulated food safety.",
+            "answer": "Who is Theodore Roosevelt?"
+          },
+          "on_grade": {
+            "clue": "As the first president to aggressively use antitrust law, this 'Square Deal' progressive filed over 40 antitrust suits \u2014 breaking up Northern Securities, Standard Oil, and other monopolies while also championing conservation and consumer protection.",
+            "answer": "Who is Theodore Roosevelt?"
+          },
+          "advanced": {
+            "clue": "Roosevelt's trust-busting was selective and strategic rather than ideologically anti-business \u2014 he distinguished between 'good trusts' that competed fairly and 'bad trusts' that abused their power, preferring federal regulation to breakup as the long-term solution.",
+            "answer": "Who is Theodore Roosevelt?"
+          }
+        },
+        {
+          "value": 400,
+          "wrong_answers": [
+            "What is the Clayton Antitrust Act?",
+            "What is the Federal Trade Commission Act?",
+            "What is the Interstate Commerce Act?"
+          ],
+          "supported": {
+            "clue": "Congress passed two laws in 1906 after Upton Sinclair's expos\u00e9 of the meatpacking industry \u2014 one required federal inspection of meat, and another banned the sale of dangerous food and medicines.",
+            "answer": "What are the Pure Food and Drug Act and Meat Inspection Act?"
+          },
+          "on_grade": {
+            "clue": "These 1906 consumer protection laws \u2014 passed after Sinclair's The Jungle horrified the public \u2014 established federal inspection of meatpacking facilities and banned the sale of adulterated or mislabeled food and drugs, creating the regulatory framework that became the FDA.",
+            "answer": "What are the Pure Food and Drug Act and Meat Inspection Act?"
+          },
+          "advanced": {
+            "clue": "Roosevelt supported these laws partly for food safety reasons and partly for economic ones \u2014 he recognized that the meatpacking industry's unsanitary reputation was destroying the lucrative European export market, making federal inspection a business subsidy as much as a consumer protection.",
+            "answer": "What are the Pure Food and Drug Act and Meat Inspection Act?"
+          }
+        },
+        {
+          "value": 600,
+          "wrong_answers": [
+            "What is the National Park Service?",
+            "What is the Bureau of Reclamation?",
+            "What is the Forest Service?"
+          ],
+          "supported": {
+            "clue": "Theodore Roosevelt set aside millions of acres of forest, created national parks, and established wildlife refuges \u2014 believing the government had a responsibility to protect America's natural resources for future generations.",
+            "answer": "What is the conservation movement?"
+          },
+          "on_grade": {
+            "clue": "Roosevelt's conservation program \u2014 guided by chief forester Gifford Pinchot's philosophy of 'wise use' \u2014 withdrew over 230 million acres from development, established the U.S. Forest Service, and made environmental stewardship a federal responsibility.",
+            "answer": "What is the conservation movement?"
+          },
+          "advanced": {
+            "clue": "The split between Pinchot's 'wise use' conservation (managing resources for sustainable human use) and John Muir's preservationism (protecting wilderness for its own sake) anticipated the modern environmentalism debate \u2014 crystallized when Roosevelt sided with Pinchot in damming the Hetch Hetchy Valley over Muir's fierce objection.",
+            "answer": "What is the conservation movement?"
+          }
+        },
+        {
+          "value": 800,
+          "wrong_answers": [
+            "What is the Sherman Antitrust Act?",
+            "What is the Clayton Antitrust Act?",
+            "What is the Interstate Commerce Act?"
+          ],
+          "supported": {
+            "clue": "President Wilson's reform program in 1913 created a central bank to stabilize the money supply, passed a new income tax, and strengthened antitrust laws \u2014 going further than Roosevelt's 'Square Deal' in regulating big business.",
+            "answer": "What is the New Freedom?"
+          },
+          "on_grade": {
+            "clue": "Wilson's Progressive agenda \u2014 the Federal Reserve Act, the Underwood Tariff with its income tax, and the Clayton Antitrust Act \u2014 represented a more structurally ambitious reform program than Roosevelt's, aiming to restore competition rather than merely regulate monopoly power.",
+            "answer": "What is the New Freedom?"
+          },
+          "advanced": {
+            "clue": "The Wilson-Roosevelt debate between 'New Freedom' (restore competition by breaking up monopolies) and 'New Nationalism' (regulate monopolies in the public interest) was the foundational debate of 20th-century liberalism \u2014 between anti-monopoly decentralization and administrative state management of concentrated power.",
+            "answer": "What is the New Freedom?"
+          }
+        },
+        {
+          "value": 1000,
+          "wrong_answers": [
+            "What is the Sherman Antitrust Act?",
+            "What is the Interstate Commerce Act?",
+            "What is the Pure Food and Drug Act?"
+          ],
+          "supported": {
+            "clue": "Congress passed a law in 1913 creating a system of regional central banks to regulate the money supply, set interest rates, and act as a lender of last resort during financial panics.",
+            "answer": "What is the Federal Reserve Act?"
+          },
+          "on_grade": {
+            "clue": "This 1913 legislation created the Federal Reserve System \u2014 a network of regional central banks under federal oversight \u2014 to stabilize the currency, prevent bank panics, and give the government tools to manage the national economy.",
+            "answer": "What is the Federal Reserve Act?"
+          },
+          "advanced": {
+            "clue": "The Federal Reserve's hybrid structure \u2014 private banks own the regional Fed banks but a presidentially appointed Board of Governors sets national policy \u2014 was a deliberate political compromise between those who feared government control of money and those who feared Wall Street control, satisfying neither completely.",
+            "answer": "What is the Federal Reserve Act?"
+          }
+        }
+      ]
+    },
+    {
+      "id": "democratic_reforms",
+      "title": "Democratic Reforms",
+      "clues": [
+        {
+          "value": 200,
+          "wrong_answers": [
+            "What is the 17th Amendment?",
+            "What is the initiative?",
+            "What is the recall?"
+          ],
+          "supported": {
+            "clue": "Progressives wanted to give ordinary citizens more direct control over government. These three tools let voters propose their own laws, vote directly on legislation, and remove elected officials from office before their terms ended.",
+            "answer": "What are the initiative, referendum, and recall?"
+          },
+          "on_grade": {
+            "clue": "These Progressive-era mechanisms \u2014 adopted in many states \u2014 gave citizens direct democratic power: the initiative to propose legislation by petition, the referendum to vote directly on laws, and the recall to remove elected officials before their terms expired.",
+            "answer": "What are the initiative, referendum, and recall?"
+          },
+          "advanced": {
+            "clue": "The initiative, referendum, and recall reflected the Progressive conviction that representative government had been captured by special interests \u2014 yet their introduction also enabled the passage of regressive measures like the Chinese Exclusion referenda in California, illustrating the democratic paradox of majority rule over minority rights.",
+            "answer": "What are the initiative, referendum, and recall?"
+          }
+        },
+        {
+          "value": 400,
+          "wrong_answers": [
+            "What is the 16th Amendment?",
+            "What is the 18th Amendment?",
+            "What is the 19th Amendment?"
+          ],
+          "supported": {
+            "clue": "Before 1913, U.S. senators were chosen by state legislatures, not by voters. This amendment changed that \u2014 giving ordinary citizens the right to directly elect their senators.",
+            "answer": "What is the 17th Amendment?"
+          },
+          "on_grade": {
+            "clue": "This 1913 amendment transferred the election of U.S. senators from state legislatures to direct popular vote \u2014 ending a system that Progressives argued made senators accountable to corporate interests and political machines rather than the people.",
+            "answer": "What is the 17th Amendment?"
+          },
+          "advanced": {
+            "clue": "The shift to direct Senate election had an ironic long-term consequence \u2014 it reduced the Senate's responsiveness to state government interests (as the framers intended) but increased its responsiveness to national media and well-funded interest groups, replacing one form of corruption with another.",
+            "answer": "What is the 17th Amendment?"
+          }
+        },
+        {
+          "value": 600,
+          "wrong_answers": [
+            "What is the 17th Amendment?",
+            "What is the 19th Amendment?",
+            "What is the initiative and referendum?"
+          ],
+          "supported": {
+            "clue": "Ratified in 1913, this amendment allowed the federal government to collect a tax based on how much money people earned \u2014 with the wealthy paying higher rates than the poor.",
+            "answer": "What is the 16th Amendment?"
+          },
+          "on_grade": {
+            "clue": "This amendment authorized the federal income tax \u2014 overturning an 1895 Supreme Court ruling that had blocked it \u2014 and provided the revenue base that allowed the federal government to expand dramatically in the 20th century.",
+            "answer": "What is the 16th Amendment?"
+          },
+          "advanced": {
+            "clue": "The income tax's Populist and Progressive origins were redistributive \u2014 its original rates taxed only the top 2% of earners and were explicitly designed to shift the federal revenue burden from the regressive tariff to a graduated tax on wealth, a structural change in who paid for government.",
+            "answer": "What is the 16th Amendment?"
+          }
+        },
+        {
+          "value": 800,
+          "wrong_answers": [
+            "What is the 16th Amendment?",
+            "What is the 17th Amendment?",
+            "What is the initiative and referendum?"
+          ],
+          "supported": {
+            "clue": "After decades of organizing, women won the right to vote in 1920 with the ratification of this constitutional amendment.",
+            "answer": "What is the 19th Amendment?"
+          },
+          "on_grade": {
+            "clue": "Ratified in 1920 after 72 years of women's suffrage organizing, this amendment prohibited denying the vote on account of sex \u2014 enfranchising approximately 26 million American women, though Black women in the South faced the same disenfranchisement as Black men.",
+            "answer": "What is the 19th Amendment?"
+          },
+          "advanced": {
+            "clue": "The suffrage movement's victory was incomplete \u2014 the 19th Amendment enfranchised women nationally, but Black women in the South faced poll taxes, literacy tests, and violence that effectively nullified their rights until the Voting Rights Act of 1965, a gap that has shaped the historiography of the movement.",
+            "answer": "What is the 19th Amendment?"
+          }
+        },
+        {
+          "value": 1000,
+          "wrong_answers": [
+            "What is the 17th Amendment?",
+            "What is the 19th Amendment?",
+            "What is the initiative and referendum?"
+          ],
+          "supported": {
+            "clue": "Women like Elizabeth Cady Stanton and Susan B. Anthony spent their lives fighting for women's right to vote. They organized conventions, marched, lobbied Congress, and went to jail before finally winning.",
+            "answer": "What is the women's suffrage movement?"
+          },
+          "on_grade": {
+            "clue": "The 72-year campaign for women's suffrage \u2014 from the Seneca Falls Convention of 1848 to the 19th Amendment in 1920 \u2014 employed conventions, petitions, state referenda, civil disobedience, and ultimately a constitutional amendment strategy led by NAWSA and the more militant NWP.",
+            "answer": "What is the women's suffrage movement?"
+          },
+          "advanced": {
+            "clue": "The suffrage movement's strategic shift \u2014 from a state-by-state approach to a federal amendment \u2014 reflected Carrie Chapman Catt's 'Winning Plan' of 1916, which calculated that winning enough states to force a congressional supermajority was more efficient than winning state by state across all 48 states.",
+            "answer": "What is the women's suffrage movement?"
+          }
+        }
+      ]
+    },
+    {
+      "id": "race_civil_rights_progressive",
+      "title": "Race & Civil Rights",
+      "clues": [
+        {
+          "value": 200,
+          "wrong_answers": [
+            "Who is Booker T. Washington?",
+            "Who is Marcus Garvey?",
+            "Who is Frederick Douglass?"
+          ],
+          "supported": {
+            "clue": "This Harvard-educated scholar and civil rights leader founded the NAACP and argued that Black Americans should demand full and immediate civil and political equality \u2014 rejecting accommodation with segregation.",
+            "answer": "Who is W.E.B. Du Bois?"
+          },
+          "on_grade": {
+            "clue": "Du Bois's call for the 'Talented Tenth' of Black Americans to lead the race's advancement, and his founding of the NAACP, directly challenged Booker T. Washington's accommodationist strategy \u2014 insisting on full civil and political equality rather than economic progress within segregation.",
+            "answer": "Who is W.E.B. Du Bois?"
+          },
+          "advanced": {
+            "clue": "Du Bois's concept of 'double consciousness' \u2014 the sense of 'always looking at one's self through the eyes of others' \u2014 captured the psychological cost of living in a racist society and established the framework for 20th-century Black intellectual and political thought.",
+            "answer": "Who is W.E.B. Du Bois?"
+          }
+        },
+        {
+          "value": 400,
+          "wrong_answers": [
+            "Who is W.E.B. Du Bois?",
+            "Who is Marcus Garvey?",
+            "Who is Ida B. Wells?"
+          ],
+          "supported": {
+            "clue": "This Alabama educator argued that Black Americans should focus on vocational skills and economic self-sufficiency rather than political rights \u2014 accepting segregation for now and proving their worth through hard work and practical achievement.",
+            "answer": "Who is Booker T. Washington?"
+          },
+          "on_grade": {
+            "clue": "Washington's 'Atlanta Compromise' speech \u2014 urging Black Americans to accept social separation while pursuing economic advancement \u2014 dominated Black political thought until Du Bois and the NAACP challenged its accommodationist premises.",
+            "answer": "Who is Booker T. Washington?"
+          },
+          "advanced": {
+            "clue": "Washington's accommodationism was more complex than it appeared \u2014 he privately funded legal challenges to disenfranchisement while publicly accepting segregation, operating in a political environment where open resistance invited violent reprisal, making his strategy a form of covert resistance rather than genuine acquiescence.",
+            "answer": "Who is Booker T. Washington?"
+          }
+        },
+        {
+          "value": 600,
+          "wrong_answers": [
+            "What is the Urban League?",
+            "Who is W.E.B. Du Bois?",
+            "Who is Booker T. Washington?"
+          ],
+          "supported": {
+            "clue": "This journalist and activist conducted a systematic investigation of lynching in the American South, documenting hundreds of murders and challenging the false justifications used to excuse them.",
+            "answer": "Who is Ida B. Wells?"
+          },
+          "on_grade": {
+            "clue": "Wells's anti-lynching journalism \u2014 which documented that most lynching victims were killed not for alleged crimes but for economic competition or violations of racial etiquette \u2014 exposed the terrorist function of lynching and built an international movement against it.",
+            "answer": "Who is Ida B. Wells?"
+          },
+          "advanced": {
+            "clue": "Wells's statistical analysis of lynching \u2014 challenging the rape narrative used to justify it \u2014 was a pioneering application of data journalism to civil rights advocacy, and her findings were so threatening to the racial order that her Memphis newspaper was destroyed by a mob after publication.",
+            "answer": "Who is Ida B. Wells?"
+          }
+        },
+        {
+          "value": 800,
+          "wrong_answers": [
+            "What is the Urban League?",
+            "What is the Niagara Movement?",
+            "What is the Brotherhood of Sleeping Car Porters?"
+          ],
+          "supported": {
+            "clue": "Founded in 1909 in response to racial violence and discrimination, this organization used legal challenges, lobbying, and public education to fight for Black civil rights \u2014 leading the legal battle that eventually won Brown v. Board of Education.",
+            "answer": "What is the NAACP?"
+          },
+          "on_grade": {
+            "clue": "This civil rights organization \u2014 founded in 1909 by Du Bois and white progressive allies in response to the Springfield race riot \u2014 pioneered the legal strategy of challenging segregation through the courts that culminated in Brown v. Board of Education.",
+            "answer": "What is the NAACP?"
+          },
+          "advanced": {
+            "clue": "The NAACP's legal strategy was gradualist by design \u2014 Thurgood Marshall's team spent decades building precedent before attacking Plessy directly, winning cases on equalization of facilities first to establish the principle that states bore real obligations under 'separate but equal' before arguing the doctrine was inherently unequal.",
+            "answer": "What is the NAACP?"
+          }
+        },
+        {
+          "value": 1000,
+          "wrong_answers": [
+            "What is the NAACP?",
+            "What is the Urban League?",
+            "What is the Harlem Renaissance?"
+          ],
+          "supported": {
+            "clue": "Hundreds of thousands of Black Americans moved from the rural South to Northern cities like Chicago, Detroit, and New York between 1910 and 1930 \u2014 escaping Jim Crow laws and seeking factory jobs and greater freedom.",
+            "answer": "What is the Great Migration?"
+          },
+          "on_grade": {
+            "clue": "This massive demographic shift \u2014 approximately 1.6 million Black Southerners moving to Northern cities between 1910 and 1930 \u2014 was driven by Jim Crow oppression, economic opportunity in Northern industry, and the pull of Black urban communities.",
+            "answer": "What is the Great Migration?"
+          },
+          "advanced": {
+            "clue": "The Great Migration transformed American cities and politics \u2014 it created the Black urban electorate that would eventually force the Democratic Party to address civil rights, but also produced the Northern segregation and housing discrimination that made cities like Chicago and Detroit racially divided along lines as rigid as anything in the Jim Crow South.",
+            "answer": "What is the Great Migration?"
+          }
+        }
+      ]
+    },
+    {
+      "id": "progressive_legacy",
+      "title": "Progressive Legacy",
+      "clues": [
+        {
+          "value": 200,
+          "wrong_answers": [
+            "What is the Pure Food and Drug Act?",
+            "What is the Sherman Antitrust Act?",
+            "What is the Federal Trade Commission Act?"
+          ],
+          "supported": {
+            "clue": "Congress strengthened antitrust law in 1914 by passing a law that specifically listed illegal business practices \u2014 price fixing, exclusive dealing, and interlocking directorates \u2014 and exempted labor unions from antitrust prosecution.",
+            "answer": "What is the Clayton Antitrust Act?"
+          },
+          "on_grade": {
+            "clue": "This 1914 law strengthened the Sherman Act by specifically prohibiting price discrimination, tying agreements, and interlocking corporate directorates \u2014 and crucially exempted labor unions from antitrust prosecution, which Gompers called 'labor's Magna Carta.'",
+            "answer": "What is the Clayton Antitrust Act?"
+          },
+          "advanced": {
+            "clue": "The Clayton Act's labor exemption proved weaker than Gompers hoped \u2014 courts continued to apply antitrust law against unions through the doctrine of 'secondary boycotts,' and it took the Norris-LaGuardia Act of 1932 to effectively prohibit federal injunctions against labor organizing.",
+            "answer": "What is the Clayton Antitrust Act?"
+          }
+        },
+        {
+          "value": 400,
+          "wrong_answers": [
+            "What is the Bureau of Corporations?",
+            "What is the ICC?",
+            "What is the FDA?"
+          ],
+          "supported": {
+            "clue": "Congress created this federal agency in 1914 to investigate and prevent unfair or deceptive business practices \u2014 giving the government an ongoing watchdog role over business competition.",
+            "answer": "What is the Federal Trade Commission?"
+          },
+          "on_grade": {
+            "clue": "This 1914 agency \u2014 empowered to investigate and prohibit unfair methods of competition \u2014 reflected Wilson's preference for ongoing federal oversight of business behavior rather than case-by-case antitrust litigation.",
+            "answer": "What is the Federal Trade Commission?"
+          },
+          "advanced": {
+            "clue": "The FTC embodied the 'New Nationalism' approach to regulation that Wilson had campaigned against \u2014 an expert administrative agency making ongoing judgments about business conduct \u2014 illustrating how the practical demands of governance pushed Wilson toward the Rooseveltian regulatory state he had criticized.",
+            "answer": "What is the Federal Trade Commission?"
+          }
+        },
+        {
+          "value": 600,
+          "wrong_answers": [
+            "What is the 17th Amendment?",
+            "What is the 16th Amendment?",
+            "What is women's suffrage?"
+          ],
+          "supported": {
+            "clue": "Many Progressives were also racists who believed that immigrants from Southern and Eastern Europe were inferior to Anglo-Saxon Americans. They supported immigration restrictions and some supported eugenics programs.",
+            "answer": "What is the racist dimension of Progressivism?"
+          },
+          "on_grade": {
+            "clue": "The Progressive movement had a deeply troubling racial dimension \u2014 many reformers who championed worker rights and democratic reform also supported immigration restriction, eugenics, and segregation, revealing the movement's commitment to social order as well as social justice.",
+            "answer": "What is the racist dimension of Progressivism?"
+          },
+          "advanced": {
+            "clue": "Progressive-era racism was not incidental to the movement but structural \u2014 the administrative state they built was racially exclusionary by design, with Social Security and labor laws written to exclude domestic workers and farmworkers (disproportionately Black and Latino) at Southern Democrats' insistence.",
+            "answer": "What is the racist dimension of Progressivism?"
+          }
+        },
+        {
+          "value": 800,
+          "wrong_answers": [
+            "What is Prohibition?",
+            "What is women's suffrage?",
+            "What is the direct election of senators?"
+          ],
+          "supported": {
+            "clue": "Ratified in 1919, this amendment banned the making, selling, and transporting of alcoholic beverages in the United States \u2014 a moral reform championed by women's groups and religious organizations but ultimately repealed in 1933.",
+            "answer": "What is the 18th Amendment (Prohibition)?"
+          },
+          "on_grade": {
+            "clue": "This 1919 amendment \u2014 banning the manufacture and sale of alcohol \u2014 reflected the Progressive belief in using government to reform individual behavior, but its enforcement proved impossible and its unintended consequences included the rise of organized crime.",
+            "answer": "What is the 18th Amendment (Prohibition)?"
+          },
+          "advanced": {
+            "clue": "Prohibition illustrates the Progressive movement's authoritarian potential \u2014 the confidence that expert reformers could improve human behavior through law, combined with the political coalition between women's suffrage advocates and evangelical Protestants, produced a constitutional amendment whose failure became the classic argument against legislating morality.",
+            "answer": "What is the 18th Amendment (Prohibition)?"
+          }
+        },
+        {
+          "value": 1000,
+          "wrong_answers": [
+            "What is the Progressive Party?",
+            "What is the New Deal?",
+            "What is the Fair Deal?"
+          ],
+          "supported": {
+            "clue": "The Progressive Era laid the groundwork for modern government \u2014 income taxes, banking regulation, food safety laws, and conservation programs created during this period are still in place today.",
+            "answer": "What is the Progressive Era legacy?"
+          },
+          "on_grade": {
+            "clue": "The Progressive Era created the institutional foundations of the modern American state \u2014 the income tax, the Federal Reserve, antitrust law, food safety regulation, conservation policy, and direct democracy reforms that reshaped the relationship between citizens, corporations, and government.",
+            "answer": "What is the Progressive Era legacy?"
+          },
+          "advanced": {
+            "clue": "The Progressive Era's most consequential legacy was conceptual rather than legislative \u2014 it established the principle that the democratic state had both the authority and the obligation to regulate capitalism in the public interest, a premise that Hoover would resist and FDR would expand into the New Deal order.",
+            "answer": "What is the Progressive Era legacy?"
+          }
+        }
+      ]
+    },
+    {
+      "id": "womens_rights_era",
+      "title": "Women's Rights",
+      "clues": [
+        {
+          "value": 200,
+          "wrong_answers": [
+            "Who is Carrie Chapman Catt?",
+            "Who is Alice Paul?",
+            "Who is Lucy Burns?"
+          ],
+          "supported": {
+            "clue": "This New York suffragist organized the first women's rights convention at Seneca Falls in 1848 and spent 50 years fighting for women's right to vote \u2014 dying 14 years before the 19th Amendment was ratified.",
+            "answer": "Who is Elizabeth Cady Stanton?"
+          },
+          "on_grade": {
+            "clue": "As organizer of the Seneca Falls Convention and author of the Declaration of Sentiments \u2014 modeled on the Declaration of Independence to demand equal rights for women \u2014 Stanton launched the American women's rights movement and provided its founding philosophical statement.",
+            "answer": "Who is Elizabeth Cady Stanton?"
+          },
+          "advanced": {
+            "clue": "Stanton's later career became controversial within the movement \u2014 her racist arguments that educated white women deserved the vote more than 'ignorant' Black men damaged alliances with Black reformers and illustrated the white feminist tendency to prioritize gender over racial solidarity.",
+            "answer": "Who is Elizabeth Cady Stanton?"
+          }
+        },
+        {
+          "value": 400,
+          "wrong_answers": [
+            "Who is Elizabeth Cady Stanton?",
+            "Who is Lucretia Mott?",
+            "Who is Carrie Chapman Catt?"
+          ],
+          "supported": {
+            "clue": "This famous suffragist traveled across the country for decades \u2014 delivering speeches, collecting signatures, and lobbying Congress for women's right to vote. She was arrested in 1872 for trying to vote in a presidential election.",
+            "answer": "Who is Susan B. Anthony?"
+          },
+          "on_grade": {
+            "clue": "Anthony's decades of organizing \u2014 speaking tours, congressional lobbying, and her landmark arrest for voting in 1872 \u2014 made her the most visible face of the suffrage movement, and she was celebrated as its symbol even though she died before the 19th Amendment's ratification.",
+            "answer": "Who is Susan B. Anthony?"
+          },
+          "advanced": {
+            "clue": "Anthony's trial after her 1872 arrest was a show trial \u2014 the judge wrote his verdict before hearing arguments and instructed the jury to find her guilty \u2014 but her eloquent courtroom statement, 'I shall never pay a dollar of your unjust penalty,' turned the conviction into a political asset for the movement.",
+            "answer": "Who is Susan B. Anthony?"
+          }
+        },
+        {
+          "value": 600,
+          "wrong_answers": [
+            "What is the National American Woman Suffrage Association?",
+            "What is the Congressional Union?",
+            "What is the National Woman's Party?"
+          ],
+          "supported": {
+            "clue": "After winning the vote in 1920, women activists formed this organization to educate women about civic issues and help them become effective voters and citizens \u2014 still active today as a nonpartisan civic organization.",
+            "answer": "What is the League of Women Voters?"
+          },
+          "on_grade": {
+            "clue": "Founded by Carrie Chapman Catt after the 19th Amendment's ratification, this organization focused on civic education and voter participation \u2014 representing the belief that women's enfranchisement should be followed by active democratic engagement.",
+            "answer": "What is the League of Women Voters?"
+          },
+          "advanced": {
+            "clue": "The League's founding reflected a split in the post-suffrage women's movement \u2014 between Catt's civic integration approach and Alice Paul's National Woman's Party push for an Equal Rights Amendment, a division between formal equality and protective legislation that divided women reformers for decades.",
+            "answer": "What is the League of Women Voters?"
+          }
+        },
+        {
+          "value": 800,
+          "wrong_answers": [
+            "What is the 19th Amendment?",
+            "What is the National Woman Suffrage Association?",
+            "What is the Seneca Falls Convention?"
+          ],
+          "supported": {
+            "clue": "Before the 19th Amendment, some individual states gave women the right to vote \u2014 starting with Wyoming in 1869. These state victories helped build momentum for a national constitutional amendment.",
+            "answer": "What is the state-by-state suffrage strategy?"
+          },
+          "on_grade": {
+            "clue": "The suffrage movement pursued two simultaneous strategies \u2014 winning voting rights state by state while lobbying for a constitutional amendment \u2014 with western states leading the way: Wyoming (1869), Colorado (1893), Utah and Idaho (1896).",
+            "answer": "What is the state-by-state suffrage strategy?"
+          },
+          "advanced": {
+            "clue": "The state-by-state strategy was both tactically necessary and strategically limited \u2014 it built political pressure and demonstrated that women's suffrage did not cause the social chaos opponents predicted, but Southern states' resistance made a constitutional amendment the only path to universal women's suffrage.",
+            "answer": "What is the state-by-state suffrage strategy?"
+          }
+        },
+        {
+          "value": 1000,
+          "wrong_answers": [
+            "What is the Equal Rights Amendment?",
+            "What is the suffrage movement?",
+            "What is the temperance movement?"
+          ],
+          "supported": {
+            "clue": "Many women who fought for temperance and Prohibition were also leaders in the suffrage movement \u2014 arguing that women needed the vote to protect their families from the harms of alcohol.",
+            "answer": "What is the connection between temperance and suffrage?"
+          },
+          "on_grade": {
+            "clue": "The temperance and suffrage movements were deeply intertwined \u2014 the Women's Christian Temperance Union under Frances Willard embraced suffrage as a 'home protection' strategy, arguing women needed the vote to protect their families from alcohol's harms.",
+            "answer": "What is the connection between temperance and suffrage?"
+          },
+          "advanced": {
+            "clue": "The temperance-suffrage alliance was strategically complex \u2014 it gained suffrage movement supporters among evangelical Protestants but alienated immigrant communities (especially German and Irish Catholics) who saw Prohibition as cultural attack, ultimately fragmenting the coalition that won the 19th Amendment even as it passed the 18th.",
+            "answer": "What is the connection between temperance and suffrage?"
+          }
+        }
+      ]
+    }
+  ]
+}

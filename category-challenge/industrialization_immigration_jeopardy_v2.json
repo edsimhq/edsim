@@ -1,0 +1,642 @@
+{
+  "topic": "Industrialization & Immigration",
+  "categories": [
+    {
+      "id": "big_business",
+      "title": "Big Business",
+      "clues": [
+        {
+          "value": 200,
+          "wrong_answers": [
+            "What is a monopoly?",
+            "What is a labor union?",
+            "What is the Sherman Antitrust Act?"
+          ],
+          "supported": {
+            "clue": "Men like Andrew Carnegie and John D. Rockefeller built enormous business empires after the Civil War. Some called them captains of industry who built America; others called them robber barons who exploited workers and crushed competition.",
+            "answer": "Who are the robber barons?"
+          },
+          "on_grade": {
+            "clue": "These late 19th-century industrialists \u2014 Carnegie in steel, Rockefeller in oil, Morgan in finance, Vanderbilt in railroads \u2014 accumulated unprecedented wealth through ruthless business practices, driving out competition and exploiting workers to dominate their industries.",
+            "answer": "Who are the robber barons?"
+          },
+          "advanced": {
+            "clue": "The 'robber baron' versus 'captain of industry' debate reflects genuine ambiguity \u2014 men like Carnegie brutally suppressed labor while funding libraries and concert halls, embodying the tension between Gilded Age accumulation and the Gospel of Wealth's demand for philanthropic redistribution.",
+            "answer": "Who are the robber barons?"
+          }
+        },
+        {
+          "value": 400,
+          "wrong_answers": [
+            "What is a trust?",
+            "What is horizontal integration?",
+            "What is the Sherman Antitrust Act?"
+          ],
+          "supported": {
+            "clue": "Companies that controlled every step of making and selling a product had huge advantages over competitors. Carnegie's steel company owned iron mines, railroads, and steel mills \u2014 controlling everything from raw material to finished product.",
+            "answer": "What is vertical integration?"
+          },
+          "on_grade": {
+            "clue": "This business strategy \u2014 controlling every stage of production from raw materials to retail \u2014 allowed companies like Carnegie Steel to dramatically lower costs, undercut competitors, and eventually dominate entire industries.",
+            "answer": "What is vertical integration?"
+          },
+          "advanced": {
+            "clue": "Carnegie's vertical integration was a response to the instability of 19th-century markets \u2014 by controlling his inputs, he could maintain production during downturns when competitors dependent on outside suppliers had to shut down, allowing him to gain market share precisely when others were weakest.",
+            "answer": "What is vertical integration?"
+          }
+        },
+        {
+          "value": 600,
+          "wrong_answers": [
+            "What is vertical integration?",
+            "What is a cartel?",
+            "What is the Interstate Commerce Commission?"
+          ],
+          "supported": {
+            "clue": "When a single company or group controls an entire industry and has no competition, it can charge whatever it wants. Standard Oil controlled 90% of U.S. oil refining by the 1880s.",
+            "answer": "What is a monopoly?"
+          },
+          "on_grade": {
+            "clue": "Rockefeller's Standard Oil achieved near-total dominance of the oil industry by the 1880s \u2014 using secret railroad rebates, predatory pricing, and horizontal consolidation to eliminate competition and control refining, distribution, and pricing of petroleum products.",
+            "answer": "What is a monopoly?"
+          },
+          "advanced": {
+            "clue": "Rockefeller's trust structure was a legal innovation designed to circumvent state corporation laws \u2014 by having Standard Oil shareholders exchange their stock for trust certificates, a small board of trustees could control competing companies without technically merging them, evading antitrust scrutiny until the courts caught up.",
+            "answer": "What is a monopoly?"
+          }
+        },
+        {
+          "value": 800,
+          "wrong_answers": [
+            "What is the Interstate Commerce Act?",
+            "What is the Clayton Antitrust Act?",
+            "What is the Federal Trade Commission?"
+          ],
+          "supported": {
+            "clue": "Congress passed this law in 1890 to break up monopolies and protect competition. It made it illegal for businesses to form trusts or conspiracies that restrained trade.",
+            "answer": "What is the Sherman Antitrust Act?"
+          },
+          "on_grade": {
+            "clue": "This 1890 law \u2014 the first federal antitrust legislation \u2014 declared illegal any combination or conspiracy that restrained interstate trade, though it was initially used more often against labor unions than business monopolies.",
+            "answer": "What is the Sherman Antitrust Act?"
+          },
+          "advanced": {
+            "clue": "The Sherman Act's vague language \u2014 outlawing 'every contract, combination or conspiracy in restraint of trade' \u2014 was deliberately ambiguous, allowing courts to interpret it narrowly (as they did for businesses) or broadly (as they did against labor unions) depending on the political climate.",
+            "answer": "What is the Sherman Antitrust Act?"
+          }
+        },
+        {
+          "value": 1000,
+          "wrong_answers": [
+            "What is the Gospel of Wealth?",
+            "What is laissez-faire economics?",
+            "What is the Protestant work ethic?"
+          ],
+          "supported": {
+            "clue": "Some businessmen and thinkers argued that the rich got rich because they were naturally superior \u2014 applying Darwin's theory of evolution to human society. Poverty, they said, was a sign of weakness, not injustice.",
+            "answer": "What is Social Darwinism?"
+          },
+          "on_grade": {
+            "clue": "This ideology applied evolutionary theory to human society \u2014 arguing that wealth represented fitness, poverty represented weakness, and government interference with this 'natural' process was both futile and harmful.",
+            "answer": "What is Social Darwinism?"
+          },
+          "advanced": {
+            "clue": "Social Darwinism was not Darwin's own application of his theory but a misappropriation by Herbert Spencer and William Graham Sumner \u2014 Darwin's natural selection operated over thousands of generations, not within lifetimes, making its application to social inequality a logical as well as moral error.",
+            "answer": "What is Social Darwinism?"
+          }
+        }
+      ]
+    },
+    {
+      "id": "workers_labor",
+      "title": "Workers & Labor",
+      "clues": [
+        {
+          "value": 200,
+          "wrong_answers": [
+            "What is a strike?",
+            "What is collective bargaining?",
+            "What is the American Federation of Labor?"
+          ],
+          "supported": {
+            "clue": "Workers formed organizations to demand better pay, shorter hours, and safer working conditions. When owners refused, workers sometimes went on strike \u2014 refusing to work until their demands were met.",
+            "answer": "What are labor unions?"
+          },
+          "on_grade": {
+            "clue": "These worker organizations used collective bargaining, strikes, and political pressure to counterbalance the power of industrial employers \u2014 fighting for the eight-hour day, safer conditions, and wages that could sustain a family.",
+            "answer": "What are labor unions?"
+          },
+          "advanced": {
+            "clue": "The American labor movement faced a structural disadvantage that European labor did not \u2014 the courts treated collective action as criminal conspiracy under common law, and the Sherman Antitrust Act was applied against unions as 'combinations in restraint of trade' while largely sparing business monopolies.",
+            "answer": "What are labor unions?"
+          }
+        },
+        {
+          "value": 400,
+          "wrong_answers": [
+            "What is the American Federation of Labor?",
+            "What is the Knights of Labor?",
+            "What is the Industrial Workers of the World?"
+          ],
+          "supported": {
+            "clue": "This union leader founded the American Federation of Labor and focused on practical goals: higher wages, shorter hours, and better conditions for skilled workers. He believed in working within the capitalist system.",
+            "answer": "Who is Samuel Gompers?"
+          },
+          "on_grade": {
+            "clue": "As founder and long-time president of the AFL, this leader pursued 'pure and simple' unionism \u2014 focusing on concrete economic gains for skilled craft workers rather than broad political reform or industrial unionism.",
+            "answer": "Who is Samuel Gompers?"
+          },
+          "advanced": {
+            "clue": "Gompers's craft union strategy achieved real gains for skilled workers but structurally excluded unskilled industrial workers \u2014 most of whom were immigrants and Black workers \u2014 creating a labor movement that was racially and economically stratified and unprepared for mass production industries.",
+            "answer": "Who is Samuel Gompers?"
+          }
+        },
+        {
+          "value": 600,
+          "wrong_answers": [
+            "What is the Pullman Strike?",
+            "What is the Homestead Strike?",
+            "What is the Triangle Shirtwaist Fire?"
+          ],
+          "supported": {
+            "clue": "Children as young as five or six worked in coal mines, textile factories, and glass plants \u2014 working 12-hour days in dangerous conditions for pennies. Reformers fought to pass laws banning this practice.",
+            "answer": "What is child labor?"
+          },
+          "on_grade": {
+            "clue": "In the late 19th and early 20th centuries, nearly two million American children worked in factories, mines, and agriculture \u2014 often in dangerous conditions for minimal wages \u2014 before Progressive-era reformers succeeded in passing state and eventually federal restrictions.",
+            "answer": "What is child labor?"
+          },
+          "advanced": {
+            "clue": "The Supreme Court's 1918 decision in Hammer v. Dagenhart struck down the first federal child labor law as an overreach of the commerce power \u2014 Congress tried a tax-based approach that was also struck down \u2014 until the New Deal's Fair Labor Standards Act of 1938 finally established enforceable federal standards.",
+            "answer": "What is child labor?"
+          }
+        },
+        {
+          "value": 800,
+          "wrong_answers": [
+            "What is the Homestead Strike?",
+            "What is the Haymarket Affair?",
+            "What is the Pullman Strike?"
+          ],
+          "supported": {
+            "clue": "In 1911, a fire broke out at a garment factory in New York City. Workers \u2014 mostly young immigrant women \u2014 were trapped behind locked doors and nearly 150 died. The disaster led to major safety reforms.",
+            "answer": "What is the Triangle Shirtwaist Fire?"
+          },
+          "on_grade": {
+            "clue": "This 1911 fire killed 146 garment workers \u2014 mostly young immigrant women \u2014 who were trapped behind locked exits in a New York factory. The tragedy galvanized the labor movement and led to a wave of workplace safety legislation.",
+            "answer": "What is the Triangle Shirtwaist Fire?"
+          },
+          "advanced": {
+            "clue": "The Triangle fire's political legacy was disproportionate to its size because Frances Perkins witnessed it personally \u2014 the experience drove her to a career in labor reform, and as FDR's Secretary of Labor she translated the fire's lessons into the New Deal's labor legislation.",
+            "answer": "What is the Triangle Shirtwaist Fire?"
+          }
+        },
+        {
+          "value": 1000,
+          "wrong_answers": [
+            "What is the American Federation of Labor (AFL)?",
+            "What is the Knights of Labor?",
+            "What is the Industrial Workers of the World (IWW)?"
+          ],
+          "supported": {
+            "clue": "Carnegie's steel company cut workers' wages and hired Pinkerton detectives to break their strike in 1892. The violent confrontation left workers and Pinkertons dead and ultimately crushed the union.",
+            "answer": "What is the Homestead Strike?"
+          },
+          "on_grade": {
+            "clue": "This 1892 confrontation at Carnegie's steel plant \u2014 in which Pinkerton agents hired to break the strike fought a pitched battle with locked-out workers \u2014 resulted in the destruction of the Amalgamated Association and set back steel unionism for four decades.",
+            "answer": "What is the Homestead Strike?"
+          },
+          "advanced": {
+            "clue": "Carnegie was conveniently traveling in Scotland when his manager Henry Clay Frick implemented the wage cuts and hired the Pinkertons \u2014 maintaining his public image as a benevolent employer while benefiting from tactics he would have been embarrassed to authorize directly.",
+            "answer": "What is the Homestead Strike?"
+          }
+        }
+      ]
+    },
+    {
+      "id": "immigration",
+      "title": "Immigration",
+      "clues": [
+        {
+          "value": 200,
+          "wrong_answers": [
+            "What is nativism?",
+            "What is the Chinese Exclusion Act?",
+            "What is Ellis Island?"
+          ],
+          "supported": {
+            "clue": "Millions of immigrants came to the United States in the late 1800s and early 1900s \u2014 pushed out of their home countries by poverty, famine, and persecution, and pulled toward America by the promise of jobs and freedom.",
+            "answer": "What are push-pull factors?"
+          },
+          "on_grade": {
+            "clue": "The massive immigration wave of the late 19th and early 20th centuries was driven by push factors \u2014 poverty, famine, religious persecution, and political instability in Europe and Asia \u2014 and pull factors including industrial jobs, cheap land, and the promise of political freedom.",
+            "answer": "What are push-pull factors?"
+          },
+          "advanced": {
+            "clue": "The 'new immigration' of Southern and Eastern Europeans after 1880 was qualitatively different from earlier waves not in character but in perception \u2014 nativists constructed racial hierarchies placing Anglo-Saxons above Slavs, Italians, and Jews to justify restriction, using pseudo-scientific racism to redefine who counted as white.",
+            "answer": "What are push-pull factors?"
+          }
+        },
+        {
+          "value": 400,
+          "wrong_answers": [
+            "What is the Chinese Exclusion Act?",
+            "What is Angel Island?",
+            "What is the settlement house movement?"
+          ],
+          "supported": {
+            "clue": "Most European immigrants arrived at this inspection station in New York Harbor, where doctors checked their health and officials recorded their names \u2014 often anglicizing them in the process.",
+            "answer": "What is Ellis Island?"
+          },
+          "on_grade": {
+            "clue": "This federal immigration station processed over 12 million immigrants between 1892 and 1954 \u2014 conducting medical inspections that could result in deportation, and recording arrivals who would become the ancestors of roughly 40% of present-day Americans.",
+            "answer": "What is Ellis Island?"
+          },
+          "advanced": {
+            "clue": "Ellis Island processed European immigrants while Chinese arrivals were processed at Angel Island in San Francisco Bay \u2014 a deliberate geographic segregation that reflected the racial hierarchy embedded in American immigration law, where European immigrants faced inspection while Asians faced presumptive exclusion.",
+            "answer": "What is Ellis Island?"
+          }
+        },
+        {
+          "value": 600,
+          "wrong_answers": [
+            "What is the Chinese Exclusion Act?",
+            "What is xenophobia?",
+            "What is the Immigration Restriction League?"
+          ],
+          "supported": {
+            "clue": "Many native-born Americans resented immigrants, fearing they would take jobs, lower wages, or change American culture. This hostility toward immigrants was especially strong toward the Chinese and Southern and Eastern Europeans.",
+            "answer": "What is nativism?"
+          },
+          "on_grade": {
+            "clue": "This anti-immigrant sentiment \u2014 rooted in economic anxiety, religious prejudice, and racial theory \u2014 targeted successive waves of newcomers, from Irish Catholics in the 1840s to Chinese workers in the 1870s to Southern and Eastern Europeans in the 1900s.",
+            "answer": "What is nativism?"
+          },
+          "advanced": {
+            "clue": "Nativism in the Gilded Age was systematized by scientific racism \u2014 the eugenics movement provided intellectual cover for immigration restriction by claiming that Southern and Eastern Europeans were genetically inferior, a pseudoscientific framework embedded in the Immigration Acts of 1921 and 1924.",
+            "answer": "What is nativism?"
+          }
+        },
+        {
+          "value": 800,
+          "wrong_answers": [
+            "What is the settlement house movement?",
+            "What is Toynbee Hall?",
+            "What is the NAACP?"
+          ],
+          "supported": {
+            "clue": "Jane Addams opened a community center in a Chicago immigrant neighborhood in 1889 where poor immigrants could get education, childcare, job training, and social services. She later won the Nobel Peace Prize.",
+            "answer": "What is Hull House?"
+          },
+          "on_grade": {
+            "clue": "This Chicago settlement house, founded by Jane Addams in 1889, provided education, job training, childcare, and legal assistance to immigrant workers \u2014 and became a training ground for Progressive Era reformers who went on to shape social policy nationwide.",
+            "answer": "What is Hull House?"
+          },
+          "advanced": {
+            "clue": "Hull House was simultaneously a social service agency and a research institution \u2014 Addams and her colleagues produced systematic social surveys documenting poverty, disease, and working conditions in immigrant neighborhoods that provided the empirical foundation for Progressive reform legislation.",
+            "answer": "What is Hull House?"
+          }
+        },
+        {
+          "value": 1000,
+          "wrong_answers": [
+            "What is nativism?",
+            "What is the National Origins Act?",
+            "What is the Emergency Quota Act?"
+          ],
+          "supported": {
+            "clue": "Congress passed a law in 1882 banning Chinese workers from immigrating to the United States \u2014 the first law ever to exclude a group of people based solely on their race and nationality.",
+            "answer": "What is the Chinese Exclusion Act?"
+          },
+          "on_grade": {
+            "clue": "This 1882 law \u2014 the first federal legislation to bar immigration based on race and nationality \u2014 suspended Chinese labor immigration for ten years (later made permanent), responding to racist pressure from Western states while violating the Burlingame Treaty.",
+            "answer": "What is the Chinese Exclusion Act?"
+          },
+          "advanced": {
+            "clue": "The Chinese Exclusion Act established the precedent that Congress could restrict immigration based on race \u2014 a power the Supreme Court upheld in the Chinese Exclusion Cases (1889) by holding that immigration control was an inherent attribute of sovereignty, reasoning that would later justify Japanese internment.",
+            "answer": "What is the Chinese Exclusion Act?"
+          }
+        }
+      ]
+    },
+    {
+      "id": "city_life",
+      "title": "City Life",
+      "clues": [
+        {
+          "value": 200,
+          "wrong_answers": [
+            "What is a tenement?",
+            "What is a settlement house?",
+            "What is suburbanization?"
+          ],
+          "supported": {
+            "clue": "Millions of workers crowded into cities to work in factories. They lived in overcrowded, poorly lit apartment buildings called tenements \u2014 with little ventilation, no indoor plumbing, and whole families sharing tiny rooms.",
+            "answer": "What is urbanization?"
+          },
+          "on_grade": {
+            "clue": "The industrial revolution transformed the United States from a predominantly rural nation into an urban one \u2014 as factories concentrated in cities, workers flooded in from farms and foreign shores, creating the overcrowded tenement districts that reformers would spend decades fighting to improve.",
+            "answer": "What is urbanization?"
+          },
+          "advanced": {
+            "clue": "Industrialization's urbanization created a structural paradox \u2014 the same economic growth that enriched the middle class and built great cities also produced the poverty, disease, and social chaos that Progressive reformers scrambled to address, generating reform precisely because capitalism was so successful at concentrating people and misery together.",
+            "answer": "What is urbanization?"
+          }
+        },
+        {
+          "value": 400,
+          "wrong_answers": [
+            "What is urbanization?",
+            "What is suburbanization?",
+            "What is the settlement house movement?"
+          ],
+          "supported": {
+            "clue": "Jacob Riis photographed the horrific living conditions in New York City tenements in his 1890 book 'How the Other Half Lives.' His photos shocked middle-class Americans and led to housing reforms.",
+            "answer": "Who is Jacob Riis?"
+          },
+          "on_grade": {
+            "clue": "This Danish-American journalist's 1890 photographic expos\u00e9 of New York slum life brought tenement conditions to middle-class attention \u2014 pioneering the use of documentary photography as a tool for social reform and directly influencing housing legislation.",
+            "answer": "Who is Jacob Riis?"
+          },
+          "advanced": {
+            "clue": "Riis's work was groundbreaking but not without blind spots \u2014 his sympathy for immigrant poverty coexisted with racial stereotyping of Chinese and Black New Yorkers, reflecting the limits of Progressive-era reform, which often centered the concerns of white European immigrants while marginalizing others.",
+            "answer": "Who is Jacob Riis?"
+          }
+        },
+        {
+          "value": 600,
+          "wrong_answers": [
+            "What is Tammany Hall?",
+            "What is the spoils system?",
+            "What is a political boss?"
+          ],
+          "supported": {
+            "clue": "In many cities, powerful political organizations controlled local government by giving jobs and services to loyal voters. They were corrupt, but they also helped immigrants find work and navigate city life.",
+            "answer": "What are political machines?"
+          },
+          "on_grade": {
+            "clue": "These urban political organizations \u2014 exemplified by Tammany Hall in New York \u2014 maintained power through patronage networks, trading government jobs and services for votes, providing a social safety net for immigrants while extracting graft from city contracts.",
+            "answer": "What are political machines?"
+          },
+          "advanced": {
+            "clue": "Political machines were both corrupt and genuinely functional \u2014 they provided services that neither private charity nor government programs offered to new immigrants, creating a loyalty-based welfare system that Progressive reformers dismantled without adequately replacing, often leaving immigrant communities worse off.",
+            "answer": "What are political machines?"
+          }
+        },
+        {
+          "value": 800,
+          "wrong_answers": [
+            "What is the tenement?",
+            "What is the factory system?",
+            "What is the political machine?"
+          ],
+          "supported": {
+            "clue": "Andrew Carnegie wrote an essay arguing that wealthy men had a duty to give away their money for the public good \u2014 not to their children or to charity handouts, but to libraries, universities, and institutions that helped people help themselves.",
+            "answer": "What is the Gospel of Wealth?"
+          },
+          "on_grade": {
+            "clue": "Carnegie's 1889 essay argued that accumulated wealth was a public trust \u2014 that the rich man who died rich died disgraced \u2014 and that philanthropy directed toward self-improving institutions like libraries and universities was the proper use of industrial fortunes.",
+            "answer": "What is the Gospel of Wealth?"
+          },
+          "advanced": {
+            "clue": "Carnegie's Gospel was simultaneously sincere and self-serving \u2014 it justified enormous wealth accumulation by promising eventual redistribution, while allowing the wealthy to decide how to distribute it rather than allowing democratic processes to tax and redistribute it directly.",
+            "answer": "What is the Gospel of Wealth?"
+          }
+        },
+        {
+          "value": 1000,
+          "wrong_answers": [
+            "What is a trust?",
+            "What is the Commerce Clause?",
+            "What is the Sherman Antitrust Act?"
+          ],
+          "supported": {
+            "clue": "In the late 1800s, railroads charged farmers in the West much higher rates than Eastern businessmen, and gave secret discounts to big companies. Congress passed a law to regulate railroad rates and make them fair.",
+            "answer": "What is the Interstate Commerce Act?"
+          },
+          "on_grade": {
+            "clue": "This 1887 law \u2014 the first major federal regulation of private business \u2014 created the Interstate Commerce Commission to oversee railroad rates and practices, responding to farmer and shipper outrage at discriminatory pricing and secret rebates.",
+            "answer": "What is the Interstate Commerce Act?"
+          },
+          "advanced": {
+            "clue": "The ICC was largely toothless in its early years \u2014 courts consistently ruled in railroads' favor and stripped the commission's rate-setting power \u2014 until the Hepburn Act of 1906 gave it real enforcement authority, making the original act more significant as a precedent for federal regulation than as an effective remedy.",
+            "answer": "What is the Interstate Commerce Act?"
+          }
+        }
+      ]
+    },
+    {
+      "id": "gilded_age_inequality",
+      "title": "Gilded Age Inequality",
+      "clues": [
+        {
+          "value": 200,
+          "wrong_answers": [
+            "What is the Gospel of Wealth?",
+            "What is Social Darwinism?",
+            "What is laissez-faire economics?"
+          ],
+          "supported": {
+            "clue": "Mark Twain called the late 1800s the 'Gilded Age' \u2014 glittering on the outside with wealth and progress, but corrupt and unequal underneath. A tiny number of Americans were fabulously wealthy while most workers struggled.",
+            "answer": "What is the Gilded Age?"
+          },
+          "on_grade": {
+            "clue": "This term, coined by Mark Twain, describes the era of rapid industrialization, unprecedented wealth concentration, and political corruption of the 1870s\u20131900s \u2014 when spectacular displays of upper-class wealth coexisted with widespread poverty and brutal working conditions.",
+            "answer": "What is the Gilded Age?"
+          },
+          "advanced": {
+            "clue": "Twain's metaphor captured more than inequality \u2014 'gilded' implied a thin veneer of gold over cheap metal, suggesting that Gilded Age prosperity was both superficial and fraudulent, concealing a corrupt political economy in which business interests effectively purchased government policy.",
+            "answer": "What is the Gilded Age?"
+          }
+        },
+        {
+          "value": 400,
+          "wrong_answers": [
+            "What is the Homestead Strike?",
+            "What is the Triangle Shirtwaist Fire?",
+            "What is the Pullman Strike?"
+          ],
+          "supported": {
+            "clue": "Workers who came to America from Europe often found that the streets were not paved with gold. Many worked 12-hour days, six days a week, in dangerous conditions, for wages that barely kept their families alive.",
+            "answer": "What is the immigrant worker experience?"
+          },
+          "on_grade": {
+            "clue": "The immigrant workers who built Gilded Age industry typically labored 10\u201312 hours a day, six days a week, in unsafe conditions, for wages that kept families on the edge of poverty \u2014 with no job security, no worker's compensation, and no legal recourse for injury.",
+            "answer": "What is the immigrant worker experience?"
+          },
+          "advanced": {
+            "clue": "The immigrant worker's vulnerability was structural, not incidental \u2014 employers preferred recent immigrants precisely because their economic desperation, language barriers, and uncertain legal status made them less likely to organize, strike, or challenge dangerous conditions.",
+            "answer": "What is the immigrant worker experience?"
+          }
+        },
+        {
+          "value": 600,
+          "wrong_answers": [
+            "What is the Washington Monument?",
+            "What is Ellis Island?",
+            "What is naturalization?"
+          ],
+          "supported": {
+            "clue": "Given to the United States by France in 1886, this famous statue in New York Harbor became a symbol of hope for millions of immigrants arriving in America, representing freedom and a new beginning.",
+            "answer": "What is the Statue of Liberty?"
+          },
+          "on_grade": {
+            "clue": "Dedicated in 1886, this monument became the iconic symbol of American immigration \u2014 its Emma Lazarus poem welcoming 'your tired, your poor, your huddled masses' articulating an immigrant ideal that coexisted uneasily with nativist restriction movements.",
+            "answer": "What is the Statue of Liberty?"
+          },
+          "advanced": {
+            "clue": "The Lazarus poem was added to the statue's base in 1903, not at its dedication \u2014 and the poem's welcoming rhetoric was aspirational rather than descriptive of actual policy, which had already excluded Chinese immigrants and was moving toward broader restriction of Southern and Eastern Europeans.",
+            "answer": "What is the Statue of Liberty?"
+          }
+        },
+        {
+          "value": 800,
+          "wrong_answers": [
+            "What is Social Darwinism?",
+            "What is the Gospel of Wealth?",
+            "What is vertical integration?"
+          ],
+          "supported": {
+            "clue": "The government adopted a hands-off approach to the economy during the Gilded Age, believing that competition and the market would produce the best outcomes without government regulation.",
+            "answer": "What is laissez-faire economics?"
+          },
+          "on_grade": {
+            "clue": "This economic philosophy \u2014 that government should not interfere in business \u2014 dominated Gilded Age policy, allowing industrialists to operate without meaningful regulation of working conditions, wages, prices, or monopoly power.",
+            "answer": "What is laissez-faire economics?"
+          },
+          "advanced": {
+            "clue": "Gilded Age laissez-faire was selectively applied \u2014 the same government that refused to regulate working conditions actively protected business through high tariffs, land grants to railroads, and court injunctions against labor strikes, revealing that the choice was never between government and no government but between which interests government would serve.",
+            "answer": "What is laissez-faire economics?"
+          }
+        },
+        {
+          "clue": "What is the Populist Party?",
+          "value": 1000,
+          "wrong_answers": [
+            "What is the Progressive Party?",
+            "What is the Socialist Party?",
+            "What is the Greenback Party?"
+          ],
+          "supported": {
+            "clue": "Farmers in the South and West were being crushed by railroad rates, falling crop prices, and debts they couldn't repay. They formed their own political party in the 1890s to demand government help.",
+            "answer": "What is the Populist Party?"
+          },
+          "on_grade": {
+            "clue": "This 1890s agrarian political movement \u2014 organized by farmers devastated by falling prices, railroad exploitation, and credit scarcity \u2014 called for a graduated income tax, direct election of senators, government ownership of railroads, and currency inflation to relieve debtor hardship.",
+            "answer": "What is the Populist Party?"
+          },
+          "advanced": {
+            "clue": "The Populists' program \u2014 dismissed as radical in 1892 \u2014 was largely adopted by Progressive reformers and the New Deal over the following four decades: the income tax (16th Amendment), direct Senate election (17th Amendment), railroad regulation (Hepburn Act), and banking reform (Federal Reserve Act) all derived from Populist demands.",
+            "answer": "What is the Populist Party?"
+          }
+        }
+      ]
+    },
+    {
+      "id": "technology_innovation",
+      "title": "Technology & Innovation",
+      "clues": [
+        {
+          "value": 200,
+          "wrong_answers": [
+            "What is the telephone?",
+            "What is the railroad?",
+            "What is the automobile?"
+          ],
+          "supported": {
+            "clue": "Thomas Edison invented the light bulb and created the first electrical power distribution system \u2014 transforming American cities and factories by replacing gas lamps and candles with electric light.",
+            "answer": "What is the electric light?"
+          },
+          "on_grade": {
+            "clue": "Edison's development of the practical incandescent bulb and the centralized electrical distribution system in the early 1880s launched the electrical revolution \u2014 transforming urban life, extending the workday, and enabling new industries that depended on reliable power.",
+            "answer": "What is the electric light?"
+          },
+          "advanced": {
+            "clue": "Edison's DC power system lost the 'War of Currents' to Westinghouse and Tesla's AC system \u2014 which could transmit electricity over long distances rather than just a few city blocks \u2014 illustrating that technical superiority doesn't guarantee market dominance when infrastructure decisions create lock-in effects.",
+            "answer": "What is the electric light?"
+          }
+        },
+        {
+          "value": 400,
+          "wrong_answers": [
+            "What is the steel mill?",
+            "What is the factory system?",
+            "What is the cotton gin?"
+          ],
+          "supported": {
+            "clue": "Henry Ford introduced the moving assembly line in 1913 \u2014 having each worker do one specific task as the car moved past them \u2014 making cars so cheaply that ordinary workers could afford to buy them.",
+            "answer": "What is the assembly line?"
+          },
+          "on_grade": {
+            "clue": "Ford's moving assembly line at Highland Park \u2014 which reduced the time to build a Model T from 12 hours to 93 minutes \u2014 made mass-produced consumer goods affordable to workers, transforming both production methods and consumer culture.",
+            "answer": "What is the assembly line?"
+          },
+          "advanced": {
+            "clue": "Ford's assembly line transformed labor as well as production \u2014 it deskilled manufacturing by breaking tasks into simple repetitions, creating the dependable but mind-numbing work that made high wages necessary to prevent turnover, leading to the $5 workday that itself became a marketing tool.",
+            "answer": "What is the assembly line?"
+          }
+        },
+        {
+          "value": 600,
+          "wrong_answers": [
+            "What is the Erie Canal?",
+            "What is the transcontinental telegraph?",
+            "What is the Panama Canal?"
+          ],
+          "supported": {
+            "clue": "The completion of the transcontinental railroad in 1869 connected the East and West Coasts \u2014 making it possible to cross the continent in days instead of months, and opening the West to settlement and commercial agriculture.",
+            "answer": "What is the transcontinental railroad?"
+          },
+          "on_grade": {
+            "clue": "The 1869 completion of the transcontinental railroad \u2014 built by Central Pacific workers from the west and Union Pacific workers from the east, meeting at Promontory Summit, Utah \u2014 created a national market economy by linking coasts and enabling mass movement of people and goods.",
+            "answer": "What is the transcontinental railroad?"
+          },
+          "advanced": {
+            "clue": "The transcontinental railroad was built largely by Chinese immigrants (Central Pacific) and Irish immigrants (Union Pacific), groups who received none of the federal land grants and capital that enriched railroad owners \u2014 a pattern of wealth extraction from immigrant labor that characterized Gilded Age development.",
+            "answer": "What is the transcontinental railroad?"
+          }
+        },
+        {
+          "value": 800,
+          "wrong_answers": [
+            "What is the assembly line?",
+            "What is the locomotive?",
+            "What is the telegraph?"
+          ],
+          "supported": {
+            "clue": "Alexander Graham Bell invented this communication device in 1876 \u2014 allowing people to speak to each other across long distances for the first time, transforming business communication and eventually linking American households.",
+            "answer": "What is the telephone?"
+          },
+          "on_grade": {
+            "clue": "Bell's 1876 invention revolutionized communication \u2014 enabling real-time voice transmission that transformed business operations, reduced the isolation of rural communities, and created the infrastructure for modern telecommunications networks.",
+            "answer": "What is the telephone?"
+          },
+          "advanced": {
+            "clue": "The telephone's rollout illustrated how infrastructure investment decisions shape social inequality \u2014 telephone service reached urban business customers first and rural households last, and even early telephone etiquette was contested as operators (mostly women) navigated new social expectations about voice communication across class lines.",
+            "answer": "What is the telephone?"
+          }
+        },
+        {
+          "value": 1000,
+          "wrong_answers": [
+            "What is the railroad?",
+            "What is the telegraph?",
+            "What is the automobile?"
+          ],
+          "supported": {
+            "clue": "The Bessemer process made it possible to produce steel quickly and cheaply in large quantities \u2014 making possible the construction of skyscrapers, bridges, and railroads that transformed American cities and transportation.",
+            "answer": "What is the Bessemer steel process?"
+          },
+          "on_grade": {
+            "clue": "This 1850s innovation \u2014 forcing air through molten iron to remove carbon impurities \u2014 enabled mass production of high-quality steel, driving down costs dramatically and making possible the railroad expansion, skyscraper construction, and bridge-building of the Gilded Age.",
+            "answer": "What is the Bessemer steel process?"
+          },
+          "advanced": {
+            "clue": "The Bessemer process created Carnegie's fortune by enabling continuous mass steel production, but it also deskilled steelworkers \u2014 replacing the skilled puddlers who had controlled production timelines with semi-skilled workers feeding automated converters \u2014 making the Homestead Strike partly a fight over skilled workers' autonomy as much as wages.",
+            "answer": "What is the Bessemer steel process?"
+          }
+        }
+      ]
+    }
+  ]
+}
