@@ -1,0 +1,655 @@
+{
+  "topic": "Civil War & Reconstruction",
+  "level_descriptions": {
+    "supported": "Short sentences, one idea at a time, simplified reading level",
+    "on_grade": "Clear prose with context, grade-level reading",
+    "advanced": "Complex sentences, specific details, AP-level precision"
+  },
+  "concepts": [
+    {
+      "id": "causes_civil_war",
+      "concept": "Causes of the Civil War / Sectionalism",
+      "point_value": 200,
+      "clues": {
+        "100": {
+          "clue": "Slavery, states' rights, and economic differences between North and South were the main causes of the Civil War.",
+          "answer": "What is sectionalism?",
+          "wrong_answers": [
+            "nationalism",
+            "imperialism",
+            "isolationism"
+          ]
+        },
+        "supported": {
+          "clue": "For decades before the Civil War, the North and South grew more different. The North had factories and free labor. The South had plantations and enslaved workers. Southerners worried the North would use the federal government to end slavery. These growing differences between regions are called sectionalism.",
+          "answer": "What is sectionalism?",
+          "wrong_answers": [
+            "nationalism",
+            "imperialism",
+            "nullification"
+          ]
+        },
+        "on_grade": {
+          "clue": "Sectionalism \u2014 the growing divergence of Northern and Southern economic systems, social structures, and political interests \u2014 made every national debate about tariffs, territorial expansion, and federal power increasingly a debate about slavery, until no political compromise could contain the conflict.",
+          "answer": "What is sectionalism?",
+          "wrong_answers": [
+            "nationalism",
+            "states' rights",
+            "nullification"
+          ]
+        },
+        "advanced": {
+          "clue": "Historians debate whether slavery or states' rights was the primary cause of secession \u2014 but the Confederate constitution and secession declarations themselves repeatedly cited the preservation of slavery as their explicit justification, suggesting the states' rights argument was largely a post-war reframing that obscured the centrality of slavery.",
+          "answer": "What is sectionalism?",
+          "wrong_answers": [
+            "nationalism",
+            "nullification",
+            "economic determinism"
+          ]
+        }
+      }
+    },
+    {
+      "id": "emancipation_proclamation",
+      "concept": "Emancipation Proclamation",
+      "point_value": 200,
+      "clues": {
+        "100": {
+          "clue": "President Lincoln issued this order in 1863, declaring enslaved people in Confederate states to be free.",
+          "answer": "What is the Emancipation Proclamation?",
+          "wrong_answers": [
+            "the 13th Amendment",
+            "the Gettysburg Address",
+            "the Freedmen's Bureau Act"
+          ]
+        },
+        "supported": {
+          "clue": "In January 1863, President Lincoln declared that all enslaved people in Confederate states were free. This changed the meaning of the war \u2014 it was now also a fight to end slavery. It also prevented Britain and France from helping the Confederacy, since those countries had already banned slavery.",
+          "answer": "What is the Emancipation Proclamation?",
+          "wrong_answers": [
+            "the 13th Amendment",
+            "the Gettysburg Address",
+            "the Freedmen's Bureau Act"
+          ]
+        },
+        "on_grade": {
+          "clue": "Lincoln's Emancipation Proclamation was a war measure issued under his commander-in-chief powers \u2014 it only freed enslaved people in Confederate-held territory, not in border states or Union-controlled areas. Its significance was political and moral: it redefined the war's purpose and made European intervention on behalf of the Confederacy politically impossible.",
+          "answer": "What is the Emancipation Proclamation?",
+          "wrong_answers": [
+            "the 13th Amendment",
+            "the Gettysburg Address",
+            "the Confiscation Acts"
+          ]
+        },
+        "advanced": {
+          "clue": "Because the Proclamation rested on war powers rather than legislation, Lincoln himself doubted its constitutional permanence after the war \u2014 which is why he pushed urgently for the 13th Amendment before the war ended, wanting slavery abolished by law rather than left vulnerable to court challenge once the emergency powers expired.",
+          "answer": "What is the Emancipation Proclamation?",
+          "wrong_answers": [
+            "the 13th Amendment",
+            "the Confiscation Acts",
+            "the Wade-Davis Bill"
+          ]
+        }
+      }
+    },
+    {
+      "id": "lincoln_war_aims",
+      "concept": "Lincoln's War Aims / Preservation of the Union",
+      "point_value": 300,
+      "clues": {
+        "100": {
+          "clue": "President Lincoln's primary stated goal at the start of the Civil War was to preserve the Union, not to end slavery.",
+          "answer": "What is preservation of the Union?",
+          "wrong_answers": [
+            "abolition of slavery",
+            "states' rights",
+            "Reconstruction"
+          ]
+        },
+        "supported": {
+          "clue": "Lincoln said his main goal was to save the United States as one country. He wrote that if he could save the Union without freeing any enslaved people he would, and if freeing all of them would save it he would do that too. As the war continued, ending slavery and saving the Union became the same goal.",
+          "answer": "What is preservation of the Union?",
+          "wrong_answers": [
+            "abolition of slavery",
+            "states' rights",
+            "Reconstruction"
+          ]
+        },
+        "on_grade": {
+          "clue": "Lincoln's famous 1862 letter to Horace Greeley \u2014 'My paramount object in this struggle is to save the Union' \u2014 reflected his political need to hold border states and Northern Democrats behind the war effort. By the time of his Second Inaugural Address, preserving the Union and ending slavery had become inseparable goals.",
+          "answer": "What is preservation of the Union?",
+          "wrong_answers": [
+            "abolition of slavery",
+            "states' rights",
+            "Reconstruction"
+          ]
+        },
+        "advanced": {
+          "clue": "Lincoln's Second Inaugural Address \u2014 refusing to assign blame, invoking shared national sin, and calling for 'malice toward none' \u2014 articulated a vision of Reconstruction as national healing rather than Southern punishment, a framework his assassination left to lesser politicians who would prove unable or unwilling to sustain it.",
+          "answer": "What is preservation of the Union?",
+          "wrong_answers": [
+            "the Gettysburg Address",
+            "the Wade-Davis Bill",
+            "Radical Reconstruction"
+          ]
+        }
+      }
+    },
+    {
+      "id": "reconstruction_amendments",
+      "concept": "13th, 14th, 15th Amendments",
+      "point_value": 300,
+      "clues": {
+        "100": {
+          "clue": "These three amendments, passed after the Civil War, abolished slavery, granted citizenship to formerly enslaved people, and gave Black men the right to vote.",
+          "answer": "What is the Reconstruction Amendments?",
+          "wrong_answers": [
+            "the Bill of Rights",
+            "the Civil Rights Act",
+            "the Freedmen's Bureau Act"
+          ]
+        },
+        "supported": {
+          "clue": "After the Civil War, Congress passed three important amendments. The 13th ended slavery. The 14th made all people born in the U.S. citizens and promised equal protection under the law. The 15th gave Black men the right to vote. Together, they tried to guarantee the rights of formerly enslaved people \u2014 though those rights were soon taken away.",
+          "answer": "What is the Reconstruction Amendments?",
+          "wrong_answers": [
+            "the Bill of Rights",
+            "the Civil Rights Act",
+            "the Freedmen's Bureau Act"
+          ]
+        },
+        "on_grade": {
+          "clue": "The Reconstruction Amendments \u2014 abolishing slavery, establishing birthright citizenship and equal protection, and prohibiting race-based voting restrictions \u2014 represented a constitutional revolution. But their promise was systematically undermined by Supreme Court rulings, Southern state laws, and federal abandonment of enforcement after 1877.",
+          "answer": "What is the Reconstruction Amendments?",
+          "wrong_answers": [
+            "the Bill of Rights",
+            "the Civil Rights Act of 1964",
+            "the Freedmen's Bureau Act"
+          ]
+        },
+        "advanced": {
+          "clue": "The 14th Amendment's equal protection clause \u2014 largely dormant for Black Americans for nearly a century after Reconstruction \u2014 was later repurposed by the Supreme Court in cases involving corporations, gender discrimination, and eventually same-sex marriage, demonstrating how constitutional language can carry consequences far beyond its authors' intentions.",
+          "answer": "What is the Reconstruction Amendments?",
+          "wrong_answers": [
+            "the Bill of Rights",
+            "the Civil Rights Act of 1964",
+            "the Freedmen's Bureau Act"
+          ]
+        }
+      }
+    },
+    {
+      "id": "reconstruction_plans",
+      "concept": "Reconstruction Plans",
+      "point_value": 400,
+      "clues": {
+        "100": {
+          "clue": "After the Civil War, Lincoln wanted a lenient plan to bring Southern states back quickly, while Radical Republicans in Congress wanted stricter requirements.",
+          "answer": "What is Reconstruction?",
+          "wrong_answers": [
+            "the Compromise of 1877",
+            "the New Deal",
+            "the Great Society"
+          ]
+        },
+        "supported": {
+          "clue": "After the war, leaders disagreed about how to bring Southern states back into the Union. Lincoln wanted a gentle approach \u2014 forgive the South and reunite quickly. Radical Republicans in Congress wanted the South to meet strict requirements to protect the rights of freed people before rejoining. Lincoln's death gave the Radicals control.",
+          "answer": "What is Reconstruction?",
+          "wrong_answers": [
+            "the Compromise of 1877",
+            "the Freedmen's Bureau",
+            "Presidential Reconstruction"
+          ]
+        },
+        "on_grade": {
+          "clue": "The contest between Lincoln's lenient Ten Percent Plan and the Radical Republicans' Wade-Davis Bill reflected a fundamental disagreement about whether Reconstruction's goal was rapid reunion or genuine transformation of Southern society \u2014 a debate that Andrew Johnson's intransigence resolved in the Radicals' favor, leading to congressional Reconstruction.",
+          "answer": "What is Reconstruction?",
+          "wrong_answers": [
+            "the Compromise of 1877",
+            "the Freedmen's Bureau",
+            "Presidential Reconstruction"
+          ]
+        },
+        "advanced": {
+          "clue": "Thaddeus Stevens's vision of Reconstruction \u2014 redistributing confiscated plantation land to freedpeople as 'forty acres and a mule' \u2014 was the road not taken, and historians have argued that its rejection condemned Black Southerners to economic dependence on their former enslavers, making the formal political rights granted by the amendments practically unenforceable.",
+          "answer": "What is Reconstruction?",
+          "wrong_answers": [
+            "the Compromise of 1877",
+            "the Freedmen's Bureau",
+            "Presidential Reconstruction"
+          ]
+        }
+      }
+    },
+    {
+      "id": "freedmens_bureau",
+      "concept": "Freedmen's Bureau",
+      "point_value": 300,
+      "clues": {
+        "100": {
+          "clue": "This federal agency was created after the Civil War to help formerly enslaved people find work, get education, and adjust to freedom.",
+          "answer": "What is the Freedmen's Bureau?",
+          "wrong_answers": [
+            "the NAACP",
+            "the Underground Railroad",
+            "the Bureau of Indian Affairs"
+          ]
+        },
+        "supported": {
+          "clue": "After the Civil War, millions of formerly enslaved people had no land, money, or education. The Freedmen's Bureau was created to help them. It set up schools, hospitals, and helped people find jobs. But it was underfunded and President Johnson tried to shut it down. It was abolished in 1872 before its work was finished.",
+          "answer": "What is the Freedmen's Bureau?",
+          "wrong_answers": [
+            "the NAACP",
+            "the Underground Railroad",
+            "the Bureau of Indian Affairs"
+          ]
+        },
+        "on_grade": {
+          "clue": "The Freedmen's Bureau established over 1,000 schools, negotiated labor contracts, and provided emergency relief to both Black and white Southerners \u2014 but its effectiveness was crippled by chronic underfunding, Southern resistance, and President Johnson's vetoes of legislation to extend its authority.",
+          "answer": "What is the Freedmen's Bureau?",
+          "wrong_answers": [
+            "the NAACP",
+            "the Underground Railroad",
+            "the Bureau of Indian Affairs"
+          ]
+        },
+        "advanced": {
+          "clue": "W.E.B. Du Bois's assessment that the Freedmen's Bureau was 'a government social agency on a scale never before attempted in the United States' proved prescient \u2014 it served as both a model and a cautionary tale for New Deal administrators designing federal relief programs sixty years later.",
+          "answer": "What is the Freedmen's Bureau?",
+          "wrong_answers": [
+            "the NAACP",
+            "the Reconstruction Acts",
+            "the Bureau of Indian Affairs"
+          ]
+        }
+      }
+    },
+    {
+      "id": "black_codes_sharecropping",
+      "concept": "Black Codes / Sharecropping",
+      "point_value": 300,
+      "clues": {
+        "100": {
+          "clue": "Southern states passed these laws after the Civil War to limit the freedom of Black people and force them to work for white landowners.",
+          "answer": "What is the Black Codes?",
+          "wrong_answers": [
+            "Jim Crow laws",
+            "the Freedmen's Bureau",
+            "the 13th Amendment"
+          ]
+        },
+        "supported": {
+          "clue": "Right after the Civil War, Southern states passed laws called Black Codes to keep formerly enslaved people from exercising their freedom. These laws forced Black people to sign work contracts, limited where they could live, and made it illegal to be unemployed. Many Black workers ended up as sharecroppers \u2014 farming land owned by white landlords in exchange for a share of the crop.",
+          "answer": "What is the Black Codes?",
+          "wrong_answers": [
+            "Jim Crow laws",
+            "the Freedmen's Bureau Acts",
+            "the Reconstruction Acts"
+          ]
+        },
+        "on_grade": {
+          "clue": "Black Codes \u2014 enacted across the South in 1865\u201366 \u2014 effectively recreated the conditions of slavery through nominally race-neutral vagrancy laws, labor contract requirements, and restrictions on movement. Sharecropping further entrenched economic dependence, trapping Black families in cycles of debt that persisted for generations.",
+          "answer": "What is the Black Codes?",
+          "wrong_answers": [
+            "Jim Crow laws",
+            "the convict leasing system",
+            "the crop-lien system"
+          ]
+        },
+        "advanced": {
+          "clue": "The sharecropping system's genius as a mechanism of social control lay in its self-perpetuating debt cycle: merchants who extended credit for seeds and tools at usurious rates ensured that most sharecroppers never produced enough to pay off their debt, legally binding them to the land as effectively as slavery had \u2014 without requiring formal ownership of the people.",
+          "answer": "What is sharecropping?",
+          "wrong_answers": [
+            "the crop-lien system",
+            "the convict leasing system",
+            "tenant farming"
+          ]
+        }
+      }
+    },
+    {
+      "id": "impeachment_johnson",
+      "concept": "Impeachment of Andrew Johnson",
+      "point_value": 400,
+      "clues": {
+        "100": {
+          "clue": "President Andrew Johnson was impeached by the House in 1868 for violating the Tenure of Office Act, but the Senate acquitted him by one vote.",
+          "answer": "What is the impeachment of Andrew Johnson?",
+          "wrong_answers": [
+            "the impeachment of Bill Clinton",
+            "the impeachment of Richard Nixon",
+            "the Trial of Aaron Burr"
+          ]
+        },
+        "supported": {
+          "clue": "President Johnson blocked Radical Republican Reconstruction at every turn. When he fired Secretary of War Edwin Stanton in violation of a new law, the House impeached him. His Senate trial ended with a single vote saving him from removal. The confrontation showed how deeply divided the government was over Reconstruction policy.",
+          "answer": "What is the impeachment of Andrew Johnson?",
+          "wrong_answers": [
+            "the impeachment of Bill Clinton",
+            "the impeachment of Nixon",
+            "the nullification crisis"
+          ]
+        },
+        "on_grade": {
+          "clue": "Johnson's impeachment for violating the Tenure of Office Act was the legal pretext for a fundamentally political confrontation \u2014 Radical Republicans sought to remove a president who was systematically undermining Reconstruction by vetoing civil rights legislation, pardoning ex-Confederates, and returning political power to Southern white supremacists.",
+          "answer": "What is the impeachment of Andrew Johnson?",
+          "wrong_answers": [
+            "the impeachment of Bill Clinton",
+            "the Credit Mobilier scandal",
+            "the Tenure of Office Act alone"
+          ]
+        },
+        "advanced": {
+          "clue": "Senator Edmund Ross's deciding vote to acquit Johnson \u2014 celebrated in John F. Kennedy's Profiles in Courage as an act of principled independence \u2014 has been reread by historians as a vote that enabled Johnson's sabotage of Reconstruction and contributed to the abandonment of Black civil rights in the South for nearly a century.",
+          "answer": "What is the impeachment of Andrew Johnson?",
+          "wrong_answers": [
+            "the impeachment of Bill Clinton",
+            "the Credit Mobilier scandal",
+            "the Tenure of Office Act"
+          ]
+        }
+      }
+    },
+    {
+      "id": "compromise_1877",
+      "concept": "Compromise of 1877 / End of Reconstruction",
+      "point_value": 400,
+      "clues": {
+        "100": {
+          "clue": "This backroom political deal resolved the disputed 1876 election and ended Reconstruction by removing federal troops from the South.",
+          "answer": "What is the Compromise of 1877?",
+          "wrong_answers": [
+            "the Missouri Compromise",
+            "the Compromise of 1850",
+            "the Election of 1876"
+          ]
+        },
+        "supported": {
+          "clue": "The 1876 presidential election between Hayes and Tilden was disputed. A backroom deal gave the presidency to Republican Hayes in exchange for removing federal troops from the South. Without soldiers to protect them, Black Southerners quickly lost the rights they had gained during Reconstruction.",
+          "answer": "What is the Compromise of 1877?",
+          "wrong_answers": [
+            "the Missouri Compromise",
+            "the Compromise of 1850",
+            "the Election of 1876"
+          ]
+        },
+        "on_grade": {
+          "clue": "The Compromise of 1877 \u2014 trading the disputed presidency to Rutherford Hayes in exchange for ending Reconstruction \u2014 marked the federal government's abandonment of Black Southerners to the mercy of the states that had just lost the war. The political rights granted by the Reconstruction Amendments would not be enforced again for nearly ninety years.",
+          "answer": "What is the Compromise of 1877?",
+          "wrong_answers": [
+            "the Missouri Compromise",
+            "the Compromise of 1850",
+            "the Redeemer movement"
+          ]
+        },
+        "advanced": {
+          "clue": "C. Vann Woodward's revisionist argument that the Compromise of 1877 was a deliberate bargain between Northern capital and Southern Redeemers \u2014 trading Black rights for economic development access \u2014 remains controversial, but the outcome is not: the systematic disenfranchisement of Black Southerners accelerated dramatically within a decade of the federal withdrawal.",
+          "answer": "What is the Compromise of 1877?",
+          "wrong_answers": [
+            "the Missouri Compromise",
+            "the Redeemer movement",
+            "the Election of 1876"
+          ]
+        }
+      }
+    },
+    {
+      "id": "kkk_redemption",
+      "concept": "Rise of the KKK / Redemption",
+      "point_value": 400,
+      "clues": {
+        "100": {
+          "clue": "The Ku Klux Klan used terror and violence after the Civil War to prevent Black Southerners from voting and exercising their rights.",
+          "answer": "What is the Ku Klux Klan?",
+          "wrong_answers": [
+            "the Redeemers",
+            "the White League",
+            "the Red Shirts"
+          ]
+        },
+        "supported": {
+          "clue": "After the Civil War, white Southerners used violence and terror to take back political power. The Ku Klux Klan attacked Black voters, officeholders, and Republicans. Congress passed laws against the KKK, but without federal enforcement, Southern states could not or would not stop the violence. This period of taking back white control was called Redemption.",
+          "answer": "What is the Ku Klux Klan?",
+          "wrong_answers": [
+            "the Redeemers",
+            "the White League",
+            "the Red Shirts"
+          ]
+        },
+        "on_grade": {
+          "clue": "The Ku Klux Klan and similar paramilitary groups used assassination, arson, and mass terror to destroy Republican political power in the South during Reconstruction \u2014 effectively launching a counter-revolution against the rights established by the Reconstruction Amendments that the federal government lacked the sustained political will to suppress.",
+          "answer": "What is the Ku Klux Klan?",
+          "wrong_answers": [
+            "the Redeemers",
+            "the White League",
+            "the Red Shirts"
+          ]
+        },
+        "advanced": {
+          "clue": "Historian Eric Foner has argued that the violent overthrow of Reconstruction governments constitutes the first successful domestic terrorism campaign in American history \u2014 and that the federal government's decision to stop enforcing the Reconstruction Amendments set a precedent for how civil rights would be treated as a sectional matter rather than a national one for the next century.",
+          "answer": "What is the Ku Klux Klan?",
+          "wrong_answers": [
+            "the Redeemers",
+            "the White League",
+            "the Enforcement Acts"
+          ]
+        }
+      }
+    },
+    {
+      "id": "plessy_ferguson",
+      "concept": "Plessy v. Ferguson / Separate but Equal",
+      "point_value": 300,
+      "clues": {
+        "100": {
+          "clue": "This 1896 Supreme Court case ruled that racial segregation was legal as long as facilities were 'separate but equal.'",
+          "answer": "What is Plessy v. Ferguson?",
+          "wrong_answers": [
+            "Brown v. Board of Education",
+            "Dred Scott v. Sandford",
+            "McCulloch v. Maryland"
+          ]
+        },
+        "supported": {
+          "clue": "In 1896, Homer Plessy challenged a Louisiana law requiring separate railroad cars for Black and white passengers. The Supreme Court ruled against him, saying segregation was legal as long as facilities were equal. This 'separate but equal' ruling gave legal support to Jim Crow laws for almost sixty years.",
+          "answer": "What is Plessy v. Ferguson?",
+          "wrong_answers": [
+            "Brown v. Board of Education",
+            "Dred Scott v. Sandford",
+            "McCulloch v. Maryland"
+          ]
+        },
+        "on_grade": {
+          "clue": "The Supreme Court's 'separate but equal' doctrine in Plessy v. Ferguson (1896) provided constitutional cover for the entire Jim Crow system \u2014 even though facilities were virtually never equal \u2014 and remained binding precedent until Brown v. Board of Education overturned it fifty-eight years later.",
+          "answer": "What is Plessy v. Ferguson?",
+          "wrong_answers": [
+            "Brown v. Board of Education",
+            "Dred Scott v. Sandford",
+            "Civil Rights Cases (1883)"
+          ]
+        },
+        "advanced": {
+          "clue": "Justice Harlan's lone dissent in Plessy \u2014 arguing that 'our Constitution is color-blind' \u2014 was later adopted almost verbatim by the NAACP's legal strategy and by Chief Justice Warren's majority opinion in Brown, illustrating how dissenting opinions can become the law of the land when political conditions finally align with their principles.",
+          "answer": "What is Plessy v. Ferguson?",
+          "wrong_answers": [
+            "Brown v. Board of Education",
+            "the Civil Rights Cases of 1883",
+            "Dred Scott v. Sandford"
+          ]
+        }
+      }
+    },
+    {
+      "id": "kansas_nebraska_bleeding_kansas",
+      "concept": "Kansas-Nebraska Act / Bleeding Kansas",
+      "point_value": 300,
+      "clues": {
+        "100": {
+          "clue": "The Kansas-Nebraska Act of 1854 allowed settlers in those territories to vote on whether to allow slavery, leading to violent conflict in Kansas.",
+          "answer": "What is the Kansas-Nebraska Act?",
+          "wrong_answers": [
+            "the Missouri Compromise",
+            "the Compromise of 1850",
+            "popular sovereignty"
+          ]
+        },
+        "supported": {
+          "clue": "The Kansas-Nebraska Act of 1854 said that the people living in those territories would vote on whether to allow slavery. Both pro-slavery and anti-slavery settlers rushed to Kansas to influence the vote. Violence broke out between the two sides. The territory became known as Bleeding Kansas, showing the country was heading toward civil war.",
+          "answer": "What is the Kansas-Nebraska Act?",
+          "wrong_answers": [
+            "the Missouri Compromise",
+            "the Compromise of 1850",
+            "the Wilmot Proviso"
+          ]
+        },
+        "on_grade": {
+          "clue": "The Kansas-Nebraska Act repealed the Missouri Compromise's prohibition on slavery north of 36\u00b030', replacing it with popular sovereignty. The resulting violence in Kansas \u2014 as pro-slavery Missourians and anti-slavery New Englanders fought for control \u2014 destroyed the Whig Party, created the Republican Party, and demonstrated that the slavery question could not be resolved by popular vote.",
+          "answer": "What is the Kansas-Nebraska Act?",
+          "wrong_answers": [
+            "the Missouri Compromise",
+            "the Compromise of 1850",
+            "the Wilmot Proviso"
+          ]
+        },
+        "advanced": {
+          "clue": "Stephen Douglas designed the Kansas-Nebraska Act to facilitate a transcontinental railroad through Chicago by organizing the territories \u2014 requiring him to repeal the Missouri Compromise to win Southern votes \u2014 a political calculation that destroyed his presidential ambitions, collapsed the existing party system, and accelerated the sectional crisis by a decade.",
+          "answer": "What is the Kansas-Nebraska Act?",
+          "wrong_answers": [
+            "the Missouri Compromise",
+            "the Compromise of 1850",
+            "the Lecompton Constitution"
+          ]
+        }
+      }
+    },
+    {
+      "id": "dred_scott",
+      "concept": "Dred Scott Decision",
+      "point_value": 400,
+      "clues": {
+        "100": {
+          "clue": "In 1857, the Supreme Court ruled that enslaved people were property, not citizens, and that Congress had no power to ban slavery in the territories.",
+          "answer": "What is the Dred Scott decision?",
+          "wrong_answers": [
+            "Plessy v. Ferguson",
+            "McCulloch v. Maryland",
+            "Marbury v. Madison"
+          ]
+        },
+        "supported": {
+          "clue": "Dred Scott was an enslaved man who sued for his freedom after living in a free state and territory. The Supreme Court ruled against him. Chief Justice Taney said Black people could never be citizens. He also said Congress had no power to ban slavery anywhere. This decision outraged Northerners and pushed the country closer to war.",
+          "answer": "What is the Dred Scott decision?",
+          "wrong_answers": [
+            "Plessy v. Ferguson",
+            "McCulloch v. Maryland",
+            "Marbury v. Madison"
+          ]
+        },
+        "on_grade": {
+          "clue": "Chief Justice Taney's sweeping ruling in Dred Scott v. Sandford declared that Black people had 'no rights which the white man was bound to respect,' that enslaved people were property protected by the Fifth Amendment, and that the Missouri Compromise had always been unconstitutional \u2014 effectively making slavery legal everywhere and making political compromise impossible.",
+          "answer": "What is the Dred Scott decision?",
+          "wrong_answers": [
+            "Plessy v. Ferguson",
+            "McCulloch v. Maryland",
+            "Prigg v. Pennsylvania"
+          ]
+        },
+        "advanced": {
+          "clue": "Taney intended Dred Scott to permanently resolve the slavery question by removing it from the political arena \u2014 but it had the opposite effect, galvanizing Northern opinion, boosting the Republican Party, discrediting popular sovereignty, and making Lincoln's 'House Divided' argument seem prescient rather than radical.",
+          "answer": "What is the Dred Scott decision?",
+          "wrong_answers": [
+            "Plessy v. Ferguson",
+            "Prigg v. Pennsylvania",
+            "Ableman v. Booth"
+          ]
+        }
+      }
+    },
+    {
+      "id": "lincolns_second_inaugural",
+      "concept": "Lincoln's Second Inaugural Address",
+      "point_value": 300,
+      "clues": {
+        "100": {
+          "clue": "In this 1865 speech, Lincoln called for 'malice toward none' and national healing as the Civil War neared its end.",
+          "answer": "What is Lincoln's Second Inaugural Address?",
+          "wrong_answers": [
+            "the Gettysburg Address",
+            "the Emancipation Proclamation",
+            "the House Divided speech"
+          ]
+        },
+        "supported": {
+          "clue": "As the war was ending in 1865, Lincoln gave a speech calling for forgiveness rather than punishment. He said both North and South shared responsibility for slavery. He called for 'malice toward none, charity for all.' His vision of gentle Reconstruction was cut short when he was assassinated weeks later.",
+          "answer": "What is Lincoln's Second Inaugural Address?",
+          "wrong_answers": [
+            "the Gettysburg Address",
+            "the Emancipation Proclamation",
+            "the House Divided speech"
+          ]
+        },
+        "on_grade": {
+          "clue": "Lincoln's Second Inaugural Address \u2014 acknowledging slavery as the war's cause, invoking shared national guilt, and calling for 'malice toward none' \u2014 offered a vision of Reconstruction as national reconciliation rather than punishment. Historians consider it among the greatest presidential speeches, and its generosity of spirit was cut short by his assassination.",
+          "answer": "What is Lincoln's Second Inaugural Address?",
+          "wrong_answers": [
+            "the Gettysburg Address",
+            "the Emancipation Proclamation",
+            "the House Divided speech"
+          ]
+        },
+        "advanced": {
+          "clue": "Lincoln's theological framing of the war as divine punishment for the national sin of slavery \u2014 'until every drop of blood drawn with the lash shall be paid by another drawn with the sword' \u2014 was a more radical interpretation than most Northern audiences expected, suggesting Lincoln's private understanding of slavery's moral weight went far deeper than his public political positions.",
+          "answer": "What is Lincoln's Second Inaugural Address?",
+          "wrong_answers": [
+            "the Gettysburg Address",
+            "the Emancipation Proclamation",
+            "the Cooper Union speech"
+          ]
+        }
+      }
+    },
+    {
+      "id": "election_1860_secession",
+      "concept": "Election of 1860 / Secession",
+      "point_value": 200,
+      "clues": {
+        "100": {
+          "clue": "Abraham Lincoln's election as president in 1860 prompted Southern states to secede from the Union, leading to the Civil War.",
+          "answer": "What is secession?",
+          "wrong_answers": [
+            "nullification",
+            "Reconstruction",
+            "states' rights"
+          ]
+        },
+        "supported": {
+          "clue": "When Abraham Lincoln won the 1860 election, Southern states feared he would end slavery. South Carolina left the Union first. Ten more states followed. They formed the Confederate States of America. Lincoln said secession was illegal. The attack on Fort Sumter in April 1861 started the Civil War.",
+          "answer": "What is secession?",
+          "wrong_answers": [
+            "nullification",
+            "Reconstruction",
+            "the Confederate Constitution"
+          ]
+        },
+        "on_grade": {
+          "clue": "Lincoln won the 1860 election without a single Southern electoral vote, running on a platform opposing slavery's expansion \u2014 not abolition \u2014 yet Southern states treated his election as an existential threat and seceded before he took office, demonstrating how thoroughly slavery had made sectional compromise impossible.",
+          "answer": "What is secession?",
+          "wrong_answers": [
+            "nullification",
+            "the Confederate Constitution",
+            "Bleeding Kansas"
+          ]
+        },
+        "advanced": {
+          "clue": "The four-way 1860 election \u2014 which split the Democratic Party between Douglas and Breckinridge along sectional lines \u2014 effectively guaranteed Lincoln's victory with only 39% of the popular vote, illustrating how the collapse of intersectional political parties was itself a structural cause of disunion as much as any single policy dispute.",
+          "answer": "What is secession?",
+          "wrong_answers": [
+            "nullification",
+            "the Confederate Constitution",
+            "the Crittenden Compromise"
+          ]
+        }
+      }
+    }
+  ]
+}

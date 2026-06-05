@@ -1,0 +1,655 @@
+{
+  "topic": "Foundations & Constitution",
+  "level_descriptions": {
+    "supported": "Short sentences, one idea at a time, simplified reading level",
+    "on_grade": "Clear prose with context, grade-level reading",
+    "advanced": "Complex sentences, specific details, AP-level precision"
+  },
+  "concepts": [
+    {
+      "id": "enlightenment_social_contract",
+      "concept": "Enlightenment / Social Contract",
+      "point_value": 200,
+      "clues": {
+        "100": {
+          "clue": "Philosophers like John Locke believed people have natural rights that no government can take away.",
+          "answer": "What is the Enlightenment?",
+          "wrong_answers": [
+            "the Renaissance",
+            "the Reformation",
+            "the Scientific Revolution"
+          ]
+        },
+        "supported": {
+          "clue": "John Locke said that people are born with rights to life, liberty, and property. He also said that people agree to be governed. If the government breaks that agreement, people can replace it.",
+          "answer": "What is the social contract?",
+          "wrong_answers": [
+            "the Magna Carta",
+            "the Bill of Rights",
+            "common law"
+          ]
+        },
+        "on_grade": {
+          "clue": "This Enlightenment idea, developed by thinkers like John Locke and Jean-Jacques Rousseau, held that governments derive their authority from the consent of the governed \u2014 and that citizens have the right to overthrow a government that fails to protect their natural rights.",
+          "answer": "What is the social contract?",
+          "wrong_answers": [
+            "the divine right of kings",
+            "mercantilism",
+            "the Magna Carta"
+          ]
+        },
+        "advanced": {
+          "clue": "Thomas Jefferson drew directly on Locke's Second Treatise when drafting the Declaration of Independence \u2014 substituting 'pursuit of happiness' for 'property' in the natural rights triad, a deliberate philosophical choice that has generated debate about the founders' intentions ever since.",
+          "answer": "What is the social contract?",
+          "wrong_answers": [
+            "the divine right of kings",
+            "Montesquieu's separation of powers",
+            "Rousseau's general will"
+          ]
+        }
+      }
+    },
+    {
+      "id": "declaration_of_independence",
+      "concept": "Declaration of Independence",
+      "point_value": 200,
+      "clues": {
+        "100": {
+          "clue": "This 1776 document announced that the American colonies were breaking away from Great Britain.",
+          "answer": "What is the Declaration of Independence?",
+          "wrong_answers": [
+            "the Constitution",
+            "the Mayflower Compact",
+            "the Articles of Confederation"
+          ]
+        },
+        "supported": {
+          "clue": "This document was written mostly by Thomas Jefferson in 1776. It listed the colonists' complaints against the king. It also said that all men are created equal and have rights that cannot be taken away.",
+          "answer": "What is the Declaration of Independence?",
+          "wrong_answers": [
+            "the Constitution",
+            "the Bill of Rights",
+            "the Magna Carta"
+          ]
+        },
+        "on_grade": {
+          "clue": "Adopted on July 4, 1776, this document justified the colonies' break from Britain by appealing to Enlightenment principles \u2014 declaring that all men are created equal and endowed with unalienable rights to life, liberty, and the pursuit of happiness.",
+          "answer": "What is the Declaration of Independence?",
+          "wrong_answers": [
+            "the Articles of Confederation",
+            "the Mayflower Compact",
+            "the Constitution"
+          ]
+        },
+        "advanced": {
+          "clue": "Though celebrated as a universal statement of human equality, this document's contradiction \u2014 authored largely by an enslaved person's owner \u2014 has led historians to debate whether its promises were intended as immediate guarantees or aspirational ideals deferred by political compromise.",
+          "answer": "What is the Declaration of Independence?",
+          "wrong_answers": [
+            "the Articles of Confederation",
+            "the Constitution",
+            "the Northwest Ordinance"
+          ]
+        }
+      }
+    },
+    {
+      "id": "constitutional_convention",
+      "concept": "Constitutional Convention / Compromises",
+      "point_value": 200,
+      "clues": {
+        "100": {
+          "clue": "Delegates met in Philadelphia in 1787 to write a new plan of government for the United States.",
+          "answer": "What is the Constitutional Convention?",
+          "wrong_answers": [
+            "the Continental Congress",
+            "the First Congress",
+            "the Annapolis Convention"
+          ]
+        },
+        "supported": {
+          "clue": "At this 1787 meeting, delegates from the states disagreed about many things. Large states and small states argued about representation. Northern and Southern states argued about slavery. They made deals called compromises to finish the Constitution.",
+          "answer": "What is the Constitutional Convention?",
+          "wrong_answers": [
+            "the Continental Congress",
+            "the First Congress",
+            "the Annapolis Convention"
+          ]
+        },
+        "on_grade": {
+          "clue": "The Great Compromise resolved the dispute between large and small states by creating a bicameral Congress \u2014 a Senate with equal representation and a House based on population. The Three-Fifths Clause separately resolved the question of how enslaved people would be counted for representation.",
+          "answer": "What is the Constitutional Convention?",
+          "wrong_answers": [
+            "the Articles of Confederation",
+            "the Continental Congress",
+            "the Annapolis Convention"
+          ]
+        },
+        "advanced": {
+          "clue": "The Three-Fifths Clause \u2014 counting enslaved people as three-fifths of a person for apportionment \u2014 was not a moral compromise but a political one: it dramatically inflated Southern representation in the House and the Electoral College, giving slaveholding states disproportionate national power for decades.",
+          "answer": "What is the Constitutional Convention?",
+          "wrong_answers": [
+            "the Articles of Confederation",
+            "the Northwest Ordinance",
+            "the Annapolis Convention"
+          ]
+        }
+      }
+    },
+    {
+      "id": "federalists_antifederalists",
+      "concept": "Federalists vs. Antifederalists",
+      "point_value": 200,
+      "clues": {
+        "100": {
+          "clue": "These two groups disagreed about whether the states should ratify the new Constitution in 1787.",
+          "answer": "What is the Federalist-Antifederalist debate?",
+          "wrong_answers": [
+            "Whigs and Tories",
+            "Patriots and Loyalists",
+            "Democrats and Republicans"
+          ]
+        },
+        "supported": {
+          "clue": "Federalists wanted to approve the new Constitution. They said a strong national government was needed. Antifederalists were against it. They worried the new government would have too much power and would take away people's freedoms.",
+          "answer": "What is the Federalist-Antifederalist debate?",
+          "wrong_answers": [
+            "Patriots and Loyalists",
+            "Whigs and Tories",
+            "Republicans and Democrats"
+          ]
+        },
+        "on_grade": {
+          "clue": "Antifederalists opposed ratification of the Constitution primarily because it lacked a bill of rights and created a powerful central government they feared would overwhelm the states. Their pressure ultimately forced Federalists to promise that amendments protecting individual liberties would be added.",
+          "answer": "What is the Antifederalist position?",
+          "wrong_answers": [
+            "the Loyalists",
+            "the Democratic-Republicans",
+            "the Whigs"
+          ]
+        },
+        "advanced": {
+          "clue": "Antifederalist writers like 'Brutus' and 'Centinel' argued that a republic could only function in a small, homogeneous society \u2014 directly challenging Madison's counterargument in Federalist No. 10 that a large, diverse republic would actually better control the dangers of faction.",
+          "answer": "What is the Antifederalist position?",
+          "wrong_answers": [
+            "the Loyalists",
+            "the Democratic-Republicans",
+            "the Whigs"
+          ]
+        }
+      }
+    },
+    {
+      "id": "federalist_papers",
+      "concept": "The Federalist Papers",
+      "point_value": 300,
+      "clues": {
+        "100": {
+          "clue": "Alexander Hamilton, James Madison, and John Jay wrote these essays to convince people to support the new Constitution.",
+          "answer": "What is the Federalist Papers?",
+          "wrong_answers": [
+            "the Anti-Federalist Papers",
+            "the Articles of Confederation",
+            "Common Sense"
+          ]
+        },
+        "supported": {
+          "clue": "Alexander Hamilton, James Madison, and John Jay wrote 85 essays to convince people in New York to vote for the Constitution. They argued that a strong national government would protect the country. These essays are still used today to understand what the founders meant.",
+          "answer": "What is the Federalist Papers?",
+          "wrong_answers": [
+            "Common Sense",
+            "the Bill of Rights",
+            "the Articles of Confederation"
+          ]
+        },
+        "on_grade": {
+          "clue": "Written under the pseudonym 'Publius,' these 85 essays by Hamilton, Madison, and Jay made the intellectual case for ratifying the Constitution \u2014 arguing that a strong federal republic with separated powers would protect liberty better than a weak confederacy or a direct democracy.",
+          "answer": "What is the Federalist Papers?",
+          "wrong_answers": [
+            "Common Sense",
+            "the Anti-Federalist Papers",
+            "the Articles of Confederation"
+          ]
+        },
+        "advanced": {
+          "clue": "Federalist No. 10 \u2014 in which Madison argued that a large republic containing many competing factions would prevent any single group from seizing tyrannical control \u2014 directly inverted the classical republican assumption that self-governance required a small, unified citizenry.",
+          "answer": "What is the Federalist Papers?",
+          "wrong_answers": [
+            "Common Sense",
+            "the Anti-Federalist Papers",
+            "Letters from a Federal Farmer"
+          ]
+        }
+      }
+    },
+    {
+      "id": "bill_of_rights",
+      "concept": "Bill of Rights",
+      "point_value": 200,
+      "clues": {
+        "100": {
+          "clue": "These first ten amendments to the Constitution protect the basic freedoms of American citizens.",
+          "answer": "What is the Bill of Rights?",
+          "wrong_answers": [
+            "the Declaration of Independence",
+            "the Magna Carta",
+            "the Preamble"
+          ]
+        },
+        "supported": {
+          "clue": "These first ten amendments were added to the Constitution in 1791. They protect freedoms like speech, religion, and the right to a fair trial. They were added because Antifederalists were afraid the new government would take away people's rights.",
+          "answer": "What is the Bill of Rights?",
+          "wrong_answers": [
+            "the Declaration of Independence",
+            "the Magna Carta",
+            "the Preamble"
+          ]
+        },
+        "on_grade": {
+          "clue": "Ratified in 1791, these ten amendments were the price of Antifederalist support for the Constitution \u2014 guaranteeing freedoms of speech, religion, press, and assembly; the right to bear arms; protections against unreasonable searches; and the right to a fair trial.",
+          "answer": "What is the Bill of Rights?",
+          "wrong_answers": [
+            "the Declaration of Independence",
+            "the Magna Carta",
+            "the Preamble"
+          ]
+        },
+        "advanced": {
+          "clue": "James Madison originally opposed a bill of rights as unnecessary and potentially dangerous \u2014 fearing that listing specific rights might imply the government possessed all powers not explicitly denied \u2014 but reversed course after ratification politics made it the only path to securing Antifederalist acceptance.",
+          "answer": "What is the Bill of Rights?",
+          "wrong_answers": [
+            "the Declaration of Independence",
+            "the Magna Carta",
+            "the Articles of Confederation"
+          ]
+        }
+      }
+    },
+    {
+      "id": "separation_of_powers",
+      "concept": "Separation of Powers",
+      "point_value": 300,
+      "clues": {
+        "100": {
+          "clue": "The Constitution divides the federal government into three branches: legislative, executive, and judicial.",
+          "answer": "What is separation of powers?",
+          "wrong_answers": [
+            "checks and balances",
+            "federalism",
+            "judicial review"
+          ]
+        },
+        "supported": {
+          "clue": "The founders did not want any one person or group to have all the power. So they split the government into three parts. Congress makes the laws. The President carries out the laws. The Supreme Court decides if the laws are fair.",
+          "answer": "What is separation of powers?",
+          "wrong_answers": [
+            "checks and balances",
+            "federalism",
+            "judicial review"
+          ]
+        },
+        "on_grade": {
+          "clue": "Drawn from Montesquieu's political philosophy, this constitutional principle divides government authority among three distinct branches \u2014 legislative, executive, and judicial \u2014 to prevent any single branch from accumulating enough power to become tyrannical.",
+          "answer": "What is separation of powers?",
+          "wrong_answers": [
+            "checks and balances",
+            "federalism",
+            "judicial review"
+          ]
+        },
+        "advanced": {
+          "clue": "Madison argued in Federalist No. 51 that separation of powers alone was insufficient \u2014 that each branch must be given the means to resist encroachment by the others, making ambition counteract ambition as the structural guarantee of liberty.",
+          "answer": "What is separation of powers?",
+          "wrong_answers": [
+            "checks and balances",
+            "federalism",
+            "judicial review"
+          ]
+        }
+      }
+    },
+    {
+      "id": "checks_and_balances",
+      "concept": "Checks & Balances",
+      "point_value": 300,
+      "clues": {
+        "100": {
+          "clue": "Each branch of the government has the power to limit or control the other two branches.",
+          "answer": "What is the system of checks and balances?",
+          "wrong_answers": [
+            "separation of powers",
+            "federalism",
+            "judicial review"
+          ]
+        },
+        "supported": {
+          "clue": "The three branches of government watch over each other. Congress can reject a president's choice for Supreme Court justice. The president can veto a law that Congress passes. The Supreme Court can strike down a law that goes against the Constitution.",
+          "answer": "What is the system of checks and balances?",
+          "wrong_answers": [
+            "separation of powers",
+            "federalism",
+            "judicial review"
+          ]
+        },
+        "on_grade": {
+          "clue": "This system gives each branch specific powers to restrain the others \u2014 the president can veto legislation, Congress can override vetoes and impeach the president, and the Supreme Court can invalidate laws \u2014 ensuring that no single branch can act without accountability.",
+          "answer": "What is the system of checks and balances?",
+          "wrong_answers": [
+            "separation of powers",
+            "federalism",
+            "judicial review"
+          ]
+        },
+        "advanced": {
+          "clue": "FDR's 1937 court-packing proposal \u2014 threatening to add up to six new justices after the Supreme Court struck down New Deal legislation \u2014 was ultimately defeated in Congress, demonstrating that this system's effectiveness depends as much on political norms as on constitutional text.",
+          "answer": "What is the system of checks and balances?",
+          "wrong_answers": [
+            "separation of powers",
+            "federalism",
+            "judicial review"
+          ]
+        }
+      }
+    },
+    {
+      "id": "judicial_review",
+      "concept": "Judicial Review / Marbury v. Madison",
+      "point_value": 300,
+      "clues": {
+        "100": {
+          "clue": "This 1803 Supreme Court case gave the Court the power to strike down laws that violate the Constitution.",
+          "answer": "What is Marbury v. Madison?",
+          "wrong_answers": [
+            "McCulloch v. Maryland",
+            "Plessy v. Ferguson",
+            "Gibbons v. Ogden"
+          ]
+        },
+        "supported": {
+          "clue": "In 1803, Chief Justice John Marshall ruled that the Supreme Court had the power to decide if a law goes against the Constitution. If a law does, the court can throw it out. This power is not written in the Constitution \u2014 Marshall claimed it for the Court himself.",
+          "answer": "What is judicial review?",
+          "wrong_answers": [
+            "impeachment",
+            "the veto",
+            "the elastic clause"
+          ]
+        },
+        "on_grade": {
+          "clue": "Chief Justice John Marshall's ruling in this 1803 case established the principle of judicial review \u2014 the Supreme Court's authority to declare acts of Congress unconstitutional \u2014 fundamentally expanding the Court's power and making it a co-equal branch of government.",
+          "answer": "What is Marbury v. Madison?",
+          "wrong_answers": [
+            "McCulloch v. Maryland",
+            "Gibbons v. Ogden",
+            "Fletcher v. Peck"
+          ]
+        },
+        "advanced": {
+          "clue": "Marshall's ruling in this case was a political masterstroke \u2014 by ruling against Marbury on the narrow jurisdictional question, Marshall avoided a direct confrontation with Jefferson that he would likely have lost, while simultaneously claiming for the Court a power that dwarfed anything at stake in the original dispute.",
+          "answer": "What is Marbury v. Madison?",
+          "wrong_answers": [
+            "McCulloch v. Maryland",
+            "Gibbons v. Ogden",
+            "Fletcher v. Peck"
+          ]
+        }
+      }
+    },
+    {
+      "id": "mcculloch_v_maryland",
+      "concept": "McCulloch v. Maryland / Federal Supremacy",
+      "point_value": 400,
+      "clues": {
+        "100": {
+          "clue": "This 1819 Supreme Court case ruled that states cannot tax the federal government and that Congress has implied powers.",
+          "answer": "What is McCulloch v. Maryland?",
+          "wrong_answers": [
+            "Marbury v. Madison",
+            "Gibbons v. Ogden",
+            "Plessy v. Ferguson"
+          ]
+        },
+        "supported": {
+          "clue": "Maryland tried to tax the Bank of the United States. The Supreme Court said Maryland could not do that. The Court also said that Congress has powers beyond those listed in the Constitution. This helped make the federal government stronger than the states.",
+          "answer": "What is McCulloch v. Maryland?",
+          "wrong_answers": [
+            "Marbury v. Madison",
+            "Gibbons v. Ogden",
+            "Plessy v. Ferguson"
+          ]
+        },
+        "on_grade": {
+          "clue": "In this 1819 ruling, Chief Justice Marshall upheld the constitutionality of the national bank and struck down Maryland's attempt to tax it \u2014 establishing two key principles: that Congress holds implied powers under the Necessary and Proper Clause, and that federal law is supreme over state law.",
+          "answer": "What is McCulloch v. Maryland?",
+          "wrong_answers": [
+            "Marbury v. Madison",
+            "Gibbons v. Ogden",
+            "Plessy v. Ferguson"
+          ]
+        },
+        "advanced": {
+          "clue": "Marshall's broad reading of the Necessary and Proper Clause in this decision \u2014 rejecting Maryland's strict constructionist argument that Congress could only act on powers explicitly listed \u2014 laid the constitutional foundation for the dramatic expansion of federal authority that would accelerate during the New Deal era a century later.",
+          "answer": "What is McCulloch v. Maryland?",
+          "wrong_answers": [
+            "Marbury v. Madison",
+            "Gibbons v. Ogden",
+            "Hammer v. Dagenhart"
+          ]
+        }
+      }
+    },
+    {
+      "id": "amendment_process",
+      "concept": "Amendment Process",
+      "point_value": 400,
+      "clues": {
+        "100": {
+          "clue": "The Constitution can be changed, but the process requires approval from Congress and most of the states.",
+          "answer": "What is the amendment process?",
+          "wrong_answers": [
+            "judicial review",
+            "the veto process",
+            "the legislative process"
+          ]
+        },
+        "supported": {
+          "clue": "Changing the Constitution is very hard on purpose. First, two-thirds of Congress must approve the change. Then three-fourths of the states must also approve it. The founders made it difficult so that the Constitution would not change too easily.",
+          "answer": "What is the amendment process?",
+          "wrong_answers": [
+            "judicial review",
+            "the veto process",
+            "the legislative process"
+          ]
+        },
+        "on_grade": {
+          "clue": "The Constitution's amendment process requires a two-thirds vote in both houses of Congress and ratification by three-fourths of state legislatures \u2014 a deliberately high bar that has resulted in only 27 amendments in over 230 years, reflecting the founders' intent to create a stable but adaptable framework.",
+          "answer": "What is the amendment process?",
+          "wrong_answers": [
+            "judicial review",
+            "the legislative process",
+            "the veto process"
+          ]
+        },
+        "advanced": {
+          "clue": "The supermajority requirements for amendment \u2014 designed to prevent temporary majorities from rewriting fundamental law \u2014 have meant that major constitutional change often happens through judicial reinterpretation rather than formal amendment, a phenomenon critics call the 'living Constitution' and originalists reject.",
+          "answer": "What is the amendment process?",
+          "wrong_answers": [
+            "judicial review",
+            "the legislative process",
+            "the elastic clause"
+          ]
+        }
+      }
+    },
+    {
+      "id": "civil_liberties_wartime",
+      "concept": "Civil Liberties in Wartime",
+      "point_value": 400,
+      "clues": {
+        "100": {
+          "clue": "During wartime, the government has sometimes limited Americans' freedoms in ways that were later seen as wrong.",
+          "answer": "What is the suspension of civil liberties?",
+          "wrong_answers": [
+            "martial law",
+            "habeas corpus",
+            "due process"
+          ]
+        },
+        "supported": {
+          "clue": "During World War I, the government made it illegal to criticize the war. During World War II, Japanese Americans were forced into internment camps. The Supreme Court allowed both of these actions. Many Americans later said they were wrong.",
+          "answer": "What is the suspension of civil liberties during wartime?",
+          "wrong_answers": [
+            "martial law",
+            "the draft",
+            "rationing"
+          ]
+        },
+        "on_grade": {
+          "clue": "The Supreme Court upheld the Espionage Act in Schenck v. United States (1919) and Japanese American internment in Korematsu v. United States (1944) \u2014 both times ruling that wartime emergency justified curtailing constitutional rights, decisions that are now widely viewed as serious failures of judicial independence.",
+          "answer": "What is the suspension of civil liberties during wartime?",
+          "wrong_answers": [
+            "martial law",
+            "the draft",
+            "the War Powers Act"
+          ]
+        },
+        "advanced": {
+          "clue": "Justice Murphy's dissent in Korematsu argued that the majority had crossed 'the ugly abyss of racism' \u2014 and declassified documents later revealed that government lawyers had knowingly withheld evidence from the Court showing Japanese Americans posed no military threat, leading to a coram nobis ruling vacating Korematsu's conviction in 1983.",
+          "answer": "What is Korematsu v. United States?",
+          "wrong_answers": [
+            "Schenck v. United States",
+            "Hirabayashi v. United States",
+            "Ex parte Milligan"
+          ]
+        }
+      }
+    },
+    {
+      "id": "impeachment",
+      "concept": "Impeachment",
+      "point_value": 400,
+      "clues": {
+        "100": {
+          "clue": "This is the process by which Congress can formally charge a president or other official with wrongdoing.",
+          "answer": "What is impeachment?",
+          "wrong_answers": [
+            "a veto",
+            "a recall election",
+            "a filibuster"
+          ]
+        },
+        "supported": {
+          "clue": "The Constitution gives Congress the power to remove a president from office. The House of Representatives votes to charge the president. Then the Senate holds a trial. If two-thirds of the Senate votes guilty, the president is removed.",
+          "answer": "What is impeachment?",
+          "wrong_answers": [
+            "a veto",
+            "a recall election",
+            "a filibuster"
+          ]
+        },
+        "on_grade": {
+          "clue": "This constitutional process \u2014 in which the House impeaches by simple majority and the Senate tries and convicts by two-thirds vote \u2014 has been used against three presidents: Andrew Johnson, Bill Clinton, and Donald Trump (twice). None were convicted and removed by the Senate.",
+          "answer": "What is impeachment?",
+          "wrong_answers": [
+            "a veto override",
+            "a recall election",
+            "a filibuster"
+          ]
+        },
+        "advanced": {
+          "clue": "The Constitution's phrase 'high crimes and misdemeanors' as grounds for impeachment has never been precisely defined \u2014 leaving Congress to determine in each case whether the standard is met, a deliberate ambiguity that has made impeachment as much a political process as a legal one.",
+          "answer": "What is impeachment?",
+          "wrong_answers": [
+            "a veto override",
+            "a censure",
+            "a filibuster"
+          ]
+        }
+      }
+    },
+    {
+      "id": "war_powers",
+      "concept": "War Powers / Commander in Chief",
+      "point_value": 500,
+      "clues": {
+        "100": {
+          "clue": "The Constitution makes the president the commander in chief of the military, but gives Congress the power to declare war.",
+          "answer": "What is the war powers debate?",
+          "wrong_answers": [
+            "the veto power",
+            "the treaty power",
+            "the appointment power"
+          ]
+        },
+        "supported": {
+          "clue": "The Constitution says Congress declares war. But it also says the president leads the military. These two ideas have created conflict for years. After the Vietnam War, Congress passed a law to limit the president's ability to send troops without approval.",
+          "answer": "What is the War Powers Resolution?",
+          "wrong_answers": [
+            "the draft",
+            "the National Security Act",
+            "the Patriot Act"
+          ]
+        },
+        "on_grade": {
+          "clue": "The War Powers Resolution of 1973 \u2014 passed over Nixon's veto in response to undeclared wars in Korea and Vietnam \u2014 requires the president to notify Congress within 48 hours of deploying troops and limits unauthorized military action to 60 days, though presidents of both parties have questioned its constitutionality.",
+          "answer": "What is the War Powers Resolution?",
+          "wrong_answers": [
+            "the National Security Act",
+            "the Patriot Act",
+            "the Gulf of Tonkin Resolution"
+          ]
+        },
+        "advanced": {
+          "clue": "The Constitution's division of war powers \u2014 giving Congress the power to declare war while making the president commander in chief \u2014 has produced a persistent tension that Congress has never fully resolved: every president since Nixon has complied minimally with the War Powers Resolution while refusing to concede its constitutionality.",
+          "answer": "What is the War Powers Resolution?",
+          "wrong_answers": [
+            "the National Security Act",
+            "the Patriot Act",
+            "the Gulf of Tonkin Resolution"
+          ]
+        }
+      }
+    },
+    {
+      "id": "fdr_court_packing",
+      "concept": "FDR Court-Packing Plan",
+      "point_value": 500,
+      "clues": {
+        "100": {
+          "clue": "President Roosevelt proposed adding extra justices to the Supreme Court in 1937 after it struck down his New Deal programs.",
+          "answer": "What is the court-packing plan?",
+          "wrong_answers": [
+            "the New Deal",
+            "the Four Freedoms",
+            "the Lend-Lease Act"
+          ]
+        },
+        "supported": {
+          "clue": "The Supreme Court kept striking down FDR's New Deal laws. So Roosevelt came up with a plan to add up to six new justices who would agree with him. Congress rejected the plan. Many people thought it would destroy the independence of the courts.",
+          "answer": "What is the court-packing plan?",
+          "wrong_answers": [
+            "the New Deal",
+            "the Four Freedoms",
+            "the Lend-Lease Act"
+          ]
+        },
+        "on_grade": {
+          "clue": "After the Supreme Court invalidated key New Deal programs, FDR proposed allowing the president to appoint an additional justice for every sitting justice over 70 \u2014 potentially adding six new members. Congress rejected the plan as a threat to judicial independence, but the Court soon began upholding New Deal legislation anyway.",
+          "answer": "What is the court-packing plan?",
+          "wrong_answers": [
+            "the New Deal",
+            "the Four Freedoms",
+            "the Lend-Lease Act"
+          ]
+        },
+        "advanced": {
+          "clue": "The episode known as 'the switch in time that saved nine' \u2014 in which Justice Owen Roberts shifted to uphold New Deal legislation just as FDR's court-packing bill was pending \u2014 illustrated how political pressure can reshape constitutional interpretation without a single amendment or new appointment.",
+          "answer": "What is the court-packing plan?",
+          "wrong_answers": [
+            "the New Deal",
+            "Marbury v. Madison",
+            "the Four Freedoms"
+          ]
+        }
+      }
+    }
+  ]
+}

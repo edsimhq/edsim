@@ -1,0 +1,955 @@
+{
+  "topic": "Cold War",
+  "level_descriptions": {
+    "supported": "Short sentences, one idea at a time, simplified reading level",
+    "on_grade": "Clear prose with context, grade-level reading",
+    "advanced": "Complex sentences, specific details, AP-level precision"
+  },
+  "concepts": [
+    {
+      "id": "marshall_plan",
+      "concept": "Marshall Plan",
+      "point_value": 200,
+      "clues": {
+        "supported": {
+          "clue": "The United States sent money to countries in Europe after World War II to help them rebuild their homes, farms, and cities. This plan was named after Secretary of State George Marshall.",
+          "answer": "What is the Marshall Plan?",
+          "wrong_answers": [
+            "the Truman Doctrine",
+            "Lend-Lease",
+            "the Berlin Airlift"
+          ]
+        },
+        "on_grade": {
+          "clue": "Launched in 1948, this U.S. program rebuilt war-devastated Western European economies with the goal of preventing poverty and instability from making those nations vulnerable to communist takeover.",
+          "answer": "What is the Marshall Plan?",
+          "wrong_answers": [
+            "the Truman Doctrine",
+            "NATO",
+            "the Berlin Airlift"
+          ]
+        },
+        "advanced": {
+          "clue": "France and the United Kingdom received the largest shares of this postwar aid program — which Secretary Marshall deliberately framed as being directed against hunger and chaos rather than against the Soviet Union, giving wavering nations political cover to accept American aid.",
+          "answer": "What is the Marshall Plan?",
+          "wrong_answers": [
+            "the Truman Doctrine",
+            "Lend-Lease",
+            "the Open Door Policy"
+          ]
+        },
+        "100": {
+          "supported": {
+            "clue": "The United States gave money to help countries in Western Europe rebuild after World War II.",
+            "answer": "What is the Marshall Plan?",
+            "wrong_answers": [
+              "the Truman Doctrine",
+              "Lend-Lease",
+              "the New Deal"
+            ]
+          },
+          "on_grade": {
+            "clue": "This U.S. foreign aid program provided billions of dollars to rebuild war-torn Western Europe after World War II.",
+            "answer": "What is the Marshall Plan?",
+            "wrong_answers": [
+              "the Truman Doctrine",
+              "Lend-Lease",
+              "the New Deal"
+            ]
+          },
+          "advanced": {
+            "clue": "Named after Truman's Secretary of State, this 1948 economic recovery program distributed over $13 billion to rebuild Western European nations devastated by World War II.",
+            "answer": "What is the Marshall Plan?",
+            "wrong_answers": [
+              "the Truman Doctrine",
+              "the Molotov Plan",
+              "Lend-Lease"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "containment_truman_doctrine",
+      "concept": "Containment / Truman Doctrine",
+      "point_value": 200,
+      "clues": {
+        "supported": {
+          "clue": "This was the United States' plan to stop communism from spreading to new countries during the Cold War.",
+          "answer": "What is containment?",
+          "wrong_answers": [
+            "isolationism",
+            "détente",
+            "the domino theory"
+          ]
+        },
+        "on_grade": {
+          "clue": "In March 1947, President Truman asked Congress for aid to Greece and Turkey — declaring the United States must support free peoples everywhere resisting communist takeover. This speech launched the doctrine that bore his name.",
+          "answer": "What is the Truman Doctrine?",
+          "wrong_answers": [
+            "the Marshall Plan",
+            "the Monroe Doctrine",
+            "the Eisenhower Doctrine"
+          ]
+        },
+        "advanced": {
+          "clue": "Both the Truman Doctrine and the Marshall Plan were practical applications of this broader Cold War strategy — first formally articulated in Kennan's anonymous 1947 'X Article' in Foreign Affairs — which held that rollback was unnecessary if expansion could be blocked.",
+          "answer": "What is containment?",
+          "wrong_answers": [
+            "massive retaliation",
+            "détente",
+            "isolationism"
+          ]
+        },
+        "100": {
+          "supported": {
+            "clue": "The United States made a plan to stop communism from spreading to other countries.",
+            "answer": "What is containment?",
+            "wrong_answers": [
+              "isolationism",
+              "détente",
+              "appeasement"
+            ]
+          },
+          "on_grade": {
+            "clue": "This U.S. foreign policy strategy aimed to prevent the Soviet Union from expanding communism beyond the countries it already controlled.",
+            "answer": "What is containment?",
+            "wrong_answers": [
+              "isolationism",
+              "détente",
+              "appeasement"
+            ]
+          },
+          "advanced": {
+            "clue": "George Kennan's 'Long Telegram' of 1946 provided the intellectual foundation for this Cold War grand strategy, which accepted Soviet control of existing satellites while committing the U.S. to blocking further expansion.",
+            "answer": "What is containment?",
+            "wrong_answers": [
+              "massive retaliation",
+              "détente",
+              "rollback"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "mccarthyism",
+      "concept": "McCarthyism / Red Scare",
+      "point_value": 300,
+      "clues": {
+        "supported": {
+          "clue": "This senator told people that communists were hiding inside the United States government. Many Americans were scared and believed him.",
+          "answer": "Who is Joseph McCarthy?",
+          "wrong_answers": [
+            "J. Edgar Hoover",
+            "Richard Nixon",
+            "Alger Hiss"
+          ]
+        },
+        "on_grade": {
+          "clue": "The period of intense anti-communist suspicion in the late 1940s and early 1950s — when Americans feared Soviet spies had infiltrated the government, Hollywood, and the military — is named after this senator who exploited those fears most aggressively.",
+          "answer": "Who is Joseph McCarthy?",
+          "wrong_answers": [
+            "J. Edgar Hoover",
+            "Richard Nixon",
+            "Barry Goldwater"
+          ]
+        },
+        "advanced": {
+          "clue": "Historians distinguish between the broader Second Red Scare — which included HUAC investigations, loyalty oaths, and Hollywood blacklists — and the specific phenomenon named after this senator, whose particular genius was weaponizing accusation itself as a tool of political destruction.",
+          "answer": "Who is Joseph McCarthy?",
+          "wrong_answers": [
+            "J. Edgar Hoover",
+            "Alger Hiss",
+            "Richard Nixon"
+          ]
+        },
+        "100": {
+          "supported": {
+            "clue": "In the 1950s, many Americans were afraid that communists were secretly living and working in the United States.",
+            "answer": "What is the Red Scare?",
+            "wrong_answers": [
+              "the Cold War",
+              "the Space Race",
+              "the Arms Race"
+            ]
+          },
+          "on_grade": {
+            "clue": "Senator Joseph McCarthy fueled this era of fear and suspicion by claiming that communists had secretly infiltrated the U.S. government.",
+            "answer": "What is McCarthyism?",
+            "wrong_answers": [
+              "the Red Scare",
+              "HUAC",
+              "the Lavender Scare"
+            ]
+          },
+          "advanced": {
+            "clue": "Senator Joseph McCarthy lent his name to this mid-century period of aggressive anti-communist investigations, public accusations, and political persecution — often without credible evidence.",
+            "answer": "What is McCarthyism?",
+            "wrong_answers": [
+              "the Second Red Scare",
+              "HUAC",
+              "the Hollywood Blacklist"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "korean_war",
+      "concept": "Korean War",
+      "point_value": 300,
+      "clues": {
+        "supported": {
+          "clue": "This war was fought in Asia between 1950 and 1953. The United States helped South Korea fight against communist North Korea.",
+          "answer": "What is the Korean War?",
+          "wrong_answers": [
+            "the Vietnam War",
+            "World War II",
+            "the Gulf War"
+          ]
+        },
+        "on_grade": {
+          "clue": "Often called 'The Forgotten War,' this 1950–1953 conflict ended in an armistice rather than a peace treaty — leaving the peninsula divided near the same line where the fighting began, with no formal resolution to this day.",
+          "answer": "What is the Korean War?",
+          "wrong_answers": [
+            "the Vietnam War",
+            "the Suez Crisis",
+            "the Berlin Crisis"
+          ]
+        },
+        "advanced": {
+          "clue": "This conflict's ambiguous conclusion — an armistice, not a peace treaty, restoring a division near the prewar border after 36,000 American deaths — established the troubling template of limited war that would define U.S. military intervention for the rest of the Cold War.",
+          "answer": "What is the Korean War?",
+          "wrong_answers": [
+            "the Vietnam War",
+            "the Gulf War",
+            "the Suez Crisis"
+          ]
+        },
+        "100": {
+          "supported": {
+            "clue": "The United States sent soldiers to fight in this country in Asia after the communist north invaded the democratic south in 1950.",
+            "answer": "What is Korea?",
+            "wrong_answers": [
+              "Vietnam",
+              "China",
+              "Japan"
+            ]
+          },
+          "on_grade": {
+            "clue": "This conflict, which began in 1950 when North Korea invaded South Korea, was the first military test of the United Nations and of the U.S. containment policy.",
+            "answer": "What is the Korean War?",
+            "wrong_answers": [
+              "the Vietnam War",
+              "the Gulf War",
+              "the Suez Crisis"
+            ]
+          },
+          "advanced": {
+            "clue": "President Truman's decision to intervene in this 1950 conflict — without a formal declaration of war — established the precedent of presidential war powers that would be tested repeatedly throughout the Cold War era.",
+            "answer": "What is the Korean War?",
+            "wrong_answers": [
+              "the Vietnam War",
+              "the Gulf War",
+              "the Suez Crisis"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "sputnik_space_race",
+      "concept": "Sputnik / Space Race",
+      "point_value": 300,
+      "clues": {
+        "supported": {
+          "clue": "In 1957, the Soviet Union launched the first satellite into space. Americans were shocked and scared. They worried the Soviets were ahead of them in technology.",
+          "answer": "What is Sputnik?",
+          "wrong_answers": [
+            "the hydrogen bomb",
+            "Explorer 1",
+            "the U-2 spy plane"
+          ]
+        },
+        "on_grade": {
+          "clue": "The Soviet launch of this satellite in 1957 triggered a crisis of American confidence — directly leading Congress to pass the National Defense Education Act and accelerating the creation of NASA to compete in the space race.",
+          "answer": "What is Sputnik?",
+          "wrong_answers": [
+            "the hydrogen bomb",
+            "Vostok 1",
+            "the Apollo program"
+          ]
+        },
+        "advanced": {
+          "clue": "Eisenhower's muted public response to this Soviet launch masked genuine private alarm — declassified documents later revealed that U.S. intelligence had known the Soviets were close to this capability but had underestimated the psychological impact its achievement would have on American public opinion.",
+          "answer": "What is Sputnik?",
+          "wrong_answers": [
+            "the Soviet hydrogen bomb test",
+            "the U-2 incident",
+            "Yuri Gagarin's flight"
+          ]
+        },
+        "100": {
+          "supported": {
+            "clue": "The United States and the Soviet Union competed to see who could explore outer space first. This competition was called the Space Race.",
+            "answer": "What is the Space Race?",
+            "wrong_answers": [
+              "the Arms Race",
+              "the Cold War",
+              "the Nuclear Race"
+            ]
+          },
+          "on_grade": {
+            "clue": "The Soviet Union shocked the world in 1957 by launching the first artificial satellite into orbit, igniting a technological competition with the United States.",
+            "answer": "What is Sputnik?",
+            "wrong_answers": [
+              "Explorer 1",
+              "Vostok 1",
+              "the Apollo program"
+            ]
+          },
+          "advanced": {
+            "clue": "The Soviet Union's 1957 launch of the first orbital satellite created a national security crisis in the United States, directly prompting the creation of NASA and a dramatic increase in federal funding for science education.",
+            "answer": "What is Sputnik?",
+            "wrong_answers": [
+              "Explorer 1",
+              "Vostok 1",
+              "the U-2 spy plane"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "iron_curtain",
+      "concept": "Soviet Occupation of Eastern Europe / Iron Curtain",
+      "point_value": 200,
+      "clues": {
+        "supported": {
+          "clue": "Winston Churchill gave a famous speech in 1946. He said a curtain had fallen across Europe. On one side were free countries. On the other side were countries controlled by the Soviet Union.",
+          "answer": "What is the Iron Curtain?",
+          "wrong_answers": [
+            "the Berlin Wall",
+            "the Warsaw Pact",
+            "the Maginot Line"
+          ]
+        },
+        "on_grade": {
+          "clue": "Winston Churchill coined this famous phrase in 1946 to describe the division of Europe — with Soviet-dominated communist states to the east cut off from the democratic west by a line stretching from the Baltic to the Adriatic.",
+          "answer": "What is the Iron Curtain?",
+          "wrong_answers": [
+            "the Berlin Wall",
+            "the Warsaw Pact",
+            "the Maginot Line"
+          ]
+        },
+        "advanced": {
+          "clue": "The 1948 Czechoslovak coup — in which communists seized power in the last Eastern European democracy — shocked Western governments into action, directly accelerating the formation of NATO and cementing this division as a permanent feature of Cold War Europe.",
+          "answer": "What is the Iron Curtain?",
+          "wrong_answers": [
+            "the Berlin Wall",
+            "the Warsaw Pact",
+            "the Greek Civil War"
+          ]
+        },
+        "100": {
+          "supported": {
+            "clue": "After World War II, the Soviet Union took control of many countries in Eastern Europe, separating them from the free countries of the West.",
+            "answer": "What is the Iron Curtain?",
+            "wrong_answers": [
+              "the Berlin Wall",
+              "the Warsaw Pact",
+              "the Cold War"
+            ]
+          },
+          "on_grade": {
+            "clue": "Winston Churchill used this famous phrase in 1946 to describe the political and military barrier separating Soviet-controlled Eastern Europe from democratic Western Europe.",
+            "answer": "What is the Iron Curtain?",
+            "wrong_answers": [
+              "the Berlin Wall",
+              "the Warsaw Pact",
+              "the Maginot Line"
+            ]
+          },
+          "advanced": {
+            "clue": "Churchill's 1946 Fulton, Missouri speech introduced this metaphor to describe the enforced division of Europe, warning Western audiences that Soviet expansionism posed a direct threat to democratic civilization.",
+            "answer": "What is the Iron Curtain?",
+            "wrong_answers": [
+              "the Berlin Wall",
+              "the Warsaw Pact",
+              "the Truman Doctrine"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "berlin_wall",
+      "concept": "Berlin Wall",
+      "point_value": 200,
+      "clues": {
+        "supported": {
+          "clue": "This wall was built in 1961 to keep people from leaving communist East Germany. Families were separated overnight when it went up.",
+          "answer": "What is the Berlin Wall?",
+          "wrong_answers": [
+            "the Iron Curtain",
+            "the 38th Parallel",
+            "the Siegfried Line"
+          ]
+        },
+        "on_grade": {
+          "clue": "This structure went up in 1961 because East Germany was hemorrhaging its most educated and skilled citizens to the West — over three million had fled since 1949 — and the Soviet-backed government needed to physically stop the exodus.",
+          "answer": "What is the Berlin Wall?",
+          "wrong_answers": [
+            "the Iron Curtain",
+            "the 38th Parallel",
+            "the Maginot Line"
+          ]
+        },
+        "advanced": {
+          "clue": "The fall of this barrier on November 9, 1989 was not planned by any government — it happened because an East German spokesman mistakenly announced new travel regulations would take effect 'immediately, without delay,' triggering crowds that overwhelmed border guards who had received no orders.",
+          "answer": "What is the Berlin Wall?",
+          "wrong_answers": [
+            "the Iron Curtain",
+            "the Warsaw Pact",
+            "the Brandenburg Gate"
+          ]
+        },
+        "100": {
+          "supported": {
+            "clue": "East Germany built this structure in 1961 to keep its people from escaping to West Germany.",
+            "answer": "What is the Berlin Wall?",
+            "wrong_answers": [
+              "the Iron Curtain",
+              "the 38th Parallel",
+              "the Maginot Line"
+            ]
+          },
+          "on_grade": {
+            "clue": "Built overnight in August 1961, this physical barrier divided a major German city and became the most powerful symbol of the Cold War's division of Europe.",
+            "answer": "What is the Berlin Wall?",
+            "wrong_answers": [
+              "the Iron Curtain",
+              "the 38th Parallel",
+              "the Maginot Line"
+            ]
+          },
+          "advanced": {
+            "clue": "Constructed in August 1961, this 96-mile barrier halted the mass emigration of East Germans — over 3.5 million since 1949 — and became the defining physical symbol of Cold War division until its unexpected collapse in 1989.",
+            "answer": "What is the Berlin Wall?",
+            "wrong_answers": [
+              "the Iron Curtain",
+              "the Warsaw Pact",
+              "the Brandenburg Gate"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "berlin_airlift",
+      "concept": "Berlin Airlift",
+      "point_value": 300,
+      "clues": {
+        "supported": {
+          "clue": "The Soviet Union blocked all roads into West Berlin in 1948. The United States flew food and supplies into the city to keep people alive. Planes landed every few minutes, day and night.",
+          "answer": "What is the Berlin Airlift?",
+          "wrong_answers": [
+            "the Marshall Plan",
+            "Operation Overlord",
+            "the Berlin Wall"
+          ]
+        },
+        "on_grade": {
+          "clue": "Rather than risk direct military confrontation with the Soviets during the 1948 Berlin Blockade, President Truman authorized this massive logistical operation — delivering over two million tons of supplies by air before the Soviets finally backed down.",
+          "answer": "What is the Berlin Airlift?",
+          "wrong_answers": [
+            "the Marshall Plan",
+            "NATO",
+            "the Truman Doctrine"
+          ]
+        },
+        "advanced": {
+          "clue": "This operation's success had a consequence its planners did not fully anticipate — it transformed West Berliners from former enemies into committed democratic allies, creating a powerful symbol of freedom behind Soviet lines that shaped Cold War politics for decades.",
+          "answer": "What is the Berlin Airlift?",
+          "wrong_answers": [
+            "the Marshall Plan",
+            "the formation of NATO",
+            "the Truman Doctrine"
+          ]
+        },
+        "100": {
+          "supported": {
+            "clue": "When the Soviet Union blocked roads into West Berlin, the United States flew food and supplies to the city by airplane.",
+            "answer": "What is the Berlin Airlift?",
+            "wrong_answers": [
+              "the Marshall Plan",
+              "the Berlin Wall",
+              "NATO"
+            ]
+          },
+          "on_grade": {
+            "clue": "When the Soviet Union blockaded West Berlin in 1948, the Western Allies responded by flying in all essential supplies for nearly a year until the Soviets backed down.",
+            "answer": "What is the Berlin Airlift?",
+            "wrong_answers": [
+              "the Marshall Plan",
+              "NATO",
+              "the Truman Doctrine"
+            ]
+          },
+          "advanced": {
+            "clue": "The Western response to the Soviet blockade of West Berlin in June 1948 demonstrated that the U.S. would sustain a costly logistical operation — over 200,000 flights in eleven months — rather than abandon its commitment to the divided city.",
+            "answer": "What is the Berlin Airlift?",
+            "wrong_answers": [
+              "the Marshall Plan",
+              "the formation of NATO",
+              "the Truman Doctrine"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "vietnam_war",
+      "concept": "Vietnam War",
+      "point_value": 300,
+      "clues": {
+        "supported": {
+          "clue": "This war was fought in Southeast Asia. The United States sent soldiers to help South Vietnam fight against communist North Vietnam. It was one of the longest wars in American history.",
+          "answer": "What is the Vietnam War?",
+          "wrong_answers": [
+            "the Korean War",
+            "the Gulf War",
+            "the Cambodian Civil War"
+          ]
+        },
+        "on_grade": {
+          "clue": "Growing opposition to this conflict at home — fueled by televised combat footage, rising casualties, and the military draft — produced a massive antiwar movement that fractured American society and eroded public trust in the government.",
+          "answer": "What is the Vietnam War?",
+          "wrong_answers": [
+            "the Korean War",
+            "the Gulf War",
+            "the Iranian hostage crisis"
+          ]
+        },
+        "advanced": {
+          "clue": "The War Powers Resolution of 1973 — passed over Nixon's veto in direct response to this conflict — attempted to restore congressional authority over military commitments by requiring the president to notify Congress within 48 hours of deploying troops and limiting unauthorized engagements to 60 days.",
+          "answer": "What is the Vietnam War?",
+          "wrong_answers": [
+            "the Korean War",
+            "the Gulf War",
+            "the Cambodian Incursion"
+          ]
+        },
+        "100": {
+          "supported": {
+            "clue": "The United States fought in this country in Southeast Asia to stop the spread of communism from the north to the south.",
+            "answer": "What is Vietnam?",
+            "wrong_answers": [
+              "Korea",
+              "Cambodia",
+              "China"
+            ]
+          },
+          "on_grade": {
+            "clue": "The United States sent over 500,000 troops to this Southeast Asian country to prevent a communist takeover of the south, making it one of the longest and most divisive wars in American history.",
+            "answer": "What is the Vietnam War?",
+            "wrong_answers": [
+              "the Korean War",
+              "the Gulf War",
+              "the Cambodian Civil War"
+            ]
+          },
+          "advanced": {
+            "clue": "U.S. involvement in this conflict escalated dramatically after the Gulf of Tonkin Resolution (1964), which granted President Johnson broad authority to use military force without a formal declaration of war — a decision that shaped the domestic political crisis that followed.",
+            "answer": "What is the Vietnam War?",
+            "wrong_answers": [
+              "the Korean War",
+              "the Cambodian Incursion",
+              "the Gulf War"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "domino_theory",
+      "concept": "Domino Theory",
+      "point_value": 400,
+      "clues": {
+        "supported": {
+          "clue": "This idea said that if one country became communist, the countries next to it would become communist too — like a row of dominoes falling down.",
+          "answer": "What is the domino theory?",
+          "wrong_answers": [
+            "containment",
+            "brinkmanship",
+            "the Truman Doctrine"
+          ]
+        },
+        "on_grade": {
+          "clue": "President Eisenhower first used this analogy in 1954 to explain why the United States could not allow a communist victory in Indochina — arguing that the fall of one Southeast Asian nation would inevitably pull down the next.",
+          "answer": "What is the domino theory?",
+          "wrong_answers": [
+            "containment",
+            "the Truman Doctrine",
+            "mutual assured destruction"
+          ]
+        },
+        "advanced": {
+          "clue": "The historical record largely disproved this theory — Vietnam's fall to communism in 1975 did not produce the predicted cascade of communist takeovers across Southeast Asia, suggesting that the nations of the region were far more capable of charting their own political paths than Cold War strategists assumed.",
+          "answer": "What is the domino theory?",
+          "wrong_answers": [
+            "containment",
+            "brinkmanship",
+            "détente"
+          ]
+        },
+        "100": {
+          "supported": {
+            "clue": "American leaders believed that if one country in a region became communist, the countries around it would become communist too, like falling dominoes.",
+            "answer": "What is the domino theory?",
+            "wrong_answers": [
+              "containment",
+              "brinkmanship",
+              "deterrence"
+            ]
+          },
+          "on_grade": {
+            "clue": "This Cold War idea held that a communist victory in one country would trigger a chain reaction of communist takeovers in neighboring nations.",
+            "answer": "What is the domino theory?",
+            "wrong_answers": [
+              "containment",
+              "brinkmanship",
+              "the Truman Doctrine"
+            ]
+          },
+          "advanced": {
+            "clue": "First articulated publicly by Eisenhower in 1954, this geopolitical theory provided the central justification for U.S. intervention in Southeast Asia — though its predictions were not borne out by events following the fall of Saigon in 1975.",
+            "answer": "What is the domino theory?",
+            "wrong_answers": [
+              "containment",
+              "brinkmanship",
+              "mutual assured destruction"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "nato",
+      "concept": "NATO",
+      "point_value": 200,
+      "clues": {
+        "supported": {
+          "clue": "This military alliance was formed in 1949. The United States and countries in Western Europe agreed that if anyone attacked one of them, all of them would fight back together.",
+          "answer": "What is NATO?",
+          "wrong_answers": [
+            "the United Nations",
+            "the Warsaw Pact",
+            "the Marshall Plan"
+          ]
+        },
+        "on_grade": {
+          "clue": "The formation of this 1949 Western military alliance was a direct response to Soviet aggression in Eastern Europe and the Berlin Blockade — marking the first time the United States committed to a permanent peacetime military alliance since the founding era.",
+          "answer": "What is NATO?",
+          "wrong_answers": [
+            "the United Nations",
+            "SEATO",
+            "the Warsaw Pact"
+          ]
+        },
+        "advanced": {
+          "clue": "Article 5's first invocation came not against the Soviet threat it was designed to deter, but on September 12, 2001 — a post-Cold War application that transformed this Cold War institution into the legal foundation for the international response to the September 11 attacks.",
+          "answer": "What is NATO?",
+          "wrong_answers": [
+            "the United Nations",
+            "the Warsaw Pact",
+            "SEATO"
+          ]
+        },
+        "100": {
+          "supported": {
+            "clue": "The United States and countries in Western Europe formed this military alliance in 1949 to protect each other from Soviet attack.",
+            "answer": "What is NATO?",
+            "wrong_answers": [
+              "the United Nations",
+              "the Warsaw Pact",
+              "the Marshall Plan"
+            ]
+          },
+          "on_grade": {
+            "clue": "Founded in 1949, this military alliance bound the United States, Canada, and Western European nations together under a collective defense agreement — if one member was attacked, all would respond.",
+            "answer": "What is NATO?",
+            "wrong_answers": [
+              "the United Nations",
+              "the Warsaw Pact",
+              "SEATO"
+            ]
+          },
+          "advanced": {
+            "clue": "The North Atlantic Treaty Organization, founded in April 1949, represented a historic departure from U.S. foreign policy tradition — committing America to a permanent peacetime military alliance for the first time since the 18th century.",
+            "answer": "What is NATO?",
+            "wrong_answers": [
+              "the United Nations",
+              "the Warsaw Pact",
+              "SEATO"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "cuban_missile_crisis",
+      "concept": "Cuban Missile Crisis",
+      "point_value": 400,
+      "clues": {
+        "supported": {
+          "clue": "In 1962, the United States discovered that the Soviet Union was placing nuclear missiles in Cuba — just 90 miles from Florida. For 13 days, the world held its breath wondering if a nuclear war would start.",
+          "answer": "What is the Cuban Missile Crisis?",
+          "wrong_answers": [
+            "the Bay of Pigs invasion",
+            "the Berlin Crisis",
+            "the Suez Crisis"
+          ]
+        },
+        "on_grade": {
+          "clue": "President Kennedy chose to impose a naval blockade rather than launch an airstrike during this 1962 crisis — giving Soviet leader Khrushchev time to back down and remove the missiles without either side firing a shot.",
+          "answer": "What is the Cuban Missile Crisis?",
+          "wrong_answers": [
+            "the Bay of Pigs invasion",
+            "the Berlin Crisis",
+            "the Korean War"
+          ]
+        },
+        "advanced": {
+          "clue": "Declassified Soviet and American documents have since revealed that this crisis was even more dangerous than either government admitted at the time — a Soviet submarine in the blockade zone came within minutes of launching a nuclear torpedo before its captain was overruled.",
+          "answer": "What is the Cuban Missile Crisis?",
+          "wrong_answers": [
+            "the Bay of Pigs invasion",
+            "the Berlin Crisis",
+            "the Suez Crisis"
+          ]
+        },
+        "100": {
+          "supported": {
+            "clue": "In 1962, the Soviet Union placed nuclear missiles on the island of Cuba, just 90 miles from the United States.",
+            "answer": "What is the Cuban Missile Crisis?",
+            "wrong_answers": [
+              "the Bay of Pigs invasion",
+              "the Berlin Crisis",
+              "the Korean War"
+            ]
+          },
+          "on_grade": {
+            "clue": "For thirteen tense days in October 1962, the United States and Soviet Union stood at the brink of nuclear war after the U.S. discovered Soviet missile sites under construction in Cuba.",
+            "answer": "What is the Cuban Missile Crisis?",
+            "wrong_answers": [
+              "the Bay of Pigs invasion",
+              "the Berlin Crisis",
+              "the Suez Crisis"
+            ]
+          },
+          "advanced": {
+            "clue": "The thirteen-day standoff of October 1962 — resolved when the Soviets agreed to remove missiles from Cuba in exchange for a U.S. pledge not to invade and a secret agreement to remove Jupiter missiles from Turkey — remains the closest the superpowers came to nuclear exchange.",
+            "answer": "What is the Cuban Missile Crisis?",
+            "wrong_answers": [
+              "the Bay of Pigs invasion",
+              "the Berlin Crisis",
+              "the Suez Crisis"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "mutual_assured_destruction",
+      "concept": "Mutual Assured Destruction",
+      "point_value": 500,
+      "clues": {
+        "supported": {
+          "clue": "The United States and the Soviet Union both built thousands of nuclear weapons during the Cold War. Neither side used them because both knew that if they did, the other side would destroy them too. This kept the peace but kept everyone scared.",
+          "answer": "What is mutual assured destruction?",
+          "wrong_answers": [
+            "containment",
+            "brinkmanship",
+            "détente"
+          ]
+        },
+        "on_grade": {
+          "clue": "The Cold War nuclear standoff rested on this paradox — the more nuclear weapons each superpower built, the safer both were, because the certainty of total retaliation made launching a first strike completely irrational.",
+          "answer": "What is mutual assured destruction?",
+          "wrong_answers": [
+            "containment",
+            "the domino theory",
+            "brinkmanship"
+          ]
+        },
+        "advanced": {
+          "clue": "The near-miss incidents revealed by declassified documents — including a 1983 Soviet early-warning system false alarm that a single officer chose to classify as a malfunction rather than trigger a counterlaunch — suggest that this doctrine's stability depended as much on individual human judgment as on strategic logic.",
+          "answer": "What is mutual assured destruction?",
+          "wrong_answers": [
+            "containment",
+            "détente",
+            "brinkmanship"
+          ]
+        },
+        "100": {
+          "supported": {
+            "clue": "Both the United States and Soviet Union had so many nuclear weapons that if one side attacked, the other could destroy it completely. This kept both sides from using their weapons.",
+            "answer": "What is mutual assured destruction?",
+            "wrong_answers": [
+              "containment",
+              "deterrence",
+              "brinkmanship"
+            ]
+          },
+          "on_grade": {
+            "clue": "This nuclear strategy held that neither superpower would launch a first strike because doing so would guarantee its own total destruction in retaliation.",
+            "answer": "What is mutual assured destruction?",
+            "wrong_answers": [
+              "containment",
+              "brinkmanship",
+              "détente"
+            ]
+          },
+          "advanced": {
+            "clue": "Abbreviated MAD, this strategic doctrine held that the certainty of overwhelming retaliation — made possible by second-strike nuclear capabilities — was the primary deterrent to superpower conflict throughout the Cold War.",
+            "answer": "What is mutual assured destruction?",
+            "wrong_answers": [
+              "containment",
+              "brinkmanship",
+              "massive retaliation"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "detente",
+      "concept": "Détente",
+      "point_value": 500,
+      "clues": {
+        "supported": {
+          "clue": "In the 1970s, the United States and the Soviet Union tried to get along better. They signed agreements to limit nuclear weapons and traded goods with each other. This period of less tension was called by a French word meaning 'relaxation.'",
+          "answer": "What is détente?",
+          "wrong_answers": [
+            "containment",
+            "isolationism",
+            "brinkmanship"
+          ]
+        },
+        "on_grade": {
+          "clue": "Nixon's national security advisor Henry Kissinger was the chief architect of this 1970s foreign policy — using secret diplomacy, back-channel negotiations, and the strategic opening to China to rebalance Cold War power in America's favor.",
+          "answer": "What is détente?",
+          "wrong_answers": [
+            "containment",
+            "isolationism",
+            "the Nixon Doctrine"
+          ]
+        },
+        "advanced": {
+          "clue": "Reagan's rejection of this framework in favor of direct ideological confrontation — combined with massive defense spending designed to bankrupt the Soviet economy — reflected his conviction that the policy had legitimized Soviet power rather than constrained it, and that communism could be actively defeated rather than merely contained.",
+          "answer": "What is détente?",
+          "wrong_answers": [
+            "containment",
+            "isolationism",
+            "the Nixon Doctrine"
+          ]
+        },
+        "100": {
+          "supported": {
+            "clue": "In the 1970s, the United States and Soviet Union tried to reduce tensions and get along better. They signed agreements to limit nuclear weapons.",
+            "answer": "What is détente?",
+            "wrong_answers": [
+              "containment",
+              "the Cold War",
+              "brinkmanship"
+            ]
+          },
+          "on_grade": {
+            "clue": "This 1970s policy of easing Cold War tensions between the U.S. and Soviet Union included arms control agreements, increased trade, and President Nixon's historic visit to China.",
+            "answer": "What is détente?",
+            "wrong_answers": [
+              "containment",
+              "isolationism",
+              "brinkmanship"
+            ]
+          },
+          "advanced": {
+            "clue": "Championed by Nixon and Kissinger, this strategy of managed superpower competition produced SALT I (1972) and the Helsinki Accords (1975), temporarily reducing Cold War tensions before collapsing in the wake of the Soviet invasion of Afghanistan in 1979.",
+            "answer": "What is détente?",
+            "wrong_answers": [
+              "containment",
+              "massive retaliation",
+              "the Nixon Doctrine"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "38th_parallel",
+      "concept": "38th Parallel",
+      "point_value": 400,
+      "clues": {
+        "supported": {
+          "clue": "This invisible line divides the country of Korea in two. North of this line is communist North Korea. South of this line is democratic South Korea. It became the border after World War II.",
+          "answer": "What is the 38th parallel?",
+          "wrong_answers": [
+            "the DMZ",
+            "the Iron Curtain",
+            "the 17th parallel"
+          ]
+        },
+        "on_grade": {
+          "clue": "When North Korean forces crossed this geographic boundary in June 1950, it triggered the first military response in United Nations history — with the Security Council able to authorize force only because the Soviet Union happened to be boycotting the body at the time.",
+          "answer": "What is the 38th parallel?",
+          "wrong_answers": [
+            "the Berlin Wall",
+            "the Iron Curtain",
+            "the Maginot Line"
+          ]
+        },
+        "advanced": {
+          "clue": "The division of Korea at this latitude in 1945 was an improvised decision made by two American colonels in a single night — a hasty postwar arrangement that became one of the most militarized and consequential borders in modern history.",
+          "answer": "What is the 38th parallel?",
+          "wrong_answers": [
+            "the 17th parallel",
+            "the DMZ",
+            "the Yalu River"
+          ]
+        },
+        "100": {
+          "supported": {
+            "clue": "This line of latitude divides the Korean peninsula into North Korea and South Korea.",
+            "answer": "What is the 38th parallel?",
+            "wrong_answers": [
+              "the DMZ",
+              "the Iron Curtain",
+              "the 17th parallel"
+            ]
+          },
+          "on_grade": {
+            "clue": "This geographic line, running across the Korean peninsula, served as the boundary between communist North Korea and democratic South Korea — and was the line North Korean forces crossed to start the Korean War in 1950.",
+            "answer": "What is the 38th parallel?",
+            "wrong_answers": [
+              "the DMZ",
+              "the Iron Curtain",
+              "the 17th parallel"
+            ]
+          },
+          "advanced": {
+            "clue": "Chosen hastily by U.S. Army colonels Dean Rusk and Charles Bonesteel in August 1945 as a postwar occupation boundary, this latitude line became one of the most heavily militarized and geopolitically consequential borders of the 20th century.",
+            "answer": "What is the 38th parallel?",
+            "wrong_answers": [
+              "the 17th parallel",
+              "the DMZ",
+              "the Yalu River"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

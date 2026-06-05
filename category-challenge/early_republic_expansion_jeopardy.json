@@ -1,0 +1,655 @@
+{
+  "topic": "Early Republic & Expansion",
+  "level_descriptions": {
+    "supported": "Short sentences, one idea at a time, simplified reading level",
+    "on_grade": "Clear prose with context, grade-level reading",
+    "advanced": "Complex sentences, specific details, AP-level precision"
+  },
+  "concepts": [
+    {
+      "id": "washington_farewell_address",
+      "concept": "Washington's Farewell Address",
+      "point_value": 300,
+      "clues": {
+        "100": {
+          "clue": "In his 1796 farewell speech, President Washington warned Americans to avoid permanent alliances with foreign nations.",
+          "answer": "What is Washington's Farewell Address?",
+          "wrong_answers": [
+            "the Monroe Doctrine",
+            "the Emancipation Proclamation",
+            "the Gettysburg Address"
+          ]
+        },
+        "supported": {
+          "clue": "When George Washington left office in 1796, he gave a famous speech warning Americans about two dangers. He said political parties would divide the country. He also said the U.S. should stay out of foreign conflicts and avoid permanent alliances with other nations.",
+          "answer": "What is Washington's Farewell Address?",
+          "wrong_answers": [
+            "the Monroe Doctrine",
+            "the Emancipation Proclamation",
+            "the Gettysburg Address"
+          ]
+        },
+        "on_grade": {
+          "clue": "In his 1796 Farewell Address, Washington warned against the 'permanent alliances' and 'passionate attachments' to foreign nations that could drag the U.S. into European conflicts \u2014 a warning that became the foundation of American isolationism and was invoked for over a century to justify staying out of foreign wars.",
+          "answer": "What is Washington's Farewell Address?",
+          "wrong_answers": [
+            "the Monroe Doctrine",
+            "the Emancipation Proclamation",
+            "the Gettysburg Address"
+          ]
+        },
+        "advanced": {
+          "clue": "Washington's warnings against both 'permanent alliances' and the 'spirit of party' reflected his direct experience of how French sympathy had divided his own cabinet \u2014 pitting Hamilton's pro-British Federalists against Jefferson's pro-French Democratic-Republicans \u2014 and his fear that foreign entanglements would tear the fragile republic apart.",
+          "answer": "What is Washington's Farewell Address?",
+          "wrong_answers": [
+            "the Monroe Doctrine",
+            "the XYZ Affair",
+            "the Jay Treaty"
+          ]
+        }
+      }
+    },
+    {
+      "id": "louisiana_purchase",
+      "concept": "Louisiana Purchase",
+      "point_value": 200,
+      "clues": {
+        "100": {
+          "clue": "In 1803, President Jefferson bought a vast territory from France that doubled the size of the United States.",
+          "answer": "What is the Louisiana Purchase?",
+          "wrong_answers": [
+            "the Gadsden Purchase",
+            "the Mexican Cession",
+            "the Treaty of Paris"
+          ]
+        },
+        "supported": {
+          "clue": "In 1803, President Jefferson bought a huge piece of land from France for about 15 million dollars. This land doubled the size of the United States. Jefferson worried that the Constitution did not give him the power to buy land. But he decided the deal was too good to pass up.",
+          "answer": "What is the Louisiana Purchase?",
+          "wrong_answers": [
+            "the Gadsden Purchase",
+            "the Mexican Cession",
+            "the Adams-Onis Treaty"
+          ]
+        },
+        "on_grade": {
+          "clue": "Jefferson's purchase of 828,000 square miles of territory from Napoleon in 1803 \u2014 for about three cents an acre \u2014 doubled the size of the United States and opened the continent to westward expansion. Jefferson privately worried the purchase exceeded his constitutional authority but moved forward anyway, arguing the national interest demanded it.",
+          "answer": "What is the Louisiana Purchase?",
+          "wrong_answers": [
+            "the Gadsden Purchase",
+            "the Mexican Cession",
+            "the Adams-Onis Treaty"
+          ]
+        },
+        "advanced": {
+          "clue": "Jefferson's decision to purchase Louisiana without a constitutional amendment \u2014 despite his strict constructionist philosophy that the federal government could only do what was explicitly permitted \u2014 established a precedent of executive pragmatism over constitutional principle that his Federalist opponents had championed and he had spent years criticizing.",
+          "answer": "What is the Louisiana Purchase?",
+          "wrong_answers": [
+            "the Gadsden Purchase",
+            "the Mexican Cession",
+            "the Adams-Onis Treaty"
+          ]
+        }
+      }
+    },
+    {
+      "id": "manifest_destiny",
+      "concept": "Manifest Destiny",
+      "point_value": 200,
+      "clues": {
+        "100": {
+          "clue": "Many Americans in the 1800s believed it was their God-given right and duty to expand the United States from coast to coast.",
+          "answer": "What is Manifest Destiny?",
+          "wrong_answers": [
+            "the Monroe Doctrine",
+            "imperialism",
+            "isolationism"
+          ]
+        },
+        "supported": {
+          "clue": "In the 1800s, many Americans believed it was their destiny to spread across North America all the way to the Pacific Ocean. They believed God had chosen them to do this. This idea was used to justify pushing Native Americans off their lands and going to war with Mexico.",
+          "answer": "What is Manifest Destiny?",
+          "wrong_answers": [
+            "the Monroe Doctrine",
+            "imperialism",
+            "isolationism"
+          ]
+        },
+        "on_grade": {
+          "clue": "This belief that the United States was divinely ordained to expand across the continent provided the ideological justification for Indian removal, the Mexican-American War, and the settlement of the West \u2014 framing conquest and displacement as both inevitable and virtuous.",
+          "answer": "What is Manifest Destiny?",
+          "wrong_answers": [
+            "the Monroe Doctrine",
+            "imperialism",
+            "Social Darwinism"
+          ]
+        },
+        "advanced": {
+          "clue": "Manifest Destiny was not a unified policy but a cultural conviction \u2014 journalist John O'Sullivan coined the phrase in 1845 to argue for Texas annexation \u2014 yet its power lay precisely in its vagueness: it could justify anything from peaceful settlement to military conquest while wrapping territorial ambition in the language of providential mission.",
+          "answer": "What is Manifest Destiny?",
+          "wrong_answers": [
+            "the Monroe Doctrine",
+            "Anglo-Saxonism",
+            "Social Darwinism"
+          ]
+        }
+      }
+    },
+    {
+      "id": "monroe_doctrine",
+      "concept": "Monroe Doctrine",
+      "point_value": 300,
+      "clues": {
+        "100": {
+          "clue": "In 1823, President Monroe declared that European nations should not establish new colonies or interfere in the affairs of the Western Hemisphere.",
+          "answer": "What is the Monroe Doctrine?",
+          "wrong_answers": [
+            "the Truman Doctrine",
+            "Washington's Farewell Address",
+            "the Roosevelt Corollary"
+          ]
+        },
+        "supported": {
+          "clue": "In 1823, President Monroe warned European countries to stay out of North and South America. He said the Western Hemisphere was closed to new European colonies. In return, the U.S. promised not to interfere in European affairs. This became one of the most important foreign policy statements in American history.",
+          "answer": "What is the Monroe Doctrine?",
+          "wrong_answers": [
+            "the Truman Doctrine",
+            "Washington's Farewell Address",
+            "the Roosevelt Corollary"
+          ]
+        },
+        "on_grade": {
+          "clue": "Issued in 1823, this declaration warned European powers that the Western Hemisphere was closed to further colonization and that any attempt to extend their political system to the Americas would be considered a threat to U.S. security \u2014 establishing a regional sphere of influence that shaped American foreign policy for over a century.",
+          "answer": "What is the Monroe Doctrine?",
+          "wrong_answers": [
+            "the Truman Doctrine",
+            "Washington's Farewell Address",
+            "the Roosevelt Corollary"
+          ]
+        },
+        "advanced": {
+          "clue": "When Monroe issued this doctrine in 1823, the U.S. lacked the military power to enforce it \u2014 its credibility rested almost entirely on the British navy, which had its own commercial reasons for keeping European powers out of Latin American markets, making this celebrated statement of American independence ironically dependent on British power.",
+          "answer": "What is the Monroe Doctrine?",
+          "wrong_answers": [
+            "the Truman Doctrine",
+            "the Roosevelt Corollary",
+            "the Open Door Policy"
+          ]
+        }
+      }
+    },
+    {
+      "id": "jacksonian_democracy",
+      "concept": "Jacksonian Democracy",
+      "point_value": 300,
+      "clues": {
+        "100": {
+          "clue": "Andrew Jackson championed the idea that ordinary white male citizens \u2014 not just the wealthy elite \u2014 should have political power.",
+          "answer": "What is Jacksonian Democracy?",
+          "wrong_answers": [
+            "Jeffersonian Democracy",
+            "the spoils system",
+            "the nullification crisis"
+          ]
+        },
+        "supported": {
+          "clue": "Andrew Jackson said he was the president of the common man. He expanded voting rights for white men who did not own property. He also replaced government workers with his own supporters \u2014 a practice called the spoils system. But his democracy did not include Native Americans, women, or enslaved people.",
+          "answer": "What is Jacksonian Democracy?",
+          "wrong_answers": [
+            "Jeffersonian Democracy",
+            "the spoils system",
+            "the nullification crisis"
+          ]
+        },
+        "on_grade": {
+          "clue": "Jacksonian Democracy expanded white male suffrage and celebrated the 'common man' over the Eastern elite \u2014 but its vision of equality was sharply limited by race and gender. Jackson's policies toward Native Americans, culminating in the Trail of Tears, revealed that his democratic ideals extended only to white citizens.",
+          "answer": "What is Jacksonian Democracy?",
+          "wrong_answers": [
+            "Jeffersonian Democracy",
+            "the spoils system",
+            "the nullification crisis"
+          ]
+        },
+        "advanced": {
+          "clue": "Historians have debated whether Jackson's presidency represented a genuine democratization of American politics or merely the substitution of one elite \u2014 Eastern merchant-financiers \u2014 for another: a coalition of Southern planters and Western frontiersmen whose 'common man' rhetoric masked deep commitments to slavery and Indian removal.",
+          "answer": "What is Jacksonian Democracy?",
+          "wrong_answers": [
+            "Jeffersonian Democracy",
+            "the spoils system",
+            "the nullification crisis"
+          ]
+        }
+      }
+    },
+    {
+      "id": "indian_removal",
+      "concept": "Indian Removal / Trail of Tears",
+      "point_value": 300,
+      "clues": {
+        "100": {
+          "clue": "The forced relocation of the Cherokee and other Native American nations from the Southeast to Oklahoma killed thousands and is known as the Trail of Tears.",
+          "answer": "What is the Trail of Tears?",
+          "wrong_answers": [
+            "the Long Walk",
+            "the Sand Creek Massacre",
+            "the Battle of Little Bighorn"
+          ]
+        },
+        "supported": {
+          "clue": "President Jackson signed the Indian Removal Act in 1830. It forced Native American tribes living in the southeastern United States to move west of the Mississippi River. The Cherokee were forced to march over a thousand miles in winter with little food. Thousands of people died on this march.",
+          "answer": "What is the Trail of Tears?",
+          "wrong_answers": [
+            "the Long Walk",
+            "the Sand Creek Massacre",
+            "the Battle of Little Bighorn"
+          ]
+        },
+        "on_grade": {
+          "clue": "The Indian Removal Act of 1830 \u2014 championed by Jackson despite the Supreme Court's ruling in Worcester v. Georgia that the Cherokee nation had legal sovereignty over its territory \u2014 forced approximately 60,000 Native Americans from their homelands, with the Cherokee removal alone killing an estimated 4,000 people during the forced march west.",
+          "answer": "What is the Trail of Tears?",
+          "wrong_answers": [
+            "the Long Walk",
+            "the Sand Creek Massacre",
+            "the Dawes Act"
+          ]
+        },
+        "advanced": {
+          "clue": "Jackson's defiance of Marshall's ruling in Worcester v. Georgia \u2014 reportedly saying 'John Marshall has made his decision; now let him enforce it' \u2014 demonstrated that checks and balances depended on executive willingness to comply, and established a precedent for how presidents could simply ignore judicial rulings they found politically inconvenient.",
+          "answer": "What is the Trail of Tears?",
+          "wrong_answers": [
+            "the Long Walk",
+            "the Dawes Act",
+            "the Sand Creek Massacre"
+          ]
+        }
+      }
+    },
+    {
+      "id": "missouri_compromise",
+      "concept": "Missouri Compromise",
+      "point_value": 300,
+      "clues": {
+        "100": {
+          "clue": "This 1820 agreement admitted Missouri as a slave state and Maine as a free state, keeping a balance between slave and free states.",
+          "answer": "What is the Missouri Compromise?",
+          "wrong_answers": [
+            "the Compromise of 1850",
+            "the Kansas-Nebraska Act",
+            "the Three-Fifths Compromise"
+          ]
+        },
+        "supported": {
+          "clue": "In 1820, Congress argued about whether Missouri would allow slavery. They agreed on a deal: Missouri joined as a slave state and Maine joined as a free state. They also drew a line \u2014 slavery would be banned north of that line in any new states. This kept the peace for about 30 years.",
+          "answer": "What is the Missouri Compromise?",
+          "wrong_answers": [
+            "the Compromise of 1850",
+            "the Kansas-Nebraska Act",
+            "the Three-Fifths Compromise"
+          ]
+        },
+        "on_grade": {
+          "clue": "The Missouri Compromise of 1820 temporarily resolved the slavery crisis by admitting Missouri as a slave state paired with Maine as a free state, and drawing the 36\u00b030' line \u2014 banning slavery in the remainder of the Louisiana Territory north of that boundary. It held as the national solution to slavery for three decades before the Kansas-Nebraska Act repealed it.",
+          "answer": "What is the Missouri Compromise?",
+          "wrong_answers": [
+            "the Compromise of 1850",
+            "the Kansas-Nebraska Act",
+            "the Three-Fifths Compromise"
+          ]
+        },
+        "advanced": {
+          "clue": "Jefferson famously called the Missouri crisis 'a fire bell in the night' \u2014 recognizing that the question of slavery's expansion into new territories had the potential to destroy the Union, and that the compromise merely postponed rather than resolved the fundamental conflict, a judgment the Civil War ultimately confirmed.",
+          "answer": "What is the Missouri Compromise?",
+          "wrong_answers": [
+            "the Compromise of 1850",
+            "the Kansas-Nebraska Act",
+            "the Wilmot Proviso"
+          ]
+        }
+      }
+    },
+    {
+      "id": "nullification_crisis",
+      "concept": "Nullification Crisis",
+      "point_value": 400,
+      "clues": {
+        "100": {
+          "clue": "South Carolina claimed it had the right to cancel \u2014 or nullify \u2014 a federal tariff law it considered unconstitutional.",
+          "answer": "What is the nullification crisis?",
+          "wrong_answers": [
+            "secession",
+            "states' rights",
+            "the spoils system"
+          ]
+        },
+        "supported": {
+          "clue": "In 1832, South Carolina declared it had the right to ignore a federal tariff law it said was unfair. This idea \u2014 that a state could cancel a federal law \u2014 was called nullification. President Jackson said this was treason. The crisis ended with a compromise tariff, but the deeper argument about states' rights was never fully settled.",
+          "answer": "What is the nullification crisis?",
+          "wrong_answers": [
+            "secession",
+            "the spoils system",
+            "the Bank War"
+          ]
+        },
+        "on_grade": {
+          "clue": "When South Carolina declared the tariffs of 1828 and 1832 null and void within its borders, President Jackson responded with a Proclamation to the People of South Carolina declaring nullification treasonous \u2014 but also worked with Congress to lower the tariff, resolving the immediate crisis while leaving the underlying question of federal supremacy unresolved.",
+          "answer": "What is the nullification crisis?",
+          "wrong_answers": [
+            "secession",
+            "the Bank War",
+            "the Trail of Tears"
+          ]
+        },
+        "advanced": {
+          "clue": "The nullification doctrine, developed by Calhoun in his anonymously published 'South Carolina Exposition and Protest,' was a constitutional theory rooted in the compact theory of the Union \u2014 arguing states had created the federal government and retained the right to judge its actions \u2014 a theory that would reemerge three decades later as the intellectual justification for secession.",
+          "answer": "What is the nullification crisis?",
+          "wrong_answers": [
+            "secession",
+            "the Bank War",
+            "the Hartford Convention"
+          ]
+        }
+      }
+    },
+    {
+      "id": "mexican_american_war",
+      "concept": "Mexican-American War",
+      "point_value": 400,
+      "clues": {
+        "100": {
+          "clue": "The United States went to war with Mexico from 1846 to 1848 and gained California and the Southwest as a result.",
+          "answer": "What is the Mexican-American War?",
+          "wrong_answers": [
+            "the Spanish-American War",
+            "the Texas Revolution",
+            "the War of 1812"
+          ]
+        },
+        "supported": {
+          "clue": "After the United States annexed Texas in 1845, a border dispute led to war with Mexico. The U.S. won and Mexico gave up a huge territory including California and New Mexico. Critics like Abraham Lincoln and Henry David Thoreau said the war was started by President Polk on false pretenses.",
+          "answer": "What is the Mexican-American War?",
+          "wrong_answers": [
+            "the Spanish-American War",
+            "the Texas Revolution",
+            "the War of 1812"
+          ]
+        },
+        "on_grade": {
+          "clue": "The Mexican-American War (1846\u20131848) added 525,000 square miles of territory to the United States \u2014 including California, Nevada, Utah, and parts of several other states \u2014 but also reignited the explosive debate over whether slavery would be permitted in the newly acquired lands, directly accelerating the sectional crisis of the 1850s.",
+          "answer": "What is the Mexican-American War?",
+          "wrong_answers": [
+            "the Spanish-American War",
+            "the Texas Revolution",
+            "the War of 1812"
+          ]
+        },
+        "advanced": {
+          "clue": "Congressman Abraham Lincoln's 'Spot Resolutions' demanding that Polk identify the exact spot where American blood was shed to justify the war reflected a broader Whig critique that the president had manufactured a pretext for an aggressive, unconstitutional war of territorial expansion \u2014 a critique with striking parallels to later debates over the Gulf of Tonkin Resolution.",
+          "answer": "What is the Mexican-American War?",
+          "wrong_answers": [
+            "the Spanish-American War",
+            "the Texas Revolution",
+            "the War of 1812"
+          ]
+        }
+      }
+    },
+    {
+      "id": "embargo_act",
+      "concept": "Embargo Act / Economic Warfare",
+      "point_value": 400,
+      "clues": {
+        "100": {
+          "clue": "President Jefferson banned all American trade with foreign nations in 1807 to try to keep the U.S. out of the Napoleonic Wars.",
+          "answer": "What is the Embargo Act?",
+          "wrong_answers": [
+            "the Monroe Doctrine",
+            "the Alien and Sedition Acts",
+            "the Missouri Compromise"
+          ]
+        },
+        "supported": {
+          "clue": "Britain and France were at war and both were seizing American ships. Jefferson did not want to go to war, so he tried a different approach: he stopped all American trade with foreign countries. This hurt American merchants and farmers far more than it hurt Britain or France. It was a major failure.",
+          "answer": "What is the Embargo Act?",
+          "wrong_answers": [
+            "the Monroe Doctrine",
+            "the Alien and Sedition Acts",
+            "the Non-Intercourse Act"
+          ]
+        },
+        "on_grade": {
+          "clue": "Jefferson's Embargo Act of 1807 \u2014 cutting off all American foreign trade to avoid being drawn into the Napoleonic Wars \u2014 devastated the New England merchant economy while doing almost nothing to pressure Britain or France. Its failure discredited economic coercion as a diplomatic tool and helped push the U.S. toward the War of 1812.",
+          "answer": "What is the Embargo Act?",
+          "wrong_answers": [
+            "the Monroe Doctrine",
+            "the Alien and Sedition Acts",
+            "the Non-Intercourse Act"
+          ]
+        },
+        "advanced": {
+          "clue": "The Embargo Act's catastrophic failure exposed a fundamental contradiction in Jeffersonian foreign policy: a president who had championed agrarian self-sufficiency and minimal government now required an unprecedented expansion of federal enforcement power to stop American merchants and farmers from trading \u2014 and even then could not make the policy work.",
+          "answer": "What is the Embargo Act?",
+          "wrong_answers": [
+            "the Monroe Doctrine",
+            "the Non-Intercourse Act",
+            "the Alien and Sedition Acts"
+          ]
+        }
+      }
+    },
+    {
+      "id": "war_of_1812",
+      "concept": "War of 1812",
+      "point_value": 300,
+      "clues": {
+        "100": {
+          "clue": "The United States fought Britain again in this war, which ended in a stalemate but produced a surge of American nationalism.",
+          "answer": "What is the War of 1812?",
+          "wrong_answers": [
+            "the Mexican-American War",
+            "the Revolutionary War",
+            "the Spanish-American War"
+          ]
+        },
+        "supported": {
+          "clue": "The U.S. went to war with Britain in 1812. Americans were angry that the British were seizing American sailors and ships, and that Britain was encouraging Native Americans to resist American expansion. The war ended with no clear winner, but Americans felt proud and more independent from Europe.",
+          "answer": "What is the War of 1812?",
+          "wrong_answers": [
+            "the Mexican-American War",
+            "the Revolutionary War",
+            "the Spanish-American War"
+          ]
+        },
+        "on_grade": {
+          "clue": "The War of 1812 ended inconclusively with the Treaty of Ghent \u2014 restoring the prewar status quo \u2014 but its political effects were significant: it discredited the Federalist Party, which had opposed the war, accelerated American industrial development by cutting off British imports, and produced a surge of national pride sometimes called the Era of Good Feelings.",
+          "answer": "What is the War of 1812?",
+          "wrong_answers": [
+            "the Mexican-American War",
+            "the Revolutionary War",
+            "the Spanish-American War"
+          ]
+        },
+        "advanced": {
+          "clue": "The Battle of New Orleans \u2014 fought two weeks after the Treaty of Ghent had already ended the war \u2014 made Andrew Jackson a national hero and a future president, demonstrating how military mythology could shape political careers independent of the actual strategic outcome of a conflict.",
+          "answer": "What is the War of 1812?",
+          "wrong_answers": [
+            "the Mexican-American War",
+            "the Revolutionary War",
+            "the Spanish-American War"
+          ]
+        }
+      }
+    },
+    {
+      "id": "homestead_act",
+      "concept": "Homestead Act / Western Settlement",
+      "point_value": 200,
+      "clues": {
+        "100": {
+          "clue": "The Homestead Act of 1862 offered 160 acres of free land to settlers willing to farm it for five years.",
+          "answer": "What is the Homestead Act?",
+          "wrong_answers": [
+            "the Land Ordinance of 1785",
+            "the Kansas-Nebraska Act",
+            "the Morrill Act"
+          ]
+        },
+        "supported": {
+          "clue": "In 1862, Congress passed a law offering 160 acres of free land to any American willing to farm it for five years. This encouraged thousands of settlers to move west. But the land was not really free \u2014 it came from Native American territories, and many settlers found the land too dry to farm successfully.",
+          "answer": "What is the Homestead Act?",
+          "wrong_answers": [
+            "the Land Ordinance of 1785",
+            "the Kansas-Nebraska Act",
+            "the Morrill Act"
+          ]
+        },
+        "on_grade": {
+          "clue": "The Homestead Act of 1862 distributed over 270 million acres of public land to settlers over the following decades \u2014 but the promised opportunity was unevenly distributed. Large railroads and land speculators often claimed the best land, leaving many small farmers with marginal acreage in the arid Great Plains where the 160-acre plot proved inadequate for sustainable farming.",
+          "answer": "What is the Homestead Act?",
+          "wrong_answers": [
+            "the Land Ordinance of 1785",
+            "the Pacific Railway Act",
+            "the Morrill Act"
+          ]
+        },
+        "advanced": {
+          "clue": "The Homestead Act's vision of a nation of independent yeoman farmers \u2014 deeply Jeffersonian in spirit \u2014 collided with the reality of industrial-scale railroads, land monopolies, and Plains agriculture that required far more than 160 acres and far more capital than most settlers possessed, helping explain the rise of agrarian protest movements like the Grangers and Populists in the 1870s\u20131890s.",
+          "answer": "What is the Homestead Act?",
+          "wrong_answers": [
+            "the Land Ordinance of 1785",
+            "the Pacific Railway Act",
+            "the Dawes Act"
+          ]
+        }
+      }
+    },
+    {
+      "id": "frontier_thesis",
+      "concept": "Frontier Thesis / Frederick Jackson Turner",
+      "point_value": 500,
+      "clues": {
+        "100": {
+          "clue": "Historian Frederick Jackson Turner argued in 1893 that the frontier experience had shaped American democracy and character.",
+          "answer": "What is the Frontier Thesis?",
+          "wrong_answers": [
+            "Manifest Destiny",
+            "Social Darwinism",
+            "the Gospel of Wealth"
+          ]
+        },
+        "supported": {
+          "clue": "In 1893, historian Frederick Jackson Turner said that the western frontier had made Americans unique. The experience of conquering wild land had created democratic values and rugged independence. He also warned that the frontier had just closed \u2014 and that losing it might change what America was.",
+          "answer": "What is the Frontier Thesis?",
+          "wrong_answers": [
+            "Manifest Destiny",
+            "Social Darwinism",
+            "the Gospel of Wealth"
+          ]
+        },
+        "on_grade": {
+          "clue": "Turner's 1893 argument that the frontier experience \u2014 the repeated process of settling and 'civilizing' the West \u2014 had forged uniquely American democratic values had enormous influence on how Americans understood their national identity. It also implicitly justified westward expansion and ignored the Native American perspective entirely.",
+          "answer": "What is the Frontier Thesis?",
+          "wrong_answers": [
+            "Manifest Destiny",
+            "Social Darwinism",
+            "the Gospel of Wealth"
+          ]
+        },
+        "advanced": {
+          "clue": "Turner's thesis has been critiqued by later historians as a founding myth that erased Native American agency, ignored the role of slavery and immigration in shaping American development, and provided an ideological framework \u2014 the need for new frontiers \u2014 that would be used to justify overseas imperialism just as the continental frontier closed.",
+          "answer": "What is the Frontier Thesis?",
+          "wrong_answers": [
+            "Manifest Destiny",
+            "Anglo-Saxonism",
+            "the Gospel of Wealth"
+          ]
+        }
+      }
+    },
+    {
+      "id": "election_of_1800",
+      "concept": "Election of 1800 / Peaceful Transfer of Power",
+      "point_value": 500,
+      "clues": {
+        "100": {
+          "clue": "The election of 1800 was the first time power was peacefully transferred from one political party to another in American history.",
+          "answer": "What is the Election of 1800?",
+          "wrong_answers": [
+            "the Election of 1824",
+            "the Election of 1876",
+            "the Election of 1860"
+          ]
+        },
+        "supported": {
+          "clue": "In 1800, Thomas Jefferson defeated John Adams for president. This was the first time that one political party peacefully gave power to another in U.S. history. Many countries at the time changed governments through violence. Jefferson called it the Revolution of 1800 because it proved democracy could work peacefully.",
+          "answer": "What is the Election of 1800?",
+          "wrong_answers": [
+            "the Election of 1824",
+            "the Election of 1876",
+            "the Election of 1860"
+          ]
+        },
+        "on_grade": {
+          "clue": "The peaceful transfer of power from Federalist John Adams to Democratic-Republican Thomas Jefferson in 1801 \u2014 despite bitter partisan conflict and a tied Electoral College requiring the House to choose the president \u2014 established the crucial precedent that American democracy could survive the transfer of power between rival parties without violence.",
+          "answer": "What is the Election of 1800?",
+          "wrong_answers": [
+            "the Election of 1824",
+            "the Election of 1876",
+            "the Election of 1860"
+          ]
+        },
+        "advanced": {
+          "clue": "The constitutional crisis of the election of 1800 \u2014 in which Jefferson and his running mate Burr tied in the Electoral College because electors could not distinguish between votes for president and vice president \u2014 directly produced the 12th Amendment, demonstrating how unforeseen structural flaws in the Constitution required ongoing repair.",
+          "answer": "What is the Election of 1800?",
+          "wrong_answers": [
+            "the Election of 1824",
+            "the Election of 1876",
+            "the XYZ Affair"
+          ]
+        }
+      }
+    },
+    {
+      "id": "alien_sedition_acts",
+      "concept": "Alien & Sedition Acts",
+      "point_value": 400,
+      "clues": {
+        "100": {
+          "clue": "These 1798 laws made it illegal to criticize the government and allowed the president to deport foreigners deemed dangerous.",
+          "answer": "What is the Alien and Sedition Acts?",
+          "wrong_answers": [
+            "the Espionage Act",
+            "the Naturalization Act",
+            "the Bill of Rights"
+          ]
+        },
+        "supported": {
+          "clue": "In 1798, the Federalist-controlled Congress passed laws that made it a crime to criticize the government. They also made it harder for immigrants to become citizens. President Adams used these laws against Democratic-Republican newspaper editors who criticized him. Jefferson and Madison said the states had the right to ignore these laws.",
+          "answer": "What is the Alien and Sedition Acts?",
+          "wrong_answers": [
+            "the Espionage Act",
+            "the Naturalization Act",
+            "the Embargo Act"
+          ]
+        },
+        "on_grade": {
+          "clue": "The Alien and Sedition Acts of 1798 \u2014 passed by the Federalist Congress during tensions with France \u2014 criminalized criticism of the government and targeted immigrant communities sympathetic to Jefferson's party. Jefferson and Madison responded with the Virginia and Kentucky Resolutions, arguing states could nullify unconstitutional federal laws.",
+          "answer": "What is the Alien and Sedition Acts?",
+          "wrong_answers": [
+            "the Espionage Act",
+            "the Naturalization Act",
+            "the Embargo Act"
+          ]
+        },
+        "advanced": {
+          "clue": "The Virginia and Kentucky Resolutions written secretly by Jefferson and Madison in response to these acts articulated an early version of the nullification doctrine \u2014 ironically, the same doctrine that Southern states would later use to defend slavery, demonstrating how constitutional arguments developed for one purpose can be repurposed in ways their authors never intended.",
+          "answer": "What is the Alien and Sedition Acts?",
+          "wrong_answers": [
+            "the Espionage Act",
+            "the Naturalization Act",
+            "the Hartford Convention resolutions"
+          ]
+        }
+      }
+    }
+  ]
+}

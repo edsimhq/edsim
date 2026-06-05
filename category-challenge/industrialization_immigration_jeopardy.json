@@ -1,0 +1,416 @@
+{
+  "topic": "Industrialization & Immigration",
+  "level_descriptions": {
+    "supported": "Short sentences, one idea at a time, simplified reading level",
+    "on_grade": "Clear prose with context, grade-level reading",
+    "advanced": "Complex sentences, specific details, AP-level precision"
+  },
+  "concepts": [
+    {
+      "id": "robber_barons",
+      "concept": "Robber Barons / Captains of Industry",
+      "point_value": 200,
+      "clues": {
+        "100": {
+          "clue": "Andrew Carnegie, John D. Rockefeller, and J.P. Morgan were powerful businessmen who dominated American industry in the late 1800s.",
+          "answer": "What is a robber baron?",
+          "wrong_answers": ["a labor union leader", "a muckraker", "a Progressive reformer"]
+        },
+        "supported": {
+          "clue": "In the late 1800s, a small number of very rich men controlled most of America's big industries. Some people called them robber barons because they crushed competition and treated workers badly. Others called them captains of industry because they built the modern economy.",
+          "answer": "What is a robber baron?",
+          "wrong_answers": ["a labor union leader", "a muckraker", "a trust buster"]
+        },
+        "on_grade": {
+          "clue": "Figures like Rockefeller in oil, Carnegie in steel, and Morgan in finance built enormous fortunes by eliminating competition, driving down wages, and using their political connections to block regulation — earning both admiration for their economic achievements and condemnation for their ruthless methods.",
+          "answer": "What is a robber baron?",
+          "wrong_answers": ["a labor union leader", "a muckraker", "a trust buster"]
+        },
+        "advanced": {
+          "clue": "The debate over whether Gilded Age industrialists were robber barons or captains of industry reflects a deeper tension in American culture between celebration of entrepreneurial success and concern about concentrated economic power — a tension the Progressive Era attempted to resolve through regulation rather than revolution.",
+          "answer": "What is a robber baron?",
+          "wrong_answers": ["a muckraker", "a trust buster", "a social Darwinist"]
+        }
+      }
+    },
+    {
+      "id": "monopolies_trusts",
+      "concept": "Monopolies & Trusts",
+      "point_value": 200,
+      "clues": {
+        "100": {
+          "clue": "Rockefeller's Standard Oil controlled so much of the oil industry that it could set prices and crush any competition.",
+          "answer": "What is a monopoly?",
+          "wrong_answers": ["a labor union", "a tariff", "a subsidy"]
+        },
+        "supported": {
+          "clue": "When one company controls an entire industry, it can charge whatever it wants and workers have nowhere else to go for jobs. Rockefeller used this strategy with oil. Carnegie did it with steel. These business arrangements were called trusts.",
+          "answer": "What is a monopoly?",
+          "wrong_answers": ["a labor union", "a tariff", "a cooperative"]
+        },
+        "on_grade": {
+          "clue": "Trusts allowed major corporations to combine under a single board of directors, eliminating competition and controlling prices across an entire industry. Rockefeller's Standard Oil, which at its peak controlled 90% of U.S. oil refining, became the defining example of monopolistic power.",
+          "answer": "What is a trust?",
+          "wrong_answers": ["a labor union", "a tariff", "a cooperative"]
+        },
+        "advanced": {
+          "clue": "The horizontal integration strategy pioneered by Rockefeller — buying out or bankrupting competitors until Standard Oil dominated the entire refining sector — differed from Carnegie's vertical integration, which controlled every stage of steel production from raw materials to finished product, but both achieved the same result: effective monopoly.",
+          "answer": "What is a trust?",
+          "wrong_answers": ["a labor union", "a tariff", "a cooperative"]
+        }
+      }
+    },
+    {
+      "id": "sherman_antitrust_act",
+      "concept": "Sherman Antitrust Act",
+      "point_value": 300,
+      "clues": {
+        "100": {
+          "clue": "Congress passed this 1890 law to break up monopolies and restore competition in American business.",
+          "answer": "What is the Sherman Antitrust Act?",
+          "wrong_answers": ["the Clayton Act", "the Interstate Commerce Act", "the Pure Food and Drug Act"]
+        },
+        "supported": {
+          "clue": "Congress passed this law in 1890 to stop trusts from controlling entire industries. But it had a big weakness — the language was vague and courts could use it against labor unions instead of corporations. It took many years before the government used it effectively against big business.",
+          "answer": "What is the Sherman Antitrust Act?",
+          "wrong_answers": ["the Clayton Act", "the Interstate Commerce Act", "the Pure Food and Drug Act"]
+        },
+        "on_grade": {
+          "clue": "Passed in 1890, this law banned business combinations that restrained trade — but its vague language made enforcement difficult, and courts initially used it more often against labor unions than corporations. It was not used effectively against monopolies until Theodore Roosevelt revived it as a trust-busting tool after 1901.",
+          "answer": "What is the Sherman Antitrust Act?",
+          "wrong_answers": ["the Clayton Act", "the Interstate Commerce Act", "the Pure Food and Drug Act"]
+        },
+        "advanced": {
+          "clue": "The irony of this 1890 law's early history is that its vague prohibition on 'combinations in restraint of trade' was applied by federal courts far more aggressively against labor union organizing than against the corporate monopolies it was ostensibly designed to break up — a pattern that persisted until the Clayton Act of 1914 explicitly exempted unions.",
+          "answer": "What is the Sherman Antitrust Act?",
+          "wrong_answers": ["the Clayton Act", "the Interstate Commerce Act", "the Pure Food and Drug Act"]
+        }
+      }
+    },
+    {
+      "id": "labor_unions",
+      "concept": "Labor Unions / Samuel Gompers",
+      "point_value": 300,
+      "clues": {
+        "100": {
+          "clue": "Workers formed these organizations to demand better wages, shorter hours, and safer working conditions from their employers.",
+          "answer": "What is a labor union?",
+          "wrong_answers": ["a trust", "a political party", "a cooperative"]
+        },
+        "supported": {
+          "clue": "In the late 1800s, factory workers had long hours, low pay, and dangerous jobs. They joined together to demand better conditions. Samuel Gompers led the American Federation of Labor. He focused on practical goals like higher wages and shorter workdays instead of trying to change the whole economic system.",
+          "answer": "What is a labor union?",
+          "wrong_answers": ["a trust", "a political party", "a cooperative"]
+        },
+        "on_grade": {
+          "clue": "Samuel Gompers built the American Federation of Labor into the nation's most powerful labor organization by focusing on 'bread and butter' issues — wages, hours, and working conditions — rather than socialist ideology. His approach of using strikes and collective bargaining shaped the American labor movement for decades.",
+          "answer": "Who is Samuel Gompers?",
+          "wrong_answers": ["Eugene Debs", "Mother Jones", "Terence Powderly"]
+        },
+        "advanced": {
+          "clue": "Gompers' strategy of craft unionism — organizing skilled workers by trade rather than industry-wide — gave the AFL bargaining leverage but left unskilled immigrant and African American workers largely unorganized, a structural weakness that would not be addressed until the Congress of Industrial Organizations emerged in the 1930s.",
+          "answer": "Who is Samuel Gompers?",
+          "wrong_answers": ["Eugene Debs", "Mother Jones", "John L. Lewis"]
+        }
+      }
+    },
+    {
+      "id": "muckrakers",
+      "concept": "Muckrakers",
+      "point_value": 300,
+      "clues": {
+        "100": {
+          "clue": "Ida Tarbell and Upton Sinclair were journalists who exposed corruption and dangerous conditions in American industry.",
+          "answer": "What is a muckraker?",
+          "wrong_answers": ["a robber baron", "a trust buster", "a labor organizer"]
+        },
+        "supported": {
+          "clue": "These investigative journalists wrote about problems in American society during the early 1900s. Upton Sinclair wrote about the disgusting conditions in meatpacking plants. Ida Tarbell exposed how Rockefeller's Standard Oil cheated competitors. Their writing helped lead to new laws.",
+          "answer": "What is a muckraker?",
+          "wrong_answers": ["a robber baron", "a trust buster", "a labor organizer"]
+        },
+        "on_grade": {
+          "clue": "Investigative journalists of the Progressive Era who exposed corruption, corporate abuse, and social injustice through detailed reporting — Ida Tarbell's exposé of Standard Oil, Upton Sinclair's portrayal of meatpacking plants in The Jungle, and Jacob Riis's photographs of tenement life all directly influenced public pressure for reform legislation.",
+          "answer": "What is a muckraker?",
+          "wrong_answers": ["a robber baron", "a trust buster", "a labor organizer"]
+        },
+        "advanced": {
+          "clue": "The unintended consequence of Sinclair's The Jungle illustrates the limits of muckraking: written to generate sympathy for immigrant meatpacking workers, it instead prompted public outrage over contaminated meat — leading to the Pure Food and Drug Act but doing little to improve workers' conditions, prompting Sinclair's famous lament that he had aimed for the public's heart but hit its stomach.",
+          "answer": "What is a muckraker?",
+          "wrong_answers": ["a robber baron", "a trust buster", "a social Darwinist"]
+        }
+      }
+    },
+    {
+      "id": "immigration_push_pull",
+      "concept": "Immigration / Push-Pull Factors",
+      "point_value": 200,
+      "clues": {
+        "100": {
+          "clue": "Between 1880 and 1920, millions of immigrants came to the United States from Southern and Eastern Europe.",
+          "answer": "What is the new immigration?",
+          "wrong_answers": ["the Great Migration", "westward expansion", "urbanization"]
+        },
+        "supported": {
+          "clue": "Millions of people came to America in the late 1800s and early 1900s. Many were pushed out of their home countries by poverty, religious persecution, or war. They were pulled to America by the hope of jobs, freedom, and a better life. Most settled in crowded city neighborhoods.",
+          "answer": "What is immigration?",
+          "wrong_answers": ["the Great Migration", "westward expansion", "urbanization"]
+        },
+        "on_grade": {
+          "clue": "Between 1880 and 1920, over 20 million immigrants arrived in the United States — mostly from Southern and Eastern Europe — fleeing poverty, persecution, and political instability. They clustered in urban ethnic neighborhoods, provided cheap industrial labor, and dramatically transformed American cities and culture.",
+          "answer": "What is the new immigration?",
+          "wrong_answers": ["the Great Migration", "westward expansion", "nativism"]
+        },
+        "advanced": {
+          "clue": "The shift from 'old' immigration (Northern and Western Europeans seen as culturally compatible) to 'new' immigration (Southern and Eastern Europeans, including large numbers of Catholics and Jews) fueled nativist anxieties that culminated in the Immigration Act of 1924 — which used national origin quotas specifically designed to favor Northwestern Europeans and virtually exclude Southern and Eastern Europeans.",
+          "answer": "What is the new immigration?",
+          "wrong_answers": ["the Great Migration", "the Chinese Exclusion Act", "nativism"]
+        }
+      }
+    },
+    {
+      "id": "nativism_immigration_restriction",
+      "concept": "Nativism & Immigration Restriction",
+      "point_value": 300,
+      "clues": {
+        "100": {
+          "clue": "The Immigration Act of 1924 used quotas to severely limit the number of immigrants allowed into the United States.",
+          "answer": "What is the Immigration Act of 1924?",
+          "wrong_answers": ["the Chinese Exclusion Act", "the Homestead Act", "the Sherman Antitrust Act"]
+        },
+        "supported": {
+          "clue": "Many Americans feared that new immigrants would take their jobs, change American culture, or bring dangerous ideas. This fear of immigrants is called nativism. Congress responded by passing laws to limit immigration. The 1924 law used quotas that heavily favored immigrants from Northern and Western Europe.",
+          "answer": "What is nativism?",
+          "wrong_answers": ["Social Darwinism", "isolationism", "populism"]
+        },
+        "on_grade": {
+          "clue": "Fueled by fears about cultural change, job competition, and the spread of radical political ideas, nativist sentiment led Congress to pass the Immigration Act of 1924 — establishing national origin quotas that drastically reduced Southern and Eastern European immigration and virtually banned immigration from Asia.",
+          "answer": "What is nativism?",
+          "wrong_answers": ["Social Darwinism", "isolationism", "populism"]
+        },
+        "advanced": {
+          "clue": "The Immigration Act of 1924 was explicitly designed using 1890 census data rather than current population figures — a deliberate choice that locked in Northern European dominance before the wave of Southern and Eastern European immigration had been fully counted, effectively writing pseudoscientific racial hierarchy into federal law.",
+          "answer": "What is the Immigration Act of 1924?",
+          "wrong_answers": ["the Chinese Exclusion Act", "the Emergency Quota Act", "the Naturalization Act"]
+        }
+      }
+    },
+    {
+      "id": "urbanization",
+      "concept": "Urbanization & Tenement Life",
+      "point_value": 200,
+      "clues": {
+        "100": {
+          "clue": "As factories grew in American cities, millions of workers moved from farms to urban areas, creating crowded slums.",
+          "answer": "What is urbanization?",
+          "wrong_answers": ["the Great Migration", "westward expansion", "suburbanization"]
+        },
+        "supported": {
+          "clue": "As factories grew in American cities, millions of workers needed places to live. Many ended up in crowded, rundown buildings called tenements. These buildings often had no clean water, no heat, and very little light. Jacob Riis photographed these conditions to show middle-class Americans how the poor lived.",
+          "answer": "What is a tenement?",
+          "wrong_answers": ["a settlement house", "a factory", "a company town"]
+        },
+        "on_grade": {
+          "clue": "Rapid industrialization drew millions of workers into American cities, creating overcrowded slum neighborhoods where immigrants and the poor lived in dangerous tenements. Jacob Riis's photojournalism in How the Other Half Lives (1890) shocked middle-class readers and built public support for housing reform.",
+          "answer": "What is urbanization?",
+          "wrong_answers": ["the Great Migration", "the settlement house movement", "suburbanization"]
+        },
+        "advanced": {
+          "clue": "Riis's use of flash photography to document tenement conditions was itself a form of power — bringing the hidden lives of immigrant poor into the parlors of middle-class reformers — but critics have noted that his work also reflected the nativist assumptions of his era, framing immigrants as problems to be managed rather than people with agency.",
+          "answer": "What is urbanization?",
+          "wrong_answers": ["the Great Migration", "the settlement house movement", "suburbanization"]
+        }
+      }
+    },
+    {
+      "id": "social_darwinism",
+      "concept": "Social Darwinism / Gospel of Wealth",
+      "point_value": 400,
+      "clues": {
+        "100": {
+          "clue": "Andrew Carnegie argued that the rich had a duty to use their wealth to help society, calling this idea the Gospel of Wealth.",
+          "answer": "What is the Gospel of Wealth?",
+          "wrong_answers": ["Social Darwinism", "the Protestant work ethic", "the Social Gospel"]
+        },
+        "supported": {
+          "clue": "Some people in the Gilded Age believed that the rich were rich because they were naturally better — smarter or harder working. They used Darwin's ideas about nature to argue that society worked the same way. This thinking was used to argue against helping the poor or regulating businesses.",
+          "answer": "What is Social Darwinism?",
+          "wrong_answers": ["the Gospel of Wealth", "the Protestant work ethic", "the Social Gospel"]
+        },
+        "on_grade": {
+          "clue": "Social Darwinism applied Darwin's concept of natural selection to human society — arguing that the wealthy had earned their position through superior fitness and that poverty was the natural result of inferiority. This ideology conveniently justified laissez-faire economics and opposition to labor reform.",
+          "answer": "What is Social Darwinism?",
+          "wrong_answers": ["the Gospel of Wealth", "the Protestant work ethic", "the Social Gospel"]
+        },
+        "advanced": {
+          "clue": "Carnegie's Gospel of Wealth was in tension with Social Darwinism: while both justified industrial capitalism, Carnegie insisted that great wealth carried an obligation of philanthropic stewardship — building libraries, universities, and concert halls — a paternalistic vision that deflected demands for structural economic reform by reframing inequality as an opportunity for elite benevolence.",
+          "answer": "What is the Gospel of Wealth?",
+          "wrong_answers": ["Social Darwinism", "the Protestant work ethic", "the Social Gospel"]
+        }
+      }
+    },
+    {
+      "id": "progressive_era_reforms",
+      "concept": "Progressive Era Reforms",
+      "point_value": 300,
+      "clues": {
+        "100": {
+          "clue": "The Progressive Era was a period of reform in the early 1900s when the government took new steps to regulate big business and protect workers.",
+          "answer": "What is the Progressive Era?",
+          "wrong_answers": ["the Gilded Age", "the New Deal", "Reconstruction"]
+        },
+        "supported": {
+          "clue": "In the early 1900s, reformers pushed the government to fix problems caused by industrialization. They wanted laws to protect workers, regulate big businesses, and make government more honest. President Theodore Roosevelt became famous for using federal power to break up monopolies.",
+          "answer": "What is the Progressive Era?",
+          "wrong_answers": ["the Gilded Age", "the New Deal", "Reconstruction"]
+        },
+        "on_grade": {
+          "clue": "Progressive Era reformers used government power at the local, state, and federal level to address the excesses of industrial capitalism — passing child labor laws, pure food regulations, workplace safety standards, and antitrust legislation, while also pursuing political reforms like the direct election of senators.",
+          "answer": "What is the Progressive Era?",
+          "wrong_answers": ["the Gilded Age", "the New Deal", "Reconstruction"]
+        },
+        "advanced": {
+          "clue": "Progressive Era reformers shared a faith in expertise and scientific management that distinguished them from earlier populists — believing that trained professionals, regulatory agencies, and statistical evidence could solve social problems that the free market had created, laying the institutional foundation for the modern administrative state.",
+          "answer": "What is the Progressive Era?",
+          "wrong_answers": ["the Gilded Age", "the New Deal", "the Populist movement"]
+        }
+      }
+    },
+    {
+      "id": "political_machines",
+      "concept": "Political Machines / Tammany Hall",
+      "point_value": 400,
+      "clues": {
+        "100": {
+          "clue": "Tammany Hall was a powerful political organization in New York City that traded favors for votes, especially among immigrants.",
+          "answer": "What is a political machine?",
+          "wrong_answers": ["a labor union", "a settlement house", "a muckraking newspaper"]
+        },
+        "supported": {
+          "clue": "In many big cities, powerful political organizations called machines controlled elections and city services. They helped immigrants find jobs and housing in exchange for votes. While they were often corrupt, they also gave poor people real help that the government did not otherwise provide.",
+          "answer": "What is a political machine?",
+          "wrong_answers": ["a labor union", "a settlement house", "a muckraking newspaper"]
+        },
+        "on_grade": {
+          "clue": "Urban political machines like New York's Tammany Hall built loyal constituencies among immigrant communities by providing jobs, housing assistance, and social services — in exchange for votes. Their corruption was real, but so was their function: they filled gaps in social welfare that neither government nor private charity addressed.",
+          "answer": "What is a political machine?",
+          "wrong_answers": ["a labor union", "a settlement house", "a reform organization"]
+        },
+        "advanced": {
+          "clue": "The Progressive attack on political machines had a demographic subtext: middle-class reformers who championed civil service reform and direct democracy were often seeking to reduce the political power of immigrant Catholic communities whose bloc voting had given machines their strength — making 'good government' advocacy simultaneously a reform movement and a nativist one.",
+          "answer": "What is a political machine?",
+          "wrong_answers": ["a labor union", "a settlement house", "a reform organization"]
+        }
+      }
+    },
+    {
+      "id": "settlement_houses",
+      "concept": "Settlement Houses / Jane Addams",
+      "point_value": 300,
+      "clues": {
+        "100": {
+          "clue": "Jane Addams founded Hull House in Chicago in 1889 to provide services to poor immigrants living in the city.",
+          "answer": "Who is Jane Addams?",
+          "wrong_answers": ["Ida Tarbell", "Florence Kelley", "Susan B. Anthony"]
+        },
+        "supported": {
+          "clue": "Jane Addams created community centers in poor neighborhoods where immigrants could get help. These places offered English classes, childcare, and job training. They were called settlement houses because workers actually moved in to live alongside the poor. Hull House in Chicago was the most famous.",
+          "answer": "What is a settlement house?",
+          "wrong_answers": ["a tenement", "a political machine", "a labor union"]
+        },
+        "on_grade": {
+          "clue": "Jane Addams co-founded Hull House in Chicago in 1889 as a center where educated women lived and worked alongside immigrant communities — providing education, childcare, and advocacy. The settlement house movement became a training ground for Progressive Era reformers and a launching pad for careers in social work and public policy.",
+          "answer": "Who is Jane Addams?",
+          "wrong_answers": ["Ida Tarbell", "Florence Kelley", "Lillian Wald"]
+        },
+        "advanced": {
+          "clue": "Hull House was simultaneously a social service center and a social science laboratory — Addams and her colleagues conducted systematic surveys of neighborhood conditions whose findings shaped local and state policy, pioneering the idea that empirical research could drive progressive reform and making Hull House the model for what would become modern social work.",
+          "answer": "Who is Jane Addams?",
+          "wrong_answers": ["Florence Kelley", "Lillian Wald", "Ida B. Wells"]
+        }
+      }
+    },
+    {
+      "id": "gilded_age_inequality",
+      "concept": "Gilded Age Inequality",
+      "point_value": 400,
+      "clue": "Mark Twain gave this era its name — suggesting that beneath a glittering surface of wealth lay serious social problems.",
+      "clues": {
+        "100": {
+          "clue": "Mark Twain called this era the Gilded Age because great wealth for a few hid widespread poverty and corruption underneath.",
+          "answer": "What is the Gilded Age?",
+          "wrong_answers": ["the Progressive Era", "the Roaring Twenties", "Reconstruction"]
+        },
+        "supported": {
+          "clue": "The late 1800s were a time of huge economic growth in America — but most of the wealth went to a tiny group of very rich men. Workers lived in poverty while industrialists built mansions. Mark Twain called this the Gilded Age, meaning it looked golden on the outside but had serious problems underneath.",
+          "answer": "What is the Gilded Age?",
+          "wrong_answers": ["the Progressive Era", "the Roaring Twenties", "Reconstruction"]
+        },
+        "on_grade": {
+          "clue": "The Gilded Age produced extraordinary economic growth alongside extreme inequality — by 1890, the wealthiest 1% of Americans owned more than half the nation's wealth. Low wages, child labor, 12-hour workdays, and dangerous factory conditions were the lived reality for the millions whose labor generated that wealth.",
+          "answer": "What is the Gilded Age?",
+          "wrong_answers": ["the Progressive Era", "the Roaring Twenties", "Reconstruction"]
+        },
+        "advanced": {
+          "clue": "Twain's ironic title captured a structural critique: industrialization had created unprecedented national wealth while concentrating it so narrowly that the democratic ideals of the founding era seemed increasingly hollow — a tension that drove both the Populist revolt of the 1890s and the Progressive reforms of the early 1900s.",
+          "answer": "What is the Gilded Age?",
+          "wrong_answers": ["the Progressive Era", "the Roaring Twenties", "the New Deal era"]
+        }
+      }
+    },
+    {
+      "id": "child_labor",
+      "concept": "Child Labor & Working Conditions",
+      "point_value": 400,
+      "clues": {
+        "100": {
+          "clue": "In the late 1800s, children as young as eight years old worked long hours in factories, mines, and mills instead of going to school.",
+          "answer": "What is child labor?",
+          "wrong_answers": ["indentured servitude", "the apprentice system", "vocational training"]
+        },
+        "supported": {
+          "clue": "In the late 1800s, children worked in dangerous factories, coal mines, and textile mills for very low wages. Families needed the money. Reformers like Lewis Hine photographed child workers to show the public how bad conditions were. Their work helped lead to laws that protected children.",
+          "answer": "What is child labor?",
+          "wrong_answers": ["indentured servitude", "the apprentice system", "vocational training"]
+        },
+        "on_grade": {
+          "clue": "By 1900, nearly two million children under 16 worked in American factories and mines under dangerous conditions. Progressive reformers used photography, journalism, and lobbying to build public support for child labor laws — a campaign that culminated in the Fair Labor Standards Act of 1938, which set federal minimum age requirements.",
+          "answer": "What is child labor?",
+          "wrong_answers": ["indentured servitude", "the apprentice system", "vocational training"]
+        },
+        "advanced": {
+          "clue": "The Supreme Court's decision in Hammer v. Dagenhart (1918) — striking down a federal child labor law as an overreach of Congress's commerce power — revealed how constitutional interpretation could protect exploitative labor practices, and its eventual overruling in U.S. v. Darby (1941) marked the Court's broader acceptance of federal labor regulation.",
+          "answer": "What is child labor?",
+          "wrong_answers": ["indentured servitude", "the Lochner era", "the yellow dog contract"]
+        }
+      }
+    },
+    {
+      "id": "statue_of_liberty_immigration_symbol",
+      "concept": "Statue of Liberty / American Dream",
+      "point_value": 500,
+      "clues": {
+        "100": {
+          "clue": "Emma Lazarus's poem on the Statue of Liberty welcomed immigrants with the words 'Give me your tired, your poor, your huddled masses.'",
+          "answer": "What is the Statue of Liberty?",
+          "wrong_answers": ["Ellis Island", "the Declaration of Independence", "the Bill of Rights"]
+        },
+        "supported": {
+          "clue": "The Statue of Liberty became a symbol of hope for millions of immigrants arriving in New York Harbor. A poem by Emma Lazarus on its base welcomed the world's poor and struggling people. But many immigrants faced discrimination, poverty, and hard labor after they arrived — the American Dream was not equally available to all.",
+          "answer": "What is the American Dream?",
+          "wrong_answers": ["the melting pot", "assimilation", "nativism"]
+        },
+        "on_grade": {
+          "clue": "The gap between the promise represented by Emma Lazarus's poem on the Statue of Liberty — welcoming the world's 'huddled masses yearning to breathe free' — and the reality of tenement poverty, nativist hostility, and discriminatory immigration laws reveals the central tension in America's self-image as a nation of immigrants.",
+          "answer": "What is the American Dream?",
+          "wrong_answers": ["the melting pot", "assimilation", "nativism"]
+        },
+        "advanced": {
+          "clue": "Lazarus's poem was added to the Statue of Liberty's pedestal in 1903 — nearly two decades after the statue's dedication — and reflected a particular Progressive-era vision of immigrant inclusion that would be directly contradicted just two decades later by the Immigration Act of 1924's racial quotas, illustrating how American rhetoric about immigration has consistently outpaced its policy.",
+          "answer": "What is the American Dream?",
+          "wrong_answers": ["the melting pot theory", "Anglo-conformity", "nativism"]
+        }
+      }
+    }
+  ]
+}

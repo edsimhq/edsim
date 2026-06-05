@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "category-challenge",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "7890", "--directory", "."],
+      "port": 7890
+    }
+  ]
+}

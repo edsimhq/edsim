@@ -1,0 +1,415 @@
+{
+  "topic": "Progressive Era",
+  "level_descriptions": {
+    "supported": "Short sentences, one idea at a time, simplified reading level",
+    "on_grade": "Clear prose with context, grade-level reading",
+    "advanced": "Complex sentences, specific details, AP-level precision"
+  },
+  "concepts": [
+    {
+      "id": "theodore_roosevelt_trust_busting",
+      "concept": "Theodore Roosevelt / Trust-Busting",
+      "point_value": 200,
+      "clues": {
+        "100": {
+          "clue": "President Theodore Roosevelt used the Sherman Antitrust Act to break up powerful monopolies, earning him the nickname 'trust buster.'",
+          "answer": "Who is Theodore Roosevelt?",
+          "wrong_answers": ["William Howard Taft", "Woodrow Wilson", "William McKinley"]
+        },
+        "supported": {
+          "clue": "President Roosevelt believed that big corporations had too much power over the economy and politics. He used the Sherman Antitrust Act to break up monopolies, including Standard Oil and Northern Securities. He said he was not against bigness in business — only against businesses that used their power unfairly.",
+          "answer": "Who is Theodore Roosevelt?",
+          "wrong_answers": ["William Howard Taft", "Woodrow Wilson", "William McKinley"]
+        },
+        "on_grade": {
+          "clue": "Roosevelt distinguished between 'good trusts' that served the public interest and 'bad trusts' that abused their market power — using the Sherman Antitrust Act to break up Northern Securities and Standard Oil while expanding the regulatory state through the Bureau of Corporations and the Hepburn Act.",
+          "answer": "Who is Theodore Roosevelt?",
+          "wrong_answers": ["William Howard Taft", "Woodrow Wilson", "Grover Cleveland"]
+        },
+        "advanced": {
+          "clue": "Roosevelt's approach to trusts was fundamentally regulatory rather than destructive — he preferred federal supervision of large corporations to their breakup, believing that industrial concentration was economically efficient if properly controlled, a philosophy that put him at odds with Wilson's New Freedom, which sought to restore competition by dismantling monopolies.",
+          "answer": "Who is Theodore Roosevelt?",
+          "wrong_answers": ["William Howard Taft", "Woodrow Wilson", "Herbert Croly"]
+        }
+      }
+    },
+    {
+      "id": "muckrakers_progressive",
+      "concept": "Muckrakers",
+      "point_value": 200,
+      "clues": {
+        "100": {
+          "clue": "Ida Tarbell's investigation of Standard Oil and Upton Sinclair's exposé of meatpacking plants are famous examples of this type of investigative journalism.",
+          "answer": "What is muckraking?",
+          "wrong_answers": ["yellow journalism", "yellow press", "sensationalism"]
+        },
+        "supported": {
+          "clue": "Progressive Era journalists called muckrakers exposed corruption and dangerous conditions in American society. Ida Tarbell's reporting on Standard Oil helped lead to its breakup. Upton Sinclair's book The Jungle exposed filthy meatpacking plants. Jacob Riis photographed slum conditions. Their work helped create public pressure for reform laws.",
+          "answer": "What is muckraking?",
+          "wrong_answers": ["yellow journalism", "yellow press", "sensationalism"]
+        },
+        "on_grade": {
+          "clue": "Muckraking journalists of the Progressive Era — working through mass-circulation magazines like McClure's — produced detailed, evidence-based exposés of corporate corruption, political graft, and social misery that mobilized middle-class reform energy and created the public demand for legislation that politicians then had to deliver.",
+          "answer": "What is muckraking?",
+          "wrong_answers": ["yellow journalism", "penny press reporting", "sensationalism"]
+        },
+        "advanced": {
+          "clue": "The muckraking movement demonstrated that the newly consolidated mass media could function as a fourth estate — but its dependence on advertising revenue from the corporations it criticized created structural tensions that led magazine owners to rein in their most aggressive journalists by the 1910s, anticipating recurring questions about media independence from corporate power.",
+          "answer": "What is muckraking?",
+          "wrong_answers": ["yellow journalism", "the penny press", "the New Journalism"]
+        }
+      }
+    },
+    {
+      "id": "pure_food_drug_act",
+      "concept": "Pure Food and Drug Act / Meat Inspection Act",
+      "point_value": 200,
+      "clues": {
+        "100": {
+          "clue": "These 1906 laws required that food and medicines be safe and accurately labeled, and that meatpacking plants meet federal inspection standards.",
+          "answer": "What is the Pure Food and Drug Act?",
+          "wrong_answers": ["the Sherman Antitrust Act", "the Hepburn Act", "the Clayton Act"]
+        },
+        "supported": {
+          "clue": "After Upton Sinclair's book The Jungle described revolting conditions in Chicago meatpacking plants, public outrage led Congress to act. In 1906, two laws required that food and drugs be safe and properly labeled, and that federal inspectors check meatpacking plants. This marked a new role for the federal government in protecting consumers.",
+          "answer": "What is the Pure Food and Drug Act?",
+          "wrong_answers": ["the Sherman Antitrust Act", "the Hepburn Act", "the Clayton Act"]
+        },
+        "on_grade": {
+          "clue": "The Pure Food and Drug Act and Meat Inspection Act of 1906 established the federal government's role as a consumer protector — creating inspection and labeling requirements that the meat and patent medicine industries had successfully blocked for years, until Sinclair's book made the status quo politically untenable.",
+          "answer": "What is the Pure Food and Drug Act?",
+          "wrong_answers": ["the Sherman Antitrust Act", "the Hepburn Act", "the Clayton Act"]
+        },
+        "advanced": {
+          "clue": "The Meat Inspection Act's passage illustrates the paradox of regulatory capture in its early form: large meatpackers actually supported federal inspection because it would certify the safety of their products for export markets, while the costs of compliance would fall most heavily on smaller competitors — making the 'consumer protection' law simultaneously a barrier to entry that protected the industry's dominant firms.",
+          "answer": "What is the Pure Food and Drug Act?",
+          "wrong_answers": ["the Sherman Antitrust Act", "the Hepburn Act", "the Federal Trade Commission Act"]
+        }
+      }
+    },
+    {
+      "id": "sherman_clayton_acts",
+      "concept": "Sherman Antitrust Act / Clayton Act",
+      "point_value": 300,
+      "clues": {
+        "100": {
+          "clue": "The Clayton Act of 1914 strengthened antitrust law and explicitly protected labor unions from being treated as illegal monopolies.",
+          "answer": "What is the Clayton Act?",
+          "wrong_answers": ["the Sherman Antitrust Act", "the Hepburn Act", "the Federal Trade Commission Act"]
+        },
+        "supported": {
+          "clue": "The Sherman Antitrust Act of 1890 was too vague to use effectively against big business. The Clayton Act of 1914 fixed some of its weaknesses. It listed specific illegal business practices. It also said that labor unions were not monopolies — which meant the government could no longer use antitrust law to break up strikes.",
+          "answer": "What is the Clayton Act?",
+          "wrong_answers": ["the Sherman Antitrust Act", "the Hepburn Act", "the Federal Reserve Act"]
+        },
+        "on_grade": {
+          "clue": "The Clayton Act of 1914 addressed the Sherman Act's weaknesses by specifically prohibiting price discrimination, exclusive contracts, and interlocking directorates, while also exempting labor unions from antitrust prosecution — Samuel Gompers called it 'labor's Magna Carta,' though courts would later limit its union protections significantly.",
+          "answer": "What is the Clayton Act?",
+          "wrong_answers": ["the Sherman Antitrust Act", "the Hepburn Act", "the Federal Trade Commission Act"]
+        },
+        "advanced": {
+          "clue": "The Clayton Act's labor exemption reflected Wilson's understanding that collective bargaining was not a restraint of trade but a necessary counterweight to corporate power — yet the Supreme Court's subsequent Duplex Printing decision (1921) read the exemption so narrowly that it provided unions little practical protection, forcing Congress to revisit the issue with the Norris-LaGuardia Act in 1932.",
+          "answer": "What is the Clayton Act?",
+          "wrong_answers": ["the Sherman Antitrust Act", "the Hepburn Act", "the Federal Trade Commission Act"]
+        }
+      }
+    },
+    {
+      "id": "conservation_movement",
+      "concept": "Conservation Movement",
+      "point_value": 300,
+      "clues": {
+        "100": {
+          "clue": "President Theodore Roosevelt set aside millions of acres of public land as national parks, forests, and wildlife refuges.",
+          "answer": "What is the conservation movement?",
+          "wrong_answers": ["the environmental movement", "the Progressive movement", "the naturalist movement"]
+        },
+        "supported": {
+          "clue": "Theodore Roosevelt loved the outdoors and worried that America's natural resources were being destroyed by industry. He set aside over 230 million acres of public land, including national parks and forests. His friend Gifford Pinchot led the new Forest Service. Roosevelt believed the government had a duty to protect natural resources for future generations.",
+          "answer": "What is the conservation movement?",
+          "wrong_answers": ["the environmental movement", "the Progressive movement", "the naturalist movement"]
+        },
+        "on_grade": {
+          "clue": "Roosevelt's conservation program represented a new philosophy of managed resource use — Gifford Pinchot's 'wise use' doctrine held that public lands should be managed scientifically for long-term productivity, in contrast to John Muir's preservationist argument that wilderness had intrinsic value beyond human utility.",
+          "answer": "What is the conservation movement?",
+          "wrong_answers": ["the environmental movement", "the wilderness preservation movement", "the naturalist movement"]
+        },
+        "advanced": {
+          "clue": "The Hetch Hetchy controversy — in which Muir fought and lost to prevent a dam from flooding a Yosemite valley for San Francisco's water supply — crystallized the fundamental tension between conservation and preservation that has defined environmental politics ever since: whether public lands exist for managed human benefit or for protection from human use.",
+          "answer": "What is the conservation movement?",
+          "wrong_answers": ["the environmental movement", "the wilderness preservation movement", "the naturalist movement"]
+        }
+      }
+    },
+    {
+      "id": "womens_suffrage_progressive",
+      "concept": "Women's Suffrage Movement",
+      "point_value": 300,
+      "clues": {
+        "100": {
+          "clue": "Susan B. Anthony and Elizabeth Cady Stanton led the decades-long campaign to win women the right to vote.",
+          "answer": "Who is Susan B. Anthony?",
+          "wrong_answers": ["Jane Addams", "Carrie Chapman Catt", "Alice Paul"]
+        },
+        "supported": {
+          "clue": "Women worked for the right to vote for more than 70 years. Some used peaceful persuasion. Others like Alice Paul organized protests and picketed the White House. Women in many western states won voting rights before 1920. Their wartime contributions finally convinced enough politicians to support the 19th Amendment.",
+          "answer": "What is the women's suffrage movement?",
+          "wrong_answers": ["the temperance movement", "the settlement house movement", "the abolitionist movement"]
+        },
+        "on_grade": {
+          "clue": "The suffrage movement divided over strategy: the mainstream NAWSA pursued a state-by-state approach and emphasized women's moral superiority, while Alice Paul's National Woman's Party used militant tactics including White House pickets and hunger strikes — both strategies proved necessary to build the coalition that passed the 19th Amendment.",
+          "answer": "What is the women's suffrage movement?",
+          "wrong_answers": ["the temperance movement", "the settlement house movement", "the labor movement"]
+        },
+        "advanced": {
+          "clue": "The suffrage movement's internal contradictions on race — mainstream organizations often appealed to white Southern women by explicitly excluding Black women from their vision of female citizenship — meant that the 19th Amendment's ratification in 1920 delivered full voting rights only to white women, with Black women facing the same disenfranchisement mechanisms as Black men.",
+          "answer": "What is the women's suffrage movement?",
+          "wrong_answers": ["the temperance movement", "the settlement house movement", "the labor movement"]
+        }
+      }
+    },
+    {
+      "id": "jane_addams_settlement",
+      "concept": "Jane Addams / Settlement Houses",
+      "point_value": 300,
+      "clues": {
+        "100": {
+          "clue": "Jane Addams founded Hull House in Chicago in 1889, providing education, childcare, and social services to immigrant communities.",
+          "answer": "Who is Jane Addams?",
+          "wrong_answers": ["Ida Tarbell", "Florence Kelley", "Lillian Wald"]
+        },
+        "supported": {
+          "clue": "Jane Addams believed that educated women should use their knowledge to help society. She moved into a poor immigrant neighborhood in Chicago and created Hull House — a place where immigrants could get English classes, job training, and childcare. She also used her research to push for labor laws, child welfare laws, and women's suffrage.",
+          "answer": "Who is Jane Addams?",
+          "wrong_answers": ["Ida Tarbell", "Florence Kelley", "Lillian Wald"]
+        },
+        "on_grade": {
+          "clue": "Jane Addams turned Hull House into both a social service center and a political laboratory — the data her residents collected on neighborhood poverty, child labor, and working conditions directly shaped Chicago's labor ordinances and Illinois factory inspection laws, pioneering the use of empirical research as a tool for progressive reform.",
+          "answer": "Who is Jane Addams?",
+          "wrong_answers": ["Ida Tarbell", "Florence Kelley", "Lillian Wald"]
+        },
+        "advanced": {
+          "clue": "Addams's receipt of the Nobel Peace Prize in 1931 — awarded for her pacifism during World War I, which had earned her denunciation as a traitor during the war — illustrated how political reputation can reverse over time, and validated her argument that the same Progressive values that demanded domestic reform required opposition to militarism abroad.",
+          "answer": "Who is Jane Addams?",
+          "wrong_answers": ["Florence Kelley", "Lillian Wald", "Julia Lathrop"]
+        }
+      }
+    },
+    {
+      "id": "sixteenth_amendment",
+      "concept": "16th Amendment / Income Tax",
+      "point_value": 400,
+      "clues": {
+        "100": {
+          "clue": "The 16th Amendment, ratified in 1913, gave Congress the power to collect a federal income tax.",
+          "answer": "What is the 16th Amendment?",
+          "wrong_answers": ["the 17th Amendment", "the 18th Amendment", "the 19th Amendment"]
+        },
+        "supported": {
+          "clue": "Before 1913, the federal government raised money mainly through tariffs and taxes on goods. The 16th Amendment allowed Congress to tax people's incomes directly. Progressives supported this because it would make wealthy people pay more. It also gave the federal government a powerful new way to fund programs.",
+          "answer": "What is the 16th Amendment?",
+          "wrong_answers": ["the 17th Amendment", "the 18th Amendment", "the Federal Reserve Act"]
+        },
+        "on_grade": {
+          "clue": "The 16th Amendment's establishment of the federal income tax in 1913 was a Progressive victory on two fronts: it shifted the tax burden toward the wealthy and away from tariffs that fell disproportionately on consumers, and it gave the federal government a revenue source that would ultimately fund the enormous expansion of government programs in the New Deal and beyond.",
+          "answer": "What is the 16th Amendment?",
+          "wrong_answers": ["the 17th Amendment", "the Federal Reserve Act", "the Clayton Act"]
+        },
+        "advanced": {
+          "clue": "The original federal income tax applied only to incomes over $3,000 — roughly $90,000 in today's dollars — meaning that fewer than 3% of Americans paid it initially. Its transformation into a mass tax during World War II, when rates were extended far down the income scale and withholding was introduced, fundamentally changed the fiscal relationship between citizens and the federal government.",
+          "answer": "What is the 16th Amendment?",
+          "wrong_answers": ["the 17th Amendment", "the Revenue Act of 1942", "the Federal Reserve Act"]
+        }
+      }
+    },
+    {
+      "id": "seventeenth_amendment",
+      "concept": "17th Amendment / Direct Election of Senators",
+      "point_value": 400,
+      "clues": {
+        "100": {
+          "clue": "The 17th Amendment, ratified in 1913, changed how U.S. senators are chosen — from being elected by state legislatures to being elected directly by voters.",
+          "answer": "What is the 17th Amendment?",
+          "wrong_answers": ["the 16th Amendment", "the 18th Amendment", "the 19th Amendment"]
+        },
+        "supported": {
+          "clue": "Before 1913, U.S. senators were chosen by state legislatures, not by voters. This created corruption — corporations and political machines often bribed legislators to pick their preferred senators. The 17th Amendment changed this so that voters could choose their senators directly. Progressives believed this would make government more democratic and less corrupt.",
+          "answer": "What is the 17th Amendment?",
+          "wrong_answers": ["the 16th Amendment", "the 18th Amendment", "the Pendleton Act"]
+        },
+        "on_grade": {
+          "clue": "The 17th Amendment's shift to direct election of senators responded to documented corruption in state legislatures — where Senate seats were effectively purchased by corporate interests — and reflected the Progressive faith that expanding democratic participation would produce more honest, responsive government.",
+          "answer": "What is the 17th Amendment?",
+          "wrong_answers": ["the 16th Amendment", "the 18th Amendment", "the Pendleton Civil Service Act"]
+        },
+        "advanced": {
+          "clue": "Conservatives have argued that the 17th Amendment undermined federalism by severing senators' accountability to state governments — eliminating the Senate's original role as a check on federal encroachment on state authority — illustrating how democratic reforms can have structural consequences that their advocates did not fully anticipate.",
+          "answer": "What is the 17th Amendment?",
+          "wrong_answers": ["the 16th Amendment", "the 18th Amendment", "the Pendleton Civil Service Act"]
+        }
+      }
+    },
+    {
+      "id": "initiative_referendum_recall",
+      "concept": "Initiative, Referendum, Recall",
+      "point_value": 400,
+      "clues": {
+        "100": {
+          "clue": "Progressives introduced these three tools so that voters could directly propose laws, approve or reject laws, and remove elected officials from office.",
+          "answer": "What is the initiative, referendum, and recall?",
+          "wrong_answers": ["the primary election", "the direct primary", "the secret ballot"]
+        },
+        "supported": {
+          "clue": "Progressives worried that elected officials were controlled by corrupt bosses and corporations rather than the people. They created three new tools for voters. The initiative lets citizens propose new laws. The referendum lets citizens vote directly on laws. The recall lets citizens remove an official from office before their term ends.",
+          "answer": "What is the initiative, referendum, and recall?",
+          "wrong_answers": ["the primary election", "the direct primary", "the secret ballot"]
+        },
+        "on_grade": {
+          "clue": "Progressive democratic reforms — including the initiative, referendum, recall, direct primary, and direct election of senators — reflected a belief that the corruption of the Gilded Age had been enabled by too much distance between voters and government decisions, and that democracy could be purified by giving citizens more direct control over the political process.",
+          "answer": "What is the initiative, referendum, and recall?",
+          "wrong_answers": ["the primary election", "the Australian ballot", "the direct democracy movement"]
+        },
+        "advanced": {
+          "clue": "The initiative and referendum — celebrated by Progressives as tools of direct democracy — have in practice often been captured by well-funded interest groups that can afford signature-gathering operations and ballot campaigns, raising the question of whether direct democracy reduces the influence of money in politics or simply relocates it.",
+          "answer": "What is the initiative, referendum, and recall?",
+          "wrong_answers": ["the primary election", "the Australian ballot", "the direct democracy movement"]
+        }
+      }
+    },
+    {
+      "id": "social_gospel",
+      "concept": "Social Gospel Movement",
+      "point_value": 400,
+      "clues": {
+        "100": {
+          "clue": "This religious movement argued that Christians had a duty to address poverty, inequality, and social injustice — not just save individual souls.",
+          "answer": "What is the Social Gospel?",
+          "wrong_answers": ["the Gospel of Wealth", "the temperance movement", "the abolitionist movement"]
+        },
+        "supported": {
+          "clue": "Some Protestant ministers in the late 1800s said that Christianity required helping the poor and fixing society — not just focusing on individual salvation. They called for better working conditions, an end to child labor, and help for the urban poor. This Social Gospel movement provided the moral energy behind many Progressive reforms.",
+          "answer": "What is the Social Gospel?",
+          "wrong_answers": ["the Gospel of Wealth", "the temperance movement", "evangelicalism"]
+        },
+        "on_grade": {
+          "clue": "The Social Gospel movement provided the religious foundation for Progressive Era reform — arguing that Christian ethics required structural responses to poverty and inequality, not just individual charity. Its influence shaped the settlement house movement, the labor reform movement, and the careers of reformers like Jane Addams and Florence Kelley.",
+          "answer": "What is the Social Gospel?",
+          "wrong_answers": ["the Gospel of Wealth", "the temperance movement", "evangelical revivalism"]
+        },
+        "advanced": {
+          "clue": "Walter Rauschenbusch's A Theology for the Social Gospel (1917) argued that sin was structural as well as individual — that unjust institutions were themselves sinful, not merely the product of sinful individuals — a theological claim that justified collective political action as a form of Christian witness and provided intellectual grounding for the Progressive belief in reform through law.",
+          "answer": "What is the Social Gospel?",
+          "wrong_answers": ["the Gospel of Wealth", "evangelical revivalism", "the temperance movement"]
+        }
+      }
+    },
+    {
+      "id": "woodrow_wilson_new_freedom",
+      "concept": "Woodrow Wilson / New Freedom",
+      "point_value": 300,
+      "clues": {
+        "100": {
+          "clue": "President Wilson's 'New Freedom' program broke up monopolies, created the Federal Reserve, and established a new income tax.",
+          "answer": "Who is Woodrow Wilson?",
+          "wrong_answers": ["Theodore Roosevelt", "William Howard Taft", "William Jennings Bryan"]
+        },
+        "supported": {
+          "clue": "Woodrow Wilson's New Freedom program had three big goals: break up monopolies instead of just regulating them, create a new banking system called the Federal Reserve, and establish a graduated income tax. He believed that restoring competition — not just regulating big business — was the way to protect ordinary Americans.",
+          "answer": "Who is Woodrow Wilson?",
+          "wrong_answers": ["Theodore Roosevelt", "William Howard Taft", "William Jennings Bryan"]
+        },
+        "on_grade": {
+          "clue": "Wilson's New Freedom philosophy — that monopolies should be destroyed to restore competition, rather than regulated as Roosevelt preferred — produced a burst of legislation: the Federal Reserve Act, the Clayton Antitrust Act, the Federal Trade Commission, and the income tax, making Wilson's first term one of the most legislatively productive in American history.",
+          "answer": "Who is Woodrow Wilson?",
+          "wrong_answers": ["Theodore Roosevelt", "William Howard Taft", "William Jennings Bryan"]
+        },
+        "advanced": {
+          "clue": "The irony of Wilson's presidency is that his New Freedom's anti-monopoly rhetoric was accompanied by the segregation of the federal civil service — reversing decades of Black federal employment and excluding African Americans from the administrative state his reforms were building, revealing how the Progressive Era's vision of democratic reform was racially bounded.",
+          "answer": "Who is Woodrow Wilson?",
+          "wrong_answers": ["Theodore Roosevelt", "William Howard Taft", "William Jennings Bryan"]
+        }
+      }
+    },
+    {
+      "id": "child_labor_reform",
+      "concept": "Child Labor Reform",
+      "point_value": 300,
+      "clues": {
+        "100": {
+          "clue": "Progressive Era reformers used photography, journalism, and lobbying to build support for laws limiting the age and hours that children could work.",
+          "answer": "What is child labor reform?",
+          "wrong_answers": ["the settlement house movement", "the temperance movement", "the suffrage movement"]
+        },
+        "supported": {
+          "clue": "Photographer Lewis Hine documented the reality of children working in factories and mines to shock the public into supporting reform. Reformers pushed states to pass minimum age and maximum hour laws. Congress passed the Keating-Owen Act in 1916 to limit child labor, but the Supreme Court struck it down as unconstitutional.",
+          "answer": "What is child labor reform?",
+          "wrong_answers": ["the settlement house movement", "the temperance movement", "the suffrage movement"]
+        },
+        "on_grade": {
+          "clue": "The child labor reform movement — led by the National Child Labor Committee and its photographer Lewis Hine — used documentary evidence to build public support for factory inspection laws, age minimums, and compulsory schooling requirements, making child labor one of the Progressive Era's signature reform campaigns even though federal legislation was blocked by the Supreme Court until 1938.",
+          "answer": "What is child labor reform?",
+          "wrong_answers": ["the settlement house movement", "the temperance movement", "the suffrage movement"]
+        },
+        "advanced": {
+          "clue": "The Supreme Court's invalidation of the Keating-Owen Child Labor Act (1916) in Hammer v. Dagenhart — ruling that Congress could not use its commerce power to regulate labor conditions — forced reformers to attempt a constitutional amendment before the New Deal Court's expanded interpretation of the commerce clause finally made federal child labor regulation possible in U.S. v. Darby (1941).",
+          "answer": "What is child labor reform?",
+          "wrong_answers": ["the settlement house movement", "the temperance movement", "the suffrage movement"]
+        }
+      }
+    },
+    {
+      "id": "naacp_dubois_washington",
+      "concept": "NAACP / Du Bois vs. Washington",
+      "point_value": 400,
+      "clues": {
+        "100": {
+          "clue": "W.E.B. Du Bois and Booker T. Washington disagreed about the best strategy for African Americans to achieve equality — and Du Bois co-founded the NAACP to pursue civil rights through legal challenges.",
+          "answer": "Who is W.E.B. Du Bois?",
+          "wrong_answers": ["Booker T. Washington", "Marcus Garvey", "Ida B. Wells"]
+        },
+        "supported": {
+          "clue": "Booker T. Washington said Black Americans should focus on learning trades and economic self-improvement rather than demanding civil rights — a position he called accommodation. W.E.B. Du Bois disagreed. He said Black Americans must demand full political and civil equality now. Du Bois helped found the NAACP in 1909 to fight for rights through law and protest.",
+          "answer": "Who is W.E.B. Du Bois?",
+          "wrong_answers": ["Booker T. Washington", "Marcus Garvey", "Ida B. Wells"]
+        },
+        "on_grade": {
+          "clue": "The Washington-Du Bois debate defined the fault lines of Black political strategy at the turn of the century: Washington's Atlanta Compromise accepted segregation in exchange for economic opportunity, while Du Bois insisted that without political rights economic advancement was impossible — and that demanding less than full citizenship was itself a form of racial capitulation.",
+          "answer": "Who is W.E.B. Du Bois?",
+          "wrong_answers": ["Booker T. Washington", "Marcus Garvey", "Ida B. Wells"]
+        },
+        "advanced": {
+          "clue": "Washington's public accommodationism masked private activism — he secretly funded legal challenges to disfranchisement and Jim Crow while publicly counseling patience, suggesting that his strategy was more a tactical response to the realities of Southern terror than a genuine acceptance of racial subordination, complicating the simple narrative of the Washington-Du Bois debate.",
+          "answer": "Who is W.E.B. Du Bois?",
+          "wrong_answers": ["Booker T. Washington", "Marcus Garvey", "Ida B. Wells"]
+        }
+      }
+    },
+    {
+      "id": "federal_reserve_act",
+      "concept": "Federal Reserve Act",
+      "point_value": 500,
+      "clues": {
+        "100": {
+          "clue": "Congress created the Federal Reserve System in 1913 to serve as the nation's central bank and stabilize the money supply.",
+          "answer": "What is the Federal Reserve Act?",
+          "wrong_answers": ["the National Bank Act", "the Clayton Act", "the Sherman Antitrust Act"]
+        },
+        "supported": {
+          "clue": "Before 1913, the United States had no central bank to manage the money supply. Financial panics — like the Panic of 1907 — could cause bank failures and economic collapse. The Federal Reserve Act created a central banking system that could lend money to banks during crises and regulate the money supply. It remains the foundation of American monetary policy today.",
+          "answer": "What is the Federal Reserve Act?",
+          "wrong_answers": ["the National Bank Act", "the Clayton Act", "the Gold Standard Act"]
+        },
+        "on_grade": {
+          "clue": "The Federal Reserve Act of 1913 resolved a decades-long debate about central banking by creating a decentralized system of twelve regional banks supervised by a federal board — a political compromise that satisfied both those who feared Wall Street domination of a single central bank and those who wanted national monetary coordination.",
+          "answer": "What is the Federal Reserve Act?",
+          "wrong_answers": ["the National Bank Act", "the Clayton Act", "the Gold Standard Act"]
+        },
+        "advanced": {
+          "clue": "The Federal Reserve's failure to act as lender of last resort during the banking panics of 1930–1933 — allowing thousands of bank failures and a catastrophic contraction of the money supply — led Milton Friedman and Anna Schwartz to argue in A Monetary History of the United States that the Great Depression was primarily a monetary phenomenon caused by Fed inaction, not a structural failure of capitalism.",
+          "answer": "What is the Federal Reserve Act?",
+          "wrong_answers": ["the National Bank Act", "the Glass-Steagall Act", "the Gold Standard Act"]
+        }
+      }
+    }
+  ]
+}
