@@ -539,7 +539,7 @@ async function loadUnits() {
   const loadingEl = document.getElementById('loadingMsg');
   const gridEl = document.getElementById('topicGrid');
   try {
-    ALL_UNITS = await Promise.all(
+    const raw = await Promise.all(
       UNIT_FILES.map(f =>
         fetch(f).then(r => {
           if (!r.ok) throw new Error('Failed to load ' + f);
@@ -547,6 +547,25 @@ async function loadUnits() {
         })
       )
     );
+    ALL_UNITS = raw.map(unit => ({
+      topic: unit.topic,
+      // concepts = one entry per category; clues keyed by point value
+      concepts: unit.categories.map(cat => ({
+        id: cat.id,
+        title: cat.title,
+        clues: Object.fromEntries(
+          cat.clues.map(clue => [
+            clue.value,
+            {
+              supported: clue.supported,
+              on_grade: clue.on_grade,
+              advanced: clue.advanced,
+              wrong_answers: clue.wrong_answers || []
+            }
+          ])
+        )
+      }))
+    }));
     loadingEl.style.display = 'none';
     gridEl.style.display = '';
     renderTopicButtons();
@@ -628,13 +647,7 @@ function startGame() {
 }
 
 function pickBoardConcepts() {
-  // Group by point value
-  const byPV = {200:[], 400:[], 600:[], 800:[], 1000:[]};
-  GAME_DATA.concepts.forEach(c => {
-    if (byPV[c.point_value]) byPV[c.point_value].push(c);
-  });
-  // We want COLUMNS distinct concepts that cover a range of point values
-  // Just pick COLUMNS random unique concepts (up to COLUMNS)
+  // Each concept is a category; shuffle and pick up to COLUMNS
   const all = [...GAME_DATA.concepts];
   shuffle(all);
   return all.slice(0, Math.min(COLUMNS, all.length));
@@ -657,7 +670,7 @@ function renderBoard() {
   boardConcepts.forEach(c => {
     const h = document.createElement('div');
     h.className = 'cat-header';
-    h.textContent = c.concept;
+    h.textContent = c.title;
     board.appendChild(h);
   });
 
@@ -683,24 +696,16 @@ function openClue(concept, pv) {
   const cellId = `${concept.id}_${pv}`;
   if (usedCells.has(cellId)) return;
 
-  // Handle both $100 clue formats:
-  // flat:   clues['100'] = { clue, answer, wrong_answers }
-  // nested: clues['100'] = { supported: {...}, on_grade: {...}, advanced: {...} }
-  let clueData;
-  if (pv === 100) {
-    const c100 = concept.clues['100'];
-    if (!c100) { clueData = null; }
-    else if (c100.clue !== undefined) { clueData = c100; }
-    else { clueData = c100[difficulty]; }
-  } else {
-    clueData = concept.clues[difficulty];
-  }
+  // Look up clue by point value, then by difficulty
+  const clueByPV = concept.clues[pv];
+  if (!clueByPV) return;
+  const clueData = clueByPV[difficulty];
   if (!clueData) return;
 
-  currentClue = { concept, pv, cellId, clueData };
+  currentClue = { concept, pv, cellId, clueData, clueByPV };
   answerRevealed = false;
 
-  document.getElementById('modalCatName').textContent = concept.concept;
+  document.getElementById('modalCatName').textContent = concept.title;
   document.getElementById('modalPts').textContent = `$${pv}`;
 
   const diffBadge = document.getElementById('modalDiffBadge');
@@ -731,7 +736,7 @@ function openClue(concept, pv) {
 function renderMCOptions(clueData, container) {
   // Build option list: correct + wrong_answers (trimmed to mcCount)
   const correct = clueData.answer;
-  const wrongs = (clueData.wrong_answers || []).slice(0, mcCount - 1);
+  const wrongs = (currentClue && currentClue.clueByPV ? currentClue.clueByPV.wrong_answers || [] : []).slice(0, mcCount - 1);
   const options = [correct, ...wrongs];
   shuffle(options);
 
