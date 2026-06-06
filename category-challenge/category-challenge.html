@@ -526,7 +526,7 @@ let currentClue = null; // {conceptIdx, pointValue, clue, answer, wrongAnswers}
 let answerRevealed = false;
 
 const COLUMNS = 5; // how many categories to show at once
-const POINT_VALUES = [100, 200, 300, 400, 500]; // row point values
+const POINT_VALUES = [200, 400, 600, 800, 1000]; // row point values
 
 // Map point_value to row index
 const PV_TO_ROW = {100:0, 200:1, 300:2, 400:3, 500:4};
@@ -629,7 +629,7 @@ function startGame() {
 
 function pickBoardConcepts() {
   // Group by point value
-  const byPV = {200:[], 300:[], 400:[], 500:[]};
+  const byPV = {200:[], 400:[], 600:[], 800:[], 1000:[]};
   GAME_DATA.concepts.forEach(c => {
     if (byPV[c.point_value]) byPV[c.point_value].push(c);
   });
