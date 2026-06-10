@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Rate Like a Rater — Level 3</title>
+<style>
+  :root {
+    --bg-base: #0f1117;
+    --bg-card: #1c1f2b;
+    --bg-card-hover: #22263a;
+    --bg-elevated: #262b3d;
+    --text-primary: #f0f0f0;
+    --text-muted: #9aa3b2;
+    --border: #2a2f40;
+    --accent: #e8ff47;
+    --accent-secondary: #ff6b35;
+    --correct: #3ecf8e;
+    --correct-bg: rgba(62, 207, 142, 0.14);
+    --correct-border: rgba(62, 207, 142, 0.55);
+    --incorrect: #ff7b7b;
+    --incorrect-bg: rgba(255, 107, 107, 0.14);
+    --incorrect-border: rgba(255, 107, 107, 0.5);
+    --gold: #ffd24a;
+    --gold-bg: rgba(255, 210, 74, 0.12);
+    --radius: 10px;
+    --maxw: 1180px;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg-base);
+    color: var(--text-primary);
+    line-height: 1.55;
+  }
+
+  /* ---------- Header ---------- */
+  header.app-header {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  header.app-header h1 {
+    font-size: 1.15rem;
+    margin: 0;
+    color: var(--accent);
+    letter-spacing: 0.2px;
+  }
+  header.app-header .exam-tag {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    padding: 3px 9px;
+    border-radius: 999px;
+  }
+  header.app-header .spacer { flex: 1; }
+
+  .btn {
+    font: inherit;
+    font-size: 0.85rem;
+    cursor: pointer;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--bg-elevated);
+    color: var(--text-primary);
+    padding: 9px 14px;
+    min-height: 44px;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .btn:hover { background: var(--bg-card-hover); }
+  .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .btn.primary { background: var(--accent); color: #1a1a1a; border-color: var(--accent); font-weight: 600; }
+  .btn.primary:hover { filter: brightness(1.05); }
+  .btn.gold { background: var(--gold); color: #2a2200; border-color: var(--gold); font-weight: 600; }
+  .btn.ghost { background: transparent; }
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  /* ---------- Tab nav ---------- */
+  nav.tabbar {
+    position: sticky;
+    top: 61px;
+    z-index: 30;
+    background: var(--bg-base);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 4px;
+    padding: 8px 14px;
+    overflow-x: auto;
+  }
+  nav.tabbar button {
+    font: inherit;
+    font-size: 0.82rem;
+    white-space: nowrap;
+    cursor: pointer;
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--text-muted);
+    padding: 8px 12px;
+    min-height: 44px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  nav.tabbar button:hover { background: var(--bg-card); color: var(--text-primary); }
+  nav.tabbar button.active {
+    background: var(--bg-card);
+    color: var(--accent);
+    border-color: var(--border);
+    font-weight: 600;
+  }
+  nav.tabbar button .done-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--correct);
+    display: inline-block;
+  }
+  nav.tabbar button.rate-tab { color: var(--gold); }
+  nav.tabbar button.rate-tab.active { color: var(--gold); }
+
+  main { max-width: var(--maxw); margin: 0 auto; padding: 22px 18px 90px; }
+
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  h2.panel-title { font-size: 1.4rem; margin: 0 0 4px; }
+  .panel-sub { color: var(--text-muted); margin: 0 0 18px; }
+
+  /* ---------- Directions ---------- */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    margin-bottom: 16px;
+  }
+  .card h3 { margin: 0 0 10px; font-size: 1.05rem; }
+  .steps { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+  .steps li { display: flex; gap: 12px; align-items: flex-start; }
+  .steps .num {
+    flex: 0 0 28px; height: 28px; border-radius: 50%;
+    background: var(--accent); color: #1a1a1a; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; font-size: 0.85rem;
+  }
+  .meta-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+  .field { display: flex; flex-direction: column; gap: 5px; }
+  .field label { font-size: 0.8rem; color: var(--text-muted); }
+  .field input {
+    font: inherit; padding: 10px 12px; min-height: 44px;
+    background: var(--bg-base); border: 1px solid var(--border);
+    border-radius: 8px; color: var(--text-primary); min-width: 160px;
+  }
+  .field input:focus-visible { outline: 2px solid var(--accent); }
+  .privacy-note { font-size: 0.78rem; color: var(--text-muted); margin-top: 10px; }
+
+  /* ---------- Task bar ---------- */
+  .taskbar {
+    background: linear-gradient(180deg, var(--bg-elevated), var(--bg-card));
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    position: sticky;
+    top: 118px;
+    z-index: 20;
+  }
+  .taskbar .tb-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .taskbar .tb-icon { font-size: 1.4rem; }
+  .taskbar h3 { margin: 0; font-size: 1.1rem; }
+  .taskbar .advanced-flag {
+    font-size: 0.72rem; background: var(--accent-secondary); color: #fff;
+    padding: 2px 8px; border-radius: 999px;
+  }
+  .taskbar .prompt { margin: 8px 0 0; color: var(--text-primary); }
+  .taskbar .progress-wrap { margin-top: 12px; }
+  .progress-bar {
+    height: 9px; background: var(--bg-base); border-radius: 999px; overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .progress-bar > span { display: block; height: 100%; width: 0; background: var(--correct); transition: width 0.3s; }
+  .progress-label { font-size: 0.82rem; color: var(--text-muted); margin-top: 6px; display: flex; gap: 14px; flex-wrap: wrap; }
+  .progress-label b { color: var(--text-primary); }
+
+  /* ---------- Essay sentences ---------- */
+  .essay {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    font-size: 1.02rem;
+  }
+  .essay .para { margin: 0 0 14px; }
+  .sentence {
+    font: inherit;
+    font-size: inherit;
+    text-align: left;
+    line-height: 1.6;
+    cursor: pointer;
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--text-primary);
+    padding: 1px 3px;
+    border-radius: 5px;
+    transition: background 0.12s;
+    display: inline;
+  }
+  .sentence:hover { background: var(--bg-card-hover); }
+  .sentence:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .sentence.correct { background: var(--correct-bg); border-color: var(--correct-border); }
+  .sentence.incorrect { background: var(--incorrect-bg); border-color: var(--incorrect-border); }
+  .sentence .marker { font-weight: 700; margin-right: 3px; }
+  .sentence.correct .marker { color: var(--correct); }
+  .sentence.incorrect .marker { color: var(--incorrect); }
+
+  .feedback {
+    display: block;
+    margin: 8px 0 12px;
+    padding: 11px 14px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    border-left: 3px solid var(--border);
+    background: var(--bg-elevated);
+  }
+  .feedback.correct { border-left-color: var(--correct); }
+  .feedback.incorrect { border-left-color: var(--incorrect); }
+  .feedback .fb-head { font-weight: 700; margin-bottom: 3px; display: block; }
+  .feedback.correct .fb-head { color: var(--correct); }
+  .feedback.incorrect .fb-head { color: var(--incorrect); }
+  .feedback .fb-cat { color: var(--text-muted); font-size: 0.82rem; }
+
+  /* ---------- Bottom nav ---------- */
+  .panel-nav {
+    display: flex; justify-content: space-between; gap: 10px;
+    margin-top: 20px;
+  }
+
+  /* ---------- Rate the Essay ---------- */
+  .rate-essay {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 18px 20px; margin-bottom: 16px;
+  }
+  .rate-essay p { margin: 0 0 13px; }
+  .score-picker { display: flex; gap: 10px; flex-wrap: wrap; margin: 8px 0 4px; }
+  .score-opt {
+    width: 58px; height: 58px; border-radius: 10px;
+    border: 1px solid var(--border); background: var(--bg-elevated);
+    color: var(--text-primary); font-size: 1.3rem; font-weight: 700; cursor: pointer;
+  }
+  .score-opt:hover { background: var(--bg-card-hover); }
+  .score-opt:focus-visible { outline: 2px solid var(--gold); }
+  .score-opt.selected { background: var(--gold); color: #2a2200; border-color: var(--gold); }
+  textarea.justify {
+    width: 100%; min-height: 150px; resize: vertical;
+    font: inherit; padding: 12px 14px; background: var(--bg-base);
+    border: 1px solid var(--border); border-radius: 8px; color: var(--text-primary);
+  }
+  textarea.justify:focus-visible { outline: 2px solid var(--gold); }
+
+  .reveal { border: 1px solid var(--gold); border-radius: var(--radius); padding: 18px 20px; margin-top: 16px; background: var(--gold-bg); }
+  .reveal h3 { margin-top: 0; color: var(--gold); }
+  .score-compare { display: flex; gap: 20px; flex-wrap: wrap; margin: 12px 0; }
+  .score-box { text-align: center; }
+  .score-box .big { font-size: 2.2rem; font-weight: 800; }
+  .score-box .lbl { font-size: 0.78rem; color: var(--text-muted); }
+  .verdict { font-weight: 700; padding: 10px 14px; border-radius: 8px; margin: 10px 0; }
+  .verdict.match { background: var(--correct-bg); color: var(--correct); }
+  .verdict.close { background: var(--gold-bg); color: var(--gold); }
+  .verdict.off { background: var(--incorrect-bg); color: var(--incorrect); }
+
+  details.rubric-ref { margin-top: 12px; }
+  details.rubric-ref summary { cursor: pointer; color: var(--text-muted); }
+  details.rubric-ref ul { margin: 8px 0; padding-left: 18px; }
+
+  /* ---------- Document drawer ---------- */
+  .doc-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.55);
+    display: none; z-index: 60;
+  }
+  .doc-overlay.open { display: block; }
+  .doc-drawer {
+    position: absolute; top: 0; right: 0; height: 100%;
+    width: min(560px, 92vw); background: var(--bg-card);
+    border-left: 1px solid var(--border); display: flex; flex-direction: column;
+  }
+  .doc-drawer header { padding: 14px 18px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+  .doc-drawer header h3 { margin: 0; font-size: 1.05rem; flex: 1; }
+  .doc-tabs { display: flex; gap: 4px; padding: 10px 14px; overflow-x: auto; border-bottom: 1px solid var(--border); }
+  .doc-tabs button {
+    font: inherit; font-size: 0.8rem; cursor: pointer; white-space: nowrap;
+    border: 1px solid var(--border); background: var(--bg-elevated); color: var(--text-muted);
+    padding: 7px 11px; min-height: 40px; border-radius: 7px;
+  }
+  .doc-tabs button.active { background: var(--accent); color: #1a1a1a; border-color: var(--accent); font-weight: 600; }
+  .doc-content { padding: 16px 18px; overflow-y: auto; }
+  .doc-content .src { color: var(--text-muted); font-size: 0.82rem; font-style: italic; margin-bottom: 10px; }
+  .doc-content .img-desc { background: var(--bg-elevated); border-left: 3px solid var(--accent-secondary); padding: 10px 12px; border-radius: 6px; font-size: 0.88rem; margin-bottom: 12px; }
+  .doc-content img { max-width: 100%; border-radius: 8px; margin-bottom: 12px; border: 1px solid var(--border); }
+
+  /* ---------- Toast ---------- */
+  .toast {
+    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+    background: var(--bg-elevated); color: var(--text-primary);
+    border: 1px solid var(--border); border-radius: 10px; padding: 13px 18px;
+    z-index: 80; max-width: 90vw; box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+    opacity: 0; pointer-events: none; transition: opacity 0.25s, transform 0.25s;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(-4px); }
+
+  .float-docs {
+    position: fixed; bottom: 20px; right: 20px; z-index: 35;
+  }
+
+  @media (max-width: 768px) {
+    header.app-header h1 { font-size: 1rem; }
+    .taskbar { position: static; }
+    nav.tabbar { top: 57px; }
+  }
+</style>
+</head>
+<body>
+<header class="app-header">
+  <h1 id="appTitle">Rate Like a Rater</h1>
+  <span class="exam-tag" id="examTag"></span>
+  <span class="spacer"></span>
+  <button class="btn ghost" id="copyBtn">📋 Copy My Work</button>
+  <button class="btn ghost" id="restartBtn">↺ Start Over</button>
+</header>
+
+<nav class="tabbar" id="tabbar" aria-label="Sections"></nav>
+
+<main id="main"></main>
+
+<button class="btn primary float-docs" id="floatDocsBtn" aria-label="View source documents">📄 View Documents</button>
+
+<!-- Document drawer -->
+<div class="doc-overlay" id="docOverlay">
+  <div class="doc-drawer" role="dialog" aria-label="Source documents" aria-modal="true">
+    <header>
+      <h3>Source Documents</h3>
+      <button class="btn ghost" id="docCloseBtn" aria-label="Close documents">✕ Close</button>
+    </header>
+    <div class="doc-tabs" id="docTabs"></div>
+    <div class="doc-content" id="docContent"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* =========================================================================
+   Rate Like a Rater — Level 3 build
+   Data is inlined below (generated from rubric.json / documents.json /
+   essays.json by build.js) so the file runs standalone with no server.
+   Compliance: §0 no PII sent anywhere; §1 tab + next/prev nav; §2 directions
+   first; §3 Copy Text export with reset-on-success; §5 localStorage autosave;
+   §6 keyboard + aria + 44px targets; §10 CSS variables; §12 always boot to
+   Directions; §14 all feedback hand-built, no AI.
+   ========================================================================= */
+const SIM_DATA = {"meta":{"title":"Rate Like a Rater","exam":"January 2026","topic":"Prohibition"},"dimensions":[{"id":"task_development","label":"Task Identification","icon":"📋","student_prompt":"Find where the essay addresses each of the three parts of the task: historical circumstances, efforts to address the issue, and impact. Identifying the topic sentence — or any sentence in that section — is enough.","description":"Does the essay address all three parts of the task: historical circumstances, efforts, and impact?","count_mode":"aspect"},{"id":"document_use","label":"Document Use","icon":"📄","student_prompt":"Find sentences where the essay uses information from the source documents. Check the documents in the side panel to verify.","description":"Does the essay incorporate relevant information from the source documents? How many documents are used?"},{"id":"supporting_details","label":"Supporting Details","icon":"📌","student_prompt":"Find sentences that include specific facts, examples, statistics, names, dates, or other concrete details that support the essay's claims.","description":"Does the essay include specific facts, examples, and details — or is it vague and general?"},{"id":"analytical_vs_descriptive","label":"Analysis vs. Description","icon":"🔬","student_prompt":"Find sentences that ANALYZE (explain why, evaluate, draw conclusions) rather than just DESCRIBE (state facts without interpretation).","description":"Does the essay analyze, evaluate, and draw conclusions — or does it just retell facts?"},{"id":"outside_information","label":"Outside Information","icon":"🌍","student_prompt":"Find sentences that include relevant historical knowledge NOT found in any of the 6 source documents.","description":"Does the essay bring in relevant knowledge beyond what the documents provide?"},{"id":"organization","label":"Organization","icon":"🏗️","student_prompt":"Identify the introduction, conclusion, and how the essay is structured. Does the introduction go beyond restating the theme? Does the conclusion do more than repeat the prompt?","description":"Does the essay have a logical plan, a real introduction, and a meaningful conclusion?"},{"id":"inaccuracy","label":"Inaccuracies","icon":"⚠️","student_prompt":"Find sentences that contain historical errors, misattributions, or factual mistakes. Check claims against the source documents and your own knowledge.","description":"Does the essay contain factual errors? This is an advanced skill — can you spot what the writer got wrong?","advanced":true}],"essay":{"label":"Anchor Paper — Level 3","score":3,"paragraphs":[4,11,9,6,3],"sentences":[{"id":"3-s01","text":"Throughout our history in the United States, many constitutional and civic issues have been discussed and debated.","tags":{"task_development":{"match":false,"note":"Opening generalization; sets up the essay but does not yet address historical circumstances, efforts, or impact."},"analytical_vs_descriptive":{"match":false,"category":"descriptive","note":"Descriptive framing that restates the prompt's premise."},"document_use":{"match":false,"note":"No document information — echoes the task's historical context."},"outside_information":{"match":false,"note":"General framing, not specific outside knowledge."},"supporting_details":{"match":false,"note":"No specific facts or details; a broad opening statement."},"organization":{"match":true,"category":"introduction","note":"First sentence of the introduction. Largely restates the theme from the prompt — the rater noted the introduction is a restatement of the theme."},"inaccuracy":{"match":false}}},{"id":"3-s02","text":"Citizens, groups, and the Government have made efforts to try and fix or address these issues.","tags":{"task_development":{"match":false,"note":"Echoes the task's language about efforts, but in general terms rather than about Prohibition specifically."},"analytical_vs_descriptive":{"match":false,"category":"descriptive","note":"Descriptive restatement of the prompt."},"document_use":{"match":false,"note":"No document information."},"outside_information":{"match":false,"note":"Generic framing, not specific outside knowledge."},"supporting_details":{"match":false,"note":"No specific facts or details."},"organization":{"match":true,"category":"introduction","note":"Part of the introduction, restating the prompt's framing about efforts."},"inaccuracy":{"match":false}}},{"id":"3-s03","text":"Some of these efforts have been successful and some have not.","tags":{"task_development":{"match":false,"note":"General framing; does not develop a specific task aspect."},"analytical_vs_descriptive":{"match":false,"category":"descriptive","note":"Descriptive framing."},"document_use":{"match":false,"note":"No document information."},"outside_information":{"match":false,"note":"No specific outside knowledge."},"supporting_details":{"match":false,"note":"No specific facts or details."},"organization":{"match":true,"category":"introduction","note":"Introduction sentence setting up the success/failure theme that the conclusion returns to."},"inaccuracy":{"match":false}}},{"id":"3-s04","text":"One of these issues that we have faced in America is Prohibition.","tags":{"task_development":{"match":false,"note":"Names the essay's topic but does not yet develop a task aspect."},"analytical_vs_descriptive":{"match":false,"category":"descriptive","note":"Descriptive — states the topic."},"document_use":{"match":false,"note":"No document information."},"outside_information":{"match":false,"note":"No specific outside knowledge."},"supporting_details":{"match":false,"note":"No specific facts or details."},"organization":{"match":true,"category":"introduction","note":"Names the topic, completing the restatement-of-theme introduction."},"inaccuracy":{"match":false}}},{"id":"3-s05","text":"Prohibition was caused by different historical circumstances.","tags":{"task_development":{"match":true,"category":"historical_circumstances","note":"Topic sentence announcing the historical-circumstances aspect of the task."},"analytical_vs_descriptive":{"match":false,"category":"descriptive","note":"A framing claim without specific analysis."},"document_use":{"match":false,"note":"No document information yet."},"outside_information":{"match":false,"note":"General framing, not a specific outside fact."},"supporting_details":{"match":false,"note":"No concrete detail yet — the details follow in this paragraph."},"organization":{"match":true,"category":"body","note":"Topic sentence opening the historical-circumstances paragraph."},"inaccuracy":{"match":false}}},{"id":"3-s06","text":"One example is stated in Document 1 which says, \"The prohibition movement was an outgrowth of the temperance crusades...\"","tags":{"task_development":{"match":true,"category":"historical_circumstances","note":"Develops historical circumstances by citing Doc 1 on the temperance origins of Prohibition."},"analytical_vs_descriptive":{"match":false,"category":"descriptive","note":"Quotes the document without interpreting it — description."},"document_use":{"match":true,"document":"doc1","note":"Direct quotation from Document 1 (L. Ames Brown): Prohibition as an outgrowth of the temperance crusades. Check Doc 1 to verify."},"outside_information":{"match":false,"note":"Information comes straight from Document 1, not outside knowledge."},"supporting_details":{"match":false,"note":"A general claim quoted from the document rather than a concrete fact or statistic."},"organization":{"match":false,"category":"body","note":"Supporting sentence within the historical-circumstances paragraph."},"inaccuracy":{"match":false}}},{"id":"3-s07","text":"That began because people were drinking too much hard liquor.","tags":{"task_development":{"match":true,"category":"historical_circumstances","note":"Explains a cause behind the temperance movement — develops historical circumstances."},"analytical_vs_descriptive":{"match":true,"category":"analytical","note":"Goes beyond the quote to explain WHY the temperance movement began — a simple causal/analytical statement. The rater credited this reasoning."},"document_use":{"match":false,"note":"An explanation in the student's own words, not document text."},"outside_information":{"match":false,"note":"General reasoning rather than a discrete outside fact."},"supporting_details":{"match":false,"note":"No specific fact or statistic."},"organization":{"match":false,"category":"body","note":"Supporting sentence within the historical-circumstances paragraph."},"inaccuracy":{"match":false}}},{"id":"3-s08","text":"It also says that after the War of 1812, alcohol consumption increased.","tags":{"task_development":{"match":true,"category":"historical_circumstances","note":"Develops historical circumstances using Doc 1."},"analytical_vs_descriptive":{"match":false,"category":"descriptive","note":"Reports a fact from the document without interpretation."},"document_use":{"match":true,"document":"doc1","note":"Paraphrases Document 1's point that commerce and consumption grew after the War of 1812. Check Doc 1 to verify."},"outside_information":{"match":false,"note":"Drawn from Document 1, not outside knowledge."},"supporting_details":{"match":true,"note":"Specific factual detail (War of 1812; rise in consumption) drawn from Doc 1."},"organization":{"match":false,"category":"body","note":"Supporting sentence within the historical-circumstances paragraph."},"inaccuracy":{"match":false}}},{"id":"3-s09","text":"The State of Maine alone manufactured 1,333,160 gallons of liquor and sold it in nearly every single store.","tags":{"task_development":{"match":true,"category":"historical_circumstances","note":"Develops historical circumstances with a concrete statistic from Doc 1."},"analytical_vs_descriptive":{"match":false,"category":"descriptive","note":"States a statistic without interpreting it."},"document_use":{"match":true,"document":"doc1","note":"Specific statistic taken from Document 1 (Maine, 1827: 1,333,160 gallons). Check Doc 1 to verify."},"outside_information":{"match":false,"note":"Drawn from Document 1, not outside knowledge."},"supporting_details":{"match":true,"note":"Strong concrete statistic (1,333,160 gallons) — exactly the kind of specific detail the rubric rewards."},"organization":{"match":false,"category":"body","note":"Supporting sentence within the historical-circumstances paragraph."},"inaccuracy":{"match":false}}},{"id":"3-s10","text":"This caused an unhealthy and unsafe amount of drunkenness, which led to workers not being able to do their jobs safely or at all.","tags":{"task_development":{"match":true,"category":"historical_circumstances","note":"Develops historical circumstances by describing the social effects of heavy drinking."},"analytical_vs_descriptive":{"match":false,"category":"descriptive","note":"Describes consequences as elaboration rather than evaluating or drawing a conclusion."},"document_use":{"match":false,"note":"Not in any document — the link to workers' job performance is the student's own knowledge."},"outside_information":{"match":true,"note":"Outside information — connecting drunkenness to workers being unable to do their jobs is not stated in the documents. The rater listed this among the essay's limited outside information."},"supporting_details":{"match":false,"note":"General consequence rather than a specific fact or example."},"organization":{"match":false,"category":"body","note":"Supporting sentence within the historical-circumstances paragraph."},"inaccuracy":{"match":false}}},{"id":"3-s11","text":"Losing jobs because of drunkenness, many men found themselves in poorhouses.","tags":{"task_development":{"match":true,"category":"historical_circumstances","note":"Develops historical circumstances by tracing a social consequence of drinking."},"analytical_vs_descriptive":{"match":false,"category":"descriptive","note":"Describes a consequence rather than analyzing it."},"document_use":{"match":false,"note":"Doc 1 mentions poorhouses, but the causal claim (job loss leads to poorhouses) is the student's own — the rater scored this as outside information, not document use."},"outside_information":{"match":true,"note":"Outside reasoning the rater credited as outside information: linking job loss to ending up in poorhouses."},"supporting_details":{"match":false,"note":"General consequence rather than a specific named fact."},"organization":{"match":false,"category":"body","note":"Supporting sentence within the historical-circumstances paragraph."},"inaccuracy":{"match":false}}},{"id":"3-s12","text":"Many other problems like an increase in violent behavior and the number of people going to jail for alcohol related crimes increased.","tags":{"task_development":{"match":true,"category":"historical_circumstances","note":"Develops historical circumstances by listing further social consequences."},"analytical_vs_descriptive":{"match":false,"category":"descriptive","note":"Lists consequences without interpretation."},"document_use":{"match":false,"note":"Doc 1 references jails, but the broader claim about increased violence and arrests is the student's own elaboration — the rater scored it as outside information."},"outside_information":{"match":true,"note":"Outside information — the increase in violent behavior and alcohol-related arrests is not detailed in the documents."},"supporting_details":{"match":false,"note":"General problems rather than a specific fact or statistic."},"organization":{"match":false,"category":"body","note":"Supporting sentence within the historical-circumstances paragraph."},"inaccuracy":{"match":false}}},{"id":"3-s13","text":"Women's temperance groups at first tried to get drinkers to drink less but changed their goal to prohibiting alcohol completely.","tags":{"task_development":{"match":true,"category":"historical_circumstances","note":"Develops historical circumstances by describing how the temperance movement shifted toward prohibition."},"analytical_vs_descriptive":{"match":false,"category":"descriptive","note":"Describes a change in goals without analyzing why."},"document_use":{"match":false,"note":"Not stated in any document; the shift from moderation to total prohibition is the student's own knowledge."},"outside_information":{"match":false,"note":"This is knowledge beyond the documents, but the official rater counted it among the essay's supporting details rather than its limited outside information. A defensible 'outside info' pick too — good discussion point."},"supporting_details":{"match":true,"note":"Specific factual claim about temperance groups changing their goal — credited by the rater as a supporting detail."},"organization":{"match":false,"category":"body","note":"Supporting sentence within the historical-circumstances paragraph."},"inaccuracy":{"match":false}}},{"id":"3-s14","text":"Men also actively worked for prohibition for moral and religious reasons in groups like the Anti-Saloon League.","tags":{"task_development":{"match":true,"category":"historical_circumstances","note":"Develops historical circumstances by identifying who pushed for prohibition and why."},"analytical_vs_descriptive":{"match":false,"category":"descriptive","note":"Describes the actors and motives without analysis."},"document_use":{"match":false,"note":"The Anti-Saloon League's moral/religious motivation echoes Doc 2, but the student presents it as general knowledge here; the explicit Doc 2 citation comes in the next sentence. The rater scored this as a supporting detail."},"outside_information":{"match":false,"note":"Treated by the rater as a supporting detail rather than outside information."},"supporting_details":{"match":true,"note":"Names a specific group (Anti-Saloon League) and its moral/religious motivation — a supporting detail."},"organization":{"match":false,"category":"body","note":"Supporting sentence within the historical-circumstances paragraph."},"inaccuracy":{"match":false}}},{"id":"3-s15","text":"As shown in Document 2, this group kept track of the progress National Prohibition was making in state legislatures with ratification of the Prohibition Amendment.","tags":{"task_development":{"match":true,"category":"historical_circumstances","note":"Develops historical circumstances using Doc 2."},"analytical_vs_descriptive":{"match":false,"category":"descriptive","note":"Reports what the document shows without interpretation."},"document_use":{"match":true,"document":"doc2","note":"Explicitly cites Document 2 (Anti-Saloon League ratification map) and paraphrases it accurately. Check Doc 2 to verify."},"outside_information":{"match":false,"note":"Drawn from Document 2."},"supporting_details":{"match":true,"note":"Specific document-based detail about tracking ratification progress in state legislatures — credited by the rater."},"organization":{"match":false,"category":"body","note":"Closing supporting sentence of the historical-circumstances paragraph."},"inaccuracy":{"match":false}}},{"id":"3-s16","text":"Efforts had to be made by many to continue to address the issue of prohibition after the Amendment was passed.","tags":{"task_development":{"match":true,"category":"efforts","note":"Topic sentence announcing the efforts aspect of the task."},"analytical_vs_descriptive":{"match":true,"category":"analytical","note":"The rater credited this framing ('efforts had to be made... after the amendment was passed') as an analytical statement that organizes the discussion of efforts."},"document_use":{"match":false,"note":"No specific document information."},"outside_information":{"match":false,"note":"Framing rather than a discrete outside fact."},"supporting_details":{"match":false,"note":"No concrete detail yet — details follow in this paragraph."},"organization":{"match":true,"category":"body","note":"Topic sentence introducing the second task aspect — efforts to address the issue."},"inaccuracy":{"match":false}}},{"id":"3-s17","text":"One effort was made by President Hoover in the late 1920s.","tags":{"task_development":{"match":true,"category":"efforts","note":"Introduces the first specific effort (Hoover) — develops the efforts aspect."},"analytical_vs_descriptive":{"match":false,"category":"descriptive","note":"States who and when without analysis."},"document_use":{"match":false,"note":"General framing; the Hoover detail and quote come in the next sentences."},"outside_information":{"match":false,"note":"No specific outside fact."},"supporting_details":{"match":false,"note":"General; the specific detail (the law) follows."},"organization":{"match":false,"category":"body","note":"Supporting sentence within the efforts paragraph."},"inaccuracy":{"match":false}}},{"id":"3-s18","text":"One way he showed his support for prohibition was by signing the \"Five and Ten Law,\" which made liquor violation a felony.","tags":{"task_development":{"match":true,"category":"efforts","note":"Develops the efforts aspect with a specific governmental action."},"analytical_vs_descriptive":{"match":false,"category":"descriptive","note":"States what the law did without analyzing it."},"document_use":{"match":true,"document":"doc3","note":"Draws on Document 3 — Hoover signed the 'Five and Ten Law' making every liquor violation a felony (1929). Check Doc 3 to verify."},"outside_information":{"match":false,"note":"Drawn from Document 3."},"supporting_details":{"match":true,"note":"Specific named law (Five and Ten Law) and what it did — a concrete supporting detail."},"organization":{"match":false,"category":"body","note":"Supporting sentence within the efforts paragraph."},"inaccuracy":{"match":false}}},{"id":"3-s19","text":"With crime rates in the country increasing because of people violating Prohibition laws and organized crime rates growing, Hoover thought that making liquor violations a felony might convince people to obey the law.","tags":{"task_development":{"match":true,"category":"efforts","note":"Develops the efforts aspect by explaining the purpose behind Hoover's action."},"analytical_vs_descriptive":{"match":true,"category":"analytical","note":"Interprets Hoover's motivation ('thought that making liquor violations a felony might convince people to obey the law') — the rater credited this as analytical."},"document_use":{"match":false,"note":"Doc 3 mentions an increased jail population, but 'organized crime rates growing' and Hoover's reasoning are the student's own framing, not document text."},"outside_information":{"match":false,"note":"Borderline — 'organized crime' is outside the documents, but the rater treated the crime-rate point as a supporting detail and the motive as analysis, not as outside information."},"supporting_details":{"match":true,"note":"The rater listed 'crime rates increasing and organized crime growing because of people violating Prohibition laws' among the essay's supporting details."},"organization":{"match":false,"category":"body","note":"Supporting sentence within the efforts paragraph."},"inaccuracy":{"match":false}}},{"id":"3-s20","text":"In the text of Document 3 it says, \"Hoover saluted Prohibition as 'a great social and economic experiment...far-reaching in purpose.'\"","tags":{"task_development":{"match":true,"category":"efforts","note":"Develops the efforts aspect using Hoover's own words from Doc 3."},"analytical_vs_descriptive":{"match":false,"category":"descriptive","note":"Quotes the document; the interpretation comes in the next sentence."},"document_use":{"match":true,"document":"doc3","note":"Direct quotation from Document 3 (Hoover's 1928 'noble experiment' remark). Check Doc 3 to verify."},"outside_information":{"match":false,"note":"Drawn from Document 3."},"supporting_details":{"match":false,"note":"A quoted opinion used to set up the next sentence's interpretation, rather than a concrete fact."},"organization":{"match":false,"category":"body","note":"Supporting sentence within the efforts paragraph."},"inaccuracy":{"match":false}}},{"id":"3-s21","text":"This means that he felt that prohibition would make the country better and it would serve a great purpose by saving souls, family life, and keeping people out of poorhouses.","tags":{"task_development":{"match":true,"category":"efforts","note":"Develops the efforts aspect by explaining the reasoning behind Hoover's support."},"analytical_vs_descriptive":{"match":true,"category":"analytical","note":"Interprets the Doc 3 quote ('This means that he felt...') — the rater credited this explanation as analytical."},"document_use":{"match":false,"note":"The student's interpretation of the quote, in their own words — not document text."},"outside_information":{"match":false,"note":"Interpretation/elaboration rather than a discrete outside fact."},"supporting_details":{"match":false,"note":"Interpretive claim rather than a specific fact."},"organization":{"match":false,"category":"body","note":"Supporting sentence within the efforts paragraph."},"inaccuracy":{"match":false}}},{"id":"3-s22","text":"Another effort was made by the WONPR, or the Women's Organization for National Prohibition Reform which disagreed with the WCTU opinion that their support for Prohibition represented \"the women of America.\"","tags":{"task_development":{"match":true,"category":"efforts","note":"Introduces a second effort (WONPR) — develops the efforts aspect and shows two efforts, as the task requires."},"analytical_vs_descriptive":{"match":true,"category":"analytical","note":"Sets up a contrast (WONPR disagreeing with the WCTU's claim to speak for 'the women of America') — the rater credited this as analytical."},"document_use":{"match":true,"document":"doc4","note":"From Document 4 — WONPR formed after Ella Boole (WCTU) claimed to represent 'the women of America.' Check Doc 4 to verify."},"outside_information":{"match":false,"note":"Drawn from Document 4."},"supporting_details":{"match":true,"note":"Names the WONPR and its full title and identifies its disagreement with the WCTU — specific, document-based detail."},"organization":{"match":false,"category":"body","note":"Supporting sentence within the efforts paragraph, introducing the second effort."},"inaccuracy":{"match":false,"note":"Accurate — this essay correctly has the WONPR opposing Prohibition (the Level 1 and Level 2 papers get this wrong)."}}},{"id":"3-s23","text":"This group's purpose was to campaign against prohibition including motorcading through New York State, \"members attending meetings, giving speeches at rallies, going door to door to recruit new supporters, and using technology to spread their message.\"","tags":{"task_development":{"match":true,"category":"efforts","note":"Develops the efforts aspect with specific WONPR campaign activities."},"analytical_vs_descriptive":{"match":false,"category":"descriptive","note":"Lists activities quoted from the document without interpretation."},"document_use":{"match":true,"document":"doc4","note":"Paraphrases and quotes Document 4's list of WONPR campaign activities (meetings, rallies, door-to-door, radio, motorcade). Check Doc 4 to verify."},"outside_information":{"match":false,"note":"Drawn from Document 4."},"supporting_details":{"match":true,"note":"Rich list of specific WONPR activities — strong concrete detail credited by the rater."},"organization":{"match":false,"category":"body","note":"Supporting sentence within the efforts paragraph."},"inaccuracy":{"match":false}}},{"id":"3-s24","text":"This shows that this organization did whatever they could to get support for repealing the prohibition amendment.","tags":{"task_development":{"match":true,"category":"efforts","note":"Closes the efforts discussion by stating the point of the WONPR's actions."},"analytical_vs_descriptive":{"match":true,"category":"analytical","note":"Draws a conclusion from the evidence ('This shows that... the organization did whatever they could') — the rater credited this as analytical."},"document_use":{"match":false,"note":"The student's own conclusion, not document text."},"outside_information":{"match":false,"note":"Conclusion rather than a discrete outside fact."},"supporting_details":{"match":false,"note":"Interpretive conclusion rather than a specific fact."},"organization":{"match":false,"category":"body","note":"Closing supporting sentence of the efforts paragraph."},"inaccuracy":{"match":false}}},{"id":"3-s25","text":"These efforts impacted the United States and our society.","tags":{"task_development":{"match":true,"category":"impact","note":"Topic sentence announcing the impact aspect of the task."},"analytical_vs_descriptive":{"match":false,"category":"descriptive","note":"Framing claim without specific analysis."},"document_use":{"match":false,"note":"No specific document information yet."},"outside_information":{"match":false,"note":"Framing rather than a discrete outside fact."},"supporting_details":{"match":false,"note":"No concrete detail yet — details follow in this paragraph."},"organization":{"match":true,"category":"body","note":"Topic sentence introducing the third task aspect — impact of the efforts."},"inaccuracy":{"match":false}}},{"id":"3-s26","text":"One impact anti-prohibitionists made was that in 1933, as the newspaper headline says, \"Prohibition repeal is ratified: New York celebrates with quiet restraint.\"","tags":{"task_development":{"match":true,"category":"impact","note":"Develops the impact aspect with the 1933 repeal."},"analytical_vs_descriptive":{"match":false,"category":"descriptive","note":"Reports the headline without interpreting it."},"document_use":{"match":true,"document":"doc6","note":"Quotes the Document 6 headline (NYT, Dec 1933: repeal ratified, New York celebrates with quiet restraint). Check Doc 6 to verify."},"outside_information":{"match":false,"note":"Drawn from Document 6."},"supporting_details":{"match":true,"note":"Specific dated event (1933 repeal) with the headline quoted — concrete detail."},"organization":{"match":false,"category":"body","note":"Supporting sentence within the impact paragraph."},"inaccuracy":{"match":false}}},{"id":"3-s27","text":"The newspaper stories in Document 6 mention that people celebrated in the streets and many speakeasies closed as alcohol became legal again.","tags":{"task_development":{"match":true,"category":"impact","note":"Develops the impact aspect using Doc 6."},"analytical_vs_descriptive":{"match":false,"category":"descriptive","note":"Reports details from the document without interpretation."},"document_use":{"match":true,"document":"doc6","note":"Paraphrases Document 6 sub-headlines (celebration in the streets; many speakeasies close). Check Doc 6 to verify."},"outside_information":{"match":false,"note":"Drawn from Document 6."},"supporting_details":{"match":true,"note":"Concrete details (street celebrations, speakeasies closing) drawn from Doc 6."},"organization":{"match":false,"category":"body","note":"Supporting sentence within the impact paragraph."},"inaccuracy":{"match":false}}},{"id":"3-s28","text":"One author wrote that prohibition failed.","tags":{"task_development":{"match":true,"category":"impact","note":"Develops the impact aspect by introducing the judgment that Prohibition failed."},"analytical_vs_descriptive":{"match":false,"category":"descriptive","note":"A vague lead-in to the quotation that follows."},"document_use":{"match":false,"note":"Vague attribution ('one author') to the Doc 5 quotation that follows in the next sentence."},"outside_information":{"match":false,"note":"No specific outside fact."},"supporting_details":{"match":false,"note":"General claim; the supporting quotation follows."},"organization":{"match":false,"category":"body","note":"Supporting sentence within the impact paragraph."},"inaccuracy":{"match":false}}},{"id":"3-s29","text":"He says, \"in fourteen years Prohibition succeeded neither in changing American's behavior nor in eliminating the problems caused by Alcohol abuse.\"","tags":{"task_development":{"match":true,"category":"impact","note":"Develops the impact aspect with Doc 5's assessment of Prohibition's failure."},"analytical_vs_descriptive":{"match":false,"category":"descriptive","note":"Quotes the document's conclusion rather than the student's own analysis; the student's interpretation comes next."},"document_use":{"match":true,"document":"doc5","note":"Direct quotation from Document 5 (Michael A. Lerner): in fourteen years Prohibition changed neither behavior nor the problems of alcohol abuse. Check Doc 5 to verify."},"outside_information":{"match":false,"note":"Drawn from Document 5."},"supporting_details":{"match":false,"note":"A quoted evaluative conclusion from Doc 5 rather than a concrete fact."},"organization":{"match":false,"category":"body","note":"Supporting sentence within the impact paragraph."},"inaccuracy":{"match":false}}},{"id":"3-s30","text":"This means that Prohibition was pointless because it solved nothing, but created many problems that no one expected, including disrespect for laws and law enforcement.","tags":{"task_development":{"match":true,"category":"impact","note":"Develops the impact aspect by interpreting Prohibition's overall effect."},"analytical_vs_descriptive":{"match":true,"category":"analytical","note":"Interprets the Doc 5 quote and draws an overall conclusion ('Prohibition was pointless... created many problems... disrespect for laws') — the rater credited this as analytical."},"document_use":{"match":false,"note":"The student's own interpretation; 'disrespect for laws and law enforcement' is not stated in the documents."},"outside_information":{"match":false,"note":"Interpretation/conclusion rather than a discrete outside fact."},"supporting_details":{"match":false,"note":"Interpretive conclusion rather than a specific fact."},"organization":{"match":false,"category":"body","note":"Closing supporting sentence of the impact paragraph."},"inaccuracy":{"match":false}}},{"id":"3-s31","text":"In conclusion, Prohibition has been just one issue debated in the United States in our history.","tags":{"task_development":{"match":false,"note":"Conclusion framing; does not develop a new task aspect."},"analytical_vs_descriptive":{"match":false,"category":"descriptive","note":"Restates the framing of the essay."},"document_use":{"match":false,"note":"No document information."},"outside_information":{"match":false,"note":"No specific outside knowledge."},"supporting_details":{"match":false,"note":"No specific facts or details."},"organization":{"match":true,"category":"conclusion","note":"Opens the conclusion."},"inaccuracy":{"match":false}}},{"id":"3-s32","text":"Many efforts were made to address the issue, and only some were successful.","tags":{"task_development":{"match":false,"note":"Conclusion framing; restates the intro's success/failure point."},"analytical_vs_descriptive":{"match":false,"category":"descriptive","note":"Restates an earlier general claim."},"document_use":{"match":false,"note":"No document information."},"outside_information":{"match":false,"note":"No specific outside knowledge."},"supporting_details":{"match":false,"note":"No specific facts or details."},"organization":{"match":true,"category":"conclusion","note":"Conclusion sentence echoing the introduction."},"inaccuracy":{"match":false}}},{"id":"3-s33","text":"The issue was a big part of our history as a society, and it will never be forgotten because people are still debating the medical and moral issues surrounding alcohol.","tags":{"task_development":{"match":false,"note":"Conclusion reflection rather than development of a task aspect."},"analytical_vs_descriptive":{"match":false,"category":"descriptive","note":"A forward-looking reflection; mildly evaluative but the rater did not list it among the essay's analytical statements."},"document_use":{"match":false,"note":"No document information."},"outside_information":{"match":false,"note":"General reflection rather than a discrete outside fact."},"supporting_details":{"match":false,"note":"No specific facts or details."},"organization":{"match":true,"category":"conclusion","note":"This is the sentence that lifts the conclusion 'beyond a restatement of the theme' — it connects Prohibition to the ongoing present-day debate over alcohol. The rater noted it would have benefited from more explanation."},"inaccuracy":{"match":false}}}]},"documents":[{"id":"doc1","title":"Document 1","source":"L. Ames Brown, \"Prohibition,\" The North American Review, November 1915","type":"text","content":"The prohibition movement was an outgrowth of the temperance crusades of the first half of the nineteenth century. Hard drinking was almost the rule among the Fathers of the Republic. The per capita consumption of spirits in the early days was many times what it is now, and beer drinking was almost unknown. After the War of 1812, there grew up in the New England States a large commerce in West Indian rum, which was consumed extensively, especially in Maine, supplementing the consumption of heavy liquors which were manufactured in those States. Maine alone, in 1827, when her population was 360,000, manufactured 1,333,160 gallons of liquor, and it was sold at retail in nearly every store and tavern. Drunkenness in its worst form, involving disastrous social consequences, was widespread. Sufficient evidence of it was to be found in the number of persons in the jails and poorhouses.","image_description":null,"preamble":null,"image_file":null},{"id":"doc2","title":"Document 2","source":"Anti-Saloon League of America, 1919","type":"image_and_text","content":"STATEMENT OF THE NATIONAL LEGISLATIVE COMMITTEE OF THE ANTI-SALOON LEAGUE OF AMERICA\n\nThe ratification of the Prohibition amendment to the constitution is the consummation of more than twenty-five years of effort on the part of the Anti-Saloon League, representing as it has the moral and religious forces of the nation. It is the greatest victory for moral reform in America since the Declaration of Independence.\n\nNot less in importance to that which has already been accomplished is the vitally essential task now before the Prohibition forces of securing from Congress and the states proper enforcement legislation and the crystallizing of public sentiment in the large cities and wet districts for complete enforcement of the law.\n\nWith Prohibition assured for this nation, the American anti-liquor forces need to redouble their efforts for the larger task of world Prohibition of the manufacture and sale of all intoxicating beverages.","image_description":"A poster titled 'National Prohibition Ratification Map' showing a map of the United States with numbers indicating the order in which states ratified the National Prohibition Amendment. The map notes that as of January 31, 1919, only four states had not ratified. Three of these (Pennsylvania, Connecticut, and Rhode Island) were expected to ratify soon. Even New Jersey was expected to ratify and make the result unanimous.","preamble":null,"image_file":"images/doc2_ratification_map.png"},{"id":"doc3","title":"Document 3","source":"Charles Rappleye, Herbert Hoover in the White House, Simon & Schuster, 2016 (adapted)","type":"text","content":"Over his first three years in the White House Hoover never wavered in his support for Prohibition. In 1929 he signed the \"Five and Ten Law\" making every liquor violation a felony, and his Justice Department ramped up federal enforcement. \"We enormously increased the jail population,\" by jailing Prohibition violators Hoover recalled in his memoirs. \"We multiplied the fines, padlocking, and confiscations.\" Yet all this aggressive action he ascribed [attributed] to his duty as a constitutional officer, not to his actual endorsement. On this basic political question, Hoover declined to share his feelings and refused to act on them.\n\nDuring the 1928 campaign Hoover famously saluted Prohibition as \"a great social and economic experiment, noble in motive and far-reaching in purpose.\" But three years later, surely the test had been run.\n\nBy early 1932 little doubt remained as to the mood of the electorate. Respondents to a national mail-in survey conducted by The Literary Digest in February and March endorsed repeal of the Eighteenth Amendment by a four-to-one margin. Residents of Ohio, the birthplace of Prohibition, sent in 112,026 ballots for repeal and just 43,284 for keeping the ban on booze. Kansas was the only state to poll in favor of Prohibition.","image_description":null,"preamble":null,"image_file":null},{"id":"doc4","title":"Document 4","source":"Sarah Seidman, \"The New York Women Who Dismantled Prohibition,\" Museum of the City of New York, December 15, 2015","type":"text","content":"The Women's Organization for National Prohibition Reform (WONPR) was founded in 1929 to show that not all women supported temperance. New York socialite Pauline Sabin led the charge after hearing Ella Boole, the Brooklyn-based leader of the Women's Christian Temperance Union, declare that her support for Prohibition represented \"the women of America.\" On the heels of the successful suffrage campaign that won women the right to vote in 1920, the WONPR, and Sabin in particular, reflected the modern \"new woman\" of the 1920s. Many members of the WONPR had in fact initially supported the 18th amendment. But they had come to believe that Prohibition had led to a surge in unregulated and particularly underage drinking, as well as a growing sense of distrust for the rule of law. The WONPR's opposition to Prohibition, just like the 18th amendment itself, was not only about drinking, but about the government's role in regulating behavior.\n\nThe WONPR did a lot of what we think of now as typical political campaign activities: members attended meetings and gave speeches at rallies, went door-to-door to recruit new supporters, used new technology to spread their message—at the time radio, and lobbied politicians. Wealthy women had founded the organization, and proved able to raise funds even after the Stock Market Crash of 1929 ushered in the Great Depression. From its headquarters in New York City, the organization also gained publicity by organizing events such as a motorcade through New York State.","image_description":null,"preamble":null,"image_file":null},{"id":"doc5","title":"Document 5","source":"Michael A. Lerner, Dry Manhattan: Prohibition in New York City, Harvard University Press, 2007","type":"text","content":"The end of the Prohibition era marked the demise of a moral crusade meant to impose a uniform standard of social behavior in the United States. Unrealistic and unforgiving, Prohibition had allowed a vocal minority to regulate the personal habits of all Americans, especially those who lived and worked in cities like New York. While the desire of the dry crusade to uplift and improve the United States by banning alcohol and the saloon had in some ways been understandable in the Progressive era that spawned the Prohibition movement, the shortcomings of the dry crusade manifested themselves as soon as the dry experiment had begun. Anachronistic [outdated] and unworkable, the Prohibition experiment was ill suited to the diversity and dynamic of the modern United States, which by the 1920s had grown too large and too varied a nation to be governed by an impulse as intrusive as the dry crusade. Despite the force of federal law, the use of authoritarian tactics to enforce it, and the expenditure of millions of dollars a year, in fourteen years Prohibition succeeded neither in changing Americans' behavior nor in eliminating the problems caused by alcohol abuse. When Prohibition failed, and it did so spectacularly, it revealed the limits of moral reform movements, and specifically the paternalistic, prejudiced, and undemocratic ideals behind the dry crusade.","image_description":null,"preamble":null,"image_file":null},{"id":"doc6","title":"Document 6","source":"New York Times, December 6, 1933","type":"image_and_text","content":"PROHIBITION REPEAL IS RATIFIED AT 5:32 P.M.; ROOSEVELT ASKS NATION TO BAR THE SALOON; NEW YORK CELEBRATES WITH QUIET RESTRAINT. Sub-headlines: State House Bootlegger Is Barred in Maryland. CITY TOASTS NEW ERA. Crowds Swamp Licensed Resorts, but the Legal Liquor Is Scarce. CELEBRATION IN STREETS Marked by Absence of Undue Hilarity and Only Normal Number of Arrests. MANY SPEAKEASIES CLOSE. Machine Guns Guard Some Liquor Trucks — Supplies to Be Rushed Out Today. The Repeal Proclamation. FINAL ACTION AT CAPITAL. President Proclaims the Nation's New Policy as Utah Ratifies. PHILLIPS SIGNS DECREE. Orders 21st Amendment in Effect on Receiving Votes of Three Final States. RECOVERY TAXES TO END. $227,000,000 a Year Automatically Dropped — Canadian Whisky Quota Is Raised.","image_description":"Front page of the New York Times from December 6, 1933. Main headline: 'PROHIBITION REPEAL IS RATIFIED AT 5:32 P.M.; ROOSEVELT ASKS NATION TO BAR THE SALOON; NEW YORK CELEBRATES WITH QUIET RESTRAINT.' Sub-headlines include: 'State House Bootlegger Is Barred in Maryland,' 'CITY TOASTS NEW ERA,' 'Crowds Swamp Licensed Resorts, but the Legal Liquor Is Scarce,' 'CELEBRATION IN STREETS,' 'Marked by Absence of Undue Hilarity and Only Normal Number of Arrests,' 'MANY SPEAKEASIES CLOSE,' 'Machine Guns Guard Some Liquor Trucks — Supplies to Be Rushed Out Today,' 'The Repeal Proclamation,' 'FINAL ACTION AT CAPITAL,' 'President Proclaims the Nation's New Policy as Utah Ratifies,' 'PHILLIPS SIGNS DECREE,' 'Orders 21st Amendment in Effect on Receiving Votes of Three Final States,' 'RECOVERY TAXES TO END,' '$227,000,000 a Year Automatically Dropped — Canadian Whisky Quota Is Raised.'","preamble":"Although President Franklin Roosevelt supported repeal of Prohibition, he wanted to ban the operation of saloons, bars, and taverns in the United States.","image_file":"images/doc6_nyt_front_page.png"}],"practice":{"label":"Practice Paper A","score":3,"raw_text":"Throughout different historical periods in the United States, copious amounts of constitutional and civic dilemmas have constantly been raised by the American people. These issues resulted in individuals, groups, and governments all taking action to make change, some being more successful than others. One of these constitutional and civic issues has been Prohibition. Prohibition initially began in the early 1800s when issues regarding the abuse of alcohol increased resulting in disastrous consequences that led to many people being placed in jails and poorhouses. Due to the unwell social state that many people were in, temperance groups formed and persuaded many people that drinking was wrong. Ultimately the government decided to pass laws making it so that the sale of alcohol would end.\n\nThe efforts to address Prohibition were widely seen coming from individuals. In Document 2, their efforts were represented through the democratic system of voting, as people got to voice their opinions both directly and indirectly. State legislators, democratically elected by the people, had to ratify the National Prohibition Amendment. Since only 4 states had not ratified by January 1919, it seemed that many people supported a ban on alcohol. State legislators might have also been persuaded by the moral and religious arguments of individuals in the Anti-Saloon League who supported Prohibition. In Document 3 people voicing their opinion is seen through a mail-in-survey, in The Literary Digest. During this time many were disagreeing with Hoover's Five and Ten Law and federal enforcement and they decided to take action by responding to a survey, in which 112,026 voted for repeal. From this it is made entirely evident that people started to see the problems with Prohibition, and decided to make their opinions known.\n\nAside from the people in general making efforts to address Prohibition more specific groups such as women decided to take action as well. In Document 4, an example of this is represented through the creation of the organization WONPR (Women's Organization for National Prohibition Reform.) This organization worked to repeal Prohibition from the view point of the \"new women\". They strongly believed that it only created more issues as it led to distrust and more underage drinking, and they actively worked to recruit more people and gain publicity through events.\n\nThe courses of action taken by the people were successful in that the 18th Amendment was passed and later proved to be successful as Prohibition was eventually repealed.\n\nIt was made entirely evident that these efforts were successful and represented the shifting viewpoints of the people. In Document 5, it is clearly stated by Michael A Lerner that the act of Prohibition was unsuccessful both in changing Americans people's behaviors and putting an end to substance abuse. It was gradually deemed as a complete failure as it was supported by fewer and fewer people. The efforts taken by groups such as the WONPR, as previously stated, directly contributed to this matter as it shined more light on the fact that although Prohibition was achieved through democratic methods, in the end it was seen as undemocratic and was repealed by the efforts taken by the American people speaking out against it. It is evident that the democratic system puts more power at the hands of the people.\n\nIn Document 6, we are given a prime example of what the people through their efforts achieved in a primary source. The source is a newspaper article informing people of the ratification of the Prohibition repeal and explains President Roosevelt's opinions on it. It ultimately states that although he supported it, the repeal celebration was done with \"restraint\" as many speakeasies were closed and liquor was scarce.","rater_commentary_summary":"Overall, the response fits the criteria for Level 3. Analytic statements demonstrate a good understanding of the role individuals played in the democratic process in addressing the issue of Prohibition. Further development of historical circumstances would have strengthened the effort."},"scoreLevels":{"0":{"score":0,"bullets":[{"dimension":"overall","text":"Fails to develop the task or may only refer to the theme in a general way; OR includes no relevant facts, examples, or details; OR includes only the historical context and/or task as copied from the test booklet; OR includes only entire documents copied from the test booklet; OR is illegible; OR is a blank paper"}]},"1":{"score":1,"bullets":[{"dimension":"task_development","text":"Minimally develops some aspects of the task"},{"dimension":"analytical_vs_descriptive","text":"Is descriptive; may lack understanding, application, or analysis"},{"dimension":"document_use","text":"Makes vague, unclear references to the documents or consists primarily of relevant and irrelevant information copied from the documents"},{"dimension":"outside_information","text":"Presents no relevant outside information"},{"dimension":"supporting_details","text":"Includes few relevant facts, examples, or details; may include inaccuracies"},{"dimension":"organization","text":"May demonstrate a weakness in organization; may lack focus; may contain digressions; may not clearly identify which aspect of the task is being addressed; may lack an introduction and/or a conclusion"}]},"2":{"score":2,"bullets":[{"dimension":"task_development","text":"Minimally develops all aspects of the task or develops at least two aspects of the task in some depth"},{"dimension":"analytical_vs_descriptive","text":"Is primarily descriptive; may include faulty, weak, or isolated application or analysis"},{"dimension":"document_use","text":"Incorporates limited relevant information from the documents or consists primarily of relevant information copied from the documents"},{"dimension":"outside_information","text":"Presents little or no relevant outside information"},{"dimension":"supporting_details","text":"Includes few relevant facts, examples, and details; may include some inaccuracies"},{"dimension":"organization","text":"Demonstrates a general plan of organization; may lack focus; may contain digressions; may not clearly identify which aspect of the task is being addressed; may lack an introduction and/or a conclusion"}]},"3":{"score":3,"bullets":[{"dimension":"task_development","text":"Develops all aspects of the task with little depth or develops at least three aspects of the task in some depth"},{"dimension":"analytical_vs_descriptive","text":"Is more descriptive than analytical (applies, may analyze and/or evaluate information)"},{"dimension":"document_use","text":"Incorporates some relevant information from some of the documents"},{"dimension":"outside_information","text":"Incorporates limited relevant outside information"},{"dimension":"supporting_details","text":"Includes some relevant facts, examples, and details; may include some minor inaccuracies"},{"dimension":"organization","text":"Demonstrates a satisfactory plan of organization, includes an introduction and a conclusion that may be a restatement of the theme"}]},"4":{"score":4,"bullets":[{"dimension":"task_development","text":"Develops all aspects of the task but may do so somewhat unevenly by discussing one aspect of the task less thoroughly than the other aspects of the task"},{"dimension":"analytical_vs_descriptive","text":"Is both descriptive and analytical (applies, analyzes, evaluates, and/or creates information)"},{"dimension":"document_use","text":"Incorporates relevant information from at least four documents"},{"dimension":"outside_information","text":"Incorporates relevant outside information"},{"dimension":"supporting_details","text":"Supports the theme with relevant facts, examples, and details"},{"dimension":"organization","text":"Demonstrates a logical and clear plan of organization; includes an introduction and a conclusion that are beyond a restatement of the theme"}]},"5":{"score":5,"bullets":[{"dimension":"task_development","text":"Thoroughly develops all aspects of the task evenly and in depth by describing the historical circumstances surrounding Prohibition, explaining at least two efforts to address the issue by individuals, groups, and/or governments, and discussing the impact of the efforts on the United States and/or on American society"},{"dimension":"analytical_vs_descriptive","text":"Is more analytical than descriptive (analyzes, evaluates, and/or creates information)"},{"dimension":"document_use","text":"Incorporates relevant information from at least four documents (see Key Ideas chart)"},{"dimension":"outside_information","text":"Incorporates relevant outside information (see Outside Information chart)"},{"dimension":"supporting_details","text":"Richly supports the theme with many relevant facts, examples, and details"},{"dimension":"organization","text":"Demonstrates a logical and clear plan of organization; includes an introduction and a conclusion that are beyond a restatement of the theme"}]}}};
+
+const LS_KEY = "edsim_ratelikearater_l3_v1";
+const DIM_BY_ID = {};
+SIM_DATA.dimensions.forEach(d => DIM_BY_ID[d.id] = d);
+
+/* ---------------- State ---------------- */
+function blankState() {
+  return {
+    name: "",
+    period: "",
+    selections: {},          // { dimId: { sentenceId: true } }
+    rate: { score: null, justification: "", submitted: false }
+  };
+}
+let state = blankState();
+let activeIndex = 0;         // current panel index
+let docActive = SIM_DATA.documents[0].id;
+
+/* ---------------- Persistence (§5) ---------------- */
+function save() {
+  try { localStorage.setItem(LS_KEY, JSON.stringify(state)); } catch (e) {}
+}
+function load() {
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    if (!raw) return;
+    const parsed = JSON.parse(raw);
+    if (parsed && typeof parsed === "object") {
+      state = Object.assign(blankState(), parsed);
+      state.selections = parsed.selections || {};
+      state.rate = Object.assign({ score: null, justification: "", submitted: false }, parsed.rate || {});
+    }
+  } catch (e) {}
+}
+
+/* ---------------- Panels model ---------------- */
+// index 0 = Directions, 1..N = dimensions, N+1 = Rate the Essay
+const PANELS = [{ kind: "intro", label: "Directions", icon: "📖" }]
+  .concat(SIM_DATA.dimensions.map(d => ({ kind: "dim", id: d.id, label: d.label, icon: d.icon })))
+  .concat([{ kind: "rate", label: "Rate the Essay", icon: "🎯" }]);
+
+/* ---------------- Helpers ---------------- */
+function esc(s) {
+  return String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+}
+// Some dimensions (Task Identification) are scored by ASPECT, not by sentence:
+// finding the topic sentence OR any sentence in a section credits that aspect.
+function isAspectMode(dimId) {
+  return (DIM_BY_ID[dimId] || {}).count_mode === "aspect";
+}
+function allAspects(dimId) {
+  const set = new Set();
+  SIM_DATA.essay.sentences.forEach(s => {
+    const t = s.tags[dimId];
+    if (t && t.match && t.category) set.add(t.category);
+  });
+  return [...set];
+}
+function foundAspects(dimId) {
+  const sel = state.selections[dimId] || {};
+  const set = new Set();
+  SIM_DATA.essay.sentences.forEach(s => {
+    const t = s.tags[dimId];
+    if (sel[s.id] && t && t.match && t.category) set.add(t.category);
+  });
+  return [...set];
+}
+function dimTotal(dimId) {
+  if (isAspectMode(dimId)) return allAspects(dimId).length;
+  return SIM_DATA.essay.sentences.filter(s => s.tags[dimId] && s.tags[dimId].match).length;
+}
+function dimFoundCorrect(dimId) {
+  if (isAspectMode(dimId)) return foundAspects(dimId).length;
+  const sel = state.selections[dimId] || {};
+  return SIM_DATA.essay.sentences.filter(s => sel[s.id] && s.tags[dimId] && s.tags[dimId].match).length;
+}
+function dimWrong(dimId) {
+  const sel = state.selections[dimId] || {};
+  return SIM_DATA.essay.sentences.filter(s => sel[s.id] && !(s.tags[dimId] && s.tags[dimId].match)).length;
+}
+function dimComplete(dimId) {
+  return dimTotal(dimId) > 0 && dimFoundCorrect(dimId) === dimTotal(dimId);
+}
+
+/* ---------------- Build tab bar (§1) ---------------- */
+function renderTabs() {
+  const bar = document.getElementById("tabbar");
+  bar.innerHTML = "";
+  PANELS.forEach((p, i) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.dataset.index = i;
+    const done = p.kind === "dim" && dimComplete(p.id);
+    const dot = done ? '<span class="done-dot" aria-hidden="true"></span>' : "";
+    b.innerHTML = `<span aria-hidden="true">${p.icon}</span> ${esc(p.label)} ${dot}`;
+    if (p.kind === "rate") b.classList.add("rate-tab");
+    if (i === activeIndex) b.classList.add("active");
+    b.setAttribute("aria-current", i === activeIndex ? "true" : "false");
+    b.addEventListener("click", () => goTo(i));
+    bar.appendChild(b);
+  });
+}
+
+/* ---------------- Sentence rendering ---------------- */
+// Essay paragraphs: split sentences into paragraphs of original 5-paragraph structure.
+const PARA_BREAKS = SIM_DATA.essay.paragraphs; // array of sentence counts per paragraph
+
+function renderEssayForDim(dimId) {
+  const wrap = document.createElement("div");
+  wrap.className = "essay";
+  const sents = SIM_DATA.essay.sentences;
+  let idx = 0;
+  (PARA_BREAKS || [sents.length]).forEach(count => {
+    const para = document.createElement("p");
+    para.className = "para";
+    for (let k = 0; k < count && idx < sents.length; k++, idx++) {
+      const s = sents[idx];
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "sentence";
+      btn.dataset.sid = s.id;
+      btn.setAttribute("aria-label", "Sentence: " + s.text);
+      btn.textContent = s.text + " ";
+      para.appendChild(btn);
+      // feedback placeholder lives after the sentence
+      const fb = document.createElement("span");
+      fb.className = "fb-slot";
+      fb.dataset.for = s.id;
+      para.appendChild(fb);
+      btn.addEventListener("click", () => toggleSentence(dimId, s.id));
+    }
+    wrap.appendChild(para);
+  });
+  return wrap;
+}
+
+function toggleSentence(dimId, sid) {
+  if (!state.selections[dimId]) state.selections[dimId] = {};
+  const sel = state.selections[dimId];
+  if (sel[sid]) delete sel[sid]; else sel[sid] = true;
+  save();
+  paintDim(dimId);
+  renderTabs();
+}
+
+function paintDim(dimId) {
+  const panel = document.getElementById("panel-" + dimId);
+  if (!panel) return;
+  const sel = state.selections[dimId] || {};
+  const sents = SIM_DATA.essay.sentences;
+  sents.forEach(s => {
+    const btn = panel.querySelector('.sentence[data-sid="' + CSS.escape(s.id) + '"]');
+    const slot = panel.querySelector('.fb-slot[data-for="' + CSS.escape(s.id) + '"]');
+    if (!btn || !slot) return;
+    const tag = s.tags[dimId] || { match: false };
+    btn.classList.remove("correct", "incorrect");
+    btn.querySelector(".marker")?.remove();
+    slot.innerHTML = "";
+    if (sel[s.id]) {
+      const ok = !!tag.match;
+      btn.classList.add(ok ? "correct" : "incorrect");
+      const mark = document.createElement("span");
+      mark.className = "marker";
+      mark.setAttribute("aria-hidden", "true");
+      mark.textContent = ok ? "✓ " : "✗ ";
+      btn.prepend(mark);
+      const aspect = isAspectMode(dimId);
+      // In aspect mode the head names the section, so the separate category line is redundant.
+      const cat = (!aspect && tag.category) ? `<div class="fb-cat">Category: ${esc(tag.category.replace(/_/g, " "))}</div>` : "";
+      let head;
+      if (ok) {
+        head = (aspect && tag.category)
+          ? `✅ Yes — ${esc(tag.category.replace(/_/g, " "))} section`
+          : "✅ Yes — this one counts";
+      } else {
+        head = "❌ Not for this dimension";
+      }
+      slot.innerHTML =
+        `<span class="feedback ${ok ? "correct" : "incorrect"}">` +
+        `<span class="fb-head">${head}</span>` +
+        (tag.note ? esc(tag.note) : "") + cat + `</span>`;
+    }
+  });
+  // progress
+  const total = dimTotal(dimId);
+  const found = dimFoundCorrect(dimId);
+  const wrong = dimWrong(dimId);
+  const pb = panel.querySelector(".progress-bar > span");
+  if (pb) pb.style.width = (total ? Math.round(found / total * 100) : 0) + "%";
+  const lab = panel.querySelector(".progress-label");
+  if (lab) {
+    const aspect = isAspectMode(dimId);
+    let foundList = "";
+    if (aspect) {
+      const names = foundAspects(dimId).map(c => esc(c.replace(/_/g, " ")));
+      if (names.length) foundList = ` &nbsp;·&nbsp; <span style="color:var(--correct)">${names.join(", ")}</span>`;
+    }
+    lab.innerHTML =
+      `Found <b>${found}</b> of <b>${total}</b> ${aspect ? "task aspects" : "in this essay"}` +
+      foundList +
+      (wrong ? ` &nbsp;·&nbsp; <span style="color:var(--incorrect)">${wrong} not a match</span>` : "") +
+      (total && found === total ? ` &nbsp;·&nbsp; <span style="color:var(--correct)">complete ✓</span>` : "");
+  }
+}
+
+/* ---------------- Panel builders ---------------- */
+function buildIntroPanel() {
+  const p = document.createElement("section");
+  p.className = "panel";
+  p.id = "panel-intro";
+  const dimList = SIM_DATA.dimensions.map(d =>
+    `<li><span class="num" aria-hidden="true">${d.icon}</span><div><b>${esc(d.label)}</b> — ${esc(d.description)}</div></li>`
+  ).join("");
+  p.innerHTML = `
+    <h2 class="panel-title">Rate Like a Rater</h2>
+    <p class="panel-sub">${esc(SIM_DATA.meta.exam)} Civic Literacy Essay · Topic: ${esc(SIM_DATA.meta.topic)} · Anchor Paper — Level ${SIM_DATA.essay.score}</p>
+
+    <div class="card">
+      <h3>What you'll do</h3>
+      <ol class="steps">
+        <li><span class="num">1</span><div><b>Train on each rubric dimension (~3–4 min each).</b> For each dimension tab, read the prompt at the top, then click the sentences in the essay that match it. You'll get instant feedback explaining why each sentence does or doesn't count.</div></li>
+        <li><span class="num">2</span><div><b>Use the documents.</b> Tap <b>View Documents</b> any time to check the essay's claims against the six sources (or use your paper copies).</div></li>
+        <li><span class="num">3</span><div><b>Rate the Essay (~8–10 min).</b> The last tab gives you a fresh practice paper. Read it, assign a score 0–5, and justify it — then reveal the official score and see how you did.</div></li>
+      </ol>
+      <p class="privacy-note">Total time: about 30–40 minutes. You can stop anytime — your work saves on this device automatically.</p>
+    </div>
+
+    <div class="card">
+      <h3>The 7 dimensions a rater scores</h3>
+      <ul class="steps">${dimList}</ul>
+    </div>
+
+    <div class="card">
+      <h3>Your name (optional)</h3>
+      <p class="panel-sub" style="margin-bottom:8px">Only used to label your work when you copy it out. Nothing is sent anywhere.</p>
+      <div class="meta-row">
+        <div class="field"><label for="nameInput">First name</label><input id="nameInput" type="text" autocomplete="off" /></div>
+        <div class="field"><label for="periodInput">Period</label><input id="periodInput" type="text" autocomplete="off" /></div>
+      </div>
+      <p class="privacy-note">🔒 This activity collects no personal data and never connects to the internet. When you "Copy My Work," this device is cleared for the next student.</p>
+    </div>
+
+    <div class="panel-nav">
+      <span></span>
+      <button class="btn primary" id="introNext">Start training →</button>
+    </div>
+  `;
+  return p;
+}
+
+function buildDimPanel(dim) {
+  const p = document.createElement("section");
+  p.className = "panel";
+  p.id = "panel-" + dim.id;
+  const adv = dim.advanced ? '<span class="advanced-flag">Advanced</span>' : "";
+  p.innerHTML = `
+    <div class="taskbar">
+      <div class="tb-head">
+        <span class="tb-icon" aria-hidden="true">${dim.icon}</span>
+        <h3>${esc(dim.label)}</h3>
+        ${adv}
+      </div>
+      <p class="prompt">${esc(dim.student_prompt)}</p>
+      <div class="progress-wrap">
+        <div class="progress-bar"><span></span></div>
+        <div class="progress-label"></div>
+      </div>
+    </div>
+  `;
+  p.appendChild(renderEssayForDim(dim.id));
+  const navrow = document.createElement("div");
+  navrow.className = "panel-nav";
+  navrow.innerHTML = `<button class="btn" data-prev>← Previous</button><button class="btn" data-next>Next →</button>`;
+  p.appendChild(navrow);
+  return p;
+}
+
+function buildRatePanel() {
+  const p = document.createElement("section");
+  p.className = "panel";
+  p.id = "panel-rate";
+  const paras = SIM_DATA.practice.raw_text.split(/\n\n+/).map(t => `<p>${esc(t)}</p>`).join("");
+  const scoreBtns = [0,1,2,3,4,5].map(n => `<button class="score-opt" type="button" data-score="${n}" aria-label="Score ${n}">${n}</button>`).join("");
+  p.innerHTML = `
+    <div class="taskbar" style="border-left-color:var(--gold)">
+      <div class="tb-head"><span class="tb-icon" aria-hidden="true">🎯</span><h3>Rate the Essay</h3></div>
+      <p class="prompt">This is a <b>new practice paper</b> — not one of the anchors you trained on. Read it, then assign a holistic score from 0 to 5 and justify your reasoning. When you submit, you'll see the official score and rater commentary.</p>
+    </div>
+
+    <div class="rate-essay">${paras}</div>
+
+    <div class="card">
+      <h3>Your score</h3>
+      <div class="score-picker" id="scorePicker" role="group" aria-label="Choose a score 0 to 5">${scoreBtns}</div>
+      <h3 style="margin-top:18px">Your justification</h3>
+      <p class="panel-sub" style="margin-bottom:8px">Point to specific things in the essay. Which rubric dimensions are strong or weak?</p>
+      <textarea class="justify" id="justifyBox" placeholder="This essay earns a ___ because..."></textarea>
+      <div class="meta-row" style="margin-top:12px">
+        <button class="btn" id="scaffoldBtn" type="button">✨ Auto-fill a starter template</button>
+        <button class="btn gold" id="submitRateBtn" type="button">Submit &amp; reveal official score</button>
+      </div>
+    </div>
+
+    <div id="revealMount"></div>
+
+    <div class="panel-nav">
+      <button class="btn" data-prev>← Previous</button>
+      <span></span>
+    </div>
+  `;
+  return p;
+}
+
+function buildReveal() {
+  const mount = document.getElementById("revealMount");
+  if (!mount) return;
+  if (!state.rate.submitted || state.rate.score === null) { mount.innerHTML = ""; return; }
+  const official = SIM_DATA.practice.score;
+  const mine = state.rate.score;
+  const diff = Math.abs(mine - official);
+  let cls = "off", word = "Quite different";
+  if (diff === 0) { cls = "match"; word = "Spot on — you rated like a rater!"; }
+  else if (diff === 1) { cls = "close"; word = "Close — within one level of the official score."; }
+  const levelBullets = (SIM_DATA.scoreLevels[String(official)] || { bullets: [] }).bullets
+    .map(b => `<li><b>${esc((DIM_BY_ID[b.dimension] || {}).label || b.dimension)}:</b> ${esc(b.text)}</li>`).join("");
+  mount.innerHTML = `
+    <div class="reveal">
+      <h3>Official Score &amp; Commentary</h3>
+      <div class="score-compare">
+        <div class="score-box"><div class="big" style="color:var(--gold)">${official}</div><div class="lbl">Official score</div></div>
+        <div class="score-box"><div class="big">${mine}</div><div class="lbl">Your score</div></div>
+      </div>
+      <div class="verdict ${cls}">${word}</div>
+      <p><b>What the rater said:</b><br>${esc(SIM_DATA.practice.rater_commentary_summary)}</p>
+      <details class="rubric-ref">
+        <summary>See the Level ${official} rubric descriptors</summary>
+        <ul>${levelBullets}</ul>
+      </details>
+      <p class="privacy-note">Compare your justification above to the rater's reasoning. Did you notice the same strengths and gaps?</p>
+    </div>
+  `;
+  mount.querySelector(".reveal").scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+
+/* ---------------- Navigation (§1, §12) ---------------- */
+function goTo(i) {
+  activeIndex = Math.max(0, Math.min(PANELS.length - 1, i));
+  document.querySelectorAll(".panel").forEach(el => el.classList.remove("active"));
+  const p = PANELS[activeIndex];
+  const id = p.kind === "intro" ? "panel-intro" : p.kind === "rate" ? "panel-rate" : "panel-" + p.id;
+  const el = document.getElementById(id);
+  if (el) el.classList.add("active");
+  if (p.kind === "dim") paintDim(p.id);
+  renderTabs();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+/* ---------------- Export: Copy Text (§3 Option B, reset on success) ---------------- */
+function buildExportText() {
+  const L = [];
+  L.push("RATE LIKE A RATER — my work");
+  L.push(SIM_DATA.meta.exam + " · " + SIM_DATA.meta.topic + " · Anchor Level " + SIM_DATA.essay.score);
+  if (state.name || state.period) L.push("Student: " + (state.name || "—") + "   Period: " + (state.period || "—"));
+  L.push("");
+  SIM_DATA.dimensions.forEach(d => {
+    const total = dimTotal(d.id), found = dimFoundCorrect(d.id), wrong = dimWrong(d.id);
+    L.push(`## ${d.label} — found ${found}/${total}` + (wrong ? `, ${wrong} not a match` : ""));
+    const sel = state.selections[d.id] || {};
+    SIM_DATA.essay.sentences.forEach(s => {
+      if (sel[s.id]) {
+        const ok = s.tags[d.id] && s.tags[d.id].match;
+        L.push(`   ${ok ? "[✓]" : "[✗]"} ${s.text}`);
+      }
+    });
+    L.push("");
+  });
+  L.push("## RATE THE ESSAY (practice paper)");
+  L.push("My score: " + (state.rate.score === null ? "(none)" : state.rate.score) +
+         "   Official score: " + SIM_DATA.practice.score);
+  L.push("My justification:");
+  L.push(state.rate.justification || "(none written)");
+  L.push("");
+  L.push("Official rater commentary:");
+  L.push(SIM_DATA.practice.rater_commentary_summary);
+  return L.join("\n");
+}
+
+async function copyWork() {
+  const text = buildExportText();
+  let ok = false;
+  try {
+    await navigator.clipboard.writeText(text);
+    ok = true;
+  } catch (e) {
+    // Fallback for browsers/contexts without async clipboard
+    try {
+      const ta = document.createElement("textarea");
+      ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.focus(); ta.select();
+      ok = document.execCommand("copy");
+      document.body.removeChild(ta);
+    } catch (e2) { ok = false; }
+  }
+  if (ok) {
+    // §3/§5: reset only on confirmed success
+    try { localStorage.removeItem(LS_KEY); } catch (e) {}
+    state = blankState();
+    docActive = SIM_DATA.documents[0].id;
+    syncInputs();
+    rebuildDynamic();
+    goTo(0);
+    toast("Copied! Paste it into your Google Doc. This device is now cleared for the next student.");
+  } else {
+    toast("Copy didn't go through — your work is still saved. Try again.");
+  }
+}
+
+/* ---------------- Restart (manual) ---------------- */
+function restart() {
+  if (!confirm("Start over? This clears your selections, score, and justification on this device.")) return;
+  try { localStorage.removeItem(LS_KEY); } catch (e) {}
+  state = blankState();
+  docActive = SIM_DATA.documents[0].id;
+  syncInputs();
+  rebuildDynamic();
+  goTo(0);
+  toast("Cleared. Starting fresh.");
+}
+
+/* ---------------- Documents drawer ---------------- */
+function renderDocTabs() {
+  const tabs = document.getElementById("docTabs");
+  tabs.innerHTML = "";
+  SIM_DATA.documents.forEach(d => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.textContent = d.title;
+    if (d.id === docActive) b.classList.add("active");
+    b.addEventListener("click", () => { docActive = d.id; renderDocTabs(); renderDocContent(); });
+    tabs.appendChild(b);
+  });
+}
+function renderDocContent() {
+  const c = document.getElementById("docContent");
+  const d = SIM_DATA.documents.find(x => x.id === docActive);
+  if (!d) return;
+  let html = `<div class="src">${esc(d.source)}</div>`;
+  if (d.image_file) html += `<img src="${esc(d.image_file)}" alt="${esc(d.image_description || d.title)}" onerror="this.style.display='none'" />`;
+  if (d.image_description) html += `<div class="img-desc"><b>Image:</b> ${esc(d.image_description)}</div>`;
+  if (d.preamble) html += `<p><i>${esc(d.preamble)}</i></p>`;
+  html += esc(d.content).split(/\n+/).map(t => `<p>${t}</p>`).join("");
+  c.innerHTML = html;
+  c.scrollTop = 0;
+}
+function openDocs() { document.getElementById("docOverlay").classList.add("open"); renderDocTabs(); renderDocContent(); }
+function closeDocs() { document.getElementById("docOverlay").classList.remove("open"); }
+
+/* ---------------- Toast ---------------- */
+let toastTimer = null;
+function toast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove("show"), 4200);
+}
+
+/* ---------------- Input sync ---------------- */
+function syncInputs() {
+  const n = document.getElementById("nameInput");
+  const pr = document.getElementById("periodInput");
+  if (n) n.value = state.name || "";
+  if (pr) pr.value = state.period || "";
+  const jb = document.getElementById("justifyBox");
+  if (jb) jb.value = state.rate.justification || "";
+  document.querySelectorAll("#scorePicker .score-opt").forEach(b => {
+    b.classList.toggle("selected", String(state.rate.score) === b.dataset.score);
+  });
+}
+
+/* ---------------- Build all dynamic panels ---------------- */
+function rebuildDynamic() {
+  const main = document.getElementById("main");
+  main.innerHTML = "";
+  main.appendChild(buildIntroPanel());
+  SIM_DATA.dimensions.forEach(d => main.appendChild(buildDimPanel(d)));
+  main.appendChild(buildRatePanel());
+  wirePanels();
+  syncInputs();
+  SIM_DATA.dimensions.forEach(d => paintDim(d.id));
+  buildReveal();
+  renderTabs();
+}
+
+function wirePanels() {
+  document.getElementById("introNext").addEventListener("click", () => goTo(1));
+  document.getElementById("nameInput").addEventListener("input", e => { state.name = e.target.value; save(); });
+  document.getElementById("periodInput").addEventListener("input", e => { state.period = e.target.value; save(); });
+
+  document.querySelectorAll("[data-prev]").forEach(b => b.addEventListener("click", () => goTo(activeIndex - 1)));
+  document.querySelectorAll("[data-next]").forEach(b => b.addEventListener("click", () => goTo(activeIndex + 1)));
+
+  // Rate panel
+  document.querySelectorAll("#scorePicker .score-opt").forEach(b => {
+    b.addEventListener("click", () => {
+      state.rate.score = parseInt(b.dataset.score, 10);
+      syncInputs(); save();
+    });
+  });
+  const jb = document.getElementById("justifyBox");
+  jb.addEventListener("input", e => { state.rate.justification = e.target.value; save(); });
+  document.getElementById("scaffoldBtn").addEventListener("click", () => {
+    if (state.rate.justification && state.rate.justification.trim() &&
+        !confirm("Replace what's in the justification box with a starter template?")) return;
+    state.rate.justification = scaffoldTemplate();
+    syncInputs(); save();
+    toast("Starter template added — now edit it with your own evidence.");
+  });
+  document.getElementById("submitRateBtn").addEventListener("click", () => {
+    if (state.rate.score === null) { toast("Pick a score from 0 to 5 first."); return; }
+    state.rate.submitted = true; save();
+    buildReveal();
+  });
+}
+
+function scaffoldTemplate() {
+  return [
+    "I would score this essay a ___ out of 5.",
+    "",
+    "TASK DEVELOPMENT: The essay addresses historical circumstances by ___, efforts by ___, and impact by ___. One of these aspects is developed (more / less) than the others because ___.",
+    "ANALYSIS vs. DESCRIPTION: It is mostly (descriptive / analytical) because ___.",
+    "DOCUMENT USE: It uses information from ___ documents, such as ___.",
+    "OUTSIDE INFORMATION: Outside the documents, the writer adds ___.",
+    "SUPPORTING DETAILS: Specific facts include ___.",
+    "ORGANIZATION: The introduction ___ and the conclusion ___ (does / does not) go beyond restating the theme.",
+    "",
+    "Overall, this fits Level ___ because ___."
+  ].join("\n");
+}
+
+/* ---------------- Boot ---------------- */
+function boot() {
+  document.getElementById("appTitle").textContent = "Rate Like a Rater";
+  document.getElementById("examTag").textContent = SIM_DATA.meta.exam + " · " + SIM_DATA.meta.topic;
+  load();
+  rebuildDynamic();
+  goTo(0); // §12 always boot to Directions, regardless of saved progress
+
+  document.getElementById("copyBtn").addEventListener("click", copyWork);
+  document.getElementById("restartBtn").addEventListener("click", restart);
+  document.getElementById("floatDocsBtn").addEventListener("click", openDocs);
+  document.getElementById("docCloseBtn").addEventListener("click", closeDocs);
+  document.getElementById("docOverlay").addEventListener("click", e => {
+    if (e.target.id === "docOverlay") closeDocs();
+  });
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape") closeDocs();
+  });
+}
+boot();
+</script>
+</body>
+</html>

@@ -1,0 +1,235 @@
+{
+  "essay_type": "Civic Literacy Essay",
+  "exam": "January 2026",
+  "topic": "Prohibition",
+  "task": {
+    "historical_context": "Throughout United States history, many constitutional and civic issues have been debated by Americans. These debates have resulted in efforts by individuals, groups, and governments to address these issues. These efforts have achieved varying degrees of success. One of these constitutional and civic issues is Prohibition.",
+    "requirements": [
+      "Describe the historical circumstances surrounding this constitutional or civic issue",
+      "Explain efforts by individuals, groups, and/or governments to address this constitutional or civic issue",
+      "Discuss the impact of the efforts on the United States and/or on American society"
+    ],
+    "guidelines": [
+      "Develop all aspects of the task",
+      "Explain at least two efforts to address the issue",
+      "Incorporate information from at least four documents",
+      "Incorporate relevant outside information",
+      "Support the theme with relevant facts, examples, and details",
+      "Use a logical and clear plan of organization, including an introduction and a conclusion that are beyond a restatement of the theme"
+    ],
+    "definitions": {
+      "describe": "to illustrate something in words or tell about it",
+      "explain": "to make plain or understandable; to give reasons for or causes of; to show the logical development or relationships of",
+      "discuss": "to make observations about something using facts, reasoning, and argument; to present in some detail"
+    }
+  },
+  "dimensions": [
+    {
+      "id": "task_development",
+      "label": "Task Identification",
+      "icon": "📋",
+      "student_prompt": "Find where the essay addresses each of the three parts of the task: historical circumstances, efforts to address the issue, and impact. Identifying the topic sentence — or any sentence in that section — is enough.",
+      "description": "Does the essay address all three parts of the task: historical circumstances, efforts, and impact?",
+      "count_mode": "aspect"
+    },
+    {
+      "id": "document_use",
+      "label": "Document Use",
+      "icon": "📄",
+      "student_prompt": "Find sentences where the essay uses information from the source documents. Check the documents in the side panel to verify.",
+      "description": "Does the essay incorporate relevant information from the source documents? How many documents are used?"
+    },
+    {
+      "id": "supporting_details",
+      "label": "Supporting Details",
+      "icon": "📌",
+      "student_prompt": "Find sentences that include specific facts, examples, statistics, names, dates, or other concrete details that support the essay's claims.",
+      "description": "Does the essay include specific facts, examples, and details — or is it vague and general?"
+    },
+    {
+      "id": "analytical_vs_descriptive",
+      "label": "Analysis vs. Description",
+      "icon": "🔬",
+      "student_prompt": "Find sentences that ANALYZE (explain why, evaluate, draw conclusions) rather than just DESCRIBE (state facts without interpretation).",
+      "description": "Does the essay analyze, evaluate, and draw conclusions — or does it just retell facts?"
+    },
+    {
+      "id": "outside_information",
+      "label": "Outside Information",
+      "icon": "🌍",
+      "student_prompt": "Find sentences that include relevant historical knowledge NOT found in any of the 6 source documents.",
+      "description": "Does the essay bring in relevant knowledge beyond what the documents provide?"
+    },
+    {
+      "id": "organization",
+      "label": "Organization",
+      "icon": "🏗️",
+      "student_prompt": "Identify the introduction, conclusion, and how the essay is structured. Does the introduction go beyond restating the theme? Does the conclusion do more than repeat the prompt?",
+      "description": "Does the essay have a logical plan, a real introduction, and a meaningful conclusion?"
+    },
+    {
+      "id": "inaccuracy",
+      "label": "Inaccuracies",
+      "icon": "⚠️",
+      "student_prompt": "Find sentences that contain historical errors, misattributions, or factual mistakes. Check claims against the source documents and your own knowledge.",
+      "description": "Does the essay contain factual errors? This is an advanced skill — can you spot what the writer got wrong?",
+      "advanced": true
+    }
+  ],
+  "score_levels": {
+    "5": {
+      "score": 5,
+      "bullets": [
+        {
+          "dimension": "task_development",
+          "text": "Thoroughly develops all aspects of the task evenly and in depth by describing the historical circumstances surrounding Prohibition, explaining at least two efforts to address the issue by individuals, groups, and/or governments, and discussing the impact of the efforts on the United States and/or on American society"
+        },
+        {
+          "dimension": "analytical_vs_descriptive",
+          "text": "Is more analytical than descriptive (analyzes, evaluates, and/or creates information)"
+        },
+        {
+          "dimension": "document_use",
+          "text": "Incorporates relevant information from at least four documents (see Key Ideas chart)"
+        },
+        {
+          "dimension": "outside_information",
+          "text": "Incorporates relevant outside information (see Outside Information chart)"
+        },
+        {
+          "dimension": "supporting_details",
+          "text": "Richly supports the theme with many relevant facts, examples, and details"
+        },
+        {
+          "dimension": "organization",
+          "text": "Demonstrates a logical and clear plan of organization; includes an introduction and a conclusion that are beyond a restatement of the theme"
+        }
+      ]
+    },
+    "4": {
+      "score": 4,
+      "bullets": [
+        {
+          "dimension": "task_development",
+          "text": "Develops all aspects of the task but may do so somewhat unevenly by discussing one aspect of the task less thoroughly than the other aspects of the task"
+        },
+        {
+          "dimension": "analytical_vs_descriptive",
+          "text": "Is both descriptive and analytical (applies, analyzes, evaluates, and/or creates information)"
+        },
+        {
+          "dimension": "document_use",
+          "text": "Incorporates relevant information from at least four documents"
+        },
+        {
+          "dimension": "outside_information",
+          "text": "Incorporates relevant outside information"
+        },
+        {
+          "dimension": "supporting_details",
+          "text": "Supports the theme with relevant facts, examples, and details"
+        },
+        {
+          "dimension": "organization",
+          "text": "Demonstrates a logical and clear plan of organization; includes an introduction and a conclusion that are beyond a restatement of the theme"
+        }
+      ]
+    },
+    "3": {
+      "score": 3,
+      "bullets": [
+        {
+          "dimension": "task_development",
+          "text": "Develops all aspects of the task with little depth or develops at least three aspects of the task in some depth"
+        },
+        {
+          "dimension": "analytical_vs_descriptive",
+          "text": "Is more descriptive than analytical (applies, may analyze and/or evaluate information)"
+        },
+        {
+          "dimension": "document_use",
+          "text": "Incorporates some relevant information from some of the documents"
+        },
+        {
+          "dimension": "outside_information",
+          "text": "Incorporates limited relevant outside information"
+        },
+        {
+          "dimension": "supporting_details",
+          "text": "Includes some relevant facts, examples, and details; may include some minor inaccuracies"
+        },
+        {
+          "dimension": "organization",
+          "text": "Demonstrates a satisfactory plan of organization, includes an introduction and a conclusion that may be a restatement of the theme"
+        }
+      ]
+    },
+    "2": {
+      "score": 2,
+      "bullets": [
+        {
+          "dimension": "task_development",
+          "text": "Minimally develops all aspects of the task or develops at least two aspects of the task in some depth"
+        },
+        {
+          "dimension": "analytical_vs_descriptive",
+          "text": "Is primarily descriptive; may include faulty, weak, or isolated application or analysis"
+        },
+        {
+          "dimension": "document_use",
+          "text": "Incorporates limited relevant information from the documents or consists primarily of relevant information copied from the documents"
+        },
+        {
+          "dimension": "outside_information",
+          "text": "Presents little or no relevant outside information"
+        },
+        {
+          "dimension": "supporting_details",
+          "text": "Includes few relevant facts, examples, and details; may include some inaccuracies"
+        },
+        {
+          "dimension": "organization",
+          "text": "Demonstrates a general plan of organization; may lack focus; may contain digressions; may not clearly identify which aspect of the task is being addressed; may lack an introduction and/or a conclusion"
+        }
+      ]
+    },
+    "1": {
+      "score": 1,
+      "bullets": [
+        {
+          "dimension": "task_development",
+          "text": "Minimally develops some aspects of the task"
+        },
+        {
+          "dimension": "analytical_vs_descriptive",
+          "text": "Is descriptive; may lack understanding, application, or analysis"
+        },
+        {
+          "dimension": "document_use",
+          "text": "Makes vague, unclear references to the documents or consists primarily of relevant and irrelevant information copied from the documents"
+        },
+        {
+          "dimension": "outside_information",
+          "text": "Presents no relevant outside information"
+        },
+        {
+          "dimension": "supporting_details",
+          "text": "Includes few relevant facts, examples, or details; may include inaccuracies"
+        },
+        {
+          "dimension": "organization",
+          "text": "May demonstrate a weakness in organization; may lack focus; may contain digressions; may not clearly identify which aspect of the task is being addressed; may lack an introduction and/or a conclusion"
+        }
+      ]
+    },
+    "0": {
+      "score": 0,
+      "bullets": [
+        {
+          "dimension": "overall",
+          "text": "Fails to develop the task or may only refer to the theme in a general way; OR includes no relevant facts, examples, or details; OR includes only the historical context and/or task as copied from the test booklet; OR includes only entire documents copied from the test booklet; OR is illegible; OR is a blank paper"
+        }
+      ]
+    }
+  }
+}

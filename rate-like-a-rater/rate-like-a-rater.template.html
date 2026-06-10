@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Rate Like a Rater — Level 3</title>
+<style>
+  :root {
+    --bg-base: #0f1117;
+    --bg-card: #1c1f2b;
+    --bg-card-hover: #22263a;
+    --bg-elevated: #262b3d;
+    --text-primary: #f0f0f0;
+    --text-muted: #9aa3b2;
+    --border: #2a2f40;
+    --accent: #e8ff47;
+    --accent-secondary: #ff6b35;
+    --correct: #3ecf8e;
+    --correct-bg: rgba(62, 207, 142, 0.14);
+    --correct-border: rgba(62, 207, 142, 0.55);
+    --incorrect: #ff7b7b;
+    --incorrect-bg: rgba(255, 107, 107, 0.14);
+    --incorrect-border: rgba(255, 107, 107, 0.5);
+    --gold: #ffd24a;
+    --gold-bg: rgba(255, 210, 74, 0.12);
+    --radius: 10px;
+    --maxw: 1180px;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg-base);
+    color: var(--text-primary);
+    line-height: 1.55;
+  }
+
+  /* ---------- Header ---------- */
+  header.app-header {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  header.app-header h1 {
+    font-size: 1.15rem;
+    margin: 0;
+    color: var(--accent);
+    letter-spacing: 0.2px;
+  }
+  header.app-header .exam-tag {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    padding: 3px 9px;
+    border-radius: 999px;
+  }
+  header.app-header .spacer { flex: 1; }
+
+  .btn {
+    font: inherit;
+    font-size: 0.85rem;
+    cursor: pointer;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--bg-elevated);
+    color: var(--text-primary);
+    padding: 9px 14px;
+    min-height: 44px;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .btn:hover { background: var(--bg-card-hover); }
+  .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .btn.primary { background: var(--accent); color: #1a1a1a; border-color: var(--accent); font-weight: 600; }
+  .btn.primary:hover { filter: brightness(1.05); }
+  .btn.gold { background: var(--gold); color: #2a2200; border-color: var(--gold); font-weight: 600; }
+  .btn.ghost { background: transparent; }
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  /* ---------- Tab nav ---------- */
+  nav.tabbar {
+    position: sticky;
+    top: 61px;
+    z-index: 30;
+    background: var(--bg-base);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 4px;
+    padding: 8px 14px;
+    overflow-x: auto;
+  }
+  nav.tabbar button {
+    font: inherit;
+    font-size: 0.82rem;
+    white-space: nowrap;
+    cursor: pointer;
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--text-muted);
+    padding: 8px 12px;
+    min-height: 44px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  nav.tabbar button:hover { background: var(--bg-card); color: var(--text-primary); }
+  nav.tabbar button.active {
+    background: var(--bg-card);
+    color: var(--accent);
+    border-color: var(--border);
+    font-weight: 600;
+  }
+  nav.tabbar button .done-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--correct);
+    display: inline-block;
+  }
+  nav.tabbar button.rate-tab { color: var(--gold); }
+  nav.tabbar button.rate-tab.active { color: var(--gold); }
+
+  main { max-width: var(--maxw); margin: 0 auto; padding: 22px 18px 90px; }
+
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  h2.panel-title { font-size: 1.4rem; margin: 0 0 4px; }
+  .panel-sub { color: var(--text-muted); margin: 0 0 18px; }
+
+  /* ---------- Directions ---------- */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    margin-bottom: 16px;
+  }
+  .card h3 { margin: 0 0 10px; font-size: 1.05rem; }
+  .steps { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+  .steps li { display: flex; gap: 12px; align-items: flex-start; }
+  .steps .num {
+    flex: 0 0 28px; height: 28px; border-radius: 50%;
+    background: var(--accent); color: #1a1a1a; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; font-size: 0.85rem;
+  }
+  .meta-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+  .field { display: flex; flex-direction: column; gap: 5px; }
+  .field label { font-size: 0.8rem; color: var(--text-muted); }
+  .field input {
+    font: inherit; padding: 10px 12px; min-height: 44px;
+    background: var(--bg-base); border: 1px solid var(--border);
+    border-radius: 8px; color: var(--text-primary); min-width: 160px;
+  }
+  .field input:focus-visible { outline: 2px solid var(--accent); }
+  .privacy-note { font-size: 0.78rem; color: var(--text-muted); margin-top: 10px; }
+
+  /* ---------- Task bar ---------- */
+  .taskbar {
+    background: linear-gradient(180deg, var(--bg-elevated), var(--bg-card));
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    position: sticky;
+    top: 118px;
+    z-index: 20;
+  }
+  .taskbar .tb-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .taskbar .tb-icon { font-size: 1.4rem; }
+  .taskbar h3 { margin: 0; font-size: 1.1rem; }
+  .taskbar .advanced-flag {
+    font-size: 0.72rem; background: var(--accent-secondary); color: #fff;
+    padding: 2px 8px; border-radius: 999px;
+  }
+  .taskbar .prompt { margin: 8px 0 0; color: var(--text-primary); }
+  .taskbar .progress-wrap { margin-top: 12px; }
+  .progress-bar {
+    height: 9px; background: var(--bg-base); border-radius: 999px; overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .progress-bar > span { display: block; height: 100%; width: 0; background: var(--correct); transition: width 0.3s; }
+  .progress-label { font-size: 0.82rem; color: var(--text-muted); margin-top: 6px; display: flex; gap: 14px; flex-wrap: wrap; }
+  .progress-label b { color: var(--text-primary); }
+
+  /* ---------- Essay sentences ---------- */
+  .essay {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    font-size: 1.02rem;
+  }
+  .essay .para { margin: 0 0 14px; }
+  .sentence {
+    font: inherit;
+    font-size: inherit;
+    text-align: left;
+    line-height: 1.6;
+    cursor: pointer;
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--text-primary);
+    padding: 1px 3px;
+    border-radius: 5px;
+    transition: background 0.12s;
+    display: inline;
+  }
+  .sentence:hover { background: var(--bg-card-hover); }
+  .sentence:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .sentence.correct { background: var(--correct-bg); border-color: var(--correct-border); }
+  .sentence.incorrect { background: var(--incorrect-bg); border-color: var(--incorrect-border); }
+  .sentence .marker { font-weight: 700; margin-right: 3px; }
+  .sentence.correct .marker { color: var(--correct); }
+  .sentence.incorrect .marker { color: var(--incorrect); }
+
+  .feedback {
+    display: block;
+    margin: 8px 0 12px;
+    padding: 11px 14px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    border-left: 3px solid var(--border);
+    background: var(--bg-elevated);
+  }
+  .feedback.correct { border-left-color: var(--correct); }
+  .feedback.incorrect { border-left-color: var(--incorrect); }
+  .feedback .fb-head { font-weight: 700; margin-bottom: 3px; display: block; }
+  .feedback.correct .fb-head { color: var(--correct); }
+  .feedback.incorrect .fb-head { color: var(--incorrect); }
+  .feedback .fb-cat { color: var(--text-muted); font-size: 0.82rem; }
+
+  /* ---------- Bottom nav ---------- */
+  .panel-nav {
+    display: flex; justify-content: space-between; gap: 10px;
+    margin-top: 20px;
+  }
+
+  /* ---------- Rate the Essay ---------- */
+  .rate-essay {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 18px 20px; margin-bottom: 16px;
+  }
+  .rate-essay p { margin: 0 0 13px; }
+  .score-picker { display: flex; gap: 10px; flex-wrap: wrap; margin: 8px 0 4px; }
+  .score-opt {
+    width: 58px; height: 58px; border-radius: 10px;
+    border: 1px solid var(--border); background: var(--bg-elevated);
+    color: var(--text-primary); font-size: 1.3rem; font-weight: 700; cursor: pointer;
+  }
+  .score-opt:hover { background: var(--bg-card-hover); }
+  .score-opt:focus-visible { outline: 2px solid var(--gold); }
+  .score-opt.selected { background: var(--gold); color: #2a2200; border-color: var(--gold); }
+  textarea.justify {
+    width: 100%; min-height: 150px; resize: vertical;
+    font: inherit; padding: 12px 14px; background: var(--bg-base);
+    border: 1px solid var(--border); border-radius: 8px; color: var(--text-primary);
+  }
+  textarea.justify:focus-visible { outline: 2px solid var(--gold); }
+
+  .reveal { border: 1px solid var(--gold); border-radius: var(--radius); padding: 18px 20px; margin-top: 16px; background: var(--gold-bg); }
+  .reveal h3 { margin-top: 0; color: var(--gold); }
+  .score-compare { display: flex; gap: 20px; flex-wrap: wrap; margin: 12px 0; }
+  .score-box { text-align: center; }
+  .score-box .big { font-size: 2.2rem; font-weight: 800; }
+  .score-box .lbl { font-size: 0.78rem; color: var(--text-muted); }
+  .verdict { font-weight: 700; padding: 10px 14px; border-radius: 8px; margin: 10px 0; }
+  .verdict.match { background: var(--correct-bg); color: var(--correct); }
+  .verdict.close { background: var(--gold-bg); color: var(--gold); }
+  .verdict.off { background: var(--incorrect-bg); color: var(--incorrect); }
+
+  details.rubric-ref { margin-top: 12px; }
+  details.rubric-ref summary { cursor: pointer; color: var(--text-muted); }
+  details.rubric-ref ul { margin: 8px 0; padding-left: 18px; }
+
+  /* ---------- Document drawer ---------- */
+  .doc-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.55);
+    display: none; z-index: 60;
+  }
+  .doc-overlay.open { display: block; }
+  .doc-drawer {
+    position: absolute; top: 0; right: 0; height: 100%;
+    width: min(560px, 92vw); background: var(--bg-card);
+    border-left: 1px solid var(--border); display: flex; flex-direction: column;
+  }
+  .doc-drawer header { padding: 14px 18px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+  .doc-drawer header h3 { margin: 0; font-size: 1.05rem; flex: 1; }
+  .doc-tabs { display: flex; gap: 4px; padding: 10px 14px; overflow-x: auto; border-bottom: 1px solid var(--border); }
+  .doc-tabs button {
+    font: inherit; font-size: 0.8rem; cursor: pointer; white-space: nowrap;
+    border: 1px solid var(--border); background: var(--bg-elevated); color: var(--text-muted);
+    padding: 7px 11px; min-height: 40px; border-radius: 7px;
+  }
+  .doc-tabs button.active { background: var(--accent); color: #1a1a1a; border-color: var(--accent); font-weight: 600; }
+  .doc-content { padding: 16px 18px; overflow-y: auto; }
+  .doc-content .src { color: var(--text-muted); font-size: 0.82rem; font-style: italic; margin-bottom: 10px; }
+  .doc-content .img-desc { background: var(--bg-elevated); border-left: 3px solid var(--accent-secondary); padding: 10px 12px; border-radius: 6px; font-size: 0.88rem; margin-bottom: 12px; }
+  .doc-content img { max-width: 100%; border-radius: 8px; margin-bottom: 12px; border: 1px solid var(--border); }
+
+  /* ---------- Toast ---------- */
+  .toast {
+    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+    background: var(--bg-elevated); color: var(--text-primary);
+    border: 1px solid var(--border); border-radius: 10px; padding: 13px 18px;
+    z-index: 80; max-width: 90vw; box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+    opacity: 0; pointer-events: none; transition: opacity 0.25s, transform 0.25s;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(-4px); }
+
+  .float-docs {
+    position: fixed; bottom: 20px; right: 20px; z-index: 35;
+  }
+
+  @media (max-width: 768px) {
+    header.app-header h1 { font-size: 1rem; }
+    .taskbar { position: static; }
+    nav.tabbar { top: 57px; }
+  }
+</style>
+</head>
+<body>
+<header class="app-header">
+  <h1 id="appTitle">Rate Like a Rater</h1>
+  <span class="exam-tag" id="examTag"></span>
+  <span class="spacer"></span>
+  <button class="btn ghost" id="copyBtn">📋 Copy My Work</button>
+  <button class="btn ghost" id="restartBtn">↺ Start Over</button>
+</header>
+
+<nav class="tabbar" id="tabbar" aria-label="Sections"></nav>
+
+<main id="main"></main>
+
+<button class="btn primary float-docs" id="floatDocsBtn" aria-label="View source documents">📄 View Documents</button>
+
+<!-- Document drawer -->
+<div class="doc-overlay" id="docOverlay">
+  <div class="doc-drawer" role="dialog" aria-label="Source documents" aria-modal="true">
+    <header>
+      <h3>Source Documents</h3>
+      <button class="btn ghost" id="docCloseBtn" aria-label="Close documents">✕ Close</button>
+    </header>
+    <div class="doc-tabs" id="docTabs"></div>
+    <div class="doc-content" id="docContent"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* =========================================================================
+   Rate Like a Rater — Level 3 build
+   Data is inlined below (generated from rubric.json / documents.json /
+   essays.json by build.js) so the file runs standalone with no server.
+   Compliance: §0 no PII sent anywhere; §1 tab + next/prev nav; §2 directions
+   first; §3 Copy Text export with reset-on-success; §5 localStorage autosave;
+   §6 keyboard + aria + 44px targets; §10 CSS variables; §12 always boot to
+   Directions; §14 all feedback hand-built, no AI.
+   ========================================================================= */
+const SIM_DATA = __SIM_DATA__;
+
+const LS_KEY = "edsim_ratelikearater_l3_v1";
+const DIM_BY_ID = {};
+SIM_DATA.dimensions.forEach(d => DIM_BY_ID[d.id] = d);
+
+/* ---------------- State ---------------- */
+function blankState() {
+  return {
+    name: "",
+    period: "",
+    selections: {},          // { dimId: { sentenceId: true } }
+    rate: { score: null, justification: "", submitted: false }
+  };
+}
+let state = blankState();
+let activeIndex = 0;         // current panel index
+let docActive = SIM_DATA.documents[0].id;
+
+/* ---------------- Persistence (§5) ---------------- */
+function save() {
+  try { localStorage.setItem(LS_KEY, JSON.stringify(state)); } catch (e) {}
+}
+function load() {
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    if (!raw) return;
+    const parsed = JSON.parse(raw);
+    if (parsed && typeof parsed === "object") {
+      state = Object.assign(blankState(), parsed);
+      state.selections = parsed.selections || {};
+      state.rate = Object.assign({ score: null, justification: "", submitted: false }, parsed.rate || {});
+    }
+  } catch (e) {}
+}
+
+/* ---------------- Panels model ---------------- */
+// index 0 = Directions, 1..N = dimensions, N+1 = Rate the Essay
+const PANELS = [{ kind: "intro", label: "Directions", icon: "📖" }]
+  .concat(SIM_DATA.dimensions.map(d => ({ kind: "dim", id: d.id, label: d.label, icon: d.icon })))
+  .concat([{ kind: "rate", label: "Rate the Essay", icon: "🎯" }]);
+
+/* ---------------- Helpers ---------------- */
+function esc(s) {
+  return String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+}
+// Some dimensions (Task Identification) are scored by ASPECT, not by sentence:
+// finding the topic sentence OR any sentence in a section credits that aspect.
+function isAspectMode(dimId) {
+  return (DIM_BY_ID[dimId] || {}).count_mode === "aspect";
+}
+function allAspects(dimId) {
+  const set = new Set();
+  SIM_DATA.essay.sentences.forEach(s => {
+    const t = s.tags[dimId];
+    if (t && t.match && t.category) set.add(t.category);
+  });
+  return [...set];
+}
+function foundAspects(dimId) {
+  const sel = state.selections[dimId] || {};
+  const set = new Set();
+  SIM_DATA.essay.sentences.forEach(s => {
+    const t = s.tags[dimId];
+    if (sel[s.id] && t && t.match && t.category) set.add(t.category);
+  });
+  return [...set];
+}
+function dimTotal(dimId) {
+  if (isAspectMode(dimId)) return allAspects(dimId).length;
+  return SIM_DATA.essay.sentences.filter(s => s.tags[dimId] && s.tags[dimId].match).length;
+}
+function dimFoundCorrect(dimId) {
+  if (isAspectMode(dimId)) return foundAspects(dimId).length;
+  const sel = state.selections[dimId] || {};
+  return SIM_DATA.essay.sentences.filter(s => sel[s.id] && s.tags[dimId] && s.tags[dimId].match).length;
+}
+function dimWrong(dimId) {
+  const sel = state.selections[dimId] || {};
+  return SIM_DATA.essay.sentences.filter(s => sel[s.id] && !(s.tags[dimId] && s.tags[dimId].match)).length;
+}
+function dimComplete(dimId) {
+  return dimTotal(dimId) > 0 && dimFoundCorrect(dimId) === dimTotal(dimId);
+}
+
+/* ---------------- Build tab bar (§1) ---------------- */
+function renderTabs() {
+  const bar = document.getElementById("tabbar");
+  bar.innerHTML = "";
+  PANELS.forEach((p, i) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.dataset.index = i;
+    const done = p.kind === "dim" && dimComplete(p.id);
+    const dot = done ? '<span class="done-dot" aria-hidden="true"></span>' : "";
+    b.innerHTML = `<span aria-hidden="true">${p.icon}</span> ${esc(p.label)} ${dot}`;
+    if (p.kind === "rate") b.classList.add("rate-tab");
+    if (i === activeIndex) b.classList.add("active");
+    b.setAttribute("aria-current", i === activeIndex ? "true" : "false");
+    b.addEventListener("click", () => goTo(i));
+    bar.appendChild(b);
+  });
+}
+
+/* ---------------- Sentence rendering ---------------- */
+// Essay paragraphs: split sentences into paragraphs of original 5-paragraph structure.
+const PARA_BREAKS = SIM_DATA.essay.paragraphs; // array of sentence counts per paragraph
+
+function renderEssayForDim(dimId) {
+  const wrap = document.createElement("div");
+  wrap.className = "essay";
+  const sents = SIM_DATA.essay.sentences;
+  let idx = 0;
+  (PARA_BREAKS || [sents.length]).forEach(count => {
+    const para = document.createElement("p");
+    para.className = "para";
+    for (let k = 0; k < count && idx < sents.length; k++, idx++) {
+      const s = sents[idx];
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "sentence";
+      btn.dataset.sid = s.id;
+      btn.setAttribute("aria-label", "Sentence: " + s.text);
+      btn.textContent = s.text + " ";
+      para.appendChild(btn);
+      // feedback placeholder lives after the sentence
+      const fb = document.createElement("span");
+      fb.className = "fb-slot";
+      fb.dataset.for = s.id;
+      para.appendChild(fb);
+      btn.addEventListener("click", () => toggleSentence(dimId, s.id));
+    }
+    wrap.appendChild(para);
+  });
+  return wrap;
+}
+
+function toggleSentence(dimId, sid) {
+  if (!state.selections[dimId]) state.selections[dimId] = {};
+  const sel = state.selections[dimId];
+  if (sel[sid]) delete sel[sid]; else sel[sid] = true;
+  save();
+  paintDim(dimId);
+  renderTabs();
+}
+
+function paintDim(dimId) {
+  const panel = document.getElementById("panel-" + dimId);
+  if (!panel) return;
+  const sel = state.selections[dimId] || {};
+  const sents = SIM_DATA.essay.sentences;
+  sents.forEach(s => {
+    const btn = panel.querySelector('.sentence[data-sid="' + CSS.escape(s.id) + '"]');
+    const slot = panel.querySelector('.fb-slot[data-for="' + CSS.escape(s.id) + '"]');
+    if (!btn || !slot) return;
+    const tag = s.tags[dimId] || { match: false };
+    btn.classList.remove("correct", "incorrect");
+    btn.querySelector(".marker")?.remove();
+    slot.innerHTML = "";
+    if (sel[s.id]) {
+      const ok = !!tag.match;
+      btn.classList.add(ok ? "correct" : "incorrect");
+      const mark = document.createElement("span");
+      mark.className = "marker";
+      mark.setAttribute("aria-hidden", "true");
+      mark.textContent = ok ? "✓ " : "✗ ";
+      btn.prepend(mark);
+      const aspect = isAspectMode(dimId);
+      // In aspect mode the head names the section, so the separate category line is redundant.
+      const cat = (!aspect && tag.category) ? `<div class="fb-cat">Category: ${esc(tag.category.replace(/_/g, " "))}</div>` : "";
+      let head;
+      if (ok) {
+        head = (aspect && tag.category)
+          ? `✅ Yes — ${esc(tag.category.replace(/_/g, " "))} section`
+          : "✅ Yes — this one counts";
+      } else {
+        head = "❌ Not for this dimension";
+      }
+      slot.innerHTML =
+        `<span class="feedback ${ok ? "correct" : "incorrect"}">` +
+        `<span class="fb-head">${head}</span>` +
+        (tag.note ? esc(tag.note) : "") + cat + `</span>`;
+    }
+  });
+  // progress
+  const total = dimTotal(dimId);
+  const found = dimFoundCorrect(dimId);
+  const wrong = dimWrong(dimId);
+  const pb = panel.querySelector(".progress-bar > span");
+  if (pb) pb.style.width = (total ? Math.round(found / total * 100) : 0) + "%";
+  const lab = panel.querySelector(".progress-label");
+  if (lab) {
+    const aspect = isAspectMode(dimId);
+    let foundList = "";
+    if (aspect) {
+      const names = foundAspects(dimId).map(c => esc(c.replace(/_/g, " ")));
+      if (names.length) foundList = ` &nbsp;·&nbsp; <span style="color:var(--correct)">${names.join(", ")}</span>`;
+    }
+    lab.innerHTML =
+      `Found <b>${found}</b> of <b>${total}</b> ${aspect ? "task aspects" : "in this essay"}` +
+      foundList +
+      (wrong ? ` &nbsp;·&nbsp; <span style="color:var(--incorrect)">${wrong} not a match</span>` : "") +
+      (total && found === total ? ` &nbsp;·&nbsp; <span style="color:var(--correct)">complete ✓</span>` : "");
+  }
+}
+
+/* ---------------- Panel builders ---------------- */
+function buildIntroPanel() {
+  const p = document.createElement("section");
+  p.className = "panel";
+  p.id = "panel-intro";
+  const dimList = SIM_DATA.dimensions.map(d =>
+    `<li><span class="num" aria-hidden="true">${d.icon}</span><div><b>${esc(d.label)}</b> — ${esc(d.description)}</div></li>`
+  ).join("");
+  p.innerHTML = `
+    <h2 class="panel-title">Rate Like a Rater</h2>
+    <p class="panel-sub">${esc(SIM_DATA.meta.exam)} Civic Literacy Essay · Topic: ${esc(SIM_DATA.meta.topic)} · Anchor Paper — Level ${SIM_DATA.essay.score}</p>
+
+    <div class="card">
+      <h3>What you'll do</h3>
+      <ol class="steps">
+        <li><span class="num">1</span><div><b>Train on each rubric dimension (~3–4 min each).</b> For each dimension tab, read the prompt at the top, then click the sentences in the essay that match it. You'll get instant feedback explaining why each sentence does or doesn't count.</div></li>
+        <li><span class="num">2</span><div><b>Use the documents.</b> Tap <b>View Documents</b> any time to check the essay's claims against the six sources (or use your paper copies).</div></li>
+        <li><span class="num">3</span><div><b>Rate the Essay (~8–10 min).</b> The last tab gives you a fresh practice paper. Read it, assign a score 0–5, and justify it — then reveal the official score and see how you did.</div></li>
+      </ol>
+      <p class="privacy-note">Total time: about 30–40 minutes. You can stop anytime — your work saves on this device automatically.</p>
+    </div>
+
+    <div class="card">
+      <h3>The 7 dimensions a rater scores</h3>
+      <ul class="steps">${dimList}</ul>
+    </div>
+
+    <div class="card">
+      <h3>Your name (optional)</h3>
+      <p class="panel-sub" style="margin-bottom:8px">Only used to label your work when you copy it out. Nothing is sent anywhere.</p>
+      <div class="meta-row">
+        <div class="field"><label for="nameInput">First name</label><input id="nameInput" type="text" autocomplete="off" /></div>
+        <div class="field"><label for="periodInput">Period</label><input id="periodInput" type="text" autocomplete="off" /></div>
+      </div>
+      <p class="privacy-note">🔒 This activity collects no personal data and never connects to the internet. When you "Copy My Work," this device is cleared for the next student.</p>
+    </div>
+
+    <div class="panel-nav">
+      <span></span>
+      <button class="btn primary" id="introNext">Start training →</button>
+    </div>
+  `;
+  return p;
+}
+
+function buildDimPanel(dim) {
+  const p = document.createElement("section");
+  p.className = "panel";
+  p.id = "panel-" + dim.id;
+  const adv = dim.advanced ? '<span class="advanced-flag">Advanced</span>' : "";
+  p.innerHTML = `
+    <div class="taskbar">
+      <div class="tb-head">
+        <span class="tb-icon" aria-hidden="true">${dim.icon}</span>
+        <h3>${esc(dim.label)}</h3>
+        ${adv}
+      </div>
+      <p class="prompt">${esc(dim.student_prompt)}</p>
+      <div class="progress-wrap">
+        <div class="progress-bar"><span></span></div>
+        <div class="progress-label"></div>
+      </div>
+    </div>
+  `;
+  p.appendChild(renderEssayForDim(dim.id));
+  const navrow = document.createElement("div");
+  navrow.className = "panel-nav";
+  navrow.innerHTML = `<button class="btn" data-prev>← Previous</button><button class="btn" data-next>Next →</button>`;
+  p.appendChild(navrow);
+  return p;
+}
+
+function buildRatePanel() {
+  const p = document.createElement("section");
+  p.className = "panel";
+  p.id = "panel-rate";
+  const paras = SIM_DATA.practice.raw_text.split(/\n\n+/).map(t => `<p>${esc(t)}</p>`).join("");
+  const scoreBtns = [0,1,2,3,4,5].map(n => `<button class="score-opt" type="button" data-score="${n}" aria-label="Score ${n}">${n}</button>`).join("");
+  p.innerHTML = `
+    <div class="taskbar" style="border-left-color:var(--gold)">
+      <div class="tb-head"><span class="tb-icon" aria-hidden="true">🎯</span><h3>Rate the Essay</h3></div>
+      <p class="prompt">This is a <b>new practice paper</b> — not one of the anchors you trained on. Read it, then assign a holistic score from 0 to 5 and justify your reasoning. When you submit, you'll see the official score and rater commentary.</p>
+    </div>
+
+    <div class="rate-essay">${paras}</div>
+
+    <div class="card">
+      <h3>Your score</h3>
+      <div class="score-picker" id="scorePicker" role="group" aria-label="Choose a score 0 to 5">${scoreBtns}</div>
+      <h3 style="margin-top:18px">Your justification</h3>
+      <p class="panel-sub" style="margin-bottom:8px">Point to specific things in the essay. Which rubric dimensions are strong or weak?</p>
+      <textarea class="justify" id="justifyBox" placeholder="This essay earns a ___ because..."></textarea>
+      <div class="meta-row" style="margin-top:12px">
+        <button class="btn" id="scaffoldBtn" type="button">✨ Auto-fill a starter template</button>
+        <button class="btn gold" id="submitRateBtn" type="button">Submit &amp; reveal official score</button>
+      </div>
+    </div>
+
+    <div id="revealMount"></div>
+
+    <div class="panel-nav">
+      <button class="btn" data-prev>← Previous</button>
+      <span></span>
+    </div>
+  `;
+  return p;
+}
+
+function buildReveal() {
+  const mount = document.getElementById("revealMount");
+  if (!mount) return;
+  if (!state.rate.submitted || state.rate.score === null) { mount.innerHTML = ""; return; }
+  const official = SIM_DATA.practice.score;
+  const mine = state.rate.score;
+  const diff = Math.abs(mine - official);
+  let cls = "off", word = "Quite different";
+  if (diff === 0) { cls = "match"; word = "Spot on — you rated like a rater!"; }
+  else if (diff === 1) { cls = "close"; word = "Close — within one level of the official score."; }
+  const levelBullets = (SIM_DATA.scoreLevels[String(official)] || { bullets: [] }).bullets
+    .map(b => `<li><b>${esc((DIM_BY_ID[b.dimension] || {}).label || b.dimension)}:</b> ${esc(b.text)}</li>`).join("");
+  mount.innerHTML = `
+    <div class="reveal">
+      <h3>Official Score &amp; Commentary</h3>
+      <div class="score-compare">
+        <div class="score-box"><div class="big" style="color:var(--gold)">${official}</div><div class="lbl">Official score</div></div>
+        <div class="score-box"><div class="big">${mine}</div><div class="lbl">Your score</div></div>
+      </div>
+      <div class="verdict ${cls}">${word}</div>
+      <p><b>What the rater said:</b><br>${esc(SIM_DATA.practice.rater_commentary_summary)}</p>
+      <details class="rubric-ref">
+        <summary>See the Level ${official} rubric descriptors</summary>
+        <ul>${levelBullets}</ul>
+      </details>
+      <p class="privacy-note">Compare your justification above to the rater's reasoning. Did you notice the same strengths and gaps?</p>
+    </div>
+  `;
+  mount.querySelector(".reveal").scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+
+/* ---------------- Navigation (§1, §12) ---------------- */
+function goTo(i) {
+  activeIndex = Math.max(0, Math.min(PANELS.length - 1, i));
+  document.querySelectorAll(".panel").forEach(el => el.classList.remove("active"));
+  const p = PANELS[activeIndex];
+  const id = p.kind === "intro" ? "panel-intro" : p.kind === "rate" ? "panel-rate" : "panel-" + p.id;
+  const el = document.getElementById(id);
+  if (el) el.classList.add("active");
+  if (p.kind === "dim") paintDim(p.id);
+  renderTabs();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+/* ---------------- Export: Copy Text (§3 Option B, reset on success) ---------------- */
+function buildExportText() {
+  const L = [];
+  L.push("RATE LIKE A RATER — my work");
+  L.push(SIM_DATA.meta.exam + " · " + SIM_DATA.meta.topic + " · Anchor Level " + SIM_DATA.essay.score);
+  if (state.name || state.period) L.push("Student: " + (state.name || "—") + "   Period: " + (state.period || "—"));
+  L.push("");
+  SIM_DATA.dimensions.forEach(d => {
+    const total = dimTotal(d.id), found = dimFoundCorrect(d.id), wrong = dimWrong(d.id);
+    L.push(`## ${d.label} — found ${found}/${total}` + (wrong ? `, ${wrong} not a match` : ""));
+    const sel = state.selections[d.id] || {};
+    SIM_DATA.essay.sentences.forEach(s => {
+      if (sel[s.id]) {
+        const ok = s.tags[d.id] && s.tags[d.id].match;
+        L.push(`   ${ok ? "[✓]" : "[✗]"} ${s.text}`);
+      }
+    });
+    L.push("");
+  });
+  L.push("## RATE THE ESSAY (practice paper)");
+  L.push("My score: " + (state.rate.score === null ? "(none)" : state.rate.score) +
+         "   Official score: " + SIM_DATA.practice.score);
+  L.push("My justification:");
+  L.push(state.rate.justification || "(none written)");
+  L.push("");
+  L.push("Official rater commentary:");
+  L.push(SIM_DATA.practice.rater_commentary_summary);
+  return L.join("\n");
+}
+
+async function copyWork() {
+  const text = buildExportText();
+  let ok = false;
+  try {
+    await navigator.clipboard.writeText(text);
+    ok = true;
+  } catch (e) {
+    // Fallback for browsers/contexts without async clipboard
+    try {
+      const ta = document.createElement("textarea");
+      ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.focus(); ta.select();
+      ok = document.execCommand("copy");
+      document.body.removeChild(ta);
+    } catch (e2) { ok = false; }
+  }
+  if (ok) {
+    // §3/§5: reset only on confirmed success
+    try { localStorage.removeItem(LS_KEY); } catch (e) {}
+    state = blankState();
+    docActive = SIM_DATA.documents[0].id;
+    syncInputs();
+    rebuildDynamic();
+    goTo(0);
+    toast("Copied! Paste it into your Google Doc. This device is now cleared for the next student.");
+  } else {
+    toast("Copy didn't go through — your work is still saved. Try again.");
+  }
+}
+
+/* ---------------- Restart (manual) ---------------- */
+function restart() {
+  if (!confirm("Start over? This clears your selections, score, and justification on this device.")) return;
+  try { localStorage.removeItem(LS_KEY); } catch (e) {}
+  state = blankState();
+  docActive = SIM_DATA.documents[0].id;
+  syncInputs();
+  rebuildDynamic();
+  goTo(0);
+  toast("Cleared. Starting fresh.");
+}
+
+/* ---------------- Documents drawer ---------------- */
+function renderDocTabs() {
+  const tabs = document.getElementById("docTabs");
+  tabs.innerHTML = "";
+  SIM_DATA.documents.forEach(d => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.textContent = d.title;
+    if (d.id === docActive) b.classList.add("active");
+    b.addEventListener("click", () => { docActive = d.id; renderDocTabs(); renderDocContent(); });
+    tabs.appendChild(b);
+  });
+}
+function renderDocContent() {
+  const c = document.getElementById("docContent");
+  const d = SIM_DATA.documents.find(x => x.id === docActive);
+  if (!d) return;
+  let html = `<div class="src">${esc(d.source)}</div>`;
+  if (d.image_file) html += `<img src="${esc(d.image_file)}" alt="${esc(d.image_description || d.title)}" onerror="this.style.display='none'" />`;
+  if (d.image_description) html += `<div class="img-desc"><b>Image:</b> ${esc(d.image_description)}</div>`;
+  if (d.preamble) html += `<p><i>${esc(d.preamble)}</i></p>`;
+  html += esc(d.content).split(/\n+/).map(t => `<p>${t}</p>`).join("");
+  c.innerHTML = html;
+  c.scrollTop = 0;
+}
+function openDocs() { document.getElementById("docOverlay").classList.add("open"); renderDocTabs(); renderDocContent(); }
+function closeDocs() { document.getElementById("docOverlay").classList.remove("open"); }
+
+/* ---------------- Toast ---------------- */
+let toastTimer = null;
+function toast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove("show"), 4200);
+}
+
+/* ---------------- Input sync ---------------- */
+function syncInputs() {
+  const n = document.getElementById("nameInput");
+  const pr = document.getElementById("periodInput");
+  if (n) n.value = state.name || "";
+  if (pr) pr.value = state.period || "";
+  const jb = document.getElementById("justifyBox");
+  if (jb) jb.value = state.rate.justification || "";
+  document.querySelectorAll("#scorePicker .score-opt").forEach(b => {
+    b.classList.toggle("selected", String(state.rate.score) === b.dataset.score);
+  });
+}
+
+/* ---------------- Build all dynamic panels ---------------- */
+function rebuildDynamic() {
+  const main = document.getElementById("main");
+  main.innerHTML = "";
+  main.appendChild(buildIntroPanel());
+  SIM_DATA.dimensions.forEach(d => main.appendChild(buildDimPanel(d)));
+  main.appendChild(buildRatePanel());
+  wirePanels();
+  syncInputs();
+  SIM_DATA.dimensions.forEach(d => paintDim(d.id));
+  buildReveal();
+  renderTabs();
+}
+
+function wirePanels() {
+  document.getElementById("introNext").addEventListener("click", () => goTo(1));
+  document.getElementById("nameInput").addEventListener("input", e => { state.name = e.target.value; save(); });
+  document.getElementById("periodInput").addEventListener("input", e => { state.period = e.target.value; save(); });
+
+  document.querySelectorAll("[data-prev]").forEach(b => b.addEventListener("click", () => goTo(activeIndex - 1)));
+  document.querySelectorAll("[data-next]").forEach(b => b.addEventListener("click", () => goTo(activeIndex + 1)));
+
+  // Rate panel
+  document.querySelectorAll("#scorePicker .score-opt").forEach(b => {
+    b.addEventListener("click", () => {
+      state.rate.score = parseInt(b.dataset.score, 10);
+      syncInputs(); save();
+    });
+  });
+  const jb = document.getElementById("justifyBox");
+  jb.addEventListener("input", e => { state.rate.justification = e.target.value; save(); });
+  document.getElementById("scaffoldBtn").addEventListener("click", () => {
+    if (state.rate.justification && state.rate.justification.trim() &&
+        !confirm("Replace what's in the justification box with a starter template?")) return;
+    state.rate.justification = scaffoldTemplate();
+    syncInputs(); save();
+    toast("Starter template added — now edit it with your own evidence.");
+  });
+  document.getElementById("submitRateBtn").addEventListener("click", () => {
+    if (state.rate.score === null) { toast("Pick a score from 0 to 5 first."); return; }
+    state.rate.submitted = true; save();
+    buildReveal();
+  });
+}
+
+function scaffoldTemplate() {
+  return [
+    "I would score this essay a ___ out of 5.",
+    "",
+    "TASK DEVELOPMENT: The essay addresses historical circumstances by ___, efforts by ___, and impact by ___. One of these aspects is developed (more / less) than the others because ___.",
+    "ANALYSIS vs. DESCRIPTION: It is mostly (descriptive / analytical) because ___.",
+    "DOCUMENT USE: It uses information from ___ documents, such as ___.",
+    "OUTSIDE INFORMATION: Outside the documents, the writer adds ___.",
+    "SUPPORTING DETAILS: Specific facts include ___.",
+    "ORGANIZATION: The introduction ___ and the conclusion ___ (does / does not) go beyond restating the theme.",
+    "",
+    "Overall, this fits Level ___ because ___."
+  ].join("\n");
+}
+
+/* ---------------- Boot ---------------- */
+function boot() {
+  document.getElementById("appTitle").textContent = "Rate Like a Rater";
+  document.getElementById("examTag").textContent = SIM_DATA.meta.exam + " · " + SIM_DATA.meta.topic;
+  load();
+  rebuildDynamic();
+  goTo(0); // §12 always boot to Directions, regardless of saved progress
+
+  document.getElementById("copyBtn").addEventListener("click", copyWork);
+  document.getElementById("restartBtn").addEventListener("click", restart);
+  document.getElementById("floatDocsBtn").addEventListener("click", openDocs);
+  document.getElementById("docCloseBtn").addEventListener("click", closeDocs);
+  document.getElementById("docOverlay").addEventListener("click", e => {
+    if (e.target.id === "docOverlay") closeDocs();
+  });
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape") closeDocs();
+  });
+}
+boot();
+</script>
+</body>
+</html>

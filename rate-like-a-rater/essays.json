@@ -1,0 +1,571 @@
+{
+  "_note": "Sentence-by-sentence tagging is the primary Claude Code task. Each essay's 'sentences' array must be built by segmenting the raw_text and tagging each sentence across all 7 dimensions. The Level 5 anchor below shows the target structure. Raw text and rater commentary are provided for all essays.",
+  
+  "anchor_papers": {
+    "level_5": {
+      "score": 5,
+      "type": "anchor",
+      "label": "Anchor Paper — Level 5",
+      "raw_text": "Alcohol consumption has existed all over the world for thousands of years and in the United States since colonization. Alongside it, alcohol has also brought its problems. In America the issue of Prohibition proved to be one of the most significant debates in history. It was so much so that a Prohibition amendment was ratified and afterwards continued to be a constitutional and civic issue for more than a decade.\n\nIn Document 1 it discusses how there was an influx of commerce and increase in consumption in regards to alcohol after the war of 1812. It is also mentioned how the Prohibition movement was \"an outgrowth of the temperance crusades of the first half of the 19th century\" which initially stressed abstinence and rehabilitation. However, the effects of alcohol proved to have extremely negative consequences. This led to many women and mothers in the first half of the 19th century coming together to organize the temperance movements as many families had to deal with awful behavior due to husbands and fathers frequently being under the influence of alcohol. Their work also led to local and state governments passing \"wet and dry acts\". Those who were associated with the \"wet\" were against the ban of alcohol while those for dry insisted on it being illegal. This proved to cause a rift between the two in many parts of the country. In document 2, a poster displays a map that shows how support for Prohibition had taken over the country and was heading toward National Ratification of a Prohibition Amendment. The work of groups such as the Women's Christian Temperance Union and Anti-Saloon League supported a ban on alcohol for both moral and religious reasons and had been influenced by the Second Great Awakening. This and Progressivism led to much interest in social reform by the early 20th century. As time passed and anti-liquor forces lobbied and became politically more powerful, ideas shifted and led to more people believing that the federal government had the responsibility to ban alcohol nationally. With the United States fighting Germany in World War I, the connection German Americans had with making and drinking beer made Prohibition a nativist and patriotic issue that increased support for Prohibition.\n\nIn document 3, Herbert Hoover—the president himself was taking initiative in regards to fully enforcing the ban on alcohol while calling Prohibition a \"noble experiment\". For instance he signed the \"Five and Ten Law,\" making every liquor violation a felony.\" To many this was the way things should be done. However, the document also states by 1932, many wanted to repeal the 18th amendment which essentially made the manufacture and transportation of alcohol illegal. Once again this fueled fire between the two sides. Those who wanted the 18th amendment reported felt that it had only further increased the troubles in America. Crime rates increased, smugglers were being more active and as a result gang violence also increased. Conflicting attitudes about Prohibition can be seen in document 6, in which although \"President Franklin Roosevelt supported repeal of Prohibition, he wanted to ban the operation of saloons, bars, and taverns in the United States.\" Earlier President Hoover showed a contradictory attitude as shown in document 3 with his willingness to sign strict laws to enforce Prohibition to fulfill his constitutional duty but refused to personally endorse Prohibition. This goes to show that this constitutional and civic issue was complicated and had everyone in a bind. It is clear that there were both benefits and negatives to Prohibition. In fact, some women who initially supported the WCTU and Prohibition changed their minds when they saw an increase in distrust for the law. Having gained the right to vote, they became more politically active, gave speeches, and raised money in support of the repeal of the amendment. The WONPR and their efforts to address prohibition made a difference because they represented the new and more modern women of the 1920s. This issue continued to give women the opportunity to play an important public role in society and further their involvement in addressing other issues as they stressed their worry about the government and it's increasing regulations. Nonetheless, as document 5 states, \"Prohibition failed, and it did so spectacularly, as it revealed the limits of moral reform movements.\"\n\nThe efforts of groups such as the Anti-Saloon League led to the 18th Amendment which had a huge impact on the country. People were forced to drink less and with saloons closed many families were happier. However, crime became a national problem. Women worried about the increase in underage drinking and many people believed the government should not interfere with personal liberty. It cost millions of dollars a year to enforce at a time when money was scarce—the Great Depression. The impact of those who fought for repeal was also significant since as document 5 states it \"revealed the limit of moral reform movements\" and the problem with \"a vocal minority trying to regulate the personal habits of all Americans.\" Lots of time, money, and effort was put into prohibition—yet it was not something that solidified the Nation. Despite this, it enable various new points and groups of people to arise and take initiative.",
+      "sentences": "_TO_BE_BUILT_IN_CLAUDE_CODE",
+      "rater_commentary": {
+        "task_development": "Thoroughly develops all aspects of the task evenly and in depth for Prohibition",
+        "analytical_vs_descriptive": "Is more analytical than descriptive (in America issue of Prohibition one of most significant debates in history; after Prohibition amendment ratified, continued to be a constitutional and civic issue for more than a decade; effects of alcohol proved to have extremely negative consequences; rift in many parts of country between \"wet\" who were against ban on alcohol and \"dry\" who insisted on it being illegal; as anti-liquor forces lobbied and became politically more powerful ideas shifted and led to more people believing in federal government's responsibility to ban alcohol nationally; Hoover took initiative in enforcing ban on alcohol while calling Prohibition a \"noble experiment\"; Hoover showed a contradictory attitude with his willingness to sign strict laws to enforce Prohibition but refused to personally endorse it; some women who initially supported Prohibition changed their minds with increase in distrust for the law; WONPR and their efforts made a difference because they represented new and more modern women of 1920s; Prohibition continued to give women opportunity to play important role in society and furthered their involvement in other issues; revealed problem with a vocal minority trying to regulate personal habits of all Americans)",
+        "document_use": "Incorporates relevant information from all the documents",
+        "outside_information": "Incorporates relevant outside information (alcohol consumption existed all over world for thousands of years; temperance crusades initially stressed abstinence and rehabilitation; many women and mothers in first half of 19th century came together to organize temperance movements as many families had to deal with awful behavior due to husbands and fathers frequently under influence of alcohol; work of groups such as Women's Christian Temperance Union and Anti-Saloon League supported a ban on alcohol for moral and religious reasons and influenced by Second Great Awakening; with United States fighting Germany in World War I, connection German Americans had with making and drinking beer made Prohibition a nativist and patriotic issue; many people believed government should not interfere with personal liberty; cost millions of dollars per year to enforce at a time when money scarce because of Great Depression)",
+        "supporting_details": "Richly supports the theme with many relevant facts, examples, and details (alcohol consumption an issue in United States since colonization; after War of 1812 influx in commerce and increase in consumption in regard to alcohol; Prohibition Movement outgrowth of temperance crusades of first half of 19th century; Hoover signed \"Five and Ten Law\" making every liquor violation a felony; by 1932 many wanted to repeal 18th amendment which essentially made manufacture and transportation of alcohol illegal; some felt as result of Prohibition crime rates increased, smugglers more active, and violence increased; President Franklin Roosevelt supported repeal of Prohibition and wanted to ban operation of saloons, bars, and taverns in United States; women became politically active after gaining right to vote, gave speeches, and raised money in support of repeal of Prohibition; Prohibition revealed limits of moral reform movements)",
+        "organization": "Demonstrates a logical and clear plan of organization; includes an introduction and a conclusion that are beyond a restatement of the theme",
+        "overall_conclusion": "Overall, the response fits the criteria for Level 5. Historical details and analytical statements support effective document interpretation. Thoughtful conclusions reflect a good critical appraisal of the complicated nature of the Prohibition issue."
+      }
+    },
+
+    "level_4": {
+      "score": 4,
+      "type": "anchor",
+      "label": "Anchor Paper — Level 4",
+      "raw_text": "Of all the debates throughout United States history, civic and constitutional issues have made the largest impact on the country. These debates have often led to continuous efforts by individuals and groups to address issues that need to be solved. One of these issues is Prohibition, the banned sale and manufacture of alcohol in the early 20th century. While prohibition had been addressed in many different ways, the impact of those efforts changed the mindset of American Society during the 1900s and has even influenced the US today. Prohibition, a result of concerns about tremendous liquor production and consumption in the 19th century, gave a voice to minorities and other special interest groups across the country, and its impact was felt in almost every home.\n\nThe right to drink alcohol was something most Americans took for granted. Since the settlement of Jamestown, people in America drank including our Founding Fathers. Specifically after the 1812 war, New England states led the charge for \"West Indian Rum, which was consumed extensively\" (Doc 1). The consumption and sale of these products together led to what some considered a nation-wide drinking problem and to a temperance movement with a strong message. It can be inferred from speeches and writings of groups such as the Women's Christian Temperance Union that it was most likely difficult to find a man who wasn't spending money getting drunk, no matter the time of day. Alcohol was easy to access, and people took advantage of that, and drank too much endangering their health and jobs which often led wives and children into poverty. Thus, it became a concern of many women, employers, and religious leaders to see alcohol as a problem that needed fixing. The longer and more effectively the Anti-Saloon League and other anti-liquor groups expressed the negative aspects of alcohol the more demands there were that politicians do something about it. Because of this, \"the greatest moral victory since the declaration of Independence\" (Doc 2) was born in the form of Prohibition and the 18th Amendment which ended the sale and manufacture of alcohol. However, other groups have stated that Prohibition actually had a negative impact on the country and was undemocratic since only a minority of Americans supported it.\n\nWhen Herbert Hoover was running for President in 1928, he called Prohibition \"noble\" and \"far-reaching in purpose.\" After he was elected he signed a law making every liquor violation a felony. Although hopeful Prohibition would succeed, it supporters would actually see their efforts go in the opposite direction; Many people actually wanted to get rid of prohibition. One of these groups was the WONPR, women who believed that Prohibition had led to a \"surge in underage and unregulated drinking\" and raised a lot of money to get their message out sometimes using the radio. (Doc 4). This surge in drinking could be attributed to the large amounts of underground sales of alcohol. Bootleggers, people who illegally sold alcohol, became more common and many made a fortune off people who wanted liquor. However, drunkiness wasn't the only issue. Some believed that prohibition revealed the \"limits of moral reform movements\" (Doc 6), as stated by Michael A. Lerner, an author for Harvard University Press. This statement creates the sense that prohibition not only made people violate the laws of the government, but it also led to the government violating the civil rights of the US public. Prohibition seemed to create distrust in the government as it was a way to control the behavior of the US public. On a similar note, the public had felt that their freedom was being limited by not being able to consume a specific product. As the Great Depression worsened disagreements over Prohibition grew and eventually lead to it becoming a campaign issue in 1932 when Franklin Roosevelt ran against Herbert Hoover and supported the repeal of the 18th Amendment.\n\nOverall, while it was initially demanded Prohibition would ultimately be a failure. It cost millions of dollars to enforce, enforcement was generally a failure, and Americans were tired of it and didn't want it. Regulating the personal habits of urban America, even with authoritarian tactics was impossible, especially during the 1920s. While it can be argued that the Progressive idea to improve America wasn't bad and that it wasn't executed properly, it generally led the US public to realizing that a right that they had since the founding of the country had been restricted by the government and they resented it. The public's ability to come together and fight against prohibition presented the strength of democracy which led to the successful repeal of Prohibition. Opposition to Prohibition was just one of the many civil rights argued throughout US history, but the nation can be sure to see similar debates transpire in the near future.",
+      "sentences": "_TO_BE_BUILT_IN_CLAUDE_CODE",
+      "rater_commentary": {
+        "task_development": "Develops all aspects of the task for Prohibition",
+        "analytical_vs_descriptive": "Is both descriptive and analytical (impact of efforts to address Prohibition changed mindset of American society and influenced United States today; Prohibition gave a voice to minorities and other special interest groups across country; right to drink alcohol something most Americans took for granted; the longer and more effectively Anti-Saloon League and other anti-liquor groups expressed negative effects of alcohol, the more demands that politicians do something about it; some felt Prohibition not only made people violate laws of government, but also led government to violate civil rights of public; some groups felt Prohibition negative effect on country and undemocratic since only a minority of Americans supported it; public felt freedom being limited by not being able to consume a specific product; overall, while initially demanded, Prohibition would ultimately be a failure; while it can be argued Progressive idea to improve America not bad and not executed properly, it generally led United States public to realize a right they had since founding of country had been restricted and they resented it; public's ability to come together and fight Prohibition presented strength of democracy which led to successful repeal)",
+        "document_use": "Incorporates relevant information from all documents",
+        "outside_information": "Incorporates relevant outside information (alcohol easy to access and people took advantage of that and drank too much endangering health and jobs which often led wives and children into poverty; alcoholism became a concern of many women, employers, and religious leaders as a problem that needed fixing; as Great Depression worsened disagreements over Prohibition grew and eventually led to it becoming a campaign issue in 1932 when Franklin Roosevelt ran against Herbert Hoover and supported repeal of 18th amendment)",
+        "supporting_details": "Supports the theme with relevant facts, examples, and details (Prohibition banned sale and manufacture of alcohol in early 20th century; since settlement of Jamestown, people in America drank including Founding Fathers; New England states led charge for West Indian rum; Women's Christian Temperance Union gave speeches and published writings; 18th amendment ended sale and manufacture of alcohol; after Hoover elected signed a law making every liquor violation a felony; WONPR wanted to get rid of Prohibition as believed it led to surge in underage and unregulated drinking; WONPR raised a lot of money to get message out, sometimes using the radio; surge in drinking could be attributed to large amounts of underground sales of alcohol)",
+        "organization": "Demonstrates a logical and clear plan of organization; includes an introduction and a conclusion that are beyond a restatement of the theme",
+        "overall_conclusion": "Overall, the response fits the criteria for Level 4. Relevant historical details support a thoughtful appraisal of document information. Good conclusions reflect an understanding of the role democratic ideals played in the repeal of Prohibition. However, additional facts and details would have strengthened the evaluation."
+      }
+    },
+
+    "level_3": {
+      "score": 3,
+      "type": "anchor",
+      "label": "Anchor Paper — Level 3",
+      "raw_text": "Throughout our history in the United States, many constitutional and civic issues have been discussed and debated. Citizens, groups, and the Government have made efforts to try and fix or address these issues. Some of these efforts have been successful and some have not. One of these issues that we have faced in America is Prohibition.\n\nProhibition was caused by different historical circumstances. One example is stated in Document 1 which says, \"The prohibition movement was an outgrowth of the temperance crusades...\" That began because people were drinking too much hard liquor. It also says that after the War of 1812, alcohol consumption increased. The State of Maine alone manufactured 1,333,160 gallons of liquor and sold it in nearly every single store. This caused an unhealthy and unsafe amount of drunkenness, which led to workers not being able to do their jobs safely or at all. Losing jobs because of drunkenness, many men found themselves in poorhouses. Many other problems like an increase in violent behavior and the number of people going to jail for alcohol related crimes increased. Women's temperance groups at first tried to get drinkers to drink less but changed their goal to prohibiting alcohol completely. Men also actively worked for prohibition for moral and religious reasons in groups like the Anti-Saloon League. As shown in Document 2, this group kept track of the progress National Prohibition was making in state legislatures with ratification of the Prohibition Amendment.\n\nEfforts had to be made by many to continue to address the issue of prohibition after the Amendment was passed. One effort was made by President Hoover in the late 1920s. One way he showed his support for prohibition was by signing the \"Five and Ten Law,\" which made liquor violation a felony. With crime rates in the country increasing because of people violating Prohibition laws and organized crime rates growing, Hoover thought that making liquor violations a felony might convince people to obey the law. In the text of Document 3 it says, \"Hoover saluted Prohibition as 'a great social and economic experiment...far-reaching in purpose.'\" This means that he felt that prohibition would make the country better and it would serve a great purpose by saving souls, family life, and keeping people out of poorhouses. Another effort was made by the WONPR, or the Women's Organization for National Prohibition Reform which disagreed with the WCTU opinion that their support for Prohibition represented \"the women of America.\" This group's purpose was to campaign against prohibition including motorcading through New York State, \"members attending meetings, giving speeches at rallies, going door to door to recruit new supporters, and using technology to spread their message.\" This shows that this organization did whatever they could to get support for repealing the prohibition amendment.\n\nThese efforts impacted the United States and our society. One impact anti-prohibitionists made was that in 1933, as the newspaper headline says, \"Prohibition repeal is ratified: New York celebrates with quiet restraint.\" The newspaper stories in Document 6 mention that people celebrated in the streets and many speakeasies closed as alcohol became legal again. One author wrote that prohibition failed. He says, \"in fourteen years Prohibition succeeded neither in changing American's behavior nor in eliminating the problems caused by Alcohol abuse.\" This means that Prohibition was pointless because it solved nothing, but created many problems that no one expected, including disrespect for laws and law enforcement.\n\nIn conclusion, Prohibition has been just one issue debated in the United States in our history. Many efforts were made to address the issue, and only some were successful. The issue was a big part of our history as a society, and it will never be forgotten because people are still debating the medical and moral issues surrounding alcohol.",
+      "sentences": [
+        {
+          "id": "3-s01",
+          "text": "Throughout our history in the United States, many constitutional and civic issues have been discussed and debated.",
+          "tags": {
+            "task_development": { "match": false, "note": "Opening generalization; sets up the essay but does not yet address historical circumstances, efforts, or impact." },
+            "analytical_vs_descriptive": { "match": false, "category": "descriptive", "note": "Descriptive framing that restates the prompt's premise." },
+            "document_use": { "match": false, "note": "No document information — echoes the task's historical context." },
+            "outside_information": { "match": false, "note": "General framing, not specific outside knowledge." },
+            "supporting_details": { "match": false, "note": "No specific facts or details; a broad opening statement." },
+            "organization": { "match": true, "category": "introduction", "note": "First sentence of the introduction. Largely restates the theme from the prompt — the rater noted the introduction is a restatement of the theme." },
+            "inaccuracy": { "match": false }
+          }
+        },
+        {
+          "id": "3-s02",
+          "text": "Citizens, groups, and the Government have made efforts to try and fix or address these issues.",
+          "tags": {
+            "task_development": { "match": false, "note": "Echoes the task's language about efforts, but in general terms rather than about Prohibition specifically." },
+            "analytical_vs_descriptive": { "match": false, "category": "descriptive", "note": "Descriptive restatement of the prompt." },
+            "document_use": { "match": false, "note": "No document information." },
+            "outside_information": { "match": false, "note": "Generic framing, not specific outside knowledge." },
+            "supporting_details": { "match": false, "note": "No specific facts or details." },
+            "organization": { "match": true, "category": "introduction", "note": "Part of the introduction, restating the prompt's framing about efforts." },
+            "inaccuracy": { "match": false }
+          }
+        },
+        {
+          "id": "3-s03",
+          "text": "Some of these efforts have been successful and some have not.",
+          "tags": {
+            "task_development": { "match": false, "note": "General framing; does not develop a specific task aspect." },
+            "analytical_vs_descriptive": { "match": false, "category": "descriptive", "note": "Descriptive framing." },
+            "document_use": { "match": false, "note": "No document information." },
+            "outside_information": { "match": false, "note": "No specific outside knowledge." },
+            "supporting_details": { "match": false, "note": "No specific facts or details." },
+            "organization": { "match": true, "category": "introduction", "note": "Introduction sentence setting up the success/failure theme that the conclusion returns to." },
+            "inaccuracy": { "match": false }
+          }
+        },
+        {
+          "id": "3-s04",
+          "text": "One of these issues that we have faced in America is Prohibition.",
+          "tags": {
+            "task_development": { "match": false, "note": "Names the essay's topic but does not yet develop a task aspect." },
+            "analytical_vs_descriptive": { "match": false, "category": "descriptive", "note": "Descriptive — states the topic." },
+            "document_use": { "match": false, "note": "No document information." },
+            "outside_information": { "match": false, "note": "No specific outside knowledge." },
+            "supporting_details": { "match": false, "note": "No specific facts or details." },
+            "organization": { "match": true, "category": "introduction", "note": "Names the topic, completing the restatement-of-theme introduction." },
+            "inaccuracy": { "match": false }
+          }
+        },
+        {
+          "id": "3-s05",
+          "text": "Prohibition was caused by different historical circumstances.",
+          "tags": {
+            "task_development": { "match": true, "category": "historical_circumstances", "note": "Topic sentence announcing the historical-circumstances aspect of the task." },
+            "analytical_vs_descriptive": { "match": false, "category": "descriptive", "note": "A framing claim without specific analysis." },
+            "document_use": { "match": false, "note": "No document information yet." },
+            "outside_information": { "match": false, "note": "General framing, not a specific outside fact." },
+            "supporting_details": { "match": false, "note": "No concrete detail yet — the details follow in this paragraph." },
+            "organization": { "match": true, "category": "body", "note": "Topic sentence opening the historical-circumstances paragraph." },
+            "inaccuracy": { "match": false }
+          }
+        },
+        {
+          "id": "3-s06",
+          "text": "One example is stated in Document 1 which says, \"The prohibition movement was an outgrowth of the temperance crusades...\"",
+          "tags": {
+            "task_development": { "match": true, "category": "historical_circumstances", "note": "Develops historical circumstances by citing Doc 1 on the temperance origins of Prohibition." },
+            "analytical_vs_descriptive": { "match": false, "category": "descriptive", "note": "Quotes the document without interpreting it — description." },
+            "document_use": { "match": true, "document": "doc1", "note": "Direct quotation from Document 1 (L. Ames Brown): Prohibition as an outgrowth of the temperance crusades. Check Doc 1 to verify." },
+            "outside_information": { "match": false, "note": "Information comes straight from Document 1, not outside knowledge." },
+            "supporting_details": { "match": false, "note": "A general claim quoted from the document rather than a concrete fact or statistic." },
+            "organization": { "match": false, "category": "body", "note": "Supporting sentence within the historical-circumstances paragraph." },
+            "inaccuracy": { "match": false }
+          }
+        },
+        {
+          "id": "3-s07",
+          "text": "That began because people were drinking too much hard liquor.",
+          "tags": {
+            "task_development": { "match": true, "category": "historical_circumstances", "note": "Explains a cause behind the temperance movement — develops historical circumstances." },
+            "analytical_vs_descriptive": { "match": true, "category": "analytical", "note": "Goes beyond the quote to explain WHY the temperance movement began — a simple causal/analytical statement. The rater credited this reasoning." },
+            "document_use": { "match": false, "note": "An explanation in the student's own words, not document text." },
+            "outside_information": { "match": false, "note": "General reasoning rather than a discrete outside fact." },
+            "supporting_details": { "match": false, "note": "No specific fact or statistic." },
+            "organization": { "match": false, "category": "body", "note": "Supporting sentence within the historical-circumstances paragraph." },
+            "inaccuracy": { "match": false }
+          }
+        },
+        {
+          "id": "3-s08",
+          "text": "It also says that after the War of 1812, alcohol consumption increased.",
+          "tags": {
+            "task_development": { "match": true, "category": "historical_circumstances", "note": "Develops historical circumstances using Doc 1." },
+            "analytical_vs_descriptive": { "match": false, "category": "descriptive", "note": "Reports a fact from the document without interpretation." },
+            "document_use": { "match": true, "document": "doc1", "note": "Paraphrases Document 1's point that commerce and consumption grew after the War of 1812. Check Doc 1 to verify." },
+            "outside_information": { "match": false, "note": "Drawn from Document 1, not outside knowledge." },
+            "supporting_details": { "match": true, "note": "Specific factual detail (War of 1812; rise in consumption) drawn from Doc 1." },
+            "organization": { "match": false, "category": "body", "note": "Supporting sentence within the historical-circumstances paragraph." },
+            "inaccuracy": { "match": false }
+          }
+        },
+        {
+          "id": "3-s09",
+          "text": "The State of Maine alone manufactured 1,333,160 gallons of liquor and sold it in nearly every single store.",
+          "tags": {
+            "task_development": { "match": true, "category": "historical_circumstances", "note": "Develops historical circumstances with a concrete statistic from Doc 1." },
+            "analytical_vs_descriptive": { "match": false, "category": "descriptive", "note": "States a statistic without interpreting it." },
+            "document_use": { "match": true, "document": "doc1", "note": "Specific statistic taken from Document 1 (Maine, 1827: 1,333,160 gallons). Check Doc 1 to verify." },
+            "outside_information": { "match": false, "note": "Drawn from Document 1, not outside knowledge." },
+            "supporting_details": { "match": true, "note": "Strong concrete statistic (1,333,160 gallons) — exactly the kind of specific detail the rubric rewards." },
+            "organization": { "match": false, "category": "body", "note": "Supporting sentence within the historical-circumstances paragraph." },
+            "inaccuracy": { "match": false }
+          }
+        },
+        {
+          "id": "3-s10",
+          "text": "This caused an unhealthy and unsafe amount of drunkenness, which led to workers not being able to do their jobs safely or at all.",
+          "tags": {
+            "task_development": { "match": true, "category": "historical_circumstances", "note": "Develops historical circumstances by describing the social effects of heavy drinking." },
+            "analytical_vs_descriptive": { "match": false, "category": "descriptive", "note": "Describes consequences as elaboration rather than evaluating or drawing a conclusion." },
+            "document_use": { "match": false, "note": "Not in any document — the link to workers' job performance is the student's own knowledge." },
+            "outside_information": { "match": true, "note": "Outside information — connecting drunkenness to workers being unable to do their jobs is not stated in the documents. The rater listed this among the essay's limited outside information." },
+            "supporting_details": { "match": false, "note": "General consequence rather than a specific fact or example." },
+            "organization": { "match": false, "category": "body", "note": "Supporting sentence within the historical-circumstances paragraph." },
+            "inaccuracy": { "match": false }
+          }
+        },
+        {
+          "id": "3-s11",
+          "text": "Losing jobs because of drunkenness, many men found themselves in poorhouses.",
+          "tags": {
+            "task_development": { "match": true, "category": "historical_circumstances", "note": "Develops historical circumstances by tracing a social consequence of drinking." },
+            "analytical_vs_descriptive": { "match": false, "category": "descriptive", "note": "Describes a consequence rather than analyzing it." },
+            "document_use": { "match": false, "note": "Doc 1 mentions poorhouses, but the causal claim (job loss leads to poorhouses) is the student's own — the rater scored this as outside information, not document use." },
+            "outside_information": { "match": true, "note": "Outside reasoning the rater credited as outside information: linking job loss to ending up in poorhouses." },
+            "supporting_details": { "match": false, "note": "General consequence rather than a specific named fact." },
+            "organization": { "match": false, "category": "body", "note": "Supporting sentence within the historical-circumstances paragraph." },
+            "inaccuracy": { "match": false }
+          }
+        },
+        {
+          "id": "3-s12",
+          "text": "Many other problems like an increase in violent behavior and the number of people going to jail for alcohol related crimes increased.",
+          "tags": {
+            "task_development": { "match": true, "category": "historical_circumstances", "note": "Develops historical circumstances by listing further social consequences." },
+            "analytical_vs_descriptive": { "match": false, "category": "descriptive", "note": "Lists consequences without interpretation." },
+            "document_use": { "match": false, "note": "Doc 1 references jails, but the broader claim about increased violence and arrests is the student's own elaboration — the rater scored it as outside information." },
+            "outside_information": { "match": true, "note": "Outside information — the increase in violent behavior and alcohol-related arrests is not detailed in the documents." },
+            "supporting_details": { "match": false, "note": "General problems rather than a specific fact or statistic." },
+            "organization": { "match": false, "category": "body", "note": "Supporting sentence within the historical-circumstances paragraph." },
+            "inaccuracy": { "match": false }
+          }
+        },
+        {
+          "id": "3-s13",
+          "text": "Women's temperance groups at first tried to get drinkers to drink less but changed their goal to prohibiting alcohol completely.",
+          "tags": {
+            "task_development": { "match": true, "category": "historical_circumstances", "note": "Develops historical circumstances by describing how the temperance movement shifted toward prohibition." },
+            "analytical_vs_descriptive": { "match": false, "category": "descriptive", "note": "Describes a change in goals without analyzing why." },
+            "document_use": { "match": false, "note": "Not stated in any document; the shift from moderation to total prohibition is the student's own knowledge." },
+            "outside_information": { "match": false, "note": "This is knowledge beyond the documents, but the official rater counted it among the essay's supporting details rather than its limited outside information. A defensible 'outside info' pick too — good discussion point." },
+            "supporting_details": { "match": true, "note": "Specific factual claim about temperance groups changing their goal — credited by the rater as a supporting detail." },
+            "organization": { "match": false, "category": "body", "note": "Supporting sentence within the historical-circumstances paragraph." },
+            "inaccuracy": { "match": false }
+          }
+        },
+        {
+          "id": "3-s14",
+          "text": "Men also actively worked for prohibition for moral and religious reasons in groups like the Anti-Saloon League.",
+          "tags": {
+            "task_development": { "match": true, "category": "historical_circumstances", "note": "Develops historical circumstances by identifying who pushed for prohibition and why." },
+            "analytical_vs_descriptive": { "match": false, "category": "descriptive", "note": "Describes the actors and motives without analysis." },
+            "document_use": { "match": false, "note": "The Anti-Saloon League's moral/religious motivation echoes Doc 2, but the student presents it as general knowledge here; the explicit Doc 2 citation comes in the next sentence. The rater scored this as a supporting detail." },
+            "outside_information": { "match": false, "note": "Treated by the rater as a supporting detail rather than outside information." },
+            "supporting_details": { "match": true, "note": "Names a specific group (Anti-Saloon League) and its moral/religious motivation — a supporting detail." },
+            "organization": { "match": false, "category": "body", "note": "Supporting sentence within the historical-circumstances paragraph." },
+            "inaccuracy": { "match": false }
+          }
+        },
+        {
+          "id": "3-s15",
+          "text": "As shown in Document 2, this group kept track of the progress National Prohibition was making in state legislatures with ratification of the Prohibition Amendment.",
+          "tags": {
+            "task_development": { "match": true, "category": "historical_circumstances", "note": "Develops historical circumstances using Doc 2." },
+            "analytical_vs_descriptive": { "match": false, "category": "descriptive", "note": "Reports what the document shows without interpretation." },
+            "document_use": { "match": true, "document": "doc2", "note": "Explicitly cites Document 2 (Anti-Saloon League ratification map) and paraphrases it accurately. Check Doc 2 to verify." },
+            "outside_information": { "match": false, "note": "Drawn from Document 2." },
+            "supporting_details": { "match": true, "note": "Specific document-based detail about tracking ratification progress in state legislatures — credited by the rater." },
+            "organization": { "match": false, "category": "body", "note": "Closing supporting sentence of the historical-circumstances paragraph." },
+            "inaccuracy": { "match": false }
+          }
+        },
+        {
+          "id": "3-s16",
+          "text": "Efforts had to be made by many to continue to address the issue of prohibition after the Amendment was passed.",
+          "tags": {
+            "task_development": { "match": true, "category": "efforts", "note": "Topic sentence announcing the efforts aspect of the task." },
+            "analytical_vs_descriptive": { "match": true, "category": "analytical", "note": "The rater credited this framing ('efforts had to be made... after the amendment was passed') as an analytical statement that organizes the discussion of efforts." },
+            "document_use": { "match": false, "note": "No specific document information." },
+            "outside_information": { "match": false, "note": "Framing rather than a discrete outside fact." },
+            "supporting_details": { "match": false, "note": "No concrete detail yet — details follow in this paragraph." },
+            "organization": { "match": true, "category": "body", "note": "Topic sentence introducing the second task aspect — efforts to address the issue." },
+            "inaccuracy": { "match": false }
+          }
+        },
+        {
+          "id": "3-s17",
+          "text": "One effort was made by President Hoover in the late 1920s.",
+          "tags": {
+            "task_development": { "match": true, "category": "efforts", "note": "Introduces the first specific effort (Hoover) — develops the efforts aspect." },
+            "analytical_vs_descriptive": { "match": false, "category": "descriptive", "note": "States who and when without analysis." },
+            "document_use": { "match": false, "note": "General framing; the Hoover detail and quote come in the next sentences." },
+            "outside_information": { "match": false, "note": "No specific outside fact." },
+            "supporting_details": { "match": false, "note": "General; the specific detail (the law) follows." },
+            "organization": { "match": false, "category": "body", "note": "Supporting sentence within the efforts paragraph." },
+            "inaccuracy": { "match": false }
+          }
+        },
+        {
+          "id": "3-s18",
+          "text": "One way he showed his support for prohibition was by signing the \"Five and Ten Law,\" which made liquor violation a felony.",
+          "tags": {
+            "task_development": { "match": true, "category": "efforts", "note": "Develops the efforts aspect with a specific governmental action." },
+            "analytical_vs_descriptive": { "match": false, "category": "descriptive", "note": "States what the law did without analyzing it." },
+            "document_use": { "match": true, "document": "doc3", "note": "Draws on Document 3 — Hoover signed the 'Five and Ten Law' making every liquor violation a felony (1929). Check Doc 3 to verify." },
+            "outside_information": { "match": false, "note": "Drawn from Document 3." },
+            "supporting_details": { "match": true, "note": "Specific named law (Five and Ten Law) and what it did — a concrete supporting detail." },
+            "organization": { "match": false, "category": "body", "note": "Supporting sentence within the efforts paragraph." },
+            "inaccuracy": { "match": false }
+          }
+        },
+        {
+          "id": "3-s19",
+          "text": "With crime rates in the country increasing because of people violating Prohibition laws and organized crime rates growing, Hoover thought that making liquor violations a felony might convince people to obey the law.",
+          "tags": {
+            "task_development": { "match": true, "category": "efforts", "note": "Develops the efforts aspect by explaining the purpose behind Hoover's action." },
+            "analytical_vs_descriptive": { "match": true, "category": "analytical", "note": "Interprets Hoover's motivation ('thought that making liquor violations a felony might convince people to obey the law') — the rater credited this as analytical." },
+            "document_use": { "match": false, "note": "Doc 3 mentions an increased jail population, but 'organized crime rates growing' and Hoover's reasoning are the student's own framing, not document text." },
+            "outside_information": { "match": false, "note": "Borderline — 'organized crime' is outside the documents, but the rater treated the crime-rate point as a supporting detail and the motive as analysis, not as outside information." },
+            "supporting_details": { "match": true, "note": "The rater listed 'crime rates increasing and organized crime growing because of people violating Prohibition laws' among the essay's supporting details." },
+            "organization": { "match": false, "category": "body", "note": "Supporting sentence within the efforts paragraph." },
+            "inaccuracy": { "match": false }
+          }
+        },
+        {
+          "id": "3-s20",
+          "text": "In the text of Document 3 it says, \"Hoover saluted Prohibition as 'a great social and economic experiment...far-reaching in purpose.'\"",
+          "tags": {
+            "task_development": { "match": true, "category": "efforts", "note": "Develops the efforts aspect using Hoover's own words from Doc 3." },
+            "analytical_vs_descriptive": { "match": false, "category": "descriptive", "note": "Quotes the document; the interpretation comes in the next sentence." },
+            "document_use": { "match": true, "document": "doc3", "note": "Direct quotation from Document 3 (Hoover's 1928 'noble experiment' remark). Check Doc 3 to verify." },
+            "outside_information": { "match": false, "note": "Drawn from Document 3." },
+            "supporting_details": { "match": false, "note": "A quoted opinion used to set up the next sentence's interpretation, rather than a concrete fact." },
+            "organization": { "match": false, "category": "body", "note": "Supporting sentence within the efforts paragraph." },
+            "inaccuracy": { "match": false }
+          }
+        },
+        {
+          "id": "3-s21",
+          "text": "This means that he felt that prohibition would make the country better and it would serve a great purpose by saving souls, family life, and keeping people out of poorhouses.",
+          "tags": {
+            "task_development": { "match": true, "category": "efforts", "note": "Develops the efforts aspect by explaining the reasoning behind Hoover's support." },
+            "analytical_vs_descriptive": { "match": true, "category": "analytical", "note": "Interprets the Doc 3 quote ('This means that he felt...') — the rater credited this explanation as analytical." },
+            "document_use": { "match": false, "note": "The student's interpretation of the quote, in their own words — not document text." },
+            "outside_information": { "match": false, "note": "Interpretation/elaboration rather than a discrete outside fact." },
+            "supporting_details": { "match": false, "note": "Interpretive claim rather than a specific fact." },
+            "organization": { "match": false, "category": "body", "note": "Supporting sentence within the efforts paragraph." },
+            "inaccuracy": { "match": false }
+          }
+        },
+        {
+          "id": "3-s22",
+          "text": "Another effort was made by the WONPR, or the Women's Organization for National Prohibition Reform which disagreed with the WCTU opinion that their support for Prohibition represented \"the women of America.\"",
+          "tags": {
+            "task_development": { "match": true, "category": "efforts", "note": "Introduces a second effort (WONPR) — develops the efforts aspect and shows two efforts, as the task requires." },
+            "analytical_vs_descriptive": { "match": true, "category": "analytical", "note": "Sets up a contrast (WONPR disagreeing with the WCTU's claim to speak for 'the women of America') — the rater credited this as analytical." },
+            "document_use": { "match": true, "document": "doc4", "note": "From Document 4 — WONPR formed after Ella Boole (WCTU) claimed to represent 'the women of America.' Check Doc 4 to verify." },
+            "outside_information": { "match": false, "note": "Drawn from Document 4." },
+            "supporting_details": { "match": true, "note": "Names the WONPR and its full title and identifies its disagreement with the WCTU — specific, document-based detail." },
+            "organization": { "match": false, "category": "body", "note": "Supporting sentence within the efforts paragraph, introducing the second effort." },
+            "inaccuracy": { "match": false, "note": "Accurate — this essay correctly has the WONPR opposing Prohibition (the Level 1 and Level 2 papers get this wrong)." }
+          }
+        },
+        {
+          "id": "3-s23",
+          "text": "This group's purpose was to campaign against prohibition including motorcading through New York State, \"members attending meetings, giving speeches at rallies, going door to door to recruit new supporters, and using technology to spread their message.\"",
+          "tags": {
+            "task_development": { "match": true, "category": "efforts", "note": "Develops the efforts aspect with specific WONPR campaign activities." },
+            "analytical_vs_descriptive": { "match": false, "category": "descriptive", "note": "Lists activities quoted from the document without interpretation." },
+            "document_use": { "match": true, "document": "doc4", "note": "Paraphrases and quotes Document 4's list of WONPR campaign activities (meetings, rallies, door-to-door, radio, motorcade). Check Doc 4 to verify." },
+            "outside_information": { "match": false, "note": "Drawn from Document 4." },
+            "supporting_details": { "match": true, "note": "Rich list of specific WONPR activities — strong concrete detail credited by the rater." },
+            "organization": { "match": false, "category": "body", "note": "Supporting sentence within the efforts paragraph." },
+            "inaccuracy": { "match": false }
+          }
+        },
+        {
+          "id": "3-s24",
+          "text": "This shows that this organization did whatever they could to get support for repealing the prohibition amendment.",
+          "tags": {
+            "task_development": { "match": true, "category": "efforts", "note": "Closes the efforts discussion by stating the point of the WONPR's actions." },
+            "analytical_vs_descriptive": { "match": true, "category": "analytical", "note": "Draws a conclusion from the evidence ('This shows that... the organization did whatever they could') — the rater credited this as analytical." },
+            "document_use": { "match": false, "note": "The student's own conclusion, not document text." },
+            "outside_information": { "match": false, "note": "Conclusion rather than a discrete outside fact." },
+            "supporting_details": { "match": false, "note": "Interpretive conclusion rather than a specific fact." },
+            "organization": { "match": false, "category": "body", "note": "Closing supporting sentence of the efforts paragraph." },
+            "inaccuracy": { "match": false }
+          }
+        },
+        {
+          "id": "3-s25",
+          "text": "These efforts impacted the United States and our society.",
+          "tags": {
+            "task_development": { "match": true, "category": "impact", "note": "Topic sentence announcing the impact aspect of the task." },
+            "analytical_vs_descriptive": { "match": false, "category": "descriptive", "note": "Framing claim without specific analysis." },
+            "document_use": { "match": false, "note": "No specific document information yet." },
+            "outside_information": { "match": false, "note": "Framing rather than a discrete outside fact." },
+            "supporting_details": { "match": false, "note": "No concrete detail yet — details follow in this paragraph." },
+            "organization": { "match": true, "category": "body", "note": "Topic sentence introducing the third task aspect — impact of the efforts." },
+            "inaccuracy": { "match": false }
+          }
+        },
+        {
+          "id": "3-s26",
+          "text": "One impact anti-prohibitionists made was that in 1933, as the newspaper headline says, \"Prohibition repeal is ratified: New York celebrates with quiet restraint.\"",
+          "tags": {
+            "task_development": { "match": true, "category": "impact", "note": "Develops the impact aspect with the 1933 repeal." },
+            "analytical_vs_descriptive": { "match": false, "category": "descriptive", "note": "Reports the headline without interpreting it." },
+            "document_use": { "match": true, "document": "doc6", "note": "Quotes the Document 6 headline (NYT, Dec 1933: repeal ratified, New York celebrates with quiet restraint). Check Doc 6 to verify." },
+            "outside_information": { "match": false, "note": "Drawn from Document 6." },
+            "supporting_details": { "match": true, "note": "Specific dated event (1933 repeal) with the headline quoted — concrete detail." },
+            "organization": { "match": false, "category": "body", "note": "Supporting sentence within the impact paragraph." },
+            "inaccuracy": { "match": false }
+          }
+        },
+        {
+          "id": "3-s27",
+          "text": "The newspaper stories in Document 6 mention that people celebrated in the streets and many speakeasies closed as alcohol became legal again.",
+          "tags": {
+            "task_development": { "match": true, "category": "impact", "note": "Develops the impact aspect using Doc 6." },
+            "analytical_vs_descriptive": { "match": false, "category": "descriptive", "note": "Reports details from the document without interpretation." },
+            "document_use": { "match": true, "document": "doc6", "note": "Paraphrases Document 6 sub-headlines (celebration in the streets; many speakeasies close). Check Doc 6 to verify." },
+            "outside_information": { "match": false, "note": "Drawn from Document 6." },
+            "supporting_details": { "match": true, "note": "Concrete details (street celebrations, speakeasies closing) drawn from Doc 6." },
+            "organization": { "match": false, "category": "body", "note": "Supporting sentence within the impact paragraph." },
+            "inaccuracy": { "match": false }
+          }
+        },
+        {
+          "id": "3-s28",
+          "text": "One author wrote that prohibition failed.",
+          "tags": {
+            "task_development": { "match": true, "category": "impact", "note": "Develops the impact aspect by introducing the judgment that Prohibition failed." },
+            "analytical_vs_descriptive": { "match": false, "category": "descriptive", "note": "A vague lead-in to the quotation that follows." },
+            "document_use": { "match": false, "note": "Vague attribution ('one author') to the Doc 5 quotation that follows in the next sentence." },
+            "outside_information": { "match": false, "note": "No specific outside fact." },
+            "supporting_details": { "match": false, "note": "General claim; the supporting quotation follows." },
+            "organization": { "match": false, "category": "body", "note": "Supporting sentence within the impact paragraph." },
+            "inaccuracy": { "match": false }
+          }
+        },
+        {
+          "id": "3-s29",
+          "text": "He says, \"in fourteen years Prohibition succeeded neither in changing American's behavior nor in eliminating the problems caused by Alcohol abuse.\"",
+          "tags": {
+            "task_development": { "match": true, "category": "impact", "note": "Develops the impact aspect with Doc 5's assessment of Prohibition's failure." },
+            "analytical_vs_descriptive": { "match": false, "category": "descriptive", "note": "Quotes the document's conclusion rather than the student's own analysis; the student's interpretation comes next." },
+            "document_use": { "match": true, "document": "doc5", "note": "Direct quotation from Document 5 (Michael A. Lerner): in fourteen years Prohibition changed neither behavior nor the problems of alcohol abuse. Check Doc 5 to verify." },
+            "outside_information": { "match": false, "note": "Drawn from Document 5." },
+            "supporting_details": { "match": false, "note": "A quoted evaluative conclusion from Doc 5 rather than a concrete fact." },
+            "organization": { "match": false, "category": "body", "note": "Supporting sentence within the impact paragraph." },
+            "inaccuracy": { "match": false }
+          }
+        },
+        {
+          "id": "3-s30",
+          "text": "This means that Prohibition was pointless because it solved nothing, but created many problems that no one expected, including disrespect for laws and law enforcement.",
+          "tags": {
+            "task_development": { "match": true, "category": "impact", "note": "Develops the impact aspect by interpreting Prohibition's overall effect." },
+            "analytical_vs_descriptive": { "match": true, "category": "analytical", "note": "Interprets the Doc 5 quote and draws an overall conclusion ('Prohibition was pointless... created many problems... disrespect for laws') — the rater credited this as analytical." },
+            "document_use": { "match": false, "note": "The student's own interpretation; 'disrespect for laws and law enforcement' is not stated in the documents." },
+            "outside_information": { "match": false, "note": "Interpretation/conclusion rather than a discrete outside fact." },
+            "supporting_details": { "match": false, "note": "Interpretive conclusion rather than a specific fact." },
+            "organization": { "match": false, "category": "body", "note": "Closing supporting sentence of the impact paragraph." },
+            "inaccuracy": { "match": false }
+          }
+        },
+        {
+          "id": "3-s31",
+          "text": "In conclusion, Prohibition has been just one issue debated in the United States in our history.",
+          "tags": {
+            "task_development": { "match": false, "note": "Conclusion framing; does not develop a new task aspect." },
+            "analytical_vs_descriptive": { "match": false, "category": "descriptive", "note": "Restates the framing of the essay." },
+            "document_use": { "match": false, "note": "No document information." },
+            "outside_information": { "match": false, "note": "No specific outside knowledge." },
+            "supporting_details": { "match": false, "note": "No specific facts or details." },
+            "organization": { "match": true, "category": "conclusion", "note": "Opens the conclusion." },
+            "inaccuracy": { "match": false }
+          }
+        },
+        {
+          "id": "3-s32",
+          "text": "Many efforts were made to address the issue, and only some were successful.",
+          "tags": {
+            "task_development": { "match": false, "note": "Conclusion framing; restates the intro's success/failure point." },
+            "analytical_vs_descriptive": { "match": false, "category": "descriptive", "note": "Restates an earlier general claim." },
+            "document_use": { "match": false, "note": "No document information." },
+            "outside_information": { "match": false, "note": "No specific outside knowledge." },
+            "supporting_details": { "match": false, "note": "No specific facts or details." },
+            "organization": { "match": true, "category": "conclusion", "note": "Conclusion sentence echoing the introduction." },
+            "inaccuracy": { "match": false }
+          }
+        },
+        {
+          "id": "3-s33",
+          "text": "The issue was a big part of our history as a society, and it will never be forgotten because people are still debating the medical and moral issues surrounding alcohol.",
+          "tags": {
+            "task_development": { "match": false, "note": "Conclusion reflection rather than development of a task aspect." },
+            "analytical_vs_descriptive": { "match": false, "category": "descriptive", "note": "A forward-looking reflection; mildly evaluative but the rater did not list it among the essay's analytical statements." },
+            "document_use": { "match": false, "note": "No document information." },
+            "outside_information": { "match": false, "note": "General reflection rather than a discrete outside fact." },
+            "supporting_details": { "match": false, "note": "No specific facts or details." },
+            "organization": { "match": true, "category": "conclusion", "note": "This is the sentence that lifts the conclusion 'beyond a restatement of the theme' — it connects Prohibition to the ongoing present-day debate over alcohol. The rater noted it would have benefited from more explanation." },
+            "inaccuracy": { "match": false }
+          }
+        }
+      ],
+      "rater_commentary": {
+        "task_development": "Develops all aspects of the task with some depth for Prohibition",
+        "analytical_vs_descriptive": "Is both descriptive and analytical (Prohibition outgrowth of temperance crusades which began because people drinking too much hard liquor; efforts had to be made by many to address issue after Prohibition amendment passed; Hoover thought making liquor violations a felony might convince people to obey law; Hoover felt Prohibition would make country better and would serve a great purpose by saving souls, family life, and keeping people out of poorhouses; WONPR disagreed with WCTU opinion that their support for Prohibition represented \"women of America\"; WONPR's activities show they did whatever they could to get support for repealing Prohibition amendment; some believed Prohibition pointless because it solved nothing and created many problems that no one expected, including disrespect for laws and law enforcement)",
+        "document_use": "Incorporates some relevant information from all the documents",
+        "outside_information": "Incorporates limited relevant outside information (unhealthy and unsafe amount of drunkenness led to workers not being able to do their jobs safely or at all; losing jobs because of drunkenness led many men to find themselves in poorhouses; many other problems such as an increase in violent behavior and number of people going to jail for alcohol-related crimes increased)",
+        "supporting_details": "Includes some relevant facts, examples, and details (after War of 1812 alcohol consumption increased; state of Maine alone manufactured 1,333,160 gallons of liquor and sold it in nearly every single store; women's temperance groups at first tried to get drinkers to drink less but changed their goal to prohibiting alcohol completely; men also actively worked for Prohibition for moral and religious reasons in groups such as Anti-Saloon League; Anti-Saloon League kept track of progress National Prohibition making in state legislatures with ratification of Prohibition Amendment; Hoover showed support for Prohibition by signing Five and Ten Law which made liquor violations a felony; crime rates in country increasing and organized crime growing because of people violating Prohibition laws; WONPR campaigned against Prohibition including motorcading through New York State, members attending meetings, giving speeches at rallies, going door to door to recruit new supporters, and using technology to spread their message; Prohibition repealed in 1933; newspaper stories reported people celebrated in streets and many speakeasies closed with repeal of Prohibition and alcohol becoming legal again)",
+        "organization": "Demonstrates a satisfactory plan of organization; includes an introduction that is a restatement of the theme and a conclusion that is beyond a restatement of the theme",
+        "overall_conclusion": "Overall, the response fits the criteria for Level 3. Quoted statements from the documents establish a framework for the discussion and are supported by relevant facts and details. The conclusion that the use of alcohol is a continuing debate would have benefited from additional explanation."
+      }
+    },
+
+    "level_2": {
+      "score": 2,
+      "type": "anchor",
+      "label": "Anchor Paper — Level 2",
+      "raw_text": "Throughout United States history, many Constitutional and Civic issues have been debated by Americans. These debates have resulted in the efforts by individuals, groups, and governments to address these issues. These efforts have achieved varying degrees of success. One of these Constitutional and Civic issues is Prohibition. In the early 19th century heavy drinking was very common amongst Americans, rum was consumed excessively. During 1827, in Maine alone, \"When her population was 360,000, manufactured 1,333,160 gallons of liquor\" (Document 1). Americans, mainly men, were consuming massive amounts of hard liquor every day. This resulted in disastrous Social Consequences. Man became to drunk to work, lost their jobs, and spent all there money at bars. In addition to this men became violent at home, often abusing there children and wives. Women although not doing the majority of the drinking were severely impacted. Women relied on there husbands for money, shelter, and food. Due to the drinking many families were left without. This led to the creation of organizations such as the Anti-Saloon league, and the Womans organization for National prohibition. Both organizations fought to ban Alcohol. This led to the passing of Prohibition on Anti-Alcohol law. Although many people did not like this.\n\nAfter the passing of Prohibition and many similar laws, people wanted them removed. According to document 4, many individuals \"attended meetings and gave speeches at rallies.\" All of this was done in effort to repeal prohibition. In addition to this women raised funds and lobbied petitions to overturn prohibition. In 2932 a mail in survey was conducted and an overwhelming number of people disagreed with prohibition. Document 3 states \"Residents of Ohio, the birth place of prohibition, sent 112,026 ballots for repeal and just 43,289 for keeping the ban on booze.\" The vast majority of people wanted prohibition lifted.\n\nIn the end the 18th Amendment regarding Prohibition was overturned. The end of prohibition allowed us to see \"the demise of a moral crusade.\" (Doc 5) The failure of prohibition allowed Americans to see to what extent the government could control Social behavior and make it uniform. Prohibition revealed the limits of moral reform, prejudice, undemocratic ideals behind the government regulating social ideals.",
+      "sentences": "_TO_BE_BUILT_IN_CLAUDE_CODE",
+      "rater_commentary": {
+        "task_development": "Minimally develops all aspects of the task for Prohibition",
+        "analytical_vs_descriptive": "Is primarily descriptive; includes weak application (men became too drunk to work, lost their jobs, and spent all their money at bars; men became violent at home, often abusing their children and wives); includes faulty application (Anti-Saloon League and Women's Organization for National Prohibition Reform fought to ban alcohol)",
+        "document_use": "Incorporates limited relevant information from all the documents",
+        "outside_information": "Presents little relevant outside information (women relied on husbands for money, shelter, and food and due to drinking many families left without)",
+        "supporting_details": "Includes relevant facts, examples, and details (rum consumed excessively; in 1827 in Maine, population 360,000, 1,333,160 gallons of liquor manufactured; led to creation of organizations such as Anti-Saloon League and Women's Organization for National Prohibition Reform; many individuals attended meetings and gave speeches at rallies to protest Prohibition; residents of Ohio sent 112,026 ballots for repeal and 43,284 sent ballots to keep ban on booze; in the end 18th amendment overturned)",
+        "organization": "Demonstrates a general plan of organization; includes an introduction that is a restatement of the historical context and a concluding sentence",
+        "overall_conclusion": "Overall, the response fits the criteria for Level 2. A few statements of overgeneralized outside information are included; however, most of the discussion focuses on information from the documents. Although lack of development characterizes the overall response, a few analytical statements strengthen the effort."
+      },
+      "known_inaccuracies": [
+        "States WONPR fought to BAN alcohol — WONPR actually fought to REPEAL Prohibition",
+        "Date error: writes '2932' instead of '1932' for the mail-in survey"
+      ]
+    },
+
+    "level_1": {
+      "score": 1,
+      "type": "anchor",
+      "label": "Anchor Paper — Level 1",
+      "raw_text": "The prohibition and the efforts to address the prohibition where not in vain for some of these efforts succeeded others did not. I will be discussing three topics in the essay, one historical circumstances, two efforts by individuals, groups, and/or government to address this issue, and three the impact of these efforts.\n\nOne effort to address the prohibition was making liquor selling and distribution illegal. In the first paragraph of Document three it states \"...Over his first three years in the White House Hoover never wavered in his support for the prohibition. In 1929 he signed the 'Five and ten Law' making every liquor violation a felony...\" Showing his support of the prohibition he has outlawed liquor hoping that this would stop people from selling and drinking liquor.\n\nAnother effect to address the prohibition was for members of a group called WONPR talking about the prohibition in a public setting. In Document four the second paragraph \"WONPR did a lot of what we think of now as typical political campaigning activities: members attended meetings and gave speeches at rallies.\" Showing the people supporting the prohibition would go to great lengths to protect it.\n\nSome historical context of this prohibition was the temperance crusades in document one the text states \"The prohibition movement was an outgrowth of the temperance crusades.\" This historical context was to show where the prohibition was first thought of.\n\nSome impacts of the efforts was and had allowed vocal minority to regulate in Document five the text states in paragraph one \"Prohibition has allowed a vocal minority to regulate the personal habits of all Americans...\"",
+      "sentences": "_TO_BE_BUILT_IN_CLAUDE_CODE",
+      "rater_commentary": {
+        "task_development": "Minimally addresses all aspects of the task for Prohibition",
+        "analytical_vs_descriptive": "Is descriptive (Prohibition and efforts to address it not in vain, for some succeeded while others did not; Hoover hoped Prohibition would stop people from selling and drinking liquor; WONPR members showed that people supporting Prohibition would go to great lengths to protect it; Prohibition allowed vocal minority to regulate personal habits of all Americans)",
+        "document_use": "Includes minimal information from Documents 1, 3, 4, and 5",
+        "outside_information": "Presents no relevant outside information",
+        "supporting_details": "Includes few relevant facts, examples, and details (effort to address Prohibition to make liquor selling and distribution illegal; Hoover signed \"Five and Ten Law\" making every liquor violation a felony; members of WONPR talked about Prohibition in a public setting; WONPR members attended meetings and gave speeches at rallies; Prohibition movement outgrowth of temperance movement); includes an inaccuracy (WONPR worked to support Prohibition)",
+        "organization": "Demonstrates a general plan of organization; includes an introduction that is a restatement of the theme and lacks a conclusion",
+        "overall_conclusion": "Overall, the response fits the criteria for Level 1. Although quotations from the documents briefly address all aspects of the task, the treatment of historical circumstances and impact results in one brief sentence each. The use of generalizations and a lack of explanation throughout the discussion weaken the effort."
+      },
+      "known_inaccuracies": [
+        "States WONPR worked to SUPPORT Prohibition — WONPR actually fought to REPEAL it"
+      ]
+    }
+  },
+
+  "practice_papers": {
+    "paper_a": {
+      "score": 3,
+      "type": "practice",
+      "label": "Practice Paper A",
+      "raw_text": "Throughout different historical periods in the United States, copious amounts of constitutional and civic dilemmas have constantly been raised by the American people. These issues resulted in individuals, groups, and governments all taking action to make change, some being more successful than others. One of these constitutional and civic issues has been Prohibition. Prohibition initially began in the early 1800s when issues regarding the abuse of alcohol increased resulting in disastrous consequences that led to many people being placed in jails and poorhouses. Due to the unwell social state that many people were in, temperance groups formed and persuaded many people that drinking was wrong. Ultimately the government decided to pass laws making it so that the sale of alcohol would end.\n\nThe efforts to address Prohibition were widely seen coming from individuals. In Document 2, their efforts were represented through the democratic system of voting, as people got to voice their opinions both directly and indirectly. State legislators, democratically elected by the people, had to ratify the National Prohibition Amendment. Since only 4 states had not ratified by January 1919, it seemed that many people supported a ban on alcohol. State legislators might have also been persuaded by the moral and religious arguments of individuals in the Anti-Saloon League who supported Prohibition. In Document 3 people voicing their opinion is seen through a mail-in-survey, in The Literary Digest. During this time many were disagreeing with Hoover's Five and Ten Law and federal enforcement and they decided to take action by responding to a survey, in which 112,026 voted for repeal. From this it is made entirely evident that people started to see the problems with Prohibition, and decided to make their opinions known.\n\nAside from the people in general making efforts to address Prohibition more specific groups such as women decided to take action as well. In Document 4, an example of this is represented through the creation of the organization WONPR (Women's Organization for National Prohibition Reform.) This organization worked to repeal Prohibition from the view point of the \"new women\". They strongly believed that it only created more issues as it led to distrust and more underage drinking, and they actively worked to recruit more people and gain publicity through events.\n\nThe courses of action taken by the people were successful in that the 18th Amendment was passed and later proved to be successful as Prohibition was eventually repealed.\n\nIt was made entirely evident that these efforts were successful and represented the shifting viewpoints of the people. In Document 5, it is clearly stated by Michael A Lerner that the act of Prohibition was unsuccessful both in changing Americans people's behaviors and putting an end to substance abuse. It was gradually deemed as a complete failure as it was supported by fewer and fewer people. The efforts taken by groups such as the WONPR, as previously stated, directly contributed to this matter as it shined more light on the fact that although Prohibition was achieved through democratic methods, in the end it was seen as undemocratic and was repealed by the efforts taken by the American people speaking out against it. It is evident that the democratic system puts more power at the hands of the people.\n\nIn Document 6, we are given a prime example of what the people through their efforts achieved in a primary source. The source is a newspaper article informing people of the ratification of the Prohibition repeal and explains President Roosevelt's opinions on it. It ultimately states that although he supported it, the repeal celebration was done with \"restraint\" as many speakeasies were closed and liquor was scarce.",
+      "sentences": "_TO_BE_BUILT_IN_CLAUDE_CODE",
+      "rater_commentary_summary": "Overall, the response fits the criteria for Level 3. Analytic statements demonstrate a good understanding of the role individuals played in the democratic process in addressing the issue of Prohibition. Further development of historical circumstances would have strengthened the effort."
+    },
+    "paper_b": {
+      "score": 4,
+      "type": "practice",
+      "label": "Practice Paper B",
+      "raw_text": "The consumption of alcohol has been seen as a relief for some after a hard day of labor or as part of a family celebration or gathering. American drinking habits in the 1800s with alcohol consumption on the rise, made it more common to think that a change needed to be made. While there have been many debates over Prohibition and efforts to address the issue, there wasn't a national ban until the 20th century.\n\nAlthough alcohol has always been a part of society, the prohibition idea didn't come around until the 19th century. After the war of 1812, there was an increase in alcohol production due to the high demand (Doc 1). Alcohol prices dropped and it became more accessible for all. Unfortunately, this caused an increase in husbands who drank too much. While that may seem unimportant, many women were becoming concerned for their future life styles. Often, the husband would spend the little money made on purchasing alcohol and once he came home he might act violently towards his wife and children. Although this scenario may not occur in all households, many women decided to speak out against alcohol in order to support other women and families. On top of all this, the cult of domesticity was prominent during the 1800s and was a belief that women belong at home in their sphere being caretakers and house wives. It was assumed that women would not get jobs outside the home and the husband would be the protector and provider. Alcohol abuse by their husbands threatened their sphere. This left women at the mercy of their husbands because they needed his income in order to live a life of security. This inspired women to unite together and organize temperance movements which ultimately sparked the prohibition movement and ratification of the 18th Amendment.\n\nWith the success of the prohibition movement came the need for enforcement measures. Many efforts were made to \"crystallize their cause.\" In 1929, Hoover signed the \"Five and Ten Law,\" which made every liquor violation a felony. (Doc 3). Hoover did this in hopes of it further enforcing the 18th Amendment, but unfortunately many of the efforts to improve enforcement failed. Many had become so willing to break the law that there weren't enough police to enforce Prohibition. Some people were willing to join gangs or even purchase bootleg alcohol. Hoover's efforts led to a significant increase of the jail population but not public support for Prohibition which eventually led to the repeal of the amendment. At this point prohibition of alcohol was affecting the worsening economy. However Hoover was not the only person making efforts to address the issues of prohibition. Many women changed from being temperance supporters to opposing Prohibition. In 1929, the Women's Organization for National Prohibition Reform (WONPR) was founded to politically fight against temperance. They believed that prohibition had led to a spike in the amount of underage drinkers. So they were able to raise money despite the Depression and held rallies, radio talks, and even door-to-door recruitment to spread their message (Doc 4). While the WONPR was fighting Prohibitionists, it revealed how controversial this topic was. There was no \"easy\" fix and it would take Franklin Roosevelt to order the 21st Amendment to take effect in 1933 after it was ratified (Doc 6).\n\nThe impacts of prohibition were many. The prohibition era or the dry crusade made many citizens believe that the government was untrustworthy and suffocating (Doc 4 + 5). Eventually Roosevelt supported repeal of prohibition, but with some restraint on saloons and their hours (Doc 6). After that people had other things to worry about so things began settle down and eventually the American people had to compromise. Today, there is a drinking age of 21 and while that's not always followed to the fullest, it does help place boundaries on alcohol. This era will never be deemed as completely successful due to all the backlash it received, the difficulty with enforcement, and the criminal behavior it encouraged. However, there were some successes. Since Prohibition was controversial, it gave people the opportunity to express their ideas and beliefs and the government listened when the majority won the debate with the repeal of prohibition (Doc 6).\n\nAlcohol is still an issue in today's society, but even so it is at a smaller scale. It took a long Depression and World War II to get over the prohibition conflict. While this issue may never fully be resolved it has come a long way since the 19th and 20th centuries.",
+      "sentences": "_TO_BE_BUILT_IN_CLAUDE_CODE",
+      "rater_commentary_summary": "Overall, the response fits the criteria for Level 4. A good understanding of the role of the cult of domesticity in encouraging the support of women for Prohibition is demonstrated. While some important concepts are included in the discussion of impact, additional facts and details would have strengthened the effort."
+    },
+    "paper_c": {
+      "score": 1,
+      "type": "practice",
+      "label": "Practice Paper C",
+      "raw_text": "The Historical context behind prohibition is...back in the Early 1800's, Alcohol had become majority popular in England especially after the 1812 war. Naturally, this love for alcohol would carry over to America. However, this alcohol was created drunken fathers and create tears in families and domestic life. So people wanted to change this and, after 25-years, the prohibition act had been passed by an almost unanimous vote by the states. Laws had been passed that make the sale or consumption of alcohol illegal. For a while, this law would be in power. However, soon the cracks of prohibition would begin to show. Mail-in surveys conducted by the Literary digest showed that people were more in favor of repealing the prohibition act. Groups like WONPR had formed to fight to repeal prohibition act. And despite having made alcohol illegal, people had still been drinking and selling it (illegally) regardless. Soon, it was decided that the prohibition act was a complete failure, and was repealed. However, when repealed, Roosevelt still kept saloons and bars closed",
+      "sentences": "_TO_BE_BUILT_IN_CLAUDE_CODE",
+      "rater_commentary_summary": "Overall, the response fits the criteria for Level 1. A few facts from all the documents mention all aspects of the task; however, lack of development weakens their effectiveness. Although a limited understanding of Prohibition is demonstrated, the response is limited in scope and lacks details."
+    },
+    "paper_d": {
+      "score": 5,
+      "type": "practice",
+      "label": "Practice Paper D",
+      "raw_text": "Debates over rights, laws, privileges, etc. have existed for as long as the U.S. itself has. Many of these debates are fueled by the pursuit of morality & equality, such as the womans' rights movement & the abolitionist cause. Notably, the issue of Prohibition persisted throughout much of American history. While many supported the cause, seeing it as a vital opportunity for moral reform, others opposed it, believing the seemingly benevolent movement actually did more harm than good. The affects of both sides of the Prohibition movement are still felt today, even though the movement ultimately failed.\n\nPrior to the emergence of the idea of Prohibition, the sale & consumption of alcohol was at an all time high. Document 1 states that following the War of 1812, \"a large commerce in West Indian rum\" grew in the New England states, and that \"hard drinking was almost the rule for Fathers of the Republic\". This document helps to convey how truly widespread the consumption of alcohol was. However, along with other morally motivated movements, the Prohibition movement emerged in an attempt to combat this, resulting in what some expected to be unanimous state approval for national prohibition.\n\nMany Americans supported the movement, seeking to ban alcohol in the name of moral reform. The reason for this is that drinking often led to disastrous social effects & was generally seen as \"immoral behavior\". Families were destabilized and drunkenness caused men to lose jobs and not be able to support their families. Alcohol was also seen as degrading to women as men sat in saloons disrespecting their wives who were home caring for their children. Carrie Nation's saloon smashing is an example of the frustration many women in the Women's Christian Temperance Union were feeling. Religious convictions were often at the core of Prohibition as can be seen in document 2. It frames the ratification of the Prohibition movement as \"the greatest victory for moral reform in America since the Declaration of Independence\". Audiences throughout the country became convinced that drinking was inherently immoral. This is corroborated by document 3, which displays President Hoover's support for Prohibition, highlighting the \"Five and Ten Law\", which made every liquor violation a felony, along with his support for the general Prohibition movement which he saw as \"a great social and economic experiment, noble in motive and far-reaching in purpose.\" By 1932, Americans were outspoken about their support for repeal of the Amendment; but Hoover continued to support Prohibition during his campaign for reelection. With only one state polling in favor of Prohibition and with people suffering from the Great Depression the mood of the nation was not great.\n\nThe Depression caused even more people to question Prohibition. A large number of Americans opposed the movement, seeing it as a band-aid fix to a larger problem which had unforeseen consequences. The reason for this is that it was largely an attempt to control the lives of Americans, which angered some and caused others to rebel, leading to increases in issues such as underage drinking. For example, document 4 presents a declaration from the WONPR, a group of women dedicated to opposing temperance in the 1920s when women were becoming bolder and more independent. They also had gotten the right to vote in the 19th Amendment. They expressed their primary gripes with the 18th amendment, stating \"the WONPR's opposition to Prohibition, just like the 18th amendment itself, was not only about drinking, but also about the government's role in regulating behavior\".\n\nThe effects of the Prohibition movement are still felt today, in a America where alcohol is legal. The reason for this is that even though Prohibition ultimately failed, the existence of things like alcohol licenses show that attempts to regulate alcohol use remain. Document 6 displays a newspaper showing Roosevelt's announcement about the repeal of Prohibition, which he supported when running for President. However, he also asked the nation to ban the operation of bars, saloons, and taverns in the U.S. Roosevelt's actions reflected much of modern day America's view on alcohol & temperance: it should be legal, but sufficiently regulated.\n\nEven in the present, the legality of drugs/intoxicating items is still being questioned. Notably, marijuana has been a hot button topic. While undeniably a drug which can prove to harm, it also has noticeable medical benefits which should be considered. Going back a couple years, cigarettes were also a topic of discussion. Many believed tobacco wasn't harmful and was possibly even helpful. However, we now know that tobacco is highly harmful to the human body. Most of these discussions either circle back or mirror discussions over alcohol.",
+      "sentences": "_TO_BE_BUILT_IN_CLAUDE_CODE",
+      "rater_commentary_summary": "Overall, the response fits the criteria for Level 5. An analytical discussion of Prohibition is well supported by substantive historical details and effective integration of document quotations. The treatment of impact includes thoughtful conclusions about the continuing influence of the Prohibition debate and its connection to contemporary debates over federal regulation of personal behavior."
+    },
+    "paper_e": {
+      "score": 2,
+      "type": "practice",
+      "label": "Practice Paper E",
+      "note": "Confirmed Level 2. The rater commentary text in the rating guide was a copy-paste error from Paper C — the score is 2.",
+      "raw_text": "The historical circumstances surrounding the constitutional or civic issue of prohibition in the United States were largely driven by the temperance movement, which sought to reduce or eliminate the consumption of alcoholic beverages. This movement gained momentum in the late 19th and early 20th centuries culminating in the passage of the 18th Amendment in 1919 which prohibited the manufacture sale and transportation of alcoholic beverages Efforts by individuals, groups, and governments to address the issue of prohibition were varied and often contentious. Supporters of prohibition including religious groups and women's organization believed that alcohol was the root cause of many social problems including domestic violence and poverty. They lobbied for the passage of the 18th Amendment which was eventually ratified and went into effect in 1920. However, prohibition was met with widespread resistance leading to the rise of organized crime and illegal speakeasies. This resistance ultimately led to the repeal of prohibition with the passage of the 21st Amendment in 1933 the impact of prohibition on the United States and American society was profound. While it was intended to address social issues and improve public morals it often had the opposite effect. The rise of organized crime the loss of tax revenue from the alcohol industry and the widespread disregard for the law all had lasting impacts on American society. Ultimately the efforts to enforce prohibition were unsuccessful leading to its repeal and the return of legal alcohol sales.",
+      "sentences": "_TO_BE_BUILT_IN_CLAUDE_CODE",
+      "rater_commentary_summary": "Overall, the response fits the criteria for Level 1. A few facts from all the documents mention all aspects of the task; however, lack of development weakens their effectiveness. Although a limited understanding of Prohibition is demonstrated, the response is limited in scope and lacks details."
+    }
+  }
+}
