@@ -182,6 +182,12 @@
     padding: 2px 8px; border-radius: 999px;
   }
   .taskbar .prompt { margin: 8px 0 0; color: var(--text-primary); }
+  .taskbar .dim-tip {
+    margin: 9px 0 0; padding: 9px 12px; font-size: 0.86rem;
+    color: var(--text-primary); background: rgba(232, 255, 71, 0.08);
+    border: 1px solid var(--border); border-left: 3px solid var(--accent);
+    border-radius: 7px;
+  }
   .taskbar .progress-wrap { margin-top: 12px; }
   .progress-bar {
     height: 9px; background: var(--bg-base); border-radius: 999px; overflow: hidden;
@@ -190,6 +196,13 @@
   .progress-bar > span { display: block; height: 100%; width: 0; background: var(--correct); transition: width 0.3s; }
   .progress-label { font-size: 0.82rem; color: var(--text-muted); margin-top: 6px; display: flex; gap: 14px; flex-wrap: wrap; }
   .progress-label b { color: var(--text-primary); }
+
+  .level-select { display: flex; align-items: center; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
+  .level-select .ls-label { font-size: 0.8rem; color: var(--text-muted); margin-right: 2px; }
+  .level-opt { font: inherit; font-size: 0.8rem; cursor: pointer; border: 1px solid var(--border); background: var(--bg-base); color: var(--text-muted); padding: 7px 13px; min-height: 40px; border-radius: 7px; }
+  .level-opt:hover { background: var(--bg-card-hover); color: var(--text-primary); }
+  .level-opt.active { background: var(--accent); color: #1a1a1a; border-color: var(--accent); font-weight: 600; }
+  .level-opt:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
   /* ---------- Essay sentences ---------- */
   .essay {
@@ -358,7 +371,7 @@
 
 <script>
 /* =========================================================================
-   Rate Like a Rater — Level 3 build
+   Rate Like a Rater — anchor training (Levels 4 / 3 / 2) + Rate the Essay
    Data is inlined below (generated from rubric.json / documents.json /
    essays.json by build.js) so the file runs standalone with no server.
    Compliance: §0 no PII sent anywhere; §1 tab + next/prev nav; §2 directions
@@ -368,17 +381,43 @@
    ========================================================================= */
 const SIM_DATA = __SIM_DATA__;
 
-const LS_KEY = "edsim_ratelikearater_l3_v1";
+const LS_KEY = "edsim_ratelikearater_v3";
 const DIM_BY_ID = {};
 SIM_DATA.dimensions.forEach(d => DIM_BY_ID[d.id] = d);
 
+/* ---------------- Current anchor essay ---------------- */
+const DEFAULT_ESSAY_ID = SIM_DATA.defaultEssayId || SIM_DATA.anchors[0].id;
+let currentEssayId = DEFAULT_ESSAY_ID;
+function currentEssay() {
+  return SIM_DATA.anchors.find(a => a.id === currentEssayId) || SIM_DATA.anchors[0];
+}
+
+/* ---------------- Current practice paper (Rate the Essay) ---------------- */
+const DEFAULT_PRACTICE_ID = SIM_DATA.defaultPracticeId || SIM_DATA.practices[0].id;
+let currentPracticeId = DEFAULT_PRACTICE_ID;
+function currentPractice() {
+  return SIM_DATA.practices.find(p => p.id === currentPracticeId) || SIM_DATA.practices[0];
+}
+function ratingFor(id) {
+  id = id || currentPracticeId;
+  return state.ratings[id] || { score: null, justification: "", submitted: false };
+}
+function ensureRating(id) {
+  if (!state.ratings[id]) state.ratings[id] = { score: null, justification: "", submitted: false };
+  return state.ratings[id];
+}
+
 /* ---------------- State ---------------- */
+// selections: { essayId: { dimId: { sentenceId: true } } }
+// ratings:    { practiceId: { score, justification, submitted } }
 function blankState() {
   return {
     name: "",
     period: "",
-    selections: {},          // { dimId: { sentenceId: true } }
-    rate: { score: null, justification: "", submitted: false }
+    currentEssayId: DEFAULT_ESSAY_ID,
+    currentPracticeId: DEFAULT_PRACTICE_ID,
+    selections: {},
+    ratings: {}
   };
 }
 let state = blankState();
@@ -387,6 +426,8 @@ let docActive = SIM_DATA.documents[0].id;
 
 /* ---------------- Persistence (§5) ---------------- */
 function save() {
+  state.currentEssayId = currentEssayId;
+  state.currentPracticeId = currentPracticeId;
   try { localStorage.setItem(LS_KEY, JSON.stringify(state)); } catch (e) {}
 }
 function load() {
@@ -397,7 +438,13 @@ function load() {
     if (parsed && typeof parsed === "object") {
       state = Object.assign(blankState(), parsed);
       state.selections = parsed.selections || {};
-      state.rate = Object.assign({ score: null, justification: "", submitted: false }, parsed.rate || {});
+      state.ratings = parsed.ratings || {};
+      if (parsed.currentEssayId && SIM_DATA.anchors.some(a => a.id === parsed.currentEssayId)) {
+        currentEssayId = parsed.currentEssayId;
+      }
+      if (parsed.currentPracticeId && SIM_DATA.practices.some(p => p.id === parsed.currentPracticeId)) {
+        currentPracticeId = parsed.currentPracticeId;
+      }
     }
   } catch (e) {}
 }
@@ -412,43 +459,59 @@ const PANELS = [{ kind: "intro", label: "Directions", icon: "📖" }]
 function esc(s) {
   return String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 }
+// Selections are stored per essay: state.selections[essayId][dimId][sentenceId].
+function selFor(dimId, essayId) {
+  essayId = essayId || currentEssayId;
+  return (state.selections[essayId] && state.selections[essayId][dimId]) || {};
+}
+function ensureSel(essayId, dimId) {
+  if (!state.selections[essayId]) state.selections[essayId] = {};
+  if (!state.selections[essayId][dimId]) state.selections[essayId][dimId] = {};
+  return state.selections[essayId][dimId];
+}
 // Some dimensions (Task Identification) are scored by ASPECT, not by sentence:
 // finding the topic sentence OR any sentence in a section credits that aspect.
 function isAspectMode(dimId) {
   return (DIM_BY_ID[dimId] || {}).count_mode === "aspect";
 }
-function allAspects(dimId) {
+function allAspects(dimId, essay) {
+  essay = essay || currentEssay();
   const set = new Set();
-  SIM_DATA.essay.sentences.forEach(s => {
+  essay.sentences.forEach(s => {
     const t = s.tags[dimId];
     if (t && t.match && t.category) set.add(t.category);
   });
   return [...set];
 }
-function foundAspects(dimId) {
-  const sel = state.selections[dimId] || {};
+function foundAspects(dimId, essay) {
+  essay = essay || currentEssay();
+  const sel = selFor(dimId, essay.id);
   const set = new Set();
-  SIM_DATA.essay.sentences.forEach(s => {
+  essay.sentences.forEach(s => {
     const t = s.tags[dimId];
     if (sel[s.id] && t && t.match && t.category) set.add(t.category);
   });
   return [...set];
 }
-function dimTotal(dimId) {
-  if (isAspectMode(dimId)) return allAspects(dimId).length;
-  return SIM_DATA.essay.sentences.filter(s => s.tags[dimId] && s.tags[dimId].match).length;
+function dimTotal(dimId, essay) {
+  essay = essay || currentEssay();
+  if (isAspectMode(dimId)) return allAspects(dimId, essay).length;
+  return essay.sentences.filter(s => s.tags[dimId] && s.tags[dimId].match).length;
 }
-function dimFoundCorrect(dimId) {
-  if (isAspectMode(dimId)) return foundAspects(dimId).length;
-  const sel = state.selections[dimId] || {};
-  return SIM_DATA.essay.sentences.filter(s => sel[s.id] && s.tags[dimId] && s.tags[dimId].match).length;
+function dimFoundCorrect(dimId, essay) {
+  essay = essay || currentEssay();
+  if (isAspectMode(dimId)) return foundAspects(dimId, essay).length;
+  const sel = selFor(dimId, essay.id);
+  return essay.sentences.filter(s => sel[s.id] && s.tags[dimId] && s.tags[dimId].match).length;
 }
-function dimWrong(dimId) {
-  const sel = state.selections[dimId] || {};
-  return SIM_DATA.essay.sentences.filter(s => sel[s.id] && !(s.tags[dimId] && s.tags[dimId].match)).length;
+function dimWrong(dimId, essay) {
+  essay = essay || currentEssay();
+  const sel = selFor(dimId, essay.id);
+  return essay.sentences.filter(s => sel[s.id] && !(s.tags[dimId] && s.tags[dimId].match)).length;
 }
-function dimComplete(dimId) {
-  return dimTotal(dimId) > 0 && dimFoundCorrect(dimId) === dimTotal(dimId);
+function dimComplete(dimId, essay) {
+  essay = essay || currentEssay();
+  return dimTotal(dimId, essay) > 0 && dimFoundCorrect(dimId, essay) === dimTotal(dimId, essay);
 }
 
 /* ---------------- Build tab bar (§1) ---------------- */
@@ -471,15 +534,14 @@ function renderTabs() {
 }
 
 /* ---------------- Sentence rendering ---------------- */
-// Essay paragraphs: split sentences into paragraphs of original 5-paragraph structure.
-const PARA_BREAKS = SIM_DATA.essay.paragraphs; // array of sentence counts per paragraph
-
 function renderEssayForDim(dimId) {
   const wrap = document.createElement("div");
   wrap.className = "essay";
-  const sents = SIM_DATA.essay.sentences;
+  const essay = currentEssay();
+  const sents = essay.sentences;
+  const breaks = essay.paragraphs || [sents.length];
   let idx = 0;
-  (PARA_BREAKS || [sents.length]).forEach(count => {
+  breaks.forEach(count => {
     const para = document.createElement("p");
     para.className = "para";
     for (let k = 0; k < count && idx < sents.length; k++, idx++) {
@@ -504,8 +566,7 @@ function renderEssayForDim(dimId) {
 }
 
 function toggleSentence(dimId, sid) {
-  if (!state.selections[dimId]) state.selections[dimId] = {};
-  const sel = state.selections[dimId];
+  const sel = ensureSel(currentEssayId, dimId);
   if (sel[sid]) delete sel[sid]; else sel[sid] = true;
   save();
   paintDim(dimId);
@@ -515,8 +576,9 @@ function toggleSentence(dimId, sid) {
 function paintDim(dimId) {
   const panel = document.getElementById("panel-" + dimId);
   if (!panel) return;
-  const sel = state.selections[dimId] || {};
-  const sents = SIM_DATA.essay.sentences;
+  const essay = currentEssay();
+  const sel = selFor(dimId, essay.id);
+  const sents = essay.sentences;
   sents.forEach(s => {
     const btn = panel.querySelector('.sentence[data-sid="' + CSS.escape(s.id) + '"]');
     const slot = panel.querySelector('.fb-slot[data-for="' + CSS.escape(s.id) + '"]');
@@ -559,16 +621,27 @@ function paintDim(dimId) {
   const lab = panel.querySelector(".progress-label");
   if (lab) {
     const aspect = isAspectMode(dimId);
-    let foundList = "";
-    if (aspect) {
-      const names = foundAspects(dimId).map(c => esc(c.replace(/_/g, " ")));
-      if (names.length) foundList = ` &nbsp;·&nbsp; <span style="color:var(--correct)">${names.join(", ")}</span>`;
+    if (total === 0) {
+      // A dimension with no matches in this essay (e.g. Level 1 has no analytical
+      // or outside-info sentences) — recognizing the absence is the lesson.
+      const msg = (dimId === "document_use")
+        ? "⚠️ This writer never cites a source document. The essay may read well, but with no documents used it can't score high — the task requires using at least four. Spotting that gap is the whole lesson here."
+        : "This essay has no sentences for this dimension — noticing that is the point at this level.";
+      lab.innerHTML =
+        `<span style="color:var(--text-muted)">${msg}</span>` +
+        (wrong ? ` &nbsp;·&nbsp; <span style="color:var(--incorrect)">${wrong} clicked, none match</span>` : "");
+    } else {
+      let foundList = "";
+      if (aspect) {
+        const names = foundAspects(dimId).map(c => esc(c.replace(/_/g, " ")));
+        if (names.length) foundList = ` &nbsp;·&nbsp; <span style="color:var(--correct)">${names.join(", ")}</span>`;
+      }
+      lab.innerHTML =
+        `Found <b>${found}</b> of <b>${total}</b> ${aspect ? "task aspects" : "in this essay"}` +
+        foundList +
+        (wrong ? ` &nbsp;·&nbsp; <span style="color:var(--incorrect)">${wrong} not a match</span>` : "") +
+        (found === total ? ` &nbsp;·&nbsp; <span style="color:var(--correct)">complete ✓</span>` : "");
     }
-    lab.innerHTML =
-      `Found <b>${found}</b> of <b>${total}</b> ${aspect ? "task aspects" : "in this essay"}` +
-      foundList +
-      (wrong ? ` &nbsp;·&nbsp; <span style="color:var(--incorrect)">${wrong} not a match</span>` : "") +
-      (total && found === total ? ` &nbsp;·&nbsp; <span style="color:var(--correct)">complete ✓</span>` : "");
   }
 }
 
@@ -582,14 +655,14 @@ function buildIntroPanel() {
   ).join("");
   p.innerHTML = `
     <h2 class="panel-title">Rate Like a Rater</h2>
-    <p class="panel-sub">${esc(SIM_DATA.meta.exam)} Civic Literacy Essay · Topic: ${esc(SIM_DATA.meta.topic)} · Anchor Paper — Level ${SIM_DATA.essay.score}</p>
+    <p class="panel-sub">${esc(SIM_DATA.meta.exam)} Civic Literacy Essay · Topic: ${esc(SIM_DATA.meta.topic)} · ${SIM_DATA.anchors.length} sample essays to study (Essays ${esc(SIM_DATA.anchors[0].letter)}–${esc(SIM_DATA.anchors[SIM_DATA.anchors.length - 1].letter)})</p>
 
     <div class="card">
       <h3>What you'll do</h3>
       <ol class="steps">
-        <li><span class="num">1</span><div><b>Train on each rubric dimension (~3–4 min each).</b> For each dimension tab, read the prompt at the top, then click the sentences in the essay that match it. You'll get instant feedback explaining why each sentence does or doesn't count.</div></li>
+        <li><span class="num">1</span><div><b>Train on each rubric dimension (~3–4 min each).</b> For each dimension tab, read the prompt at the top, then click the sentences in the essay that match it. You'll get instant feedback explaining why each sentence does or doesn't count. Use the <b>Sample essay</b> buttons at the top of a dimension to switch between the ${SIM_DATA.anchors.length} essays (Essays ${esc(SIM_DATA.anchors[0].letter)}–${esc(SIM_DATA.anchors[SIM_DATA.anchors.length - 1].letter)}) — they're labeled with letters, not scores, so you can judge the writing for yourself.</div></li>
         <li><span class="num">2</span><div><b>Use the documents.</b> Tap <b>View Documents</b> any time to check the essay's claims against the six sources (or use your paper copies).</div></li>
-        <li><span class="num">3</span><div><b>Rate the Essay (~8–10 min).</b> The last tab gives you a fresh practice paper. Read it, assign a score 0–5, and justify it — then reveal the official score and see how you did.</div></li>
+        <li><span class="num">3</span><div><b>Rate the Essay (~8–10 min).</b> The last tab gives you fresh practice papers (A–${esc(String.fromCharCode(64 + SIM_DATA.practices.length))}). Pick one, read it, assign a score 0–5, and justify it — then reveal the official score and see how you did.</div></li>
       </ol>
       <p class="privacy-note">Total time: about 30–40 minutes. You can stop anytime — your work saves on this device automatically.</p>
     </div>
@@ -622,6 +695,9 @@ function buildDimPanel(dim) {
   p.className = "panel";
   p.id = "panel-" + dim.id;
   const adv = dim.advanced ? '<span class="advanced-flag">Advanced</span>' : "";
+  const levelOpts = SIM_DATA.anchors.map(a =>
+    `<button type="button" class="level-opt${a.id === currentEssayId ? " active" : ""}" data-essay="${a.id}" aria-pressed="${a.id === currentEssayId}">Essay ${esc(a.letter)}</button>`
+  ).join("");
   p.innerHTML = `
     <div class="taskbar">
       <div class="tb-head">
@@ -630,6 +706,11 @@ function buildDimPanel(dim) {
         ${adv}
       </div>
       <p class="prompt">${esc(dim.student_prompt)}</p>
+      ${dim.tip ? `<p class="dim-tip">💡 ${esc(dim.tip)}</p>` : ""}
+      <div class="level-select" role="group" aria-label="Choose a sample essay">
+        <span class="ls-label">Sample essay:</span>
+        ${levelOpts}
+      </div>
       <div class="progress-wrap">
         <div class="progress-bar"><span></span></div>
         <div class="progress-label"></div>
@@ -648,12 +729,20 @@ function buildRatePanel() {
   const p = document.createElement("section");
   p.className = "panel";
   p.id = "panel-rate";
-  const paras = SIM_DATA.practice.raw_text.split(/\n\n+/).map(t => `<p>${esc(t)}</p>`).join("");
+  const practice = currentPractice();
+  const paras = practice.raw_text.split(/\n\n+/).map(t => `<p>${esc(t)}</p>`).join("");
   const scoreBtns = [0,1,2,3,4,5].map(n => `<button class="score-opt" type="button" data-score="${n}" aria-label="Score ${n}">${n}</button>`).join("");
+  const practiceOpts = SIM_DATA.practices.map((pp, i) =>
+    `<button type="button" class="level-opt${pp.id === currentPracticeId ? " active" : ""}" data-practice="${pp.id}" aria-pressed="${pp.id === currentPracticeId}">Paper ${String.fromCharCode(65 + i)}</button>`
+  ).join("");
   p.innerHTML = `
     <div class="taskbar" style="border-left-color:var(--gold)">
       <div class="tb-head"><span class="tb-icon" aria-hidden="true">🎯</span><h3>Rate the Essay</h3></div>
-      <p class="prompt">This is a <b>new practice paper</b> — not one of the anchors you trained on. Read it, then assign a holistic score from 0 to 5 and justify your reasoning. When you submit, you'll see the official score and rater commentary.</p>
+      <p class="prompt">These are <b>practice papers</b> — not the anchors you trained on. Pick a paper, read it, assign a holistic score from 0 to 5, and justify your reasoning. When you submit, you'll see the official score and rater commentary.</p>
+      <div class="level-select" role="group" aria-label="Choose a practice paper">
+        <span class="ls-label">Practice paper:</span>
+        ${practiceOpts}
+      </div>
     </div>
 
     <div class="rate-essay">${paras}</div>
@@ -683,9 +772,11 @@ function buildRatePanel() {
 function buildReveal() {
   const mount = document.getElementById("revealMount");
   if (!mount) return;
-  if (!state.rate.submitted || state.rate.score === null) { mount.innerHTML = ""; return; }
-  const official = SIM_DATA.practice.score;
-  const mine = state.rate.score;
+  const practice = currentPractice();
+  const rating = ratingFor(currentPracticeId);
+  if (!rating.submitted || rating.score === null) { mount.innerHTML = ""; return; }
+  const official = practice.score;
+  const mine = rating.score;
   const diff = Math.abs(mine - official);
   let cls = "off", word = "Quite different";
   if (diff === 0) { cls = "match"; word = "Spot on — you rated like a rater!"; }
@@ -700,7 +791,7 @@ function buildReveal() {
         <div class="score-box"><div class="big">${mine}</div><div class="lbl">Your score</div></div>
       </div>
       <div class="verdict ${cls}">${word}</div>
-      <p><b>What the rater said:</b><br>${esc(SIM_DATA.practice.rater_commentary_summary)}</p>
+      <p><b>What the rater said:</b><br>${esc(practice.rater_commentary_summary)}</p>
       <details class="rubric-ref">
         <summary>See the Level ${official} rubric descriptors</summary>
         <ul>${levelBullets}</ul>
@@ -712,8 +803,7 @@ function buildReveal() {
 }
 
 /* ---------------- Navigation (§1, §12) ---------------- */
-function goTo(i) {
-  activeIndex = Math.max(0, Math.min(PANELS.length - 1, i));
+function showActivePanel(scroll) {
   document.querySelectorAll(".panel").forEach(el => el.classList.remove("active"));
   const p = PANELS[activeIndex];
   const id = p.kind === "intro" ? "panel-intro" : p.kind === "rate" ? "panel-rate" : "panel-" + p.id;
@@ -721,36 +811,76 @@ function goTo(i) {
   if (el) el.classList.add("active");
   if (p.kind === "dim") paintDim(p.id);
   renderTabs();
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  if (scroll) window.scrollTo({ top: 0, behavior: "smooth" });
+}
+function goTo(i) {
+  activeIndex = Math.max(0, Math.min(PANELS.length - 1, i));
+  showActivePanel(true);
+}
+// Switch the active anchor essay. Rebuilds the dimension panels for the new
+// essay but keeps the student on the same dimension tab.
+function setEssay(id) {
+  if (id === currentEssayId || !SIM_DATA.anchors.some(a => a.id === id)) return;
+  currentEssayId = id;
+  save();
+  rebuildDynamic();
+  showActivePanel(false);
+  const tb = document.querySelector(".panel.active .taskbar");
+  if (tb) tb.scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+// Switch the practice paper in the Rate the Essay task (keeps each paper's own rating).
+function setPractice(id) {
+  if (id === currentPracticeId || !SIM_DATA.practices.some(p => p.id === id)) return;
+  currentPracticeId = id;
+  save();
+  rebuildDynamic();
+  showActivePanel(false);
+  const tb = document.querySelector("#panel-rate .taskbar");
+  if (tb) tb.scrollIntoView({ behavior: "smooth", block: "nearest" });
 }
 
 /* ---------------- Export: Copy Text (§3 Option B, reset on success) ---------------- */
 function buildExportText() {
   const L = [];
   L.push("RATE LIKE A RATER — my work");
-  L.push(SIM_DATA.meta.exam + " · " + SIM_DATA.meta.topic + " · Anchor Level " + SIM_DATA.essay.score);
+  L.push(SIM_DATA.meta.exam + " · " + SIM_DATA.meta.topic);
   if (state.name || state.period) L.push("Student: " + (state.name || "—") + "   Period: " + (state.period || "—"));
   L.push("");
-  SIM_DATA.dimensions.forEach(d => {
-    const total = dimTotal(d.id), found = dimFoundCorrect(d.id), wrong = dimWrong(d.id);
-    L.push(`## ${d.label} — found ${found}/${total}` + (wrong ? `, ${wrong} not a match` : ""));
-    const sel = state.selections[d.id] || {};
-    SIM_DATA.essay.sentences.forEach(s => {
-      if (sel[s.id]) {
-        const ok = s.tags[d.id] && s.tags[d.id].match;
-        L.push(`   ${ok ? "[✓]" : "[✗]"} ${s.text}`);
-      }
+  SIM_DATA.anchors.forEach(essay => {
+    const worked = SIM_DATA.dimensions.some(d => Object.keys(selFor(d.id, essay.id)).length > 0);
+    if (!worked) return;
+    L.push("==================================================");
+    L.push("SAMPLE ESSAY " + essay.letter);
+    L.push("==================================================");
+    SIM_DATA.dimensions.forEach(d => {
+      const sel = selFor(d.id, essay.id);
+      if (!Object.keys(sel).length) return;
+      const total = dimTotal(d.id, essay), found = dimFoundCorrect(d.id, essay), wrong = dimWrong(d.id, essay);
+      const unit = isAspectMode(d.id) ? " task aspects" : "";
+      L.push(`## ${d.label} — found ${found}/${total}${unit}` + (wrong ? `, ${wrong} not a match` : ""));
+      essay.sentences.forEach(s => {
+        if (sel[s.id]) {
+          const ok = s.tags[d.id] && s.tags[d.id].match;
+          L.push(`   ${ok ? "[✓]" : "[✗]"} ${s.text}`);
+        }
+      });
     });
     L.push("");
   });
-  L.push("## RATE THE ESSAY (practice paper)");
-  L.push("My score: " + (state.rate.score === null ? "(none)" : state.rate.score) +
-         "   Official score: " + SIM_DATA.practice.score);
-  L.push("My justification:");
-  L.push(state.rate.justification || "(none written)");
-  L.push("");
-  L.push("Official rater commentary:");
-  L.push(SIM_DATA.practice.rater_commentary_summary);
+  let ratedAny = false;
+  SIM_DATA.practices.forEach((pp, i) => {
+    const r = ratingFor(pp.id);
+    if (r.score === null && !(r.justification && r.justification.trim())) return;
+    ratedAny = true;
+    L.push("## RATE THE ESSAY — Practice Paper " + String.fromCharCode(65 + i));
+    L.push("My score: " + (r.score === null ? "(none)" : r.score) + "   Official score: " + pp.score);
+    L.push("My justification:");
+    L.push(r.justification || "(none written)");
+    L.push("Official rater commentary:");
+    L.push(pp.rater_commentary_summary);
+    L.push("");
+  });
+  if (!ratedAny) L.push("## RATE THE ESSAY — (no paper rated yet)");
   return L.join("\n");
 }
 
@@ -774,6 +904,8 @@ async function copyWork() {
     // §3/§5: reset only on confirmed success
     try { localStorage.removeItem(LS_KEY); } catch (e) {}
     state = blankState();
+    currentEssayId = DEFAULT_ESSAY_ID;
+    currentPracticeId = DEFAULT_PRACTICE_ID;
     docActive = SIM_DATA.documents[0].id;
     syncInputs();
     rebuildDynamic();
@@ -789,6 +921,8 @@ function restart() {
   if (!confirm("Start over? This clears your selections, score, and justification on this device.")) return;
   try { localStorage.removeItem(LS_KEY); } catch (e) {}
   state = blankState();
+  currentEssayId = DEFAULT_ESSAY_ID;
+  currentPracticeId = DEFAULT_PRACTICE_ID;
   docActive = SIM_DATA.documents[0].id;
   syncInputs();
   rebuildDynamic();
@@ -840,10 +974,11 @@ function syncInputs() {
   const pr = document.getElementById("periodInput");
   if (n) n.value = state.name || "";
   if (pr) pr.value = state.period || "";
+  const rating = ratingFor(currentPracticeId);
   const jb = document.getElementById("justifyBox");
-  if (jb) jb.value = state.rate.justification || "";
+  if (jb) jb.value = rating.justification || "";
   document.querySelectorAll("#scorePicker .score-opt").forEach(b => {
-    b.classList.toggle("selected", String(state.rate.score) === b.dataset.score);
+    b.classList.toggle("selected", String(rating.score) === b.dataset.score);
   });
 }
 
@@ -869,25 +1004,34 @@ function wirePanels() {
   document.querySelectorAll("[data-prev]").forEach(b => b.addEventListener("click", () => goTo(activeIndex - 1)));
   document.querySelectorAll("[data-next]").forEach(b => b.addEventListener("click", () => goTo(activeIndex + 1)));
 
-  // Rate panel
+  // Anchor-level selectors (one set per dimension panel)
+  document.querySelectorAll(".level-opt[data-essay]").forEach(b =>
+    b.addEventListener("click", () => setEssay(b.dataset.essay)));
+  // Practice-paper selectors (Rate the Essay)
+  document.querySelectorAll(".level-opt[data-practice]").forEach(b =>
+    b.addEventListener("click", () => setPractice(b.dataset.practice)));
+
+  // Rate panel — operates on the current practice paper's rating
   document.querySelectorAll("#scorePicker .score-opt").forEach(b => {
     b.addEventListener("click", () => {
-      state.rate.score = parseInt(b.dataset.score, 10);
+      ensureRating(currentPracticeId).score = parseInt(b.dataset.score, 10);
       syncInputs(); save();
     });
   });
   const jb = document.getElementById("justifyBox");
-  jb.addEventListener("input", e => { state.rate.justification = e.target.value; save(); });
+  jb.addEventListener("input", e => { ensureRating(currentPracticeId).justification = e.target.value; save(); });
   document.getElementById("scaffoldBtn").addEventListener("click", () => {
-    if (state.rate.justification && state.rate.justification.trim() &&
+    const rating = ensureRating(currentPracticeId);
+    if (rating.justification && rating.justification.trim() &&
         !confirm("Replace what's in the justification box with a starter template?")) return;
-    state.rate.justification = scaffoldTemplate();
+    rating.justification = scaffoldTemplate();
     syncInputs(); save();
     toast("Starter template added — now edit it with your own evidence.");
   });
   document.getElementById("submitRateBtn").addEventListener("click", () => {
-    if (state.rate.score === null) { toast("Pick a score from 0 to 5 first."); return; }
-    state.rate.submitted = true; save();
+    const rating = ensureRating(currentPracticeId);
+    if (rating.score === null) { toast("Pick a score from 0 to 5 first."); return; }
+    rating.submitted = true; save();
     buildReveal();
   });
 }

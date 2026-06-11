@@ -36,8 +36,9 @@
       "id": "document_use",
       "label": "Document Use",
       "icon": "📄",
-      "student_prompt": "Find sentences where the essay uses information from the source documents. Check the documents in the side panel to verify.",
-      "description": "Does the essay incorporate relevant information from the source documents? How many documents are used?"
+      "student_prompt": "Find sentences where the essay uses information from the source documents — look for \"Document 1\", direct quotes, or a clear paraphrase of a source. Check the side panel to verify.",
+      "description": "Does the essay incorporate relevant information from the source documents? How many documents are used?",
+      "tip": "Why this matters: the task requires using at least four documents. An essay can sound smart and be totally accurate, yet still score low if it never cites the documents. As you compare essays, notice which ones point to Docs 1–6 — and which don't."
     },
     {
       "id": "supporting_details",
@@ -64,8 +65,9 @@
       "id": "organization",
       "label": "Organization",
       "icon": "🏗️",
-      "student_prompt": "Identify the introduction, conclusion, and how the essay is structured. Does the introduction go beyond restating the theme? Does the conclusion do more than repeat the prompt?",
-      "description": "Does the essay have a logical plan, a real introduction, and a meaningful conclusion?"
+      "student_prompt": "Find the introduction, the conclusion, and the topic sentence that opens each body section. Does each section start with a simple sentence that says what it's about?",
+      "description": "Does the essay have a logical plan, a real introduction, and a meaningful conclusion?",
+      "tip": "Why this matters: strong essays open each section with a simple topic sentence — \"One effort to address Prohibition was...\" — and start a new paragraph for each part of the task. Notice which essays signpost their sections clearly, and which run everything together."
     },
     {
       "id": "inaccuracy",
