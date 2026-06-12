@@ -1,0 +1,194 @@
+{
+  "examId": "aug2025",
+  "title": "Regulation of Business",
+  "eyebrow": "US History Regents Prep · August 2025 CLE",
+  "storageKey": "edsim_tea_aug2025_v1",
+  "partALabel": "On the August 2025 Regents, Part A (Questions 31–36) is worth 6 points — 1 point per document",
+  "essayPrompt": "The government regulation of business — especially the rise of trusts and monopolies during the Progressive Era — has been a major constitutional and civic issue in United States history. Using the documents, analyze the historical circumstances surrounding the issue, the efforts of individuals and groups to address it, and the impact of those efforts on the United States.",
+  "docs": [
+    {
+      "id": 1,
+      "title": "Document 1",
+      "source": "Frank Beard, The Judge, July 19, 1884 (adapted); President Theodore Roosevelt, Second Annual Message to Congress, December 2, 1902",
+      "question": "Based on these documents, what is one historical circumstance surrounding the government regulation of business?",
+      "questionType": "historical circumstance",
+      "topicDisplay": "Historical Circumstance — the rise of giant trusts and the question of whether government could regulate them",
+      "image": {
+        "src": "",
+        "alt": "1884 political cartoon depicting the Standard Oil Company as a giant monopoly reaching out to take over many other businesses, including an insurance company, a gas company, a savings bank, and smaller oil companies.",
+        "caption": "Frank Beard, The Judge, July 19, 1884 (adapted); President Theodore Roosevelt, Second Annual Message to Congress, 1902"
+      },
+      "sentences": [
+        { "id": "d1s1", "text": "The cartoon shows the Standard Oil Company taking over many different businesses — insurance, gas, banking, and smaller oil companies.", "correct": true },
+        { "id": "d1s2", "text": "The cartoon suggests that small oil companies were putting the Standard Oil Company out of business.", "correct": false },
+        { "id": "d1s3", "text": "Big corporations and trusts doing interstate business often have some tendency toward monopoly.", "correct": true },
+        { "id": "d1s4", "text": "We are not attacking the corporations, but endeavoring to do away with any evil in them; we are not hostile to them.", "correct": true },
+        { "id": "d1s5", "text": "We are merely determined that they shall be so handled as to subserve [serve] the public good; we draw the line against misconduct, not against wealth.", "correct": true },
+        { "id": "d1s6", "text": "The power of the Congress to regulate interstate commerce is an absolute and unqualified grant, without limitations other than those prescribed by the Constitution.", "correct": true },
+        { "id": "d1s7", "text": "Evils restrictive of commercial freedom and entailing restraint upon national commerce fall within the regulative power of the Congress.", "correct": true }
+      ],
+      "starters": [
+        "This circumstance led to calls for regulation because...",
+        "The growth of giant trusts like Standard Oil mattered because...",
+        "Roosevelt's claim that Congress can regulate commerce suggests that..."
+      ],
+      "mcOptions": [
+        { "letter": "A", "text": "This means that as huge trusts like Standard Oil grew to dominate whole industries, leaders argued the government had the power and the duty to regulate them for the public good.", "correct": true },
+        { "letter": "B", "text": "This shows that small companies were driving the big trusts out of business.", "correct": false },
+        { "letter": "C", "text": "This means that Congress had no power to regulate interstate commerce.", "correct": false },
+        { "letter": "D", "text": "This shows that the government wanted to punish corporations simply for being wealthy.", "correct": false }
+      ],
+      "correctMcIndex": 0
+    },
+    {
+      "id": 2,
+      "title": "Document 2",
+      "source": "J. D. Rockefeller, \"Opportunity in America,\" Cosmopolitan, September 1, 1907",
+      "question": "What is one reason John D. Rockefeller believed that trusts were good for the country?",
+      "questionType": "reason for support",
+      "topicDisplay": "Reason for Support — why Rockefeller argued that trusts benefited the country",
+      "image": null,
+      "sentences": [
+        { "id": "d2s1", "text": "I deny emphatically the assertion that opportunity has been restricted or individual effort stifled by reason of the growth of the trusts.", "correct": true },
+        { "id": "d2s2", "text": "On the contrary, the trusts have opened wider avenues and greater opportunities to the young men of to-day than those of any other generation ever enjoyed.", "correct": true },
+        { "id": "d2s3", "text": "In the old days, before the union of interests, murderous competition made any business venture precarious.", "correct": true },
+        { "id": "d2s4", "text": "Aside from that, through lack of time, opportunity, and capital, the young man was kept within a very restricted field.", "correct": true },
+        { "id": "d2s5", "text": "It is combination that has produced the capital to open up mines and factories, to build great industrial plants and the monster wholesale and retail establishments.", "correct": true },
+        { "id": "d2s6", "text": "It is combination and capital that have sent the railroads shooting in a hundred different directions all over the continent.", "correct": true },
+        { "id": "d2s7", "text": "Decidedly, the opportunities for the young American boy are greater to-day than they have ever been before; and no boy, however lowly, need despair.", "correct": true },
+        { "id": "d2s8", "text": "They have but to master the knack of economy, thrift, honesty, and perseverance, and success is theirs.", "correct": false }
+      ],
+      "starters": [
+        "Rockefeller believed trusts helped the country because...",
+        "The idea that \"combination\" produced capital suggests that...",
+        "By pointing to opportunities for young men, Rockefeller argues that..."
+      ],
+      "mcOptions": [
+        { "letter": "A", "text": "This means that Rockefeller argued trusts were good because their large-scale \"combination\" of capital built industries, jobs, and railroads that gave young Americans more opportunity than ever before.", "correct": true },
+        { "letter": "B", "text": "This shows that Rockefeller believed trusts limited opportunities for young men.", "correct": false },
+        { "letter": "C", "text": "This means that combination caused mines and factories to close.", "correct": false },
+        { "letter": "D", "text": "This shows that the number of railroads was decreasing.", "correct": false }
+      ],
+      "correctMcIndex": 0
+    },
+    {
+      "id": 3,
+      "title": "Document 3",
+      "source": "Fon Boardman, America and the Progressive Era, 1900–1917, Henry Z. Walck, Inc., 1970",
+      "question": "Based on this document, what was one effort made to address the government regulation of business?",
+      "questionType": "effort to address",
+      "topicDisplay": "Effort to Address — how journalists and reformers (muckrakers) worked to expose business abuses",
+      "image": null,
+      "sentences": [
+        { "id": "d3s1", "text": "Journalism and publicity played important roles in promoting the goals of the progressives, especially with regard to corruption in government and the monopolistic practices of business and industry.", "correct": true },
+        { "id": "d3s2", "text": "During the period, scores of articles appeared in magazines — revealing the truth, as the reformers saw it — about the way America was really ruled.", "correct": true },
+        { "id": "d3s3", "text": "Novels were also written to expose evil.", "correct": true },
+        { "id": "d3s4", "text": "The use of journalism to further a social cause was made possible by new magazines of mass circulation, a number of them counting their readers in the hundreds of thousands.", "correct": true },
+        { "id": "d3s5", "text": "Such magazines included McClure's, Munsey's, Everybody's, Cosmopolitan, Collier's, and the American Magazine.", "correct": true },
+        { "id": "d3s6", "text": "The men and women who wrote these articles were called muckrakers, although the name was applied some time after they began their work.", "correct": false },
+        { "id": "d3s7", "text": "The name was applied in 1906 by Theodore Roosevelt who, while basically on their side, feared their revelations would get people too worked up and indignant.", "correct": true }
+      ],
+      "starters": [
+        "Muckraking journalism helped address business regulation because...",
+        "Exposing monopolies in mass-circulation magazines mattered because...",
+        "The fact that novels and articles revealed corruption suggests that..."
+      ],
+      "mcOptions": [
+        { "letter": "A", "text": "This means that muckraking journalists and novelists used mass-circulation magazines to expose corporate monopolies and government corruption, building public pressure for reform.", "correct": true },
+        { "letter": "B", "text": "This shows that magazine circulation decreased and the muckrakers became inactive.", "correct": false },
+        { "letter": "C", "text": "This means that journalists opposed the goals of the Progressives.", "correct": false },
+        { "letter": "D", "text": "This shows that the Progressives opposed efforts against corruption in government.", "correct": false }
+      ],
+      "correctMcIndex": 0
+    },
+    {
+      "id": 4,
+      "title": "Document 4",
+      "source": "Nathan Miller, Theodore Roosevelt: A Life, William Morrow and Company, 1992",
+      "question": "According to Nathan Miller, what was one effort made to address the government regulation of business?",
+      "questionType": "effort to address",
+      "topicDisplay": "Effort to Address — Theodore Roosevelt's approach to regulating trusts",
+      "image": null,
+      "sentences": [
+        { "id": "d4s1", "text": "The Northern Securities Company was a combination of three railroads that monopolized transportation in several western states; Roosevelt considered it in violation of the Sherman Antitrust Act, and in 1904 the Supreme Court agreed.", "correct": true },
+        { "id": "d4s2", "text": "Roosevelt recognized that the large corporation was a fact of modern economic life and that a general rise in the standard of living depended far more on increased productivity than on radical redistribution of existing wealth.", "correct": true },
+        { "id": "d4s3", "text": "Rather than follow the common Progressive line that by their nature all trusts were inherently evil, he divided them into \"good\" and \"bad\" trusts.", "correct": true },
+        { "id": "d4s4", "text": "If a trust was charging fair prices and offering good service, he favored allowing it to continue.", "correct": true },
+        { "id": "d4s5", "text": "If it was restraining trade and jacking up prices, then it was evil; the line was to be drawn on conduct, not bigness.", "correct": true },
+        { "id": "d4s6", "text": "Northern Securities, he decided, was bad — and should be broken up.", "correct": true },
+        { "id": "d4s7", "text": "Roosevelt also advocated selective prosecutions because the government did not have enough lawyers to prosecute all monopolies and because the conservatism of the courts would make all prosecutions difficult.", "correct": true },
+        { "id": "d4s8", "text": "Roosevelt called for the establishment of a Bureau of Corporations in a Cabinet-level Department of Commerce to determine if regulation was warranted.", "correct": true },
+        { "id": "d4s9", "text": "The bureau would provide the president with information on the trusts, which he could at his own discretion make public and present to the Justice Department as a basis for indictments.", "correct": true }
+      ],
+      "starters": [
+        "Roosevelt addressed business regulation by...",
+        "Dividing trusts into \"good\" and \"bad\" mattered because...",
+        "Creating the Bureau of Corporations shows that..."
+      ],
+      "mcOptions": [
+        { "letter": "A", "text": "This means that Roosevelt regulated business by separating \"good\" from \"bad\" trusts, breaking up bad ones like Northern Securities, and creating a Bureau of Corporations to investigate them.", "correct": true },
+        { "letter": "B", "text": "This shows that Roosevelt labeled all trusts as \"bad\" and prosecuted every one of them.", "correct": false },
+        { "letter": "C", "text": "This means that Northern Securities was one of the \"good\" trusts Roosevelt allowed to continue.", "correct": false },
+        { "letter": "D", "text": "This shows that Roosevelt believed living standards did not depend on increased productivity.", "correct": false }
+      ],
+      "correctMcIndex": 0
+    },
+    {
+      "id": 5,
+      "title": "Document 5",
+      "source": "Jennings and Brewster, The Century, Doubleday, 1998",
+      "question": "Based on this document, what is one result of efforts to address the government regulation of business?",
+      "questionType": "impact",
+      "topicDisplay": "Impact — the results of Roosevelt's efforts to regulate business and protect the public",
+      "image": null,
+      "sentences": [
+        { "id": "d5s1", "text": "Roosevelt's brand of progressivism put him foursquare in the middle of the national mood: while people wanted change, they did not want radical change.", "correct": false },
+        { "id": "d5s2", "text": "Roosevelt's reforms were a conservative sort of progressivism that policed more by threat than by action, more by regulation than by prosecution, and used power more symbolically and rhetorically than in fact.", "correct": true },
+        { "id": "d5s3", "text": "In a very public confrontation, Roosevelt did prosecute John D. Rockefeller and J. P. Morgan, two of the most celebrated titans of American business, for their railroad monopoly in the Northwest.", "correct": true },
+        { "id": "d5s4", "text": "He righteously took the side of labor and the consumer in the great coal strike of 1902.", "correct": true },
+        { "id": "d5s5", "text": "By 1906, TR increased the pace of reform by creating standards for food and drugs and tackling the corruption in the meat industry, in response to novelist Upton Sinclair's best-selling The Jungle.", "correct": true },
+        { "id": "d5s6", "text": "In the cause he perhaps held dearest, he aggressively limited development of public lands, doubling the number of national parks and establishing fifty-one wild bird refuges.", "correct": true }
+      ],
+      "starters": [
+        "Roosevelt's reforms produced results such as...",
+        "Prosecuting business titans like Rockefeller and Morgan shows that...",
+        "Creating food and drug standards mattered because..."
+      ],
+      "mcOptions": [
+        { "letter": "A", "text": "This means that Roosevelt's regulation produced real results — prosecuting business titans, backing labor in the 1902 coal strike, creating food and drug standards, and protecting public lands.", "correct": true },
+        { "letter": "B", "text": "This shows that Roosevelt took the side of the coal companies in the 1902 strike.", "correct": false },
+        { "letter": "C", "text": "This means that Roosevelt aggressively sold off public lands and reduced the number of national parks.", "correct": false },
+        { "letter": "D", "text": "This shows that Roosevelt refused to prosecute Rockefeller and Morgan.", "correct": false }
+      ],
+      "correctMcIndex": 0
+    },
+    {
+      "id": 6,
+      "title": "Document 6",
+      "source": "Senator Amy Klobuchar, Statement on the Antitrust Lawsuit Against Amazon, September 26, 2023",
+      "question": "According to this document, what is one result of efforts to address the government regulation of business?",
+      "questionType": "impact",
+      "topicDisplay": "Impact — how the regulation of business continues today against Big Tech monopolies",
+      "image": null,
+      "sentences": [
+        { "id": "d6s1", "text": "America's prosperity is built on hard work, open markets, and fair competition.", "correct": false },
+        { "id": "d6s2", "text": "But right now we're facing a monopoly problem as dominant digital platforms like Amazon increasingly use their power to increase prices, preference their own products and services, and harm small businesses.", "correct": true },
+        { "id": "d6s3", "text": "These anticompetitive practices are bad for consumers, entrepreneurs, and businesses, and I commend the Federal Trade Commission for taking action.", "correct": true },
+        { "id": "d6s4", "text": "The case for reinvigorating competition policy and putting in place rules of the road for Big Tech companies is clear.", "correct": true },
+        { "id": "d6s5", "text": "I will continue to push for updates to the antitrust laws, including the bipartisan American Innovation and Choice Online Act, to strengthen our economy and make sure consumers can get the fair treatment they deserve.", "correct": true }
+      ],
+      "starters": [
+        "Efforts to regulate business continue today because...",
+        "The FTC's action against Amazon shows that...",
+        "Pushing for new antitrust laws suggests that..."
+      ],
+      "mcOptions": [
+        { "letter": "A", "text": "This means that government regulation of business is still ongoing today — the FTC sued Amazon and senators are pushing new antitrust laws to protect consumers and small businesses from Big Tech monopolies.", "correct": true },
+        { "letter": "B", "text": "This shows that America has completely solved its monopoly problem.", "correct": false },
+        { "letter": "C", "text": "This means that the Federal Trade Commission refused to take action against Amazon.", "correct": false },
+        { "letter": "D", "text": "This shows that antitrust laws have been eliminated.", "correct": false }
+      ],
+      "correctMcIndex": 0
+    }
+  ]
+}

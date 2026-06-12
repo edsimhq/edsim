@@ -1,0 +1,197 @@
+{
+  "examId": "june2025",
+  "title": "Louisiana Purchase",
+  "eyebrow": "US History Regents Prep · June 2025 CLE",
+  "storageKey": "edsim_tea_june2025_v1",
+  "partALabel": "On the June 2025 Regents, Part A (Questions 31–36) is worth 6 points — 1 point per document",
+  "essayPrompt": "The Louisiana Purchase of 1803 was a major constitutional and civic issue in United States history. Using the documents, analyze the historical circumstances that led to the purchase, the efforts of individuals and groups to address the issue, and the impact of the purchase on the United States.",
+  "docs": [
+    {
+      "id": 1,
+      "title": "Document 1",
+      "source": "\"The Louisiana Purchase,\" Museum Gazette, National Park Service, December 1991 (adapted)",
+      "question": "Based on this document, what is one historical circumstance that led to the purchase of the Louisiana Territory?",
+      "questionType": "historical circumstance",
+      "topicDisplay": "Historical Circumstance — why access to the Mississippi River and New Orleans mattered before the purchase",
+      "image": null,
+      "sentences": [
+        { "id": "d1s1", "text": "When the United States won its independence from Great Britain in 1783, one of its major concerns was having a European power on its western boundary, and the need for unrestricted access to the Mississippi River.", "correct": true },
+        { "id": "d1s2", "text": "As American settlers pushed west, they found that the Appalachian Mountains provided a barrier to shipping goods eastward.", "correct": true },
+        { "id": "d1s3", "text": "The easiest way to ship produce was to build a flatboat and float down the Ohio and Mississippi Rivers to the port of New Orleans, from which goods could be put on ocean-going vessels.", "correct": true },
+        { "id": "d1s4", "text": "The problem with this route was that the Spanish owned both sides of the Mississippi below Natchez.", "correct": true },
+        { "id": "d1s5", "text": "In 1795 the United States negotiated the Pinckney Treaty with Spain, which provided the right of navigation on the river and the right of deposit [right to store goods until export] of U.S. goods at the port of New Orleans.", "correct": true },
+        { "id": "d1s6", "text": "Spain was eager to divest [relieve] itself of Louisiana, which was a drain on its financial resources.", "correct": false },
+        { "id": "d1s7", "text": "On October 1, 1800, Napoleon Bonaparte concluded the Treaty of San Ildefonso with Spain, which returned Louisiana to French ownership in exchange for a Spanish kingdom in Italy.", "correct": true }
+      ],
+      "starters": [
+        "This circumstance pushed the U.S. toward buying Louisiana because...",
+        "Control of New Orleans and the Mississippi mattered because...",
+        "The transfer of Louisiana back to France suggests that..."
+      ],
+      "mcOptions": [
+        { "letter": "A", "text": "This means that American access to the Mississippi River and New Orleans was vital, and control by foreign powers (Spain, then France) threatened western trade.", "correct": true },
+        { "letter": "B", "text": "This shows that the Appalachian Mountains made it easy to ship goods eastward.", "correct": false },
+        { "letter": "C", "text": "This means that the Pinckney Treaty was negotiated with France.", "correct": false },
+        { "letter": "D", "text": "This shows that Louisiana was returned to Spanish ownership in 1800.", "correct": false }
+      ],
+      "correctMcIndex": 0
+    },
+    {
+      "id": 2,
+      "title": "Document 2",
+      "source": "Joseph A. Harriss, \"How the Louisiana Purchase Changed the World,\" Smithsonian, April 2003 (adapted)",
+      "question": "According to Joseph A. Harriss, what is one historical circumstance that led to the purchase of the Louisiana Territory?",
+      "questionType": "historical circumstance",
+      "topicDisplay": "Historical Circumstance — why Napoleon decided to sell the entire Louisiana Territory",
+      "image": null,
+      "sentences": [
+        { "id": "d2s1", "text": "Jefferson asked James Monroe to join Robert R. Livingston in Paris with discretionary powers to spend $9,375,000 to secure New Orleans and parts of the Floridas, to consolidate the U.S. position in the southeastern part of the continent.", "correct": true },
+        { "id": "d2s2", "text": "By the time Monroe arrived in Paris on April 12, the situation had radically altered: Napoléon had suddenly decided to sell the entire Louisiana Territory to the United States.", "correct": true },
+        { "id": "d2s3", "text": "He had always seen Saint Domingue, producing enough sugar, coffee, indigo, cotton and cocoa to fill some 700 ships a year, as France's most important holding in the Western Hemisphere.", "correct": false },
+        { "id": "d2s4", "text": "The Louisiana Territory, in Napoléon's view, was useful mainly as a granary for Saint Domingue.", "correct": false },
+        { "id": "d2s5", "text": "With the colony in danger of being lost, the territory was less useful.", "correct": true },
+        { "id": "d2s6", "text": "Then, too, Napoléon was gearing up for another campaign against Britain and needed funds for that.", "correct": true }
+      ],
+      "starters": [
+        "Napoleon's decision to sell mattered because...",
+        "The danger of losing Saint-Domingue suggests that...",
+        "Because Napoleon needed war funds, the United States was able to..."
+      ],
+      "mcOptions": [
+        { "letter": "A", "text": "This means that Napoleon chose to sell Louisiana because he was losing the valuable colony of Saint-Domingue and needed money for war with Britain.", "correct": true },
+        { "letter": "B", "text": "This shows that Napoleon decided to keep the Louisiana Territory.", "correct": false },
+        { "letter": "C", "text": "This means that Britain needed money to fight Napoleon.", "correct": false },
+        { "letter": "D", "text": "This shows that the United States only wanted Saint-Domingue, not Louisiana.", "correct": false }
+      ],
+      "correctMcIndex": 0
+    },
+    {
+      "id": 3,
+      "title": "Document 3",
+      "source": "\"The Louisiana Purchase: Jefferson's Constitutional Gamble,\" Constitution Daily, National Constitution Center (adapted)",
+      "question": "Based on this document, state one way the constitutional issue raised by the Louisiana Purchase was addressed.",
+      "questionType": "effort to address",
+      "topicDisplay": "Effort to Address — how leaders handled the constitutional question of whether the purchase was allowed",
+      "image": null,
+      "sentences": [
+        { "id": "d3s1", "text": "While the deal was instantly popular, there was a debate about whether and how such a large property purchase was allowed under the Constitution.", "correct": true },
+        { "id": "d3s2", "text": "Negotiations would need to start with Great Britain and Spain about shared boundaries.", "correct": false },
+        { "id": "d3s3", "text": "Jefferson took a strict, literal view of constitutional powers, meaning that specific powers reserved for the President and Executive Branch needed to be spelled out in the Constitution.", "correct": true },
+        { "id": "d3s4", "text": "The ability to buy property from foreign governments was not among these powers listed in the Constitution.", "correct": false },
+        { "id": "d3s5", "text": "Instead, Jefferson considered a constitutional amendment the only way to conclude the deal with France.", "correct": true },
+        { "id": "d3s6", "text": "\"The General Government has no powers but such as the Constitution gives it,\" he wrote to John Dickinson in 1803, adding that \"an amendment of the Constitution seems necessary for this.\"", "correct": true },
+        { "id": "d3s7", "text": "Jefferson's cabinet, including James Madison, disagreed about the need for a constitutional amendment.", "correct": true },
+        { "id": "d3s8", "text": "The President had also been assured by Albert Gallatin, his Treasury Secretary, that any potential deal with France would be permissible and implied under the Constitution's treaty-making provisions.", "correct": true },
+        { "id": "d3s9", "text": "The debate in the Senate only lasted for two days.", "correct": true },
+        { "id": "d3s10", "text": "On October 20, 1803, the Senate voted for ratification 24-7, and the treaty was signed on October 31, 1803.", "correct": true }
+      ],
+      "starters": [
+        "The constitutional problem was addressed when...",
+        "Jefferson's worry about presidential powers mattered because...",
+        "The Senate's quick ratification suggests that..."
+      ],
+      "mcOptions": [
+        { "letter": "A", "text": "This means that leaders debated whether the Constitution allowed the purchase — Jefferson first wanted an amendment, but his cabinet argued the treaty power already permitted it, and the Senate ratified it.", "correct": true },
+        { "letter": "B", "text": "This shows that the Senate voted against ratifying the treaty.", "correct": false },
+        { "letter": "C", "text": "This means that an amendment was actually added to the Constitution for the purchase.", "correct": false },
+        { "letter": "D", "text": "This shows that negotiations with Britain and Spain settled the constitutional issue.", "correct": false }
+      ],
+      "correctMcIndex": 0
+    },
+    {
+      "id": 4,
+      "title": "Document 4",
+      "source": "Thomas J. Farnham, \"The Federal-State Issue and the Louisiana Purchase,\" Louisiana History, 1965 (adapted)",
+      "question": "According to Thomas J. Farnham, what is one effort by Federalists to oppose the Louisiana Purchase?",
+      "questionType": "effort to oppose",
+      "topicDisplay": "Effort to Oppose — how New England Federalists tried to defeat the Louisiana Purchase",
+      "image": null,
+      "sentences": [
+        { "id": "d4s1", "text": "While Jefferson and his followers were altering their political philosophy to accommodate Louisiana, the Federalists of New England, led by Timothy Pickering, were also doing an about-face, from broad to strict interpretation of the Constitution.", "correct": true },
+        { "id": "d4s2", "text": "In this way, they hoped to prevent the inclusion of Louisiana in the Union.", "correct": false },
+        { "id": "d4s3", "text": "Standing alone, New England Federalism began to attack the Louisiana Purchase on various grounds.", "correct": false },
+        { "id": "d4s4", "text": "Much attention was given to the huge sum that was to be paid for this desolate wilderness.", "correct": true },
+        { "id": "d4s5", "text": "There was concern among some that the French title to Louisiana was not clear and that an attempt to occupy this region would involve the United States in a war with Spain, from whom France had obtained Louisiana.", "correct": true },
+        { "id": "d4s6", "text": "Other voices of New England Federalism urged that the purchase was unconstitutional, that the general government did not have the power to acquire foreign territory.", "correct": true },
+        { "id": "d4s7", "text": "When Jefferson called a special session of Congress in October 1803, Pickering and his fellow Federalists proceeded to Washington with much determination to defeat the agreement.", "correct": true },
+        { "id": "d4s8", "text": "Their attack was to be launched on constitutional grounds.", "correct": true }
+      ],
+      "starters": [
+        "The Federalists opposed the purchase by...",
+        "Switching to a strict interpretation mattered because...",
+        "Attacking the purchase as unconstitutional shows that..."
+      ],
+      "mcOptions": [
+        { "letter": "A", "text": "This means that New England Federalists fought the purchase — switching to a strict reading of the Constitution and arguing it was unconstitutional and too costly — to try to defeat it in Congress.", "correct": true },
+        { "letter": "B", "text": "This shows that the Federalists switched from a strict to a broad interpretation of the Constitution.", "correct": false },
+        { "letter": "C", "text": "This means that the Federalists refused to attend the special session of Congress.", "correct": false },
+        { "letter": "D", "text": "This shows that Federalists worried the purchase would cause a war with Great Britain.", "correct": false }
+      ],
+      "correctMcIndex": 0
+    },
+    {
+      "id": 5,
+      "title": "Document 5",
+      "source": "The American Journey, Glencoe McGraw-Hill, 2003 (adapted); Charles A. Cerami, Jefferson's Great Gamble, Sourcebooks, 2003 (adapted)",
+      "question": "Based on these documents, what is one impact of the Louisiana Purchase on the United States?",
+      "questionType": "impact",
+      "topicDisplay": "Impact — how the Louisiana Purchase changed the size and future of the United States",
+      "image": {
+        "src": "",
+        "alt": "Map titled 'The Louisiana Purchase and Western Exploration' showing the Louisiana Territory stretching from the Mississippi River west to the Rocky Mountains, the route of Lewis and Clark (1805), British territory to the north, Spanish territory to the southwest, the U.S.–Spain disputed boundary of 1803–1819 near New Orleans, and the original states along the Atlantic.",
+        "caption": "The American Journey, Glencoe McGraw-Hill, 2003 (adapted); Charles A. Cerami, Jefferson's Great Gamble, 2003"
+      },
+      "sentences": [
+        { "id": "d5s1", "text": "The map shows the Louisiana Territory stretching from the Mississippi River west to the Rocky Mountains, roughly doubling the size of the United States.", "correct": true },
+        { "id": "d5s2", "text": "The new territory reached all the way to the Pacific Ocean.", "correct": false },
+        { "id": "d5s3", "text": "Lewis and Clark explored the lands west of the Mississippi River in 1805.", "correct": true },
+        { "id": "d5s4", "text": "Part of the southern boundary, near New Orleans, was disputed between the United States and Spain from 1803 to 1819.", "correct": true },
+        { "id": "d5s5", "text": "Many Americans feared the country was suddenly becoming clumsily huge, with nearly nine hundred thousand square miles of almost virgin, largely uninhabited territory.", "correct": true },
+        { "id": "d5s6", "text": "Eventually thirteen new states would be created from the territory, from Louisiana up to Montana, between the Gulf of Mexico and the Canadian border.", "correct": true },
+        { "id": "d5s7", "text": "Even Americans who never planned to travel west thought of the new land as part of their country and would have fought to defend it.", "correct": true }
+      ],
+      "starters": [
+        "The Louisiana Purchase changed the United States because...",
+        "Doubling the nation's size meant that...",
+        "The creation of so many new states from this land shows that..."
+      ],
+      "mcOptions": [
+        { "letter": "A", "text": "This means that the Louisiana Purchase roughly doubled the size of the United States, opening vast western land that became many new states — though it also brought boundary disputes and fears about governing so much territory.", "correct": true },
+        { "letter": "B", "text": "This shows that the purchase extended the United States to the Pacific Ocean.", "correct": false },
+        { "letter": "C", "text": "This means that the new land was totally uninhabited.", "correct": false },
+        { "letter": "D", "text": "This shows that the purchase gave the United States more land along the Atlantic coast.", "correct": false }
+      ],
+      "correctMcIndex": 0
+    },
+    {
+      "id": 6,
+      "title": "Document 6",
+      "source": "\"The Louisiana Purchase: Aftermath,\" The Lehrman Institute online (adapted)",
+      "question": "Based on this document, state one impact of the Louisiana Purchase on the United States.",
+      "questionType": "impact",
+      "topicDisplay": "Impact — the long-term consequences of the Louisiana Purchase for the nation",
+      "image": null,
+      "sentences": [
+        { "id": "d6s1", "text": "The Louisiana Territory was the great unknown, with fewer facts than fantasy about it.", "correct": false },
+        { "id": "d6s2", "text": "What was clear at the time of the Louisiana Purchase was that it had put America on the road to becoming a truly continental power.", "correct": true },
+        { "id": "d6s3", "text": "Historian Henry Adams wrote that the annexation of Louisiana \"gave a new face to politics, and ranked in historical importance next to the Declaration of Independence and the adoption of the Constitution.\"", "correct": true },
+        { "id": "d6s4", "text": "But as a matter of diplomacy it was unparalleled, because it cost almost nothing.", "correct": true },
+        { "id": "d6s5", "text": "The Louisiana Purchase changed America's shape and destiny — but also affected international relations.", "correct": true },
+        { "id": "d6s6", "text": "Although the Louisiana Purchase provided the structure for the nation's expansion, it also provided the seeds for its potential destruction.", "correct": true },
+        { "id": "d6s7", "text": "Historian Sean Wilentz wrote that the consequences of the Purchase would \"disturb public opinion over constitutional issues connected to the expansion of slavery — and help rip the country to pieces.\"", "correct": true }
+      ],
+      "starters": [
+        "The Louisiana Purchase had a lasting impact because...",
+        "Becoming a \"continental power\" meant that...",
+        "The connection between the Purchase and the expansion of slavery suggests that..."
+      ],
+      "mcOptions": [
+        { "letter": "A", "text": "This means that the Louisiana Purchase made the U.S. a continental power and shaped its future — but also deepened conflicts over slavery's expansion that helped lead to the Civil War.", "correct": true },
+        { "letter": "B", "text": "This shows that the purchase unified public opinion over constitutional issues.", "correct": false },
+        { "letter": "C", "text": "This means that the purchase stopped the nation's expansion.", "correct": false },
+        { "letter": "D", "text": "This shows that the Louisiana Purchase led to the adoption of the Constitution.", "correct": false }
+      ],
+      "correctMcIndex": 0
+    }
+  ]
+}

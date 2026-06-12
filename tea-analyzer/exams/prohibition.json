@@ -1,0 +1,206 @@
+{
+  "examId": "prohibition",
+  "title": "Prohibition",
+  "eyebrow": "US History Regents Prep · January 2026 CLE",
+  "storageKey": "edsim_tea_prohibition_v1",
+  "partALabel": "On the January 2026 Regents, Part A (Questions 31–36) is worth 6 points — 1 point per document",
+  "essayPrompt": "Prohibition (the nationwide ban on the manufacture, sale, and transportation of alcohol, 1920–1933) was a major issue in United States history. Using the documents, analyze a historical circumstance surrounding Prohibition, an effort to address it, and one impact of those efforts.",
+  "docs": [
+    {
+      "id": 1,
+      "title": "Document 1",
+      "source": "L. Ames Brown, \"Prohibition,\" The North American Review, November 1915",
+      "question": "According to L. Ames Brown, what is one historical circumstance surrounding the issue of Prohibition?",
+      "questionType": "historical circumstance",
+      "topicDisplay": "Historical Circumstance — what conditions existed before or during the push for Prohibition",
+      "image": null,
+      "sentences": [
+        { "id": "d1s1", "text": "The prohibition movement was an outgrowth of the temperance crusades of the first half of the nineteenth century.", "correct": true },
+        { "id": "d1s2", "text": "Hard drinking was almost the rule among the Fathers of the Republic.", "correct": true },
+        { "id": "d1s3", "text": "The per capita consumption of spirits in the early days was many times what it is now, and beer drinking was almost unknown.", "correct": true },
+        { "id": "d1s4", "text": "After the War of 1812, there grew up in the New England States a large commerce in West Indian rum, which was consumed extensively, especially in Maine, supplementing the consumption of heavy liquors which were manufactured in those States.", "correct": true },
+        { "id": "d1s5", "text": "Maine alone, in 1827, when her population was 360,000, manufactured 1,333,160 gallons of liquor, and it was sold at retail in nearly every store and tavern.", "correct": true },
+        { "id": "d1s6", "text": "Drunkenness in its worst form, involving disastrous social consequences, was widespread.", "correct": true },
+        { "id": "d1s7", "text": "Sufficient evidence of it was to be found in the number of persons in the jails and poorhouses.", "correct": true }
+      ],
+      "starters": [
+        "This circumstance contributed to the push for Prohibition because...",
+        "Brown's evidence reveals that alcohol abuse was already causing serious harm, which means...",
+        "The fact that drunkenness was widespread in the early 1800s suggests that reformers..."
+      ],
+      "mcOptions": [
+        { "letter": "A", "text": "This shows that alcohol was popular, so Prohibition was not needed.", "correct": false },
+        { "letter": "B", "text": "This shows that beer was the most common drink in early America.", "correct": false },
+        { "letter": "C", "text": "This means that alcohol abuse was causing real problems in American society, which gave reformers a reason to fight for a national ban.", "correct": true },
+        { "letter": "D", "text": "This means that the temperance movement had already solved the drinking problem by 1915.", "correct": false }
+      ],
+      "correctMcIndex": 2
+    },
+    {
+      "id": 2,
+      "title": "Document 2",
+      "source": "Anti-Saloon League of America, 1919",
+      "question": "According to this poster, what is one historical circumstance surrounding the issue of Prohibition?",
+      "questionType": "historical circumstance",
+      "topicDisplay": "Historical Circumstance — what factors led to or surrounded the passage of Prohibition",
+      "image": {
+        "src": "",
+        "alt": "1919 Anti-Saloon League map showing the order in which states ratified the National Prohibition Amendment, with only four states not yet ratified as of January 31, 1919.",
+        "caption": "Anti-Saloon League of America, 1919"
+      },
+      "sentences": [
+        { "id": "d2s1", "text": "Numbers indicate the order in which states have ratified the National Prohibition Amendment.", "correct": false },
+        { "id": "d2s2", "text": "This map shows on this date, January 31, 1919, that there are yet only four states which have not ratified. Three of these, Pennsylvania, Connecticut and Rhode Island, are expected to ratify at an early date. Even New Jersey may ratify and make the result unanimous.", "correct": true },
+        { "id": "d2s3", "text": "The ratification of the Prohibition amendment to the constitution is the consummation of more than twenty-five years of effort on the part of the Anti-Saloon League, representing as it has the moral and religious forces of the nation.", "correct": true },
+        { "id": "d2s4", "text": "It is the greatest victory for moral reform in America since the Declaration of Independence.", "correct": false },
+        { "id": "d2s5", "text": "Not less in importance to that which has already been accomplished is the vitally essential task now before the Prohibition forces of securing from Congress and the states proper enforcement legislation and the crystallizing of public sentiment in the large cities and wet districts for complete enforcement of the law.", "correct": true },
+        { "id": "d2s6", "text": "With Prohibition assured for this nation, the American anti-liquor forces need to redouble their efforts for the larger task of world Prohibition of the manufacture and sale of all intoxicating beverages.", "correct": true }
+      ],
+      "starters": [
+        "The near-unanimous ratification of Prohibition shows that organized reform groups were able to...",
+        "This evidence is significant because it reveals that Prohibition had broad political support in 1919, which means...",
+        "The fact that only four states had not yet ratified suggests that..."
+      ],
+      "mcOptions": [
+        { "letter": "A", "text": "This means that decades of organized pressure from groups like the Anti-Saloon League were powerful enough to change the Constitution.", "correct": true },
+        { "letter": "B", "text": "This shows that Prohibition passed quickly with very little effort.", "correct": false },
+        { "letter": "C", "text": "This shows that western states were the biggest supporters of Prohibition.", "correct": false },
+        { "letter": "D", "text": "This means that Congress alone decided to pass Prohibition.", "correct": false }
+      ],
+      "correctMcIndex": 0
+    },
+    {
+      "id": 3,
+      "title": "Document 3",
+      "source": "Charles Rappleye, Herbert Hoover in the White House, Simon & Schuster, 2016 (adapted)",
+      "question": "Based on this document, what was one effort to address the issue of Prohibition?",
+      "questionType": "effort to address",
+      "topicDisplay": "Effort to Address — a specific action taken by an individual, group, or government related to Prohibition",
+      "image": null,
+      "sentences": [
+        { "id": "d3s1", "text": "Over his first three years in the White House Hoover never wavered in his support for Prohibition.", "correct": true },
+        { "id": "d3s2", "text": "In 1929 he signed the \"Five and Ten Law\" making every liquor violation a felony, and his Justice Department ramped up federal enforcement.", "correct": true },
+        { "id": "d3s3", "text": "\"We enormously increased the jail population,\" by jailing Prohibition violators Hoover recalled in his memoirs.", "correct": true },
+        { "id": "d3s4", "text": "\"We multiplied the fines, padlocking, and confiscations.\"", "correct": true },
+        { "id": "d3s5", "text": "Yet all this aggressive action he ascribed to his duty as a constitutional officer, not to his actual endorsement.", "correct": false },
+        { "id": "d3s6", "text": "On this basic political question, Hoover declined to share his feelings and refused to act on them.", "correct": false },
+        { "id": "d3s7", "text": "During the 1928 campaign Hoover famously saluted Prohibition as \"a great social and economic experiment, noble in motive and far-reaching in purpose.\"", "correct": true },
+        { "id": "d3s8", "text": "By early 1932 little doubt remained as to the mood of the electorate. Respondents to a national mail-in survey conducted by The Literary Digest in February and March endorsed repeal of the Eighteenth Amendment by a four-to-one margin.", "correct": true },
+        { "id": "d3s9", "text": "Residents of Ohio, the birthplace of Prohibition, sent in 112,026 ballots for repeal and just 43,284 for keeping the ban on booze.", "correct": true },
+        { "id": "d3s10", "text": "Kansas was the only state to poll in favor of Prohibition.", "correct": true }
+      ],
+      "starters": [
+        "Hoover's enforcement efforts show that the federal government believed Prohibition could succeed if...",
+        "The growing public opposition revealed in the 1932 survey suggests that...",
+        "This effort matters because it shows the tension between government policy and public opinion, which..."
+      ],
+      "mcOptions": [
+        { "letter": "A", "text": "This shows that Hoover's strict enforcement proved Prohibition was working.", "correct": false },
+        { "letter": "B", "text": "This shows that most Americans still supported Prohibition in 1932.", "correct": false },
+        { "letter": "C", "text": "This means that Hoover personally wanted to end Prohibition from the beginning.", "correct": false },
+        { "letter": "D", "text": "This means that even strong government action could not make Prohibition work when most Americans had turned against it.", "correct": true }
+      ],
+      "correctMcIndex": 3
+    },
+    {
+      "id": 4,
+      "title": "Document 4",
+      "source": "Sarah Seidman, \"The New York Women Who Dismantled Prohibition,\" Museum of the City of New York, December 15, 2015",
+      "question": "According to Sarah Seidman, what was one effort to address Prohibition?",
+      "questionType": "effort to address",
+      "topicDisplay": "Effort to Address — a specific action taken by an individual, group, or government related to Prohibition",
+      "image": null,
+      "sentences": [
+        { "id": "d4s1", "text": "The Women's Organization for National Prohibition Reform (WONPR) was founded in 1929 to show that not all women supported temperance.", "correct": true },
+        { "id": "d4s2", "text": "New York socialite Pauline Sabin led the charge after hearing Ella Boole, the Brooklyn-based leader of the Women's Christian Temperance Union, declare that her support for Prohibition represented \"the women of America.\"", "correct": true },
+        { "id": "d4s3", "text": "On the heels of the successful suffrage campaign that won women the right to vote in 1920, the WONPR, and Sabin in particular, reflected the modern \"new woman\" of the 1920s.", "correct": false },
+        { "id": "d4s4", "text": "Many members of the WONPR had in fact initially supported the 18th amendment. But they had come to believe that Prohibition had led to a surge in unregulated and particularly underage drinking, as well as a growing sense of distrust for the rule of law.", "correct": true },
+        { "id": "d4s5", "text": "The WONPR's opposition to Prohibition, just like the 18th amendment itself, was not only about drinking, but about the government's role in regulating behavior.", "correct": true },
+        { "id": "d4s6", "text": "The WONPR did a lot of what we think of now as typical political campaign activities: members attended meetings and gave speeches at rallies, went door-to-door to recruit new supporters, used new technology to spread their message — at the time radio, and lobbied politicians.", "correct": true },
+        { "id": "d4s7", "text": "Wealthy women had founded the organization, and proved able to raise funds even after the Stock Market Crash of 1929 ushered in the Great Depression.", "correct": true },
+        { "id": "d4s8", "text": "From its headquarters in New York City, the organization also gained publicity by organizing events such as a motorcade through New York State.", "correct": true }
+      ],
+      "starters": [
+        "The WONPR's opposition to Prohibition was significant because it showed that...",
+        "By using tactics like rallies, door-to-door outreach, and radio, the WONPR demonstrated that...",
+        "The founding of the WONPR reveals that the debate over Prohibition was not just about drinking, but also about..."
+      ],
+      "mcOptions": [
+        { "letter": "A", "text": "This shows that most women in America supported Prohibition.", "correct": false },
+        { "letter": "B", "text": "This means that opposition to Prohibition came from many parts of society, including women who organized and fought back against a law they believed was causing more harm than good.", "correct": true },
+        { "letter": "C", "text": "This shows that the WONPR failed because it started too late.", "correct": false },
+        { "letter": "D", "text": "This means that the WONPR wanted to make Prohibition stronger.", "correct": false }
+      ],
+      "correctMcIndex": 1
+    },
+    {
+      "id": 5,
+      "title": "Document 5",
+      "source": "Michael A. Lerner, Dry Manhattan: Prohibition in New York City, Harvard University Press, 2007",
+      "question": "According to Michael A. Lerner, what has been one impact of the efforts to address Prohibition?",
+      "questionType": "impact",
+      "topicDisplay": "Impact — a lasting effect or result that came from efforts to address Prohibition",
+      "image": null,
+      "sentences": [
+        { "id": "d5s1", "text": "The end of the Prohibition era marked the demise of a moral crusade meant to impose a uniform standard of social behavior in the United States.", "correct": true },
+        { "id": "d5s2", "text": "Unrealistic and unforgiving, Prohibition had allowed a vocal minority to regulate the personal habits of all Americans, especially those who lived and worked in cities like New York.", "correct": true },
+        { "id": "d5s3", "text": "While the desire of the dry crusade to uplift and improve the United States by banning alcohol and the saloon had in some ways been understandable in the Progressive era that spawned the Prohibition movement, the shortcomings of the dry crusade manifested themselves as soon as the dry experiment had begun.", "correct": true },
+        { "id": "d5s4", "text": "Anachronistic and unworkable, the Prohibition experiment was ill suited to the diversity and dynamic of the modern United States, which by the 1920s had grown too large and too varied a nation to be governed by an impulse as intrusive as the dry crusade.", "correct": true },
+        { "id": "d5s5", "text": "Despite the force of federal law, the use of authoritarian tactics to enforce it, and the expenditure of millions of dollars a year, in fourteen years Prohibition succeeded neither in changing Americans' behavior nor in eliminating the problems caused by alcohol abuse.", "correct": true },
+        { "id": "d5s6", "text": "When Prohibition failed, and it did so spectacularly, it revealed the limits of moral reform movements, and specifically the paternalistic, prejudiced, and undemocratic ideals behind the dry crusade.", "correct": true }
+      ],
+      "starters": [
+        "Lerner argues that the failure of Prohibition revealed important limits, specifically that...",
+        "According to Lerner, Prohibition's collapse had a lasting impact because it showed that...",
+        "The fact that Prohibition failed to change behavior even after 14 years and millions of dollars suggests that..."
+      ],
+      "mcOptions": [
+        { "letter": "A", "text": "This means that when Prohibition failed, it proved that the government cannot force all Americans to live by one group's moral rules.", "correct": true },
+        { "letter": "B", "text": "This shows that Prohibition successfully reduced alcohol problems in American cities.", "correct": false },
+        { "letter": "C", "text": "This shows that Prohibition failed only because enforcement was too weak.", "correct": false },
+        { "letter": "D", "text": "This means that Prohibition was a good idea that just needed more time.", "correct": false }
+      ],
+      "correctMcIndex": 0
+    },
+    {
+      "id": 6,
+      "title": "Document 6",
+      "source": "New York Times, December 6, 1933",
+      "question": "Based on this document, what is one impact of the efforts to address Prohibition?",
+      "questionType": "impact",
+      "topicDisplay": "Impact — a lasting effect or result that came from efforts to address Prohibition",
+      "isNewspaper": true,
+      "newspaperLabel": "New York Times, December 6, 1933 — Front Page Headlines & Text",
+      "image": {
+        "src": "",
+        "alt": "Front page of the New York Times, December 6, 1933, announcing the ratification and repeal of Prohibition.",
+        "caption": "New York Times, December 6, 1933"
+      },
+      "sentences": [
+        { "id": "d6s1", "text": "Prohibition Repeal Is Ratified at 5:32 P.M.", "correct": true },
+        { "id": "d6s2", "text": "Roosevelt Asks Nation to Bar the Saloon", "correct": true },
+        { "id": "d6s3", "text": "New York Celebrates with Quiet Restraint", "correct": true },
+        { "id": "d6s4", "text": "Crowds Swamp Licensed Resorts, but the Legal Liquor Is Scarce.", "correct": true },
+        { "id": "d6s5", "text": "Celebration in Streets — Marked by Absence of Undue Hilarity and Only Normal Number of Arrests.", "correct": false },
+        { "id": "d6s6", "text": "Many Speakeasies Close", "correct": true },
+        { "id": "d6s7", "text": "Machine Guns Guard Some Liquor Trucks — Supplies to Be Rushed Out Today.", "correct": false },
+        { "id": "d6s8", "text": "State House Bootlegger Is Barred in Maryland", "correct": true },
+        { "id": "d6s9", "text": "Ratifying by Utah Ends Prohibition", "correct": true },
+        { "id": "d6s10", "text": "President Proclaims the Nation's New Policy as Utah Ratifies.", "correct": true },
+        { "id": "d6s11", "text": "Phillips Signs Decree — Orders 21st Amendment in Effect on Receiving Votes of Three Final States.", "correct": true }
+      ],
+      "starters": [
+        "The repeal of Prohibition had a significant impact because it showed that...",
+        "Roosevelt's call to ban saloons even after repeal suggests that the government was still concerned about...",
+        "The closing of speakeasies and the ratification of the 21st Amendment reveals that..."
+      ],
+      "mcOptions": [
+        { "letter": "A", "text": "This shows that the 18th Amendment successfully changed American drinking habits.", "correct": false },
+        { "letter": "B", "text": "This shows that Roosevelt supported both Prohibition and the right to open saloons and bars.", "correct": false },
+        { "letter": "C", "text": "This means that repealing Prohibition was a major turning point — the government admitted the ban had failed and shifted to regulating alcohol instead of banning it.", "correct": true },
+        { "letter": "D", "text": "This means that the federal government would no longer have any role in controlling alcohol.", "correct": false }
+      ],
+      "correctMcIndex": 2
+    }
+  ]
+}

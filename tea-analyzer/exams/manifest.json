@@ -1,0 +1,6 @@
+[
+  { "examId": "prohibition", "title": "Prohibition (Jan 2026)", "file": "exams/prohibition.json" },
+  { "examId": "jan2025", "title": "Treaty of Versailles (Jan 2025)", "file": "exams/jan2025.json" },
+  { "examId": "june2025", "title": "Louisiana Purchase (June 2025)", "file": "exams/june2025.json" },
+  { "examId": "aug2025", "title": "Regulation of Business (Aug 2025)", "file": "exams/aug2025.json" }
+]

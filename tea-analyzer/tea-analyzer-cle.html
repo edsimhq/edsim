@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>TEA Analyzer: Prohibition · EdSim</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Source+Code+Pro:wght@400;500;600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0c0f;
+  --surf:#111418;
+  --surf2:#181c22;
+  --surf3:#1e242d;
+  --border:#252d3a;
+  --border-hi:#3a4558;
+  --text:#d0d7e4;
+  --dim:#6b7890;
+  --faint:#2e3a4e;
+  --red:#c0392b;
+  --red-hi:#e74c3c;
+  --red-glow:rgba(192,57,43,.28);
+  --green:#1a6e45;
+  --green-hi:#27ae60;
+  --green-glow:rgba(27,174,74,.22);
+  --amber:#c8900a;
+  --amber-hi:#f0a500;
+  --blue:#1a4a8a;
+  --blue-hi:#2d6fd4;
+  --white:#eef1f6;
+  --accent:#e8b84b;
+  --accent-dim:#7a5a1a;
+  --print-border:#cccccc;
+  --print-highlight:#fffbe6;
+  --fd:'Oswald',sans-serif;
+  --fm:'Source Code Pro',monospace;
+  --fb:'Libre Baskerville',Georgia,serif;
+  --ease:cubic-bezier(.4,0,.2,1);
+  --r:7px;
+  --rs:4px;
+}
+
+html,body{min-height:100%;height:100%}
+body{font-family:var(--fb);background:var(--bg);color:var(--text);display:flex;flex-direction:column}
+
+/* ── HEADER ── */
+.hdr{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  padding:0 20px;height:50px;border-bottom:1px solid var(--border);
+  background:rgba(10,12,15,.95);backdrop-filter:blur(10px);flex-shrink:0}
+.hdr-l{display:flex;align-items:center;gap:10px}
+.logo{font-family:var(--fd);font-size:15px;font-weight:600;color:var(--dim);letter-spacing:.1em}
+.hdiv{width:1px;height:15px;background:var(--border)}
+.unit-label{font-family:var(--fm);font-size:10px;color:var(--accent);letter-spacing:.14em;text-transform:uppercase}
+.hdr-r{display:flex;align-items:center;gap:8px}
+.hdr-btn{font-family:var(--fm);font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  padding:5px 12px;border-radius:var(--rs);cursor:pointer;min-height:34px;min-width:44px;
+  background:transparent;border:1px solid var(--border);color:var(--dim);transition:all .15s}
+.hdr-btn:hover{border-color:var(--border-hi);color:var(--white)}
+.hdr-btn.copy-btn{border-color:var(--accent-dim);color:var(--accent)}
+.hdr-btn.copy-btn:hover{border-color:var(--accent);background:rgba(232,184,75,.08)}
+.exam-picker{font-family:var(--fm);font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  padding:5px 10px;border-radius:var(--rs);min-height:34px;cursor:pointer;
+  background:var(--surf2);border:1px solid var(--border);color:var(--text);transition:all .15s}
+.exam-picker:hover{border-color:var(--border-hi);color:var(--white)}
+
+/* ── MAIN LAYOUT ── */
+.main{flex:1;display:flex;flex-direction:column;max-width:960px;width:100%;margin:0 auto;padding:0 16px 48px}
+
+/* ── TAB NAV ── */
+.tab-nav{display:flex;gap:2px;padding:12px 0 0;overflow-x:auto;flex-shrink:0}
+.tab-nav::-webkit-scrollbar{height:3px}
+.tab-nav::-webkit-scrollbar-track{background:transparent}
+.tab-nav::-webkit-scrollbar-thumb{background:var(--border)}
+.tab-btn{font-family:var(--fm);font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  padding:7px 12px;border-radius:var(--rs) var(--rs) 0 0;cursor:pointer;white-space:nowrap;
+  background:var(--surf);border:1px solid var(--border);border-bottom:none;color:var(--dim);
+  transition:all .15s;min-height:34px;position:relative}
+.tab-btn:hover{color:var(--white);background:var(--surf2)}
+.tab-btn.active{background:var(--surf3);border-color:var(--border-hi);color:var(--white)}
+.tab-btn .tab-check{display:inline-block;margin-left:5px;color:var(--green-hi);font-size:9px}
+.tab-btn .tab-partial{display:inline-block;margin-left:5px;color:var(--amber-hi);font-size:9px}
+
+/* ── TAB PANELS ── */
+.tab-panels{border:1px solid var(--border-hi);border-radius:0 var(--r) var(--r) var(--r);
+  background:var(--surf3);flex:1}
+.tab-panel{display:none;padding:24px;animation:fadeIn .2s ease}
+.tab-panel.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── DIRECTIONS TAB ── */
+.dir-hero{text-align:center;margin-bottom:28px}
+.dir-eyebrow{font-family:var(--fm);font-size:10px;color:var(--accent);letter-spacing:.2em;text-transform:uppercase;margin-bottom:8px}
+.dir-title{font-family:var(--fd);font-size:38px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--white);line-height:1.1;margin-bottom:6px}
+.dir-sub{font-family:var(--fd);font-size:16px;font-weight:300;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+.dir-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:24px}
+@media(max-width:600px){.dir-grid{grid-template-columns:1fr}}
+.dir-card{background:var(--surf2);border:1px solid var(--border);border-radius:var(--r);padding:16px}
+.dir-card-label{font-family:var(--fm);font-size:9px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.dir-card-title{font-family:var(--fd);font-size:15px;font-weight:600;color:var(--white);margin-bottom:6px}
+.dir-card-text{font-size:13px;line-height:1.6;color:var(--text)}
+.dir-steps{background:var(--surf2);border:1px solid var(--border);border-radius:var(--r);padding:18px;margin-bottom:24px}
+.dir-steps-title{font-family:var(--fd);font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--white);margin-bottom:12px}
+.dir-step{display:flex;gap:12px;margin-bottom:10px;align-items:flex-start}
+.dir-step:last-child{margin-bottom:0}
+.dir-step-num{font-family:var(--fd);font-size:18px;font-weight:700;color:var(--accent);min-width:28px;line-height:1}
+.dir-step-text{font-size:13px;line-height:1.6;color:var(--text)}
+.dir-step-text strong{color:var(--white)}
+.dir-goal{background:rgba(232,184,75,.07);border:1px solid var(--accent-dim);border-radius:var(--r);padding:14px 18px;font-size:13px;line-height:1.7;color:var(--text)}
+.dir-goal strong{color:var(--accent)}
+
+/* ── DOCUMENT TAB ── */
+.doc-question-box{background:rgba(232,184,75,.07);border:1px solid var(--accent-dim);border-radius:var(--r);padding:14px 18px;margin-bottom:20px}
+.doc-question-label{font-family:var(--fm);font-size:9px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.doc-question-text{font-size:14px;font-weight:700;color:var(--white);line-height:1.5;font-style:italic}
+
+/* TEA SECTIONS */
+.tea-section{margin-bottom:20px}
+.tea-header{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.tea-letter{font-family:var(--fd);font-size:22px;font-weight:700;color:var(--accent);min-width:24px}
+.tea-label{font-family:var(--fd);font-size:16px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--white)}
+.tea-sublabel{font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.08em}
+
+/* TOPIC */
+.topic-value{background:var(--surf2);border:1px solid var(--border);border-radius:var(--r);
+  padding:12px 16px;font-size:14px;line-height:1.6;color:var(--text);font-style:italic}
+
+/* DOCUMENT TEXT */
+.doc-source{font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.08em;margin-bottom:10px;text-align:right}
+.doc-image-fig{margin:0 0 12px;background:var(--surf2);border:1px solid var(--border);border-radius:var(--r);padding:12px;text-align:center}
+.doc-image{max-width:100%;height:auto;border-radius:var(--rs);border:1px solid var(--border-hi);background:#fff}
+.doc-image-cap{font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.06em;margin-top:8px;text-align:center}
+.doc-body{background:var(--surf2);border:1px solid var(--border);border-radius:var(--r);
+  padding:16px;font-size:13.5px;line-height:1.8;color:var(--text);margin-bottom:12px}
+.doc-instruction{font-family:var(--fm);font-size:10px;color:var(--amber-hi);letter-spacing:.06em;
+  margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.doc-instruction::before{content:'▶';font-size:8px}
+
+/* SENTENCES */
+.doc-sentence{cursor:pointer;border-radius:3px;padding:1px 3px;margin:0 -3px;
+  transition:background .15s,color .15s;display:inline}
+.doc-sentence:hover{background:rgba(232,184,75,.18);color:var(--white)}
+.doc-sentence.selected-correct{background:rgba(27,174,74,.22);color:var(--white);border-radius:3px;
+  outline:1px solid var(--green-hi)}
+.doc-sentence.selected-wrong{background:rgba(192,57,43,.22);color:var(--white);border-radius:3px;
+  outline:1px solid var(--red-hi)}
+
+/* EVIDENCE FEEDBACK */
+.evidence-feedback{border-radius:var(--r);padding:12px 16px;font-size:13px;line-height:1.6;margin-bottom:10px;display:none}
+.evidence-feedback.show{display:block}
+.evidence-feedback.correct{background:rgba(27,174,74,.12);border:1px solid var(--green-hi);color:var(--green-hi)}
+.evidence-feedback.wrong{background:rgba(192,57,43,.12);border:1px solid var(--red-hi);color:var(--red-hi)}
+
+/* SCAFFOLD TOGGLE */
+.scaffold-toggle{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.scaffold-btn{font-family:var(--fm);font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  padding:6px 14px;border-radius:20px;cursor:pointer;min-height:34px;
+  background:transparent;border:1px solid var(--border);color:var(--dim);transition:all .15s}
+.scaffold-btn:hover{border-color:var(--border-hi);color:var(--white)}
+.scaffold-btn.active{background:var(--surf);border-color:var(--border-hi);color:var(--white)}
+.scaffold-btn.none-btn.active{border-color:var(--dim)}
+
+/* SENTENCE STARTERS */
+.starters-panel,.mc-panel{display:none;margin-bottom:12px}
+.starters-panel.show,.mc-panel.show{display:block}
+.starter-option{display:block;width:100%;text-align:left;background:var(--surf2);
+  border:1px solid var(--border);border-radius:var(--rs);padding:10px 14px;cursor:pointer;
+  font-family:var(--fb);font-size:13px;color:var(--text);margin-bottom:6px;
+  transition:all .15s;min-height:44px;line-height:1.5}
+.starter-option:hover{border-color:var(--border-hi);color:var(--white);background:var(--surf3)}
+.starter-option.selected{border-color:var(--accent);color:var(--white);background:rgba(232,184,75,.08)}
+
+/* MC OPTIONS */
+.mc-option{display:flex;align-items:flex-start;gap:10px;background:var(--surf2);
+  border:1px solid var(--border);border-radius:var(--rs);padding:11px 14px;cursor:pointer;
+  margin-bottom:6px;transition:all .15s;min-height:44px;width:100%;text-align:left}
+.mc-option:hover{border-color:var(--border-hi);background:var(--surf3)}
+.mc-option.selected-correct{border-color:var(--green-hi);background:rgba(27,174,74,.1)}
+.mc-option.selected-wrong{border-color:var(--red-hi);background:rgba(192,57,43,.1)}
+.mc-option.reveal-correct{border-color:var(--green-hi);background:rgba(27,174,74,.06)}
+.mc-letter{font-family:var(--fd);font-size:14px;font-weight:700;color:var(--accent);min-width:18px;margin-top:1px}
+.mc-text{font-family:var(--fb);font-size:13px;color:var(--text);line-height:1.5}
+.mc-option.selected-correct .mc-text,.mc-option.selected-correct .mc-letter{color:var(--green-hi)}
+.mc-option.selected-wrong .mc-text,.mc-option.selected-wrong .mc-letter{color:var(--red-hi)}
+.mc-option.reveal-correct .mc-text,.mc-option.reveal-correct .mc-letter{color:var(--green-hi)}
+.mc-feedback{font-family:var(--fm);font-size:11px;margin-top:8px;padding:8px 12px;border-radius:var(--rs);display:none}
+.mc-feedback.show{display:block}
+.mc-feedback.correct{background:rgba(27,174,74,.12);color:var(--green-hi);border:1px solid rgba(27,174,74,.3)}
+.mc-feedback.wrong{background:rgba(192,57,43,.12);color:var(--red-hi);border:1px solid rgba(192,57,43,.3)}
+
+/* ANALYSIS TEXTAREA */
+.analysis-wrap{position:relative}
+.analysis-textarea{width:100%;min-height:100px;background:var(--surf2);border:1px solid var(--border);
+  border-radius:var(--r);padding:12px 44px 12px 14px;font-family:var(--fb);font-size:14px;
+  color:var(--white);resize:vertical;line-height:1.7;transition:border-color .15s}
+.analysis-textarea:focus{outline:none;border-color:var(--border-hi)}
+.voice-btn{position:absolute;top:10px;right:10px;background:transparent;border:1px solid var(--border);
+  border-radius:var(--rs);width:30px;height:30px;cursor:pointer;font-size:14px;
+  display:flex;align-items:center;justify-content:center;transition:all .15s;color:var(--dim)}
+.voice-btn:hover{border-color:var(--border-hi);color:var(--white)}
+.voice-btn.recording{border-color:var(--red-hi);background:rgba(192,57,43,.15);color:var(--red-hi)}
+.voice-btn.hidden{display:none}
+
+/* DOC STATUS BADGE */
+.doc-status{display:flex;gap:8px;align-items:center;margin-bottom:16px;flex-wrap:wrap}
+.status-badge{font-family:var(--fm);font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+  padding:4px 10px;border-radius:12px;border:1px solid var(--border);color:var(--dim)}
+.status-badge.done{border-color:var(--green-hi);color:var(--green-hi);background:rgba(27,174,74,.08)}
+.status-badge.partial{border-color:var(--amber-hi);color:var(--amber-hi);background:rgba(240,165,0,.08)}
+
+/* NAVIGATION FOOTER */
+.tab-footer{display:flex;justify-content:space-between;align-items:center;margin-top:28px;
+  padding-top:18px;border-top:1px solid var(--border)}
+.nav-btn{font-family:var(--fm);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  padding:10px 20px;border-radius:var(--rs);cursor:pointer;min-height:44px;
+  background:var(--surf2);border:1px solid var(--border);color:var(--dim);transition:all .15s}
+.nav-btn:hover{border-color:var(--border-hi);color:var(--white)}
+.nav-btn:disabled{opacity:.3;cursor:default;pointer-events:none}
+.nav-btn.primary{border-color:var(--accent-dim);color:var(--accent)}
+.nav-btn.primary:hover{border-color:var(--accent);background:rgba(232,184,75,.08)}
+.tab-progress{font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.06em}
+
+/* SUMMARY TAB */
+.summary-grid{display:grid;gap:12px}
+.summary-card{background:var(--surf2);border:1px solid var(--border);border-radius:var(--r);padding:16px}
+.summary-card-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.summary-doc-label{font-family:var(--fd);font-size:14px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.06em;color:var(--white)}
+.summary-score{font-family:var(--fm);font-size:10px;padding:3px 8px;border-radius:10px;
+  border:1px solid var(--border);color:var(--dim)}
+.summary-score.full{border-color:var(--green-hi);color:var(--green-hi)}
+.summary-score.partial{border-color:var(--amber-hi);color:var(--amber-hi)}
+.summary-row{margin-bottom:10px}
+.summary-row-label{font-family:var(--fm);font-size:9px;font-weight:600;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--dim);margin-bottom:4px}
+.summary-row-value{font-size:13px;line-height:1.6;color:var(--text);background:var(--surf3);
+  border-radius:var(--rs);padding:8px 12px;border:1px solid var(--border)}
+.summary-row-value.empty{color:var(--dim);font-style:italic}
+.summary-empty{text-align:center;padding:40px;color:var(--dim);font-family:var(--fm);font-size:12px;
+  letter-spacing:.08em}
+
+/* EXPORT MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:100;
+  display:flex;align-items:center;justify-content:center;padding:20px;display:none}
+.modal-overlay.show{display:flex}
+.modal{background:var(--surf2);border:1px solid var(--border-hi);border-radius:var(--r);
+  padding:24px;max-width:480px;width:100%;animation:fadeIn .2s ease}
+.modal-title{font-family:var(--fd);font-size:20px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.04em;color:var(--white);margin-bottom:6px}
+.modal-sub{font-size:13px;color:var(--dim);margin-bottom:20px;line-height:1.6}
+.modal-checks{margin-bottom:20px;display:flex;flex-direction:column;gap:8px}
+.modal-check-label{display:flex;align-items:center;gap:10px;cursor:pointer;
+  background:var(--surf3);border:1px solid var(--border);border-radius:var(--rs);
+  padding:10px 14px;transition:border-color .15s;min-height:44px}
+.modal-check-label:hover{border-color:var(--border-hi)}
+.modal-check-label input{width:16px;height:16px;accent-color:var(--accent);cursor:pointer}
+.modal-check-text{font-size:13px;color:var(--text)}
+.modal-btns{display:flex;gap:10px;justify-content:flex-end}
+.modal-btn{font-family:var(--fm);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  padding:10px 18px;border-radius:var(--rs);cursor:pointer;min-height:44px;transition:all .15s}
+.modal-btn.cancel{background:transparent;border:1px solid var(--border);color:var(--dim)}
+.modal-btn.cancel:hover{border-color:var(--border-hi);color:var(--white)}
+.modal-btn.confirm{background:rgba(232,184,75,.1);border:1px solid var(--accent);color:var(--accent)}
+.modal-btn.confirm:hover{background:rgba(232,184,75,.18)}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:var(--surf3);border:1px solid var(--border-hi);border-radius:var(--r);
+  padding:12px 20px;font-family:var(--fm);font-size:12px;color:var(--white);
+  letter-spacing:.06em;z-index:200;opacity:0;transition:all .3s;pointer-events:none;
+  white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast.success{border-color:var(--green-hi);color:var(--green-hi)}
+.toast.error{border-color:var(--red-hi);color:var(--red-hi)}
+
+/* SCORE BANNER */
+.score-banner{display:flex;gap:16px;padding:14px 18px;background:var(--surf2);
+  border:1px solid var(--border);border-radius:var(--r);margin-bottom:20px;flex-wrap:wrap;align-items:center}
+.score-item{display:flex;flex-direction:column;gap:2px}
+.score-item-label{font-family:var(--fm);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+.score-item-val{font-family:var(--fd);font-size:22px;font-weight:700;color:var(--white)}
+.score-divider{width:1px;height:36px;background:var(--border)}
+.score-message{font-size:13px;color:var(--text);line-height:1.5;flex:1;min-width:140px}
+
+/* PRINT */
+@media print{
+  .hdr,.tab-nav,.tab-footer,.scaffold-toggle,.starters-panel,.mc-panel,.modal-overlay,.toast{display:none!important}
+  body{background:white;color:black}
+  .tab-panels{border:none;background:white}
+  .tab-panel{display:block!important;page-break-after:always}
+  .doc-body,.topic-value,.analysis-textarea{background:white;color:black;border:1px solid var(--print-border)}
+  .doc-question-box{background:var(--print-highlight);border:1px solid var(--print-border)}
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .main{padding:0 10px 40px}
+  .tab-panel{padding:16px}
+  .dir-grid{grid-template-columns:1fr}
+  .dir-title{font-size:28px}
+  .score-banner{gap:10px}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="hdr">
+  <div class="hdr-l">
+    <span class="logo">EdSim</span>
+    <div class="hdiv"></div>
+    <span class="unit-label" id="unitLabel">TEA Analyzer</span>
+  </div>
+  <div class="hdr-r">
+    <select class="exam-picker" id="examPicker" aria-label="Choose exam"></select>
+    <button class="hdr-btn copy-btn" onclick="openExportModal()" aria-label="Export your work">Export Work</button>
+  </div>
+</header>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- TAB NAV (populated by buildTabBar once the exam is loaded) -->
+  <nav class="tab-nav" id="tabNav" role="tablist" aria-label="Activity sections"></nav>
+
+  <!-- TAB PANELS -->
+  <div class="tab-panels">
+
+    <!-- ══ PANEL 0: DIRECTIONS ══ -->
+    <div class="tab-panel active" id="panel-0" role="tabpanel" aria-labelledby="tab-btn-0">
+      <div class="dir-hero">
+        <div class="dir-eyebrow" id="dirEyebrow">US History Regents Prep · Civic Literacy Essay</div>
+        <div class="dir-title">TEA Analyzer</div>
+        <div class="dir-sub" id="dirSub">Civic Literacy Essay</div>
+      </div>
+
+      <div class="dir-goal" id="dirGoal" style="margin-bottom:22px">
+        <strong>Your goal:</strong> Practice the TEA method — <strong>Topic, Evidence, Analysis</strong> — using the primary source documents from this exam. By the end, you will have a complete set of notes you can use to write the Civic Literacy Essay.
+      </div>
+
+      <div class="dir-steps" style="margin-bottom:22px">
+        <div class="dir-steps-title">What TEA means</div>
+        <div class="dir-step">
+          <div class="dir-step-num">T</div>
+          <div class="dir-step-text"><strong>Topic</strong> — The question you need to answer. It's already filled in for you — you just need to read it carefully before you look at the document.</div>
+        </div>
+        <div class="dir-step">
+          <div class="dir-step-num">E</div>
+          <div class="dir-step-text"><strong>Evidence</strong> — The specific sentence or detail from the document that best answers the question. Click the sentence in the document that you think is the best answer. You'll get instant feedback.</div>
+        </div>
+        <div class="dir-step">
+          <div class="dir-step-num">A</div>
+          <div class="dir-step-text"><strong>Analysis</strong> — Your explanation of <em>why</em> the evidence matters. Good analysis sentences start with <strong>"This shows..."</strong> or <strong>"This means..."</strong> You can use a sentence starter, try the multiple choice, or write your own.</div>
+        </div>
+      </div>
+
+      <div class="dir-grid">
+        <div class="dir-card">
+          <div class="dir-card-label" id="dirCardDocsLabel">Documents</div>
+          <div class="dir-card-title">One document per tab</div>
+          <div class="dir-card-text">Each tab has a document and three steps: Topic (auto-filled), Evidence (click to select), and Analysis (write or scaffold). Spend about <strong>5–7 minutes per document</strong>.</div>
+        </div>
+        <div class="dir-card">
+          <div class="dir-card-label">Analysis Scaffolds</div>
+          <div class="dir-card-title">Two ways to get help</div>
+          <div class="dir-card-text">Stuck on analysis? Click <strong>Sentence Starters</strong> to pick a starter you finish yourself, or <strong>Multiple Choice</strong> to choose the best analysis sentence. Or turn both off and write your own.</div>
+        </div>
+        <div class="dir-card">
+          <div class="dir-card-label">Summary Tab</div>
+          <div class="dir-card-title">See all your work</div>
+          <div class="dir-card-text" id="dirCardSummaryText">The last tab shows all your documents side by side — your evidence picks and analysis together. Use it to review before writing your essay.</div>
+        </div>
+        <div class="dir-card">
+          <div class="dir-card-label">Export</div>
+          <div class="dir-card-title">Save your work</div>
+          <div class="dir-card-text">Click <strong>Export Work</strong> in the top right to copy your responses to the clipboard. Paste into your Google Doc or notes. Your work also auto-saves to this device as you go.</div>
+        </div>
+      </div>
+
+      <div class="tab-footer">
+        <button class="nav-btn" disabled aria-label="Previous tab">← Previous</button>
+        <span class="tab-progress" id="dirFooterProgress">Tab 1 of 8</span>
+        <button class="nav-btn primary" onclick="goToTab(1)" aria-label="Go to Document 1">Doc 1 →</button>
+      </div>
+    </div>
+
+    <!-- ══ PANELS 1–6: DOCUMENTS ══ -->
+    <!-- Generated by JS -->
+
+    <!-- ══ SUMMARY PANEL (always last; id renumbered by buildDocPanels) ══ -->
+    <div class="tab-panel" id="panel-summary" role="tabpanel" aria-labelledby="tab-btn-summary">
+      <div style="margin-bottom:20px">
+        <div style="font-family:var(--fd);font-size:22px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--white);margin-bottom:6px">Your TEA Notes</div>
+        <div style="font-size:13px;color:var(--dim);line-height:1.6">Everything you've written, collected in one place. Review before writing your essay — or export to save your work.</div>
+      </div>
+      <div id="score-banner-area"></div>
+      <div id="summary-content" class="summary-grid"></div>
+      <div class="tab-footer">
+        <button class="nav-btn" id="summaryPrevBtn" onclick="goToTab(SUMMARY_TAB - 1)" aria-label="Previous document">← Last Doc</button>
+        <span class="tab-progress" id="summaryFooterProgress">Tab of</span>
+        <button class="nav-btn primary" onclick="openExportModal()" aria-label="Export your work">Export Work</button>
+      </div>
+    </div>
+
+  </div><!-- end tab-panels -->
+</div><!-- end main -->
+
+<!-- EXPORT MODAL -->
+<div class="modal-overlay" id="exportModal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal">
+    <div class="modal-title" id="modal-title">Export Your Work</div>
+    <div class="modal-sub">Choose which sections to include, then click Copy. Paste into your Google Doc or notes.</div>
+    <div class="modal-checks" id="modal-checks"></div>
+    <div class="modal-btns">
+      <button class="modal-btn cancel" onclick="closeExportModal()">Cancel</button>
+      <button class="modal-btn confirm" onclick="doExport()">Copy to Clipboard</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+// ═══════════════════════════════════════════════════════
+//  CONSTANTS & DATA
+// ═══════════════════════════════════════════════════════
+// ─── DYNAMIC EXAM LOADING ───
+// Exam content is loaded at runtime from exams/<id>.json (one file per exam),
+// indexed by exams/manifest.json. No exam data is hard-coded here.
+let EXAM = null;        // the loaded exam object
+let DOCS = [];          // EXAM.docs
+let LS_KEY = '';        // per-exam localStorage key (EXAM.storageKey)
+let TOTAL_TABS = 0;     // Directions + N docs + Summary
+let SUMMARY_TAB = 0;    // index of the Summary tab (= DOCS.length + 1)
+let MANIFEST = [];      // available exams for the picker
+
+// ═══════════════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════════════
+let state = {
+  currentTab: 0,
+  docs: {}
+};
+
+// Initialize per-doc state (called once DOCS is loaded)
+function initState() {
+  state.docs = {};
+  DOCS.forEach(doc => {
+    state.docs[doc.id] = {
+      selectedSentenceId: null,
+      evidenceCorrect: null,
+      firstAttemptCorrect: null,
+      scaffoldMode: 'none', // 'none' | 'starters' | 'mc'
+      selectedStarterIndex: null,
+      selectedMcIndex: null,
+      mcCorrect: null,
+      analysisText: ''
+    };
+  });
+}
+
+// ═══════════════════════════════════════════════════════
+//  LOCALSTORAGE
+// ═══════════════════════════════════════════════════════
+function saveState() {
+  try { localStorage.setItem(LS_KEY, JSON.stringify(state.docs)); } catch(e) {}
+}
+
+function loadState() {
+  try {
+    const saved = localStorage.getItem(LS_KEY);
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      DOCS.forEach(doc => {
+        if (parsed[doc.id]) {
+          state.docs[doc.id] = { ...state.docs[doc.id], ...parsed[doc.id] };
+        }
+      });
+    }
+  } catch(e) {}
+}
+
+function resetState() {
+  DOCS.forEach(doc => {
+    state.docs[doc.id] = {
+      selectedSentenceId: null,
+      evidenceCorrect: null,
+      firstAttemptCorrect: null,
+      scaffoldMode: 'none',
+      selectedStarterIndex: null,
+      selectedMcIndex: null,
+      mcCorrect: null,
+      analysisText: ''
+    };
+  });
+  try { localStorage.removeItem(LS_KEY); } catch(e) {}
+}
+
+// ═══════════════════════════════════════════════════════
+//  BUILD DOCUMENT PANELS
+// ═══════════════════════════════════════════════════════
+function buildDocPanels() {
+  DOCS.forEach((doc, idx) => {
+    const tabIdx = idx + 1;
+    const panel = document.createElement('div');
+    panel.className = 'tab-panel';
+    panel.id = `panel-${tabIdx}`;
+    panel.setAttribute('role', 'tabpanel');
+    panel.setAttribute('aria-labelledby', `tab-btn-${tabIdx}`);
+
+    panel.innerHTML = `
+      <div class="doc-status" id="status-${doc.id}"></div>
+
+      <!-- QUESTION BOX -->
+      <div class="doc-question-box">
+        <div class="doc-question-label">Exam Question</div>
+        <div class="doc-question-text">${doc.question}</div>
+      </div>
+
+      <!-- T: TOPIC -->
+      <div class="tea-section">
+        <div class="tea-header">
+          <div class="tea-letter">T</div>
+          <div>
+            <div class="tea-label">Topic</div>
+            <div class="tea-sublabel">The question is asking about…</div>
+          </div>
+        </div>
+        <div class="topic-value">${doc.topicDisplay}</div>
+      </div>
+
+      <!-- E: EVIDENCE -->
+      <div class="tea-section">
+        <div class="tea-header">
+          <div class="tea-letter">E</div>
+          <div>
+            <div class="tea-label">Evidence</div>
+            <div class="tea-sublabel">Click the sentence that best answers the question</div>
+          </div>
+        </div>
+        <div class="doc-source">${doc.source}</div>
+        ${buildDocImage(doc)}
+        <div class="doc-instruction">Read the document, then click one sentence to select your evidence.</div>
+        <div class="doc-body" id="docbody-${doc.id}">${buildDocBody(doc)}</div>
+        <div class="evidence-feedback" id="evfeedback-${doc.id}"></div>
+      </div>
+
+      <!-- A: ANALYSIS -->
+      <div class="tea-section">
+        <div class="tea-header">
+          <div class="tea-letter">A</div>
+          <div>
+            <div class="tea-label">Analysis</div>
+            <div class="tea-sublabel">Explain why your evidence matters. Try starting with "This shows…" or "This means…"</div>
+          </div>
+        </div>
+
+        <!-- SCAFFOLD TOGGLE -->
+        <div class="scaffold-toggle" role="group" aria-label="Analysis scaffold options">
+          <button class="scaffold-btn none-btn active" id="scaffold-none-${doc.id}"
+            onclick="setScaffold(${doc.id}, 'none')" aria-pressed="true">Write My Own</button>
+          <button class="scaffold-btn" id="scaffold-starters-${doc.id}"
+            onclick="setScaffold(${doc.id}, 'starters')" aria-pressed="false">Sentence Starters</button>
+          <button class="scaffold-btn" id="scaffold-mc-${doc.id}"
+            onclick="setScaffold(${doc.id}, 'mc')" aria-pressed="false">Multiple Choice</button>
+        </div>
+
+        <!-- SENTENCE STARTERS -->
+        <div class="starters-panel" id="starters-${doc.id}">
+          <div style="font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.06em;margin-bottom:8px;text-transform:uppercase;">Click a starter, then finish it in the box below</div>
+          ${doc.starters.map((s, i) => `
+            <button class="starter-option" id="starter-${doc.id}-${i}"
+              onclick="selectStarter(${doc.id}, ${i})"
+              aria-pressed="false">${s}</button>
+          `).join('')}
+        </div>
+
+        <!-- MULTIPLE CHOICE -->
+        <div class="mc-panel" id="mc-${doc.id}">
+          <div style="font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.06em;margin-bottom:8px;text-transform:uppercase;">Which sentence best analyzes this evidence?</div>
+          ${doc.mcOptions.map((opt, i) => `
+            <button class="mc-option" id="mc-opt-${doc.id}-${i}"
+              onclick="selectMc(${doc.id}, ${i})"
+              aria-pressed="false">
+              <span class="mc-letter">${opt.letter}.</span>
+              <span class="mc-text">${opt.text}</span>
+            </button>
+          `).join('')}
+          <div class="mc-feedback" id="mc-feedback-${doc.id}"></div>
+        </div>
+
+        <!-- TEXTAREA -->
+        <div class="analysis-wrap">
+          <textarea class="analysis-textarea" id="analysis-${doc.id}"
+            placeholder="Write your analysis here… (e.g., This means that…)"
+            aria-label="Analysis for document ${doc.id}"
+            oninput="onAnalysisInput(${doc.id}, this.value)"
+            rows="4"></textarea>
+          <button class="voice-btn hidden" id="voice-btn-${doc.id}"
+            aria-label="Start voice input" onclick="toggleVoice(${doc.id})">🎤</button>
+        </div>
+      </div>
+
+      <!-- FOOTER NAV -->
+      <div class="tab-footer">
+        <button class="nav-btn" onclick="goToTab(${tabIdx - 1})" aria-label="Previous tab">← ${tabIdx === 1 ? 'Directions' : 'Doc ' + (tabIdx - 1)}</button>
+        <span class="tab-progress">Tab ${tabIdx + 1} of ${TOTAL_TABS}</span>
+        <button class="nav-btn primary" onclick="goToTab(${tabIdx + 1})" aria-label="Next tab">${tabIdx === DOCS.length ? 'Summary' : 'Doc ' + (tabIdx + 1)} →</button>
+      </div>
+    `;
+
+    // Insert before the Summary panel (kept last in DOM order)
+    const summaryPanel = document.getElementById('panel-summary');
+    summaryPanel.parentNode.insertBefore(panel, summaryPanel);
+  });
+  // Summary tab is the last tab: renumber its id/aria now that doc count is known
+  const summaryPanel = document.getElementById('panel-summary');
+  summaryPanel.setAttribute('aria-labelledby', `tab-btn-${SUMMARY_TAB}`);
+}
+
+// Hybrid image block: shows the document image for visual context.
+// The clickable evidence remains the text sentences below it.
+function buildDocImage(doc) {
+  if (!doc.image || !doc.image.src) return '';
+  const cap = doc.image.caption ? `<figcaption class="doc-image-cap">${doc.image.caption}</figcaption>` : '';
+  return `<figure class="doc-image-fig">
+      <img class="doc-image" src="${doc.image.src}" alt="${(doc.image.alt || '').replace(/"/g,"'")}" loading="lazy"/>
+      ${cap}
+    </figure>`;
+}
+
+function buildDocBody(doc) {
+  if (doc.isNewspaper) {
+    const label = doc.newspaperLabel || doc.source;
+    return `<div style="font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.06em;margin-bottom:10px;text-transform:uppercase;">${label}</div>` +
+      doc.sentences.map(s => `<span class="doc-sentence" id="sent-${s.id}" data-docid="${doc.id}" data-sentid="${s.id}" data-correct="${s.correct}" onclick="selectSentence(${doc.id}, '${s.id}', ${s.correct})" tabindex="0" role="button" aria-label="Select: ${s.text.replace(/"/g,"'")}">▸ ${s.text}</span><br><br>`).join('');
+  }
+  return doc.sentences.map(s =>
+    `<span class="doc-sentence" id="sent-${s.id}" data-docid="${doc.id}" data-sentid="${s.id}" data-correct="${s.correct}" onclick="selectSentence(${doc.id}, '${s.id}', ${s.correct})" tabindex="0" role="button" aria-label="Select: ${s.text.replace(/"/g,"'")}">${s.text}</span> `
+  ).join('');
+}
+
+// ═══════════════════════════════════════════════════════
+//  TAB NAVIGATION
+// ═══════════════════════════════════════════════════════
+function goToTab(idx) {
+  if (idx < 0 || idx >= TOTAL_TABS) return;
+  state.currentTab = idx;
+
+  document.querySelectorAll('.tab-panel').forEach((p, i) => {
+    p.classList.toggle('active', i === idx);
+  });
+  document.querySelectorAll('.tab-btn').forEach((b, i) => {
+    b.classList.toggle('active', i === idx);
+    b.setAttribute('aria-selected', i === idx ? 'true' : 'false');
+  });
+
+  if (idx === SUMMARY_TAB) renderSummary();
+  window.scrollTo(0, 0);
+}
+
+// ═══════════════════════════════════════════════════════
+//  RESTORE STATE INTO UI
+// ═══════════════════════════════════════════════════════
+function restoreUI() {
+  DOCS.forEach(doc => {
+    const ds = state.docs[doc.id];
+
+    // Restore evidence selection
+    if (ds.selectedSentenceId) {
+      const sentEl = document.getElementById(`sent-${ds.selectedSentenceId}`);
+      if (sentEl) sentEl.classList.add(ds.evidenceCorrect ? 'selected-correct' : 'selected-wrong');
+      showEvidenceFeedback(doc.id, ds.evidenceCorrect);
+    }
+
+    // Restore scaffold mode
+    setScaffoldUI(doc.id, ds.scaffoldMode);
+
+    // Restore starter selection
+    if (ds.selectedStarterIndex !== null) {
+      const btn = document.getElementById(`starter-${doc.id}-${ds.selectedStarterIndex}`);
+      if (btn) { btn.classList.add('selected'); btn.setAttribute('aria-pressed','true'); }
+    }
+
+    // Restore MC selection
+    if (ds.selectedMcIndex !== null) {
+      applyMcUI(doc.id, ds.selectedMcIndex, ds.mcCorrect);
+    }
+
+    // Restore analysis text
+    const ta = document.getElementById(`analysis-${doc.id}`);
+    if (ta && ds.analysisText) ta.value = ds.analysisText;
+
+    // Update tab badge
+    updateTabBadge(doc.id);
+    updateStatusBadge(doc.id);
+  });
+}
+
+// ═══════════════════════════════════════════════════════
+//  EVIDENCE SELECTION
+// ═══════════════════════════════════════════════════════
+function selectSentence(docId, sentId, isCorrect) {
+  const ds = state.docs[docId];
+  const doc = DOCS.find(d => d.id === docId);
+
+  // Clear previous selection styling
+  if (ds.selectedSentenceId) {
+    const prevEl = document.getElementById(`sent-${ds.selectedSentenceId}`);
+    if (prevEl) prevEl.classList.remove('selected-correct', 'selected-wrong');
+  }
+
+  // Record first attempt (only on very first click ever)
+  if (ds.firstAttemptCorrect === null) {
+    ds.firstAttemptCorrect = isCorrect;
+  }
+
+  ds.selectedSentenceId = sentId;
+  ds.evidenceCorrect = isCorrect;
+
+  // Style the newly clicked sentence
+  const sentEl = document.getElementById(`sent-${sentId}`);
+  if (sentEl) sentEl.classList.add(isCorrect ? 'selected-correct' : 'selected-wrong');
+
+  showEvidenceFeedback(docId, isCorrect);
+  updateTabBadge(docId);
+  updateStatusBadge(docId);
+  saveState();
+}
+
+function showEvidenceFeedback(docId, isCorrect) {
+  const fb = document.getElementById(`evfeedback-${docId}`);
+  if (!fb) return;
+  fb.className = `evidence-feedback show ${isCorrect ? 'correct' : 'wrong'}`;
+  if (isCorrect) {
+    fb.textContent = '✓ Good evidence! That sentence directly answers the question.';
+  } else {
+    fb.textContent = '✗ That sentence doesn\'t directly answer the question. Try clicking a different sentence.';
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+//  SCAFFOLD
+// ═══════════════════════════════════════════════════════
+function setScaffold(docId, mode) {
+  state.docs[docId].scaffoldMode = mode;
+  setScaffoldUI(docId, mode);
+  saveState();
+}
+
+function setScaffoldUI(docId, mode) {
+  const noneBtn = document.getElementById(`scaffold-none-${docId}`);
+  const startersBtn = document.getElementById(`scaffold-starters-${docId}`);
+  const mcBtn = document.getElementById(`scaffold-mc-${docId}`);
+  const startersPanel = document.getElementById(`starters-${docId}`);
+  const mcPanel = document.getElementById(`mc-${docId}`);
+
+  if (!noneBtn) return;
+
+  [noneBtn, startersBtn, mcBtn].forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed','false'); });
+  startersPanel.classList.remove('show');
+  mcPanel.classList.remove('show');
+
+  if (mode === 'none') {
+    noneBtn.classList.add('active'); noneBtn.setAttribute('aria-pressed','true');
+  } else if (mode === 'starters') {
+    startersBtn.classList.add('active'); startersBtn.setAttribute('aria-pressed','true');
+    startersPanel.classList.add('show');
+  } else if (mode === 'mc') {
+    mcBtn.classList.add('active'); mcBtn.setAttribute('aria-pressed','true');
+    mcPanel.classList.add('show');
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+//  SENTENCE STARTERS
+// ═══════════════════════════════════════════════════════
+function selectStarter(docId, idx) {
+  const ds = state.docs[docId];
+  const doc = DOCS.find(d => d.id === docId);
+
+  // Deselect previous
+  if (ds.selectedStarterIndex !== null) {
+    const prev = document.getElementById(`starter-${docId}-${ds.selectedStarterIndex}`);
+    if (prev) { prev.classList.remove('selected'); prev.setAttribute('aria-pressed','false'); }
+  }
+
+  ds.selectedStarterIndex = idx;
+  const btn = document.getElementById(`starter-${docId}-${idx}`);
+  if (btn) { btn.classList.add('selected'); btn.setAttribute('aria-pressed','true'); }
+
+  // Populate textarea with starter
+  const ta = document.getElementById(`analysis-${docId}`);
+  if (ta) {
+    ta.value = doc.starters[idx];
+    ta.focus();
+    ta.setSelectionRange(ta.value.length, ta.value.length);
+    ds.analysisText = ta.value;
+  }
+  saveState();
+}
+
+// ═══════════════════════════════════════════════════════
+//  MULTIPLE CHOICE
+// ═══════════════════════════════════════════════════════
+function selectMc(docId, idx) {
+  const ds = state.docs[docId];
+  if (ds.selectedMcIndex !== null) return; // already answered
+
+  const doc = DOCS.find(d => d.id === docId);
+  const isCorrect = doc.mcOptions[idx].correct;
+
+  ds.selectedMcIndex = idx;
+  ds.mcCorrect = isCorrect;
+
+  applyMcUI(docId, idx, isCorrect);
+
+  // If correct, also populate textarea
+  if (isCorrect) {
+    const ta = document.getElementById(`analysis-${docId}`);
+    if (ta && !ds.analysisText) {
+      ta.value = doc.mcOptions[idx].text;
+      ds.analysisText = ta.value;
+    }
+  }
+
+  updateTabBadge(docId);
+  updateStatusBadge(docId);
+  saveState();
+}
+
+function applyMcUI(docId, idx, isCorrect) {
+  const doc = DOCS.find(d => d.id === docId);
+  const fb = document.getElementById(`mc-feedback-${docId}`);
+
+  doc.mcOptions.forEach((opt, i) => {
+    const btn = document.getElementById(`mc-opt-${docId}-${i}`);
+    if (!btn) return;
+    btn.style.pointerEvents = 'none';
+    btn.setAttribute('aria-pressed', 'true');
+    if (i === idx) {
+      btn.classList.add(isCorrect ? 'selected-correct' : 'selected-wrong');
+    } else if (opt.correct && !isCorrect) {
+      btn.classList.add('reveal-correct');
+    }
+  });
+
+  if (fb) {
+    fb.className = `mc-feedback show ${isCorrect ? 'correct' : 'wrong'}`;
+    fb.textContent = isCorrect
+      ? '✓ That\'s the best analysis!'
+      : '✗ Not quite. The highlighted answer explains the "so what" most clearly.';
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+//  ANALYSIS TEXTAREA
+// ═══════════════════════════════════════════════════════
+function onAnalysisInput(docId, value) {
+  state.docs[docId].analysisText = value;
+  updateTabBadge(docId);
+  updateStatusBadge(docId);
+  saveState();
+}
+
+// ═══════════════════════════════════════════════════════
+//  PROGRESS BADGES
+// ═══════════════════════════════════════════════════════
+function getDocProgress(docId) {
+  const ds = state.docs[docId];
+  const hasEvidence = ds.selectedSentenceId !== null;
+  const hasAnalysis = ds.analysisText && ds.analysisText.trim().length > 0;
+  if (hasEvidence && hasAnalysis) return 'done';
+  if (hasEvidence || hasAnalysis) return 'partial';
+  return 'none';
+}
+
+function updateTabBadge(docId) {
+  const tabIdx = docId; // doc 1 = tab index 1, etc.
+  const btn = document.getElementById(`tab-btn-${tabIdx}`);
+  if (!btn) return;
+
+  // Remove existing badges
+  btn.querySelectorAll('.tab-check,.tab-partial').forEach(el => el.remove());
+
+  const progress = getDocProgress(docId);
+  if (progress === 'done') {
+    const span = document.createElement('span');
+    span.className = 'tab-check';
+    span.textContent = '✓';
+    btn.appendChild(span);
+  } else if (progress === 'partial') {
+    const span = document.createElement('span');
+    span.className = 'tab-partial';
+    span.textContent = '◐';
+    btn.appendChild(span);
+  }
+}
+
+function updateStatusBadge(docId) {
+  const area = document.getElementById(`status-${docId}`);
+  if (!area) return;
+  area.innerHTML = '';
+  const ds = state.docs[docId];
+
+  if (ds.selectedSentenceId) {
+    const badge = document.createElement('span');
+    badge.className = `status-badge ${ds.evidenceCorrect ? 'done' : ''}`;
+    badge.textContent = ds.evidenceCorrect ? 'Evidence: ✓ Good' : 'Evidence: Selected';
+    area.appendChild(badge);
+  }
+  if (ds.analysisText && ds.analysisText.trim().length > 0) {
+    const badge = document.createElement('span');
+    badge.className = 'status-badge done';
+    badge.textContent = 'Analysis: Written';
+    area.appendChild(badge);
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+//  SUMMARY
+// ═══════════════════════════════════════════════════════
+function renderSummary() {
+  const container = document.getElementById('summary-content');
+  const bannerArea = document.getElementById('score-banner-area');
+  if (!container) return;
+
+  // Progress counts
+  let done = 0, partial = 0;
+  DOCS.forEach(doc => {
+    const p = getDocProgress(doc.id);
+    if (p === 'done') done++;
+    else if (p === 'partial') partial++;
+  });
+
+  // First-attempt evidence score (out of N — mirrors Part A of the exam)
+  const N = DOCS.length;
+  let firstAttemptScore = 0;
+  let attempted = 0;
+  DOCS.forEach(doc => {
+    const ds = state.docs[doc.id];
+    if (ds.firstAttemptCorrect !== null) {
+      attempted++;
+      if (ds.firstAttemptCorrect) firstAttemptScore++;
+    }
+  });
+
+  const scoreMsg = attempted === 0
+    ? 'Select evidence in each document tab to see your score here.'
+    : attempted < N
+    ? `${firstAttemptScore}/${attempted} so far — finish the remaining documents to see your full score.`
+    : firstAttemptScore === N
+    ? `🎉 Perfect! You identified strong evidence on the first try for all ${N} documents.`
+    : firstAttemptScore >= Math.ceil(N * 0.66)
+    ? `Good work. On the real exam, Part A is worth ${N} points — one per document.`
+    : `Keep practicing. On the real exam, Part A is worth ${N} points — one per document.`;
+
+  bannerArea.innerHTML = `
+    <div class="score-banner">
+      <div class="score-item">
+        <div class="score-item-label">Evidence Score</div>
+        <div class="score-item-val" style="color:${firstAttemptScore === attempted && attempted > 0 ? 'var(--green-hi)' : attempted > 0 ? 'var(--amber-hi)' : 'var(--white)'}">${attempted > 0 ? firstAttemptScore + '/' + attempted : '—'}</div>
+      </div>
+      <div class="score-divider"></div>
+      <div class="score-item">
+        <div class="score-item-label">Notes Complete</div>
+        <div class="score-item-val">${done}/${N}</div>
+      </div>
+      <div class="score-divider"></div>
+      <div class="score-message">${scoreMsg}</div>
+    </div>
+    ${attempted > 0 ? `<div style="font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.06em;margin-bottom:16px;padding:0 2px;">📋 ${EXAM.partALabel || `On the real exam, Part A is worth ${N} points — 1 point per document`}. Your evidence score above reflects how many you would have earned on the first try.</div>` : ''}
+  `;
+
+  container.innerHTML = '';
+  DOCS.forEach(doc => {
+    const ds = state.docs[doc.id];
+    const progress = getDocProgress(doc.id);
+
+    // Find selected sentence text
+    let evidenceText = '';
+    if (ds.selectedSentenceId) {
+      const sent = doc.sentences.find(s => s.id === ds.selectedSentenceId);
+      if (sent) evidenceText = sent.text;
+    }
+
+    // First-attempt indicator
+    let firstAttemptBadge = '';
+    if (ds.firstAttemptCorrect === true) {
+      firstAttemptBadge = '<span style="font-family:var(--fm);font-size:10px;color:var(--green-hi);margin-left:8px;letter-spacing:.06em;">✓ +1 pt first try</span>';
+    } else if (ds.firstAttemptCorrect === false) {
+      firstAttemptBadge = `<span style="font-family:var(--fm);font-size:10px;color:var(--amber-hi);margin-left:8px;letter-spacing:.06em;">${ds.evidenceCorrect ? '✓ corrected' : '✗ try again'}</span>`;
+    }
+
+    const card = document.createElement('div');
+    card.className = 'summary-card';
+    card.innerHTML = `
+      <div class="summary-card-hdr">
+        <div class="summary-doc-label">${doc.title}</div>
+        <div class="summary-score ${progress === 'done' ? 'full' : progress === 'partial' ? 'partial' : ''}">${progress === 'done' ? '✓ Complete' : progress === 'partial' ? '◐ In Progress' : 'Not Started'}</div>
+      </div>
+      <div class="summary-row">
+        <div class="summary-row-label">Topic</div>
+        <div class="summary-row-value" style="font-style:italic;font-size:12px">${doc.topicDisplay}</div>
+      </div>
+      <div class="summary-row">
+        <div class="summary-row-label" style="display:flex;align-items:center;">Evidence Selected${firstAttemptBadge}</div>
+        <div class="summary-row-value ${!evidenceText ? 'empty' : ''}">${evidenceText || 'No evidence selected yet'}</div>
+      </div>
+      <div class="summary-row">
+        <div class="summary-row-label">Analysis Written</div>
+        <div class="summary-row-value ${!ds.analysisText ? 'empty' : ''}">${ds.analysisText || 'No analysis written yet'}</div>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+// ═══════════════════════════════════════════════════════
+//  EXPORT
+// ═══════════════════════════════════════════════════════
+function openExportModal() {
+  const checksDiv = document.getElementById('modal-checks');
+  checksDiv.innerHTML = DOCS.map(doc => `
+    <label class="modal-check-label">
+      <input type="checkbox" id="export-check-${doc.id}" checked>
+      <span class="modal-check-text">${doc.title} — ${doc.source.substring(0, 50)}…</span>
+    </label>
+  `).join('') + `
+    <label class="modal-check-label">
+      <input type="checkbox" id="export-check-summary" checked>
+      <span class="modal-check-text">Summary Header</span>
+    </label>
+  `;
+  document.getElementById('exportModal').classList.add('show');
+}
+
+function closeExportModal() {
+  document.getElementById('exportModal').classList.remove('show');
+}
+
+async function doExport() {
+  const lines = [];
+  const inclSummary = document.getElementById('export-check-summary')?.checked;
+
+  if (inclSummary) {
+    lines.push('TEA ANALYZER — ' + (EXAM.title || '').toUpperCase());
+    lines.push(EXAM.eyebrow || 'US History Regents Prep · Civic Literacy Essay');
+    lines.push('=' .repeat(50));
+    lines.push('');
+  }
+
+  DOCS.forEach(doc => {
+    const checkbox = document.getElementById(`export-check-${doc.id}`);
+    if (!checkbox || !checkbox.checked) return;
+
+    const ds = state.docs[doc.id];
+    let evidenceText = '';
+    if (ds.selectedSentenceId) {
+      const sent = doc.sentences.find(s => s.id === ds.selectedSentenceId);
+      if (sent) evidenceText = sent.text;
+    }
+
+    lines.push(`${doc.title.toUpperCase()} — ${doc.source}`);
+    lines.push('-'.repeat(40));
+    lines.push(`TOPIC: ${doc.topicDisplay}`);
+    lines.push(`EVIDENCE: ${evidenceText || '[Not selected]'}`);
+    lines.push(`ANALYSIS: ${ds.analysisText || '[Not written]'}`);
+    lines.push('');
+  });
+
+  const text = lines.join('\n');
+
+  try {
+    await navigator.clipboard.writeText(text);
+    closeExportModal();
+    showToast('Copied! Paste into your Google Doc.', 'success');
+    // Export-triggered reset per Build Standards §5
+    resetState();
+    restoreUI();
+    updateAllBadges();
+  } catch(e) {
+    closeExportModal();
+    showToast('Copy failed — your work is still saved. Try again.', 'error');
+  }
+}
+
+function updateAllBadges() {
+  DOCS.forEach(doc => {
+    updateTabBadge(doc.id);
+    updateStatusBadge(doc.id);
+  });
+}
+
+// ═══════════════════════════════════════════════════════
+//  TOAST
+// ═══════════════════════════════════════════════════════
+function showToast(msg, type = '') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = `toast show ${type}`;
+  setTimeout(() => { t.className = 'toast'; }, 3500);
+}
+
+// ═══════════════════════════════════════════════════════
+//  VOICE INPUT (Web Speech API)
+// ═══════════════════════════════════════════════════════
+const voiceRecognizers = {};
+
+function initVoice() {
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SpeechRecognition) return;
+
+  DOCS.forEach(doc => {
+    const btn = document.getElementById(`voice-btn-${doc.id}`);
+    if (!btn) return;
+    btn.classList.remove('hidden');
+
+    const recognition = new SpeechRecognition();
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    recognition.lang = 'en-US';
+    let recording = false;
+
+    btn.addEventListener('click', () => {
+      if (recording) {
+        recognition.stop();
+      } else {
+        recognition.start();
+        btn.classList.add('recording');
+        recording = true;
+      }
+    });
+
+    recognition.onresult = (e) => {
+      const transcript = e.results[0][0].transcript;
+      const ta = document.getElementById(`analysis-${doc.id}`);
+      if (ta) {
+        ta.value = ta.value ? ta.value + ' ' + transcript : transcript;
+        ta.dispatchEvent(new Event('input'));
+      }
+    };
+
+    recognition.onend = () => { btn.classList.remove('recording'); recording = false; };
+    recognition.onerror = () => { btn.classList.remove('recording'); recording = false; };
+    voiceRecognizers[doc.id] = recognition;
+  });
+}
+
+function toggleVoice(docId) {
+  // handled by event listener in initVoice
+}
+
+// ═══════════════════════════════════════════════════════
+//  KEYBOARD NAVIGATION FOR SENTENCES
+// ═══════════════════════════════════════════════════════
+function initKeyboard() {
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      const el = document.activeElement;
+      if (el && el.classList.contains('doc-sentence')) {
+        e.preventDefault();
+        el.click();
+      }
+    }
+  });
+}
+
+// ═══════════════════════════════════════════════════════
+//  MODAL KEYBOARD / CLOSE ON OVERLAY
+// ═══════════════════════════════════════════════════════
+document.getElementById('exportModal').addEventListener('click', (e) => {
+  if (e.target === e.currentTarget) closeExportModal();
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeExportModal();
+});
+
+// ═══════════════════════════════════════════════════════
+//  EXAM LOADING
+// ═══════════════════════════════════════════════════════
+async function loadManifest() {
+  try {
+    const r = await fetch('exams/manifest.json', { cache: 'no-cache' });
+    if (r.ok) MANIFEST = await r.json();
+  } catch (e) { MANIFEST = []; }
+  if (!Array.isArray(MANIFEST) || MANIFEST.length === 0) {
+    // Fallback so the engine still works without a manifest
+    MANIFEST = [{ examId: 'prohibition', title: 'Prohibition', file: 'exams/prohibition.json' }];
+  }
+}
+
+async function loadExam(examId) {
+  const entry = MANIFEST.find(e => e.examId === examId) || MANIFEST[0];
+  const file = entry.file || `exams/${entry.examId}.json`;
+  const r = await fetch(file, { cache: 'no-cache' });
+  if (!r.ok) throw new Error(`Could not load exam: ${file} (${r.status})`);
+  EXAM = await r.json();
+  DOCS = EXAM.docs || [];
+  LS_KEY = EXAM.storageKey || `edsim_tea_${EXAM.examId}_v1`;
+  TOTAL_TABS = DOCS.length + 2;          // Directions + N docs + Summary
+  SUMMARY_TAB = DOCS.length + 1;          // last tab index
+}
+
+// Build the tab bar: Directions, Doc 1..N, Summary
+function buildTabBar() {
+  const nav = document.getElementById('tabNav');
+  nav.innerHTML = '';
+  const labels = ['Directions', ...DOCS.map((d, i) => `Doc ${i + 1}`), 'Summary'];
+  labels.forEach((label, i) => {
+    const b = document.createElement('button');
+    b.className = 'tab-btn' + (i === 0 ? ' active' : '');
+    b.setAttribute('role', 'tab');
+    b.id = `tab-btn-${i}`;
+    b.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+    b.setAttribute('aria-controls', `panel-${i}`);
+    b.textContent = label;
+    b.addEventListener('click', () => goToTab(i));
+    nav.appendChild(b);
+  });
+}
+
+// Populate the exam picker dropdown; switching reloads with ?exam=<id>
+function buildExamPicker() {
+  const sel = document.getElementById('examPicker');
+  if (MANIFEST.length <= 1) { sel.style.display = 'none'; return; }
+  sel.innerHTML = MANIFEST.map(e =>
+    `<option value="${e.examId}"${e.examId === EXAM.examId ? ' selected' : ''}>${e.title || e.examId}</option>`
+  ).join('');
+  sel.addEventListener('change', () => {
+    const url = new URL(location.href);
+    url.searchParams.set('exam', sel.value);
+    location.href = url.toString();
+  });
+}
+
+// Apply exam-specific text to the static chrome (header + directions + summary footer)
+function applyExamText() {
+  const N = DOCS.length;
+  const set = (id, html) => { const el = document.getElementById(id); if (el) el.innerHTML = html; };
+  document.title = `TEA Analyzer: ${EXAM.title} · EdSim`;
+  set('unitLabel', `TEA Analyzer · ${EXAM.title}`);
+  set('dirEyebrow', EXAM.eyebrow || 'US History Regents Prep · Civic Literacy Essay');
+  set('dirSub', `${EXAM.title} · Civic Literacy Essay`);
+  set('dirGoal', `<strong>Your goal:</strong> Practice the TEA method — <strong>Topic, Evidence, Analysis</strong> — using the ${N} primary source documents from this exam. By the end, you will have a complete set of notes you can use to write the Civic Literacy Essay.`);
+  set('dirCardDocsLabel', `Documents 1–${N}`);
+  set('dirCardSummaryText', `The last tab shows all ${N} documents side by side — your evidence picks and analysis together. Use it to review before writing your essay.`);
+  set('dirFooterProgress', `Tab 1 of ${TOTAL_TABS}`);
+  // Summary tab button + footer
+  const sumBtn = document.getElementById('tab-btn-' + SUMMARY_TAB);
+  set('summaryFooterProgress', `Tab ${TOTAL_TABS} of ${TOTAL_TABS}`);
+  const prevBtn = document.getElementById('summaryPrevBtn');
+  if (prevBtn) prevBtn.textContent = `← Doc ${N}`;
+  if (sumBtn) { /* aria-labelledby wired in buildDocPanels */ }
+}
+
+// ═══════════════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════════════
+async function init() {
+  try {
+    await loadManifest();
+    const params = new URLSearchParams(location.search);
+    const examId = params.get('exam') || MANIFEST[0].examId;
+    await loadExam(examId);
+  } catch (e) {
+    document.getElementById('tabNav').innerHTML =
+      `<div style="padding:14px;color:var(--red-hi);font-family:var(--fm);font-size:12px;">Failed to load exam: ${e.message}</div>`;
+    return;
+  }
+
+  // Always start on tab 0 per Build Standard §12
+  state.currentTab = 0;
+
+  initState();          // per-doc state now that DOCS is known
+  buildTabBar();        // Directions + N docs + Summary
+  buildExamPicker();    // dropdown to switch exams
+  applyExamText();      // exam-specific chrome text
+  buildDocPanels();     // document panels + renumber Summary panel
+  loadState();          // restore from per-exam localStorage
+  restoreUI();
+  initVoice();
+  initKeyboard();
+  updateAllBadges();
+}
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

@@ -1,0 +1,197 @@
+{
+  "examId": "jan2025",
+  "title": "Treaty of Versailles",
+  "eyebrow": "US History Regents Prep · January 2025 CLE",
+  "storageKey": "edsim_tea_jan2025_v1",
+  "partALabel": "On the January 2025 Regents, Part A (Questions 31–36) is worth 6 points — 1 point per document",
+  "essayPrompt": "The debate over United States ratification of the Treaty of Versailles and membership in the League of Nations was a major constitutional and civic issue. Using the documents, analyze the historical circumstances surrounding the issue, the efforts of individuals and groups to address it, and the impact of those efforts on the United States.",
+  "docs": [
+    {
+      "id": 1,
+      "title": "Document 1",
+      "source": "\"League of Nations,\" The President Woodrow Wilson House (adapted)",
+      "question": "Based on this document, what is one historical circumstance surrounding the ratification of the Treaty of Versailles?",
+      "questionType": "historical circumstance",
+      "topicDisplay": "Historical Circumstance — the conditions and goals behind Wilson's push for the Treaty and the League of Nations",
+      "image": null,
+      "sentences": [
+        { "id": "d1s1", "text": "During World War I, President Woodrow Wilson announced his 14 Points, which he hoped would be included in the Treaty of Versailles.", "correct": true },
+        { "id": "d1s2", "text": "\"I can predict with absolute certainty that within another generation there will be another world war if the nations of the world do not concert the method [agree to a plan] by which to prevent it.\"", "correct": true },
+        { "id": "d1s3", "text": "Once Wilson knew that the U.S. would be unable to avoid entering the war, he worked to find a way to stop such a war from happening again.", "correct": true },
+        { "id": "d1s4", "text": "In January 1918 he announced the 14 Points, a set of principles designed to remove the causes of another great war.", "correct": true },
+        { "id": "d1s5", "text": "The 14 Points included an international organization to keep the peace, by providing a place where disputes could be discussed and mediated.", "correct": true },
+        { "id": "d1s6", "text": "The 14 Points inspired the peoples of the Allied Nations and gave them hope that another great war could be prevented.", "correct": true },
+        { "id": "d1s7", "text": "When Wilson traveled to Europe in late 1918 to attend the Paris Peace Conference, he was met by crowds numbering in the millions in Britain, France and Italy.", "correct": false },
+        { "id": "d1s8", "text": "At the Peace Conference in 1919, Wilson moved the seat of the presidency to Paris for six months while he commanded the attention of the world.", "correct": true },
+        { "id": "d1s9", "text": "He was faced with the leaders of the Allied Nations determined to win as many concessions and as much territory as they could for their countries.", "correct": false },
+        { "id": "d1s10", "text": "Wilson argued and fought with them through June of 1919 to make as fair a treaty as possible under the circumstances.", "correct": true },
+        { "id": "d1s11", "text": "Wilson drew up terms of peace including his design for a League of Nations, a world body to settle future conflicts among nations.", "correct": true }
+      ],
+      "starters": [
+        "This circumstance shaped the ratification debate because...",
+        "Wilson's push for a League of Nations mattered because it means...",
+        "The fact that the 14 Points were meant to prevent another world war shows that..."
+      ],
+      "mcOptions": [
+        { "letter": "A", "text": "This shows that Wilson opposed joining any international organization.", "correct": false },
+        { "letter": "B", "text": "This means that Wilson wanted the Treaty to include a League of Nations so future wars could be prevented through international cooperation.", "correct": true },
+        { "letter": "C", "text": "This shows that the Allied nations were not interested in gaining territory.", "correct": false },
+        { "letter": "D", "text": "This means that the United States refused to enter World War I.", "correct": false }
+      ],
+      "correctMcIndex": 1
+    },
+    {
+      "id": 2,
+      "title": "Document 2",
+      "source": "\"Henry Cabot Lodge: Constitution of the League of Nations,\" Classic Senate Speeches, U.S. Senate",
+      "question": "Based on this document, what is one historical circumstance surrounding the debate over ratification of the Treaty of Versailles?",
+      "questionType": "historical circumstance",
+      "topicDisplay": "Historical Circumstance — Senator Lodge's objections that shaped the Senate debate over the Treaty",
+      "image": null,
+      "sentences": [
+        { "id": "d2s1", "text": "After discussing the proposed treaty provisions relating to the League of Nations with President Woodrow Wilson, Senator Henry Cabot Lodge gave an address to the United States Senate on February 28, 1919.", "correct": false },
+        { "id": "d2s2", "text": "Lodge insisted that the Senate, \"which is charged with responsibility… should investigate every proposal with the utmost thoroughness,\" and his address was a painstaking critique of the League's constitution.", "correct": true },
+        { "id": "d2s3", "text": "He began with the impassioned argument that the document repudiated [contradicted] George Washington's September 17, 1796, Farewell Address and the Monroe Doctrine, two sacred canons [principles] of American foreign policy.", "correct": true },
+        { "id": "d2s4", "text": "Lodge pleaded with the Senate to consider the gravity of the proposition \"before it takes the heavy responsibility of finally casting aside these policies which we have adhered to for a century and more and under which we have greatly served the cause of peace both at home and abroad.\"", "correct": true },
+        { "id": "d2s5", "text": "Turning to the specific provisions of the proposed draft, Lodge argued that the provision guaranteeing the independence and territorial integrity of all members was particularly troubling.", "correct": true },
+        { "id": "d2s6", "text": "He warned that, to insure that guarantee, the United States \"must be in possession of fleets and armies capable of enforcing them at a moment's notice.\"", "correct": true }
+      ],
+      "starters": [
+        "Lodge's objection mattered to the ratification debate because...",
+        "The claim that the League contradicted Washington's Farewell Address shows that...",
+        "Lodge's warning about needing fleets and armies suggests that..."
+      ],
+      "mcOptions": [
+        { "letter": "A", "text": "This means that Lodge believed the League would force the U.S. to abandon long-held foreign policy traditions like the Monroe Doctrine and could pull it into others' conflicts.", "correct": true },
+        { "letter": "B", "text": "This shows that Lodge wanted the treaty to include ideas from Washington's Farewell Address.", "correct": false },
+        { "letter": "C", "text": "This means that the Senate refused to investigate the treaty at all.", "correct": false },
+        { "letter": "D", "text": "This shows that Lodge believed the United States could not have an army.", "correct": false }
+      ],
+      "correctMcIndex": 0
+    },
+    {
+      "id": 3,
+      "title": "Document 3",
+      "source": "President Woodrow Wilson, The Pueblo Speech, September 25, 1919",
+      "question": "According to President Woodrow Wilson, why should the Senate approve the Treaty of Versailles?",
+      "questionType": "reason to approve",
+      "topicDisplay": "Reason to Approve — Wilson's argument for why the Senate should ratify the Treaty and join the League",
+      "image": null,
+      "sentences": [
+        { "id": "d3s1", "text": "Again and again, my fellow citizens, mothers who lost their sons in France have come to me and, taking my hand, have shed tears upon it, but they have added, \"God bless you, Mr. President!\"", "correct": false },
+        { "id": "d3s2", "text": "Why, my fellow citizens, should they pray God to bless me?", "correct": false },
+        { "id": "d3s3", "text": "I advised the Congress of the United States to create the situation that led to the death of their sons.", "correct": false },
+        { "id": "d3s4", "text": "They believe, and they rightly believe, that their sons saved the liberty of the world.", "correct": true },
+        { "id": "d3s5", "text": "They believe that wrapped up with the liberty of the world is the continuous protection of that liberty by the concerted [united] powers of all civilized people.", "correct": true },
+        { "id": "d3s6", "text": "They believe that this sacrifice was made in order that other sons should not be called upon for a similar gift — the gift of life.", "correct": true },
+        { "id": "d3s7", "text": "If it is not an absolute insurance against war, do you want no insurance at all — no probability that war will not recur, but the probability that it will recur?", "correct": true },
+        { "id": "d3s8", "text": "The arrangements of justice do not stand of themselves, my fellow citizens.", "correct": false },
+        { "id": "d3s9", "text": "The arrangements of this treaty are just, but they need the support of the combined power of the great nations of the world.", "correct": true }
+      ],
+      "starters": [
+        "Wilson argues the Senate should approve because...",
+        "By pointing to the mothers who lost sons, Wilson suggests that...",
+        "Wilson's claim that the treaty is \"insurance\" against war means that..."
+      ],
+      "mcOptions": [
+        { "letter": "A", "text": "This means that joining the League would help protect world peace so that future sons would not have to die in another war.", "correct": true },
+        { "letter": "B", "text": "This shows that Wilson believed the League was an absolute guarantee against war.", "correct": false },
+        { "letter": "C", "text": "This means that the United States did not need to support other nations.", "correct": false },
+        { "letter": "D", "text": "This shows that Wilson thought the treaty was unjust.", "correct": false }
+      ],
+      "correctMcIndex": 0
+    },
+    {
+      "id": 4,
+      "title": "Document 4",
+      "source": "Leonard F. James, American Foreign Policy, Scott, Foresman and Company, 1967",
+      "question": "According to Leonard F. James, what is one reason Senator Henry Cabot Lodge opposed the League of Nations?",
+      "questionType": "reason for opposition",
+      "topicDisplay": "Reason for Opposition — why Lodge and many Americans opposed the League of Nations",
+      "image": null,
+      "sentences": [
+        { "id": "d4s1", "text": "Opposition in the Senate to the Covenant of the League of Nations, led by Republican Henry Cabot Lodge of Massachusetts, was directed in particular at Article X, which stated that members would \"undertake to respect and preserve as against external aggression the territorial integrity and existing political independence of all Members of the League.\"", "correct": true },
+        { "id": "d4s2", "text": "Many Americans believed with Lodge that through the treaty the United States would be committed to an \"entangling alliance\" and that other nations could determine its foreign policy by obliging it to participate in action against aggressors.", "correct": true },
+        { "id": "d4s3", "text": "Deciding that an appeal to the country would force the Senate into line for the necessary two-thirds vote, President Wilson traveled over 8,000 miles by train and spoke forty times in twenty-two days.", "correct": false },
+        { "id": "d4s4", "text": "He became ill, and was forced to abandon his appeal.", "correct": false },
+        { "id": "d4s5", "text": "Wilson never succeeded in mustering enough votes to have the treaty passed as he had originally proposed it.", "correct": false },
+        { "id": "d4s6", "text": "Yet his belief in the original proposal was so intense that he used his influence to keep his supporters from agreeing to the changes which could have brought passage.", "correct": false }
+      ],
+      "starters": [
+        "Lodge opposed the League because...",
+        "The fear of an \"entangling alliance\" suggests that...",
+        "Objecting to Article X mattered because..."
+      ],
+      "mcOptions": [
+        { "letter": "A", "text": "This means that opponents feared the League — especially Article X — would pull the U.S. into foreign conflicts and let other nations control American foreign policy.", "correct": true },
+        { "letter": "B", "text": "This shows that Lodge opposed the League because Wilson traveled 8,000 miles by train.", "correct": false },
+        { "letter": "C", "text": "This means that Wilson's illness was the reason Lodge opposed the League.", "correct": false },
+        { "letter": "D", "text": "This shows that Lodge actually supported Article X.", "correct": false }
+      ],
+      "correctMcIndex": 0
+    },
+    {
+      "id": 5,
+      "title": "Document 5",
+      "source": "Leonard Raven-Hill, \"The Gap in the Bridge,\" Punch, 1920 (adapted); New York Tribune, March 20, 1920",
+      "question": "Based on these documents, what is one impact of the efforts to ratify the Treaty of Versailles?",
+      "questionType": "impact",
+      "topicDisplay": "Impact — the result of the United States Senate's refusal to ratify the Treaty and join the League",
+      "image": {
+        "src": "",
+        "alt": "1920 Punch political cartoon titled 'The Gap in the Bridge,' showing a stone bridge of League of Nations member nations with the keystone — labeled U.S.A. — missing, so the bridge is incomplete. A sign notes the bridge was designed by the President of the U.S.A.",
+        "caption": "Leonard Raven-Hill, \"The Gap in the Bridge,\" Punch, 1920; New York Tribune, March 20, 1920"
+      },
+      "sentences": [
+        { "id": "d5s1", "text": "The cartoon shows a stone bridge meant to link the nations of the League of Nations.", "correct": false },
+        { "id": "d5s2", "text": "The keystone of the bridge is missing, and it is labeled \"U.S.A.\"", "correct": true },
+        { "id": "d5s3", "text": "A sign reads that the League of Nations bridge \"was Designed by the President of this U.S.A.\"", "correct": false },
+        { "id": "d5s4", "text": "Because the United States never joined, there is a gap in the bridge that leaves it incomplete and weak.", "correct": true },
+        { "id": "d5s5", "text": "The U.S. Senate defeated the Treaty of Versailles, so the United States did not join the League of Nations.", "correct": true },
+        { "id": "d5s6", "text": "Without United States membership, the League of Nations might not succeed.", "correct": true }
+      ],
+      "starters": [
+        "The missing keystone shows that...",
+        "The Senate's defeat of the treaty had a lasting impact because...",
+        "By staying out of the League, the United States..."
+      ],
+      "mcOptions": [
+        { "letter": "A", "text": "This means that because the U.S. Senate rejected the treaty, the United States stayed out of the League of Nations, weakening the organization it had helped design.", "correct": true },
+        { "letter": "B", "text": "This shows that the House of Representatives passed the treaty.", "correct": false },
+        { "letter": "C", "text": "This means that the Senate voted in favor of the treaty.", "correct": false },
+        { "letter": "D", "text": "This shows that Wilson successfully passed the treaty.", "correct": false }
+      ],
+      "correctMcIndex": 0
+    },
+    {
+      "id": 6,
+      "title": "Document 6",
+      "source": "William E. Leuchtenburg, The Perils of Prosperity: 1914–1932, The University of Chicago Press, 1993",
+      "question": "According to William E. Leuchtenburg, what is one reason President Woodrow Wilson was not successful in gaining support for the Treaty of Versailles?",
+      "questionType": "reason for failure",
+      "topicDisplay": "Reason for Failure — why Wilson could not win support for the Treaty and the League",
+      "image": null,
+      "sentences": [
+        { "id": "d6s1", "text": "In the end Wilson failed largely because the country had never really abandoned its isolationist predilections [preferences], particularly the assumption that the United States unaided could maintain its national security.", "correct": true },
+        { "id": "d6s2", "text": "During the war, these convictions were driven underground.", "correct": false },
+        { "id": "d6s3", "text": "It is astonishing that despite the tradition of isolation, despite Wilson's collapse, despite partisan bitterness and the animosity of ethnic groups, 85 per cent of the senators voting on November 19 were willing to accept the League in some form.", "correct": true },
+        { "id": "d6s4", "text": "Yet even if the country had entered the League, it is doubtful that Americans would have been willing to assume their full obligations.", "correct": false },
+        { "id": "d6s5", "text": "The United States had not been prepared by a threat to its own security for the kind of enterprise [action] it was later to undertake in Korea.", "correct": false },
+        { "id": "d6s6", "text": "It had insufficient incentive for abandoning either isolation or absolute national sovereignty.", "correct": true },
+        { "id": "d6s7", "text": "It would take the chastening experience of World War II, Hiroshima, and the Cold War to provide that incentive.", "correct": false }
+      ],
+      "starters": [
+        "Wilson failed to gain support because...",
+        "America's tradition of isolationism mattered because...",
+        "The lack of incentive to abandon isolation suggests that..."
+      ],
+      "mcOptions": [
+        { "letter": "A", "text": "This means that deep-rooted American isolationism — the belief the U.S. could stay secure on its own — left too little support for joining the League.", "correct": true },
+        { "letter": "B", "text": "This shows that 85% of senators rejected the League entirely.", "correct": false },
+        { "letter": "C", "text": "This means that the country was fully ready to abandon isolation.", "correct": false },
+        { "letter": "D", "text": "This shows that World War II was the reason Wilson failed in 1919.", "correct": false }
+      ],
+      "correctMcIndex": 0
+    }
+  ]
+}
