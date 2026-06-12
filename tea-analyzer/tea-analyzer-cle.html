@@ -58,6 +58,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);display:flex;f
 .hdr-btn:hover{border-color:var(--border-hi);color:var(--white)}
 .hdr-btn.copy-btn{border-color:var(--accent-dim);color:var(--accent)}
 .hdr-btn.copy-btn:hover{border-color:var(--accent);background:rgba(232,184,75,.08)}
+.hdr-btn.reset-btn:hover{border-color:var(--red-hi);color:var(--red-hi);background:rgba(192,57,43,.08)}
 .exam-picker{font-family:var(--fm);font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
   padding:5px 10px;border-radius:var(--rs);min-height:34px;cursor:pointer;
   background:var(--surf2);border:1px solid var(--border);color:var(--text);transition:all .15s}
@@ -312,6 +313,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);display:flex;f
   </div>
   <div class="hdr-r">
     <select class="exam-picker" id="examPicker" aria-label="Choose exam"></select>
+    <button class="hdr-btn reset-btn" onclick="resetActivity()" aria-label="Reset this activity and return to the start">↺ Reset</button>
     <button class="hdr-btn copy-btn" onclick="openExportModal()" aria-label="Export your work">Export Work</button>
   </div>
 </header>
@@ -494,6 +496,14 @@ function resetState() {
     };
   });
   try { localStorage.removeItem(LS_KEY); } catch(e) {}
+}
+
+// Reset button: clear this exam's saved work and return to the Directions (home).
+function resetActivity() {
+  const name = EXAM ? EXAM.title : 'this activity';
+  if (!confirm(`Reset ${name}? This clears your evidence and analysis for this exam and returns to the Directions. This cannot be undone.`)) return;
+  try { localStorage.removeItem(LS_KEY); } catch(e) {}
+  location.href = location.href; // reload, preserving ?exam= — rebuilds a clean slate on the Directions tab
 }
 
 // ═══════════════════════════════════════════════════════
