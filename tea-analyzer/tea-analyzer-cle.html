@@ -618,15 +618,20 @@ function buildDocPanels() {
   summaryPanel.setAttribute('aria-labelledby', `tab-btn-${SUMMARY_TAB}`);
 }
 
-// Hybrid image block: shows the document image for visual context.
+// Hybrid image block: shows the document image(s) for visual context.
 // The clickable evidence remains the text sentences below it.
+// A doc may carry a single `image` object or an `images` array (rendered stacked).
 function buildDocImage(doc) {
-  if (!doc.image || !doc.image.src) return '';
-  const cap = doc.image.caption ? `<figcaption class="doc-image-cap">${doc.image.caption}</figcaption>` : '';
-  return `<figure class="doc-image-fig">
-      <img class="doc-image" src="${doc.image.src}" alt="${(doc.image.alt || '').replace(/"/g,"'")}" loading="lazy"/>
+  const imgs = Array.isArray(doc.images) ? doc.images : (doc.image ? [doc.image] : []);
+  const renderable = imgs.filter(im => im && im.src);
+  if (renderable.length === 0) return '';
+  return renderable.map(im => {
+    const cap = im.caption ? `<figcaption class="doc-image-cap">${im.caption}</figcaption>` : '';
+    return `<figure class="doc-image-fig">
+      <img class="doc-image" src="${im.src}" alt="${(im.alt || '').replace(/"/g,"'")}" loading="lazy"/>
       ${cap}
     </figure>`;
+  }).join('');
 }
 
 function buildDocBody(doc) {
