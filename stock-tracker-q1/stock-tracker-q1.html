@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Stock Market Tracker</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+<style>*{box-sizing:border-box;margin:0;padding:0;}::-webkit-scrollbar{width:6px;height:6px;}</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState, useEffect, useCallback } = React;
+
+// ── PASTE YOUR GOOGLE APPS SCRIPT URL BETWEEN THE QUOTES BELOW ──
+const HARDCODED_SCRIPT_URL = "";
+// ────────────────────────────────────────────────────────────────
+
+const BUDGET = 20000;
+const TEACHER_PASSWORD = "teacher2026";
+const SCRIPT_URL_KEY = "stockTracker_scriptUrl";
+const THEME_KEY = "stockTracker_theme";
+const DATE_RANGE_LABEL = "Sep 8 – Nov 6, 2026";
+
+// Tue/Fri due to Labor Day (Mon 9/7); Mon 9/21 (Rosh Hashanah) and
+// Mon 10/12 (Columbus/Indigenous Peoples Day) shifted to Tuesday.
+const TRACKING_DATES = [
+  {date:"09/08",label:"Tue 9/8"},{date:"09/11",label:"Fri 9/11"},
+  {date:"09/14",label:"Mon 9/14"},{date:"09/18",label:"Fri 9/18"},
+  {date:"09/22",label:"Tue 9/22"},{date:"09/25",label:"Fri 9/25"},
+  {date:"09/28",label:"Mon 9/28"},{date:"10/02",label:"Fri 10/2"},
+  {date:"10/05",label:"Mon 10/5"},{date:"10/09",label:"Fri 10/9"},
+  {date:"10/13",label:"Tue 10/13"},{date:"10/16",label:"Fri 10/16"},
+  {date:"10/19",label:"Mon 10/19"},{date:"10/23",label:"Fri 10/23"},
+  {date:"10/26",label:"Mon 10/26"},{date:"10/30",label:"Fri 10/30"},
+  {date:"11/02",label:"Mon 11/2"},{date:"11/06",label:"Fri 11/6"},
+];
+
+const REFLECTION_PROMPTS = [
+  "What caused your stocks to go up or down this week? Look up any news about those companies.",
+  "Which stock surprised you the most? Why do you think that happened?",
+  "If you could swap one stock right now, which would it be and why?",
+  "How does the overall market feel this week — nervous, confident, uncertain? What signals do you see?",
+  "What economic news (Fed decisions, inflation data, jobs reports) affected the market this week?",
+  "What have you learned about investing that you didn't know before this project?",
+  "How has diversification — or the lack of it — shaped your portfolio's performance so far?",
+  "Looking at your portfolio now, what would you do differently if you started over?",
+  "Final reflection: Did your stocks perform as expected? What was your biggest lesson from this project?",
+];
+
+const WEEK_LABELS = [
+  "Week 1 (Sep 8–11)","Week 2 (Sep 14–18)","Week 3 (Sep 22–25)",
+  "Week 4 (Sep 28–Oct 2)","Week 5 (Oct 5–9)","Week 6 (Oct 13–16)",
+  "Week 7 (Oct 19–23)","Week 8 (Oct 26–30)","Week 9 (Nov 2–6 · Final)",
+];
+const NUM_WEEKS = WEEK_LABELS.length; // 9
+
+const emptyPortfolio = (name="",period="") => ({
+  studentName:name, period,
+  stocks:Array(5).fill(null).map(()=>({ticker:"",company:"",shares:"",purchasePrice:""})),
+  prices:{}, reflections:{}, setupDone:false,
+});
+
+const DARK = {
+  bg:"#0a0f1e",bgAlt:"#0d1424",surface:"rgba(255,255,255,0.03)",
+  border:"#1e3a5f",borderLight:"rgba(30,58,95,0.5)",
+  text:"#e2e8f0",textMuted:"#475569",textDim:"#334155",textSub:"#94a3b8",
+  accent:"#38bdf8",accentBg:"rgba(14,165,233,0.07)",accentBg2:"rgba(14,165,233,0.06)",accentBg3:"rgba(14,165,233,0.1)",
+  headerBg:"rgba(10,15,30,0.97)",inputBg:"rgba(255,255,255,0.04)",placeholder:"#3a4a6a",
+  scrollTrack:"#0f1628",scrollThumb:"#1e3a5f",selectOption:"#0d1424",
+  tabHover:"rgba(56,189,248,0.1)",priceFocus:"rgba(56,189,248,0.08)",
+  green:"#4ade80",greenBg:"rgba(74,222,128,0.12)",greenBorder:"#16a34a",
+  red:"#f87171",redBg:"rgba(239,68,68,0.15)",redBorder:"#ef4444",
+  yellow:"#fbbf24",isDark:true,
+};
+const LIGHT = {
+  bg:"#f0f4f8",bgAlt:"#e2e8f0",surface:"#ffffff",
+  border:"#cbd5e1",borderLight:"rgba(148,163,184,0.4)",
+  text:"#0f172a",textMuted:"#64748b",textDim:"#94a3b8",textSub:"#475569",
+  accent:"#0369a1",accentBg:"rgba(3,105,161,0.07)",accentBg2:"rgba(3,105,161,0.05)",accentBg3:"rgba(3,105,161,0.1)",
+  headerBg:"rgba(240,244,248,0.97)",inputBg:"#ffffff",placeholder:"#94a3b8",
+  scrollTrack:"#e2e8f0",scrollThumb:"#cbd5e1",selectOption:"#ffffff",
+  tabHover:"rgba(3,105,161,0.08)",priceFocus:"rgba(3,105,161,0.08)",
+  green:"#16a34a",greenBg:"rgba(22,163,74,0.1)",greenBorder:"#16a34a",
+  red:"#dc2626",redBg:"rgba(220,38,38,0.1)",redBorder:"#dc2626",
+  yellow:"#d97706",isDark:false,
+};
+
+async function apiLoad(url,key){
+  try{const r=await fetch(`${url}?action=load&studentKey=${encodeURIComponent(key)}`);return await r.json();}catch{return null;}
+}
+async function apiSave(url,key,data){
+  try{const r=await fetch(url,{method:"POST",body:JSON.stringify({action:"save",studentKey:key,data})});const j=await r.json();return j.success===true;}catch{return false;}
+}
+async function apiLoadAll(url,pw){
+  try{const r=await fetch(`${url}?action=loadAll&password=${encodeURIComponent(pw)}`);const j=await r.json();return Array.isArray(j)?j:[];}catch{return[];}
+}
+
+function makeStyles(T){
+  return {
+    app:{minHeight:"100vh",background:T.bg,fontFamily:"'Sora',sans-serif",color:T.text},
+    landing:{minHeight:"100vh",display:"flex",alignItems:"center",justifyContent:"center",padding:20},
+    landingCard:{background:T.surface,border:`1px solid ${T.border}`,borderRadius:20,padding:"44px 40px",width:"100%",maxWidth:480,boxShadow:T.isDark?"none":"0 4px 24px rgba(0,0,0,0.08)"},
+    landingLogo:{fontFamily:"'Space Mono',monospace",fontSize:26,fontWeight:700,letterSpacing:2,color:T.text},
+    landingSub:{fontSize:12,color:T.textMuted,marginTop:4},
+    divider:{height:1,background:T.border,margin:"24px 0"},
+    landingSection:{display:"flex",flexDirection:"column",gap:10},
+    landingLabel:{fontFamily:"'Space Mono',monospace",fontSize:10,color:T.textMuted,letterSpacing:1.5,marginBottom:2},
+    header:{background:T.headerBg,borderBottom:`1px solid ${T.border}`,backdropFilter:"blur(12px)",padding:"16px 24px",position:"sticky",top:0,zIndex:100},
+    headerInner:{maxWidth:1300,margin:"0 auto",display:"flex",alignItems:"center",justifyContent:"space-between",gap:12,flexWrap:"wrap"},
+    logo:{fontFamily:"'Space Mono',monospace",fontSize:20,fontWeight:700,letterSpacing:2,color:T.text},
+    headerSub:{fontSize:11,color:T.textMuted,marginTop:2},
+    backBtn:{background:T.accentBg,border:`1px solid ${T.border}`,borderRadius:8,padding:"7px 14px",color:T.textSub,fontSize:12,cursor:"pointer",fontFamily:"'Space Mono',monospace"},
+    floatExit:{position:"fixed",bottom:24,right:24,zIndex:9999,background:T.redBg,border:`2px solid ${T.redBorder}`,borderRadius:50,padding:"10px 20px",color:T.isDark?"#fca5a5":T.red,fontFamily:"'Space Mono',monospace",fontSize:13,cursor:"pointer",fontWeight:700,boxShadow:"0 4px 20px rgba(239,68,68,0.2)"},
+    miniStats:{display:"flex",background:T.accentBg,border:`1px solid ${T.border}`,borderRadius:10},
+    miniStat:{padding:"7px 16px"},
+    miniLabel:{fontSize:10,color:T.textMuted},
+    miniVal:{fontFamily:"'Space Mono',monospace",fontSize:13,color:T.text,marginTop:2},
+    saveIndicator:{fontFamily:"'Space Mono',monospace",fontSize:12},
+    tabBar:{background:T.bgAlt,borderBottom:`1px solid ${T.border}`,display:"flex",padding:"0 24px",overflowX:"auto"},
+    tabBtn:{fontFamily:"'Space Mono',monospace",fontSize:12,color:T.textMuted,background:"none",border:"none",borderBottom:"2px solid transparent",padding:"14px 18px",cursor:"pointer",whiteSpace:"nowrap"},
+    tabActive:{color:T.accent,borderBottomColor:T.accent,background:T.accentBg},
+    content:{maxWidth:1300,margin:"0 auto",padding:"28px 20px 80px"},
+    panel:{display:"flex",flexDirection:"column",gap:20},
+    panelTitle:{fontFamily:"'Space Mono',monospace",fontSize:22,color:T.text,letterSpacing:1},
+    panelDesc:{color:T.textMuted,fontSize:14,lineHeight:1.6,marginTop:-8},
+    card:{background:T.surface,border:`1px solid ${T.border}`,borderRadius:14,padding:24,boxShadow:T.isDark?"none":"0 2px 8px rgba(0,0,0,0.05)"},
+    cardTitle:{fontFamily:"'Space Mono',monospace",fontSize:12,color:T.accent,letterSpacing:1,marginBottom:14},
+    row2:{display:"grid",gridTemplateColumns:"1fr 1fr",gap:20},
+    fg:{display:"flex",flexDirection:"column",gap:6},
+    label:{fontSize:12,color:T.textMuted},
+    input:{background:T.inputBg,border:`1px solid ${T.border}`,borderRadius:8,padding:"10px 14px",color:T.text,fontSize:14,fontFamily:"'Sora',sans-serif",width:"100%"},
+    select:{background:T.inputBg,border:`1px solid ${T.border}`,borderRadius:8,padding:"8px 14px",color:T.text,fontSize:13,fontFamily:"'Sora',sans-serif",cursor:"pointer"},
+    table:{width:"100%",borderCollapse:"collapse",fontSize:13},
+    th:{textAlign:"left",padding:"10px 12px",fontSize:11,color:T.textMuted,fontFamily:"'Space Mono',monospace",letterSpacing:0.5,borderBottom:`1px solid ${T.border}`,whiteSpace:"nowrap",background:T.surface},
+    tr:{borderBottom:`1px solid ${T.borderLight}`},
+    td:{padding:"10px 12px",verticalAlign:"middle",color:T.text},
+    priceInput:{background:T.inputBg,border:`1px solid ${T.border}`,borderRadius:6,padding:"7px 8px",color:T.text,fontSize:12,fontFamily:"'Space Mono',monospace",width:"100%"},
+    textarea:{width:"100%",background:T.inputBg,border:`1px solid ${T.border}`,borderRadius:8,padding:14,color:T.text,fontSize:14,fontFamily:"'Sora',sans-serif",lineHeight:1.7,resize:"vertical"},
+    primaryBtn:{background:T.accent,color:"#fff",border:"none",borderRadius:8,padding:"11px 22px",fontFamily:"'Space Mono',monospace",fontSize:13,cursor:"pointer",letterSpacing:0.5},
+    viewBtn:{background:T.accentBg3,border:`1px solid ${T.border}`,borderRadius:6,padding:"5px 12px",color:T.accent,fontSize:12,fontFamily:"'Space Mono',monospace",cursor:"pointer"},
+    summaryHero:{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(180px,1fr))",gap:16},
+    heroCard:{background:T.accentBg2,border:`1px solid ${T.border}`,borderRadius:14,padding:"20px 22px"},
+    heroLabel:{fontSize:11,color:T.textMuted,letterSpacing:0.5,marginBottom:8},
+    loading:{display:"flex",alignItems:"center",justifyContent:"center",minHeight:"100vh",fontFamily:"'Space Mono',monospace",color:T.textMuted},
+    emptyState:{textAlign:"center",color:T.textMuted,padding:"60px 20px",fontFamily:"'Space Mono',monospace",fontSize:14},
+    hint:{fontSize:11,color:T.textMuted,textAlign:"center"},
+  };
+}
+
+function GlobalStyle({T}){
+  return React.createElement("style",null,`
+    body{background:${T.bg};}
+    input,textarea{outline:none;}
+    input::placeholder,textarea::placeholder{color:${T.placeholder};}
+    ::-webkit-scrollbar-track{background:${T.scrollTrack};}
+    ::-webkit-scrollbar-thumb{background:${T.scrollThumb};border-radius:3px;}
+    select option{background:${T.selectOption};color:${T.text};}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+    .fade-in{animation:fadeIn 0.3s ease forwards;}
+  `);
+}
+
+function ThemeToggle({dark,onToggle,T}){
+  return <button onClick={onToggle} style={{background:T.accentBg,border:`1px solid ${T.border}`,borderRadius:20,padding:"6px 14px",cursor:"pointer",fontFamily:"'Space Mono',monospace",fontSize:13,color:T.accent}}>
+    {dark?"☀️ Light":"🌙 Dark"}
+  </button>;
+}
+
+function App(){
+  const [scriptUrl,setScriptUrl]=useState(()=>{
+    if(HARDCODED_SCRIPT_URL) return HARDCODED_SCRIPT_URL;
+    try{return localStorage.getItem(SCRIPT_URL_KEY)||"";}catch{return "";}
+  });
+  const [scriptInput,setScriptInput]=useState("");
+  const [mode,setMode]=useState("landing");
+  const [studentKey,setStudentKey]=useState("");
+  const [nameInput,setNameInput]=useState("");
+  const [periodInput,setPeriodInput]=useState("");
+  const [portfolio,setPortfolio]=useState(null);
+  const [saving,setSaving]=useState(false);
+  const [saveMsg,setSaveMsg]=useState("");
+  const [loading,setLoading]=useState(false);
+  const [teacherPw,setTeacherPw]=useState("");
+  const [teacherError,setTeacherError]=useState("");
+  const [tab,setTab]=useState("setup");
+  const [setupError,setSetupError]=useState("");
+  const [loginMode,setLoginMode]=useState("name");
+  const [keyInput,setKeyInput]=useState("");
+  const [loginError,setLoginError]=useState("");
+  const [dark,setDark]=useState(()=>{
+    try{const s=localStorage.getItem(THEME_KEY);if(s!==null)return s==="dark";}catch{}
+    return window.matchMedia?.("(prefers-color-scheme: dark)").matches??true;
+  });
+  const T=dark?DARK:LIGHT;
+  const S=makeStyles(T);
+
+  const toggleTheme=()=>{const n=!dark;setDark(n);try{localStorage.setItem(THEME_KEY,n?"dark":"light");}catch{}};
+  const saveUrl=(url)=>{setScriptUrl(url);try{localStorage.setItem(SCRIPT_URL_KEY,url);}catch{}};
+
+  useEffect(()=>{
+    if(!portfolio||!studentKey||!scriptUrl)return;
+    const t=setTimeout(async()=>{
+      setSaving(true);
+      const ok=await apiSave(scriptUrl,studentKey,portfolio);
+      setSaving(false);
+      setSaveMsg(ok?"Saved to Google Sheets ✓":"Save failed — check script URL");
+      setTimeout(()=>setSaveMsg(""),3000);
+    },1500);
+    return()=>clearTimeout(t);
+  },[portfolio,studentKey,scriptUrl]);
+
+  const update=(fn)=>setPortfolio(prev=>fn(JSON.parse(JSON.stringify(prev))));
+
+  async function startStudent(){
+    if(!nameInput.trim()||!scriptUrl)return;
+    setLoading(true);setLoginError("");
+    const key=nameInput.trim().toLowerCase().replace(/\s+/g,"_")+(periodInput?`_${periodInput.replace(/\s+/g,"")}`:"");
+    setStudentKey(key);
+    const existing=await apiLoad(scriptUrl,key);
+    setPortfolio(existing&&existing.studentName?existing:emptyPortfolio(nameInput.trim(),periodInput.trim()));
+    setLoading(false);setMode("student");setTab("setup");
+  }
+
+  async function startStudentByKey(){
+    const key=keyInput.trim().toLowerCase().replace(/\s+/g,"_");
+    if(!key||!scriptUrl)return;
+    setLoading(true);setLoginError("");
+    const existing=await apiLoad(scriptUrl,key);
+    if(existing&&existing.studentName){
+      setStudentKey(key);setPortfolio(existing);
+      setLoading(false);setMode("student");setTab("setup");
+    }else{
+      setLoading(false);
+      setLoginError("Student key not found. Check with your teacher for your exact key from the Google Sheet.");
+    }
+  }
+
+  function tryTeacherLogin(){
+    if(teacherPw===TEACHER_PASSWORD){setMode("teacher");setTeacherError("");}
+    else setTeacherError("Incorrect password.");
+  }
+
+  const exitToHome=()=>{setMode("landing");setPortfolio(null);setStudentKey("");};
+
+  if(!scriptUrl){
+    return <div style={S.app}><GlobalStyle T={T}/>
+      <div style={S.landing}><div style={S.landingCard}>
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:8}}>
+          <div style={S.landingLogo}><span style={{color:T.accent}}>$</span> MARKET TRACKER</div>
+          <ThemeToggle dark={dark} onToggle={toggleTheme} T={T}/>
+        </div>
+        <div style={S.landingSub}>Google Sheets Setup Required</div>
+        <div style={S.divider}/>
+        <div style={{fontSize:14,color:T.textSub,lineHeight:1.8,marginBottom:20}}>
+          Paste your deployed Apps Script Web App URL below to connect to Google Sheets.<br/><br/>
+          <span style={{color:T.accent,fontFamily:"'Space Mono',monospace",fontSize:12}}>Extensions → Apps Script → Deploy → New Deployment → Web App</span>
+        </div>
+        <input style={S.input} placeholder="https://script.google.com/macros/s/..." value={scriptInput} onChange={e=>setScriptInput(e.target.value)}/>
+        {setupError&&<div style={{color:T.red,fontSize:12,marginTop:8}}>{setupError}</div>}
+        <button style={{...S.primaryBtn,marginTop:14,width:"100%"}} onClick={()=>{
+          if(!scriptInput.includes("script.google.com")){setSetupError("That doesn't look like a valid Apps Script URL.");return;}
+          saveUrl(scriptInput.trim());
+        }}>Connect to Google Sheets →</button>
+      </div></div>
+    </div>;
+  }
+
+  if(mode==="landing"){
+    return <div style={S.app}><GlobalStyle T={T}/>
+      <div style={S.landing}><div style={S.landingCard}>
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:8}}>
+          <div style={S.landingLogo}><span style={{color:T.accent}}>$</span> MARKET TRACKER</div>
+          <ThemeToggle dark={dark} onToggle={toggleTheme} T={T}/>
+        </div>
+        <div style={S.landingSub}>Student Portfolio Simulation · {DATE_RANGE_LABEL} · $20,000 Budget</div>
+        <div style={{fontSize:11,color:T.green,marginTop:4,fontFamily:"'Space Mono',monospace"}}>✓ Connected to Google Sheets</div>
+        <div style={S.divider}/>
+        <div style={S.landingSection}>
+          <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+            <div style={S.landingLabel}>STUDENT LOGIN</div>
+            <div style={{display:"flex",border:`1px solid ${T.border}`,borderRadius:8,overflow:"hidden"}}>
+              {["name","key"].map(m=>(
+                <button key={m} onClick={()=>{setLoginMode(m);setLoginError("");}}
+                  style={{background:loginMode===m?T.accent:"transparent",color:loginMode===m?"#fff":T.textMuted,border:"none",padding:"5px 12px",fontSize:11,fontFamily:"'Space Mono',monospace",cursor:"pointer"}}>
+                  {m==="name"?"By Name":"By Key"}
+                </button>
+              ))}
+            </div>
+          </div>
+          {loginMode==="name"?(
+            <>
+              <input style={S.input} placeholder="Your full name" value={nameInput} onChange={e=>setNameInput(e.target.value)} onKeyDown={e=>e.key==="Enter"&&startStudent()}/>
+              <input style={{...S.input,marginTop:10}} placeholder="Class period (e.g. Period 3)" value={periodInput} onChange={e=>setPeriodInput(e.target.value)} onKeyDown={e=>e.key==="Enter"&&startStudent()}/>
+              <button style={S.primaryBtn} onClick={startStudent} disabled={loading||!nameInput.trim()}>{loading?"Loading…":"Enter My Portfolio →"}</button>
+            </>
+          ):(
+            <>
+              <div style={{fontSize:12,color:T.textMuted,lineHeight:1.6}}>Enter your Student Key exactly as shown in column A of your teacher's Google Sheet.</div>
+              <input style={{...S.input,fontFamily:"'Space Mono',monospace"}} placeholder="e.g. jane_smith_period3" value={keyInput} onChange={e=>setKeyInput(e.target.value)} onKeyDown={e=>e.key==="Enter"&&startStudentByKey()}/>
+              <button style={S.primaryBtn} onClick={startStudentByKey} disabled={loading||!keyInput.trim()}>{loading?"Looking up…":"Enter My Portfolio →"}</button>
+            </>
+          )}
+          {loginError&&<div style={{color:T.red,fontSize:12,marginTop:4}}>{loginError}</div>}
+          <div style={S.hint}>Progress saves automatically to Google Sheets.</div>
+        </div>
+        <div style={S.divider}/>
+        <div style={S.landingSection}>
+          <div style={S.landingLabel}>TEACHER ACCESS</div>
+          <input style={S.input} type="password" placeholder="Teacher password" value={teacherPw} onChange={e=>setTeacherPw(e.target.value)} onKeyDown={e=>e.key==="Enter"&&tryTeacherLogin()}/>
+          <button style={{...S.primaryBtn,background:dark?"#0f4c75":"#0369a1"}} onClick={tryTeacherLogin}>View All Portfolios →</button>
+          {teacherError&&<div style={{color:T.red,fontSize:12,marginTop:6}}>{teacherError}</div>}
+        </div>
+        <div style={S.divider}/>
+        <button onClick={()=>{saveUrl("");setScriptInput("");}} style={{background:"none",border:"none",color:T.textMuted,fontSize:11,cursor:"pointer",fontFamily:"'Space Mono',monospace"}}>⚙ Change Script URL</button>
+      </div></div>
+    </div>;
+  }
+
+  if(mode==="teacher") return <TeacherDashboard scriptUrl={scriptUrl} onBack={()=>setMode("landing")} dark={dark} toggleTheme={toggleTheme} T={T} S={S}/>;
+  if(!portfolio) return <div style={S.app}><GlobalStyle T={T}/><div style={S.loading}>Loading…</div></div>;
+
+  const totalInvested=portfolio.stocks.reduce((s,st)=>{const v=parseFloat(st.shares)*parseFloat(st.purchasePrice);return s+(isNaN(v)?0:v);},0);
+  const remaining=BUDGET-totalInvested;
+  const getPortfolioValue=(dk)=>portfolio.stocks.reduce((s,st,i)=>{const p=parseFloat(portfolio.prices[`${i}_${dk}`]);const sh=parseFloat(st.shares);return s+(isNaN(p)||isNaN(sh)?0:p*sh);},0);
+  const lastEnteredDate=[...TRACKING_DATES].reverse().find(d=>portfolio.stocks.some((_,i)=>portfolio.prices[`${i}_${d.date}`]));
+  const currentValue=lastEnteredDate?getPortfolioValue(lastEnteredDate.date):totalInvested;
+  const gainLoss=currentValue-totalInvested;
+  const gainPct=totalInvested>0?(gainLoss/totalInvested)*100:0;
+  const TABS=[{id:"setup",label:"📋 Setup"},{id:"tracking",label:"📈 Tracking"},{id:"reflections",label:"✍️ Reflections"},{id:"summary",label:"📊 Summary"}];
+
+  return <div style={S.app}>
+    <GlobalStyle T={T}/>
+    <button onClick={exitToHome} style={S.floatExit}>⬅ EXIT</button>
+    <div style={S.header}><div style={S.headerInner}>
+      <div style={{display:"flex",alignItems:"center",gap:16}}>
+        <button onClick={exitToHome} style={{...S.backBtn,background:T.redBg,borderColor:T.redBorder,color:dark?"#fca5a5":T.red,fontWeight:700}}>⬅ EXIT TO HOME</button>
+        <div>
+          <div style={S.logo}><span style={{color:T.accent}}>$</span> MARKET TRACKER</div>
+          <div style={S.headerSub}>{portfolio.studentName} · {portfolio.period||"—"} · {DATE_RANGE_LABEL}</div>
+          <div style={{fontSize:10,color:T.textDim,fontFamily:"'Space Mono',monospace",marginTop:2}}>Key: {studentKey}</div>
+        </div>
+      </div>
+      <div style={{display:"flex",alignItems:"center",gap:12,flexWrap:"wrap"}}>
+        {portfolio.setupDone&&<div style={S.miniStats}>
+          <div style={S.miniStat}><div style={S.miniLabel}>Value</div><div style={S.miniVal}>${currentValue.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2})}</div></div>
+          <div style={{...S.miniStat,borderLeft:`1px solid ${T.border}`}}><div style={S.miniLabel}>Return</div><div style={{...S.miniVal,color:gainLoss>=0?T.green:T.red}}>{gainLoss>=0?"▲":"▼"} {Math.abs(gainPct).toFixed(2)}%</div></div>
+        </div>}
+        <div style={S.saveIndicator}>
+          {saving?<span style={{color:T.yellow}}>⟳ Saving…</span>:saveMsg?<span style={{color:saveMsg.includes("failed")?T.red:T.green}}>{saveMsg}</span>:<span style={{color:T.textDim}}>📊 Sheets connected</span>}
+        </div>
+        <ThemeToggle dark={dark} onToggle={toggleTheme} T={T}/>
+      </div>
+    </div></div>
+    <div style={S.tabBar}>
+      {TABS.map(t=><button key={t.id} onClick={()=>setTab(t.id)} style={{...S.tabBtn,...(tab===t.id?S.tabActive:{})}}>{t.label}</button>)}
+    </div>
+    <div style={S.content} className="fade-in" key={tab}>
+      {tab==="setup"&&<SetupTab portfolio={portfolio} update={update} totalInvested={totalInvested} remaining={remaining} T={T} S={S}/>}
+      {tab==="tracking"&&<TrackingTab portfolio={portfolio} update={update} T={T} S={S}/>}
+      {tab==="reflections"&&<ReflectionsTab portfolio={portfolio} update={update} T={T} S={S}/>}
+      {tab==="summary"&&<SummaryTab portfolio={portfolio} getPortfolioValue={getPortfolioValue} totalInvested={totalInvested} gainLoss={gainLoss} gainPct={gainPct} T={T} S={S}/>}
+    </div>
+  </div>;
+}
+
+function TeacherDashboard({scriptUrl,onBack,dark,toggleTheme,T,S}){
+  const [students,setStudents]=useState([]);
+  const [loading,setLoading]=useState(true);
+  const [selected,setSelected]=useState(null);
+  const [sortBy,setSortBy]=useState("name");
+  const [filterPeriod,setFilterPeriod]=useState("all");
+  const refresh=useCallback(async()=>{setLoading(true);const all=await apiLoadAll(scriptUrl,TEACHER_PASSWORD);setStudents(all);setLoading(false);},[scriptUrl]);
+  useEffect(()=>{refresh();},[refresh]);
+  const periods=[...new Set(students.map(s=>s.period).filter(Boolean))].sort();
+  const getReturn=(data)=>{
+    const inv=data.stocks.reduce((s,st)=>{const v=parseFloat(st.shares)*parseFloat(st.purchasePrice);return s+(isNaN(v)?0:v);},0);
+    if(inv===0)return null;
+    const last=[...TRACKING_DATES].reverse().find(d=>data.stocks.some((_,i)=>data.prices?.[`${i}_${d.date}`]));
+    if(!last)return null;
+    const cur=data.stocks.reduce((s,st,i)=>{const p=parseFloat(data.prices?.[`${i}_${last.date}`]);const sh=parseFloat(st.shares);return s+(isNaN(p)||isNaN(sh)?0:p*sh);},0);
+    return((cur-inv)/inv)*100;
+  };
+  const getRefCount=(data)=>Object.keys(data.reflections||{}).filter(k=>k.startsWith("week_")&&data.reflections[k]).length;
+  let filtered=students.filter(s=>filterPeriod==="all"||s.period===filterPeriod);
+  filtered=[...filtered].sort((a,b)=>{
+    if(sortBy==="name")return(a.studentName||"").localeCompare(b.studentName||"");
+    if(sortBy==="return")return(getReturn(b)??-999)-(getReturn(a)??-999);
+    if(sortBy==="reflections")return getRefCount(b)-getRefCount(a);
+    return 0;
+  });
+  const sel=selected?students.find(s=>s.studentKey===selected):null;
+
+  if(sel){
+    const d=sel;const ret=getReturn(d);
+    const inv=d.stocks.reduce((s,st)=>{const v=parseFloat(st.shares)*parseFloat(st.purchasePrice);return s+(isNaN(v)?0:v);},0);
+    return <div style={S.app}>
+      <div style={S.header}><div style={S.headerInner}>
+        <div style={{display:"flex",alignItems:"center",gap:16}}>
+          <button onClick={()=>setSelected(null)} style={S.backBtn}>← All Students</button>
+          <div><div style={S.logo}><span style={{color:"#f59e0b"}}>👩‍🏫</span> TEACHER VIEW</div><div style={S.headerSub}>{d.studentName} · {d.period}</div></div>
+        </div>
+        <ThemeToggle dark={dark} onToggle={toggleTheme} T={T}/>
+      </div></div>
+      <div style={S.content}>
+        <div style={S.card}>
+          <div style={S.cardTitle}>Portfolio Holdings</div>
+          <table style={S.table}><thead><tr><th style={S.th}>Ticker</th><th style={S.th}>Company</th><th style={S.th}>Shares</th><th style={S.th}>Purchase Price</th><th style={S.th}>Value</th></tr></thead>
+          <tbody>{d.stocks.filter(s=>s.ticker).map((s,i)=>{const v=parseFloat(s.shares)*parseFloat(s.purchasePrice);return <tr key={i} style={S.tr}>
+            <td style={{...S.td,fontFamily:"'Space Mono',monospace",color:T.accent,fontWeight:700}}>{s.ticker}</td>
+            <td style={S.td}>{s.company}</td><td style={{...S.td,fontFamily:"'Space Mono',monospace"}}>{s.shares}</td>
+            <td style={{...S.td,fontFamily:"'Space Mono',monospace"}}>${parseFloat(s.purchasePrice||0).toFixed(2)}</td>
+            <td style={{...S.td,fontFamily:"'Space Mono',monospace"}}>{isNaN(v)?"—":`$${v.toFixed(2)}`}</td>
+          </tr>;})}
+          </tbody></table>
+          <div style={{marginTop:12,fontFamily:"'Space Mono',monospace",fontSize:13,color:T.accent}}>
+            Invested: ${inv.toFixed(2)} · Return: <span style={{color:ret===null?T.textMuted:ret>=0?T.green:T.red}}>{ret===null?"No data":`${ret>=0?"+":""}${ret.toFixed(2)}%`}</span>
+          </div>
+        </div>
+        <div style={S.card}>
+          <div style={S.cardTitle}>Price History</div>
+          <div style={{overflowX:"auto"}}><table style={{...S.table,minWidth:800}}><thead><tr>
+            <th style={S.th}>Stock</th>{TRACKING_DATES.map(dt=><th key={dt.date} style={{...S.th,fontSize:10}}>{dt.label}</th>)}
+          </tr></thead><tbody>
+            {d.stocks.filter(s=>s.ticker).map((s,i)=><tr key={i} style={S.tr}>
+              <td style={{...S.td,fontFamily:"'Space Mono',monospace",color:T.accent}}>{s.ticker}</td>
+              {TRACKING_DATES.map(dt=><td key={dt.date} style={{...S.td,fontFamily:"'Space Mono',monospace",fontSize:12,color:d.prices?.[`${i}_${dt.date}`]?T.text:T.textDim}}>
+                {d.prices?.[`${i}_${dt.date}`]?`$${parseFloat(d.prices[`${i}_${dt.date}`]).toFixed(2)}`:"—"}
+              </td>)}
+            </tr>)}
+          </tbody></table></div>
+        </div>
+        <div style={S.card}>
+          <div style={S.cardTitle}>Reflections</div>
+          {[...Array(NUM_WEEKS)].map((_,i)=>{const text=d.reflections?.[`week_${i}`];const obs=d.reflections?.[`obs_${i}`];
+            return <div key={i} style={{marginBottom:18,paddingBottom:18,borderBottom:i<NUM_WEEKS-1?`1px solid ${T.border}`:"none"}}>
+              <div style={{display:"flex",justifyContent:"space-between",marginBottom:6}}>
+                <div style={{fontFamily:"'Space Mono',monospace",fontSize:12,color:T.accent}}>Week {i+1}</div>
+                <div style={{fontSize:11,color:text?T.green:T.textMuted}}>{text?"✓ Written":"Not yet"}</div>
+              </div>
+              {text?<div style={{fontSize:14,color:T.text,lineHeight:1.7}}>{text}</div>:<div style={{fontSize:13,color:T.textDim,fontStyle:"italic"}}>No reflection yet.</div>}
+              {obs&&<div style={{marginTop:6,fontSize:12,color:T.textMuted,fontStyle:"italic"}}>📌 {obs}</div>}
+            </div>;
+          })}
+        </div>
+      </div>
+    </div>;
+  }
+
+  return <div style={S.app}>
+    <div style={S.header}><div style={S.headerInner}>
+      <div style={{display:"flex",alignItems:"center",gap:16}}>
+        <button onClick={onBack} style={S.backBtn}>← Back</button>
+        <div><div style={S.logo}><span style={{color:"#f59e0b"}}>👩‍🏫</span> TEACHER DASHBOARD</div>
+        <div style={S.headerSub}>{filtered.length} student{filtered.length!==1?"s":""} · Stock Market Project · {DATE_RANGE_LABEL}</div></div>
+      </div>
+      <div style={{display:"flex",gap:12,alignItems:"center"}}>
+        <button onClick={refresh} style={{...S.backBtn,color:T.accent}}>⟳ Refresh</button>
+        <ThemeToggle dark={dark} onToggle={toggleTheme} T={T}/>
+      </div>
+    </div></div>
+    <div style={S.content}>
+      <div style={S.summaryHero}>
+        {[["Total Students",students.length],["Setup Complete",students.filter(s=>s.setupDone).length],
+          ["Total Reflections",students.reduce((n,s)=>n+getRefCount(s),0)],
+          ["Avg Return",(()=>{const r=students.map(getReturn).filter(r=>r!==null);return r.length?(r.reduce((a,b)=>a+b,0)/r.length).toFixed(2)+"%":"—";})()]
+        ].map(([label,val])=><div key={label} style={S.heroCard}><div style={S.heroLabel}>{label}</div><div style={{fontFamily:"'Space Mono',monospace",fontSize:26,color:T.accent,fontWeight:700}}>{val}</div></div>)}
+      </div>
+      <div style={{display:"flex",gap:12,flexWrap:"wrap",alignItems:"center"}}>
+        {[["Period",filterPeriod,setFilterPeriod,["all",...periods],["All Periods",...periods]],
+          ["Sort",sortBy,setSortBy,["name","return","reflections"],["Name","Return %","Reflections"]]
+        ].map(([label,val,setter,vals,labels])=>(
+          <div key={label} style={{display:"flex",alignItems:"center",gap:8}}>
+            <span style={{fontSize:12,color:T.textMuted,fontFamily:"'Space Mono',monospace"}}>{label}:</span>
+            <select style={S.select} value={val} onChange={e=>setter(e.target.value)}>
+              {vals.map((v,i)=><option key={v} value={v}>{labels[i]}</option>)}
+            </select>
+          </div>
+        ))}
+      </div>
+      <div style={S.card}>
+        <div style={S.cardTitle}>All Student Portfolios</div>
+        {loading?<div style={{color:T.textMuted,padding:20}}>Loading from Google Sheets…</div>
+        :filtered.length===0?<div style={{color:T.textMuted,padding:20}}>No students found yet.</div>
+        :<table style={S.table}><thead><tr>
+          <th style={S.th}>Student</th><th style={S.th}>Period</th><th style={S.th}>Setup</th>
+          <th style={S.th}>Stocks</th><th style={S.th}>Invested</th><th style={S.th}>Return %</th>
+          <th style={S.th}>Prices</th><th style={S.th}>Reflections</th><th style={S.th}>Student Key</th><th style={S.th}>View</th>
+        </tr></thead><tbody>
+          {filtered.map(data=>{
+            const ret=getReturn(data);
+            const inv=data.stocks.reduce((s,st)=>{const v=parseFloat(st.shares)*parseFloat(st.purchasePrice);return s+(isNaN(v)?0:v);},0);
+            const pc=Object.keys(data.prices||{}).filter(k=>data.prices[k]).length;
+            const maxPossible=TRACKING_DATES.length*5;
+            return <tr key={data.studentKey} style={S.tr}>
+              <td style={{...S.td,fontWeight:600}}>{data.studentName||"—"}</td>
+              <td style={S.td}>{data.period||"—"}</td>
+              <td style={S.td}>{data.setupDone?<span style={{color:T.green}}>✓</span>:<span style={{color:T.textMuted}}>○</span>}</td>
+              <td style={{...S.td,fontFamily:"'Space Mono',monospace",fontSize:11,color:T.accent}}>{data.stocks.filter(s=>s.ticker).map(s=>s.ticker).join(", ")||"—"}</td>
+              <td style={{...S.td,fontFamily:"'Space Mono',monospace",fontSize:12}}>{inv>0?`$${inv.toFixed(0)}`:"—"}</td>
+              <td style={{...S.td,fontFamily:"'Space Mono',monospace",fontWeight:700,color:ret===null?T.textMuted:ret>=0?T.green:T.red}}>{ret===null?"—":`${ret>=0?"+":""}${ret.toFixed(2)}%`}</td>
+              <td style={S.td}><div style={{display:"flex",alignItems:"center",gap:8}}><div style={{flex:1,height:6,background:T.border,borderRadius:3,minWidth:50}}><div style={{height:"100%",borderRadius:3,background:T.accent,width:`${Math.min(100,(pc/maxPossible)*100)}%`}}/></div><span style={{color:T.textMuted,fontSize:11,fontFamily:"'Space Mono',monospace"}}>{pc}</span></div></td>
+              <td style={S.td}><div style={{display:"flex",gap:3}}>{[...Array(NUM_WEEKS)].map((_,i)=><div key={i} style={{width:10,height:10,borderRadius:2,background:data.reflections?.[`week_${i}`]?T.green:T.border}}/>)}</div></td>
+              <td style={{...S.td,fontFamily:"'Space Mono',monospace",fontSize:10,color:T.textDim}}>{data.studentKey}</td>
+              <td style={S.td}><button onClick={()=>setSelected(data.studentKey)} style={S.viewBtn}>View →</button></td>
+            </tr>;
+          })}
+        </tbody></table>}
+      </div>
+    </div>
+  </div>;
+}
+
+function SetupTab({portfolio,update,totalInvested,remaining,T,S}){
+  const setField=(k,v)=>update(p=>{p[k]=v;return p;});
+  const setStock=(i,k,v)=>update(p=>{p.stocks[i][k]=v;return p;});
+  const canFinalize=portfolio.stocks.every(s=>s.ticker&&s.company&&s.shares&&s.purchasePrice)&&portfolio.studentName&&remaining>=0;
+  return <div style={S.panel}>
+    <h2 style={S.panelTitle}>Portfolio Setup</h2>
+    <p style={S.panelDesc}>Choose 5 stocks and allocate your $20,000 budget. Saves automatically to Google Sheets.</p>
+    <div style={S.card}><div style={S.cardTitle}>Student Information</div>
+      <div style={S.row2}>
+        <div style={S.fg}><label style={S.label}>Student Name</label><input style={S.input} value={portfolio.studentName} onChange={e=>setField("studentName",e.target.value)} placeholder="Your full name"/></div>
+        <div style={S.fg}><label style={S.label}>Class Period</label><input style={S.input} value={portfolio.period} onChange={e=>setField("period",e.target.value)} placeholder="e.g. Period 3"/></div>
+      </div>
+    </div>
+    <div style={S.card}><div style={S.cardTitle}>Budget Tracker</div>
+      <div style={{display:"flex",gap:32,marginBottom:14,flexWrap:"wrap"}}>
+        {[["Budget","$20,000",T.text],["Invested",`$${totalInvested.toFixed(2)}`,T.accent],["Remaining",`$${remaining.toFixed(2)}`,remaining<0?T.red:T.green]].map(([l,v,c])=>(
+          <div key={l}><div style={{fontSize:11,color:T.textMuted,marginBottom:4}}>{l}</div><div style={{fontFamily:"'Space Mono',monospace",fontSize:18,color:c}}>{v}</div></div>
+        ))}
+      </div>
+      <div style={{height:6,background:T.border,borderRadius:6,overflow:"hidden"}}><div style={{height:"100%",borderRadius:6,background:remaining<0?T.red:T.accent,width:`${Math.min(100,(totalInvested/20000)*100)}%`}}/></div>
+      {remaining<0&&<div style={{color:T.yellow,fontSize:13,marginTop:8}}>⚠ Over budget.</div>}
+    </div>
+    <div style={S.card}><div style={S.cardTitle}>Your 5 Stock Picks</div>
+      <div style={{overflowX:"auto"}}><table style={S.table}><thead><tr>
+        <th style={S.th}>#</th><th style={S.th}>Ticker</th><th style={S.th}>Company Name</th>
+        <th style={S.th}>Shares</th><th style={S.th}>Purchase Price ($)</th><th style={S.th}>Total Value</th>
+      </tr></thead><tbody>
+        {portfolio.stocks.map((s,i)=>{const val=parseFloat(s.shares)*parseFloat(s.purchasePrice);return <tr key={i} style={S.tr}>
+          <td style={{...S.td,color:T.textDim,fontFamily:"'Space Mono',monospace",fontSize:12}}>{i+1}</td>
+          <td style={S.td}><input style={{...S.input,width:80,textTransform:"uppercase",fontFamily:"'Space Mono',monospace"}} placeholder="AAPL" maxLength={5} value={s.ticker} onChange={e=>setStock(i,"ticker",e.target.value.toUpperCase())}/></td>
+          <td style={S.td}><input style={{...S.input,width:"100%"}} placeholder="Apple Inc." value={s.company} onChange={e=>setStock(i,"company",e.target.value)}/></td>
+          <td style={S.td}><input style={{...S.input,width:80}} type="number" placeholder="50" value={s.shares} onChange={e=>setStock(i,"shares",e.target.value)}/></td>
+          <td style={S.td}><input style={{...S.input,width:100}} type="number" placeholder="200.00" value={s.purchasePrice} onChange={e=>setStock(i,"purchasePrice",e.target.value)}/></td>
+          <td style={{...S.td,fontFamily:"'Space Mono',monospace",color:T.accent}}>{isNaN(val)?"—":`$${val.toFixed(2)}`}</td>
+        </tr>;})}
+      </tbody></table></div>
+      <div style={{marginTop:20,display:"flex",gap:12,alignItems:"center",flexWrap:"wrap"}}>
+        <button disabled={!canFinalize} onClick={()=>update(p=>{p.setupDone=true;return p;})} style={{...S.primaryBtn,opacity:canFinalize?1:0.4,cursor:canFinalize?"pointer":"not-allowed"}}>✓ Finalize Portfolio</button>
+        {portfolio.setupDone&&<span style={{color:T.green,fontFamily:"'Space Mono',monospace",fontSize:13}}>✓ Finalized!</span>}
+      </div>
+    </div>
+  </div>;
+}
+
+function TrackingTab({portfolio,update,T,S}){
+  const setPrice=(si,dk,v)=>update(p=>{p.prices[`${si}_${dk}`]=v;return p;});
+  if(!portfolio.setupDone||!portfolio.stocks[0].ticker)
+    return <div style={S.panel}><div style={S.emptyState}>Complete Portfolio Setup first!</div></div>;
+  return <div style={S.panel}>
+    <h2 style={S.panelTitle}>Price Tracking</h2>
+    <p style={S.panelDesc}>Record the opening price every tracking day (Mon/Fri, shifted to Tue on no-school Mondays). Saves automatically.</p>
+    <div style={{overflowX:"auto"}}><table style={{...S.table,minWidth:900}}><thead><tr>
+      <th style={{...S.th,minWidth:130}}>Stock</th><th style={{...S.th,minWidth:80}}>Start $</th>
+      {TRACKING_DATES.map(d=><th key={d.date} style={{...S.th,minWidth:82,fontSize:10}}>{d.label}</th>)}
+      <th style={S.th}>Change</th>
+    </tr></thead><tbody>
+      {portfolio.stocks.map((s,i)=>{
+        const start=parseFloat(s.purchasePrice)||0;
+        const lk=[...TRACKING_DATES].reverse().find(d=>portfolio.prices[`${i}_${d.date}`]);
+        const last=lk?parseFloat(portfolio.prices[`${i}_${lk.date}`]):start;
+        const pct=start>0?((last-start)/start)*100:0;
+        return <tr key={i} style={S.tr}>
+          <td style={S.td}><div style={{fontFamily:"'Space Mono',monospace",color:T.accent,fontWeight:700}}>{s.ticker}</div><div style={{fontSize:11,color:T.textMuted}}>{s.company}</div></td>
+          <td style={{...S.td,fontFamily:"'Space Mono',monospace",color:T.textSub,fontSize:12}}>${start.toFixed(2)}</td>
+          {TRACKING_DATES.map(d=><td key={d.date} style={S.td}>
+            <input type="number" min="0" step="0.01" placeholder="—" value={portfolio.prices[`${i}_${d.date}`]||""} onChange={e=>setPrice(i,d.date,e.target.value)} style={S.priceInput}/>
+          </td>)}
+          <td style={{...S.td,fontFamily:"'Space Mono',monospace",fontWeight:700,color:pct>=0?T.green:T.red}}>{pct>=0?"▲":"▼"} {Math.abs(pct).toFixed(2)}%</td>
+        </tr>;
+      })}
+    </tbody></table></div>
+  </div>;
+}
+
+function ReflectionsTab({portfolio,update,T,S}){
+  const setRef=(k,v)=>update(p=>{p.reflections[k]=v;return p;});
+  return <div style={S.panel}>
+    <h2 style={S.panelTitle}>Weekly Reflections</h2>
+    <p style={S.panelDesc}>After each week, reflect on what happened and what you learned.</p>
+    {WEEK_LABELS.map((label,i)=><div key={i} style={S.card}>
+      <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:12}}>
+        <div><div style={S.cardTitle}>{label}</div><div style={{fontSize:12,color:T.textMuted,fontStyle:"italic",marginTop:2}}>Prompt: {REFLECTION_PROMPTS[i]}</div></div>
+        <div style={{padding:"4px 14px",borderRadius:20,fontSize:11,fontFamily:"'Space Mono',monospace",background:T.accentBg3,border:`1px solid ${T.border}`,color:T.accent}}>Week {i+1}</div>
+      </div>
+      <textarea rows={5} placeholder="Write your reflection here…" value={portfolio.reflections?.[`week_${i}`]||""} onChange={e=>setRef(`week_${i}`,e.target.value)} style={S.textarea}/>
+      <div style={{textAlign:"right",fontSize:11,color:T.textDim,fontFamily:"'Space Mono',monospace",marginTop:4}}>{(portfolio.reflections?.[`week_${i}`]||"").split(/\s+/).filter(Boolean).length} words</div>
+      <div style={{marginTop:10}}>
+        <div style={{fontSize:12,color:T.textMuted,marginBottom:6}}>📌 Key Observation / News Headline</div>
+        <input style={S.input} placeholder="e.g. Fed held rates steady — tech rallied" value={portfolio.reflections?.[`obs_${i}`]||""} onChange={e=>setRef(`obs_${i}`,e.target.value)}/>
+      </div>
+    </div>)}
+  </div>;
+}
+
+function SummaryTab({portfolio,getPortfolioValue,totalInvested,gainLoss,gainPct,T,S}){
+  if(!portfolio.setupDone) return <div style={S.panel}><div style={S.emptyState}>Complete setup to view your summary!</div></div>;
+  const stockPerf=portfolio.stocks.map((s,i)=>{
+    const start=parseFloat(s.purchasePrice)||0;
+    const lk=[...TRACKING_DATES].reverse().find(d=>portfolio.prices[`${i}_${d.date}`]);
+    const last=lk?parseFloat(portfolio.prices[`${i}_${lk.date}`]):0;
+    const pct=start>0&&last>0?((last-start)/start)*100:null;
+    const gainDol=last>0?(last-start)*parseFloat(s.shares):0;
+    return{...s,start,last,pct,gainDol};
+  }).filter(s=>s.ticker);
+  const best=stockPerf.reduce((a,b)=>(b.pct!==null&&(a?.pct===null||b.pct>(a?.pct??-999)))?b:a,stockPerf[0]);
+  const worst=stockPerf.reduce((a,b)=>(b.pct!==null&&(a?.pct===null||b.pct<(a?.pct??999)))?b:a,stockPerf[0]);
+  const reflCount=Object.keys(portfolio.reflections||{}).filter(k=>k.startsWith("week_")&&portfolio.reflections[k]).length;
+  return <div style={S.panel}>
+    <h2 style={S.panelTitle}>Portfolio Summary</h2>
+    <p style={S.panelDesc}>{portfolio.studentName}'s complete investment performance report.</p>
+    <div style={S.summaryHero}>
+      {[["Starting Capital",`$${totalInvested.toFixed(2)}`,T.text],["Current Value",`$${(totalInvested+gainLoss).toFixed(2)}`,T.accent],
+        ["Gain / Loss",`${gainLoss>=0?"+":""}$${gainLoss.toFixed(2)}`,gainLoss>=0?T.green:T.red],
+        ["Return %",`${gainPct>=0?"+":""}${gainPct.toFixed(2)}%`,gainPct>=0?T.green:T.red]
+      ].map(([l,v,c])=><div key={l} style={S.heroCard}><div style={S.heroLabel}>{l}</div><div style={{fontFamily:"'Space Mono',monospace",fontSize:22,color:c,fontWeight:700}}>{v}</div></div>)}
+    </div>
+    <div style={S.card}><div style={S.cardTitle}>Stock-by-Stock Performance</div>
+      <table style={S.table}><thead><tr><th style={S.th}>Ticker</th><th style={S.th}>Company</th><th style={S.th}>Shares</th><th style={S.th}>Start</th><th style={S.th}>Latest</th><th style={S.th}>Return %</th><th style={S.th}>Gain $</th></tr></thead>
+      <tbody>{stockPerf.map((s,i)=><tr key={i} style={S.tr}>
+        <td style={{...S.td,fontFamily:"'Space Mono',monospace",color:T.accent,fontWeight:700}}>{s.ticker}</td>
+        <td style={S.td}>{s.company}</td><td style={{...S.td,fontFamily:"'Space Mono',monospace"}}>{s.shares}</td>
+        <td style={{...S.td,fontFamily:"'Space Mono',monospace"}}>${s.start.toFixed(2)}</td>
+        <td style={{...S.td,fontFamily:"'Space Mono',monospace"}}>{s.last>0?`$${s.last.toFixed(2)}`:"—"}</td>
+        <td style={{...S.td,fontFamily:"'Space Mono',monospace",color:s.pct===null?T.textMuted:s.pct>=0?T.green:T.red,fontWeight:700}}>{s.pct===null?"—":`${s.pct>=0?"+":""}${s.pct.toFixed(2)}%`}</td>
+        <td style={{...S.td,fontFamily:"'Space Mono',monospace",color:s.gainDol>=0?T.green:T.red}}>{s.gainDol!==0?`${s.gainDol>=0?"+":""}$${s.gainDol.toFixed(2)}`:"—"}</td>
+      </tr>)}</tbody></table>
+    </div>
+    <div style={S.row2}>
+      {best?.pct!==null&&<div style={{...S.card,borderColor:T.greenBorder}}><div style={S.cardTitle}>🏆 Best Performer</div><div style={{fontFamily:"'Space Mono',monospace",fontSize:28,color:T.green,fontWeight:700}}>{best.ticker}</div><div style={{color:T.textSub}}>{best.company}</div><div style={{fontSize:20,color:T.green,marginTop:8}}>+{best.pct.toFixed(2)}%</div></div>}
+      {worst?.pct!==null&&<div style={{...S.card,borderColor:T.redBorder}}><div style={S.cardTitle}>📉 Weakest Performer</div><div style={{fontFamily:"'Space Mono',monospace",fontSize:28,color:T.red,fontWeight:700}}>{worst.ticker}</div><div style={{color:T.textSub}}>{worst.company}</div><div style={{fontSize:20,color:T.red,marginTop:8}}>{worst.pct.toFixed(2)}%</div></div>}
+    </div>
+    <div style={S.card}><div style={S.cardTitle}>✍️ Reflection Progress</div>
+      <div style={{display:"flex",gap:8,flexWrap:"wrap",marginTop:4}}>
+        {[...Array(NUM_WEEKS)].map((_,i)=>{const done=!!(portfolio.reflections?.[`week_${i}`]);
+          return <div key={i} style={{padding:"6px 14px",borderRadius:20,fontSize:12,fontFamily:"'Space Mono',monospace",background:done?T.greenBg:T.surface,border:`1px solid ${done?T.greenBorder:T.border}`,color:done?T.green:T.textMuted}}>{done?"✓":"○"} Week {i+1}</div>;
+        })}
+      </div>
+      <div style={{marginTop:10,color:T.textMuted,fontSize:13}}>{reflCount} of {NUM_WEEKS} reflections completed</div>
+    </div>
+  </div>;
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+</script>
+</body>
+</html>

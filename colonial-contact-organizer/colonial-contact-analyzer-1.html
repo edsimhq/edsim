@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>European Contact with Native Americans · EdSim</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Source+Code+Pro:wght@400;500;600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0b0d;--surf:#121417;--surf2:#181b20;--surf3:#1e232a;
+  --border:#262b33;--border-hi:#3a4250;
+  --text:#dfe3ea;--dim:#8792a3;--faint:#3a4250;
+  --accent:#b5651d;--accent-hi:#e0893a;--accent-glow:rgba(181,101,29,.28);
+  --sp:#b5651d;--sp-hi:#e0893a;      /* Spanish - rust */
+  --fr:#2d6fd4;--fr-hi:#5b93e8;      /* French - blue */
+  --du:#c8900a;--du-hi:#f0a500;      /* Dutch - amber */
+  --en:#1a6e45;--en-hi:#27ae60;      /* English - green */
+  --white:#f3f5f8;
+  --exchange:#2d6fd4;--conflict:#c0392b;--resistance:#27ae60;
+  --fd:'Oswald',sans-serif;--fm:'Source Code Pro',monospace;--fb:'Libre Baskerville',Georgia,serif;
+  --ease:cubic-bezier(.4,0,.2,1);--r:8px;--rs:5px;
+}
+html,body{min-height:100%}
+body{font-family:var(--fb);background:var(--bg);color:var(--text);display:flex;flex-direction:column;min-height:100vh}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
+  background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.05) 3px,rgba(0,0,0,.05) 4px)}
+
+/* HEADER */
+.hdr{position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;
+  padding:0 18px;height:52px;border-bottom:1px solid var(--border);
+  background:rgba(10,11,13,.94);backdrop-filter:blur(10px);flex-shrink:0;gap:10px;flex-wrap:wrap}
+.hdr-l{display:flex;align-items:center;gap:10px;min-width:0}
+.logo{font-family:var(--fd);font-size:15px;font-weight:600;color:var(--dim);letter-spacing:.1em;white-space:nowrap}
+.hdiv{width:1px;height:15px;background:var(--border);flex-shrink:0}
+.unit{font-family:var(--fm);font-size:10.5px;color:var(--accent-hi);letter-spacing:.1em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hdr-r{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.hdr-btn{font-family:var(--fm);font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;
+  padding:0 12px;height:34px;min-height:34px;border-radius:var(--rs);cursor:pointer;
+  background:transparent;border:1px solid var(--border);color:var(--dim);transition:all .15s;display:flex;align-items:center;gap:6px}
+.hdr-btn:hover{border-color:var(--border-hi);color:var(--white)}
+.hdr-btn.on{border-color:var(--accent-hi);color:var(--accent-hi);background:rgba(181,101,29,.12)}
+.hdr-btn:focus-visible{outline:2px solid var(--accent-hi);outline-offset:2px}
+
+/* TABS */
+.tabbar{position:sticky;top:52px;z-index:55;display:flex;overflow-x:auto;
+  background:var(--surf);border-bottom:1px solid var(--border);flex-shrink:0;scrollbar-width:thin}
+.tab{font-family:var(--fd);font-size:13px;font-weight:500;letter-spacing:.04em;text-transform:uppercase;
+  padding:0 16px;height:46px;min-height:44px;display:flex;align-items:center;gap:7px;white-space:nowrap;
+  background:transparent;border:none;border-bottom:3px solid transparent;color:var(--dim);cursor:pointer;transition:all .15s}
+.tab:hover{color:var(--text);background:var(--surf2)}
+.tab.active{color:var(--white);border-bottom-color:var(--accent-hi);background:var(--surf2)}
+.tab-dot{width:8px;height:8px;border-radius:50%;background:var(--faint);flex-shrink:0}
+.tab-dot.done{background:var(--en-hi)}
+.tab:focus-visible{outline:2px solid var(--accent-hi);outline-offset:-2px}
+
+/* MAIN */
+.main{position:relative;flex:1;display:flex;flex-direction:column;align-items:center;padding:26px 16px 60px;width:100%}
+.panel{width:100%;max-width:880px;animation:fadeUp .35s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* DIRECTIONS */
+.dir-title{font-family:var(--fd);font-size:clamp(26px,5vw,40px);font-weight:700;text-transform:uppercase;letter-spacing:.03em;color:var(--white);margin-bottom:6px;line-height:1.1}
+.dir-sub{font-family:var(--fd);font-size:16px;font-weight:300;letter-spacing:.08em;color:var(--accent-hi);text-transform:uppercase;margin-bottom:22px}
+.dir-card{background:var(--surf);border:1px solid var(--border);border-radius:var(--r);padding:20px;margin-bottom:14px}
+.dir-card h3{font-family:var(--fd);font-size:15px;letter-spacing:.06em;text-transform:uppercase;color:var(--white);margin-bottom:10px}
+.dir-card p{font-size:15px;line-height:1.65;color:var(--text);margin-bottom:8px}
+.dir-list{list-style:none;display:flex;flex-direction:column;gap:8px}
+.dir-list li{display:flex;gap:10px;align-items:flex-start;font-size:14.5px;line-height:1.5;color:var(--text)}
+.dir-list .swatch{width:12px;height:12px;border-radius:3px;margin-top:4px;flex-shrink:0}
+.time-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:12px}
+.time-item{background:var(--surf2);border:1px solid var(--border);border-radius:var(--rs);padding:10px 12px}
+.time-item .tn{font-family:var(--fm);font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.06em}
+.time-item .tv{font-family:var(--fd);font-size:18px;color:var(--white);margin-top:2px}
+.theme-key{display:flex;gap:16px;flex-wrap:wrap;margin-top:14px}
+.theme-key span{display:flex;align-items:center;gap:6px;font-family:var(--fm);font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--dim)}
+.theme-key i{width:10px;height:10px;border-radius:3px;display:inline-block}
+
+/* POWER HEADER */
+.power-head{display:flex;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap}
+.power-title{font-family:var(--fd);font-size:clamp(24px,4.5vw,34px);font-weight:700;text-transform:uppercase;letter-spacing:.03em;color:var(--white)}
+.power-badge{font-family:var(--fm);font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:20px;border:1px solid var(--pc);color:var(--pc)}
+
+/* DOCUMENT CARD */
+.doc{background:var(--surf);border:1px solid var(--border);border-radius:var(--r);margin-bottom:18px;overflow:hidden}
+.doc-head{padding:14px 18px;border-bottom:1px solid var(--border);background:var(--surf2)}
+.doc-title{font-family:var(--fd);font-size:16px;font-weight:600;color:var(--white);letter-spacing:.02em}
+.doc-sub{font-family:var(--fm);font-size:11px;color:var(--dim);margin-top:3px}
+.doc-body{padding:16px 18px}
+.sent{position:relative;display:flex;gap:10px;align-items:flex-start;padding:11px 12px;border-radius:var(--rs);
+  cursor:pointer;transition:background .15s;margin-bottom:4px;border:1px solid transparent}
+.sent:hover{background:var(--surf3)}
+.sent.selected{background:rgba(181,101,29,.1);border-color:var(--accent-hi)}
+.sent-check{width:20px;height:20px;min-width:20px;border-radius:5px;border:2px solid var(--border-hi);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;transition:all .15s}
+.sent.selected .sent-check{background:var(--accent-hi);border-color:var(--accent-hi)}
+.sent-check svg{width:12px;height:12px;opacity:0;transition:opacity .1s}
+.sent.selected .sent-check svg{opacity:1}
+.sent-text{font-size:15.5px;line-height:1.65;color:var(--text)}
+.classify-row{display:flex;align-items:center;gap:8px;margin-top:9px;flex-wrap:wrap}
+.classify-label{font-family:var(--fm);font-size:9.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--dim)}
+.classify-select{font-family:var(--fm);font-size:11.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;
+  background:var(--surf2);color:var(--text);border:1px solid var(--border-hi);border-radius:var(--rs);
+  padding:7px 26px 7px 10px;min-height:36px;cursor:pointer;appearance:none;-webkit-appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath fill='%238792a3' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 9px center;transition:border-color .15s}
+.classify-select:focus-visible{outline:2px solid var(--accent-hi);outline-offset:1px}
+.classify-select.picked-exchange{border-color:#5b93e8;color:#7fb0f5}
+.classify-select.picked-conflict{border-color:#e0574a;color:#f0897d}
+.classify-select.picked-resistance{border-color:#27ae60;color:#6fd99a}
+.gloss{color:var(--accent-hi);text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px;cursor:help;font-weight:600}
+.gloss:focus-visible{outline:2px solid var(--accent-hi)}
+
+/* GLOSSARY POPOVER */
+.gpop{position:fixed;z-index:200;max-width:280px;background:var(--surf3);border:1px solid var(--accent-hi);
+  border-radius:var(--rs);padding:12px 14px;box-shadow:0 8px 24px rgba(0,0,0,.5);display:none;font-family:var(--fb)}
+.gpop.show{display:block}
+.gpop-term{font-family:var(--fd);font-size:13px;font-weight:600;color:var(--accent-hi);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px}
+.gpop-def{font-size:13.5px;line-height:1.5;color:var(--text)}
+
+/* NAV */
+.navrow{display:flex;justify-content:space-between;align-items:center;margin-top:24px;gap:10px;flex-wrap:wrap}
+.navbtn{font-family:var(--fm);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  padding:0 20px;height:46px;min-height:44px;border-radius:var(--rs);cursor:pointer;transition:all .15s;
+  border:1px solid var(--border-hi);background:var(--surf2);color:var(--text);display:flex;align-items:center;gap:8px}
+.navbtn:hover{border-color:var(--accent-hi);color:var(--white)}
+.navbtn.primary{background:var(--accent);border-color:var(--accent);color:var(--white)}
+.navbtn.primary:hover{background:var(--accent-hi);border-color:var(--accent-hi)}
+.navbtn:disabled{opacity:.35;cursor:not-allowed}
+.navbtn:focus-visible{outline:2px solid var(--accent-hi);outline-offset:2px}
+
+/* SYNTHESIS TAB */
+.synth-evidence{background:var(--surf);border:1px solid var(--border);border-radius:var(--r);padding:16px;margin-bottom:18px}
+.synth-evidence h3{font-family:var(--fd);font-size:15px;text-transform:uppercase;letter-spacing:.06em;color:var(--white);margin-bottom:10px}
+.chip-list{display:flex;flex-direction:column;gap:8px}
+.chip{background:var(--surf2);border:1px solid var(--border);border-radius:var(--rs);padding:10px 12px;font-size:14px;line-height:1.5;
+  display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.chip-src{font-family:var(--fm);font-size:9.5px;color:var(--dim);text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px}
+.chip-rm{background:transparent;border:none;color:var(--dim);cursor:pointer;font-size:16px;line-height:1;padding:4px;flex-shrink:0;min-width:28px;min-height:28px}
+.chip-rm:hover{color:#f0897d}
+.empty-note{font-size:13.5px;color:var(--dim);font-style:italic}
+textarea.tea{width:100%;min-height:220px;background:var(--surf2);border:1px solid var(--border);border-radius:var(--rs);
+  padding:14px;color:var(--white);font-family:var(--fb);font-size:15px;line-height:1.65;resize:vertical;overflow:visible}
+textarea.tea:focus{outline:none;border-color:var(--accent-hi)}
+.tea-label{font-family:var(--fd);font-size:15px;text-transform:uppercase;letter-spacing:.05em;color:var(--white);margin-bottom:4px}
+.tea-hint{font-size:13px;color:var(--dim);margin-bottom:10px;line-height:1.5}
+
+/* MODAL */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:300;display:none;align-items:center;justify-content:center;padding:16px}
+.modal-bg.show{display:flex}
+.modal{background:var(--surf2);border:1px solid var(--border-hi);border-radius:var(--r);padding:22px;max-width:420px;width:100%;max-height:85vh;overflow-y:auto}
+.modal h3{font-family:var(--fd);font-size:18px;text-transform:uppercase;letter-spacing:.04em;color:var(--white);margin-bottom:14px}
+.modal-opt{display:flex;align-items:center;gap:10px;padding:10px 4px;border-bottom:1px solid var(--border);font-size:14.5px;min-height:44px}
+.modal-opt input{width:18px;height:18px;flex-shrink:0}
+.modal-actions{display:flex;gap:10px;margin-top:16px}
+.modal-actions .navbtn{flex:1;justify-content:center}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(100px);z-index:400;
+  background:var(--surf3);border:1px solid var(--accent-hi);border-radius:var(--rs);padding:12px 20px;
+  font-size:14px;color:var(--white);transition:transform .3s var(--ease);max-width:90vw;text-align:center}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+@media print{
+  .hdr,.tabbar,.navrow,.hdr-btn{display:none!important}
+  body::after{display:none}
+  .panel{max-width:100%}
+  textarea.tea{overflow:visible;height:auto}
+}
+@media (max-width:640px){
+  .hdr{padding:0 12px;height:auto;flex-direction:column;align-items:stretch;padding-top:8px;padding-bottom:8px}
+  .hdr-r{justify-content:flex-end}
+  .tabbar{top:auto}
+}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-l">
+    <span class="logo">EDSIM</span>
+    <div class="hdiv"></div>
+    <span class="unit">Unit 1 · European Contact with Native Americans</span>
+  </div>
+  <div class="hdr-r">
+    <button class="hdr-btn" id="enlBtn" aria-pressed="false" aria-label="Toggle simplified text mode">
+      <span id="enlIcon">🌐</span> <span id="enlLabel">Simplify Text</span>
+    </button>
+    <button class="hdr-btn" id="advBtn" aria-pressed="false" aria-label="Toggle advanced text mode">
+      <span>📜</span> <span id="advLabel">Advanced Text</span>
+    </button>
+    <button class="hdr-btn" id="pdfBtn">Save as PDF</button>
+    <button class="hdr-btn" id="copyBtn">Copy Text</button>
+  </div>
+</div>
+
+<div class="tabbar" id="tabbar" role="tablist" aria-label="Activity sections"></div>
+
+<div class="main">
+  <div class="panel" id="panel"></div>
+</div>
+
+<div class="gpop" id="gpop" role="tooltip">
+  <div class="gpop-term" id="gpopTerm"></div>
+  <div class="gpop-def" id="gpopDef"></div>
+</div>
+
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <h3>Choose Sections to Save</h3>
+    <div id="modalOpts"></div>
+    <div class="modal-actions">
+      <button class="navbtn" id="modalCancel">Cancel</button>
+      <button class="navbtn primary" id="modalConfirm">Save PDF</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============ DATA ============ */
+const LS_KEY = 'edsim_colonial_contact_v1';
+
+const GLOSSARY = {
+  encomienda: "A Spanish colonial system that granted colonists control over Native labor and tribute, often under harsh conditions.",
+  sachem: "A Native leader or chief, especially among northeastern nations like the Narragansett.",
+  confederacy: "A group of nations or tribes united for mutual protection and common purpose.",
+  jesuit: "A member of a Catholic religious order active in mission and conversion work in New France.",
+  huron: "Also known as the Wendat, a Native confederacy allied with the French in the fur trade and against the Iroquois.",
+  iroquois: "A powerful confederacy of Native nations, often rivals of the Huron and their French allies.",
+  wampum: "Beads made from shells, used by Native nations for trade, treaties, and record-keeping.",
+  lenape: "A Native nation living along the Hudson and Delaware River valleys, in close contact with Dutch traders.",
+  mission: "A Spanish religious settlement meant to convert and control nearby Native populations.",
+  pueblo: "Native nations of the present-day Southwest, known for organized, multi-story adobe communities.",
+  ethnographer: "A person who studies and records the customs and daily life of a culture.",
+  conquistador: "A Spanish soldier or explorer involved in the conquest of the Americas.",
+  husbandman: "An older word for a farmer, especially one who tends both crops and animals."
+};
+
+function g(key, display){ return `<span class="gloss" tabindex="0" data-term="${key}">${display||key}</span>`; }
+
+// theme: exchange | conflict | resistance
+// std = standard reading | simp = simplified/ENL reading | adv = advanced reading
+//   English adv = verbatim excerpts from historical public-domain sources (Drake 1834; Oxford Learning Link 1642 transcription)
+//   Spanish/French/Dutch adv = lightly-adapted, period-register prose grounded in the historical record
+const DOCS = {
+  spanish: {
+    label: "Spanish", short:"SP", color:"var(--sp)", colorHi:"var(--sp-hi)",
+    docs: [
+      { title:"Report on Pueblo Relations, 1680", sub:"Adapted from Spanish colonial records and Pueblo oral histories",
+        sentences:[
+          {theme:'exchange', std:`For generations, our people worked the ${g('mission','missions')}, tended Spanish cattle, and worshipped in the Spanish church.`,
+                              simp:`For a long time, our people worked at the Spanish ${g('mission','missions')}. We took care of Spanish cattle and went to the Spanish church.`,
+                              adv:`For generations beyond counting, our people labored within the ${g('mission','missions')}, tended the cattle brought by Spanish hands, and bowed our heads within the Spanish church, though the rites of our own fathers were never far from our hearts.`},
+          {theme:'conflict', std:`Drought had struck the land, and the Spanish would not allow us to perform the ceremonies that our ancestors used to bring rain.`,
+                              simp:`There was a drought (very little rain). The Spanish would not let us do our ceremonies to bring rain, like our ancestors did.`,
+                              adv:`When drought descended upon the land and the earth cracked for want of rain, the friars forbade us the sacred dances by which our ancestors had always called the rain to come.`},
+          {theme:'resistance', std:`Popé and the leaders of many ${g('pueblo','pueblos')} sent knotted cords to every village, each knot marking a day until the appointed time to rise.`,
+                              simp:`A leader named Popé sent knotted ropes to every village. Each knot stood for one day left before it was time to fight back.`,
+                              adv:`Then did Popé, and the leaders of ${g('pueblo','pueblo')} after pueblo, send forth cords knotted with the days remaining, that every village might rise as one upon the appointed morning.`},
+          {theme:'resistance', std:`On the day chosen, we drove the Spanish from our homeland, and they did not return for twelve years.`,
+                              simp:`On the day we planned, we forced the Spanish to leave our land. They did not come back for twelve years.`,
+                              adv:`And on that morning we cast the Spanish from the land of our fathers, and for twelve years' time no Spaniard set foot again upon our soil.`}
+        ]},
+      { title:"Bartolomé de las Casas, Account to the Spanish Crown, 1542", sub:"A Spanish priest who witnessed the conquest and wrote to the King urging reform",
+        sentences:[
+          {theme:'conflict', std:`I served among the conquistadors on Hispaniola and Cuba, and saw with my own eyes what was done to the people who lived there.`,
+                              simp:`I traveled with Spanish soldiers to Hispaniola and Cuba. I saw with my own eyes how they treated the people who already lived there.`,
+                              adv:`I journeyed among the ${g('conquistador','conquistadors')} upon Hispaniola and Cuba, and with my own eyes did I witness the manner in which the native peoples of those islands were used.`},
+          {theme:'conflict', std:`Where once hundreds of thousands of people lived, whole islands now stand empty, their people killed in warfare or driven to labor in the mines.`,
+                              simp:`Hundreds of thousands of people used to live on these islands. Now the islands are almost empty. People were killed in fighting or forced to work in mines.`,
+                              adv:`Where once many hundreds of thousands dwelt in peace, whole islands now lie all but emptied, their peoples put to the sword in warfare or worn away by labor in the mines.`},
+          {theme:'resistance', std:`I write this account to the King not as an enemy of Spain, but so that these cruelties might be stopped and our laws changed.`,
+                              simp:`I am writing this letter to the King. I am not against Spain — I want the cruel treatment to stop and the laws to change.`,
+                              adv:`This account I set down for His Majesty not as an enemy of Spain, but that these cruelties might at last be stayed, and our laws reformed accordingly.`}
+        ]}
+    ]
+  },
+  french: {
+    label:"French", short:"FR", color:"var(--fr)", colorHi:"var(--fr-hi)",
+    docs:[
+      { title:"Jesuit Relations, New France, 1640s", sub:"Adapted from French missionary accounts",
+        sentences:[
+          {theme:'exchange', std:`The ${g('huron','Huron')} people welcomed our ${g('jesuit','missionaries')} and traders, and in return received cloth, iron tools, and muskets.`,
+                              simp:`The ${g('huron','Huron')} people welcomed our traders and religious workers. In return, they got cloth, iron tools, and guns.`,
+                              adv:`The ${g('huron','Huron')} nation received our ${g('jesuit','missionaries')} and our traders with open welcome, and in exchange for their furs did obtain of us cloth, tools of iron, and muskets besides.`},
+          {theme:'conflict', std:`With European goods came European sickness, and whole villages of the Huron were emptied within a single winter.`,
+                              simp:`European goods brought European diseases too. Some whole Huron villages became empty in just one winter because so many people got sick.`,
+                              adv:`Yet with the goods of Europe came also its maladies, and entire villages of the Huron were emptied within the span of a single winter.`},
+          {theme:'resistance', std:`The Huron and our own people found common cause against the ${g('iroquois','Iroquois')}, who sought to control the fur trade for themselves.`,
+                              simp:`The Huron and the French worked together against the ${g('iroquois','Iroquois')}, who wanted to control the fur trade themselves.`,
+                              adv:`The Huron and our own people found in the ${g('iroquois','Iroquois')} a common enemy, that nation seeking to seize the fur trade entire unto itself.`},
+          {theme:'exchange', std:`Some among the Huron came to depend on our trade goods, while others said we had brought only death disguised as friendship.`,
+                              simp:`Some Huron people came to depend on French goods. Others said the French had only brought death, hidden behind friendly words.`,
+                              adv:`Some among the Huron came to depend upon the goods we brought, while others declared that we had carried among them nothing but death, cloaked in the guise of friendship.`}
+        ]},
+      { title:"Champlain's Journal on the Huron Alliance, 1615", sub:"Adapted from the writings of Samuel de Champlain",
+        sentences:[
+          {theme:'exchange', std:`The Huron are skilled traders and farmers, and I saw the advantage of binding our nations together for trade and mutual defense.`,
+                              simp:`The Huron are skilled traders and farmers. I saw that it would help both sides if our two peoples worked together for trade and safety.`,
+                              adv:`The Huron are traders and ${g('husbandman','husbandmen')} of no small skill, and I perceived clearly the advantage that should come of binding our two nations together, both for commerce and for mutual defense.`},
+          {theme:'exchange', std:`In return for their furs and friendship, we gave the Huron cloth, tools, and our support in their wars against the Iroquois.`,
+                              simp:`In exchange for furs and friendship, we gave the Huron cloth and tools. We also helped them fight the Iroquois.`,
+                              adv:`In exchange for their furs and their friendship, we furnished the Huron with cloth and tools, and lent our arms besides in their wars against the Iroquois.`},
+          {theme:'exchange', std:`I lived among the Huron through the winter, learning their language and customs, and found much to respect in their way of life.`,
+                              simp:`I lived with the Huron for a whole winter. I learned their language and their customs, and I came to respect their way of life.`,
+                              adv:`I passed the winter among the Huron, learning somewhat of their tongue and their customs, and found in their manner of life much that merited respect.`},
+          {theme:'conflict', std:`But our support of the Huron against the Iroquois also drew us into a rivalry that would outlast my own lifetime.`,
+                              simp:`But by helping the Huron fight the Iroquois, we also became part of a rivalry that would continue long after I was gone.`,
+                              adv:`Yet our support of the Huron against the Iroquois drew us also into a rivalry that would outlast my own days upon this earth.`}
+        ]}
+    ]
+  },
+  dutch: {
+    label:"Dutch", short:"DU", color:"var(--du)", colorHi:"var(--du-hi)",
+    docs:[
+      { title:"Account of New Amsterdam, 1643", sub:"Adapted from Dutch colonial records",
+        sentences:[
+          {theme:'exchange', std:`The ${g('lenape','Lenape')} people brought furs to trade at our post, and we exchanged ${g('wampum','wampum')}, cloth, and metal tools in return.`,
+                              simp:`The ${g('lenape','Lenape')} people brought furs to trade with us. We traded back ${g('wampum','wampum')}, cloth, and metal tools.`,
+                              adv:`The ${g('lenape','Lenape')} people came often to our post bearing furs for trade, and received of us in exchange ${g('wampum','wampum')}, cloth, and implements of metal.`},
+          {theme:'conflict', std:`Director Kieft ordered an attack upon a Lenape encampment at night, and many who had sought shelter with us were killed.`,
+                              simp:`Our leader, Director Kieft, ordered an attack on a Lenape camp at night. Many Lenape people who had come to us for safety were killed.`,
+                              adv:`Director Kieft did order an attack by night upon an encampment of the Lenape, and many among them who had sought refuge with us were put to death.`},
+          {theme:'resistance', std:`In the days after, Lenape warriors struck at outlying Dutch farms in answer, and trade between our peoples nearly ceased.`,
+                              simp:`After that, Lenape warriors attacked Dutch farms outside the town to fight back. Trade between our two peoples almost stopped completely.`,
+                              adv:`In the days that followed, Lenape warriors fell upon the outlying Dutch farms in answer, and trade betwixt our two peoples very nearly ceased entire.`}
+        ]},
+      { title:"Adriaen van der Donck, Description of New Netherland, 1655", sub:"A Dutch settler who lived among and studied Algonquian and Iroquoian communities along the Hudson",
+        sentences:[
+          {theme:'exchange', std:`I have learned the languages of several Native nations and recorded their customs of marriage, farming, government, and belief.`,
+                              simp:`I learned the languages of several Native nations. I wrote down their customs about marriage, farming, government, and religion.`,
+                              adv:`I have made myself acquainted with the tongues of several Native nations, and set down their customs of marriage, husbandry, government, and belief.`},
+          {theme:'exchange', std:`The Native peoples I have come to know are thoughtful and orderly in their government, and skilled in the use of the land.`,
+                              simp:`The Native people I have gotten to know have a thoughtful, well-organized government. They are also very skilled at using the land.`,
+                              adv:`The Native peoples with whom I have come acquainted govern themselves with much thoughtfulness and good order, and are skilled beyond measure in the use of the land.`},
+          {theme:'conflict', std:`Yet by my own count, disease brought by our people has destroyed nine of every ten Native inhabitants of this valley since the Dutch arrived.`,
+                              simp:`But by my own count, disease brought by Dutch people has killed nine out of every ten Native people in this valley since we arrived.`,
+                              adv:`Yet by mine own reckoning, the sickness borne hither by our people hath destroyed nine of every ten Natives dwelling in this valley since first the Dutch arrived.`}
+        ]}
+    ]
+  },
+  english: {
+    label:"English", short:"EN", color:"var(--en)", colorHi:"var(--en-hi)",
+    docs:[
+      { title:"Chief Miantonomo's Call to Alliance, 1640s", sub:"Adapted from the words of Narragansett Chief Miantonomo — advanced tier uses the verbatim historical transcription",
+        sentences:[
+          {theme:'exchange', std:`You know our fathers had plenty of deer and skins, and our rivers were full of fish.`,
+                              simp:`You know that our fathers had plenty of deer, animal skins, and fish from the rivers.`,
+                              adv:`You know our fathers had plenty of deer and skins, and our plains were full of game and turkeys, and our coves and rivers were full of fish.`},
+          {theme:'conflict', std:`But since these Englishmen have seized our country, they have cut down the grass and the trees, and their cattle and hogs spoil what remains.`,
+                              simp:`But since the English took our land, they have cut down the grass and trees. Their cattle and pigs ruin what is left.`,
+                              adv:`But, brothers, since these Englishmen have seized our country, they have cut down the grass with scythes, and the trees with axes; their cows and horses eat up the grass, and their hogs spoil our bed of clams, and finally we shall all starve to death.`},
+          {theme:'resistance', std:`All the ${g('sachem','sachems')}, both to the east and to the west, have joined with us, and we are resolved to act as one people.`,
+                              simp:`All the ${g('sachem','tribal leaders')}, from both east and west, have joined with us. We have decided to act together as one people.`,
+                              adv:`All the ${g('sachem','sachems')} both to the east and the west have joined with us, and we are resolved to fall upon them at a day appointed.`},
+          {theme:'resistance', std:`We must be as one as the English are, or we shall all be destroyed.`,
+                              simp:`We must stay united like the English are, or we will all be destroyed.`,
+                              adv:`Brothers, we must be as one as the English are, or we shall all be destroyed.`}
+        ]},
+      { title:"Chief Powhatan's Address to Captain John Smith, c. 1609", sub:"Adapted from the words of Powhatan, leader of a large Algonquian confederacy in Virginia — advanced tier uses the verbatim historical transcription",
+        sentences:[
+          {theme:'exchange', std:`I am growing old, and I wish that your love for my people was equal to the love we have shown you.`,
+                              simp:`I am getting old. I wish you cared about my people as much as we have cared about you.`,
+                              adv:`I am now grown old, and must soon die; I wish their experience was equal to mine, and that your love to us might not be less than ours to you.`},
+          {theme:'conflict', std:`Why take by force what you could receive through friendship? Why destroy the very people who have supplied you with food?`,
+                              simp:`Why take things from us by force? You could just ask us as friends. We are the ones who have given you food.`,
+                              adv:`Why should you take by force that from us which you can have by love? Why should you destroy us who have provided you with food?`},
+          {theme:'resistance', std:`We could easily hide our stores and retreat into the woods, leaving you to starve rather than live as our enemy.`,
+                              simp:`We could hide our food and go into the woods. Then you would have nothing to eat.`,
+                              adv:`We can hide our provisions and fly into the woods, and then you must consequently famish by wronging your friends.`},
+          {theme:'exchange', std:`I would rather live in peace, sleep soundly, and trade freely with you than face war and its dangers.`,
+                              simp:`I would rather live in peace and trade with you than go to war.`,
+                              adv:`I am not so simple as not to know it is better to eat good meat, lie well, and sleep quietly with my women and children, to laugh and be merry with the English, than to fly from all, to lie cold in the woods.`}
+        ]}
+    ]
+  }
+};
+
+const THEME_LABEL = {exchange:'Exchange', conflict:'Conflict', resistance:'Resistance'};
+const TABS = [
+  {id:'directions', label:'Directions'},
+  {id:'spanish', label:'Spanish'},
+  {id:'french', label:'French'},
+  {id:'dutch', label:'Dutch'},
+  {id:'english', label:'English'},
+  {id:'synthesis', label:'Synthesis'}
+];
+
+/* ============ STATE ============ */
+let state = {
+  tab: 'directions',
+  enl: false,
+  advanced: false,
+  selected: {},   // key: "power-docIdx-sentIdx" -> true
+  classify: {},   // key: "power-docIdx-sentIdx" -> 'exchange'|'conflict'|'resistance'
+  synthesis: ''
+};
+
+function loadState(){
+  try{
+    const raw = localStorage.getItem(LS_KEY);
+    if(raw){
+      const parsed = JSON.parse(raw);
+      state = Object.assign(state, parsed);
+    }
+  }catch(e){}
+}
+function saveState(){
+  try{ localStorage.setItem(LS_KEY, JSON.stringify(state)); }catch(e){}
+}
+
+/* ============ RENDER ============ */
+function renderTabs(){
+  const bar = document.getElementById('tabbar');
+  bar.innerHTML = '';
+  TABS.forEach(t=>{
+    const btn = document.createElement('button');
+    btn.className = 'tab' + (state.tab===t.id?' active':'');
+    btn.setAttribute('role','tab');
+    btn.setAttribute('aria-selected', state.tab===t.id ? 'true':'false');
+    btn.innerHTML = `<span class="tab-dot${tabHasProgress(t.id)?' done':''}"></span>${t.label}`;
+    btn.addEventListener('click', ()=>{ state.tab=t.id; saveState(); render(); window.scrollTo({top:0,behavior:'smooth'}); });
+    bar.appendChild(btn);
+  });
+}
+
+function tabHasProgress(id){
+  if(id==='directions') return true;
+  if(id==='synthesis') return state.synthesis.trim().length>0;
+  return Object.keys(state.selected).some(k=>k.startsWith(id+'-') && state.selected[k]);
+}
+
+function selKey(power, di, si){ return `${power}-${di}-${si}`; }
+
+function renderDirections(){
+  return `
+    <div class="dir-eyebrow"></div>
+    <h1 class="dir-title">European Contact with Native Americans</h1>
+    <div class="dir-sub">Unit 1 · Document Analyzer</div>
+
+    <div class="dir-card">
+      <h3>What You're Doing</h3>
+      <p>Students will trace European contact with Native Americans, including the Dutch, English, French, and Spanish. You'll read short adapted primary source documents from each of the four powers and look for three patterns: <strong>cultural exchange</strong>, <strong>conflict</strong>, and <strong>resistance</strong>.</p>
+      <p>As you read, click any sentence that stands out as strong evidence. Selected sentences are saved to your Synthesis workspace, where you'll write a short response comparing how contact unfolded across the four powers.</p>
+    </div>
+
+    <div class="dir-card">
+      <h3>What's In Each Tab</h3>
+      <ul class="dir-list">
+        <li><span class="swatch" style="background:var(--sp-hi)"></span><span><strong>Spanish</strong> — two documents on missions, the Pueblo Revolt, and Bartolomé de las Casas's critique of Spanish treatment of Native peoples</span></li>
+        <li><span class="swatch" style="background:var(--fr-hi)"></span><span><strong>French</strong> — two documents on the fur trade, Jesuit missionaries, and the Huron-French alliance against the Iroquois</span></li>
+        <li><span class="swatch" style="background:var(--du-hi)"></span><span><strong>Dutch</strong> — two documents on New Amsterdam trade, Kieft's War, and Adriaen van der Donck's account of Native communities</span></li>
+        <li><span class="swatch" style="background:var(--en-hi)"></span><span><strong>English</strong> — two documents featuring Chief Miantonomo and Chief Powhatan responding to English settlement</span></li>
+        <li><span class="swatch" style="background:var(--accent-hi)"></span><span><strong>Synthesis</strong> — review your selected evidence and write your comparison</span></li>
+      </ul>
+      <div class="time-grid">
+        <div class="time-item"><div class="tn">Per Power Tab</div><div class="tv">~10–12 min</div></div>
+        <div class="time-item"><div class="tn">Synthesis</div><div class="tv">~15 min</div></div>
+        <div class="time-item"><div class="tn">Total</div><div class="tv">~65–75 min</div></div>
+      </div>
+    </div>
+
+    <div class="dir-card">
+      <h3>Reading Themes</h3>
+      <p>Every sentence is tagged with one of three themes so you can track patterns across powers:</p>
+      <div class="theme-key">
+        <span><i style="background:var(--exchange)"></i>Exchange — goods, ideas, or culture moving between peoples</span>
+        <span><i style="background:var(--conflict)"></i>Conflict — violence, disease, or displacement</span>
+        <span><i style="background:var(--resistance)"></i>Resistance — Native nations responding, resisting, or adapting</span>
+      </div>
+      <p style="margin-top:12px">You'll decide the theme yourself: each sentence has a dropdown where you classify it as Exchange, Conflict, or Resistance. There's no right-or-wrong check built in — be ready to explain your reasoning, since we'll compare answers as a class.</p>
+      <p>Terms with a <span class="gloss">dotted underline</span> have a definition — tap or click them for a quick explanation. Use <strong>Simplify Text</strong> in the header for plain-language wording, or <strong>Advanced Text</strong> to read the original historical wording of each document.</p>
+    </div>
+
+    <div class="navrow">
+      <div></div>
+      <button class="navbtn primary" onclick="goTab(1)">Start with Spanish →</button>
+    </div>
+  `;
+}
+
+function renderPower(key){
+  const p = DOCS[key];
+  let html = `
+    <div class="power-head">
+      <div class="power-title">${p.label} Contact</div>
+      <span class="power-badge" style="--pc:${p.colorHi}">2 Documents</span>
+    </div>
+  `;
+  p.docs.forEach((doc, di)=>{
+    html += `<div class="doc"><div class="doc-head"><div class="doc-title">${doc.title}</div><div class="doc-sub">${doc.sub}</div></div><div class="doc-body">`;
+    doc.sentences.forEach((s, si)=>{
+      const k = selKey(key, di, si);
+      const isSel = !!state.selected[k];
+      const text = pickText(s);
+      const picked = state.classify[k] || '';
+      html += `
+        <div class="sent${isSel?' selected':''}" data-key="${k}" tabindex="0" role="checkbox" aria-checked="${isSel}" aria-label="Select sentence as evidence">
+          <div class="sent-check"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#0a0b0d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="sent-text">${text}
+            <div class="classify-row">
+              <span class="classify-label">This is:</span>
+              <select class="classify-select${picked?' picked-'+picked:''}" data-key="${k}" aria-label="Classify this sentence as exchange, conflict, or resistance">
+                <option value="" ${picked===''?'selected':''}>Choose one…</option>
+                <option value="exchange" ${picked==='exchange'?'selected':''}>Exchange</option>
+                <option value="conflict" ${picked==='conflict'?'selected':''}>Conflict</option>
+                <option value="resistance" ${picked==='resistance'?'selected':''}>Resistance</option>
+              </select>
+            </div>
+          </div>
+        </div>`;
+    });
+    html += `</div></div>`;
+  });
+
+  const idx = TABS.findIndex(t=>t.id===key);
+  html += `
+    <div class="navrow">
+      <button class="navbtn" onclick="goTab(${idx-1})">← Previous</button>
+      <button class="navbtn primary" onclick="goTab(${idx+1})">Next →</button>
+    </div>`;
+  return html;
+}
+
+function renderSynthesis(){
+  const keys = Object.keys(state.selected).filter(k=>state.selected[k]);
+  let chips = '';
+  if(keys.length===0){
+    chips = `<p class="empty-note">No evidence selected yet. Go back to each power's tab and click sentences that stand out to add them here.</p>`;
+  } else {
+    chips = '<div class="chip-list">';
+    keys.forEach(k=>{
+      const [power, di, si] = k.split('-');
+      const doc = DOCS[power].docs[+di];
+      const s = doc.sentences[+si];
+      const text = pickText(s);
+      const picked = state.classify[k];
+      const pickedLabel = picked ? `<div class="chip-src" style="margin-top:4px;color:var(--accent-hi)">You classified this as: ${THEME_LABEL[picked]}</div>` : '';
+      chips += `<div class="chip">
+        <div><div class="chip-src">${DOCS[power].label} · ${doc.title}</div>${text}${pickedLabel}</div>
+        <button class="chip-rm" aria-label="Remove this evidence" onclick="removeEvidence('${k}')">✕</button>
+      </div>`;
+    });
+    chips += '</div>';
+  }
+
+  const idx = TABS.findIndex(t=>t.id==='synthesis');
+  return `
+    <div class="power-head"><div class="power-title">Synthesis</div></div>
+    <div class="synth-evidence">
+      <h3>Your Selected Evidence (${keys.length})</h3>
+      ${chips}
+    </div>
+    <div class="dir-card">
+      <div class="tea-label">Write Your Comparison</div>
+      <div class="tea-hint">Using your selected evidence, compare how contact unfolded across the Spanish, French, Dutch, and English. Which power relied most on exchange? Which saw the most conflict? How did Native nations respond differently across the four powers?</div>
+      <textarea class="tea" id="teaBox" placeholder="Begin writing here...">${escapeHtml(state.synthesis)}</textarea>
+    </div>
+    <div class="navrow">
+      <button class="navbtn" onclick="goTab(${idx-1})">← Previous</button>
+      <div></div>
+    </div>
+  `;
+}
+
+function escapeHtml(str){
+  const d = document.createElement('div'); d.textContent = str||''; return d.innerHTML;
+}
+function pickText(s){
+  if(state.advanced) return s.adv;
+  if(state.enl) return s.simp;
+  return s.std;
+}
+
+function render(){
+  renderTabs();
+  const panel = document.getElementById('panel');
+  if(state.tab==='directions') panel.innerHTML = renderDirections();
+  else if(state.tab==='synthesis') panel.innerHTML = renderSynthesis();
+  else panel.innerHTML = renderPower(state.tab);
+
+  // wire sentence clicks
+  panel.querySelectorAll('.sent').forEach(el=>{
+    el.addEventListener('click', (e)=>{
+      if(e.target.closest('.gloss')) return;
+      toggleSentence(el.dataset.key);
+    });
+    el.addEventListener('keydown', (e)=>{
+      if((e.key==='Enter'||e.key===' ') && !e.target.closest('.gloss')){
+        e.preventDefault(); toggleSentence(el.dataset.key);
+      }
+    });
+  });
+
+  // wire glossary terms
+  panel.querySelectorAll('.gloss').forEach(el=>{
+    el.addEventListener('click', (e)=>{ e.stopPropagation(); showGlossary(el); });
+    el.addEventListener('keydown', (e)=>{
+      if(e.key==='Enter'||e.key===' '){ e.preventDefault(); e.stopPropagation(); showGlossary(el); }
+    });
+  });
+
+  // wire classify dropdowns
+  panel.querySelectorAll('.classify-select').forEach(el=>{
+    el.addEventListener('click', (e)=>{ e.stopPropagation(); });
+    el.addEventListener('change', (e)=>{
+      e.stopPropagation();
+      const k = el.dataset.key;
+      const val = el.value;
+      if(val) state.classify[k] = val; else delete state.classify[k];
+      saveState();
+      el.className = 'classify-select' + (val ? ' picked-'+val : '');
+    });
+  });
+
+  // wire synthesis textarea
+  const tea = document.getElementById('teaBox');
+  if(tea){
+    tea.addEventListener('input', ()=>{ state.synthesis = tea.value; saveState(); });
+  }
+
+  document.getElementById('enlBtn').classList.toggle('on', state.enl);
+  document.getElementById('enlBtn').setAttribute('aria-pressed', state.enl);
+  document.getElementById('enlLabel').textContent = state.enl ? 'Standard Text' : 'Simplify Text';
+
+  document.getElementById('advBtn').classList.toggle('on', state.advanced);
+  document.getElementById('advBtn').setAttribute('aria-pressed', state.advanced);
+  document.getElementById('advLabel').textContent = state.advanced ? 'Standard Text' : 'Advanced Text';
+}
+
+function toggleSentence(key){
+  state.selected[key] = !state.selected[key];
+  saveState();
+  render();
+}
+function removeEvidence(key){
+  delete state.selected[key];
+  saveState();
+  render();
+}
+function goTab(idx){
+  if(idx<0) idx=0;
+  if(idx>=TABS.length) idx=TABS.length-1;
+  state.tab = TABS[idx].id;
+  saveState();
+  render();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ============ GLOSSARY POPOVER ============ */
+function showGlossary(el){
+  const term = el.dataset.term;
+  const def = GLOSSARY[term];
+  if(!def) return;
+  const pop = document.getElementById('gpop');
+  document.getElementById('gpopTerm').textContent = el.textContent;
+  document.getElementById('gpopDef').textContent = def;
+  const rect = el.getBoundingClientRect();
+  pop.style.left = Math.min(rect.left, window.innerWidth-300) + 'px';
+  pop.style.top = (rect.bottom + 8) + 'px';
+  pop.classList.add('show');
+  setTimeout(()=>{
+    document.addEventListener('click', hideGlossaryOnce, {once:true});
+  },10);
+}
+function hideGlossaryOnce(){ document.getElementById('gpop').classList.remove('show'); }
+
+/* ============ ENL / ADVANCED TOGGLES ============ */
+document.getElementById('enlBtn').addEventListener('click', ()=>{
+  state.enl = !state.enl;
+  if(state.enl) state.advanced = false;
+  saveState();
+  render();
+});
+document.getElementById('advBtn').addEventListener('click', ()=>{
+  state.advanced = !state.advanced;
+  if(state.advanced) state.enl = false;
+  saveState();
+  render();
+});
+
+/* ============ EXPORT ============ */
+function buildExportText(){
+  let out = `EUROPEAN CONTACT WITH NATIVE AMERICANS — Student Export\n${new Date().toLocaleDateString()}\n\n`;
+  out += `SELECTED EVIDENCE\n${'-'.repeat(40)}\n`;
+  const keys = Object.keys(state.selected).filter(k=>state.selected[k]);
+  if(keys.length===0) out += `(none selected)\n`;
+  keys.forEach(k=>{
+    const [power, di, si] = k.split('-');
+    const doc = DOCS[power].docs[+di];
+    const s = doc.sentences[+si];
+    const picked = state.classify[k];
+    out += `\n[${DOCS[power].label} — ${doc.title}]\n${pickText(s)}\n`;
+    out += picked ? `Student classification: ${THEME_LABEL[picked]}\n` : `Student classification: (not classified)\n`;
+  });
+  out += `\n\nSYNTHESIS\n${'-'.repeat(40)}\n${state.synthesis || '(not yet written)'}\n`;
+  return out;
+}
+
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 3200);
+}
+
+function resetSim(){
+  state = { tab:'directions', enl:false, advanced:false, selected:{}, classify:{}, synthesis:'' };
+  localStorage.removeItem(LS_KEY);
+  render();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+document.getElementById('copyBtn').addEventListener('click', async ()=>{
+  try{
+    await navigator.clipboard.writeText(buildExportText());
+    showToast('Copied! Paste into your Google Doc. Starting fresh for the next student.');
+    resetSim();
+  }catch(err){
+    showToast('Copy failed — your work is still saved. Try again.');
+  }
+});
+
+/* PDF export modal */
+const SECTIONS = [
+  {id:'directions', label:'Directions'},
+  {id:'spanish', label:'Spanish Documents'},
+  {id:'french', label:'French Documents'},
+  {id:'dutch', label:'Dutch Documents'},
+  {id:'english', label:'English Documents'},
+  {id:'synthesis', label:'Synthesis'}
+];
+document.getElementById('pdfBtn').addEventListener('click', ()=>{
+  const opts = document.getElementById('modalOpts');
+  opts.innerHTML = SECTIONS.map(s=>`
+    <label class="modal-opt">
+      <input type="checkbox" value="${s.id}" checked/> ${s.label}
+    </label>`).join('');
+  document.getElementById('modalBg').classList.add('show');
+});
+document.getElementById('modalCancel').addEventListener('click', ()=>{
+  document.getElementById('modalBg').classList.remove('show');
+});
+document.getElementById('modalConfirm').addEventListener('click', ()=>{
+  const checked = Array.from(document.querySelectorAll('#modalOpts input:checked')).map(i=>i.value);
+  document.getElementById('modalBg').classList.remove('show');
+  if(checked.length===0){ showToast('Select at least one section.'); return; }
+  printSections(checked);
+});
+function printSections(sections){
+  // Build a temporary printable view, then trigger print
+  const win = window.open('', '_blank');
+  let body = `<html><head><title>European Contact — Export</title>
+    <style>body{font-family:Georgia,serif;padding:30px;color:#111;line-height:1.6}
+    h1{font-size:22px}h2{font-size:17px;margin-top:22px;border-bottom:1px solid #ccc;padding-bottom:4px}
+    .doc-title{font-weight:bold;margin-top:14px}.doc-sub{font-size:12px;color:#555;margin-bottom:6px}
+    p{margin:6px 0}</style></head><body>`;
+  body += `<h1>European Contact with Native Americans</h1><p>${new Date().toLocaleDateString()}</p>`;
+
+  if(sections.includes('directions')){
+    body += `<h2>Directions</h2><p>Trace European contact with Native Americans across the Dutch, English, French, and Spanish. Identify cultural exchange, conflict, and resistance.</p>`;
+  }
+  ['spanish','french','dutch','english'].forEach(key=>{
+    if(!sections.includes(key)) return;
+    const p = DOCS[key];
+    body += `<h2>${p.label}</h2>`;
+    p.docs.forEach((doc,di)=>{
+      body += `<div class="doc-title">${doc.title}</div><div class="doc-sub">${doc.sub}</div>`;
+      doc.sentences.forEach((s,si)=>{
+        const k = selKey(key,di,si);
+        const marker = state.selected[k] ? '★ ' : '';
+        const picked = state.classify[k];
+        const classLine = picked ? ` <em style="color:#555">(classified: ${THEME_LABEL[picked]})</em>` : '';
+        body += `<p>${marker}${pickText(s)}${classLine}</p>`;
+      });
+    });
+  });
+  if(sections.includes('synthesis')){
+    body += `<h2>Synthesis</h2><p>${escapeHtml(state.synthesis).replace(/\n/g,'<br/>') || '(not yet written)'}</p>`;
+  }
+  body += `</body></html>`;
+  win.document.write(body);
+  win.document.close();
+  win.focus();
+  setTimeout(()=>{
+    win.print();
+    showToast('If your download completed, this activity will reset for the next student.');
+    setTimeout(resetSim, 1500);
+  }, 400);
+}
+
+/* ============ INIT ============ */
+loadState();
+render();
+</script>
+</body>
+</html>
