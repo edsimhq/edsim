@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Freedom &harr; Order: Case Studies &middot; EdSim</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Source+Code+Pro:wght@400;500;600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0c0f;--surf:#111418;--surf2:#181c22;--surf3:#1e242d;
+  --border:#252d3a;--border-hi:#3a4558;
+  --text:#d0d7e4;--dim:#6b7890;--faint:#2e3a4e;
+  --red:#c0392b;--red-hi:#e74c3c;--red-glow:rgba(192,57,43,.28);
+  --green:#1a6e45;--green-hi:#27ae60;--green-glow:rgba(27,174,74,.22);
+  --amber:#c8900a;--amber-hi:#f0a500;
+  --blue:#1a4a8a;--blue-hi:#2d6fd4;
+  --purple:#5c2a78;--purple-hi:#8b3fa0;
+  --darkred:#3a0a0a;--darkred-hi:#6b1010;
+  --white:#eef1f6;
+  --fd:'Oswald',sans-serif;--fm:'Source Code Pro',monospace;--fb:'Libre Baskerville',Georgia,serif;
+  --ease:cubic-bezier(.4,0,.2,1);--r:7px;--rs:4px;
+}
+html,body{min-height:100%}
+body{font-family:var(--fb);background:var(--bg);color:var(--text);display:flex;flex-direction:column}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
+  background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.055) 3px,rgba(0,0,0,.055) 4px)}
+
+/* HEADER */
+.hdr{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  padding:0 22px;height:50px;border-bottom:1px solid var(--border);
+  background:rgba(10,12,15,.93);backdrop-filter:blur(10px);flex-shrink:0}
+.hdr-l{display:flex;align-items:center;gap:11px}
+.logo{font-family:var(--fd);font-size:16px;font-weight:600;color:var(--dim);letter-spacing:.1em}
+.hdiv{width:1px;height:15px;background:var(--border)}
+.unit{font-family:var(--fm);font-size:11px;color:var(--amber-hi);letter-spacing:.14em;text-transform:uppercase}
+.hdr-r{display:flex;align-items:center;gap:8px}
+.hdr-btn{font-family:var(--fm);font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  padding:4px 11px;border-radius:var(--rs);cursor:pointer;min-height:30px;
+  background:transparent;border:1px solid var(--border);color:var(--dim);transition:all .15s}
+.hdr-btn:hover{border-color:var(--border-hi);color:var(--white)}
+.hdr-btn.danger:hover{border-color:var(--red-hi);color:var(--red-hi)}
+
+/* MAIN */
+.main{position:relative;z-index:5;flex:1;display:flex;flex-direction:column;align-items:center;padding:0 16px 100px;width:100%}
+.wrap{width:100%;max-width:880px;margin:0 auto}
+
+/* TABS */
+.tabbar{display:flex;gap:4px;margin:20px 0 18px;border-bottom:1px solid var(--border);overflow-x:auto}
+.tab-btn{font-family:var(--fm);font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  padding:11px 16px;background:transparent;border:none;border-bottom:2px solid transparent;color:var(--dim);
+  cursor:pointer;white-space:nowrap;transition:all .15s;min-height:44px;display:flex;align-items:center;gap:6px}
+.tab-btn:hover{color:var(--text)}
+.tab-btn.active{color:var(--amber-hi);border-bottom-color:var(--amber-hi)}
+
+.panel{display:none;animation:fadeUp .35s ease both}
+.panel.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* DIRECTIONS */
+.dir-title{font-family:var(--fd);font-size:32px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;color:var(--white);margin-bottom:4px}
+.dir-sub{font-family:var(--fd);font-size:15px;font-weight:300;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin-bottom:22px}
+.dir-card{background:var(--surf);border:1px solid var(--border);border-radius:var(--r);padding:18px 20px;margin-bottom:14px}
+.dir-card h3{font-family:var(--fd);font-size:15px;letter-spacing:.05em;color:var(--amber-hi);margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.dir-card p{font-size:14px;line-height:1.65;color:var(--text)}
+.dir-time{font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.06em;text-transform:uppercase;margin-top:6px}
+.dir-steps{list-style:none;margin-top:10px}
+.dir-steps li{font-size:13.5px;line-height:1.6;color:var(--text);padding:6px 0 6px 26px;position:relative;border-top:1px solid var(--border)}
+.dir-steps li:first-child{border-top:none}
+.dir-steps li::before{content:attr(data-n);position:absolute;left:0;top:6px;font-family:var(--fm);font-size:11px;font-weight:700;color:var(--amber-hi)}
+.dir-assign{background:rgba(45,111,212,.1);border:1px solid rgba(45,111,212,.3);border-radius:var(--r);padding:14px 18px;font-size:13px;color:var(--text);line-height:1.6;margin-top:6px}
+.dir-assign b{color:var(--blue-hi)}
+.dir-noparam{background:rgba(240,165,0,.1);border:1px solid rgba(240,165,0,.3);border-radius:var(--r);padding:14px 18px;font-size:13px;color:var(--text);line-height:1.6;margin-top:14px}
+.dir-noparam b{color:var(--amber-hi)}
+.picker-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.picker-btn{font-family:var(--fm);font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;
+  padding:8px 14px;border-radius:var(--rs);cursor:pointer;min-height:36px;
+  background:var(--surf2);border:1px solid var(--border);color:var(--text);transition:all .15s}
+.picker-btn:hover{border-color:var(--border-hi)}
+.picker-btn.active{border-color:var(--amber-hi);color:var(--amber-hi);background:rgba(240,165,0,.1)}
+
+/* CASE STUDY */
+.case-head{margin-bottom:16px}
+.case-country{font-family:var(--fd);font-size:30px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;color:var(--white)}
+.case-sub{font-family:var(--fb);font-style:italic;font-size:15px;color:var(--amber-hi);margin-top:2px}
+
+.evidence-card{background:var(--surf);border:1px solid var(--border);border-radius:var(--r);padding:18px 20px;margin-bottom:20px}
+.evidence-label{font-family:var(--fm);font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin-bottom:10px}
+.evidence-text{font-size:15px;line-height:1.85}
+.ev-sent{cursor:pointer;transition:background .15s,color .15s;border-radius:3px;padding:1px 2px}
+.ev-sent:hover{background:rgba(240,165,0,.12)}
+.ev-sent.selected{background:rgba(240,165,0,.22);color:var(--white);box-shadow:0 0 0 1px rgba(240,165,0,.4)}
+.evidence-hint{font-family:var(--fm);font-size:10.5px;color:var(--faint);letter-spacing:.03em;margin-top:12px}
+
+.q-block{background:var(--surf);border:1px solid var(--border);border-radius:var(--r);padding:16px 18px;margin-bottom:12px}
+.q-num{font-family:var(--fm);font-size:10px;font-weight:700;color:var(--amber-hi);letter-spacing:.08em;margin-bottom:4px}
+.q-text{font-size:14.5px;line-height:1.5;color:var(--white);margin-bottom:10px}
+.q-ta{width:100%;min-height:64px;font-family:var(--fb);font-size:14px;line-height:1.6;background:var(--surf2);color:var(--white);
+  border:1px solid var(--border);border-radius:var(--rs);padding:10px 12px;resize:vertical}
+.q-ta:focus{outline:none;border-color:var(--amber-hi)}
+.q-strongest{display:flex;align-items:center;gap:8px;margin-top:8px}
+.q-strongest input{width:16px;height:16px;accent-color:var(--amber-hi);cursor:pointer}
+.q-strongest label{font-family:var(--fm);font-size:10px;letter-spacing:.04em;text-transform:uppercase;color:var(--dim);cursor:pointer}
+
+/* PLACEMENT */
+.spectrum-strip{display:flex;justify-content:space-between;gap:4px;margin:18px 0}
+.zone-box{flex:1;text-align:center;padding:12px 4px;border-radius:var(--rs);border:2px solid var(--border);cursor:pointer;transition:all .18s var(--ease);min-height:64px;display:flex;flex-direction:column;justify-content:center;gap:4px}
+.zone-box:hover{border-color:var(--border-hi)}
+.zone-box.active{transform:translateY(-2px)}
+.zone-box .zn{font-family:var(--fm);font-size:9.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;line-height:1.25}
+.zone-box[data-z="0"].active{border-color:var(--red-hi);background:var(--red-glow)}
+.zone-box[data-z="1"].active{border-color:var(--amber-hi);background:rgba(200,144,10,.2)}
+.zone-box[data-z="2"].active{border-color:var(--blue-hi);background:rgba(45,111,212,.2)}
+.zone-box[data-z="3"].active{border-color:var(--purple-hi);background:rgba(139,63,160,.2)}
+.zone-box[data-z="4"].active{border-color:var(--darkred-hi);background:rgba(107,16,16,.28)}
+.no-wrong-note{font-family:var(--fm);font-size:10.5px;color:var(--dim);letter-spacing:.03em;text-align:center;margin:10px 0 4px}
+.justify-card{background:var(--surf);border:1px solid var(--border);border-radius:var(--r);padding:18px 20px;margin-top:16px}
+.justify-label{font-family:var(--fm);font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin-bottom:8px}
+.justify-ta{width:100%;min-height:90px;font-family:var(--fb);font-size:14px;line-height:1.6;background:var(--surf2);color:var(--white);
+  border:1px solid var(--border);border-radius:var(--rs);padding:11px 13px;resize:vertical}
+.justify-ta:focus{outline:none;border-color:var(--amber-hi)}
+
+/* REPORT */
+.report-card{background:var(--surf);border:1px solid var(--border);border-radius:var(--r);padding:20px 22px;margin-bottom:16px}
+.report-title{font-family:var(--fd);font-size:16px;letter-spacing:.05em;color:var(--amber-hi);margin-bottom:12px;text-transform:uppercase}
+.report-line{display:flex;gap:10px;padding:8px 0;border-top:1px solid var(--border);font-size:14px}
+.report-line:first-child{border-top:none}
+.report-line .rl-k{font-family:var(--fm);font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);min-width:120px;flex-shrink:0}
+.report-line .rl-v{color:var(--white);line-height:1.5}
+.report-empty{color:var(--faint);font-style:italic}
+.report-note{font-family:var(--fm);font-size:11px;color:var(--dim);letter-spacing:.03em;line-height:1.6;margin-top:4px}
+
+/* NAV */
+.panel-nav{display:flex;justify-content:space-between;margin-top:24px;gap:10px}
+.nav-btn{font-family:var(--fm);font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  padding:10px 20px;border-radius:var(--rs);cursor:pointer;min-height:44px;
+  background:var(--surf2);border:1px solid var(--border);color:var(--text);transition:all .15s}
+.nav-btn:hover{border-color:var(--border-hi)}
+.nav-btn.primary{background:rgba(240,165,0,.14);border-color:var(--amber-hi);color:var(--amber-hi)}
+.nav-btn:disabled{opacity:.35;cursor:not-allowed}
+.nav-btn.ghost{visibility:hidden}
+
+/* MODALS */
+.modal-overlay{position:fixed;inset:0;background:rgba(5,6,8,.72);backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;z-index:200;padding:20px}
+.modal-overlay.open{display:flex}
+.modal-box{background:var(--surf);border:1px solid var(--border-hi);border-radius:var(--r);padding:24px;max-width:440px;width:100%;max-height:86vh;overflow-y:auto}
+.modal-title{font-family:var(--fd);font-size:19px;font-weight:600;color:var(--white);text-transform:uppercase;letter-spacing:.03em;margin-bottom:14px}
+.modal-opt{display:flex;align-items:center;gap:10px;padding:9px 0;border-top:1px solid var(--border)}
+.modal-opt:first-of-type{border-top:none}
+.modal-opt input{width:17px;height:17px;accent-color:var(--amber-hi);cursor:pointer}
+.modal-opt label{font-size:13.5px;color:var(--text);cursor:pointer}
+.modal-actions{display:flex;gap:10px;margin-top:20px}
+.modal-actions .nav-btn{flex:1}
+
+/* PRINT */
+#printDoc{display:none}
+@media print{
+  body *{visibility:hidden}
+  #printDoc,#printDoc *{visibility:visible}
+  #printDoc{display:block;position:absolute;top:0;left:0;width:100%;color:#000;background:#fff;overflow:visible}
+  .pd-header{display:flex;justify-content:space-between;border-bottom:2px solid #000;padding-bottom:10px;margin-bottom:16px}
+  .pd-logo{font-family:Georgia,serif;font-weight:700;font-size:18px}
+  .pd-unit{font-size:12px;color:#444}
+  .pd-meta{font-size:11px;color:#444}
+  .pd-section{margin-bottom:16px;overflow:visible}
+  .pd-section-title{font-weight:700;font-size:13px;text-transform:uppercase;border-bottom:1px solid #999;padding-bottom:3px;margin-bottom:6px}
+  .pd-text{font-size:12.5px;line-height:1.55;white-space:pre-wrap;overflow:visible}
+}
+
+@media (max-width:600px){
+  .spectrum-strip{flex-wrap:wrap}
+  .zone-box{min-width:30%}
+  .report-line{flex-direction:column;gap:2px}
+}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-l">
+    <span class="logo">EDSIM</span>
+    <span class="hdiv"></span>
+    <span class="unit">Freedom &harr; Order &middot; Case Studies</span>
+  </div>
+  <div class="hdr-r">
+    <button class="hdr-btn" onclick="openExportModal()">Export</button>
+    <button class="hdr-btn danger" onclick="confirmReset()">Reset</button>
+  </div>
+</div>
+
+<div class="main">
+  <div class="wrap">
+    <div class="tabbar" id="tabbar">
+      <button class="tab-btn active" data-tab="directions" onclick="goTab('directions')">Directions</button>
+      <button class="tab-btn" data-tab="case" onclick="goTab('case')">Case Study</button>
+      <button class="tab-btn" data-tab="placement" onclick="goTab('placement')">Placement</button>
+      <button class="tab-btn" data-tab="report" onclick="goTab('report')">Class Report</button>
+    </div>
+
+    <!-- DIRECTIONS -->
+    <div class="panel active" id="panel-directions">
+      <div class="dir-title">You Are a Citizen Of&hellip;</div>
+      <div class="dir-sub">Freedom &harr; Order Continuum &middot; Case Studies</div>
+
+      <div class="dir-card">
+        <h3>What you're doing</h3>
+        <p>Your group has been assigned one real society. You'll read a short description, select the sentences that answer five guiding questions, then decide where your society falls on the Freedom &harr; Order spectrum &mdash; and defend it with evidence.</p>
+        <div class="dir-time">About 20&ndash;25 minutes</div>
+      </div>
+
+      <div class="dir-card">
+        <h3>The four tabs</h3>
+        <ul class="dir-steps">
+          <li data-n="1">Case Study &mdash; read the description, select evidence, answer 5 guiding questions</li>
+          <li data-n="2">Placement &mdash; place your society on the 5-zone spectrum and justify it</li>
+          <li data-n="3">Class Report &mdash; your one-minute report auto-builds from your best evidence</li>
+          <li data-n="4">Export &mdash; save or copy your work when you're done</li>
+        </ul>
+      </div>
+
+      <div class="dir-card">
+        <h3>End goal</h3>
+        <p>A one-minute class report: your society's name, its placement, and your single strongest piece of evidence. There's no right or wrong placement &mdash; this is a defensible judgment call. What matters is that your evidence actually supports where you put it.</p>
+      </div>
+
+      <div class="dir-assign" id="assignNote"></div>
+      <div class="dir-noparam" id="noParamNote" style="display:none">
+        <b>No case study assigned.</b> This activity is normally opened with a link like <code>?country=somalia</code>. For testing or preview, pick one below:
+        <div class="picker-row" id="pickerRow"></div>
+      </div>
+
+      <div class="panel-nav">
+        <button class="nav-btn ghost">Previous</button>
+        <button class="nav-btn primary" onclick="goTab('case')">Next: Case Study</button>
+      </div>
+    </div>
+
+    <!-- CASE STUDY -->
+    <div class="panel" id="panel-case">
+      <div class="case-head">
+        <div class="case-country" id="caseCountry"></div>
+        <div class="case-sub" id="caseSub"></div>
+      </div>
+
+      <div class="evidence-card">
+        <div class="evidence-label">Description &mdash; click sentences to select them as evidence</div>
+        <div class="evidence-text" id="evidenceText"></div>
+        <div class="evidence-hint">Selected sentences are available to reference in your answers below.</div>
+      </div>
+
+      <div id="questionsWrap"></div>
+
+      <div class="panel-nav">
+        <button class="nav-btn" onclick="goTab('directions')">Previous</button>
+        <button class="nav-btn primary" onclick="goTab('placement')">Next: Placement</button>
+      </div>
+    </div>
+
+    <!-- PLACEMENT -->
+    <div class="panel" id="panel-placement">
+      <div class="dir-title" style="font-size:24px">Place Your Society</div>
+      <div class="dir-sub">Based on the evidence you selected</div>
+
+      <div class="spectrum-strip" id="spectrumStrip"></div>
+      <div class="no-wrong-note">There is no right or wrong answer here &mdash; defend your placement with evidence.</div>
+
+      <div class="justify-card">
+        <div class="justify-label">Why did you place it there?</div>
+        <textarea class="justify-ta" id="justifyTa" placeholder="Reference specific evidence from the case study..." oninput="onJustifyInput()"></textarea>
+      </div>
+
+      <div class="panel-nav">
+        <button class="nav-btn" onclick="goTab('case')">Previous</button>
+        <button class="nav-btn primary" onclick="goTab('report')">Next: Class Report</button>
+      </div>
+    </div>
+
+    <!-- REPORT -->
+    <div class="panel" id="panel-report">
+      <div class="dir-title" style="font-size:24px">One-Minute Class Report</div>
+      <div class="dir-sub">This is what you'll say when your group reports out</div>
+
+      <div class="report-card">
+        <div class="report-title">Your Report</div>
+        <div class="report-line"><div class="rl-k">Society</div><div class="rl-v" id="rptCountry"></div></div>
+        <div class="report-line"><div class="rl-k">Placement</div><div class="rl-v" id="rptZone"></div></div>
+        <div class="report-line"><div class="rl-k">Best Evidence</div><div class="rl-v" id="rptEvidence"></div></div>
+      </div>
+      <div class="report-note" id="rptHint"></div>
+
+      <div class="panel-nav">
+        <button class="nav-btn" onclick="goTab('placement')">Previous</button>
+        <button class="nav-btn primary" onclick="openExportModal()">Export My Work</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- EXPORT MODAL -->
+<div class="modal-overlay" id="exportModal">
+  <div class="modal-box">
+    <div class="modal-title">Export Your Work</div>
+    <div class="modal-opt"><input type="checkbox" id="ex-case" checked><label for="ex-case">Case study answers (5 questions)</label></div>
+    <div class="modal-opt"><input type="checkbox" id="ex-placement" checked><label for="ex-placement">Placement &amp; justification</label></div>
+    <div class="modal-opt"><input type="checkbox" id="ex-report" checked><label for="ex-report">Class report summary</label></div>
+    <div class="modal-actions">
+      <button class="nav-btn" onclick="closeExportModal()">Cancel</button>
+      <button class="nav-btn primary" onclick="doExport('pdf')">Save as PDF</button>
+    </div>
+    <div class="modal-actions">
+      <button class="nav-btn primary" style="flex:1" onclick="doExport('copy')">Copy Text</button>
+    </div>
+  </div>
+</div>
+
+<!-- RESET MODAL -->
+<div class="modal-overlay" id="resetModal">
+  <div class="modal-box">
+    <div class="modal-title">Reset This Activity?</div>
+    <p style="font-size:13.5px;color:var(--text);line-height:1.6">This clears all your answers and starts over. This cannot be undone &mdash; make sure you've exported your work first if you need it.</p>
+    <div class="modal-actions">
+      <button class="nav-btn" onclick="document.getElementById('resetModal').classList.remove('open')">Cancel</button>
+      <button class="nav-btn primary" onclick="doReset()">Reset</button>
+    </div>
+  </div>
+</div>
+
+<div id="printDoc"></div>
+
+<script>
+/* ═══════════ DATA ═══════════ */
+const ZONES = [
+  {id:0,short:'Anarchy',color:'var(--red-hi)'},
+  {id:1,short:'Minimal Gov\u2019t',color:'var(--amber-hi)'},
+  {id:2,short:'Regulated Democracy',color:'var(--blue-hi)'},
+  {id:3,short:'Authoritarianism',color:'var(--purple-hi)'},
+  {id:4,short:'Totalitarianism',color:'var(--darkred-hi)'}
+];
+
+const GUIDING_QUESTIONS = [
+  'What can people do without asking the government for permission?',
+  'What happens if someone criticizes government leaders?',
+  'Who makes the rules, and how are they chosen?',
+  'How much freedom do people have to live their lives as they choose?',
+  'How much safety and order does the government provide?'
+];
+
+const CASE_DATA = {
+  somalia: {
+    name: 'Somalia (after 1991)',
+    sub: 'Near-Statelessness',
+    sentences: [
+      "In 1991, Somalia's central government collapsed.",
+      "For years afterward, there was no single national authority in control of the whole country.",
+      "In many areas, local clans, militias, and community elders stepped in to keep order, resolve disputes, and provide basic protection, since there was no national police force or court system to rely on.",
+      "Some regions were more stable than others, and over time parts of the country rebuilt local government structures."
+    ]
+  },
+  switzerland: {
+    name: 'Switzerland',
+    sub: 'Minimal, Decentralized Government',
+    sentences: [
+      "Switzerland is a democracy, but power is spread out across small local governments (cantons) rather than concentrated in a strong national government.",
+      "Citizens vote directly on many laws through public referendums, sometimes several times a year.",
+      "Government involvement in daily life and business is comparatively light, and individual and local decision-making is highly valued."
+    ]
+  },
+  sweden: {
+    name: 'Sweden',
+    sub: 'Regulated Democracy',
+    sentences: [
+      "Sweden is a democracy where citizens elect their leaders and enjoy strong protections for free speech, a free press, and fair trials.",
+      "At the same time, the government plays an active role in citizens' lives: it funds universal healthcare, free higher education, and generous family leave programs through high taxes.",
+      "Businesses operate freely but follow significant labor and environmental regulations."
+    ]
+  },
+  singapore: {
+    name: 'Singapore',
+    sub: 'Authoritarian-Leaning',
+    sentences: [
+      "Singapore holds elections, and its economy is famously open and business-friendly.",
+      "However, one political party has held power continuously since 1965, and laws restrict public protest, limit criticism of the government and judiciary, and give the state significant control over media.",
+      "Singapore is also known for extremely low crime and a very high standard of living."
+    ]
+  },
+  nkorea: {
+    name: 'North Korea',
+    sub: 'Totalitarianism',
+    sentences: [
+      "North Korea is a one-party state where the government controls nearly every part of public and private life.",
+      "The state owns and directs the economy, controls all media and communication with the outside world, and requires strict loyalty to its leadership.",
+      "Travel outside the country is tightly restricted, and public criticism of the government is treated as a serious crime."
+    ]
+  }
+};
+
+/* ═══════════ STATE ═══════════ */
+let LS_KEY = 'edsim_freedomorder_cases_v1';
+let currentCountry = null;
+let state = {
+  selectedEvidence: [],
+  answers: ['', '', '', '', ''],
+  strongestQ: null,
+  zone: null,
+  justify: ''
+};
+
+function getParam(name){
+  const p = new URLSearchParams(window.location.search);
+  return p.get(name);
+}
+
+function loadState(){
+  try{
+    const raw = localStorage.getItem(LS_KEY);
+    if(raw){
+      const parsed = JSON.parse(raw);
+      state = Object.assign(state, parsed);
+    }
+  }catch(e){}
+}
+function saveState(){
+  try{ localStorage.setItem(LS_KEY, JSON.stringify(state)); }catch(e){}
+}
+
+/* ═══════════ TABS ═══════════ */
+function goTab(name){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('panel-'+name).classList.add('active');
+  document.querySelector('.tab-btn[data-tab="'+name+'"]').classList.add('active');
+  if(name==='report') renderReport();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ═══════════ CASE SELECTION / SETUP ═══════════ */
+function setupCase(){
+  const param = getParam('country');
+  const assignNote = document.getElementById('assignNote');
+  const noParamNote = document.getElementById('noParamNote');
+
+  if(param && CASE_DATA[param]){
+    currentCountry = param;
+    noParamNote.style.display = 'none';
+    assignNote.style.display = 'block';
+    assignNote.innerHTML = '<b>Your group\u2019s assigned society:</b> ' + CASE_DATA[param].name;
+  } else {
+    assignNote.style.display = 'none';
+    noParamNote.style.display = 'block';
+    const pickerRow = document.getElementById('pickerRow');
+    pickerRow.innerHTML = '';
+    Object.keys(CASE_DATA).forEach(key=>{
+      const btn = document.createElement('button');
+      btn.className = 'picker-btn';
+      btn.textContent = CASE_DATA[key].name;
+      btn.onclick = ()=>{ currentCountry = key; renderCase(); renderPlacement();
+        document.querySelectorAll('.picker-btn').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+      };
+      pickerRow.appendChild(btn);
+    });
+    currentCountry = currentCountry || Object.keys(CASE_DATA)[0];
+    const firstBtn = pickerRow.querySelector('.picker-btn');
+    if(firstBtn) firstBtn.classList.add('active');
+  }
+  renderCase();
+  renderPlacement();
+}
+
+/* ═══════════ CASE STUDY TAB ═══════════ */
+function renderCase(){
+  const data = CASE_DATA[currentCountry];
+  if(!data) return;
+  document.getElementById('caseCountry').textContent = 'You Are a Citizen of ' + data.name;
+  document.getElementById('caseSub').textContent = data.sub;
+
+  const evWrap = document.getElementById('evidenceText');
+  evWrap.innerHTML = '';
+  data.sentences.forEach((sent, i)=>{
+    const span = document.createElement('span');
+    span.className = 'ev-sent' + (state.selectedEvidence.includes(i) ? ' selected' : '');
+    span.textContent = sent + ' ';
+    span.tabIndex = 0;
+    span.setAttribute('role','button');
+    span.setAttribute('aria-label', 'Toggle evidence selection: ' + sent);
+    span.onclick = ()=> toggleEvidence(i);
+    span.onkeydown = (e)=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); toggleEvidence(i); } };
+    evWrap.appendChild(span);
+  });
+
+  const qWrap = document.getElementById('questionsWrap');
+  qWrap.innerHTML = '';
+  GUIDING_QUESTIONS.forEach((q,i)=>{
+    const block = document.createElement('div');
+    block.className = 'q-block';
+    block.innerHTML =
+      '<div class="q-num">Question ' + (i+1) + ' of 5</div>' +
+      '<div class="q-text">' + q + '</div>' +
+      '<textarea class="q-ta" data-qi="' + i + '" placeholder="Answer using the evidence you selected above...">' + (state.answers[i]||'') + '</textarea>' +
+      '<div class="q-strongest">' +
+        '<input type="radio" name="strongestQ" id="sq' + i + '" value="' + i + '"' + (state.strongestQ===i?' checked':'') + '>' +
+        '<label for="sq' + i + '">This is my strongest evidence for the class report</label>' +
+      '</div>';
+    qWrap.appendChild(block);
+  });
+  qWrap.querySelectorAll('.q-ta').forEach(ta=>{
+    ta.addEventListener('input', (e)=>{
+      const qi = parseInt(e.target.dataset.qi,10);
+      state.answers[qi] = e.target.value;
+      saveState();
+    });
+  });
+  qWrap.querySelectorAll('input[name="strongestQ"]').forEach(r=>{
+    r.addEventListener('change', (e)=>{
+      state.strongestQ = parseInt(e.target.value,10);
+      saveState();
+    });
+  });
+}
+
+function toggleEvidence(i){
+  const idx = state.selectedEvidence.indexOf(i);
+  if(idx>-1) state.selectedEvidence.splice(idx,1);
+  else state.selectedEvidence.push(i);
+  saveState();
+  renderCase();
+}
+
+/* ═══════════ PLACEMENT TAB ═══════════ */
+function renderPlacement(){
+  const strip = document.getElementById('spectrumStrip');
+  strip.innerHTML = '';
+  ZONES.forEach(z=>{
+    const box = document.createElement('button');
+    box.className = 'zone-box' + (state.zone===z.id ? ' active' : '');
+    box.dataset.z = z.id;
+    box.innerHTML = '<span class="zn">' + z.short + '</span>';
+    box.onclick = ()=>{ state.zone = z.id; saveState(); renderPlacement(); };
+    strip.appendChild(box);
+  });
+  document.getElementById('justifyTa').value = state.justify || '';
+}
+function onJustifyInput(){
+  state.justify = document.getElementById('justifyTa').value;
+  saveState();
+}
+
+/* ═══════════ REPORT TAB ═══════════ */
+function renderReport(){
+  const data = CASE_DATA[currentCountry];
+  document.getElementById('rptCountry').textContent = data ? data.name : '\u2014';
+
+  const zoneEl = document.getElementById('rptZone');
+  if(state.zone!==null && state.zone!==undefined){
+    zoneEl.textContent = ZONES[state.zone].short;
+  } else {
+    zoneEl.innerHTML = '<span class="report-empty">Not placed yet \u2014 visit the Placement tab</span>';
+  }
+
+  const evEl = document.getElementById('rptEvidence');
+  const hint = document.getElementById('rptHint');
+  if(state.strongestQ!==null && state.strongestQ!==undefined && state.answers[state.strongestQ]){
+    evEl.textContent = state.answers[state.strongestQ];
+    hint.textContent = 'From: "' + GUIDING_QUESTIONS[state.strongestQ] + '"';
+  } else {
+    evEl.innerHTML = '<span class="report-empty">No strongest evidence selected yet \u2014 mark one answer on the Case Study tab</span>';
+    hint.textContent = '';
+  }
+}
+
+/* ═══════════ EXPORT ═══════════ */
+function openExportModal(){ document.getElementById('exportModal').classList.add('open'); }
+function closeExportModal(){ document.getElementById('exportModal').classList.remove('open'); }
+
+function buildExportSections(){
+  const data = CASE_DATA[currentCountry];
+  const sections = [];
+  if(document.getElementById('ex-case').checked){
+    let lines = [];
+    GUIDING_QUESTIONS.forEach((q,i)=>{
+      lines.push((i+1) + '. ' + q + '\n' + (state.answers[i] || '(no response entered)'));
+    });
+    sections.push({title:'Case Study: ' + (data?data.name:''), text: lines.join('\n\n')});
+  }
+  if(document.getElementById('ex-placement').checked){
+    const zoneText = (state.zone!==null && state.zone!==undefined) ? ZONES[state.zone].short : '(not placed)';
+    sections.push({title:'Placement', text: 'Placement: ' + zoneText + '\n\nJustification:\n' + (state.justify || '(no response entered)')});
+  }
+  if(document.getElementById('ex-report').checked){
+    const zoneText = (state.zone!==null && state.zone!==undefined) ? ZONES[state.zone].short : '(not placed)';
+    const evText = (state.strongestQ!==null && state.strongestQ!==undefined) ? (state.answers[state.strongestQ] || '(no response)') : '(none selected)';
+    sections.push({title:'One-Minute Class Report', text:
+      'Society: ' + (data?data.name:'') + '\nPlacement: ' + zoneText + '\nBest Evidence: ' + evText});
+  }
+  return sections;
+}
+
+function doExport(mode){
+  const sections = buildExportSections();
+  if(mode==='copy'){
+    let out = 'Freedom \u2194 Order Continuum: Case Studies \u2014 EdSim\n\n';
+    sections.forEach(s=>{ out += s.title.toUpperCase() + '\n' + s.text + '\n\n'; });
+    navigator.clipboard.writeText(out).then(()=>{
+      closeExportModal();
+      afterExportSuccess();
+      alert('Copied! Paste into your Google Doc.');
+    }).catch(()=>{
+      alert('Copy failed \u2014 your work is still saved. Try again.');
+    });
+  } else {
+    let html = '<div class="pd-header"><div><div class="pd-logo">EdSim</div><div class="pd-unit">Freedom \u2194 Order: Case Studies</div></div>' +
+      '<div class="pd-meta">' + new Date().toLocaleDateString() + '</div></div>';
+    sections.forEach(s=>{
+      html += '<div class="pd-section"><div class="pd-section-title">' + s.title + '</div>' +
+        '<div class="pd-text">' + s.text.replace(/</g,'&lt;') + '</div></div>';
+    });
+    document.getElementById('printDoc').innerHTML = html;
+    closeExportModal();
+    setTimeout(()=>{
+      window.print();
+      afterExportSuccess();
+    }, 150);
+  }
+}
+
+function afterExportSuccess(){
+  try{ localStorage.removeItem(LS_KEY); }catch(e){}
+  resetAllState();
+}
+
+/* ═══════════ RESET ═══════════ */
+function confirmReset(){ document.getElementById('resetModal').classList.add('open'); }
+function doReset(){
+  document.getElementById('resetModal').classList.remove('open');
+  try{ localStorage.removeItem(LS_KEY); }catch(e){}
+  resetAllState();
+}
+function resetAllState(){
+  state = { selectedEvidence: [], answers: ['','','','',''], strongestQ: null, zone: null, justify: '' };
+  renderCase();
+  renderPlacement();
+  goTab('directions');
+}
+
+/* ═══════════ INIT ═══════════ */
+function init(){
+  const param = getParam('country');
+  LS_KEY = 'edsim_freedomorder_cases_v1' + (param && CASE_DATA[param] ? '_' + param : '');
+  loadState();
+  if(!state.answers) state.answers = ['','','','',''];
+  if(!state.selectedEvidence) state.selectedEvidence = [];
+  setupCase();
+  goTab('directions');
+}
+init();
+</script>
+</body>
+</html>
