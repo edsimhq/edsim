@@ -1,0 +1,1388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Freedom vs. Security Spectrum · EdSim</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Source+Code+Pro:wght@400;500;600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0c0f;--surf:#111418;--surf2:#181c22;--surf3:#1e242d;
+  --border:#252d3a;--border-hi:#3a4558;
+  --text:#d0d7e4;--dim:#6b7890;--faint:#2e3a4e;
+  --red:#c0392b;--red-hi:#e74c3c;--red-glow:rgba(192,57,43,.28);
+  --green:#1a6e45;--green-hi:#27ae60;--green-glow:rgba(27,174,74,.22);
+  --amber:#c8900a;--amber-hi:#f0a500;
+  --blue:#1a4a8a;--blue-hi:#2d6fd4;
+  --white:#eef1f6;
+  --fd:'Oswald',sans-serif;--fm:'Source Code Pro',monospace;--fb:'Libre Baskerville',Georgia,serif;
+  --ease:cubic-bezier(.4,0,.2,1);--r:7px;--rs:4px;
+}
+html,body{min-height:100%}
+body{font-family:var(--fb);background:var(--bg);color:var(--text);display:flex;flex-direction:column}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
+  background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.055) 3px,rgba(0,0,0,.055) 4px)}
+
+/* HEADER */
+.hdr{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  padding:0 22px;height:50px;border-bottom:1px solid var(--border);
+  background:rgba(10,12,15,.93);backdrop-filter:blur(10px);flex-shrink:0}
+.hdr-l{display:flex;align-items:center;gap:11px}
+.logo{font-family:var(--fd);font-size:16px;font-weight:600;color:var(--dim);letter-spacing:.1em}
+.hdiv{width:1px;height:15px;background:var(--border)}
+.unit{font-family:var(--fm);font-size:11px;color:var(--amber-hi);letter-spacing:.14em;text-transform:uppercase}
+.hdr-r{display:flex;align-items:center;gap:8px}
+.hdr-btn{font-family:var(--fm);font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  padding:4px 11px;border-radius:var(--rs);cursor:pointer;min-height:30px;
+  background:transparent;border:1px solid var(--border);color:var(--dim);transition:all .15s}
+.hdr-btn:hover{border-color:var(--border-hi);color:var(--white)}
+.hdr-btn.danger:hover{border-color:var(--red-hi);color:var(--red-hi)}
+
+/* MAIN */
+.main{position:relative;z-index:5;flex:1;display:flex;flex-direction:column;align-items:center;padding:0 16px 32px;width:100%}
+.wrap{width:100%;max-width:880px;margin:0 auto}
+
+/* TABS */
+.tabbar{display:flex;gap:4px;margin:20px 0 18px;border-bottom:1px solid var(--border);overflow-x:auto}
+.tab-btn{font-family:var(--fm);font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  padding:11px 16px;background:transparent;border:none;border-bottom:2px solid transparent;color:var(--dim);
+  cursor:pointer;white-space:nowrap;transition:all .15s;min-height:44px;display:flex;align-items:center;gap:6px}
+.tab-btn:hover{color:var(--text)}
+.tab-btn.active{color:var(--amber-hi);border-bottom-color:var(--amber-hi)}
+.tab-btn.locked{color:var(--faint);cursor:not-allowed}
+.tab-btn.locked:hover{color:var(--faint)}
+.lock-ic{font-size:10px}
+
+.panel{display:none;animation:fadeUp .35s ease both}
+.panel.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* DIRECTIONS */
+.dir-title{font-family:var(--fd);font-size:34px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;color:var(--white);margin-bottom:4px}
+.dir-sub{font-family:var(--fd);font-size:15px;font-weight:300;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin-bottom:22px}
+.dir-card{background:var(--surf);border:1px solid var(--border);border-radius:var(--r);padding:18px 20px;margin-bottom:14px}
+.dir-card h3{font-family:var(--fd);font-size:15px;letter-spacing:.05em;color:var(--amber-hi);margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.dir-card p{font-size:14px;line-height:1.65;color:var(--text)}
+.dir-time{font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.06em;text-transform:uppercase;margin-top:6px}
+.dir-steps{list-style:none;margin-top:10px}
+.dir-steps li{font-size:13.5px;line-height:1.6;color:var(--text);padding:6px 0 6px 26px;position:relative;border-top:1px solid var(--border)}
+.dir-steps li:first-child{border-top:none}
+.dir-steps li::before{content:attr(data-n);position:absolute;left:0;top:6px;font-family:var(--fm);font-size:11px;font-weight:700;color:var(--amber-hi)}
+.dir-nextday{background:rgba(45,111,212,.1);border:1px solid rgba(45,111,212,.3);border-radius:var(--r);padding:14px 18px;font-size:13px;color:var(--text);line-height:1.6;margin-top:6px}
+.dir-nextday b{color:var(--blue-hi)}
+
+/* EXPLORER */
+.exp-grid{display:grid;grid-template-columns:1fr;gap:20px}
+.stage{background:var(--surf);border:1px solid var(--border);border-radius:var(--r);padding:20px;position:relative;overflow:hidden}
+.zone-label{font-family:var(--fd);font-size:26px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--white);text-align:center;transition:color .25s}
+.zone-sub{font-family:var(--fm);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);text-align:center;margin-bottom:10px}
+.svg-wrap{position:relative;width:100%;max-width:420px;height:220px;margin:0 auto 14px;border-radius:var(--rs);overflow:hidden}
+.svg-wrap svg{position:absolute;inset:0;width:100%;height:100%}
+.zone-layer{opacity:0;transition:opacity .45s ease}
+.zone-layer.active{opacity:1}
+.zone-layer2{opacity:0;transition:opacity .45s ease}
+.zone-layer2.active{opacity:1}
+
+.slider-row{display:flex;align-items:center;gap:12px;margin-top:6px}
+.slider-end{font-family:var(--fm);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);width:64px;text-align:center;line-height:1.3}
+.spectrum-slider{flex:1;-webkit-appearance:none;appearance:none;height:8px;border-radius:4px;outline:none;cursor:pointer;
+  background:linear-gradient(90deg,#c0392b,#c8900a,#2d6fd4,#8b3fa0,#6b1010)}
+.spectrum-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:26px;height:26px;border-radius:50%;
+  background:var(--white);border:3px solid var(--amber-hi);cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.5)}
+.spectrum-slider::-moz-range-thumb{width:26px;height:26px;border-radius:50%;background:var(--white);border:3px solid var(--amber-hi);cursor:pointer}
+
+.zone-ticks{display:flex;justify-content:space-between;margin-top:10px;padding:0 4px}
+.zone-tick{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;background:none;border:none;padding:4px 2px;min-height:44px}
+.zone-tick-dot{width:11px;height:11px;border-radius:50%;background:var(--faint);border:2px solid var(--border);transition:all .2s}
+.zone-tick-label{font-family:var(--fm);font-size:8.5px;letter-spacing:.03em;text-transform:uppercase;color:var(--faint);text-align:center;line-height:1.25;transition:color .2s}
+.zone-tick.complete .zone-tick-dot{background:var(--green-hi);border-color:var(--green-hi)}
+.zone-tick.complete .zone-tick-label{color:var(--green-hi)}
+.zone-tick.partial .zone-tick-dot{background:var(--amber-hi);border-color:var(--amber-hi)}
+.zone-tick.partial .zone-tick-label{color:var(--amber-hi)}
+.zone-tick.current .zone-tick-dot{transform:scale(1.5)}
+.zone-tick.current .zone-tick-label{color:var(--white)}
+
+.progress-note{font-family:var(--fm);font-size:10.5px;color:var(--dim);letter-spacing:.04em;text-align:center;margin-top:12px}
+.progress-note.done{color:var(--green-hi)}
+
+/* CATEGORY PANELS */
+.cat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:18px}
+.cat-card{background:var(--surf2);border:1.5px solid var(--border);border-radius:var(--r);padding:14px 16px;
+  cursor:pointer;transition:all .18s var(--ease);min-height:88px;display:flex;flex-direction:column;justify-content:center}
+.cat-card:hover{border-color:var(--border-hi)}
+.cat-card:focus-visible{outline:2px solid var(--amber-hi);outline-offset:2px}
+.cat-card.revealed{cursor:default;justify-content:flex-start}
+.cat-head{font-family:var(--fm);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--amber-hi);margin-bottom:6px;display:flex;align-items:center;gap:6px;justify-content:space-between}
+.cat-tap-hint{font-family:var(--fm);font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);font-weight:400}
+.cat-text{font-size:13.5px;line-height:1.55;color:var(--text)}
+.cat-placeholder{font-family:var(--fm);font-size:11px;letter-spacing:.05em;color:var(--faint);text-align:center;padding:8px 0}
+
+.reflect-box{margin-top:18px}
+.reflect-label{font-family:var(--fm);font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin-bottom:6px}
+.reflect-ta{width:100%;min-height:80px;font-family:var(--fb);font-size:14px;line-height:1.6;background:var(--surf2);color:var(--white);
+  border:1px solid var(--border);border-radius:var(--rs);padding:11px 13px;resize:vertical}
+.reflect-ta:focus{outline:none;border-color:var(--amber-hi)}
+
+/* TRACK A RIGHT (MODE 2) */
+.right-select-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:10px}
+.right-select-btn{background:var(--surf);border:2px solid var(--border);border-radius:var(--r);padding:16px 10px;
+  cursor:pointer;text-align:center;transition:all .18s var(--ease);display:flex;flex-direction:column;align-items:center;gap:8px;min-height:44px}
+.right-select-btn:hover{border-color:var(--border-hi);transform:translateY(-2px)}
+.right-select-btn.active{border-color:var(--amber-hi);background:rgba(200,144,10,.16);box-shadow:0 0 0 2px var(--amber-hi)}
+.right-select-btn.disabled-other{opacity:.3;pointer-events:none}
+.rs-icon{font-size:22px}
+.rs-label{font-family:var(--fm);font-size:10px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--text);line-height:1.3}
+.right-locked-note{font-family:var(--fm);font-size:11px;color:var(--blue-hi);letter-spacing:.03em;margin-top:10px;text-align:center}
+
+.right-text-big{background:var(--surf2);border:1px solid var(--border);border-radius:var(--r);padding:16px 18px;margin-top:16px;
+  font-size:15px;line-height:1.6;color:var(--white);min-height:70px}
+
+.arc-label{font-family:var(--fm);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin-top:20px;margin-bottom:8px}
+.arc-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.arc-card{background:var(--surf2);border:1.5px solid var(--border);border-radius:var(--rs);padding:9px 8px;transition:all .2s}
+.arc-card.current{border-color:var(--amber-hi);background:rgba(200,144,10,.14)}
+.arc-card-zone{font-family:var(--fm);font-size:8px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--dim);margin-bottom:4px}
+.arc-card.current .arc-card-zone{color:var(--amber-hi)}
+.arc-card-text{font-size:10.5px;line-height:1.4;color:var(--text)}
+
+/* CHECKPOINT */
+.cp-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-wrap:wrap;gap:8px}
+.cp-title{font-family:var(--fd);font-size:22px;font-weight:700;color:var(--white);text-transform:uppercase;letter-spacing:.03em}
+.cp-attempt{font-family:var(--fm);font-size:10.5px;color:var(--dim);letter-spacing:.06em;text-transform:uppercase}
+.cp-instr{font-size:13.5px;color:var(--dim);line-height:1.6;margin-bottom:16px}
+
+.cp-bank{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;min-height:52px;padding:10px;background:var(--surf2);border:1px dashed var(--border);border-radius:var(--r)}
+.cp-card{background:var(--surf3);border:2px solid var(--border-hi);border-radius:var(--rs);padding:9px 12px;font-size:12.5px;line-height:1.4;
+  color:var(--text);cursor:grab;max-width:230px;transition:all .15s;user-select:none}
+.cp-card:hover{border-color:var(--amber-hi)}
+.cp-card.selected{border-color:var(--amber-hi);background:rgba(200,144,10,.18);box-shadow:0 0 0 2px var(--amber-hi)}
+.cp-card.placed{display:none}
+.cp-card[draggable="true"]{cursor:grab}
+
+.cp-buckets{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.cp-bucket{background:var(--surf);border:2px dashed var(--border);border-radius:var(--r);padding:8px 6px;min-height:120px;display:flex;flex-direction:column;gap:6px;transition:all .15s}
+.cp-bucket.dragover{border-color:var(--amber-hi);background:rgba(200,144,10,.08)}
+.cp-bucket-label{font-family:var(--fm);font-size:9px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--dim);text-align:center;line-height:1.3;padding-bottom:4px;border-bottom:1px solid var(--border)}
+.cp-bucket-card{background:var(--surf3);border:1px solid var(--border-hi);border-radius:4px;padding:6px 7px;font-size:10.5px;line-height:1.3;color:var(--text)}
+.cp-bucket-card.correct{border-color:var(--green-hi);background:rgba(39,174,96,.15)}
+.cp-bucket-card.incorrect{border-color:var(--red-hi);background:rgba(231,76,60,.15)}
+.cp-bucket-card .fix-note{font-family:var(--fm);font-size:8.5px;color:var(--red-hi);margin-top:3px}
+
+.cp-actions{display:flex;justify-content:center;gap:10px;margin-top:20px}
+.btn{font-family:var(--fm);font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  padding:11px 22px;border-radius:var(--rs);cursor:pointer;min-height:44px;border:1.5px solid var(--border-hi);
+  background:var(--surf2);color:var(--text);transition:all .15s}
+.btn:hover{border-color:var(--amber-hi);color:var(--amber-hi)}
+.btn:disabled{opacity:.35;cursor:not-allowed}
+.btn.primary{background:rgba(200,144,10,.18);border-color:var(--amber-hi);color:var(--amber-hi)}
+.btn.primary:hover{background:rgba(200,144,10,.3)}
+
+.cp-result{text-align:center;margin-top:18px;padding:16px;border-radius:var(--r);border:1px solid var(--border);background:var(--surf2)}
+.cp-score{font-family:var(--fd);font-size:30px;font-weight:700;color:var(--white)}
+.cp-score.pass{color:var(--green-hi)}
+.cp-score.retry{color:var(--amber-hi)}
+.cp-result-msg{font-size:13px;color:var(--dim);margin-top:4px;line-height:1.5}
+
+/* NAV */
+.navrow{display:flex;justify-content:space-between;align-items:center;margin-top:28px;padding-top:16px;border-top:1px solid var(--border)}
+.nav-btn{font-family:var(--fm);font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  padding:11px 18px;border-radius:var(--rs);cursor:pointer;min-height:44px;border:1px solid var(--border-hi);
+  background:var(--surf2);color:var(--text);transition:all .15s}
+.nav-btn:hover{border-color:var(--amber-hi);color:var(--amber-hi)}
+.nav-btn:disabled{opacity:.3;cursor:not-allowed}
+.nav-spacer{flex:1}
+
+/* EXPORT BAR */
+.exportbar{display:flex;gap:8px;justify-content:center;margin-top:26px;flex-wrap:wrap}
+.e-btn{font-family:var(--fm);font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  padding:10px 18px;border-radius:var(--rs);cursor:pointer;min-height:44px;border:1.5px solid var(--border-hi);
+  background:var(--surf2);color:var(--text);transition:all .15s}
+.e-btn:hover{border-color:var(--amber-hi);color:var(--amber-hi)}
+.e-btn-pdf{background:rgba(200,144,10,.15);color:var(--amber-hi);border-color:var(--amber-hi)}
+.e-btn-pdf:hover{background:rgba(200,144,10,.28)}
+
+/* MODALS */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(5,8,16,.8);z-index:100;
+  align-items:center;justify-content:center;backdrop-filter:blur(4px);padding:16px}
+.modal-overlay.open{display:flex}
+.modal{background:var(--surf2);border:1px solid var(--border);border-radius:var(--r);padding:24px;max-width:400px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.modal h2{font-family:var(--fd);font-size:19px;color:var(--white);margin-bottom:6px}
+.modal p{font-size:13px;color:var(--dim);line-height:1.6;margin-bottom:14px}
+.modal-check-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-top:1px solid var(--border)}
+.modal-check-row input{width:18px;height:18px;accent-color:var(--amber-hi)}
+.modal-check-row label{font-size:13px;color:var(--text)}
+.modal-btns{display:flex;gap:8px;justify-content:flex-end;margin-top:16px}
+
+/* PRINT */
+@media print{
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  body{background:white!important;color:#111!important;font-family:Georgia,serif}
+  body::after,.hdr,.tabbar,.navrow,.exportbar,.modal-overlay{display:none!important}
+  .main{padding:0!important}
+  .panel,.wrap>*{display:none!important}
+  #printDoc{display:block!important}
+}
+#printDoc{display:none;padding:28px 32px;font-family:Georgia,serif;color:#111;max-width:760px;margin:0 auto}
+.pd-header{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:2px solid #111;padding-bottom:12px;margin-bottom:18px}
+.pd-logo{font-family:'Oswald',sans-serif;font-size:20px;font-weight:700;letter-spacing:.1em;color:#111}
+.pd-unit{font-family:'Oswald',sans-serif;font-size:13px;letter-spacing:.08em;color:#444;margin-top:3px}
+.pd-meta{text-align:right;font-size:12px;color:#555}
+.pd-section{margin-bottom:20px}
+.pd-section-title{font-family:'Oswald',sans-serif;font-size:14px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:#fff;background:#111;padding:6px 12px;border-radius:3px;margin-bottom:10px}
+.pd-text{font-size:13px;line-height:1.6;color:#222;white-space:pre-wrap}
+.pd-score{font-size:13px;color:#222;margin-bottom:6px}
+
+@media(max-width:640px){
+  .cat-grid{grid-template-columns:1fr}
+  .cp-buckets{grid-template-columns:repeat(2,1fr)}
+  .exp-grid{gap:14px}
+  .hdr{padding:0 12px}
+  .right-select-grid{grid-template-columns:repeat(2,1fr)}
+  .arc-strip{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-l">
+    <span class="logo">EdSim</span><div class="hdiv"></div>
+    <span class="unit">Participation in Government · Unit 1</span>
+  </div>
+  <div class="hdr-r">
+    <button class="hdr-btn danger" onclick="confirmReset()">↺ Reset</button>
+  </div>
+</header>
+
+<div class="main">
+<div class="wrap">
+
+  <div id="printDoc"></div>
+
+  <div class="tabbar" id="tabbar">
+    <button class="tab-btn active" data-tab="directions" onclick="goTab('directions')">Directions</button>
+    <button class="tab-btn" data-tab="explore" onclick="goTab('explore')">Explore the Spectrum</button>
+    <button class="tab-btn locked" data-tab="checkpoint" id="tabCheckpointBtn" onclick="goTab('checkpoint')">
+      <span class="lock-ic" id="cpLockIc">🔒</span> Checkpoint
+    </button>
+    <button class="tab-btn locked" data-tab="trackright" id="tabTrackRightBtn" onclick="goTab('trackright')">
+      <span class="lock-ic" id="trLockIc">🔒</span> Track a Right
+    </button>
+  </div>
+
+  <!-- ══════════ DIRECTIONS ══════════ -->
+  <div class="panel active" id="panel-directions">
+    <div class="dir-title">Freedom vs. Security</div>
+    <div class="dir-sub">A Spectrum of Government Control</div>
+
+    <div class="dir-card">
+      <h3>🎯 What You're Working Toward</h3>
+      <p>Every government makes a trade-off: the more control it has, the more order and safety it can provide — but the less freedom its citizens keep. By the end of this activity, you'll be able to explain that trade-off using real examples, and you'll be ready to place real societies on this same spectrum in a follow-up activity.</p>
+    </div>
+
+    <div class="dir-card">
+      <h3>🧭 What's In This Activity</h3>
+      <ul class="dir-steps">
+        <li data-n="1">Explore the Spectrum — Drag a slider from Anarchy to Totalitarianism and watch how four rights (what you can do, what you can say, who makes the rules, and how much safety the government provides) change along the way.</li>
+        <li data-n="2">Checkpoint — A quick drag-and-drop sort to check your understanding before you move on.</li>
+        <li data-n="3">Track a Right — Once you've completed the checkpoint, you'll unlock a focused mode where you follow just one right across the whole spectrum.</li>
+      </ul>
+      <div class="dir-time">Estimated time: 20–25 minutes</div>
+    </div>
+
+    <div class="dir-nextday">
+      <b>Coming next class:</b> you'll apply what you learned here to real countries in a case-study activity, then join your classmates for a physical continuum on the floor — everyone brings their own placement and defends it.
+    </div>
+
+    <div class="navrow">
+      <div class="nav-spacer"></div>
+      <button class="nav-btn" onclick="goTab('explore')">Start Exploring →</button>
+    </div>
+  </div>
+
+  <!-- ══════════ EXPLORE (MODE 1) ══════════ -->
+  <div class="panel" id="panel-explore">
+    <div class="exp-grid">
+      <div class="stage">
+        <div class="zone-sub" id="zoneSub">Drag the slider to explore</div>
+        <div class="zone-label" id="zoneLabel">— Freedom —</div>
+
+        <div class="svg-wrap">
+          <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="sky0" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#2a1210"/><stop offset="55%" stop-color="#4a1f14"/><stop offset="100%" stop-color="#1a0d0a"/>
+              </linearGradient>
+              <linearGradient id="sky1" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#4a5a7a"/><stop offset="60%" stop-color="#8a9bb5"/><stop offset="100%" stop-color="#e8c98a"/>
+              </linearGradient>
+              <linearGradient id="sky2" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#2d5fa8"/><stop offset="60%" stop-color="#5b8fd4"/><stop offset="100%" stop-color="#bcd8f0"/>
+              </linearGradient>
+              <linearGradient id="sky3" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#241a22"/><stop offset="55%" stop-color="#4a2530"/><stop offset="100%" stop-color="#6b3038"/>
+              </linearGradient>
+              <linearGradient id="sky4" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#050608"/><stop offset="70%" stop-color="#0d1015"/><stop offset="100%" stop-color="#1a1418"/>
+              </linearGradient>
+              <linearGradient id="ground0" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3a2018"/><stop offset="100%" stop-color="#1a0f0a"/></linearGradient>
+              <linearGradient id="ground1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#6a8a52"/><stop offset="100%" stop-color="#425e33"/></linearGradient>
+              <linearGradient id="ground2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#c9c2ae"/><stop offset="100%" stop-color="#a39c88"/></linearGradient>
+              <linearGradient id="ground3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3a3238"/><stop offset="100%" stop-color="#1e1a1e"/></linearGradient>
+              <linearGradient id="ground4" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#25252a"/><stop offset="100%" stop-color="#0d0d10"/></linearGradient>
+              <radialGradient id="fireGrad" cx="50%" cy="90%" r="70%">
+                <stop offset="0%" stop-color="#ffd27a"/><stop offset="45%" stop-color="#f0a500"/><stop offset="100%" stop-color="#c0392b"/>
+              </radialGradient>
+              <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#fff3d0"/><stop offset="100%" stop-color="#f0c060" stop-opacity="0"/>
+              </radialGradient>
+              <radialGradient id="lensGlow" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#ff5a4a"/><stop offset="60%" stop-color="#a01818"/><stop offset="100%" stop-color="#3a0808" stop-opacity="0"/>
+              </radialGradient>
+              <linearGradient id="beam3" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#f5e6c0" stop-opacity=".45"/><stop offset="100%" stop-color="#f5e6c0" stop-opacity="0"/>
+              </linearGradient>
+              <filter id="soft"><feGaussianBlur stdDeviation="2.2"/></filter>
+            </defs>
+
+            <!-- Zone 0: Anarchy -->
+            <g class="zone-layer" id="layer0">
+              <rect x="0" y="0" width="300" height="140" fill="url(#sky0)"/>
+              <rect x="0" y="138" width="300" height="62" fill="url(#ground0)"/>
+              <path d="M0 140 Q40 132 90 140 T190 138 T300 141 L300 145 L0 148 Z" fill="#241108" opacity=".8"/>
+              <g opacity=".55" filter="url(#soft)">
+                <ellipse cx="70" cy="55" rx="30" ry="12" fill="#3a2a24"/>
+                <ellipse cx="230" cy="40" rx="26" ry="10" fill="#3a2a24"/>
+              </g>
+              <g stroke="#5a4030" stroke-width="2.5" stroke-linecap="round" opacity=".8">
+                <path d="M120 168 L128 148 M128 148 L136 168 M124 158 L132 158"/>
+              </g>
+              <rect x="112" y="168" width="32" height="6" rx="1" fill="#241108" opacity=".7"/>
+              <g>
+                <path d="M35 168 Q45 100 55 168 Q47 140 55 105 Q40 135 35 168" fill="url(#fireGrad)"/>
+                <path d="M43 168 Q50 128 57 168" fill="#ffe6a8" opacity=".8"/>
+              </g>
+              <g transform="translate(155,0)">
+                <path d="M35 168 Q47 90 60 168 Q50 132 60 92 Q42 128 35 168" fill="url(#fireGrad)"/>
+                <path d="M45 168 Q53 118 62 168" fill="#ffe6a8" opacity=".8"/>
+              </g>
+              <g transform="translate(215,10)">
+                <path d="M20 158 Q28 110 36 158 Q30 132 36 112 Q24 132 20 158" fill="url(#fireGrad)"/>
+              </g>
+              <g fill="#20130f" opacity=".9">
+                <ellipse cx="255" cy="176" rx="14" ry="6"/>
+                <rect x="248" y="162" width="14" height="16" rx="2"/>
+              </g>
+              <g fill="#1a0f0c" opacity=".85">
+                <path d="M20 30 q6 -6 12 0 q6 -6 12 0 l-2 4 l-20 0 Z"/>
+                <path d="M240 20 q6 -6 12 0 q6 -6 12 0 l-2 4 l-20 0 Z"/>
+              </g>
+            </g>
+
+            <!-- Zone 1: Minimal Government -->
+            <g class="zone-layer" id="layer1">
+              <rect x="0" y="0" width="300" height="140" fill="url(#sky1)"/>
+              <rect x="0" y="140" width="300" height="60" fill="url(#ground1)"/>
+              <circle cx="242" cy="42" r="22" fill="#ffe9a8"/>
+              <circle cx="242" cy="42" r="40" fill="url(#sunGlow)"/>
+              <rect x="0" y="150" width="300" height="4" fill="#8a7550" opacity=".5"/>
+              <g stroke="#f4efe4" stroke-width="2.5">
+                <line x1="18" y1="150" x2="18" y2="132"/><line x1="30" y1="150" x2="30" y2="132"/>
+                <line x1="42" y1="150" x2="42" y2="132"/><line x1="54" y1="150" x2="54" y2="132"/>
+                <line x1="66" y1="150" x2="66" y2="132"/>
+                <line x1="14" y1="136" x2="70" y2="136"/>
+              </g>
+              <g>
+                <rect x="105" y="105" width="70" height="48" fill="#e7ded0" stroke="#a89878" stroke-width="1.5"/>
+                <path d="M98 105 L140 78 L182 105 Z" fill="#8a5a3c"/>
+                <rect x="133" y="126" width="18" height="27" fill="#5a4028"/>
+                <rect x="112" y="115" width="14" height="12" fill="#bcd8f0" stroke="#a89878"/>
+                <rect x="154" y="115" width="14" height="12" fill="#bcd8f0" stroke="#a89878"/>
+                <rect x="122" y="95" width="10" height="16" fill="#8a5a3c"/>
+              </g>
+              <g stroke="#6a5030" stroke-width="2" fill="none">
+                <path d="M195 153 L195 128 L214 128"/>
+                <circle cx="214" cy="128" r="3" fill="#f0a500" stroke="none"/>
+              </g>
+              <g>
+                <rect x="228" y="118" width="52" height="35" fill="#e0d6c4" stroke="#a89878" stroke-width="1.5"/>
+                <path d="M224 118 L254 100 L284 118 Z" fill="#9a6a48"/>
+                <rect x="238" y="134" width="10" height="19" fill="#6a4a30"/>
+              </g>
+            </g>
+
+            <!-- Zone 2: Regulated Democracy -->
+            <g class="zone-layer" id="layer2">
+              <rect x="0" y="0" width="300" height="140" fill="url(#sky2)"/>
+              <rect x="0" y="140" width="300" height="60" fill="url(#ground2)"/>
+              <g opacity=".85" fill="#fff">
+                <ellipse cx="55" cy="30" rx="20" ry="8"/><ellipse cx="70" cy="26" rx="16" ry="7"/>
+              </g>
+              <g>
+                <rect x="128" y="88" width="44" height="56" fill="#f4f0e6" stroke="#9a8f78" stroke-width="1.5"/>
+                <path d="M122 88 L150 66 L178 88 Z" fill="#c8390f"/>
+                <rect x="145" y="118" width="12" height="26" fill="#4a4038"/>
+                <rect x="134" y="96" width="9" height="9" fill="#8fc4e8"/>
+                <rect x="157" y="96" width="9" height="9" fill="#8fc4e8"/>
+                <rect x="145" y="72" width="4" height="10" fill="#c8390f"/>
+              </g>
+              <g stroke="#5a4a30" stroke-width="2.5" fill="none">
+                <line x1="60" y1="72" x2="60" y2="130"/>
+                <line x1="32" y1="88" x2="60" y2="72"/>
+                <line x1="88" y1="88" x2="60" y2="72"/>
+              </g>
+              <rect x="18" y="88" width="28" height="6" fill="#5a4a30"/>
+              <rect x="74" y="88" width="28" height="6" fill="#5a4a30"/>
+              <path d="M20 94 L20 112 L46 112 L46 94" stroke="#2d6fd4" stroke-width="2.5" fill="#dce8f7"/>
+              <path d="M76 94 L76 112 L102 112 L102 94" stroke="#2d6fd4" stroke-width="2.5" fill="#dce8f7"/>
+              <rect x="16" y="112" width="34" height="5" fill="#8a97ab"/>
+              <rect x="72" y="112" width="34" height="5" fill="#8a97ab"/>
+              <g>
+                <rect x="204" y="112" width="10" height="32" fill="#8a97ab"/>
+                <rect x="196" y="106" width="26" height="9" fill="#5a6478"/>
+                <path d="M196 106 L196 96 L222 96 L222 106 Z" fill="#3d3428"/>
+                <rect x="222" y="106" width="14" height="4" fill="#3d3428"/>
+              </g>
+              <g fill="#3a3428">
+                <circle cx="228" cy="132" r="6"/><rect x="224" y="138" width="8" height="14" rx="2"/>
+                <circle cx="255" cy="134" r="6"/><rect x="251" y="140" width="8" height="14" rx="2"/>
+              </g>
+            </g>
+
+            <!-- Zone 3: Authoritarianism -->
+            <g class="zone-layer" id="layer3">
+              <rect x="0" y="0" width="300" height="140" fill="url(#sky3)"/>
+              <rect x="0" y="140" width="300" height="60" fill="url(#ground3)"/>
+              <polygon points="150,20 300,140 0,140" fill="url(#beam3)"/>
+              <g>
+                <rect x="18" y="60" width="14" height="90" fill="#4a4248"/>
+                <rect x="8" y="48" width="34" height="16" fill="#2a2428"/>
+                <rect x="20" y="66" width="10" height="10" fill="#7a2c2c"/>
+              </g>
+              <g stroke="#5a5258" stroke-width="2">
+                <line x1="42" y1="150" x2="42" y2="90"/><line x1="60" y1="150" x2="60" y2="90"/>
+                <line x1="78" y1="150" x2="78" y2="90"/><line x1="96" y1="150" x2="96" y2="90"/>
+                <path d="M40 92 L42 88 L44 92 M58 92 L60 88 L62 92 M76 92 L78 88 L80 92 M94 92 L96 88 L98 92" fill="none"/>
+              </g>
+              <rect x="36" y="145" width="66" height="6" fill="#2a2428"/>
+              <g>
+                <rect x="205" y="55" width="6" height="95" fill="#5a5258"/>
+                <path d="M211 55 L256 72 L211 89 Z" fill="#8b2e2e"/>
+                <circle cx="222" cy="72" r="4" fill="#1a1418"/>
+              </g>
+              <g>
+                <rect x="140" y="130" width="18" height="20" fill="#3a3438"/>
+                <circle cx="149" cy="120" r="10" fill="#3a3438"/>
+                <rect x="144" y="106" width="10" height="14" fill="#2a2428"/>
+                <path d="M138 150 L138 168 M160 150 L160 168" stroke="#2a2428" stroke-width="4"/>
+              </g>
+              <g fill="#2a2428" opacity=".9">
+                <circle cx="255" cy="160" r="7"/><rect x="250" y="167" width="10" height="16" rx="2"/>
+                <circle cx="272" cy="162" r="7"/><rect x="267" y="169" width="10" height="16" rx="2"/>
+              </g>
+            </g>
+
+            <!-- Zone 4: Totalitarianism -->
+            <g class="zone-layer" id="layer4">
+              <rect x="0" y="0" width="300" height="140" fill="url(#sky4)"/>
+              <rect x="0" y="140" width="300" height="60" fill="url(#ground4)"/>
+              <polygon points="70,0 130,140 10,140" fill="#e8e4d8" opacity=".05"/>
+              <polygon points="230,0 290,140 170,140" fill="#e8e4d8" opacity=".05"/>
+              <g>
+                <rect x="132" y="45" width="16" height="105" fill="#2a2a30"/>
+                <rect x="118" y="26" width="44" height="22" fill="#1c1c22"/>
+                <circle cx="140" cy="37" r="10" fill="url(#lensGlow)"/>
+                <circle cx="140" cy="37" r="4" fill="#ff8a6a"/>
+                <rect x="124" y="48" width="32" height="4" fill="#1c1c22"/>
+              </g>
+              <g stroke="#3a3a40" stroke-width="1.5">
+                <line x1="4" y1="150" x2="4" y2="120"/><line x1="296" y1="150" x2="296" y2="120"/>
+                <path d="M2 122 L4 118 L6 122 M294 122 L296 118 L298 122" fill="none"/>
+              </g>
+              <g fill="#26262c">
+                <g transform="translate(38,160)"><circle r="6"/><rect x="-4" y="6" width="8" height="15" rx="1"/></g>
+                <g transform="translate(66,160)"><circle r="6"/><rect x="-4" y="6" width="8" height="15" rx="1"/></g>
+                <g transform="translate(94,160)"><circle r="6"/><rect x="-4" y="6" width="8" height="15" rx="1"/></g>
+                <g transform="translate(206,160)"><circle r="6"/><rect x="-4" y="6" width="8" height="15" rx="1"/></g>
+                <g transform="translate(234,160)"><circle r="6"/><rect x="-4" y="6" width="8" height="15" rx="1"/></g>
+                <g transform="translate(262,160)"><circle r="6"/><rect x="-4" y="6" width="8" height="15" rx="1"/></g>
+                <g transform="translate(52,182)"><circle r="6"/><rect x="-4" y="6" width="8" height="15" rx="1"/></g>
+                <g transform="translate(80,182)"><circle r="6"/><rect x="-4" y="6" width="8" height="15" rx="1"/></g>
+                <g transform="translate(220,182)"><circle r="6"/><rect x="-4" y="6" width="8" height="15" rx="1"/></g>
+                <g transform="translate(248,182)"><circle r="6"/><rect x="-4" y="6" width="8" height="15" rx="1"/></g>
+              </g>
+            </g>
+          </svg>
+        </div>
+
+        <div class="slider-row">
+          <span class="slider-end">← MORE<br/>FREEDOM</span>
+          <input type="range" min="0" max="4" value="0" step="1" class="spectrum-slider" id="slider" oninput="onSlide(this.value)"/>
+          <span class="slider-end">MORE<br/>CONTROL →</span>
+        </div>
+        <div class="zone-ticks" id="zoneTicks"></div>
+        <div class="progress-note" id="progressNote">Reveal all 4 characteristics in each zone to unlock the Checkpoint (0 of 20 revealed)</div>
+
+        <div class="cat-grid" id="catGrid">
+          <div class="cat-card" data-cat="autonomy" onclick="revealCat('autonomy')" tabindex="0" role="button" aria-label="Tap to reveal: What You Can Do">
+            <div class="cat-head"><span>🗽 What You Can Do</span><span class="cat-tap-hint">Tap</span></div>
+            <div class="cat-body"><div class="cat-placeholder">Tap to reveal</div></div>
+          </div>
+          <div class="cat-card" data-cat="speech" onclick="revealCat('speech')" tabindex="0" role="button" aria-label="Tap to reveal: What You Can Say">
+            <div class="cat-head"><span>🗣 What You Can Say</span><span class="cat-tap-hint">Tap</span></div>
+            <div class="cat-body"><div class="cat-placeholder">Tap to reveal</div></div>
+          </div>
+          <div class="cat-card" data-cat="rules" onclick="revealCat('rules')" tabindex="0" role="button" aria-label="Tap to reveal: Who Makes the Rules">
+            <div class="cat-head"><span>⚖️ Who Makes the Rules</span><span class="cat-tap-hint">Tap</span></div>
+            <div class="cat-body"><div class="cat-placeholder">Tap to reveal</div></div>
+          </div>
+          <div class="cat-card" data-cat="safety" onclick="revealCat('safety')" tabindex="0" role="button" aria-label="Tap to reveal: Safety and Order">
+            <div class="cat-head"><span>🛡 Safety & Order</span><span class="cat-tap-hint">Tap</span></div>
+            <div class="cat-body"><div class="cat-placeholder">Tap to reveal</div></div>
+          </div>
+        </div>
+
+        <div class="reflect-box">
+          <div class="reflect-label">Reflection: What's one thing you noticed as you moved from Anarchy to Totalitarianism? Why does it matter?</div>
+          <textarea class="reflect-ta" id="reflect1" oninput="saveState()" placeholder="Type your answer here..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="navrow">
+      <button class="nav-btn" onclick="goTab('directions')">← Directions</button>
+      <div class="nav-spacer"></div>
+      <button class="nav-btn" id="toCheckpointBtn" onclick="goTab('checkpoint')" disabled>Checkpoint →</button>
+    </div>
+  </div>
+
+  <!-- ══════════ CHECKPOINT ══════════ -->
+  <div class="panel" id="panel-checkpoint">
+    <div class="cp-head">
+      <div class="cp-title">Checkpoint: Sort the Scenarios</div>
+      <div class="cp-attempt" id="cpAttemptLabel">Attempt 1 of 2</div>
+    </div>
+    <div class="cp-instr">Drag each card into the zone where it belongs — or tap a card, then tap a zone to place it. You need 7 out of 10 correct to pass on your first try. If you don't pass, you'll get one more attempt with the same cards and instant feedback.</div>
+
+    <div class="cp-bank" id="cpBank"></div>
+
+    <div class="cp-buckets" id="cpBuckets">
+      <div class="cp-bucket" data-z="0"><div class="cp-bucket-label">Anarchy</div></div>
+      <div class="cp-bucket" data-z="1"><div class="cp-bucket-label">Minimal Gov't</div></div>
+      <div class="cp-bucket" data-z="2"><div class="cp-bucket-label">Regulated Democracy</div></div>
+      <div class="cp-bucket" data-z="3"><div class="cp-bucket-label">Authoritarianism</div></div>
+      <div class="cp-bucket" data-z="4"><div class="cp-bucket-label">Totalitarianism</div></div>
+    </div>
+
+    <div class="cp-actions">
+      <button class="btn" onclick="resetPlacements()">Clear Placements</button>
+      <button class="btn primary" id="cpSubmitBtn" onclick="submitCheckpoint()">Check My Answers</button>
+    </div>
+
+    <div class="cp-result" id="cpResult" style="display:none"></div>
+
+    <div class="navrow">
+      <button class="nav-btn" onclick="goTab('explore')">← Explore</button>
+      <div class="nav-spacer"></div>
+      <button class="nav-btn" id="cpContinueBtn" disabled onclick="goTab('trackright')">Track a Right →</button>
+    </div>
+  </div>
+
+  <!-- ══════════ TRACK A RIGHT (MODE 2) ══════════ -->
+  <div class="panel" id="panel-trackright">
+    <div class="dir-title" style="font-size:26px">Track a Right</div>
+    <div class="dir-sub" id="trIntroSub">Pick one right and follow it across the whole spectrum</div>
+
+    <div class="right-select-grid" id="rightSelectGrid">
+      <button class="right-select-btn" data-cat="autonomy" onclick="selectRight('autonomy')">
+        <span class="rs-icon">🗽</span><span class="rs-label">What You Can Do</span>
+      </button>
+      <button class="right-select-btn" data-cat="speech" onclick="selectRight('speech')">
+        <span class="rs-icon">🗣</span><span class="rs-label">What You Can Say</span>
+      </button>
+      <button class="right-select-btn" data-cat="rules" onclick="selectRight('rules')">
+        <span class="rs-icon">⚖️</span><span class="rs-label">Who Makes the Rules</span>
+      </button>
+      <button class="right-select-btn" data-cat="safety" onclick="selectRight('safety')">
+        <span class="rs-icon">🛡</span><span class="rs-label">Safety & Order</span>
+      </button>
+    </div>
+    <div class="right-locked-note" id="rightLockedNote" style="display:none">Your teacher assigned this right for you to track.</div>
+
+    <div id="trackStage" style="display:none">
+      <div class="stage" style="margin-top:16px">
+        <div class="zone-sub" id="zoneSub2">Drag the slider to see how this right changes</div>
+        <div class="zone-label" id="zoneLabel2">— Freedom —</div>
+
+        <div class="svg-wrap">
+          <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+            <use href="#layer0" class="zone-layer2" id="layer0b"/>
+            <use href="#layer1" class="zone-layer2" id="layer1b"/>
+            <use href="#layer2" class="zone-layer2" id="layer2b"/>
+            <use href="#layer3" class="zone-layer2" id="layer3b"/>
+            <use href="#layer4" class="zone-layer2" id="layer4b"/>
+          </svg>
+        </div>
+
+        <div class="slider-row">
+          <span class="slider-end">← MORE<br/>FREEDOM</span>
+          <input type="range" min="0" max="4" value="0" step="1" class="spectrum-slider" id="slider2" oninput="onSlide2(this.value)"/>
+          <span class="slider-end">MORE<br/>CONTROL →</span>
+        </div>
+        <div class="zone-ticks" id="zoneTicks2"></div>
+
+        <div class="right-text-big" id="rightTextBig"></div>
+
+        <div class="arc-label">The Full Arc — <span id="arcCatName">this right</span> across all 5 zones</div>
+        <div class="arc-strip" id="arcStrip"></div>
+
+        <div class="reflect-box">
+          <div class="reflect-label" id="reflect2Label">Reflection</div>
+          <textarea class="reflect-ta" id="reflect2" oninput="saveState()" placeholder="Type your answer here..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="navrow">
+      <button class="nav-btn" onclick="goTab('checkpoint')">← Checkpoint</button>
+      <div class="nav-spacer"></div>
+    </div>
+  </div>
+
+  <div class="exportbar">
+    <button class="e-btn" onclick="openExportModal('copy')">📋 Copy Text</button>
+    <button class="e-btn e-btn-pdf" onclick="openExportModal('pdf')">⬇ Save as PDF</button>
+  </div>
+
+</div>
+</div>
+
+<!-- EXPORT SECTION-SELECT MODAL -->
+<div class="modal-overlay" id="exportModal">
+  <div class="modal">
+    <h2 id="exportModalTitle">Choose Sections to Export</h2>
+    <p>Select which parts of your work to include.</p>
+    <div id="exportChecks">
+      <div class="modal-check-row"><input type="checkbox" id="ex-reflect1" checked><label for="ex-reflect1">Explore Reflection</label></div>
+      <div class="modal-check-row"><input type="checkbox" id="ex-checkpoint" checked><label for="ex-checkpoint">Checkpoint Results</label></div>
+      <div class="modal-check-row"><input type="checkbox" id="ex-trackright" checked><label for="ex-trackright">Track a Right Reflection</label></div>
+    </div>
+    <div class="modal-btns">
+      <button class="hdr-btn" onclick="closeExportModal()">Cancel</button>
+      <button class="hdr-btn" style="border-color:var(--amber-hi);color:var(--amber-hi)" id="exportConfirmBtn" onclick="confirmExport()">Export</button>
+    </div>
+  </div>
+</div>
+
+<!-- RESET CONFIRM MODAL -->
+<div class="modal-overlay" id="resetModal">
+  <div class="modal">
+    <h2>Reset Everything?</h2>
+    <p>This clears your slider progress, reflection, and checkpoint results. This cannot be undone.</p>
+    <div class="modal-btns">
+      <button class="hdr-btn" onclick="document.getElementById('resetModal').classList.remove('open')">Cancel</button>
+      <button class="hdr-btn danger" onclick="doReset()">Reset</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ═══════════ CONTENT ═══════════ */
+const ZONES = [
+  {name:"Anarchy", sub:"No government at all"},
+  {name:"Minimal Government", sub:"Protects rights, does little else"},
+  {name:"Regulated Democracy", sub:"Elected government, limited by law"},
+  {name:"Authoritarianism", sub:"Control expands, rights shrink"},
+  {name:"Totalitarianism", sub:"The state controls nearly everything"}
+];
+
+const CAT_TEXT = {
+  autonomy: [
+    "There are no police. If you're robbed, you must handle it yourself — some neighbors form volunteer patrols since there's no official force.",
+    "You can start a business or make a contract without a permit. Government protects your property but doesn't run schools or hospitals.",
+    "You're free to make most choices — but some require government approval, like passing a driver's test (the same test applies to everyone).",
+    "Public protest is illegal and can lead to prison. Police can search your home at any time, without a warrant.",
+    "The government assigns you a job based on the country's needs, not your own choice. You can't leave the country without special permission."
+  ],
+  speech: [
+    "No one can stop you from saying anything — but no one protects you from private threats or retaliation either.",
+    "You can publicly criticize government leaders without fear of punishment.",
+    "Criticism of leaders is protected, and the press is free — though some public conduct is regulated.",
+    "Criticizing the government is restricted. Only one political party is allowed to run candidates for office.",
+    "The government owns all major news outlets. Independent journalists can be arrested, and even children are expected to report disloyal statements their parents make at home."
+  ],
+  rules: [
+    "No one makes binding rules. Power is local, informal, or simply absent.",
+    "Government exists mainly to protect property and enforce contracts — not to run daily life.",
+    "Citizens vote to choose their leaders in free elections held every few years.",
+    "Rules come from a single party or a small ruling group, not from the voters.",
+    "The state decides what books, films, and art people are allowed to create or see. There is no separation between public and private life."
+  ],
+  safety: [
+    "Safety depends entirely on individuals or informal groups — there is no guarantee.",
+    "The government protects your basic rights but does not provide services like public education.",
+    "The government actively provides for citizens — free public education, minimum wage laws, pollution limits — funded through taxes everyone pays.",
+    "Order is enforced through expanding government control over daily behavior.",
+    "Order is total and enforced through surveillance — cameras, informants, and constant monitoring of public and private life."
+  ]
+};
+
+// 18-card bank: {text, zone}
+const CARD_BANK = [
+  {text:"There are no police. If someone steals from you, you must handle it yourself.", zone:0},
+  {text:"Neighbors form volunteer patrol groups because there is no official police force.", zone:0},
+  {text:"The government protects your property and enforces contracts, but does not run schools or hospitals.", zone:1},
+  {text:"You can start any business you want without needing a government permit.", zone:1},
+  {text:"You can publicly criticize government leaders without fear of punishment.", zone:1},
+  {text:"The government requires businesses to pay workers a minimum wage.", zone:2},
+  {text:"Citizens vote to choose their leaders in free elections held every few years.", zone:2},
+  {text:"The government provides free public education, paid for with taxes everyone pays.", zone:2},
+  {text:"You must pass a test to get a driver's license, but the same test applies to everyone.", zone:2},
+  {text:"The government limits how much pollution factories can release into rivers and air.", zone:2},
+  {text:"Public protests against the government are illegal and can lead to prison.", zone:3},
+  {text:"Police can search your home at any time without a warrant.", zone:3},
+  {text:"Only one political party is allowed to run candidates for office.", zone:3},
+  {text:"The government owns all major news outlets, and independent journalists can be arrested.", zone:4},
+  {text:"The government assigns you a job based on the country's needs, not your own choice.", zone:4},
+  {text:"Children are expected to report disloyal statements their parents make at home.", zone:4},
+  {text:"You cannot leave the country without special government permission.", zone:4},
+  {text:"The government decides what books, films, and art people are allowed to create or see.", zone:4}
+];
+
+const ZONE_SHORT = ["Anarchy","Minimal Gov't","Regulated Democracy","Authoritarianism","Totalitarianism"];
+
+/* ═══════════ STATE ═══════════ */
+const LS_KEY = 'edsim_freedomsecurity_v2';
+
+const CAT_KEYS = ['autonomy','speech','rules','safety'];
+const CAT_LABELS = {
+  autonomy: 'What You Can Do',
+  speech: 'What You Can Say',
+  rules: 'Who Makes the Rules',
+  safety: 'Safety & Order'
+};
+
+let state = {
+  slider: 0,
+  revealed: {0:[],1:[],2:[],3:[],4:[]},  // zone -> array of revealed category keys
+  reflect1: '',
+  checkpoint: {
+    cardIds: [],      // indices into CARD_BANK, the 10 drawn
+    placements: {},   // cardId -> zone placed
+    attempt: 1,
+    submitted1: false,
+    passed: false,
+    unlocked: false
+  },
+  trackRight: {
+    category: null,   // one of CAT_KEYS, or null if not yet chosen
+    slider: 0,
+    locked: false,    // true if assigned via ?category= URL param
+    reflect2: ''
+  }
+};
+
+function loadState(){
+  try{
+    const saved = JSON.parse(localStorage.getItem(LS_KEY) || 'null');
+    if(saved) state = Object.assign(state, saved);
+  }catch(e){}
+
+  // Defensive schema checks: never trust stored values to already match the
+  // current build's constraints. Any of these can happen after an update:
+  // stale data from an older version, a hand-edited key, or partial writes.
+
+  // Slider must be an integer 0–4 (zones array has exactly 5 entries).
+  if(typeof state.slider !== 'number' || !Number.isInteger(state.slider) || state.slider < 0 || state.slider > 4){
+    state.slider = 0;
+  }
+
+  // Revealed must be an object with arrays for keys 0–4, containing only valid category keys.
+  if(typeof state.revealed !== 'object' || state.revealed === null){
+    state.revealed = {0:[],1:[],2:[],3:[],4:[]};
+  } else {
+    for(let z=0;z<5;z++){
+      const arr = state.revealed[z];
+      state.revealed[z] = Array.isArray(arr) ? arr.filter(k => CAT_KEYS.includes(k)) : [];
+    }
+  }
+
+  // Checkpoint cardIds, if present, must be exactly 10 valid indices into CARD_BANK —
+  // otherwise a schema mismatch (e.g. from an older build) would leave the bank empty.
+  const cp = state.checkpoint || {};
+  const idsValid = Array.isArray(cp.cardIds) && cp.cardIds.length === 10 &&
+    cp.cardIds.every(id => CARD_BANK[id] !== undefined);
+  if(!idsValid && cp.cardIds && cp.cardIds.length > 0){
+    state.checkpoint = { cardIds: [], placements: {}, attempt: 1, submitted1: false, passed: false, unlocked: false };
+  }
+
+  // trackRight: category must be a known key or null; slider must be 0–4.
+  if(typeof state.trackRight !== 'object' || state.trackRight === null){
+    state.trackRight = { category: null, slider: 0, locked: false, reflect2: '' };
+  } else {
+    const tr = state.trackRight;
+    if(tr.category !== null && !CAT_KEYS.includes(tr.category)) tr.category = null;
+    if(typeof tr.slider !== 'number' || !Number.isInteger(tr.slider) || tr.slider < 0 || tr.slider > 4) tr.slider = 0;
+    if(typeof tr.reflect2 !== 'string') tr.reflect2 = '';
+    if(typeof tr.locked !== 'boolean') tr.locked = false;
+  }
+
+  // A ?category= URL param assigns (and locks) the right for this session.
+  try{
+    const params = new URLSearchParams(window.location.search);
+    const urlCat = params.get('category');
+    if(urlCat && CAT_KEYS.includes(urlCat)){
+      state.trackRight.category = urlCat;
+      state.trackRight.locked = true;
+    }
+  }catch(e){}
+}
+function saveState(){
+  state.reflect1 = document.getElementById('reflect1') ? document.getElementById('reflect1').value : state.reflect1;
+  const r2 = document.getElementById('reflect2');
+  if(r2) state.trackRight.reflect2 = r2.value;
+  try{ localStorage.setItem(LS_KEY, JSON.stringify(state)); }catch(e){}
+}
+
+/* ═══════════ TABS / NAV ═══════════ */
+function goTab(name){
+  if(name === 'checkpoint' && !checkpointUnlocked()) return;
+  if(name === 'trackright' && !state.checkpoint.unlocked) return;
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(t=>t.classList.remove('active'));
+  document.getElementById('panel-'+name).classList.add('active');
+  document.querySelector('.tab-btn[data-tab="'+name+'"]').classList.add('active');
+  if(name === 'checkpoint' && state.checkpoint.cardIds.length === 0) initCheckpoint();
+  if(name === 'trackright') initTrackRight();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function totalRevealed(){
+  let n = 0;
+  for(let z=0;z<5;z++) n += (state.revealed[z] || []).length;
+  return n;
+}
+
+function checkpointUnlocked(){
+  return totalRevealed() >= 20;
+}
+
+function renderZoneTicks(){
+  const wrap = document.getElementById('zoneTicks');
+  wrap.innerHTML = '';
+  for(let z=0;z<5;z++){
+    const btn = document.createElement('button');
+    btn.className = 'zone-tick';
+    btn.type = 'button';
+    btn.setAttribute('aria-label', 'Jump to ' + ZONES[z].name);
+    const count = (state.revealed[z] || []).length;
+    if(count === 4) btn.classList.add('complete');
+    else if(count > 0) btn.classList.add('partial');
+    if(z === state.slider) btn.classList.add('current');
+    btn.innerHTML = '<span class="zone-tick-dot"></span><span class="zone-tick-label">' + ZONE_SHORT[z] + '</span>';
+    btn.onclick = ()=>{ document.getElementById('slider').value = z; onSlide(z); };
+    wrap.appendChild(btn);
+  }
+}
+
+function refreshLocks(){
+  const unlocked = checkpointUnlocked();
+  const tabBtn = document.getElementById('tabCheckpointBtn');
+  const toBtn = document.getElementById('toCheckpointBtn');
+  const lockIc = document.getElementById('cpLockIc');
+  if(unlocked){
+    tabBtn.classList.remove('locked');
+    lockIc.style.display = 'none';
+    toBtn.disabled = false;
+  } else {
+    tabBtn.classList.add('locked');
+    lockIc.style.display = 'inline';
+    toBtn.disabled = true;
+  }
+  const n = totalRevealed();
+  const note = document.getElementById('progressNote');
+  if(n >= 20){
+    note.textContent = 'All characteristics revealed — Checkpoint unlocked!';
+    note.classList.add('done');
+  } else {
+    note.textContent = 'Reveal all 4 characteristics in each zone to unlock the Checkpoint (' + n + ' of 20 revealed)';
+    note.classList.remove('done');
+  }
+  renderZoneTicks();
+}
+
+function refreshTrackRightLock(){
+  const unlocked = state.checkpoint.unlocked;
+  const tabBtn = document.getElementById('tabTrackRightBtn');
+  const lockIc = document.getElementById('trLockIc');
+  if(unlocked){
+    tabBtn.classList.remove('locked');
+    lockIc.style.display = 'none';
+  } else {
+    tabBtn.classList.add('locked');
+    lockIc.style.display = 'inline';
+  }
+}
+
+/* ═══════════ MODE 1: SLIDER ═══════════ */
+function onSlide(val){
+  state.slider = parseInt(val);
+  updateExplorer();
+  refreshLocks();
+  saveState();
+}
+
+function revealCat(catKey){
+  const zone = state.slider;
+  if(!state.revealed[zone]) state.revealed[zone] = [];
+  if(!state.revealed[zone].includes(catKey)) state.revealed[zone].push(catKey);
+  renderCatCards();
+  refreshLocks();
+  saveState();
+}
+
+function renderCatCards(){
+  const zone = state.slider;
+  const revealedHere = state.revealed[zone] || [];
+  document.querySelectorAll('.cat-card').forEach(card=>{
+    const key = card.dataset.cat;
+    const body = card.querySelector('.cat-body');
+    const hint = card.querySelector('.cat-tap-hint');
+    if(revealedHere.includes(key)){
+      card.classList.add('revealed');
+      hint.style.display = 'none';
+      body.innerHTML = '<div class="cat-text">' + CAT_TEXT[key][zone] + '</div>';
+    } else {
+      card.classList.remove('revealed');
+      hint.style.display = 'inline';
+      body.innerHTML = '<div class="cat-placeholder">Tap to reveal</div>';
+    }
+  });
+}
+
+function updateExplorer(){
+  const zone = state.slider;
+  document.querySelectorAll('.zone-layer').forEach((layer,i)=>{
+    layer.classList.toggle('active', i === zone);
+  });
+  document.getElementById('zoneLabel').textContent = ZONES[zone].name;
+  document.getElementById('zoneSub').textContent = ZONES[zone].sub;
+  renderCatCards();
+}
+
+/* ═══════════ MODE 2: TRACK A RIGHT ═══════════ */
+function initTrackRight(){
+  const tr = state.trackRight;
+  if(tr.category){
+    showTrackStage(tr.category);
+  } else {
+    resetTrackRightUI();
+  }
+}
+
+function resetTrackRightUI(){
+  document.querySelectorAll('.right-select-btn').forEach(b=>{
+    b.classList.remove('active','disabled-other');
+  });
+  document.getElementById('rightLockedNote').style.display = 'none';
+  document.getElementById('trackStage').style.display = 'none';
+  document.getElementById('trIntroSub').textContent = 'Pick one right and follow it across the whole spectrum';
+}
+
+function selectRight(catKey){
+  if(state.trackRight.locked) return; // teacher-assigned, can't change
+  state.trackRight.category = catKey;
+  state.trackRight.slider = 0;
+  showTrackStage(catKey);
+  saveState();
+}
+
+function showTrackStage(catKey){
+  document.querySelectorAll('.right-select-btn').forEach(b=>{
+    const isActive = b.dataset.cat === catKey;
+    b.classList.toggle('active', isActive);
+    b.classList.toggle('disabled-other', state.trackRight.locked && !isActive);
+  });
+  document.getElementById('rightLockedNote').style.display = state.trackRight.locked ? 'block' : 'none';
+  document.getElementById('trIntroSub').textContent = 'Tracking: ' + CAT_LABELS[catKey];
+  document.getElementById('trackStage').style.display = 'block';
+  document.getElementById('reflect2Label').textContent =
+    'Reflection: How did "' + CAT_LABELS[catKey] + '" change from Anarchy to Totalitarianism? What trade-off did you notice?';
+  document.getElementById('arcCatName').textContent = CAT_LABELS[catKey];
+
+  const slider2 = document.getElementById('slider2');
+  slider2.value = state.trackRight.slider;
+  updateTrackRight();
+}
+
+function onSlide2(val){
+  state.trackRight.slider = parseInt(val);
+  updateTrackRight();
+  saveState();
+}
+
+function updateTrackRight(){
+  const cat = state.trackRight.category;
+  if(!cat) return;
+  const zone = state.trackRight.slider;
+
+  ['0b','1b','2b','3b','4b'].forEach((suffix,i)=>{
+    document.getElementById('layer'+suffix).classList.toggle('active', i === zone);
+  });
+
+  document.getElementById('zoneLabel2').textContent = ZONES[zone].name;
+  document.getElementById('zoneSub2').textContent = ZONES[zone].sub;
+  document.getElementById('rightTextBig').textContent = CAT_TEXT[cat][zone];
+
+  renderZoneTicks2(zone);
+  renderArcStrip(cat, zone);
+}
+
+function renderZoneTicks2(currentZone){
+  const wrap = document.getElementById('zoneTicks2');
+  wrap.innerHTML = '';
+  for(let z=0;z<5;z++){
+    const btn = document.createElement('button');
+    btn.className = 'zone-tick';
+    btn.type = 'button';
+    btn.setAttribute('aria-label', 'Jump to ' + ZONES[z].name);
+    btn.classList.add('complete'); // all zones are always "available" in this mode
+    if(z === currentZone) btn.classList.add('current');
+    btn.innerHTML = '<span class="zone-tick-dot"></span><span class="zone-tick-label">' + ZONE_SHORT[z] + '</span>';
+    btn.onclick = ()=>{ document.getElementById('slider2').value = z; onSlide2(z); };
+    wrap.appendChild(btn);
+  }
+}
+
+function renderArcStrip(cat, currentZone){
+  const strip = document.getElementById('arcStrip');
+  strip.innerHTML = '';
+  for(let z=0;z<5;z++){
+    const card = document.createElement('div');
+    card.className = 'arc-card' + (z === currentZone ? ' current' : '');
+    card.innerHTML = '<div class="arc-card-zone">' + ZONE_SHORT[z] + '</div><div class="arc-card-text">' + CAT_TEXT[cat][z] + '</div>';
+    strip.appendChild(card);
+  }
+}
+
+/* ═══════════ CHECKPOINT ═══════════ */
+let selectedCardId = null;
+
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+function initCheckpoint(){
+  if(state.checkpoint.cardIds.length === 0){
+    const allIds = CARD_BANK.map((c,i)=>i);
+    state.checkpoint.cardIds = shuffle(allIds).slice(0,10);
+    saveState();
+  }
+  renderCheckpoint();
+}
+
+function renderCheckpoint(){
+  const bank = document.getElementById('cpBank');
+  bank.innerHTML = '';
+  state.checkpoint.cardIds.forEach(id=>{
+    const placedZone = state.checkpoint.placements[id];
+    if(placedZone !== undefined) return; // already placed, don't show in bank
+    const el = document.createElement('div');
+    el.className = 'cp-card';
+    el.draggable = true;
+    el.dataset.id = id;
+    el.textContent = CARD_BANK[id].text;
+    el.tabIndex = 0;
+    el.setAttribute('role','button');
+    el.setAttribute('aria-label','Scenario card: ' + CARD_BANK[id].text + '. Tap, then tap a zone to place it.');
+    el.addEventListener('click', ()=>selectCard(id, el));
+    el.addEventListener('keydown', (e)=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); selectCard(id, el); }});
+    el.addEventListener('dragstart', (e)=>{ e.dataTransfer.setData('text/plain', id); });
+    bank.appendChild(el);
+  });
+
+  document.querySelectorAll('.cp-bucket').forEach(b=>{
+    const z = parseInt(b.dataset.z);
+    b.querySelectorAll('.cp-bucket-card').forEach(c=>c.remove());
+    Object.keys(state.checkpoint.placements).forEach(id=>{
+      if(state.checkpoint.placements[id] === z){
+        const card = document.createElement('div');
+        card.className = 'cp-bucket-card';
+        card.dataset.id = id;
+        card.textContent = CARD_BANK[id].text;
+        if(state.checkpoint.submitted1){
+          const correct = CARD_BANK[id].zone === z;
+          card.classList.add(correct ? 'correct' : 'incorrect');
+          if(!correct){
+            const note = document.createElement('div');
+            note.className = 'fix-note';
+            note.textContent = 'Belongs in: ' + ZONE_SHORT[CARD_BANK[id].zone];
+            card.appendChild(note);
+          }
+        } else {
+          card.addEventListener('click', ()=>unplaceCard(id));
+        }
+        b.appendChild(card);
+      }
+    });
+    if(!state.checkpoint.submitted1){
+      b.ondragover = (e)=>{ e.preventDefault(); b.classList.add('dragover'); };
+      b.ondragleave = ()=>{ b.classList.remove('dragover'); };
+      b.ondrop = (e)=>{
+        e.preventDefault();
+        b.classList.remove('dragover');
+        const id = e.dataTransfer.getData('text/plain');
+        placeCard(id, z);
+      };
+      b.onclick = (e)=>{
+        if(e.target.closest('.cp-bucket-card')) return;
+        if(selectedCardId !== null) placeCard(selectedCardId, z);
+      };
+    } else {
+      b.ondragover = null; b.ondrop = null; b.onclick = null;
+    }
+  });
+
+  document.getElementById('cpAttemptLabel').textContent = 'Attempt ' + state.checkpoint.attempt + ' of 2';
+  const allPlaced = state.checkpoint.cardIds.every(id => state.checkpoint.placements[id] !== undefined);
+  document.getElementById('cpSubmitBtn').disabled = !allPlaced || (state.checkpoint.attempt > 2);
+}
+
+function selectCard(id, el){
+  if(state.checkpoint.submitted1) return;
+  document.querySelectorAll('.cp-card').forEach(c=>c.classList.remove('selected'));
+  if(selectedCardId === id){ selectedCardId = null; return; }
+  selectedCardId = id;
+  el.classList.add('selected');
+}
+
+function placeCard(id, zone){
+  id = parseInt(id);
+  state.checkpoint.placements[id] = zone;
+  selectedCardId = null;
+  saveState();
+  renderCheckpoint();
+}
+
+function unplaceCard(id){
+  if(state.checkpoint.submitted1) return;
+  delete state.checkpoint.placements[id];
+  saveState();
+  renderCheckpoint();
+}
+
+function resetPlacements(){
+  if(state.checkpoint.submitted1) return;
+  state.checkpoint.placements = {};
+  saveState();
+  renderCheckpoint();
+}
+
+function submitCheckpoint(){
+  const ids = state.checkpoint.cardIds;
+  let correct = 0;
+  ids.forEach(id=>{
+    if(state.checkpoint.placements[id] === CARD_BANK[id].zone) correct++;
+  });
+
+  const resultEl = document.getElementById('cpResult');
+  resultEl.style.display = 'block';
+
+  if(state.checkpoint.attempt === 1){
+    state.checkpoint.submitted1 = true;
+    const passed = correct >= 7;
+    state.checkpoint.passed = passed;
+    if(passed){
+      state.checkpoint.unlocked = true;
+      resultEl.innerHTML = '<div class="cp-score pass">' + correct + ' / 10</div><div class="cp-result-msg">You passed! Green cards show what you got right — take a look, then continue to Track a Right.</div>';
+      document.getElementById('cpSubmitBtn').style.display = 'none';
+    } else {
+      resultEl.innerHTML = '<div class="cp-score retry">' + correct + ' / 10</div><div class="cp-result-msg">Not quite 7 yet. Review the red cards below, then try again with the same 10 cards — your second attempt unlocks the next section either way.</div>';
+      document.getElementById('cpSubmitBtn').textContent = 'Try Again';
+      document.getElementById('cpSubmitBtn').onclick = startAttempt2;
+    }
+  } else {
+    state.checkpoint.unlocked = true;
+    resultEl.innerHTML = '<div class="cp-score pass">' + correct + ' / 10</div><div class="cp-result-msg">Second attempt complete — nice work sticking with it. Track a Right is now unlocked.</div>';
+    document.getElementById('cpSubmitBtn').style.display = 'none';
+  }
+
+  if(state.checkpoint.unlocked){
+    document.getElementById('cpContinueBtn').disabled = false;
+    refreshTrackRightLock();
+  }
+
+  saveState();
+  renderCheckpoint();
+}
+
+function startAttempt2(){
+  state.checkpoint.attempt = 2;
+  state.checkpoint.submitted1 = false;
+  state.checkpoint.placements = {};
+  document.getElementById('cpResult').style.display = 'none';
+  document.getElementById('cpSubmitBtn').textContent = 'Check My Answers';
+  document.getElementById('cpSubmitBtn').style.display = 'inline-block';
+  document.getElementById('cpSubmitBtn').onclick = submitCheckpoint;
+  saveState();
+  renderCheckpoint();
+}
+
+/* ═══════════ EXPORT ═══════════ */
+let exportMode = 'pdf';
+function openExportModal(mode){
+  exportMode = mode;
+  document.getElementById('exportModalTitle').textContent = mode === 'pdf' ? 'Choose Sections to Save as PDF' : 'Choose Sections to Copy';
+  document.getElementById('exportConfirmBtn').textContent = mode === 'pdf' ? 'Save PDF' : 'Copy';
+  document.getElementById('exportModal').classList.add('open');
+}
+function closeExportModal(){
+  document.getElementById('exportModal').classList.remove('open');
+}
+
+function buildExportSections(){
+  const sections = [];
+  if(document.getElementById('ex-reflect1').checked){
+    sections.push({title:'Explore Reflection', text: state.reflect1 || '(no response entered)'});
+  }
+  if(document.getElementById('ex-checkpoint').checked){
+    const ids = state.checkpoint.cardIds;
+    let correct = 0;
+    let lines = [];
+    ids.forEach(id=>{
+      const got = state.checkpoint.placements[id];
+      const right = CARD_BANK[id].zone;
+      const isCorrect = got === right;
+      if(isCorrect) correct++;
+      lines.push('- "' + CARD_BANK[id].text + '" — placed in ' + (got!==undefined?ZONE_SHORT[got]:'(not placed)') + (isCorrect?' ✓':' (correct: '+ZONE_SHORT[right]+')'));
+    });
+    sections.push({
+      title:'Checkpoint Results',
+      score: correct + ' / 10 correct (Attempt ' + state.checkpoint.attempt + ')',
+      text: lines.join('\n')
+    });
+  }
+  if(document.getElementById('ex-trackright').checked && state.trackRight.category){
+    sections.push({
+      title: 'Track a Right — ' + CAT_LABELS[state.trackRight.category],
+      text: state.trackRight.reflect2 || '(no response entered)'
+    });
+  }
+  return sections;
+}
+
+function confirmExport(){
+  const sections = buildExportSections();
+  if(exportMode === 'copy'){
+    let out = 'Freedom vs. Security Spectrum — EdSim\n\n';
+    sections.forEach(s=>{
+      out += s.title.toUpperCase() + '\n';
+      if(s.score) out += s.score + '\n';
+      out += s.text + '\n\n';
+    });
+    navigator.clipboard.writeText(out).then(()=>{
+      afterExportSuccess();
+      closeExportModal();
+      alert('Copied! Paste into your Google Doc.');
+    }).catch(()=>{
+      alert('Copy failed — your work is still saved. Try again.');
+    });
+  } else {
+    let html = '<div class="pd-header"><div><div class="pd-logo">EdSim</div><div class="pd-unit">Freedom vs. Security Spectrum</div></div>' +
+      '<div class="pd-meta">' + new Date().toLocaleDateString() + '</div></div>';
+    sections.forEach(s=>{
+      html += '<div class="pd-section"><div class="pd-section-title">' + s.title + '</div>';
+      if(s.score) html += '<div class="pd-score"><b>Score:</b> ' + s.score + '</div>';
+      html += '<div class="pd-text">' + s.text.replace(/</g,'&lt;') + '</div></div>';
+    });
+    document.getElementById('printDoc').innerHTML = html;
+    closeExportModal();
+    setTimeout(()=>{
+      window.print();
+      afterExportSuccess();
+    }, 150);
+  }
+}
+
+function afterExportSuccess(){
+  try{ localStorage.removeItem(LS_KEY); }catch(e){}
+  resetAllState();
+}
+
+/* ═══════════ RESET ═══════════ */
+function confirmReset(){
+  document.getElementById('resetModal').classList.add('open');
+}
+function doReset(){
+  document.getElementById('resetModal').classList.remove('open');
+  try{ localStorage.removeItem(LS_KEY); }catch(e){}
+  resetAllState();
+}
+function resetAllState(){
+  state = {
+    slider: 0,
+    revealed: {0:[],1:[],2:[],3:[],4:[]},
+    reflect1: '',
+    checkpoint: { cardIds: [], placements: {}, attempt: 1, submitted1: false, passed: false, unlocked: false },
+    trackRight: { category: null, slider: 0, locked: false, reflect2: '' }
+  };
+  document.getElementById('slider').value = 0;
+  document.getElementById('reflect1').value = '';
+  document.getElementById('cpResult').style.display = 'none';
+  document.getElementById('cpSubmitBtn').style.display = 'inline-block';
+  document.getElementById('cpSubmitBtn').textContent = 'Check My Answers';
+  document.getElementById('cpSubmitBtn').onclick = submitCheckpoint;
+  document.getElementById('cpContinueBtn').disabled = true;
+  document.getElementById('slider2').value = 0;
+  document.getElementById('reflect2').value = '';
+  updateExplorer();
+  refreshLocks();
+  refreshTrackRightLock();
+  resetTrackRightUI();
+  goTab('directions');
+}
+
+/* ═══════════ INIT ═══════════ */
+function init(){
+  loadState();
+  if(!state.revealed) state.revealed = {0:[],1:[],2:[],3:[],4:[]};
+  for(let z=0;z<5;z++){ if(!state.revealed[z]) state.revealed[z] = []; }
+  document.querySelectorAll('.cat-card').forEach(card=>{
+    card.addEventListener('keydown', (e)=>{
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); card.click(); }
+    });
+  });
+  // Always land on Directions per navigation-state standard, but restore content state
+  document.getElementById('slider').value = state.slider;
+  document.getElementById('reflect1').value = state.reflect1 || '';
+  updateExplorer();
+  refreshLocks();
+  refreshTrackRightLock();
+  if(state.checkpoint.cardIds.length > 0){
+    renderCheckpoint();
+    if(state.checkpoint.submitted1 && !state.checkpoint.passed){
+      document.getElementById('cpResult').style.display = 'block';
+      const ids = state.checkpoint.cardIds;
+      let correct = 0;
+      ids.forEach(id=>{ if(state.checkpoint.placements[id] === CARD_BANK[id].zone) correct++; });
+      document.getElementById('cpResult').innerHTML = '<div class="cp-score retry">' + correct + ' / 10</div><div class="cp-result-msg">Review the red cards below, then try again.</div>';
+      document.getElementById('cpSubmitBtn').textContent = 'Try Again';
+      document.getElementById('cpSubmitBtn').onclick = startAttempt2;
+    } else if(state.checkpoint.unlocked){
+      document.getElementById('cpContinueBtn').disabled = false;
+    }
+  }
+  document.getElementById('reflect2').value = state.trackRight.reflect2 || '';
+  goTab('directions');
+}
+init();
+</script>
+</body>
+</html>
