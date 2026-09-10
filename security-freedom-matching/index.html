@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Security v. Freedom: Find It in the Text</title>
+<style>
+  * { box-sizing: border-box; touch-action: manipulation; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #f7f5f0;
+    color: #222;
+    line-height: 1.5;
+    -webkit-overflow-scrolling: touch;
+  }
+  header { background: #4a1b1b; color: #fff; padding: 24px; border-radius: 10px; margin-bottom: 20px; }
+  header h1 { margin: 0 0 8px 0; font-size: 1.5em; }
+  header p { margin: 0; font-size: 1em; opacity: 0.9; }
+
+  .card { background: #fff; border: 1px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 20px; }
+  .card h3 { color: #4a1b1b; margin-top: 0; }
+
+  .vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin-top: 10px; }
+  .vocab-card { background: #fff9e8; border: 1px solid #e6d9a8; border-radius: 10px; padding: 14px; text-align: center; }
+  .vocab-card .icon { font-size: 2em; margin-bottom: 6px; }
+  .vocab-card .term { font-weight: bold; color: #6a5a10; margin-bottom: 4px; }
+  .vocab-card .def { font-size: 0.9em; }
+
+  .doc-card { border-radius: 10px; padding: 18px; margin-bottom: 22px; border: 2px solid; }
+  .doc-card.security { background: #f4ecec; border-color: #b96a6a; }
+  .doc-card.rights { background: #ecf1f4; border-color: #6a90b9; }
+
+  .doc-title { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .doc-title .icon { font-size: 1.8em; }
+  .doc-title h4 { margin: 0; }
+  .doc-title .date { font-size: 0.8em; color: #666; font-weight: normal; }
+
+  .chunk-list { background: rgba(255,255,255,0.7); border-radius: 8px; padding: 12px 14px; margin-bottom: 14px; }
+  .chunk-list h5 { margin: 0 0 8px 0; font-size: 0.9em; text-transform: uppercase; letter-spacing: 0.03em; color: #555; }
+  .chunk {
+    display: flex; gap: 10px; padding: 8px 6px; border-radius: 6px; margin-bottom: 4px;
+    font-size: 0.92em; font-style: italic; transition: background 0.2s;
+  }
+  .chunk-letter {
+    flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%;
+    background: #4a1b1b; color: #fff; font-style: normal; font-weight: bold;
+    display: flex; align-items: center; justify-content: center; font-size: 0.85em;
+  }
+  .chunk.highlight-correct { background: #d9f2df; }
+  .chunk.highlight-wrong { background: #fbdada; }
+
+  .match-list { margin-top: 6px; }
+  .match-row {
+    background: rgba(255,255,255,0.8);
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+  }
+  .match-row .idea { flex: 1; min-width: 220px; }
+  .match-row select {
+    width: auto;
+    min-width: 90px;
+    padding: 8px;
+    border: 2px solid #999;
+    border-radius: 6px;
+    font-size: 1em;
+    min-height: 44px;
+  }
+  .match-row select.correct { border-color: #3a8a4a; background: #e9f7ec; }
+  .match-row select.wrong { border-color: #b94a4a; background: #fbe9e9; }
+  .feedback-icon { font-size: 1.3em; min-width: 26px; text-align: center; }
+
+  .doc-check-btn {
+    min-height: 44px; padding: 10px 18px; border-radius: 8px; border: none;
+    background: #4a1b1b; color: #fff; font-weight: bold; cursor: pointer; margin-top: 6px;
+  }
+  .doc-score { font-weight: bold; margin-left: 10px; }
+
+  .vocab-box { background: #fff9e8; border: 1px solid #e6d9a8; border-radius: 8px; padding: 14px 18px; margin-top: 10px; }
+  .vocab-box dt { font-weight: bold; color: #6a5a10; }
+  .vocab-box dd { margin: 0 0 8px 0; }
+
+  label { display: block; font-weight: bold; margin-top: 14px; margin-bottom: 4px; }
+  .frame { font-style: italic; color: #555; font-size: 0.92em; margin-bottom: 4px; }
+  input[type="text"], textarea, select.plain {
+    width: 100%; padding: 10px; border: 1px solid #bbb; border-radius: 6px;
+    font-family: inherit; font-size: 1em; min-height: 44px;
+  }
+  textarea { min-height: 80px; resize: vertical; }
+
+  .organizer { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-top: 10px; }
+  .organizer .box { background: #f4f0f0; border: 1px solid #e0cccc; border-radius: 8px; padding: 12px; }
+  .organizer .box h4 { margin: 0 0 6px 0; color: #4a1b1b; }
+
+  .checklist { list-style: none; padding: 0; margin-top: 10px; }
+  .checklist li { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px dashed #ddd; }
+  .checklist input[type="checkbox"] { width: 22px; height: 22px; min-height: 22px; flex-shrink: 0; }
+
+  .enl-note { background: #eaf6ee; border-left: 4px solid #5a9a6a; padding: 8px 12px; margin-top: 8px; font-size: 0.9em; }
+
+  .tier-select { display: flex; gap: 10px; flex-wrap: wrap; margin: 14px 0; }
+  .tier-btn { min-height: 44px; padding: 10px 18px; border-radius: 8px; border: 2px solid #4a1b1b; background: #fff; color: #4a1b1b; font-weight: bold; font-size: 1em; cursor: pointer; }
+  .tier-btn.active { background: #4a1b1b; color: #fff; }
+  .tier-panel { display: none; }
+  .tier-panel.active { display: block; }
+
+  .btn-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px; }
+  .action-btn { min-height: 44px; padding: 12px 20px; border-radius: 8px; border: none; background: #4a1b1b; color: #fff; font-weight: bold; font-size: 1em; cursor: pointer; }
+  .action-btn.secondary { background: #6a6a6a; }
+
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); align-items: center; justify-content: center; z-index: 100; }
+  .modal-overlay.active { display: flex; }
+  .modal-box { background: #fff; border-radius: 10px; padding: 24px; max-width: 400px; width: 90%; }
+  .modal-box h3 { margin-top: 0; }
+  .modal-box .btn-row { justify-content: center; }
+
+  .tier-print-label { display: none; font-size: 1.2em; font-weight: bold; color: #4a1b1b; margin: 18px 0 6px 0; border-bottom: 2px solid #4a1b1b; padding-bottom: 4px; }
+
+  @media print {
+    header, .instructions, .tier-select, .btn-row, .modal-overlay, .doc-check-btn { display: none !important; }
+    body { background: #fff; }
+    .tier-panel { display: block !important; page-break-before: always; }
+    .tier-panel:first-of-type { page-break-before: auto; }
+    .tier-print-label { display: block !important; }
+    .print-blank .prefilled { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Security v. Freedom: Find It in the Text</h1>
+  <p>Contemporary Issues — matching ideas to the real words that state them</p>
+</header>
+
+<div class="card instructions">
+  <p><strong>Directions:</strong> Learn the key words. Then, for each document, read the lettered sentences from the real text. For each plain-language idea, pick the letter of the sentence that says that idea. Use "Check My Answers" to see how you did — you can try again if you get one wrong.</p>
+</div>
+
+<div class="card">
+  <h3>Step 1: Learn the Words First</h3>
+  <div class="vocab-grid">
+    <div class="vocab-card"><div class="icon">⚔️</div><div class="term">Authorize</div><div class="def">To officially give permission for something to happen.</div></div>
+    <div class="vocab-card"><div class="icon">🕵️</div><div class="term">Surveillance</div><div class="def">Watching or monitoring people, often without them knowing.</div></div>
+    <div class="vocab-card"><div class="icon">📜</div><div class="term">Warrant</div><div class="def">Official permission from a judge to search someone or something.</div></div>
+    <div class="vocab-card"><div class="icon">🛡️</div><div class="term">National Security</div><div class="def">Keeping the country and its people safe from danger.</div></div>
+    <div class="vocab-card"><div class="icon">⚖️</div><div class="term">Civil Liberties</div><div class="def">Basic freedoms protected from government interference — like privacy.</div></div>
+    <div class="vocab-card"><div class="icon">🏛️</div><div class="term">Congress</div><div class="def">The part of government (Senate + House) that makes laws.</div></div>
+  </div>
+  <div class="vocab-box">
+    <strong>Quick reminder</strong>
+    <dl>
+      <dt>🛡️ Security documents</dt><dd>Give the government MORE power to act.</dd>
+      <dt>⚖️ Rights documents</dt><dd>LIMIT what the government is allowed to do.</dd>
+    </dl>
+  </div>
+</div>
+
+<div class="card">
+  <h3>Step 2: Find It in the Text</h3>
+
+  <!-- CONSTITUTION -->
+  <div class="doc-card rights" data-doc="constitution">
+    <div class="doc-title"><span class="icon">⚖️</span><div><h4>U.S. Constitution &amp; 4th Amendment <span class="date">1787 / 1791</span></h4></div></div>
+    <div class="chunk-list">
+      <h5>The Real Text</h5>
+      <div class="chunk"><span class="chunk-letter">A</span><span>To declare War, grant Letters of Marque and Reprisal, and make Rules concerning Captures on Land and Water;</span></div>
+      <div class="chunk"><span class="chunk-letter">B</span><span>The President shall be Commander in Chief of the Army and Navy of the United States.</span></div>
+      <div class="chunk"><span class="chunk-letter">C</span><span>The right of the people to be secure in their persons, houses, papers, and effects, against unreasonable searches and seizures, shall not be violated,</span></div>
+      <div class="chunk"><span class="chunk-letter">D</span><span>and no Warrants shall issue, but upon probable cause, supported by Oath or affirmation, and particularly describing the place to be searched, and the persons or things to be seized.</span></div>
+    </div>
+    <div class="match-list">
+      <div class="match-row" data-correct="B"><span class="idea">1. The President is Commander in Chief — leads the military.</span><select onchange="checkOne(this)"><option value="">?</option><option>A</option><option>B</option><option>C</option><option>D</option></select><span class="feedback-icon"></span></div>
+      <div class="match-row" data-correct="A"><span class="idea">2. Congress has the power to declare war and control the military.</span><select onchange="checkOne(this)"><option value="">?</option><option>A</option><option>B</option><option>C</option><option>D</option></select><span class="feedback-icon"></span></div>
+      <div class="match-row" data-correct="C"><span class="idea">3. People have a right to be free from government searches.</span><select onchange="checkOne(this)"><option value="">?</option><option>A</option><option>B</option><option>C</option><option>D</option></select><span class="feedback-icon"></span></div>
+      <div class="match-row" data-correct="D"><span class="idea">4. A judge must approve a warrant — there has to be a good reason.</span><select onchange="checkOne(this)"><option value="">?</option><option>A</option><option>B</option><option>C</option><option>D</option></select><span class="feedback-icon"></span></div>
+    </div>
+    <button class="doc-check-btn" onclick="checkDoc(this)">Check My Answers</button><span class="doc-score"></span>
+  </div>
+
+  <!-- AUMF -->
+  <div class="doc-card security" data-doc="aumf">
+    <div class="doc-title"><span class="icon">🛡️</span><div><h4>AUMF — Authorization for Use of Military Force <span class="date">Sept. 18, 2001</span></h4></div></div>
+    <div class="chunk-list">
+      <h5>The Real Text</h5>
+      <div class="chunk"><span class="chunk-letter">A</span><span>Whereas, on September 11, 2001, acts of treacherous violence were committed against the United States and its citizens;</span></div>
+      <div class="chunk"><span class="chunk-letter">B</span><span>Resolved by the Senate and House of Representatives of the United States of America in Congress assembled...</span></div>
+      <div class="chunk"><span class="chunk-letter">C</span><span>The President is authorized to use all necessary and appropriate force against those nations, organizations, or persons he determines planned, authorized, committed, or aided the terrorist attacks that occurred on September 11, 2001,</span></div>
+      <div class="chunk"><span class="chunk-letter">D</span><span>or harbored such organizations or persons, in order to prevent any future acts of international terrorism against the United States by such nations, organizations or persons.</span></div>
+    </div>
+    <div class="match-list">
+      <div class="match-row" data-correct="C"><span class="idea">1. Congress gave the President power to use the military against anyone connected to the 9/11 attacks.</span><select onchange="checkOne(this)"><option value="">?</option><option>A</option><option>B</option><option>C</option><option>D</option></select><span class="feedback-icon"></span></div>
+      <div class="match-row" data-correct="D"><span class="idea">2. This included groups or countries that helped plan or hide the attackers.</span><select onchange="checkOne(this)"><option value="">?</option><option>A</option><option>B</option><option>C</option><option>D</option></select><span class="feedback-icon"></span></div>
+      <div class="match-row" data-correct="B"><span class="idea">3. This is a resolution passed by Congress — not a formal declaration of war.</span><select onchange="checkOne(this)"><option value="">?</option><option>A</option><option>B</option><option>C</option><option>D</option></select><span class="feedback-icon"></span></div>
+    </div>
+    <button class="doc-check-btn" onclick="checkDoc(this)">Check My Answers</button><span class="doc-score"></span>
+  </div>
+
+  <!-- BUSH ADDRESS -->
+  <div class="doc-card security" data-doc="bush">
+    <div class="doc-title"><span class="icon">🛡️</span><div><h4>President Bush's Address to Congress <span class="date">Sept. 20, 2001</span></h4></div></div>
+    <div class="chunk-list">
+      <h5>The Real Text</h5>
+      <div class="chunk"><span class="chunk-letter">A</span><span>Our war on terror begins with al Qaeda, but it does not end there. It will not end until every terrorist group of global reach has been found, stopped and defeated.</span></div>
+      <div class="chunk"><span class="chunk-letter">B</span><span>We will direct every resource at our command—every means of diplomacy, every tool of intelligence, every instrument of law enforcement, every financial influence, and every necessary weapon of war—to the destruction and to the defeat of the global terror network.</span></div>
+      <div class="chunk"><span class="chunk-letter">C</span><span>So tonight I announce the creation of a Cabinet-level position reporting directly to me—the Office of Homeland Security.</span></div>
+      <div class="chunk"><span class="chunk-letter">D</span><span>We will come together to give law enforcement the additional tools it needs to track down terror here at home.</span></div>
+    </div>
+    <div class="match-list">
+      <div class="match-row" data-correct="A"><span class="idea">1. Bush named al-Qaeda as the enemy and said the fight would not stop there.</span><select onchange="checkOne(this)"><option value="">?</option><option>A</option><option>B</option><option>C</option><option>D</option></select><span class="feedback-icon"></span></div>
+      <div class="match-row" data-correct="B"><span class="idea">2. The U.S. would use every tool — military, money, law enforcement, intelligence.</span><select onchange="checkOne(this)"><option value="">?</option><option>A</option><option>B</option><option>C</option><option>D</option></select><span class="feedback-icon"></span></div>
+      <div class="match-row" data-correct="C"><span class="idea">3. Bush announced a brand-new Cabinet position: Homeland Security.</span><select onchange="checkOne(this)"><option value="">?</option><option>A</option><option>B</option><option>C</option><option>D</option></select><span class="feedback-icon"></span></div>
+      <div class="match-row" data-correct="D"><span class="idea">4. Bush asked for new legal tools to track terrorists inside the U.S.</span><select onchange="checkOne(this)"><option value="">?</option><option>A</option><option>B</option><option>C</option><option>D</option></select><span class="feedback-icon"></span></div>
+    </div>
+    <button class="doc-check-btn" onclick="checkDoc(this)">Check My Answers</button><span class="doc-score"></span>
+  </div>
+
+  <!-- PATRIOT ACT -->
+  <div class="doc-card security" data-doc="patriot">
+    <div class="doc-title"><span class="icon">🛡️</span><div><h4>USA PATRIOT Act (DOJ Summary) <span class="date">Oct. 26, 2001</span></h4></div></div>
+    <div class="chunk-list">
+      <h5>The Real Text</h5>
+      <div class="chunk"><span class="chunk-letter">A</span><span>A roving wiretap can be authorized by a federal judge to apply to a particular suspect, rather than a particular phone or communications device.</span></div>
+      <div class="chunk"><span class="chunk-letter">B</span><span>Allows federal agents to ask a court for an order to obtain business records in national security terrorism cases.</span></div>
+      <div class="chunk"><span class="chunk-letter">C</span><span>The Act removed the major legal barriers that prevented the law enforcement, intelligence, and national defense communities from talking and coordinating their work.</span></div>
+      <div class="chunk"><span class="chunk-letter">D</span><span>Allows law enforcement officials to obtain a search warrant anywhere a terrorist-related activity occurred, instead of needing a separate warrant in every district.</span></div>
+    </div>
+    <div class="match-list">
+      <div class="match-row" data-correct="A"><span class="idea">1. Police can use wiretaps that follow a specific person, not just one phone.</span><select onchange="checkOne(this)"><option value="">?</option><option>A</option><option>B</option><option>C</option><option>D</option></select><span class="feedback-icon"></span></div>
+      <div class="match-row" data-correct="B"><span class="idea">2. Federal agents can get business records to investigate terrorism.</span><select onchange="checkOne(this)"><option value="">?</option><option>A</option><option>B</option><option>C</option><option>D</option></select><span class="feedback-icon"></span></div>
+      <div class="match-row" data-correct="C"><span class="idea">3. Government agencies can share information with each other more easily.</span><select onchange="checkOne(this)"><option value="">?</option><option>A</option><option>B</option><option>C</option><option>D</option></select><span class="feedback-icon"></span></div>
+      <div class="match-row" data-correct="D"><span class="idea">4. Law enforcement can get one search warrant that works across more than one area.</span><select onchange="checkOne(this)"><option value="">?</option><option>A</option><option>B</option><option>C</option><option>D</option></select><span class="feedback-icon"></span></div>
+    </div>
+    <button class="doc-check-btn" onclick="checkDoc(this)">Check My Answers</button><span class="doc-score"></span>
+  </div>
+
+</div>
+
+<div class="card">
+  <h3>Step 3: Your Response</h3>
+  <p>Your teacher will tell you which level to use.</p>
+  <div class="tier-select">
+    <button class="tier-btn" data-tier="l1" onclick="showTier('l1')">Level 1</button>
+    <button class="tier-btn" data-tier="l2" onclick="showTier('l2')">Level 2</button>
+    <button class="tier-btn" data-tier="l3" onclick="showTier('l3')">Level 3</button>
+  </div>
+
+  <div class="tier-panel" id="panel-l1">
+    <div class="tier-print-label">Level 1 Response</div>
+    <label>1. Pick ONE document. Which one did you pick?</label>
+    <select class="plain" id="l1_docpick">
+      <option value="">-- choose one --</option>
+      <option value="constitution">Constitution / 4th Amendment</option>
+      <option value="aumf">AUMF</option>
+      <option value="bush">Bush's Address</option>
+      <option value="patriot">PATRIOT Act</option>
+    </select>
+    <label>2. Pick one sentence you matched. Why does that sentence match the idea?</label>
+    <div class="frame">Sentence starter: "Sentence ___ matches because it says..."</div>
+    <textarea id="l1_q2"></textarea>
+    <label>3. Do you think this power/rule is fair? Why or why not?</label>
+    <div class="frame">Sentence starter: "I think this is fair/unfair because..."</div>
+    <textarea id="l1_q3"></textarea>
+  </div>
+
+  <div class="tier-panel" id="panel-l2">
+    <div class="tier-print-label">Level 2 Response</div>
+    <div class="organizer">
+      <div class="box"><h4>Security Documents (🛡️)</h4><div class="frame">"These documents give the government the power to..."</div><textarea id="l2_security"></textarea></div>
+      <div class="box"><h4>Rights Document (⚖️)</h4><div class="frame">"The Constitution/4th Amendment protects people by..."</div><textarea id="l2_rights"></textarea></div>
+      <div class="box"><h4>Where They Conflict</h4><div class="frame">"One example where these might conflict is..."</div><textarea id="l2_conflict"></textarea></div>
+      <div class="box"><h4>Your Opinion</h4><div class="frame">"I think the government got the balance right/wrong because..."</div><textarea id="l2_opinion"></textarea></div>
+    </div>
+    <div class="enl-note">Word bank: <em>power, protect, search, freedom, danger, permission, balance</em><br>Memory hook: 🛡️ = government gets MORE power. ⚖️ = government gets LESS power (people get more protection).</div>
+  </div>
+
+  <div class="tier-panel" id="panel-l3">
+    <div class="tier-print-label">Level 3 Response</div>
+    <label>Claim: Did the government's response to 9/11 strike a fair balance between security and individual freedom?</label>
+    <textarea id="l3_claim"></textarea>
+    <label>Evidence #1 — quote or paraphrase a specific sentence from a security-focused document (name the letter and document)</label>
+    <textarea id="l3_ev1"></textarea>
+    <label>Evidence #2 — quote or paraphrase a specific sentence from the Constitution / 4th Amendment (name the letter)</label>
+    <textarea id="l3_ev2"></textarea>
+    <label>Analysis: Explain HOW your two pieces of evidence support (or complicate) your claim.</label>
+    <textarea id="l3_analysis" style="min-height:100px;"></textarea>
+    <label>Conclusion: If you were in Congress in 2001, would you have voted for these measures? Why or why not?</label>
+    <textarea id="l3_conclusion" style="min-height:100px;"></textarea>
+    <h4>Self-Check Before You Submit</h4>
+    <ul class="checklist">
+      <li><input type="checkbox" id="c1"><label for="c1" style="font-weight:normal;margin:0;">My claim directly answers the question</label></li>
+      <li><input type="checkbox" id="c2"><label for="c2" style="font-weight:normal;margin:0;">I named the specific sentence/letter I used from a security document</label></li>
+      <li><input type="checkbox" id="c3"><label for="c3" style="font-weight:normal;margin:0;">I named the specific sentence/letter I used from the Constitution/4th Amendment</label></li>
+      <li><input type="checkbox" id="c4"><label for="c4" style="font-weight:normal;margin:0;">My analysis explains WHY the evidence matters</label></li>
+      <li><input type="checkbox" id="c5"><label for="c5" style="font-weight:normal;margin:0;">My conclusion takes a clear position</label></li>
+    </ul>
+  </div>
+
+  <div class="btn-row">
+    <button class="action-btn" onclick="openPrintModal()">Print / Save PDF</button>
+    <button class="action-btn secondary" onclick="clearAll()">Clear My Answers</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="printModal">
+  <div class="modal-box">
+    <h3>What would you like to print?</h3>
+    <p>Choose blank worksheet (no answers) or your saved responses.</p>
+    <div class="btn-row">
+      <button class="action-btn" onclick="printMode('blank')">Blank Worksheet</button>
+      <button class="action-btn" onclick="printMode('response')">My Responses</button>
+    </div>
+    <div class="btn-row"><button class="action-btn secondary" onclick="closePrintModal()">Cancel</button></div>
+  </div>
+</div>
+
+<script>
+  function checkOne(sel) {
+    const row = sel.closest('.match-row');
+    const correct = row.dataset.correct;
+    const icon = row.querySelector('.feedback-icon');
+    if (!sel.value) { sel.className=''; icon.textContent=''; saveAll(); return; }
+    if (sel.value === correct) {
+      sel.className = 'correct';
+      icon.textContent = '✅';
+    } else {
+      sel.className = 'wrong';
+      icon.textContent = '❌';
+    }
+    saveAll();
+  }
+
+  function checkDoc(btn) {
+    const docCard = btn.closest('.doc-card');
+    const rows = docCard.querySelectorAll('.match-row');
+    let correctCount = 0;
+    rows.forEach(row => {
+      const sel = row.querySelector('select');
+      checkOne(sel);
+      if (sel.value === row.dataset.correct) correctCount++;
+    });
+    docCard.querySelector('.doc-score').textContent = correctCount + ' / ' + rows.length + ' correct';
+  }
+
+  const textFields = [
+    'l1_docpick','l1_q2','l1_q3',
+    'l2_security','l2_rights','l2_conflict','l2_opinion',
+    'l3_claim','l3_ev1','l3_ev2','l3_analysis','l3_conclusion',
+    'c1','c2','c3','c4','c5'
+  ];
+  const STORAGE_KEY = 'security_freedom_matching_worksheet';
+
+  function saveAll() {
+    const data = {};
+    textFields.forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      data[id] = el.type === 'checkbox' ? el.checked : el.value;
+    });
+    const matches = {};
+    document.querySelectorAll('.match-row').forEach((row, i) => {
+      const sel = row.querySelector('select');
+      matches[row.closest('.doc-card').dataset.doc + '_' + i] = sel.value;
+    });
+    data._matches = matches;
+    const activeTier = document.querySelector('.tier-btn.active');
+    data._activeTier = activeTier ? activeTier.dataset.tier : null;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  }
+
+  function loadAll() {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    try {
+      const data = JSON.parse(raw);
+      textFields.forEach(id => {
+        const el = document.getElementById(id);
+        if (!el || !(id in data)) return;
+        if (el.type === 'checkbox') el.checked = data[id];
+        else el.value = data[id];
+      });
+      if (data._matches) {
+        document.querySelectorAll('.match-row').forEach((row, i) => {
+          const key = row.closest('.doc-card').dataset.doc + '_' + i;
+          const val = data._matches[key];
+          if (val) {
+            const sel = row.querySelector('select');
+            sel.value = val;
+            checkOne(sel);
+          }
+        });
+      }
+      if (data._activeTier) showTier(data._activeTier);
+    } catch(e) {}
+  }
+
+  function showTier(tier) {
+    document.querySelectorAll('.tier-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tier-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('panel-' + tier).classList.add('active');
+    document.querySelector('.tier-btn[data-tier="' + tier + '"]').classList.add('active');
+    saveAll();
+  }
+
+  function clearAll() {
+    if (!confirm('Clear all your answers? This cannot be undone.')) return;
+    localStorage.removeItem(STORAGE_KEY);
+    textFields.forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      if (el.type === 'checkbox') el.checked = false;
+      else el.value = '';
+    });
+    document.querySelectorAll('.match-row select').forEach(sel => { sel.value=''; sel.className=''; });
+    document.querySelectorAll('.feedback-icon').forEach(i => i.textContent='');
+    document.querySelectorAll('.doc-score').forEach(s => s.textContent='');
+  }
+
+  function openPrintModal() { document.getElementById('printModal').classList.add('active'); }
+  function closePrintModal() { document.getElementById('printModal').classList.remove('active'); }
+  function printMode(mode) {
+    document.body.classList.remove('print-blank');
+    if (mode === 'blank') document.body.classList.add('print-blank');
+    closePrintModal();
+    setTimeout(() => window.print(), 100);
+  }
+
+  document.addEventListener('input', saveAll);
+  document.addEventListener('change', saveAll);
+  window.addEventListener('load', () => {
+    loadAll();
+    if (!document.querySelector('.tier-btn.active')) showTier('l1');
+  });
+</script>
+
+</body>
+</html>
