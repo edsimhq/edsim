@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How 9/11 Shaped My Life — Perspectives Worksheet</title>
+<style>
+  * { box-sizing: border-box; touch-action: manipulation; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #f7f5f0;
+    color: #222;
+    line-height: 1.5;
+    -webkit-overflow-scrolling: touch;
+  }
+  header {
+    background: #1b2a4a;
+    color: #fff;
+    padding: 24px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
+  header h1 { margin: 0 0 8px 0; font-size: 1.6em; }
+  header p { margin: 0; font-size: 1em; opacity: 0.9; }
+
+  .card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+
+  .links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 12px;
+    margin-top: 12px;
+  }
+  .profile-link {
+    display: block;
+    min-height: 44px;
+    padding: 14px 16px;
+    background: #eef1f8;
+    border: 1px solid #c7cfe0;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #1b2a4a;
+    font-weight: bold;
+  }
+  .profile-link span {
+    display: block;
+    font-weight: normal;
+    font-size: 0.88em;
+    color: #444;
+    margin-top: 4px;
+  }
+  .profile-link:active, .profile-link:focus { background: #dbe2f2; }
+
+  .vocab-box {
+    background: #fff9e8;
+    border: 1px solid #e6d9a8;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-top: 10px;
+  }
+  .vocab-box dt { font-weight: bold; color: #6a5a10; }
+  .vocab-box dd { margin: 0 0 8px 0; }
+
+  .tier-select {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 14px 0;
+  }
+  .tier-btn {
+    min-height: 44px;
+    padding: 10px 18px;
+    border-radius: 8px;
+    border: 2px solid #1b2a4a;
+    background: #fff;
+    color: #1b2a4a;
+    font-weight: bold;
+    font-size: 1em;
+    cursor: pointer;
+  }
+  .tier-btn.active { background: #1b2a4a; color: #fff; }
+
+  .tier-panel { display: none; }
+  .tier-panel.active { display: block; }
+
+  label { display: block; font-weight: bold; margin-top: 14px; margin-bottom: 4px; }
+  .frame { font-style: italic; color: #555; font-size: 0.92em; margin-bottom: 4px; }
+  input[type="text"], textarea, select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #bbb;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 1em;
+    min-height: 44px;
+  }
+  textarea { min-height: 80px; resize: vertical; }
+
+  .organizer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 14px;
+    margin-top: 10px;
+  }
+  .organizer .box {
+    background: #f4f6fb;
+    border: 1px solid #ccd4e6;
+    border-radius: 8px;
+    padding: 12px;
+  }
+  .organizer .box h4 { margin: 0 0 6px 0; color: #1b2a4a; }
+
+  .checklist { list-style: none; padding: 0; margin-top: 10px; }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px dashed #ddd;
+  }
+  .checklist input[type="checkbox"] { width: 22px; height: 22px; min-height: 22px; flex-shrink: 0; }
+
+  .enl-note {
+    background: #eaf6ee;
+    border-left: 4px solid #5a9a6a;
+    padding: 8px 12px;
+    margin-top: 8px;
+    font-size: 0.9em;
+  }
+
+  .btn-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px; }
+  .action-btn {
+    min-height: 44px;
+    padding: 12px 20px;
+    border-radius: 8px;
+    border: none;
+    background: #1b2a4a;
+    color: #fff;
+    font-weight: bold;
+    font-size: 1em;
+    cursor: pointer;
+  }
+  .action-btn.secondary { background: #6a6a6a; }
+
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.5);
+    align-items: center; justify-content: center;
+    z-index: 100;
+  }
+  .modal-overlay.active { display: flex; }
+  .modal-box {
+    background: #fff;
+    border-radius: 10px;
+    padding: 24px;
+    max-width: 400px;
+    width: 90%;
+  }
+  .modal-box h3 { margin-top: 0; }
+  .modal-box .btn-row { justify-content: center; }
+
+  @media print {
+    header, .card.instructions, .links-grid, .tier-select, .btn-row, .modal-overlay { display: none !important; }
+    body { background: #fff; }
+    .tier-panel { display: block !important; }
+    .print-blank .prefilled { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>How 9/11 Shaped My Life</h1>
+  <p>Perspectives Worksheet — U.S. History</p>
+</header>
+
+<div class="card instructions">
+  <p><strong>Directions:</strong> Choose <strong>one</strong> (or two, if your teacher tells you to) of the people below. Click the link to read their story on TIME's website. Then come back here and pick the worksheet level your teacher assigned you.</p>
+</div>
+
+<div class="card">
+  <h3>Step 1: Choose a Person</h3>
+  <div class="links-grid">
+    <a class="profile-link" target="_blank" href="https://time.com/article/2026/09/03/how-9-11-shaped-my-life/#colin">
+      Colin McShane
+      <span>Son of a firefighter killed on 9/11, now a firefighter himself</span>
+    </a>
+    <a class="profile-link" target="_blank" href="https://time.com/article/2026/09/03/how-9-11-shaped-my-life/#kelsey">
+      Kelsey Griffin
+      <span>Aspiring airline pilot, inspired by a Flight 93 crew member's legacy</span>
+    </a>
+    <a class="profile-link" target="_blank" href="https://time.com/article/2026/09/03/how-9-11-shaped-my-life/#jukay">
+      Jukay Hsu
+      <span>Was a high school student near the towers; later served in Iraq and started a company</span>
+    </a>
+    <a class="profile-link" target="_blank" href="https://time.com/article/2026/09/03/how-9-11-shaped-my-life/#connie">
+      Connie Stevanus
+      <span>Lives near the Flight 93 crash site in Shanksville, PA; volunteers at the memorial</span>
+    </a>
+    <a class="profile-link" target="_blank" href="https://time.com/article/2026/09/03/how-9-11-shaped-my-life/#keira">
+      Keira, Eric &amp; Freya
+      <span>A family whose daughter was born the same day as the attacks</span>
+    </a>
+  </div>
+
+  <div class="vocab-box">
+    <strong>Helpful words</strong>
+    <dl>
+      <dt>Legacy</dt>
+      <dd>Something passed down or left behind by a person, especially after they die.</dd>
+      <dt>Veteran</dt>
+      <dd>A person who has served in the military.</dd>
+      <dt>Compensation Fund</dt>
+      <dd>A government program that pays money to people harmed by 9/11.</dd>
+      <dt>Memorial</dt>
+      <dd>A place or object built to help people remember someone or something important.</dd>
+    </dl>
+  </div>
+</div>
+
+<div class="card">
+  <h3>Step 2: Fill Out Your Worksheet</h3>
+  <p>Your teacher will tell you which level to use.</p>
+  <div class="tier-select">
+    <button class="tier-btn" data-tier="l1" onclick="showTier('l1')">Level 1</button>
+    <button class="tier-btn" data-tier="l2" onclick="showTier('l2')">Level 2</button>
+    <button class="tier-btn" data-tier="l3" onclick="showTier('l3')">Level 3</button>
+  </div>
+
+  <!-- LEVEL 1 -->
+  <div class="tier-panel" id="panel-l1">
+    <label>Name of the person you chose</label>
+    <input type="text" id="l1_name" placeholder="Type the name here">
+
+    <label>1. What happened to this person on September 11, 2001?</label>
+    <div class="frame">Sentence starter: "On September 11th, this person..."</div>
+    <textarea id="l1_q1"></textarea>
+
+    <label>2. How did this person's life change after that day?</label>
+    <div class="frame">Sentence starter: "After 9/11, this person's life changed because..."</div>
+    <textarea id="l1_q2"></textarea>
+
+    <label>3. What job, group, or cause does this person work with today?</label>
+    <div class="frame">Sentence starter: "Today, this person..."</div>
+    <textarea id="l1_q3"></textarea>
+
+    <label>4. In your own words, write 3-4 sentences telling this person's story.</label>
+    <div class="enl-note">Tip: Use your answers from #1-3 above. Put them in order like a mini-story.</div>
+    <textarea id="l1_q4" style="min-height:120px;"></textarea>
+  </div>
+
+  <!-- LEVEL 2 -->
+  <div class="tier-panel" id="panel-l2">
+    <label>Name of the person you chose</label>
+    <input type="text" id="l2_name" placeholder="Type the name here">
+
+    <div class="organizer">
+      <div class="box">
+        <h4>Who / What</h4>
+        <div class="frame">"This person is a ___ who..."</div>
+        <textarea id="l2_who"></textarea>
+      </div>
+      <div class="box">
+        <h4>What happened on 9/11</h4>
+        <div class="frame">"On 9/11, this person..."</div>
+        <textarea id="l2_what"></textarea>
+      </div>
+      <div class="box">
+        <h4>How life changed</h4>
+        <div class="frame">"Because of 9/11, this person..."</div>
+        <textarea id="l2_change"></textarea>
+      </div>
+      <div class="box">
+        <h4>Connection to history we studied</h4>
+        <div class="frame">"This story connects to ___ that we learned about, because..."</div>
+        <textarea id="l2_connect"></textarea>
+      </div>
+    </div>
+
+    <div class="enl-note">
+      Word bank: <em>war, military, veteran, memorial, government, community, family, career</em><br>
+      Memory hook: Think of the four boxes as a timeline — Before → During → After → Connection.
+    </div>
+
+    <label>Put your four boxes together into 4-6 sentences.</label>
+    <textarea id="l2_final" style="min-height:120px;"></textarea>
+  </div>
+
+  <!-- LEVEL 3 -->
+  <div class="tier-panel" id="panel-l3">
+    <label>Name of the person you chose</label>
+    <input type="text" id="l3_name" placeholder="Type the name here">
+
+    <label>Claim: How did 9/11 create effects that lasted far beyond that single day for this person?</label>
+    <div class="frame">Write one clear sentence that states your argument.</div>
+    <textarea id="l3_claim"></textarea>
+
+    <label>Evidence #1 — from the profile you read</label>
+    <textarea id="l3_ev1"></textarea>
+
+    <label>Evidence #2 — connect to a historical event, institution, or policy from this unit (e.g. AUMF, War in Afghanistan/Iraq, Department of Homeland Security, PATRIOT Act, Victim Compensation Fund)</label>
+    <textarea id="l3_ev2"></textarea>
+
+    <label>Analysis: Explain HOW your evidence supports your claim. Don't just restate it — say why it matters.</label>
+    <textarea id="l3_analysis" style="min-height:100px;"></textarea>
+
+    <label>Conclusion: What does this one person's story reveal about the broader impact of 9/11 on American life?</label>
+    <textarea id="l3_conclusion" style="min-height:100px;"></textarea>
+
+    <h4>Self-Check Before You Submit</h4>
+    <ul class="checklist">
+      <li><input type="checkbox" id="c1"><label for="c1" style="font-weight:normal;margin:0;">My claim directly answers the question</label></li>
+      <li><input type="checkbox" id="c2"><label for="c2" style="font-weight:normal;margin:0;">I used specific evidence from the profile</label></li>
+      <li><input type="checkbox" id="c3"><label for="c3" style="font-weight:normal;margin:0;">I connected the story to something we studied this unit</label></li>
+      <li><input type="checkbox" id="c4"><label for="c4" style="font-weight:normal;margin:0;">My analysis explains WHY the evidence matters, not just what it says</label></li>
+      <li><input type="checkbox" id="c5"><label for="c5" style="font-weight:normal;margin:0;">My conclusion connects to the bigger picture of 9/11's impact</label></li>
+    </ul>
+  </div>
+
+  <div class="btn-row">
+    <button class="action-btn" onclick="openPrintModal()">Print / Save PDF</button>
+    <button class="action-btn secondary" onclick="clearAll()">Clear My Answers</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="printModal">
+  <div class="modal-box">
+    <h3>What would you like to print?</h3>
+    <p>Choose blank worksheet (no answers) or your saved responses.</p>
+    <div class="btn-row">
+      <button class="action-btn" onclick="printMode('blank')">Blank Worksheet</button>
+      <button class="action-btn" onclick="printMode('response')">My Responses</button>
+    </div>
+    <div class="btn-row">
+      <button class="action-btn secondary" onclick="closePrintModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const fields = [
+    'l1_name','l1_q1','l1_q2','l1_q3','l1_q4',
+    'l2_name','l2_who','l2_what','l2_change','l2_connect','l2_final',
+    'l3_name','l3_claim','l3_ev1','l3_ev2','l3_analysis','l3_conclusion',
+    'c1','c2','c3','c4','c5'
+  ];
+  const STORAGE_KEY = 'sept11_perspectives_worksheet';
+
+  function saveAll() {
+    const data = {};
+    fields.forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      data[id] = el.type === 'checkbox' ? el.checked : el.value;
+    });
+    const activeTier = document.querySelector('.tier-btn.active');
+    data._activeTier = activeTier ? activeTier.dataset.tier : null;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  }
+
+  function loadAll() {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    try {
+      const data = JSON.parse(raw);
+      fields.forEach(id => {
+        const el = document.getElementById(id);
+        if (!el || !(id in data)) return;
+        if (el.type === 'checkbox') el.checked = data[id];
+        else el.value = data[id];
+      });
+      if (data._activeTier) showTier(data._activeTier);
+    } catch(e) {}
+  }
+
+  function showTier(tier) {
+    document.querySelectorAll('.tier-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tier-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('panel-' + tier).classList.add('active');
+    document.querySelector('.tier-btn[data-tier="' + tier + '"]').classList.add('active');
+    saveAll();
+  }
+
+  function clearAll() {
+    if (!confirm('Clear all your answers? This cannot be undone.')) return;
+    localStorage.removeItem(STORAGE_KEY);
+    fields.forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      if (el.type === 'checkbox') el.checked = false;
+      else el.value = '';
+    });
+  }
+
+  function openPrintModal() { document.getElementById('printModal').classList.add('active'); }
+  function closePrintModal() { document.getElementById('printModal').classList.remove('active'); }
+  function printMode(mode) {
+    document.body.classList.remove('print-blank');
+    if (mode === 'blank') document.body.classList.add('print-blank');
+    closePrintModal();
+    setTimeout(() => window.print(), 100);
+  }
+
+  document.addEventListener('input', saveAll);
+  document.addEventListener('change', saveAll);
+  window.addEventListener('load', () => {
+    loadAll();
+    if (!document.querySelector('.tier-btn.active')) showTier('l1');
+  });
+</script>
+
+</body>
+</html>
