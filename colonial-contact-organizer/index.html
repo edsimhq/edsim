@@ -108,6 +108,20 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
 .classify-select.picked-exchange{border-color:#5b93e8;color:#7fb0f5}
 .classify-select.picked-conflict{border-color:#e0574a;color:#f0897d}
 .classify-select.picked-resistance{border-color:#27ae60;color:#6fd99a}
+.classify-select:disabled{opacity:.6;cursor:not-allowed}
+
+/* CHECK ANSWERS PANEL */
+.check-panel{background:var(--surf);border:1px solid var(--border);border-radius:var(--r);padding:18px;margin-bottom:18px}
+.check-panel h3{font-family:var(--fd);font-size:15px;text-transform:uppercase;letter-spacing:.06em;color:var(--white);margin-bottom:10px}
+.check-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.check-btn{font-family:var(--fm);font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;
+  padding:0 18px;height:44px;min-height:44px;border-radius:var(--rs);cursor:pointer;transition:all .15s;
+  border:1px solid var(--accent-hi);background:var(--accent);color:var(--white)}
+.check-btn:hover{background:var(--accent-hi)}
+.check-btn:disabled{opacity:.45;cursor:not-allowed;background:var(--surf2);border-color:var(--border-hi);color:var(--dim)}
+.check-result{font-family:var(--fm);font-size:13px;color:var(--text);line-height:1.6}
+.check-result strong{color:var(--white)}
+.check-note{font-size:13px;color:var(--dim);margin-top:8px;line-height:1.5}
 .gloss{color:var(--accent-hi);text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px;cursor:help;font-weight:600}
 .gloss:focus-visible{outline:2px solid var(--accent-hi)}
 
@@ -393,6 +407,7 @@ let state = {
   advanced: false,
   selected: {},   // key: "power-docIdx-sentIdx" -> true
   classify: {},   // key: "power-docIdx-sentIdx" -> 'exchange'|'conflict'|'resistance'
+  checks: {},     // key: power -> { first:{correct,total}|null, second:{correct,total}|null }
   synthesis: ''
 };
 
@@ -427,7 +442,8 @@ function renderTabs(){
 function tabHasProgress(id){
   if(id==='directions') return true;
   if(id==='synthesis') return state.synthesis.trim().length>0;
-  return Object.keys(state.selected).some(k=>k.startsWith(id+'-') && state.selected[k]);
+  const rec = state.checks[id];
+  return !!(rec && rec.second);
 }
 
 function selKey(power, di, si){ return `${power}-${di}-${si}`; }
@@ -468,7 +484,7 @@ function renderDirections(){
         <span><i style="background:var(--conflict)"></i>Conflict — violence, disease, or displacement</span>
         <span><i style="background:var(--resistance)"></i>Resistance — Native nations responding, resisting, or adapting</span>
       </div>
-      <p style="margin-top:12px">You'll decide the theme yourself: each sentence has a dropdown where you classify it as Exchange, Conflict, or Resistance. There's no right-or-wrong check built in — be ready to explain your reasoning, since we'll compare answers as a class.</p>
+      <p style="margin-top:12px">You'll decide the theme yourself: each sentence has a dropdown where you classify it as Exchange, Conflict, or Resistance. Once you've classified every sentence in a tab, click <strong>Check Answers</strong> to see your score. You'll get one chance to revise before your final score locks in — so review carefully before checking a second time.</p>
       <p>Terms with a <span class="gloss">dotted underline</span> have a definition — tap or click them for a quick explanation. Use <strong>Simplify Text</strong> in the header for plain-language wording, or <strong>Advanced Text</strong> to read the original historical wording of each document.</p>
     </div>
 
@@ -479,8 +495,33 @@ function renderDirections(){
   `;
 }
 
+function totalSentencesFor(key){
+  return DOCS[key].docs.reduce((sum,d)=>sum+d.sentences.length,0);
+}
+function isLocked(key){
+  const rec = state.checks[key];
+  return !!(rec && rec.second);
+}
+function scoreFor(key){
+  const p = DOCS[key];
+  let total=0, correct=0;
+  p.docs.forEach((doc,di)=>{
+    doc.sentences.forEach((s,si)=>{
+      total++;
+      const k = selKey(key, di, si);
+      if(state.classify[k] === s.theme) correct++;
+    });
+  });
+  return {correct, total};
+}
+function allClassified(key){
+  const p = DOCS[key];
+  return p.docs.every((doc,di)=>doc.sentences.every((s,si)=>!!state.classify[selKey(key,di,si)]));
+}
+
 function renderPower(key){
   const p = DOCS[key];
+  const locked = isLocked(key);
   let html = `
     <div class="power-head">
       <div class="power-title">${p.label} Contact</div>
@@ -500,7 +541,7 @@ function renderPower(key){
           <div class="sent-text">${text}
             <div class="classify-row">
               <span class="classify-label">This is:</span>
-              <select class="classify-select${picked?' picked-'+picked:''}" data-key="${k}" aria-label="Classify this sentence as exchange, conflict, or resistance">
+              <select class="classify-select${picked?' picked-'+picked:''}" data-key="${k}" ${locked?'disabled':''} autocomplete="off" aria-label="Classify this sentence as exchange, conflict, or resistance">
                 <option value="" ${picked===''?'selected':''}>Choose one…</option>
                 <option value="exchange" ${picked==='exchange'?'selected':''}>Exchange</option>
                 <option value="conflict" ${picked==='conflict'?'selected':''}>Conflict</option>
@@ -508,10 +549,39 @@ function renderPower(key){
               </select>
             </div>
           </div>
+
         </div>`;
     });
     html += `</div></div>`;
   });
+
+  // Check Answers panel
+  const rec = state.checks[key];
+  html += `<div class="check-panel">
+    <h3>Check Your Classifications</h3>`;
+  if(!rec || !rec.first){
+    html += `
+      <div class="check-row">
+        <button class="check-btn" id="checkBtn">Check Answers (Attempt 1)</button>
+        <span class="check-result">Classify every sentence above, then check your work.</span>
+      </div>
+      <p class="check-note">You'll get one chance to revise after seeing your first score — make it count.</p>`;
+  } else if(rec.first && !rec.second){
+    html += `
+      <div class="check-row">
+        <button class="check-btn" id="checkBtn">Check Answers (Final Attempt)</button>
+        <span class="check-result">First attempt: <strong>${rec.first.correct} of ${rec.first.total} correct</strong></span>
+      </div>
+      <p class="check-note">Review your answers above and revise anything you'd like to change. This next check is final.</p>`;
+  } else {
+    html += `
+      <div class="check-row">
+        <button class="check-btn" disabled>Answers Locked</button>
+        <span class="check-result">First attempt: <strong>${rec.first.correct} of ${rec.first.total}</strong> &nbsp;→&nbsp; Final: <strong>${rec.second.correct} of ${rec.second.total} correct</strong></span>
+      </div>
+      <p class="check-note">This section is complete. Move on to the next power.</p>`;
+  }
+  html += `</div>`;
 
   const idx = TABS.findIndex(t=>t.id===key);
   html += `
@@ -602,6 +672,7 @@ function render(){
 
   // wire classify dropdowns
   panel.querySelectorAll('.classify-select').forEach(el=>{
+    el.value = state.classify[el.dataset.key] || ''; // force correct value, overriding any browser form-restore
     el.addEventListener('click', (e)=>{ e.stopPropagation(); });
     el.addEventListener('change', (e)=>{
       e.stopPropagation();
@@ -612,6 +683,12 @@ function render(){
       el.className = 'classify-select' + (val ? ' picked-'+val : '');
     });
   });
+
+  // wire check-answers button
+  const checkBtn = document.getElementById('checkBtn');
+  if(checkBtn){
+    checkBtn.addEventListener('click', ()=>{ checkAnswers(state.tab); });
+  }
 
   // wire synthesis textarea
   const tea = document.getElementById('teaBox');
@@ -630,6 +707,23 @@ function render(){
 
 function toggleSentence(key){
   state.selected[key] = !state.selected[key];
+  saveState();
+  render();
+}
+function checkAnswers(key){
+  if(!allClassified(key)){
+    showToast('Classify every sentence in this tab before checking.');
+    return;
+  }
+  const rec = state.checks[key] || (state.checks[key] = {first:null, second:null});
+  const score = scoreFor(key);
+  if(!rec.first){
+    rec.first = score;
+  } else if(!rec.second){
+    rec.second = score;
+  } else {
+    return; // already locked
+  }
   saveState();
   render();
 }
@@ -680,9 +774,35 @@ document.getElementById('advBtn').addEventListener('click', ()=>{
 });
 
 /* ============ EXPORT ============ */
+function comprehensionSummaryLines(){
+  const lines = [];
+  let totalSecondCorrect=0, totalSecondPossible=0, tabsCompleted=0;
+  ['spanish','french','dutch','english'].forEach(key=>{
+    const rec = state.checks[key];
+    if(rec && rec.first){
+      const firstStr = `${rec.first.correct}/${rec.first.total}`;
+      const secondStr = rec.second ? `${rec.second.correct}/${rec.second.total}` : '(not yet final)';
+      lines.push({power: DOCS[key].label, first: firstStr, second: secondStr});
+      if(rec.second){
+        totalSecondCorrect += rec.second.correct;
+        totalSecondPossible += rec.second.total;
+        tabsCompleted++;
+      }
+    } else {
+      lines.push({power: DOCS[key].label, first: '(not attempted)', second: '(not attempted)'});
+    }
+  });
+  return { lines, totalSecondCorrect, totalSecondPossible, tabsCompleted };
+}
+
 function buildExportText(){
   let out = `EUROPEAN CONTACT WITH NATIVE AMERICANS — Student Export\n${new Date().toLocaleDateString()}\n\n`;
-  out += `SELECTED EVIDENCE\n${'-'.repeat(40)}\n`;
+  const comp = comprehensionSummaryLines();
+  out += `COMPREHENSION CHECK RESULTS\n${'-'.repeat(40)}\n`;
+  comp.lines.forEach(l=>{ out += `${l.power}: First attempt ${l.first}  |  Final attempt ${l.second}\n`; });
+  out += `Tabs completed (final check taken): ${comp.tabsCompleted} of 4\n`;
+  if(comp.tabsCompleted>0) out += `Total correct on final attempts: ${comp.totalSecondCorrect} of ${comp.totalSecondPossible}\n`;
+  out += `\nSELECTED EVIDENCE\n${'-'.repeat(40)}\n`;
   const keys = Object.keys(state.selected).filter(k=>state.selected[k]);
   if(keys.length===0) out += `(none selected)\n`;
   keys.forEach(k=>{
@@ -705,7 +825,7 @@ function showToast(msg){
 }
 
 function resetSim(){
-  state = { tab:'directions', enl:false, advanced:false, selected:{}, classify:{}, synthesis:'' };
+  state = { tab:'directions', enl:false, advanced:false, selected:{}, classify:{}, checks:{}, synthesis:'' };
   localStorage.removeItem(LS_KEY);
   render();
   window.scrollTo({top:0,behavior:'smooth'});
@@ -756,6 +876,15 @@ function printSections(sections){
     .doc-title{font-weight:bold;margin-top:14px}.doc-sub{font-size:12px;color:#555;margin-bottom:6px}
     p{margin:6px 0}</style></head><body>`;
   body += `<h1>European Contact with Native Americans</h1><p>${new Date().toLocaleDateString()}</p>`;
+
+  // Comprehension check results always print, regardless of section selection
+  const comp = comprehensionSummaryLines();
+  body += `<h2>Comprehension Check Results</h2><table style="border-collapse:collapse;width:100%;margin-bottom:10px">
+    <tr style="background:#eee"><th style="text-align:left;padding:4px 8px;border:1px solid #ccc">Power</th><th style="text-align:left;padding:4px 8px;border:1px solid #ccc">First Attempt</th><th style="text-align:left;padding:4px 8px;border:1px solid #ccc">Final Attempt</th></tr>`;
+  comp.lines.forEach(l=>{
+    body += `<tr><td style="padding:4px 8px;border:1px solid #ccc">${l.power}</td><td style="padding:4px 8px;border:1px solid #ccc">${l.first}</td><td style="padding:4px 8px;border:1px solid #ccc">${l.second}</td></tr>`;
+  });
+  body += `</table><p>Tabs completed: ${comp.tabsCompleted} of 4${comp.tabsCompleted>0 ? ` — Total correct on final attempts: ${comp.totalSecondCorrect} of ${comp.totalSecondPossible}` : ''}</p>`;
 
   if(sections.includes('directions')){
     body += `<h2>Directions</h2><p>Trace European contact with Native Americans across the Dutch, English, French, and Spanish. Identify cultural exchange, conflict, and resistance.</p>`;
