@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Ideas Behind the Ink · EdSim</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Source+Code+Pro:wght@400;500;600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0d14;--surf:#10151f;--surf2:#161c29;--surf3:#1c2333;
+  --border:#232b3d;--border-hi:#3d4a66;
+  --text:#e2e6ee;--dim:#8590a8;--faint:#3d4a66;
+  --accent:#a5792e;--accent-hi:#d4a537;--accent-glow:rgba(212,165,55,.25);
+  --white:#f5f6f9;
+  --ok:#1f7a45;--ok-hi:#27ae60;--err:#a3352a;--err-hi:#e0574a;
+  --nr:#5b93e8;--sc:#d4a537;--ps:#c0392b;--sop:#8e6fd9;--fed:#2fa88f;
+  --fd:'Oswald',sans-serif;--fm:'Source Code Pro',monospace;--fb:'Libre Baskerville',Georgia,serif;
+  --ease:cubic-bezier(.4,0,.2,1);--r:8px;--rs:5px;
+}
+html,body{min-height:100%}
+body{font-family:var(--fb);background:var(--bg);color:var(--text);display:flex;flex-direction:column;min-height:100vh}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
+  background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.05) 3px,rgba(0,0,0,.05) 4px)}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.04;
+  background-image:radial-gradient(circle at 20% 20%,var(--accent-hi) 0,transparent 40%),radial-gradient(circle at 80% 70%,var(--accent-hi) 0,transparent 45%)}
+
+/* HEADER */
+.hdr{position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;
+  padding:0 18px;height:52px;border-bottom:1px solid var(--border);
+  background:rgba(10,13,20,.94);backdrop-filter:blur(10px);flex-shrink:0;gap:10px;flex-wrap:wrap}
+.hdr-l{display:flex;align-items:center;gap:10px;min-width:0}
+.logo{font-family:var(--fd);font-size:15px;font-weight:600;color:var(--dim);letter-spacing:.1em;white-space:nowrap}
+.hdiv{width:1px;height:15px;background:var(--border);flex-shrink:0}
+.unit{font-family:var(--fm);font-size:10.5px;color:var(--accent-hi);letter-spacing:.1em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hdr-r{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.hdr-btn{font-family:var(--fm);font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;
+  padding:0 12px;height:34px;min-height:34px;border-radius:var(--rs);cursor:pointer;
+  background:transparent;border:1px solid var(--border);color:var(--dim);transition:all .15s;display:flex;align-items:center;gap:6px}
+.hdr-btn:hover{border-color:var(--border-hi);color:var(--white)}
+.hdr-btn.on{border-color:var(--accent-hi);color:var(--accent-hi);background:var(--accent-glow)}
+.hdr-btn:focus-visible{outline:2px solid var(--accent-hi);outline-offset:2px}
+
+/* TABS */
+.tabbar{position:sticky;top:52px;z-index:55;display:flex;overflow-x:auto;
+  background:var(--surf);border-bottom:1px solid var(--border);flex-shrink:0;scrollbar-width:thin}
+.tab{font-family:var(--fd);font-size:13px;font-weight:500;letter-spacing:.04em;text-transform:uppercase;
+  padding:0 16px;height:46px;min-height:44px;display:flex;align-items:center;gap:7px;white-space:nowrap;
+  background:transparent;border:none;border-bottom:3px solid transparent;color:var(--dim);cursor:pointer;transition:all .15s}
+.tab:hover{color:var(--text);background:var(--surf2)}
+.tab.active{color:var(--white);border-bottom-color:var(--accent-hi);background:var(--surf2)}
+.tab-dot{width:8px;height:8px;border-radius:50%;background:var(--faint);flex-shrink:0}
+.tab-dot.done{background:var(--ok-hi)}
+.tab:focus-visible{outline:2px solid var(--accent-hi);outline-offset:-2px}
+
+/* MAIN */
+.main{position:relative;z-index:5;flex:1;display:flex;flex-direction:column;align-items:center;padding:26px 16px 60px;width:100%}
+.panel{width:100%;max-width:880px;animation:fadeUp .35s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* DIRECTIONS / GENERIC CARD */
+.dir-title{font-family:var(--fd);font-size:clamp(26px,5vw,40px);font-weight:700;text-transform:uppercase;letter-spacing:.03em;color:var(--white);margin-bottom:6px;line-height:1.1}
+.dir-sub{font-family:var(--fd);font-size:16px;font-weight:300;letter-spacing:.08em;color:var(--accent-hi);text-transform:uppercase;margin-bottom:22px}
+.dir-card{background:var(--surf);border:1px solid var(--border);border-radius:var(--r);padding:20px;margin-bottom:14px}
+.dir-card h3{font-family:var(--fd);font-size:15px;letter-spacing:.06em;text-transform:uppercase;color:var(--white);margin-bottom:10px}
+.dir-card p{font-size:15px;line-height:1.65;color:var(--text);margin-bottom:8px}
+.dir-list{list-style:none;display:flex;flex-direction:column;gap:8px}
+.dir-list li{display:flex;gap:10px;align-items:flex-start;font-size:14.5px;line-height:1.5;color:var(--text)}
+.dir-list .swatch{width:12px;height:12px;border-radius:3px;margin-top:4px;flex-shrink:0}
+.time-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:12px}
+.time-item{background:var(--surf2);border:1px solid var(--border);border-radius:var(--rs);padding:10px 12px}
+.time-item .tn{font-family:var(--fm);font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.06em}
+.time-item .tv{font-family:var(--fd);font-size:18px;color:var(--white);margin-top:2px}
+
+/* VOCAB TAB */
+.term-card{background:var(--surf);border:1px solid var(--border);border-radius:var(--r);padding:18px 20px;margin-bottom:12px}
+.term-name{font-family:var(--fd);font-size:19px;font-weight:600;letter-spacing:.02em;color:var(--accent-hi);margin-bottom:6px}
+.term-def{font-size:15px;line-height:1.6;color:var(--text);margin-bottom:8px}
+.term-ex{font-size:13.5px;line-height:1.55;color:var(--dim);border-left:3px solid var(--border-hi);padding-left:12px}
+.term-ex b{color:var(--dim);font-family:var(--fm);font-size:10px;letter-spacing:.06em;text-transform:uppercase;display:block;margin-bottom:3px}
+.sub-list{list-style:none;margin-top:6px;display:flex;flex-direction:column;gap:6px}
+.sub-list li{font-size:14.5px;line-height:1.55;color:var(--text)}
+.sub-list li b{color:var(--accent-hi)}
+
+/* MATCHING TAB */
+.match-wrap{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:640px){.match-wrap{grid-template-columns:1fr}}
+.match-col-label{font-family:var(--fm);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:8px}
+.match-chip{background:var(--surf);border:2px solid var(--border);border-radius:var(--rs);padding:12px 14px;
+  margin-bottom:9px;cursor:pointer;transition:all .15s var(--ease);font-size:14px;line-height:1.5;min-height:44px;
+  display:flex;align-items:center}
+.match-chip:hover:not(.matched):not(.disabled){border-color:var(--border-hi);transform:translateY(-1px)}
+.match-chip.term{font-family:var(--fd);font-weight:600;letter-spacing:.02em;font-size:15px}
+.match-chip.selected{border-color:var(--accent-hi);background:var(--accent-glow);box-shadow:0 0 0 2px var(--accent-hi)}
+.match-chip.matched{border-color:var(--ok-hi);background:rgba(39,174,96,.12);color:var(--dim);cursor:default;opacity:.75}
+.match-chip.wrong{border-color:var(--err-hi);background:rgba(224,87,74,.15);animation:shake .3s}
+.match-chip:focus-visible{outline:2px solid var(--accent-hi);outline-offset:1px}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.match-progress{font-family:var(--fm);font-size:12px;color:var(--dim);margin:14px 0;text-align:center}
+.match-complete{background:rgba(39,174,96,.12);border:1px solid var(--ok-hi);border-radius:var(--r);padding:16px 20px;margin-top:14px;text-align:center}
+.match-complete h3{font-family:var(--fd);font-size:18px;color:var(--ok-hi);text-transform:uppercase;letter-spacing:.04em}
+
+/* DOC / SCAN TAB */
+.group-head{display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap;margin-top:26px}
+.group-head:first-child{margin-top:0}
+.group-title{font-family:var(--fd);font-size:clamp(20px,4vw,28px);font-weight:700;text-transform:uppercase;letter-spacing:.03em;color:var(--white)}
+.group-badge{font-family:var(--fm);font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:20px;border:1px solid var(--accent-hi);color:var(--accent-hi)}
+.doc{background:var(--surf);border:1px solid var(--border);border-radius:var(--r);margin-bottom:14px;overflow:hidden}
+.doc-body{padding:16px 18px}
+.sent{padding:12px 0;border-bottom:1px solid var(--border)}
+.sent:last-child{border-bottom:none}
+.sent-text{font-size:15.5px;line-height:1.65;color:var(--text)}
+.classify-row{display:flex;align-items:center;gap:8px;margin-top:10px;flex-wrap:wrap}
+.classify-label{font-family:var(--fm);font-size:9.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--dim)}
+.classify-select{font-family:var(--fm);font-size:11.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;
+  background:var(--surf2);color:var(--text);border:1px solid var(--border-hi);border-radius:var(--rs);
+  padding:7px 26px 7px 10px;min-height:36px;cursor:pointer;appearance:none;-webkit-appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath fill='%238590a8' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 9px center;transition:border-color .15s}
+.classify-select:focus-visible{outline:2px solid var(--accent-hi);outline-offset:1px}
+.classify-select.picked{border-color:var(--accent-hi);color:var(--accent-hi)}
+.classify-select:disabled{opacity:.65;cursor:not-allowed}
+
+/* CHECK PANEL */
+.check-panel{background:var(--surf);border:1px solid var(--border);border-radius:var(--r);padding:18px;margin-bottom:10px}
+.check-panel h3{font-family:var(--fd);font-size:15px;text-transform:uppercase;letter-spacing:.06em;color:var(--white);margin-bottom:10px}
+.check-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.check-btn{font-family:var(--fm);font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;
+  padding:0 18px;height:44px;min-height:44px;border-radius:var(--rs);cursor:pointer;transition:all .15s;
+  border:1px solid var(--accent-hi);background:var(--accent);color:var(--white)}
+.check-btn:hover{background:var(--accent-hi)}
+.check-btn:disabled{opacity:.45;cursor:not-allowed;background:var(--surf2);border-color:var(--border-hi);color:var(--dim)}
+.check-result{font-family:var(--fm);font-size:13px;color:var(--text);line-height:1.6}
+.check-result strong{color:var(--white)}
+.check-note{font-size:13px;color:var(--dim);margin-top:8px;line-height:1.5}
+
+/* NAV */
+.navrow{display:flex;justify-content:space-between;align-items:center;margin-top:24px;gap:10px;flex-wrap:wrap}
+.navbtn{font-family:var(--fm);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  padding:0 20px;height:46px;min-height:44px;border-radius:var(--rs);cursor:pointer;transition:all .15s;
+  border:1px solid var(--border-hi);background:var(--surf2);color:var(--text);display:flex;align-items:center;gap:8px}
+.navbtn:hover{border-color:var(--accent-hi);color:var(--white)}
+.navbtn.primary{background:var(--accent);border-color:var(--accent);color:var(--white)}
+.navbtn.primary:hover{background:var(--accent-hi);border-color:var(--accent-hi)}
+.navbtn:disabled{opacity:.35;cursor:not-allowed}
+.navbtn:focus-visible{outline:2px solid var(--accent-hi);outline-offset:2px}
+
+/* EXIT TICKET */
+.tea-label{font-family:var(--fd);font-size:15px;text-transform:uppercase;letter-spacing:.05em;color:var(--white);margin-bottom:4px}
+.tea-hint{font-size:15px;color:var(--text);margin-bottom:14px;line-height:1.6}
+textarea.tea{width:100%;min-height:260px;background:var(--surf2);border:1px solid var(--border);border-radius:var(--rs);
+  padding:14px;color:var(--white);font-family:var(--fb);font-size:15px;line-height:1.65;resize:vertical;overflow:visible}
+textarea.tea:focus{outline:none;border-color:var(--accent-hi)}
+
+/* MODAL / TOAST */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:300;display:none;align-items:center;justify-content:center;padding:16px}
+.modal-bg.show{display:flex}
+.modal{background:var(--surf2);border:1px solid var(--border-hi);border-radius:var(--r);padding:22px;max-width:420px;width:100%;max-height:85vh;overflow-y:auto}
+.modal h3{font-family:var(--fd);font-size:18px;text-transform:uppercase;letter-spacing:.04em;color:var(--white);margin-bottom:14px}
+.modal-opt{display:flex;align-items:center;gap:10px;padding:10px 4px;border-bottom:1px solid var(--border);font-size:14.5px;min-height:44px}
+.modal-opt input{width:18px;height:18px;flex-shrink:0}
+.modal-actions{display:flex;gap:10px;margin-top:16px}
+.modal-actions .navbtn{flex:1;justify-content:center}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(100px);z-index:400;
+  background:var(--surf3);border:1px solid var(--accent-hi);border-radius:var(--rs);padding:12px 20px;
+  font-size:14px;color:var(--white);transition:transform .3s var(--ease);max-width:90vw;text-align:center}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+@media print{
+  .hdr,.tabbar,.navrow,.hdr-btn{display:none!important}
+  body::after,body::before{display:none}
+  .panel{max-width:100%}
+  textarea.tea{overflow:visible;height:auto}
+}
+@media (max-width:640px){
+  .hdr{padding:0 12px;height:auto;flex-direction:column;align-items:stretch;padding-top:8px;padding-bottom:8px}
+  .hdr-r{justify-content:flex-end}
+  .tabbar{top:auto}
+}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-l">
+    <span class="logo">EDSIM</span>
+    <div class="hdiv"></div>
+    <span class="unit">PIG · Ideas Behind the Ink</span>
+  </div>
+  <div class="hdr-r">
+    <button class="hdr-btn" id="simplifyBtn" aria-pressed="false" aria-label="Toggle simplified text mode">
+      <span>🌐</span> <span id="simplifyLabel">Simplify Text</span>
+    </button>
+    <button class="hdr-btn" id="pdfBtn">Save as PDF</button>
+    <button class="hdr-btn" id="copyBtn">Copy Text</button>
+  </div>
+</div>
+
+<div class="tabbar" id="tabbar" role="tablist" aria-label="Activity sections"></div>
+
+<div class="main">
+  <div class="panel" id="panel"></div>
+</div>
+
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <h3>Choose Sections to Save</h3>
+    <div id="modalOpts"></div>
+    <div class="modal-actions">
+      <button class="navbtn" id="modalCancel">Cancel</button>
+      <button class="navbtn primary" id="modalConfirm">Save PDF</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================================================
+   DATA
+============================================================ */
+const LS_KEY = 'edsim_ideas_ink_v1';
+
+const TERMS = [
+  {id:'natural_rights', label:'Natural Rights',
+    def:`Rights that belong to all people simply by being human — not granted by government and not able to be legitimately taken away. Locke argued these were life, liberty, and property; the Declaration reframed them as "Life, Liberty, and the pursuit of Happiness."`,
+    ex:`The Declaration's claim that all people are "endowed by their Creator with certain unalienable Rights" is a direct statement of natural rights.`},
+  {id:'social_contract', label:'Social Contract',
+    def:`The idea that government's authority comes from an agreement between the people and those who govern them — people give up some freedom in exchange for protection and order, and government's legitimacy depends on holding up its end.`,
+    ex:`The Declaration argues that when a government breaks this agreement, "it is the Right of the People to alter or to abolish it."`},
+  {id:'popular_sovereignty', label:'Popular Sovereignty',
+    def:`The principle that ultimate political power belongs to the people, not a monarch or ruling class — government exists because the people consent to it.`,
+    ex:`The Constitution's opening line, "We the People," establishes the document's authority as coming from citizens, not a king.`},
+  {id:'separation_of_powers', label:'Separation of Powers',
+    def:`Dividing government authority among separate branches — legislative, executive, judicial — so no single branch holds total control.`,
+    ex:`Articles I, II, and III of the Constitution each establish a different branch with distinct powers.`},
+  {id:'federalism', label:"Federalism / States' Rights",
+    def:`The division of power between the national government and state governments, with certain powers reserved to the states.`,
+    ex:`The 10th Amendment states that powers not given to the federal government "are reserved to the States respectively, or to the people."`},
+  {id:'freedom_religion', label:'Freedom of Religion',
+    def:`Freedom to practice (or not practice) any faith, free from government establishment or interference (1st Amendment).`,
+    ex:`Congress cannot create an official U.S. religion or ban a religious group from practicing.`},
+  {id:'freedom_speech', label:'Freedom of Speech',
+    def:`Freedom to express opinions, including criticism of the government, without censorship (1st Amendment).`,
+    ex:`A student writing a letter to the editor criticizing a government policy is protected by freedom of speech.`},
+  {id:'privacy', label:'Privacy',
+    def:`Protection from unreasonable government searches and seizures (4th Amendment).`,
+    ex:`Police generally need a warrant before searching someone's home — that requirement comes from this protection.`},
+  {id:'rights_accused', label:'Rights of the Accused',
+    def:`Protections like due process, right to an attorney, and protection against self-incrimination for anyone accused of a crime (5th/6th Amendments).`,
+    ex:`Someone read their Miranda rights — "you have the right to remain silent" — is being reminded of these protections.`}
+];
+const TERM_MAP = {}; TERMS.forEach(t=>TERM_MAP[t.id]=t);
+// Branch-specific variants of Separation of Powers, used only in the Constitution
+// Scan & Identify section so students distinguish legislative/executive/judicial.
+// Vocabulary and Matching still use the single general "separation_of_powers" term.
+TERM_MAP.sop_legislative = {id:'sop_legislative', label:'Separation of Powers (Legislative)'};
+TERM_MAP.sop_executive  = {id:'sop_executive',  label:'Separation of Powers (Executive)'};
+TERM_MAP.sop_judicial   = {id:'sop_judicial',   label:'Separation of Powers (Judicial)'};
+
+// theme: term id matching TERMS above
+const GROUPS = {
+  declaration: {
+    label:'Declaration of Independence', color:'var(--ps)',
+    allowed:['natural_rights','popular_sovereignty','social_contract'],
+    docTitle:'Declaration of Independence, 1776', docSub:'Original wording',
+    sentences:[
+      {term:'natural_rights',
+        std:`We hold these truths to be self-evident, that all men are created equal, that they are endowed by their Creator with certain unalienable Rights, that among these are Life, Liberty and the pursuit of Happiness.`,
+        simp:`We believe it's obvious that everyone is created equal, and that everyone has rights nobody can take away — including the right to life, freedom, and the pursuit of happiness.`},
+      {term:'popular_sovereignty',
+        std:`Governments are instituted among Men, deriving their just powers from the consent of the governed.`,
+        simp:`Governments get their power from the people they govern — the people have to agree to be governed.`},
+      {term:'social_contract',
+        std:`Whenever any Form of Government becomes destructive of these ends, it is the Right of the People to alter or to abolish it.`,
+        simp:`When a government stops protecting these rights, the people have the right to change it or get rid of it.`}
+    ]
+  },
+  constitution: {
+    label:'The Constitution', color:'var(--sop)',
+    allowed:['popular_sovereignty','sop_legislative','sop_executive','sop_judicial'],
+    docTitle:'U.S. Constitution, 1787', docSub:'Original wording',
+    sentences:[
+      {term:'popular_sovereignty',
+        std:`We the People of the United States... do ordain and establish this Constitution.`,
+        simp:`We, the people of the United States, are creating this Constitution.`},
+      {term:'sop_legislative',
+        std:`All legislative Powers herein granted shall be vested in a Congress of the United States.`,
+        simp:`Congress holds all lawmaking power.`},
+      {term:'sop_executive',
+        std:`The executive Power shall be vested in a President of the United States of America.`,
+        simp:`The President holds the power to enforce and carry out the laws.`},
+      {term:'sop_judicial',
+        std:`The judicial Power of the United States, shall be vested in one supreme Court.`,
+        simp:`The Supreme Court holds the power to interpret the laws.`}
+    ]
+  },
+  billofrights: {
+    label:'The Bill of Rights', color:'var(--fed)',
+    allowed:['freedom_religion','freedom_speech','privacy','rights_accused','federalism'],
+    docTitle:'Bill of Rights, 1791', docSub:'Original wording, trimmed to the relevant clause',
+    sentences:[
+      {term:'freedom_religion',
+        std:`Congress shall make no law respecting an establishment of religion, or prohibiting the free exercise thereof.`,
+        simp:`The government cannot create an official religion or stop people from practicing their own religion.`},
+      {term:'freedom_speech',
+        std:`Congress shall make no law... abridging the freedom of speech.`,
+        simp:`The government cannot stop people from speaking freely.`},
+      {term:'privacy',
+        std:`The right of the people to be secure in their persons, houses, papers, and effects, against unreasonable searches and seizures, shall not be violated.`,
+        simp:`People have the right to feel safe in their own bodies, homes, and belongings — the government cannot search or take them without good reason.`},
+      {term:'rights_accused',
+        std:`No person shall be compelled in any criminal case to be a witness against himself, nor be deprived of life, liberty, or property, without due process of law.`,
+        simp:`A person accused of a crime cannot be forced to testify against themselves, and the government must follow fair legal procedures before taking away someone's life, freedom, or property.`},
+      {term:'federalism',
+        std:`The powers not delegated to the United States by the Constitution, nor prohibited by it to the States, are reserved to the States respectively, or to the people.`,
+        simp:`Any power the Constitution doesn't give to the federal government, and doesn't take away from the states, belongs to the states or to the people.`}
+    ]
+  }
+};
+const GROUP_ORDER = ['declaration','constitution','billofrights'];
+
+const EXIT_PROMPT = `Which right or idea from today's lesson do you think is most crucial for a democratic society to function, and why?`;
+
+const TABS = [
+  {id:'directions', label:'Directions'},
+  {id:'vocab', label:'Vocabulary'},
+  {id:'matching', label:'Matching'},
+  {id:'scan', label:'Scan & Identify'},
+  {id:'exit', label:'Exit Ticket'}
+];
+
+/* ============================================================
+   STATE
+============================================================ */
+function shuffle(arr){
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  return a;
+}
+
+let state = {
+  tab: 'directions',
+  simplify: false,
+  match: { termOrder:null, defOrder:null, matched:[], selTerm:null, selDef:null, wrong:null },
+  classify: {},   // key: "group-si" -> termId
+  checks: {},     // key: group -> { first:{correct,total}|null, second:{...}|null }
+  exitTicket: ''
+};
+
+function loadState(){
+  try{
+    const raw = localStorage.getItem(LS_KEY);
+    if(raw){
+      const parsed = JSON.parse(raw);
+      state = Object.assign(state, parsed);
+      state.match = Object.assign({termOrder:null,defOrder:null,matched:[],selTerm:null,selDef:null,wrong:null}, parsed.match||{});
+    }
+  }catch(e){}
+  if(!state.match.termOrder) state.match.termOrder = shuffle(TERMS.map(t=>t.id));
+  if(!state.match.defOrder) state.match.defOrder = shuffle(TERMS.map(t=>t.id));
+}
+function saveState(){
+  try{ localStorage.setItem(LS_KEY, JSON.stringify(state)); }catch(e){}
+}
+
+/* ============================================================
+   RENDER — TABS / SHELL
+============================================================ */
+function renderTabs(){
+  const bar = document.getElementById('tabbar');
+  bar.innerHTML = '';
+  TABS.forEach(t=>{
+    const btn = document.createElement('button');
+    btn.className = 'tab' + (state.tab===t.id?' active':'');
+    btn.setAttribute('role','tab');
+    btn.setAttribute('aria-selected', state.tab===t.id ? 'true':'false');
+    btn.innerHTML = `<span class="tab-dot${tabHasProgress(t.id)?' done':''}"></span>${t.label}`;
+    btn.addEventListener('click', ()=>{ state.tab=t.id; saveState(); render(); window.scrollTo({top:0,behavior:'smooth'}); });
+    bar.appendChild(btn);
+  });
+}
+function tabHasProgress(id){
+  if(id==='directions') return true;
+  if(id==='vocab') return true;
+  if(id==='matching') return state.match.matched.length===TERMS.length;
+  if(id==='exit') return state.exitTicket.trim().length>0;
+  if(id==='scan') return GROUP_ORDER.every(g=>state.checks[g] && state.checks[g].second);
+  return false;
+}
+function goTab(idx){
+  if(idx<0) idx=0;
+  if(idx>=TABS.length) idx=TABS.length-1;
+  state.tab = TABS[idx].id;
+  saveState();
+  render();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function render(){
+  renderTabs();
+  const panel = document.getElementById('panel');
+  if(state.tab==='directions') panel.innerHTML = renderDirections();
+  else if(state.tab==='vocab') panel.innerHTML = renderVocab();
+  else if(state.tab==='matching') panel.innerHTML = renderMatching();
+  else if(state.tab==='scan') panel.innerHTML = renderScan();
+  else if(state.tab==='exit') panel.innerHTML = renderExit();
+
+  wireTabInteractions();
+
+  document.getElementById('simplifyBtn').classList.toggle('on', state.simplify);
+  document.getElementById('simplifyBtn').setAttribute('aria-pressed', state.simplify);
+  document.getElementById('simplifyLabel').textContent = state.simplify ? 'Original Text' : 'Simplify Text';
+}
+
+/* ============================================================
+   DIRECTIONS
+============================================================ */
+function renderDirections(){
+  return `
+    <h1 class="dir-title">Ideas Behind the Ink</h1>
+    <div class="dir-sub">Enlightenment Ideas & the Founding Documents</div>
+
+    <div class="dir-card">
+      <h3>What You're Doing</h3>
+      <p>Enlightenment ideas like natural rights, the social contract, popular sovereignty, and representative government shaped how the Founders wrote the Declaration of Independence, the Constitution, and the Bill of Rights. This activity moves in four steps: learn the vocabulary, confirm you know it, find it in the actual documents, then reflect on which idea matters most.</p>
+    </div>
+
+    <div class="dir-card">
+      <h3>What's In Each Tab</h3>
+      <ul class="dir-list">
+        <li><span class="swatch" style="background:var(--accent-hi)"></span><span><strong>Vocabulary</strong> — read through the core Enlightenment terms and how they show up in the founding documents</span></li>
+        <li><span class="swatch" style="background:var(--accent-hi)"></span><span><strong>Matching</strong> — a quick checkpoint to confirm you know each term before moving on</span></li>
+        <li><span class="swatch" style="background:var(--ps)"></span><span><strong>Scan & Identify</strong> — read short excerpts from the Declaration, the Constitution, and the Bill of Rights and tag each one with the idea it expresses</span></li>
+        <li><span class="swatch" style="background:var(--fed)"></span><span><strong>Exit Ticket</strong> — a short written reflection to wrap up the lesson</span></li>
+      </ul>
+      <div class="time-grid">
+        <div class="time-item"><div class="tn">Vocabulary</div><div class="tv">~10 min</div></div>
+        <div class="time-item"><div class="tn">Matching</div><div class="tv">~5 min</div></div>
+        <div class="time-item"><div class="tn">Scan & Identify</div><div class="tv">~15–20 min</div></div>
+        <div class="time-item"><div class="tn">Exit Ticket</div><div class="tv">~10 min</div></div>
+      </div>
+    </div>
+
+    <div class="dir-card">
+      <h3>A Note on the Text</h3>
+      <p>The excerpts in Scan & Identify use the founding documents' original wording. If the language is tough to parse, click <strong>Simplify Text</strong> in the header at any time for plain-language versions of every excerpt.</p>
+    </div>
+
+    <div class="navrow">
+      <div></div>
+      <button class="navbtn primary" onclick="goTab(1)">Start with Vocabulary →</button>
+    </div>
+  `;
+}
+
+/* ============================================================
+   VOCABULARY
+============================================================ */
+function renderVocab(){
+  let html = `
+    <div class="group-head"><div class="group-title">Vocabulary</div></div>
+    <p style="font-size:15px;color:var(--dim);margin-bottom:16px">Read through each term below. You'll need to know these before the Matching checkpoint.</p>
+  `;
+  TERMS.forEach(t=>{
+    if(t.id==='freedom_religion'){
+      html += `
+        <div class="term-card">
+          <div class="term-name">Bill of Rights Freedoms</div>
+          <div class="term-def">Specific individual liberties protected from government interference:</div>
+          <ul class="sub-list">
+            <li><b>Religion</b> — ${TERM_MAP.freedom_religion.def}</li>
+            <li><b>Speech</b> — ${TERM_MAP.freedom_speech.def}</li>
+            <li><b>Privacy</b> — ${TERM_MAP.privacy.def}</li>
+            <li><b>Rights of the accused</b> — ${TERM_MAP.rights_accused.def}</li>
+          </ul>
+        </div>`;
+    } else if(t.id==='freedom_speech'||t.id==='privacy'||t.id==='rights_accused'){
+      return; // folded into the card above
+    } else {
+      html += `
+        <div class="term-card">
+          <div class="term-name">${t.label}</div>
+          <div class="term-def">${t.def}</div>
+          <div class="term-ex"><b>Example</b>${t.ex}</div>
+        </div>`;
+    }
+  });
+  html += `
+    <div class="navrow">
+      <button class="navbtn" onclick="goTab(0)">← Previous</button>
+      <button class="navbtn primary" onclick="goTab(2)">Next →</button>
+    </div>`;
+  return html;
+}
+
+/* ============================================================
+   MATCHING
+============================================================ */
+function renderMatching(){
+  const m = state.match;
+  const done = m.matched.length === TERMS.length;
+  let html = `
+    <div class="group-head"><div class="group-title">Matching Checkpoint</div></div>
+    <p style="font-size:15px;color:var(--dim);margin-bottom:14px">Click a term, then click its matching definition. Correct pairs lock in green.</p>
+    <div class="match-wrap">
+      <div>
+        <div class="match-col-label">Terms</div>
+        ${m.termOrder.map(id=>{
+          const matched = m.matched.includes(id);
+          const sel = m.selTerm===id;
+          const wrong = m.wrong && m.wrong.term===id;
+          let cls='match-chip term'+(matched?' matched':'')+(sel?' selected':'')+(wrong?' wrong':'');
+          return `<div class="${cls}" data-kind="term" data-id="${id}" tabindex="${matched?-1:0}" role="button" aria-label="Term: ${TERM_MAP[id].label}">${TERM_MAP[id].label}${matched?' ✓':''}</div>`;
+        }).join('')}
+      </div>
+      <div>
+        <div class="match-col-label">Definitions</div>
+        ${m.defOrder.map(id=>{
+          const matched = m.matched.includes(id);
+          const sel = m.selDef===id;
+          const wrong = m.wrong && m.wrong.def===id;
+          let cls='match-chip def'+(matched?' matched':'')+(sel?' selected':'')+(wrong?' wrong':'');
+          return `<div class="${cls}" data-kind="def" data-id="${id}" tabindex="${matched?-1:0}" role="button" aria-label="Definition for a term">${TERM_MAP[id].def}${matched?' ✓':''}</div>`;
+        }).join('')}
+      </div>
+    </div>
+    <div class="match-progress">${m.matched.length} of ${TERMS.length} matched</div>
+    ${done?`<div class="match-complete"><h3>Checkpoint Complete!</h3><p style="margin-top:6px;color:var(--text)">All terms matched. Move on to Scan & Identify.</p></div>`:''}
+    <div class="navrow">
+      <button class="navbtn" onclick="goTab(1)">← Previous</button>
+      <button class="navbtn primary" onclick="goTab(3)" ${done?'':'disabled'}>Next →</button>
+    </div>
+  `;
+  return html;
+}
+function matchClick(kind, id){
+  const m = state.match;
+  if(m.matched.includes(id)) return;
+  m.wrong = null;
+  if(kind==='term'){
+    m.selTerm = (m.selTerm===id) ? null : id;
+  } else {
+    m.selDef = (m.selDef===id) ? null : id;
+  }
+  if(m.selTerm && m.selDef){
+    if(m.selTerm === m.selDef){
+      m.matched.push(m.selTerm);
+      m.selTerm = null; m.selDef = null;
+      saveState(); render();
+    } else {
+      m.wrong = {term:m.selTerm, def:m.selDef};
+      const wTerm = m.selTerm, wDef = m.selDef;
+      m.selTerm = null; m.selDef = null;
+      saveState(); render();
+      setTimeout(()=>{
+        if(state.match.wrong && state.match.wrong.term===wTerm && state.match.wrong.def===wDef){
+          state.match.wrong = null; saveState(); render();
+        }
+      }, 650);
+      return;
+    }
+  } else {
+    saveState(); render();
+  }
+}
+
+/* ============================================================
+   SCAN & IDENTIFY
+============================================================ */
+function selKey(group, si){ return `${group}-${si}`; }
+function pickText(s){ return state.simplify ? s.simp : s.std; }
+function isLocked(group){ const rec=state.checks[group]; return !!(rec && rec.second); }
+function scoreFor(group){
+  const g = GROUPS[group];
+  let total=0, correct=0;
+  g.sentences.forEach((s,si)=>{
+    total++;
+    const k = selKey(group, si);
+    if(state.classify[k] === s.term) correct++;
+  });
+  return {correct, total};
+}
+function allClassified(group){
+  const g = GROUPS[group];
+  return g.sentences.every((s,si)=>!!state.classify[selKey(group,si)]);
+}
+function renderScan(){
+  let html = `<div class="group-head" style="margin-top:0"><div class="group-title">Scan & Identify</div></div>
+    <p style="font-size:15px;color:var(--dim);margin-bottom:6px">Read each excerpt and choose the idea it expresses. Use the dropdown menus below each excerpt.</p>`;
+
+  GROUP_ORDER.forEach(gid=>{
+    const g = GROUPS[gid];
+    const locked = isLocked(gid);
+    html += `
+      <div class="group-head"><div class="group-title" style="font-size:22px">${g.label}</div><span class="group-badge" style="border-color:${g.color};color:${g.color}">${g.sentences.length} excerpts</span></div>
+      <div class="doc">
+        <div class="doc-body">`;
+    g.sentences.forEach((s,si)=>{
+      const k = selKey(gid, si);
+      const text = pickText(s);
+      const picked = state.classify[k] || '';
+      html += `
+        <div class="sent">
+          <div class="sent-text">${text}</div>
+          <div class="classify-row">
+            <span class="classify-label">This expresses:</span>
+            <select class="classify-select${picked?' picked':''}" data-key="${k}" ${locked?'disabled':''} autocomplete="off" aria-label="Choose the idea this excerpt expresses">
+              <option value="" ${picked===''?'selected':''}>Choose one…</option>
+              ${g.allowed.map(id=>`<option value="${id}" ${picked===id?'selected':''}>${TERM_MAP[id].label}</option>`).join('')}
+            </select>
+          </div>
+        </div>`;
+    });
+    html += `</div></div>`;
+
+    const rec = state.checks[gid];
+    html += `<div class="check-panel"><h3>Check Your Answers — ${g.label}</h3>`;
+    if(!rec || !rec.first){
+      html += `
+        <div class="check-row">
+          <button class="check-btn" data-group="${gid}">Check Answers (Attempt 1)</button>
+          <span class="check-result">Classify every excerpt above, then check your work.</span>
+        </div>
+        <p class="check-note">You'll get one chance to revise after seeing your first score — make it count.</p>`;
+    } else if(rec.first && !rec.second){
+      html += `
+        <div class="check-row">
+          <button class="check-btn" data-group="${gid}">Check Answers (Final Attempt)</button>
+          <span class="check-result">First attempt: <strong>${rec.first.correct} of ${rec.first.total} correct</strong></span>
+        </div>
+        <p class="check-note">Review your answers above and revise anything you'd like to change. This next check is final.</p>`;
+    } else {
+      html += `
+        <div class="check-row">
+          <button class="check-btn" disabled>Answers Locked</button>
+          <span class="check-result">First attempt: <strong>${rec.first.correct} of ${rec.first.total}</strong> &nbsp;→&nbsp; Final: <strong>${rec.second.correct} of ${rec.second.total} correct</strong></span>
+        </div>
+        <p class="check-note">This section is complete.</p>`;
+    }
+    html += `</div>`;
+  });
+
+  html += `
+    <div class="navrow">
+      <button class="navbtn" onclick="goTab(2)">← Previous</button>
+      <button class="navbtn primary" onclick="goTab(4)">Next →</button>
+    </div>`;
+  return html;
+}
+function checkAnswers(group){
+  if(!allClassified(group)){
+    showToast('Classify every excerpt in this section before checking.');
+    return;
+  }
+  const rec = state.checks[group] || (state.checks[group] = {first:null, second:null});
+  const score = scoreFor(group);
+  if(!rec.first){ rec.first = score; }
+  else if(!rec.second){ rec.second = score; }
+  else { return; }
+  saveState();
+  render();
+}
+
+/* ============================================================
+   EXIT TICKET
+============================================================ */
+function renderExit(){
+  return `
+    <div class="group-head" style="margin-top:0"><div class="group-title">Exit Ticket</div></div>
+    <div class="dir-card">
+      <div class="tea-label">Reflection</div>
+      <div class="tea-hint">${EXIT_PROMPT}</div>
+      <textarea class="tea" id="exitBox" placeholder="Begin writing here...">${escapeHtml(state.exitTicket)}</textarea>
+    </div>
+    <div class="navrow">
+      <button class="navbtn" onclick="goTab(3)">← Previous</button>
+      <div></div>
+    </div>
+  `;
+}
+
+/* ============================================================
+   SHARED WIRING
+============================================================ */
+function escapeHtml(str){
+  const d = document.createElement('div'); d.textContent = str||''; return d.innerHTML;
+}
+function wireTabInteractions(){
+  const panel = document.getElementById('panel');
+
+  panel.querySelectorAll('.classify-select').forEach(el=>{
+    el.value = state.classify[el.dataset.key] || '';
+    el.addEventListener('change', ()=>{
+      const k = el.dataset.key, val = el.value;
+      if(val) state.classify[k] = val; else delete state.classify[k];
+      saveState();
+      el.className = 'classify-select' + (val ? ' picked' : '');
+    });
+  });
+
+  panel.querySelectorAll('.check-btn[data-group]').forEach(btn=>{
+    btn.addEventListener('click', ()=>checkAnswers(btn.dataset.group));
+  });
+
+  panel.querySelectorAll('.match-chip[data-kind]').forEach(el=>{
+    if(el.classList.contains('matched')) return;
+    el.addEventListener('click', ()=>matchClick(el.dataset.kind, el.dataset.id));
+    el.addEventListener('keydown', (e)=>{
+      if(e.key==='Enter'||e.key===' '){ e.preventDefault(); matchClick(el.dataset.kind, el.dataset.id); }
+    });
+  });
+
+  const exitBox = document.getElementById('exitBox');
+  if(exitBox){
+    exitBox.addEventListener('input', ()=>{ state.exitTicket = exitBox.value; saveState(); });
+  }
+}
+
+document.getElementById('simplifyBtn').addEventListener('click', ()=>{
+  state.simplify = !state.simplify;
+  saveState();
+  render();
+});
+
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 3200);
+}
+
+/* ============================================================
+   EXPORT
+============================================================ */
+function buildExportText(){
+  let out = `IDEAS BEHIND THE INK — Student Export\n${new Date().toLocaleDateString()}\n\n`;
+
+  out += `MATCHING CHECKPOINT\n${'-'.repeat(40)}\n`;
+  out += `${state.match.matched.length} of ${TERMS.length} terms matched correctly\n\n`;
+
+  out += `SCAN & IDENTIFY RESULTS\n${'-'.repeat(40)}\n`;
+  GROUP_ORDER.forEach(gid=>{
+    const g = GROUPS[gid];
+    const rec = state.checks[gid];
+    if(rec && rec.first){
+      const firstStr = `${rec.first.correct}/${rec.first.total}`;
+      const secondStr = rec.second ? `${rec.second.correct}/${rec.second.total}` : '(not yet final)';
+      out += `${g.label}: First attempt ${firstStr}  |  Final attempt ${secondStr}\n`;
+    } else {
+      out += `${g.label}: (not attempted)\n`;
+    }
+  });
+
+  out += `\nEXIT TICKET\n${'-'.repeat(40)}\n${EXIT_PROMPT}\n\n${state.exitTicket || '(not yet written)'}\n`;
+  return out;
+}
+
+function resetSim(){
+  state = { tab:'directions', simplify:false,
+    match:{termOrder:shuffle(TERMS.map(t=>t.id)), defOrder:shuffle(TERMS.map(t=>t.id)), matched:[], selTerm:null, selDef:null, wrong:null},
+    classify:{}, checks:{}, exitTicket:'' };
+  localStorage.removeItem(LS_KEY);
+  render();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+document.getElementById('copyBtn').addEventListener('click', async ()=>{
+  try{
+    await navigator.clipboard.writeText(buildExportText());
+    showToast('Copied! Paste into your Google Doc. Starting fresh for the next student.');
+    resetSim();
+  }catch(err){
+    showToast('Copy failed — your work is still saved. Try again.');
+  }
+});
+
+const SECTIONS = [
+  {id:'directions', label:'Directions'},
+  {id:'vocab', label:'Vocabulary'},
+  {id:'matching', label:'Matching Checkpoint'},
+  {id:'declaration', label:'Scan & Identify — Declaration'},
+  {id:'constitution', label:'Scan & Identify — Constitution'},
+  {id:'billofrights', label:'Scan & Identify — Bill of Rights'},
+  {id:'exit', label:'Exit Ticket'}
+];
+document.getElementById('pdfBtn').addEventListener('click', ()=>{
+  const opts = document.getElementById('modalOpts');
+  opts.innerHTML = SECTIONS.map(s=>`
+    <label class="modal-opt">
+      <input type="checkbox" value="${s.id}" checked/> ${s.label}
+    </label>`).join('');
+  document.getElementById('modalBg').classList.add('show');
+});
+document.getElementById('modalCancel').addEventListener('click', ()=>{
+  document.getElementById('modalBg').classList.remove('show');
+});
+document.getElementById('modalConfirm').addEventListener('click', ()=>{
+  const checked = Array.from(document.querySelectorAll('#modalOpts input:checked')).map(i=>i.value);
+  document.getElementById('modalBg').classList.remove('show');
+  if(checked.length===0){ showToast('Select at least one section.'); return; }
+  printSections(checked);
+});
+function printSections(sections){
+  const win = window.open('', '_blank');
+  let body = `<html><head><title>Ideas Behind the Ink — Export</title>
+    <style>body{font-family:Georgia,serif;padding:30px;color:#111;line-height:1.6}
+    h1{font-size:22px}h2{font-size:17px;margin-top:22px;border-bottom:1px solid #ccc;padding-bottom:4px}
+    .doc-title{font-weight:bold;margin-top:14px}.doc-sub{font-size:12px;color:#555;margin-bottom:6px}
+    p{margin:6px 0}table{border-collapse:collapse;width:100%;margin-bottom:10px}
+    th,td{text-align:left;padding:4px 8px;border:1px solid #ccc}th{background:#eee}</style></head><body>`;
+  body += `<h1>Ideas Behind the Ink</h1><p>${new Date().toLocaleDateString()}</p>`;
+
+  if(sections.includes('directions')){
+    body += `<h2>Directions</h2><p>Enlightenment ideas — natural rights, the social contract, popular sovereignty, separation of powers, and federalism — traced from vocabulary through the Declaration of Independence, the Constitution, and the Bill of Rights.</p>`;
+  }
+  if(sections.includes('vocab')){
+    body += `<h2>Vocabulary</h2>`;
+    TERMS.forEach(t=>{
+      body += `<div class="doc-title">${t.label}</div><p>${t.def}</p>`;
+    });
+  }
+  if(sections.includes('matching')){
+    body += `<h2>Matching Checkpoint</h2><p>${state.match.matched.length} of ${TERMS.length} terms matched correctly.</p>`;
+  }
+  GROUP_ORDER.forEach(gid=>{
+    if(!sections.includes(gid)) return;
+    const g = GROUPS[gid];
+    body += `<h2>Scan & Identify — ${g.label}</h2>`;
+    const rec = state.checks[gid];
+    if(rec && rec.first){
+      body += `<p>First attempt: ${rec.first.correct}/${rec.first.total} &nbsp; Final attempt: ${rec.second?`${rec.second.correct}/${rec.second.total}`:'(not yet final)'}</p>`;
+    } else {
+      body += `<p>(not attempted)</p>`;
+    }
+    g.sentences.forEach((s,si)=>{
+      const k = selKey(gid, si);
+      const picked = state.classify[k];
+      const classLine = picked ? ` <em style="color:#555">(classified: ${TERM_MAP[picked].label})</em>` : '';
+      body += `<p>${pickText(s)}${classLine}</p>`;
+    });
+  });
+  if(sections.includes('exit')){
+    body += `<h2>Exit Ticket</h2><p><em>${EXIT_PROMPT}</em></p><p>${escapeHtml(state.exitTicket).replace(/\n/g,'<br/>') || '(not yet written)'}</p>`;
+  }
+  body += `</body></html>`;
+  win.document.write(body);
+  win.document.close();
+  win.focus();
+  setTimeout(()=>{
+    win.print();
+    showToast('If your download completed, this activity will reset for the next student.');
+    setTimeout(resetSim, 1500);
+  }, 400);
+}
+
+/* ============ INIT ============ */
+loadState();
+render();
+</script>
+</body>
+</html>
