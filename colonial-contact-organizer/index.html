@@ -262,7 +262,7 @@ const DOCS = {
     docs: [
       { title:"Report on Pueblo Relations, 1680", sub:"Adapted from Spanish colonial records and Pueblo oral histories",
         sentences:[
-          {theme:'exchange', std:`For generations, our people worked the ${g('mission','missions')}, tended Spanish cattle, and worshipped in the Spanish church.`,
+          {theme:'exchange', alt:['conflict'], std:`For generations, our people worked the ${g('mission','missions')}, tended Spanish cattle, and worshipped in the Spanish church.`,
                               simp:`For a long time, our people worked at the Spanish ${g('mission','missions')}. We took care of Spanish cattle and went to the Spanish church.`,
                               adv:`For generations beyond counting, our people labored within the ${g('mission','missions')}, tended the cattle brought by Spanish hands, and bowed our heads within the Spanish church, though the rites of our own fathers were never far from our hearts.`},
           {theme:'conflict', std:`Drought had struck the land, and the Spanish would not allow us to perform the ceremonies that our ancestors used to bring rain.`,
@@ -283,7 +283,7 @@ const DOCS = {
           {theme:'conflict', std:`Where once hundreds of thousands of people lived, whole islands now stand empty, their people killed in warfare or driven to labor in the mines.`,
                               simp:`Hundreds of thousands of people used to live on these islands. Now the islands are almost empty. People were killed in fighting or forced to work in mines.`,
                               adv:`Where once many hundreds of thousands dwelt in peace, whole islands now lie all but emptied, their peoples put to the sword in warfare or worn away by labor in the mines.`},
-          {theme:'resistance', std:`I write this account to the King not as an enemy of Spain, but so that these cruelties might be stopped and our laws changed.`,
+          {theme:'resistance', alt:['conflict'], std:`I write this account to the King not as an enemy of Spain, but so that these cruelties might be stopped and our laws changed.`,
                               simp:`I am writing this letter to the King. I am not against Spain — I want the cruel treatment to stop and the laws to change.`,
                               adv:`This account I set down for His Majesty not as an enemy of Spain, but that these cruelties might at last be stayed, and our laws reformed accordingly.`}
         ]}
@@ -300,19 +300,19 @@ const DOCS = {
           {theme:'conflict', std:`With European goods came European sickness, and whole villages of the Huron were emptied within a single winter.`,
                               simp:`European goods brought European diseases too. Some whole Huron villages became empty in just one winter because so many people got sick.`,
                               adv:`Yet with the goods of Europe came also its maladies, and entire villages of the Huron were emptied within the span of a single winter.`},
-          {theme:'resistance', std:`The Huron and our own people found common cause against the ${g('iroquois','Iroquois')}, who sought to control the fur trade for themselves.`,
+          {theme:'resistance', alt:['exchange'], std:`The Huron and our own people found common cause against the ${g('iroquois','Iroquois')}, who sought to control the fur trade for themselves.`,
                               simp:`The Huron and the French worked together against the ${g('iroquois','Iroquois')}, who wanted to control the fur trade themselves.`,
                               adv:`The Huron and our own people found in the ${g('iroquois','Iroquois')} a common enemy, that nation seeking to seize the fur trade entire unto itself.`},
-          {theme:'exchange', std:`Some among the Huron came to depend on our trade goods, while others said we had brought only death disguised as friendship.`,
+          {theme:'exchange', alt:['conflict'], std:`Some among the Huron came to depend on our trade goods, while others said we had brought only death disguised as friendship.`,
                               simp:`Some Huron people came to depend on French goods. Others said the French had only brought death, hidden behind friendly words.`,
                               adv:`Some among the Huron came to depend upon the goods we brought, while others declared that we had carried among them nothing but death, cloaked in the guise of friendship.`}
         ]},
       { title:"Champlain's Journal on the Huron Alliance, 1615", sub:"Adapted from the writings of Samuel de Champlain",
         sentences:[
-          {theme:'exchange', std:`The Huron are skilled traders and farmers, and I saw the advantage of binding our nations together for trade and mutual defense.`,
+          {theme:'exchange', alt:['resistance'], std:`The Huron are skilled traders and farmers, and I saw the advantage of binding our nations together for trade and mutual defense.`,
                               simp:`The Huron are skilled traders and farmers. I saw that it would help both sides if our two peoples worked together for trade and safety.`,
                               adv:`The Huron are traders and ${g('husbandman','husbandmen')} of no small skill, and I perceived clearly the advantage that should come of binding our two nations together, both for commerce and for mutual defense.`},
-          {theme:'exchange', std:`In return for their furs and friendship, we gave the Huron cloth, tools, and our support in their wars against the Iroquois.`,
+          {theme:'exchange', alt:['conflict'], std:`In return for their furs and friendship, we gave the Huron cloth, tools, and our support in their wars against the Iroquois.`,
                               simp:`In exchange for furs and friendship, we gave the Huron cloth and tools. We also helped them fight the Iroquois.`,
                               adv:`In exchange for their furs and their friendship, we furnished the Huron with cloth and tools, and lent our arms besides in their wars against the Iroquois.`},
           {theme:'exchange', std:`I lived among the Huron through the winter, learning their language and customs, and found much to respect in their way of life.`,
@@ -358,9 +358,6 @@ const DOCS = {
     docs:[
       { title:"Chief Miantonomo's Call to Alliance, 1640s", sub:"Adapted from the words of Narragansett Chief Miantonomo — advanced tier uses the verbatim historical transcription",
         sentences:[
-          {theme:'exchange', std:`You know our fathers had plenty of deer and skins, and our rivers were full of fish.`,
-                              simp:`You know that our fathers had plenty of deer, animal skins, and fish from the rivers.`,
-                              adv:`You know our fathers had plenty of deer and skins, and our plains were full of game and turkeys, and our coves and rivers were full of fish.`},
           {theme:'conflict', std:`But since these Englishmen have seized our country, they have cut down the grass and the trees, and their cattle and hogs spoil what remains.`,
                               simp:`But since the English took our land, they have cut down the grass and trees. Their cattle and pigs ruin what is left.`,
                               adv:`But, brothers, since these Englishmen have seized our country, they have cut down the grass with scythes, and the trees with axes; their cows and horses eat up the grass, and their hogs spoil our bed of clams, and finally we shall all starve to death.`},
@@ -373,9 +370,6 @@ const DOCS = {
         ]},
       { title:"Chief Powhatan's Address to Captain John Smith, c. 1609", sub:"Adapted from the words of Powhatan, leader of a large Algonquian confederacy in Virginia — advanced tier uses the verbatim historical transcription",
         sentences:[
-          {theme:'exchange', std:`I am growing old, and I wish that your love for my people was equal to the love we have shown you.`,
-                              simp:`I am getting old. I wish you cared about my people as much as we have cared about you.`,
-                              adv:`I am now grown old, and must soon die; I wish their experience was equal to mine, and that your love to us might not be less than ours to you.`},
           {theme:'conflict', std:`Why take by force what you could receive through friendship? Why destroy the very people who have supplied you with food?`,
                               simp:`Why take things from us by force? You could just ask us as friends. We are the ones who have given you food.`,
                               adv:`Why should you take by force that from us which you can have by love? Why should you destroy us who have provided you with food?`},
@@ -502,6 +496,12 @@ function isLocked(key){
   const rec = state.checks[key];
   return !!(rec && rec.second);
 }
+function isCorrectAnswer(s, picked){
+  if(!picked) return false;
+  if(picked === s.theme) return true;
+  if(s.alt && s.alt.includes(picked)) return true;
+  return false;
+}
 function scoreFor(key){
   const p = DOCS[key];
   let total=0, correct=0;
@@ -509,7 +509,7 @@ function scoreFor(key){
     doc.sentences.forEach((s,si)=>{
       total++;
       const k = selKey(key, di, si);
-      if(state.classify[k] === s.theme) correct++;
+      if(isCorrectAnswer(s, state.classify[k])) correct++;
     });
   });
   return {correct, total};
