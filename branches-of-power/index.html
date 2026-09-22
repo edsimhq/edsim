@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Balancing the Branches</title>
+<style>
+:root{
+  --bg-base:#12141c;
+  --bg-card:#1b1e2b;
+  --bg-card-hover:#242840;
+  --bg-raised:#20233350;
+  --text-primary:#f3f4f8;
+  --text-muted:#a0a4b8;
+  --border:#2e3245;
+  --accent:#f2c14e;
+  --accent-text:#12141c;
+  --legislative:#5b9bd9;
+  --legislative-bg:#1c2c42;
+  --executive:#e2685c;
+  --executive-bg:#3a2323;
+  --judicial:#d9b35c;
+  --judicial-bg:#3a331d;
+  --success:#4caf7d;
+  --success-bg:#183226;
+  --error:#e2685c;
+  --error-bg:#3a2323;
+}
+
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--bg-base);
+  color:var(--text-primary);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  line-height:1.5;
+  min-width:320px;
+}
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(255,255,255,0.02) 0, transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(255,255,255,0.015) 0, transparent 40%);
+  z-index:0;
+}
+.app{position:relative;z-index:1;max-width:920px;margin:0 auto;padding:0 16px 40px;}
+
+/* ---------- Header / Tabs ---------- */
+header.topbar{
+  position:sticky;top:0;z-index:20;
+  background:linear-gradient(180deg, var(--bg-base) 80%, transparent);
+  padding-top:20px;padding-bottom:8px;
+}
+h1{
+  font-size:1.5rem;
+  margin:0 0 4px;
+  letter-spacing:0.01em;
+}
+.subtitle{color:var(--text-muted);font-size:0.9rem;margin:0 0 16px;}
+
+.tabs{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+  border-bottom:1px solid var(--border);
+  padding-bottom:0;
+}
+.tab-btn{
+  background:transparent;
+  border:none;
+  border-bottom:3px solid transparent;
+  color:var(--text-muted);
+  padding:10px 12px;
+  font-size:0.85rem;
+  font-weight:600;
+  cursor:pointer;
+  min-height:44px;
+  border-radius:6px 6px 0 0;
+}
+.tab-btn:hover{background:var(--bg-card-hover);color:var(--text-primary);}
+.tab-btn:focus-visible{outline:2px solid var(--accent);outline-offset:-2px;}
+.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);}
+.tab-btn .done-mark{color:var(--success);margin-left:4px;}
+
+/* ---------- Panels ---------- */
+main{padding-top:20px;}
+.panel{display:none;animation:fadeIn 0.2s ease;}
+.panel.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+
+.card{
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:20px;
+  margin-bottom:16px;
+}
+h2{font-size:1.2rem;margin-top:0;}
+h3{font-size:1.02rem;margin:0 0 8px;}
+p{margin:0 0 12px;}
+ul{margin:0 0 12px;padding-left:20px;}
+li{margin-bottom:6px;}
+
+.pill{
+  display:inline-block;
+  font-size:0.72rem;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:0.04em;
+  padding:3px 9px;
+  border-radius:999px;
+  background:var(--bg-raised);
+  color:var(--text-muted);
+  margin-bottom:8px;
+}
+
+/* ---------- Directions ---------- */
+.step-list{list-style:none;padding:0;margin:0;}
+.step-list li{
+  display:flex;gap:12px;
+  background:var(--bg-raised);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:12px 14px;
+  margin-bottom:10px;
+}
+.step-num{
+  flex-shrink:0;
+  width:28px;height:28px;
+  border-radius:50%;
+  background:var(--accent);
+  color:var(--accent-text);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:0.85rem;
+}
+.step-body strong{display:block;margin-bottom:2px;}
+.step-time{color:var(--text-muted);font-size:0.82rem;}
+
+/* ---------- Meet the Branches ---------- */
+.branch-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;}
+.branch-card{
+  border-radius:12px;
+  border:1px solid var(--border);
+  overflow:hidden;
+  background:var(--bg-card);
+}
+.branch-head{
+  padding:16px 16px 14px;
+  display:flex;gap:12px;align-items:flex-start;
+  cursor:pointer;
+  min-height:44px;
+  border:none;width:100%;text-align:left;color:inherit;font:inherit;background:transparent;
+}
+.branch-head:focus-visible{outline:2px solid var(--accent);outline-offset:-2px;}
+.branch-icon{flex-shrink:0;width:38px;height:38px;}
+.branch-name{font-weight:800;font-size:1.05rem;margin-bottom:2px;}
+.branch-who{color:var(--text-muted);font-size:0.85rem;}
+.branch-toggle{margin-left:auto;color:var(--text-muted);font-size:0.8rem;align-self:center;}
+.branch-body{
+  padding:0 16px 16px;
+  display:none;
+}
+.branch-body.open{display:block;}
+.branch-role{font-weight:700;margin-bottom:10px;}
+.power-list{list-style:none;margin:0;padding:0;}
+.power-list li{
+  padding:8px 10px;
+  border-radius:7px;
+  background:var(--bg-raised);
+  margin-bottom:6px;
+  font-size:0.9rem;
+}
+
+.legislative-card{border-top:4px solid var(--legislative);}
+.executive-card{border-top:4px solid var(--executive);}
+.judicial-card{border-top:4px solid var(--judicial);}
+
+/* ---------- Power Match ---------- */
+.match-intro{margin-bottom:16px;}
+.match-board{display:grid;grid-template-columns:1fr;gap:16px;}
+@media (min-width:700px){.match-board{grid-template-columns:1.1fr 1fr;}}
+
+.power-bank{
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:14px;
+  min-height:120px;
+}
+.power-bank-title{font-weight:700;font-size:0.85rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.03em;margin-bottom:10px;}
+.power-cards{display:flex;flex-wrap:wrap;gap:8px;}
+.power-card{
+  background:var(--bg-raised);
+  border:1px solid var(--border);
+  color:var(--text-primary);
+  border-radius:8px;
+  padding:10px 12px;
+  font-size:0.85rem;
+  cursor:pointer;
+  min-height:44px;
+  text-align:left;
+  transition:transform 0.12s ease, border-color 0.12s ease;
+}
+.power-card:hover{background:var(--bg-card-hover);}
+.power-card:focus-visible{outline:2px solid var(--accent);outline-offset:-2px;}
+.power-card.selected{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent);}
+.power-card.shake{animation:shake 0.35s ease;}
+@keyframes shake{
+  10%,90%{transform:translateX(-2px);}
+  20%,80%{transform:translateX(4px);}
+  30%,50%,70%{transform:translateX(-6px);}
+  40%,60%{transform:translateX(6px);}
+}
+
+.branch-zones{display:flex;flex-direction:column;gap:10px;}
+.branch-zone{
+  border:2px dashed var(--border);
+  border-radius:12px;
+  padding:12px;
+  min-height:80px;
+  cursor:pointer;
+  background:var(--bg-card);
+}
+.branch-zone:focus-visible{outline:2px solid var(--accent);outline-offset:-2px;}
+.branch-zone[data-branch="legislative"]{border-color:var(--legislative);}
+.branch-zone[data-branch="executive"]{border-color:var(--executive);}
+.branch-zone[data-branch="judicial"]{border-color:var(--judicial);}
+.zone-label{font-weight:800;font-size:0.92rem;margin-bottom:6px;}
+.zone-label.legislative{color:var(--legislative);}
+.zone-label.executive{color:var(--executive);}
+.zone-label.judicial{color:var(--judicial);}
+.zone-items{display:flex;flex-wrap:wrap;gap:6px;}
+.zone-item{
+  background:var(--success-bg);
+  color:var(--success);
+  border:1px solid var(--success);
+  border-radius:7px;
+  padding:6px 9px;
+  font-size:0.8rem;
+}
+
+.match-status{margin-top:14px;font-size:0.9rem;color:var(--text-muted);min-height:20px;}
+.match-summary{
+  margin-top:16px;
+  padding:16px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  background:var(--bg-raised);
+}
+.match-summary h3{margin-top:0;}
+.btn{
+  background:var(--accent);
+  color:var(--accent-text);
+  border:none;
+  border-radius:8px;
+  padding:10px 16px;
+  font-weight:700;
+  font-size:0.88rem;
+  cursor:pointer;
+  min-height:44px;
+}
+.btn:focus-visible{outline:2px solid #fff;outline-offset:2px;}
+.btn.secondary{background:var(--bg-raised);color:var(--text-primary);border:1px solid var(--border);}
+
+/* ---------- Scenario Check ---------- */
+.scenario-progress{margin-bottom:16px;color:var(--text-muted);font-size:0.9rem;}
+.scenario-card{margin-bottom:16px;}
+.scenario-era{color:var(--text-muted);font-size:0.78rem;text-transform:uppercase;letter-spacing:0.04em;font-weight:700;margin-bottom:6px;}
+.scenario-text{margin-bottom:14px;}
+.option-list{list-style:none;margin:0 0 12px;padding:0;}
+.option-btn{
+  display:block;
+  width:100%;
+  text-align:left;
+  background:var(--bg-raised);
+  border:1px solid var(--border);
+  color:var(--text-primary);
+  border-radius:8px;
+  padding:10px 12px;
+  margin-bottom:8px;
+  cursor:pointer;
+  font-size:0.88rem;
+  min-height:44px;
+}
+.option-btn:hover{background:var(--bg-card-hover);}
+.option-btn:focus-visible{outline:2px solid var(--accent);outline-offset:-2px;}
+.option-btn.correct{background:var(--success-bg);border-color:var(--success);color:var(--success);}
+.option-btn.incorrect{background:var(--error-bg);border-color:var(--error);color:var(--error);}
+.option-btn:disabled{cursor:default;}
+.explanation{
+  background:var(--bg-raised);
+  border-left:3px solid var(--accent);
+  padding:10px 14px;
+  border-radius:0 8px 8px 0;
+  font-size:0.88rem;
+  display:none;
+}
+.explanation.show{display:block;}
+
+/* ---------- Nav buttons ---------- */
+.nav-buttons{
+  display:flex;justify-content:space-between;gap:10px;
+  margin-top:24px;padding-top:16px;border-top:1px solid var(--border);
+}
+
+/* ---------- Export ---------- */
+.export-bar{display:flex;justify-content:flex-end;margin:16px 0;}
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,0.6);
+  display:none;align-items:center;justify-content:center;z-index:100;padding:16px;
+}
+.modal-overlay.show{display:flex;}
+.modal{
+  background:var(--bg-card);border:1px solid var(--border);border-radius:12px;
+  padding:22px;max-width:420px;width:100%;
+}
+.modal h3{margin-top:0;}
+.modal label{display:flex;align-items:center;gap:8px;padding:8px 0;font-size:0.9rem;min-height:44px;}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:16px;flex-wrap:wrap;}
+.export-msg{font-size:0.85rem;color:var(--success);margin-top:10px;min-height:18px;}
+
+/* ---------- Print ---------- */
+.print-only{display:none;}
+@media print{
+  header.topbar, .nav-buttons, .export-bar, .tab-btn, .branch-head .branch-toggle{display:none !important;}
+  body{background:#fff;color:#000;}
+  .print-only{display:block;}
+  .panel, .app{display:block !important;max-width:100%;}
+  .card, .branch-card, .scenario-card{overflow:visible !important;background:#fff;border:1px solid #ccc;color:#000;}
+}
+
+@media (max-width:480px){
+  h1{font-size:1.25rem;}
+  .tab-btn{font-size:0.78rem;padding:8px 9px;}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <header class="topbar">
+    <h1>Balancing the Branches</h1>
+    <p class="subtitle">Separation of powers: Legislative, Executive, and Judicial</p>
+    <div class="tabs" role="tablist" aria-label="Activity sections">
+      <button class="tab-btn active" data-tab="directions" role="tab" aria-selected="true">1. Directions</button>
+      <button class="tab-btn" data-tab="meet" role="tab" aria-selected="false">2. Meet the Branches</button>
+      <button class="tab-btn" data-tab="match" role="tab" aria-selected="false">3. Power Match</button>
+      <button class="tab-btn" data-tab="scenarios" role="tab" aria-selected="false">4. Scenario Check</button>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ===================== TAB 1: DIRECTIONS ===================== -->
+    <section id="panel-directions" class="panel active" data-panel="directions">
+      <div class="card">
+        <h2>Welcome</h2>
+        <p>The U.S. Constitution divides the power of the federal government among three branches so that no single branch becomes too powerful. In this activity, you'll learn what each branch does, test yourself on their powers, and then apply what you've learned to real historical and current events.</p>
+        <ul class="step-list">
+          <li>
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <strong>Meet the Branches</strong>
+              <span>Learn the role and key powers of the Legislative, Executive, and Judicial branches.</span>
+              <div class="step-time">About 5 minutes</div>
+            </div>
+          </li>
+          <li>
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <strong>Power Match</strong>
+              <span>Match each power to the branch that holds it. If it's tricky the first time, you'll get a shorter second round focused on the essentials.</span>
+              <div class="step-time">About 5–10 minutes</div>
+            </div>
+          </li>
+          <li>
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <strong>Scenario Check</strong>
+              <span>Read six real scenarios — some historical, some current — and figure out which branch and which power is at work in each one.</span>
+              <div class="step-time">About 10–15 minutes</div>
+            </div>
+          </li>
+        </ul>
+        <p style="margin-top:16px;"><strong>By the end of this activity</strong>, you'll be able to identify which branch exercises a given power, and recognize separation of powers at work in real situations.</p>
+      </div>
+    </section>
+
+    <!-- ===================== TAB 2: MEET THE BRANCHES ===================== -->
+    <section id="panel-meet" class="panel" data-panel="meet">
+      <div class="card">
+        <h2>Meet the Branches</h2>
+        <p>Click each branch to see who's part of it and the powers it holds.</p>
+      </div>
+      <div class="branch-grid" id="branchGrid"></div>
+    </section>
+
+    <!-- ===================== TAB 3: POWER MATCH ===================== -->
+    <section id="panel-match" class="panel" data-panel="match">
+      <div class="card match-intro">
+        <h2>Power Match</h2>
+        <p id="matchInstructions">Select a power card below, then select the branch that holds that power. Correct matches lock in place; incorrect matches bounce back so you can try again.</p>
+      </div>
+
+      <div id="matchArea"></div>
+    </section>
+
+    <!-- ===================== TAB 4: SCENARIO CHECK ===================== -->
+    <section id="panel-scenarios" class="panel" data-panel="scenarios">
+      <div class="card">
+        <h2>Scenario Check</h2>
+        <p>For each scenario, decide which branch is exercising power — and how. Some are historical, some are current.</p>
+      </div>
+      <div class="scenario-progress" id="scenarioProgress"></div>
+      <div id="scenarioList"></div>
+    </section>
+
+  </main>
+
+  <div class="export-bar">
+    <button class="btn secondary" id="openExportBtn">Save / Export My Work</button>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn secondary" id="prevBtn">← Previous</button>
+    <button class="btn" id="nextBtn">Next →</button>
+  </div>
+
+</div>
+
+<!-- Export modal -->
+<div class="modal-overlay" id="exportModal">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="exportModalTitle">
+    <h3 id="exportModalTitle">Choose what to include</h3>
+    <label><input type="checkbox" id="exp-meet" checked> Meet the Branches (summary)</label>
+    <label><input type="checkbox" id="exp-match" checked> Power Match results</label>
+    <label><input type="checkbox" id="exp-scenarios" checked> Scenario Check answers</label>
+    <div class="modal-actions">
+      <button class="btn secondary" id="cancelExportBtn">Cancel</button>
+      <button class="btn secondary" id="copyTextBtn">Copy Text</button>
+      <button class="btn" id="savePdfBtn">Save as PDF</button>
+    </div>
+    <div class="export-msg" id="exportMsg" aria-live="polite"></div>
+  </div>
+</div>
+
+<div id="printArea" class="print-only"></div>
+
+<script>
+(function(){
+"use strict";
+
+var LS_KEY = "edsim_branches_of_power_v1";
+
+/* ===================== DATA ===================== */
+
+var BRANCHES = [
+  {
+    id:"legislative", name:"Legislative Branch", who:"Congress — the House of Representatives and the Senate",
+    role:"Makes the laws.",
+    icon: iconLegislative(),
+    powers5:[
+      {id:"leg1", text:"Passes laws"},
+      {id:"leg2", text:"Declares war"},
+      {id:"leg3", text:"Controls federal spending — the \u201Cpower of the purse\u201D"},
+      {id:"leg4", text:"Confirms presidential appointments & ratifies treaties (Senate)"},
+      {id:"leg5", text:"Impeaches and removes officials"}
+    ],
+    top3:["leg1","leg3","leg5"]
+  },
+  {
+    id:"executive", name:"Executive Branch", who:"The President and federal agencies",
+    role:"Enforces the laws.",
+    icon: iconExecutive(),
+    powers5:[
+      {id:"exe1", text:"Enforces and carries out laws"},
+      {id:"exe2", text:"Vetoes legislation"},
+      {id:"exe3", text:"Serves as commander-in-chief of the armed forces"},
+      {id:"exe4", text:"Appoints judges, cabinet members, and ambassadors"},
+      {id:"exe5", text:"Issues executive orders"}
+    ],
+    top3:["exe1","exe3","exe5"]
+  },
+  {
+    id:"judicial", name:"Judicial Branch", who:"The Supreme Court and federal courts",
+    role:"Interprets the laws.",
+    icon: iconJudicial(),
+    powers5:[
+      {id:"jud1", text:"Interprets laws and the Constitution"},
+      {id:"jud2", text:"Judicial review — can strike down laws or executive actions as unconstitutional"},
+      {id:"jud3", text:"Resolves disputes between states, or between states and the federal government"},
+      {id:"jud4", text:"Hears appeals from lower courts"},
+      {id:"jud5", text:"Judges serve for life, giving them independence from political pressure"}
+    ],
+    top3:["jud1","jud2","jud4"]
+  }
+];
+
+function branchById(id){
+  for (var i=0;i<BRANCHES.length;i++){ if (BRANCHES[i].id===id) return BRANCHES[i]; }
+  return null;
+}
+function powerLookup(){
+  var map = {};
+  BRANCHES.forEach(function(b){
+    b.powers5.forEach(function(p){ map[p.id] = {text:p.text, branch:b.id}; });
+  });
+  return map;
+}
+var POWER_MAP = powerLookup();
+
+var SCENARIOS = [
+  {
+    id:"s1", branch:"legislative", era:"Historical \u00B7 1956",
+    title:"The Interstate Highway Act",
+    text:"In 1956, Congress passed the Federal-Aid Highway Act, authorizing funding for what became the 41,000-mile Interstate Highway System. The bill had to pass a majority vote in both the House and the Senate before it could become law.",
+    options:[
+      {text:"Legislative branch \u2014 passing a law and funding it (power of the purse)", correct:true},
+      {text:"Executive branch \u2014 enforcing an existing law", correct:false},
+      {text:"Judicial branch \u2014 interpreting the Constitution", correct:false},
+      {text:"Executive branch \u2014 issuing an executive order", correct:false}
+    ],
+    explanation:"Only Congress can pass a law and appropriate federal funding for a nationwide project like this \u2014 that's the lawmaking power and the power of the purse working together."
+  },
+  {
+    id:"s2", branch:"legislative", era:"Current",
+    title:"Funding the Government",
+    text:"Each year, Congress must pass appropriations bills that provide funding for federal agencies and programs. If the House and Senate can't agree on a bill \u2014 or the President won't sign one \u2014 agencies can run low on money, sometimes leading to a partial government shutdown until a new spending bill is passed.",
+    options:[
+      {text:"Legislative branch \u2014 exercising the power of the purse", correct:true},
+      {text:"Executive branch \u2014 vetoing legislation", correct:false},
+      {text:"Judicial branch \u2014 resolving a dispute between states", correct:false},
+      {text:"Legislative branch \u2014 declaring war", correct:false}
+    ],
+    explanation:"Deciding how much money the federal government can spend \u2014 and on what \u2014 is a legislative power. That's why a funding disagreement in Congress can shut down federal agencies."
+  },
+  {
+    id:"s3", branch:"executive", era:"Historical \u00B7 1957",
+    title:"Enforcing Brown v. Board in Little Rock",
+    text:"In 1957, nine Black students attempted to integrate Central High School in Little Rock, Arkansas. When the governor used the Arkansas National Guard to block them, President Eisenhower federalized the National Guard and sent U.S. Army troops to enforce the students' right to attend.",
+    options:[
+      {text:"Executive branch \u2014 enforcing the law as commander-in-chief", correct:true},
+      {text:"Legislative branch \u2014 passing a new law", correct:false},
+      {text:"Judicial branch \u2014 using judicial review", correct:false},
+      {text:"Executive branch \u2014 vetoing legislation", correct:false}
+    ],
+    explanation:"The Court had already ruled in Brown v. Board \u2014 Eisenhower's job was to enforce that ruling. Sending federal troops to carry it out is the executive branch's enforcement power, backed by the President's role as commander-in-chief."
+  },
+  {
+    id:"s4", branch:"executive", era:"Current \u00B7 September 2026",
+    title:"Wildfire Disaster Relief in Colorado",
+    text:"In September 2026, wildfires, flooding, and mudslides damaged homes and infrastructure across several Colorado counties. The President approved a major disaster declaration for the state, directing FEMA to coordinate and deliver federal recovery funding to affected communities.",
+    options:[
+      {text:"Executive branch \u2014 enforcing federal disaster relief law through an executive agency", correct:true},
+      {text:"Legislative branch \u2014 exercising the power of the purse", correct:false},
+      {text:"Judicial branch \u2014 hearing an appeal", correct:false},
+      {text:"Executive branch \u2014 appointing an ambassador", correct:false}
+    ],
+    explanation:"Disaster declarations are made by the President and carried out by an executive agency (FEMA), which exists to enforce federal disaster relief law \u2014 a routine but important use of executive power."
+  },
+  {
+    id:"s5", branch:"judicial", era:"Historical \u00B7 1954",
+    title:"Brown v. Board of Education",
+    text:"In Brown v. Board of Education (1954), the Supreme Court ruled that state laws establishing separate public schools for Black and white students were unconstitutional, overturning the \u201Cseparate but equal\u201D doctrine from Plessy v. Ferguson (1896).",
+    options:[
+      {text:"Judicial branch \u2014 judicial review, striking down a practice as unconstitutional", correct:true},
+      {text:"Legislative branch \u2014 passing a civil rights law", correct:false},
+      {text:"Executive branch \u2014 issuing an executive order", correct:false},
+      {text:"Judicial branch \u2014 confirming a presidential appointment", correct:false}
+    ],
+    explanation:"The Court used judicial review to declare that state segregation laws violated the Constitution. No new law was passed \u2014 the Court reinterpreted what the Constitution already required."
+  },
+  {
+    id:"s6", branch:"judicial", era:"Current \u00B7 May 2026",
+    title:"Meta's Appeal in the Vermont Lawsuit",
+    text:"Vermont's attorney general sued Meta, arguing that Facebook and Instagram were designed to be addictive to young users. Meta asked the Supreme Court to stop the lawsuit from moving forward. In May 2026, the Court declined to hear Meta's appeal, allowing the case to continue in Vermont's courts.",
+    options:[
+      {text:"Judicial branch \u2014 controlling its own docket by declining to hear a case", correct:true},
+      {text:"Executive branch \u2014 enforcing a law", correct:false},
+      {text:"Legislative branch \u2014 exercising the power of the purse", correct:false},
+      {text:"Judicial branch \u2014 striking down a law through judicial review", correct:false}
+    ],
+    explanation:"The Supreme Court doesn't have to hear every case \u2014 it chooses which appeals to take up. By declining to hear this one (\u201Cdenying certiorari\u201D), the Court let the lower court's decision stand and allowed the lawsuit to proceed in Vermont."
+  }
+];
+
+/* ===================== ICONS (simple original line art) ===================== */
+function iconLegislative(){
+  return '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">'+
+  '<path d="M24 6 L42 18 H6 Z" stroke="var(--legislative)" stroke-width="2.5" stroke-linejoin="round"/>'+
+  '<rect x="8" y="20" width="4" height="16" fill="var(--legislative)"/>'+
+  '<rect x="16" y="20" width="4" height="16" fill="var(--legislative)"/>'+
+  '<rect x="24" y="20" width="4" height="16" fill="var(--legislative)"/>'+
+  '<rect x="32" y="20" width="4" height="16" fill="var(--legislative)"/>'+
+  '<rect x="6" y="38" width="36" height="4" fill="var(--legislative)"/>'+
+  '</svg>';
+}
+function iconExecutive(){
+  return '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">'+
+  '<path d="M24 5 L38 11 V22 C38 32 32 39 24 43 C16 39 10 32 10 22 V11 Z" stroke="var(--executive)" stroke-width="2.5" stroke-linejoin="round"/>'+
+  '<path d="M18 23 L22 27 L30 18" stroke="var(--executive)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>'+
+  '</svg>';
+}
+function iconJudicial(){
+  return '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">'+
+  '<line x1="24" y1="6" x2="24" y2="34" stroke="var(--judicial)" stroke-width="2.5"/>'+
+  '<line x1="10" y1="12" x2="38" y2="12" stroke="var(--judicial)" stroke-width="2.5"/>'+
+  '<path d="M6 12 L12 24 A6 6 0 0 1 0 24 Z" stroke="var(--judicial)" stroke-width="2" stroke-linejoin="round"/>'+
+  '<path d="M42 12 L48 24 A6 6 0 0 1 36 24 Z" stroke="var(--judicial)" stroke-width="2" stroke-linejoin="round"/>'+
+  '<rect x="16" y="34" width="16" height="4" fill="var(--judicial)"/>'+
+  '<rect x="22" y="38" width="4" height="4" fill="var(--judicial)"/>'+
+  '</svg>';
+}
+
+/* ===================== STATE ===================== */
+var defaultState = {
+  version: 1,
+  meet: { expanded: {} },
+  match: {
+    round1: { done:false, firstTryCorrect:0, total:0 },
+    round2: { attempted:false, done:false, firstTryCorrect:0, total:0 }
+  },
+  scenarios: {} // id -> {selectedIndex, correct}
+};
+
+var state = loadState();
+
+function loadState(){
+  try{
+    var raw = localStorage.getItem(LS_KEY);
+    if (!raw) return JSON.parse(JSON.stringify(defaultState));
+    var parsed = JSON.parse(raw);
+    if (!parsed || parsed.version !== 1) return JSON.parse(JSON.stringify(defaultState));
+    return parsed;
+  }catch(e){
+    return JSON.parse(JSON.stringify(defaultState));
+  }
+}
+function saveState(){
+  try{ localStorage.setItem(LS_KEY, JSON.stringify(state)); }catch(e){ /* ignore quota errors */ }
+}
+
+/* ===================== TABS / NAV ===================== */
+var TAB_ORDER = ["directions","meet","match","scenarios"];
+var currentTab = "directions"; // always reset to landing on load, per build standard
+
+function showTab(tab){
+  currentTab = tab;
+  document.querySelectorAll(".panel").forEach(function(p){
+    p.classList.toggle("active", p.getAttribute("data-panel")===tab);
+  });
+  document.querySelectorAll(".tab-btn").forEach(function(b){
+    var active = b.getAttribute("data-tab")===tab;
+    b.classList.toggle("active", active);
+    b.setAttribute("aria-selected", active ? "true":"false");
+  });
+  updateNavButtons();
+  window.scrollTo({top:0, behavior:"instant" in window ? "instant":"auto"});
+}
+function updateNavButtons(){
+  var idx = TAB_ORDER.indexOf(currentTab);
+  document.getElementById("prevBtn").disabled = idx===0;
+  document.getElementById("prevBtn").style.visibility = idx===0 ? "hidden":"visible";
+  document.getElementById("nextBtn").textContent = idx===TAB_ORDER.length-1 ? "Done \u2713" : "Next \u2192";
+}
+document.querySelectorAll(".tab-btn").forEach(function(btn){
+  btn.addEventListener("click", function(){ showTab(btn.getAttribute("data-tab")); });
+});
+document.getElementById("prevBtn").addEventListener("click", function(){
+  var idx = TAB_ORDER.indexOf(currentTab);
+  if (idx>0) showTab(TAB_ORDER[idx-1]);
+});
+document.getElementById("nextBtn").addEventListener("click", function(){
+  var idx = TAB_ORDER.indexOf(currentTab);
+  if (idx<TAB_ORDER.length-1) showTab(TAB_ORDER[idx+1]);
+});
+
+/* ===================== MEET THE BRANCHES ===================== */
+function renderBranchGrid(){
+  var grid = document.getElementById("branchGrid");
+  grid.innerHTML = "";
+  BRANCHES.forEach(function(b){
+    var card = document.createElement("div");
+    card.className = "branch-card " + b.id + "-card";
+
+    var head = document.createElement("button");
+    head.className = "branch-head";
+    head.setAttribute("aria-expanded", state.meet.expanded[b.id] ? "true":"false");
+    head.innerHTML =
+      '<div class="branch-icon">'+b.icon+'</div>'+
+      '<div><div class="branch-name">'+b.name+'</div><div class="branch-who">'+b.who+'</div></div>'+
+      '<div class="branch-toggle">'+(state.meet.expanded[b.id] ? "\u2212 Hide":"+ Show powers")+'</div>';
+    head.addEventListener("click", function(){
+      state.meet.expanded[b.id] = !state.meet.expanded[b.id];
+      saveState();
+      renderBranchGrid();
+    });
+
+    var body = document.createElement("div");
+    body.className = "branch-body" + (state.meet.expanded[b.id] ? " open":"");
+    var powersHtml = '<ul class="power-list">' + b.powers5.map(function(p){ return "<li>"+p.text+"</li>"; }).join("") + "</ul>";
+    body.innerHTML = '<div class="branch-role">'+b.role+'</div>' + powersHtml;
+
+    card.appendChild(head);
+    card.appendChild(body);
+    grid.appendChild(card);
+  });
+}
+
+/* ===================== POWER MATCH ===================== */
+var matchRuntime = { round:1, pool:[], placedCount:0, firstTryCorrect:0, selectedCard:null };
+
+function shuffle(arr){
+  var a = arr.slice();
+  for (var i=a.length-1;i>0;i--){
+    var j = Math.floor(Math.random()*(i+1));
+    var tmp=a[i]; a[i]=a[j]; a[j]=tmp;
+  }
+  return a;
+}
+
+function renderMatchArea(){
+  var area = document.getElementById("matchArea");
+  area.innerHTML = "";
+
+  // If round 1 already completed, and round 2 not needed/attempted, show summary + replay option
+  if (state.match.round1.done && !state.match.round2.attempted){
+    var passed = state.match.round1.total>0 && (state.match.round1.firstTryCorrect/state.match.round1.total) >= 0.7;
+    if (passed){
+      area.appendChild(buildSummaryBlock(
+        "Power Match complete",
+        state.match.round1.firstTryCorrect + " / " + state.match.round1.total + " correct on the first try. Nice work!",
+        [{label:"Play Again", action:function(){ startRound(1, true); }}]
+      ));
+      return;
+    } else {
+      // needs / had round 2
+      if (!state.match.round2.done){
+        area.appendChild(buildSummaryBlock(
+          "Round 1 complete",
+          state.match.round1.firstTryCorrect + " / " + state.match.round1.total + " correct on the first try. Let's focus on the essentials.",
+          [{label:"Try Again with the Essentials", action:function(){ startRound(2, true); }}]
+        ));
+        return;
+      }
+    }
+  }
+
+  if (state.match.round2.done){
+    area.appendChild(buildSummaryBlock(
+      "Power Match complete",
+      "Round 1: " + state.match.round1.firstTryCorrect + "/" + state.match.round1.total +
+      " \u00B7 Round 2 (Essentials): " + state.match.round2.firstTryCorrect + "/" + state.match.round2.total,
+      [{label:"Play Again", action:function(){ startRound(1, true); }}]
+    ));
+    return;
+  }
+
+  // Otherwise render the active round
+  buildBoard(area, matchRuntime.round);
+}
+
+function buildSummaryBlock(title, body, buttons){
+  var wrap = document.createElement("div");
+  wrap.className = "card match-summary";
+  var h = document.createElement("h3"); h.textContent = title;
+  var p = document.createElement("p"); p.textContent = body;
+  wrap.appendChild(h); wrap.appendChild(p);
+  buttons.forEach(function(b){
+    var btn = document.createElement("button");
+    btn.className = "btn";
+    btn.style.marginRight = "8px";
+    btn.textContent = b.label;
+    btn.addEventListener("click", b.action);
+    wrap.appendChild(btn);
+  });
+  return wrap;
+}
+
+function startRound(round, forceFresh){
+  matchRuntime.round = round;
+  matchRuntime.placedCount = 0;
+  matchRuntime.firstTryCorrect = 0;
+  matchRuntime.selectedCard = null;
+
+  var items = [];
+  BRANCHES.forEach(function(b){
+    var ids = round===1 ? b.powers5.map(function(p){return p.id;}) : b.top3;
+    ids.forEach(function(pid){ items.push({id:pid, text:POWER_MAP[pid].text, branch:b.id, attempts:0, placed:false}); });
+  });
+  matchRuntime.pool = shuffle(items);
+
+  if (forceFresh){
+    if (round===1){
+      state.match.round1 = {done:false, firstTryCorrect:0, total:items.length};
+      state.match.round2 = {attempted:false, done:false, firstTryCorrect:0, total:0};
+    } else {
+      state.match.round2 = {attempted:true, done:false, firstTryCorrect:0, total:items.length};
+    }
+    saveState();
+  }
+
+  renderMatchArea();
+}
+
+function buildBoard(area, round){
+  var items = matchRuntime.pool;
+  var total = items.length;
+
+  var board = document.createElement("div");
+  board.className = "match-board";
+
+  var bank = document.createElement("div");
+  bank.className = "power-bank";
+  var bankTitle = document.createElement("div");
+  bankTitle.className = "power-bank-title";
+  bankTitle.textContent = round===1 ? "Powers (select one)" : "Essential Powers (select one)";
+  bank.appendChild(bankTitle);
+  var cardsWrap = document.createElement("div");
+  cardsWrap.className = "power-cards";
+  bank.appendChild(cardsWrap);
+
+  var zonesWrap = document.createElement("div");
+  zonesWrap.className = "branch-zones";
+  BRANCHES.forEach(function(b){
+    var zone = document.createElement("button");
+    zone.className = "branch-zone";
+    zone.type = "button";
+    zone.setAttribute("data-branch", b.id);
+    zone.setAttribute("aria-label", "Place selected power in " + b.name);
+    zone.innerHTML = '<div class="zone-label '+b.id+'">'+b.name+'</div><div class="zone-items" id="zoneItems-'+b.id+'"></div>';
+    zone.addEventListener("click", function(){ handleZoneClick(b.id); });
+    zonesWrap.appendChild(zone);
+  });
+
+  board.appendChild(bank);
+  board.appendChild(zonesWrap);
+  area.appendChild(board);
+
+  var status = document.createElement("div");
+  status.className = "match-status";
+  status.id = "matchStatus";
+  status.setAttribute("aria-live","polite");
+  area.appendChild(status);
+
+  function renderCards(){
+    cardsWrap.innerHTML = "";
+    items.filter(function(it){return !it.placed;}).forEach(function(it){
+      var c = document.createElement("button");
+      c.type="button";
+      c.className = "power-card" + (matchRuntime.selectedCard===it.id ? " selected":"");
+      c.textContent = it.text;
+      c.setAttribute("aria-pressed", matchRuntime.selectedCard===it.id ? "true":"false");
+      c.addEventListener("click", function(){
+        matchRuntime.selectedCard = (matchRuntime.selectedCard===it.id) ? null : it.id;
+        renderCards();
+        updateStatus();
+      });
+      cardsWrap.appendChild(c);
+    });
+    if (items.every(function(it){return it.placed;})){
+      finishRound(round, total);
+    }
+  }
+
+  function updateStatus(){
+    var s = document.getElementById("matchStatus");
+    if (!s) return;
+    if (matchRuntime.selectedCard){
+      s.textContent = "Selected: \u201C" + POWER_MAP[matchRuntime.selectedCard].text + "\u201D \u2014 now click a branch.";
+    } else {
+      s.textContent = "Placed " + matchRuntime.placedCount + " of " + total + ".";
+    }
+  }
+
+  window._matchHandlers = window._matchHandlers || {};
+  window._matchHandlers.renderCards = renderCards;
+  window._matchHandlers.updateStatus = updateStatus;
+  window._matchHandlers.zonesWrap = zonesWrap;
+
+  renderCards();
+  updateStatus();
+}
+
+function handleZoneClick(zoneBranch){
+  if (!matchRuntime.selectedCard) return;
+  var item = matchRuntime.pool.filter(function(it){return it.id===matchRuntime.selectedCard;})[0];
+  if (!item || item.placed) return;
+
+  item.attempts++;
+  var correct = item.branch === zoneBranch;
+
+  if (correct){
+    if (item.attempts===1) matchRuntime.firstTryCorrect++;
+    item.placed = true;
+    matchRuntime.placedCount++;
+    var zoneList = document.getElementById("zoneItems-"+zoneBranch);
+    if (zoneList){
+      var chip = document.createElement("div");
+      chip.className = "zone-item";
+      chip.textContent = item.text;
+      zoneList.appendChild(chip);
+    }
+    matchRuntime.selectedCard = null;
+    window._matchHandlers.renderCards();
+    window._matchHandlers.updateStatus();
+  } else {
+    // shake the zone briefly, keep card selected/available for retry
+    var zone = document.querySelector('.branch-zone[data-branch="'+zoneBranch+'"]');
+    if (zone){
+      zone.classList.add("shake");
+      setTimeout(function(){ zone.classList.remove("shake"); }, 350);
+    }
+    var s = document.getElementById("matchStatus");
+    if (s) s.textContent = "Not quite \u2014 try another branch for \u201C" + item.text + "\u201D.";
+  }
+}
+
+function finishRound(round, total){
+  if (round===1){
+    state.match.round1 = {done:true, firstTryCorrect:matchRuntime.firstTryCorrect, total:total};
+  } else {
+    state.match.round2 = {attempted:true, done:true, firstTryCorrect:matchRuntime.firstTryCorrect, total:total};
+  }
+  saveState();
+  setTimeout(function(){ renderMatchArea(); }, 400);
+}
+
+function initMatchTab(){
+  if (state.match.round1.done && state.match.round2.attempted && !state.match.round2.done){
+    // resume mid round2 not tracked at card-level; just restart round 2 cleanly
+    startRound(2, false);
+  } else if (!state.match.round1.done){
+    startRound(1, false);
+  } else {
+    renderMatchArea();
+  }
+}
+
+/* ===================== SCENARIO CHECK ===================== */
+function renderScenarios(){
+  var list = document.getElementById("scenarioList");
+  list.innerHTML = "";
+  SCENARIOS.forEach(function(sc){
+    var saved = state.scenarios[sc.id];
+    var card = document.createElement("div");
+    card.className = "card scenario-card";
+    card.innerHTML =
+      '<div class="scenario-era">'+sc.era+'</div>'+
+      '<h3>'+sc.title+'</h3>'+
+      '<p class="scenario-text">'+sc.text+'</p>';
+
+    var optList = document.createElement("div");
+    optList.className = "option-list";
+    sc.options.forEach(function(opt, idx){
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "option-btn";
+      b.textContent = opt.text;
+      if (saved){
+        b.disabled = true;
+        if (idx===saved.selectedIndex){
+          b.classList.add(opt.correct ? "correct":"incorrect");
+        } else if (opt.correct){
+          b.classList.add("correct");
+        }
+      }
+      b.addEventListener("click", function(){
+        if (state.scenarios[sc.id]) return;
+        state.scenarios[sc.id] = {selectedIndex:idx, correct:opt.correct};
+        saveState();
+        renderScenarios();
+        updateScenarioProgress();
+      });
+      optList.appendChild(b);
+    });
+    card.appendChild(optList);
+
+    var expl = document.createElement("div");
+    expl.className = "explanation" + (saved ? " show":"");
+    expl.textContent = sc.explanation;
+    card.appendChild(expl);
+
+    list.appendChild(card);
+  });
+}
+function updateScenarioProgress(){
+  var answered = Object.keys(state.scenarios).length;
+  var correct = 0;
+  Object.keys(state.scenarios).forEach(function(k){ if (state.scenarios[k].correct) correct++; });
+  var el = document.getElementById("scenarioProgress");
+  el.textContent = "Answered " + answered + " of " + SCENARIOS.length + (answered>0 ? " \u00B7 " + correct + " correct so far":"");
+}
+
+/* ===================== EXPORT ===================== */
+var exportModal = document.getElementById("exportModal");
+document.getElementById("openExportBtn").addEventListener("click", function(){
+  document.getElementById("exportMsg").textContent = "";
+  exportModal.classList.add("show");
+});
+document.getElementById("cancelExportBtn").addEventListener("click", function(){
+  exportModal.classList.remove("show");
+});
+exportModal.addEventListener("click", function(e){ if (e.target===exportModal) exportModal.classList.remove("show"); });
+
+function buildExportText(opts){
+  var lines = [];
+  lines.push("BALANCING THE BRANCHES \u2014 Student Summary");
+  lines.push("");
+  if (opts.meet){
+    lines.push("MEET THE BRANCHES");
+    BRANCHES.forEach(function(b){
+      lines.push(b.name + " (" + b.who + ") \u2014 " + b.role);
+      b.powers5.forEach(function(p){ lines.push("  - " + p.text); });
+      lines.push("");
+    });
+  }
+  if (opts.match){
+    lines.push("POWER MATCH RESULTS");
+    if (state.match.round1.total>0){
+      lines.push("Round 1: " + state.match.round1.firstTryCorrect + " / " + state.match.round1.total + " correct on first try");
+    } else {
+      lines.push("Round 1: not completed");
+    }
+    if (state.match.round2.attempted){
+      lines.push("Round 2 (Essentials): " + state.match.round2.firstTryCorrect + " / " + state.match.round2.total + " correct on first try");
+    }
+    lines.push("");
+  }
+  if (opts.scenarios){
+    lines.push("SCENARIO CHECK ANSWERS");
+    SCENARIOS.forEach(function(sc){
+      var saved = state.scenarios[sc.id];
+      lines.push(sc.title + " (" + sc.era + ")");
+      if (saved){
+        lines.push("  My answer: " + sc.options[saved.selectedIndex].text);
+        lines.push("  Result: " + (saved.correct ? "Correct":"Incorrect"));
+      } else {
+        lines.push("  My answer: (not answered)");
+      }
+      lines.push("");
+    });
+  }
+  return lines.join("\n");
+}
+
+function getExportOpts(){
+  return {
+    meet: document.getElementById("exp-meet").checked,
+    match: document.getElementById("exp-match").checked,
+    scenarios: document.getElementById("exp-scenarios").checked
+  };
+}
+
+function resetAllState(){
+  state = JSON.parse(JSON.stringify(defaultState));
+  saveState();
+  matchRuntime = { round:1, pool:[], placedCount:0, firstTryCorrect:0, selectedCard:null };
+  renderBranchGrid();
+  initMatchTab();
+  renderScenarios();
+  updateScenarioProgress();
+  showTab("directions");
+}
+
+document.getElementById("copyTextBtn").addEventListener("click", function(){
+  var opts = getExportOpts();
+  var text = buildExportText(opts);
+  var msg = document.getElementById("exportMsg");
+  if (navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(function(){
+      msg.textContent = "Copied! Paste into your Google Doc. Starting fresh for the next student.";
+      setTimeout(function(){
+        exportModal.classList.remove("show");
+        resetAllState();
+      }, 1400);
+    }).catch(function(){
+      msg.textContent = "Copy failed \u2014 your work is still saved. Try again.";
+    });
+  } else {
+    msg.textContent = "Copy isn't supported in this browser \u2014 try Save as PDF instead.";
+  }
+});
+
+document.getElementById("savePdfBtn").addEventListener("click", function(){
+  var opts = getExportOpts();
+  var printArea = document.getElementById("printArea");
+  var html = "<h1>Balancing the Branches \u2014 Student Summary</h1>";
+  var text = buildExportText(opts);
+  html += "<pre style='white-space:pre-wrap;font-family:inherit;'>" + text.replace(/&/g,"&amp;").replace(/</g,"&lt;") + "</pre>";
+  printArea.innerHTML = html;
+
+  var handled = false;
+  function onAfterPrint(){
+    if (handled) return;
+    handled = true;
+    window.removeEventListener("afterprint", onAfterPrint);
+    exportModal.classList.remove("show");
+    resetAllState();
+  }
+  window.addEventListener("afterprint", onAfterPrint);
+  setTimeout(function(){ window.print(); }, 50);
+});
+
+/* ===================== INIT ===================== */
+renderBranchGrid();
+initMatchTab();
+renderScenarios();
+updateScenarioProgress();
+showTab("directions"); // navigation always resets to landing view on load, per build standard
+})();
+</script>
+</body>
+</html>

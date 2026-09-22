@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Geography &amp; Colonial Economies: Card Match Investigation</title>
+<style>
+  :root {
+    --bg-base: #f7f5f0;
+    --bg-card: #ffffff;
+    --bg-card-hover: #f0ede4;
+    --bg-header: #2c3e50;
+    --text-primary: #1f2933;
+    --text-inverse: #ffffff;
+    --text-muted: #5a6472;
+    --border: #d3cfc4;
+    --accent: #1d6f5e;
+    --accent-secondary: #b8552f;
+    --region-ne: #2f6690;
+    --region-mid: #6a994e;
+    --region-south: #b8552f;
+    --success: #2e7d32;
+    --danger: #b3261e;
+    --focus-ring: #1d6f5e;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: Georgia, 'Times New Roman', serif;
+    background: var(--bg-base);
+    color: var(--text-primary);
+    line-height: 1.5;
+  }
+
+  header {
+    background: var(--bg-header);
+    color: var(--text-inverse);
+    padding: 1rem 1.25rem;
+    position: sticky;
+    top: 0;
+    z-index: 20;
+  }
+
+  header h1 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.25rem;
+  }
+
+  nav.tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  nav.tabs button {
+    font-family: inherit;
+    font-size: 0.85rem;
+    padding: 0.6rem 0.9rem;
+    min-height: 44px;
+    border: 2px solid transparent;
+    border-radius: 6px;
+    background: rgba(255,255,255,0.12);
+    color: var(--text-inverse);
+    cursor: pointer;
+  }
+
+  nav.tabs button:hover { background: rgba(255,255,255,0.25); }
+  nav.tabs button:focus-visible { outline: 3px solid #ffd166; outline-offset: 2px; }
+  nav.tabs button[aria-selected="true"] {
+    background: var(--accent);
+    border-color: #fff;
+    font-weight: bold;
+  }
+
+  main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1.25rem;
+  }
+
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  .card-block {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem;
+    margin-bottom: 1.25rem;
+    overflow: visible;
+  }
+
+  h2 { margin-top: 0; }
+
+  .directions-list li { margin-bottom: 0.6rem; }
+
+  textarea {
+    width: 100%;
+    min-height: 110px;
+    font-family: inherit;
+    font-size: 1rem;
+    padding: 0.6rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: #fffef9;
+    color: var(--text-primary);
+    resize: vertical;
+    overflow: visible;
+  }
+
+  textarea:focus-visible { outline: 3px solid var(--focus-ring); }
+
+  label.field-label {
+    display: block;
+    font-weight: bold;
+    margin: 0.75rem 0 0.35rem 0;
+  }
+
+  .region-board {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  @media (min-width: 700px) {
+    .region-board { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  .geo-card {
+    border-radius: 10px;
+    padding: 1rem;
+    color: var(--text-inverse);
+    min-height: 100%;
+  }
+
+  .geo-card.ne { background: var(--region-ne); }
+  .geo-card.mid { background: var(--region-mid); }
+  .geo-card.south { background: var(--region-south); }
+  .geo-card.mystery { background: #5c5470; margin-bottom: 1.25rem; }
+
+  .mystery-board {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 700px) {
+    .mystery-board { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  .geo-card h3 { margin-top: 0; }
+
+  .dropzone {
+    margin-top: 0.75rem;
+    background: rgba(255,255,255,0.15);
+    border: 2px dashed rgba(255,255,255,0.6);
+    border-radius: 8px;
+    padding: 0.5rem;
+    min-height: 60px;
+  }
+
+  .dropzone.dragover { background: rgba(255,255,255,0.35); border-color: #fff; }
+
+  .placed-card {
+    background: #fff;
+    color: var(--text-primary);
+    border-radius: 6px;
+    padding: 0.5rem 0.6rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.85rem;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+  }
+
+  .placed-card button.remove-btn {
+    float: right;
+    background: none;
+    border: none;
+    color: var(--danger);
+    font-weight: bold;
+    cursor: pointer;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .card-pool {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 1rem;
+    padding: 0.75rem;
+    background: #fffef9;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    min-height: 60px;
+  }
+
+  .econ-card {
+    background: #fff8e7;
+    border: 2px solid #e0c88f;
+    border-radius: 8px;
+    padding: 0.6rem 0.8rem;
+    min-width: 160px;
+    max-width: 220px;
+    font-size: 0.85rem;
+    cursor: grab;
+    min-height: 44px;
+  }
+
+  .econ-card:focus-visible { outline: 3px solid var(--focus-ring); }
+  .econ-card.selected { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(29,111,94,0.3); }
+  .econ-card strong { display: block; margin-bottom: 0.25rem; }
+
+  .instructions-note {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-top: 0.5rem;
+  }
+
+  .nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+    gap: 0.75rem;
+  }
+
+  .nav-buttons button {
+    font-family: inherit;
+    font-size: 0.95rem;
+    padding: 0.65rem 1.1rem;
+    min-height: 44px;
+    border-radius: 6px;
+    border: 1px solid var(--accent);
+    background: var(--accent);
+    color: var(--text-inverse);
+    cursor: pointer;
+  }
+
+  .nav-buttons button:disabled { opacity: 0.4; cursor: default; }
+  .nav-buttons button:focus-visible { outline: 3px solid var(--focus-ring); outline-offset: 2px; }
+
+  .justify-block {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+  }
+  .justify-block:last-child { border-bottom: none; }
+
+  .export-buttons { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1rem; }
+  .export-buttons button {
+    font-family: inherit;
+    font-size: 0.95rem;
+    padding: 0.65rem 1.1rem;
+    min-height: 44px;
+    border-radius: 6px;
+    border: 1px solid var(--accent-secondary);
+    background: var(--accent-secondary);
+    color: var(--text-inverse);
+    cursor: pointer;
+  }
+
+  #statusMsg {
+    margin-top: 0.75rem;
+    font-weight: bold;
+    min-height: 1.2em;
+  }
+  #statusMsg.success { color: var(--success); }
+  #statusMsg.error { color: var(--danger); }
+
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    align-items: center;
+    justify-content: center;
+    z-index: 30;
+    padding: 1rem;
+  }
+  .modal-overlay.active { display: flex; }
+  .modal-box {
+    background: #fff;
+    border-radius: 10px;
+    padding: 1.25rem;
+    max-width: 420px;
+    width: 100%;
+  }
+  .modal-box label { display: block; margin-bottom: 0.5rem; }
+  .modal-actions { display: flex; justify-content: flex-end; gap: 0.6rem; margin-top: 1rem; }
+  .modal-actions button {
+    font-family: inherit;
+    min-height: 44px;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--bg-card-hover);
+    cursor: pointer;
+  }
+  .modal-actions button.primary { background: var(--accent); color: var(--text-inverse); border-color: var(--accent); }
+
+  .answer-key {
+    display: none;
+    margin-top: 1rem;
+    padding: 1rem;
+    background: #eef6f0;
+    border: 1px solid var(--success);
+    border-radius: 8px;
+  }
+  .answer-key.active { display: block; }
+
+  @media print {
+    header, .nav-buttons, .export-buttons, #resetNotice { display: none !important; }
+    .panel { display: block !important; page-break-after: always; }
+    textarea { border: 1px solid #999; overflow: visible; height: auto; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Geography &amp; Colonial Economies: Card Match Investigation</h1>
+  <nav class="tabs" role="tablist" aria-label="Activity sections">
+    <button role="tab" id="tabbtn-directions" aria-controls="panel-directions" aria-selected="true">1. Directions</button>
+    <button role="tab" id="tabbtn-predict" aria-controls="panel-predict" aria-selected="false">2. Prediction</button>
+    <button role="tab" id="tabbtn-match" aria-controls="panel-match" aria-selected="false">3. Card Match</button>
+    <button role="tab" id="tabbtn-justify" aria-controls="panel-justify" aria-selected="false">4. Justify</button>
+    <button role="tab" id="tabbtn-wrap" aria-controls="panel-wrap" aria-selected="false">5. Wrap-Up</button>
+  </nav>
+</header>
+
+<main>
+
+  <!-- TAB 1: DIRECTIONS -->
+  <section class="panel active" id="panel-directions" role="tabpanel" aria-labelledby="tabbtn-directions">
+    <div class="card-block">
+      <h2>Welcome</h2>
+      <p><strong>Learning goal:</strong> You will examine the impact of geographic factors on patterns of settlement and the development of colonial economic systems in the New England, Middle, and Southern colonies.</p>
+      <p>Here's what's in each tab and about how long it should take:</p>
+      <ol class="directions-list">
+        <li><strong>Directions (you are here)</strong> &mdash; 2 minutes.</li>
+        <li><strong>Prediction</strong> &mdash; Read three regions' geography without knowing which region is which, and predict what economy would develop in each. 8&ndash;10 minutes.</li>
+        <li><strong>Card Match</strong> &mdash; Drag or click 9 economic activity cards onto the 3 region cards where you think each one best fits. 10&ndash;15 minutes.</li>
+        <li><strong>Justify</strong> &mdash; For each region, explain in writing why its geography caused those economic activities. 10&ndash;15 minutes.</li>
+        <li><strong>Wrap-Up</strong> &mdash; Compare your work to a sample answer key, reflect, and export your work. 5 minutes.</li>
+      </ol>
+      <p>Your work saves automatically as you go on this device. When you're done, use the Export button on the last tab to save a copy of everything you wrote.</p>
+    </div>
+    <div class="nav-buttons">
+      <button disabled>&larr; Previous</button>
+      <button class="next-btn" data-next="panel-predict">Next: Prediction &rarr;</button>
+    </div>
+  </section>
+
+  <!-- TAB 2: PREDICTION -->
+  <section class="panel" id="panel-predict" role="tabpanel" aria-labelledby="tabbtn-predict">
+    <div class="card-block">
+      <h2>Part 1: Blind Prediction</h2>
+      <p>Read the three geography profiles below. You are <em>not</em> told which colonial region each one describes yet.</p>
+      <div class="mystery-board">
+        <div class="geo-card mystery">
+          <h3>Mystery Region A</h3>
+          <p>Rocky, thin soil that resists large-scale farming. Cold winters and a short growing season. A jagged coastline with dozens of natural harbors. Dense forests inland. Rich fishing grounds just offshore.</p>
+        </div>
+        <div class="geo-card mystery">
+          <h3>Mystery Region B</h3>
+          <p>Fertile soil, especially in wide river valleys. Moderate climate with a long growing season. Major rivers reaching deep inland, ideal for moving goods.</p>
+        </div>
+        <div class="geo-card mystery">
+          <h3>Mystery Region C</h3>
+          <p>Warm climate with a long growing season. Flat, fertile lowlands well-suited to large fields. A long coastline and many navigable rivers reaching far inland.</p>
+        </div>
+      </div>
+      <label class="field-label" for="predictInput-a">Region A &mdash; what economic activities would develop here, and what would <em>not</em> work well? Explain your reasoning.</label>
+      <textarea id="predictInput-a" data-key="predict-a"></textarea>
+      <label class="field-label" for="predictInput-b">Region B &mdash; what economic activities would develop here, and what would <em>not</em> work well? Explain your reasoning.</label>
+      <textarea id="predictInput-b" data-key="predict-b"></textarea>
+      <label class="field-label" for="predictInput-c">Region C &mdash; what economic activities would develop here, and what would <em>not</em> work well? Explain your reasoning.</label>
+      <textarea id="predictInput-c" data-key="predict-c"></textarea>
+      <p class="instructions-note">You'll find out which regions these were &mdash; and check your predictions &mdash; in the Card Match tab.</p>
+    </div>
+    <div class="nav-buttons">
+      <button class="prev-btn" data-prev="panel-directions">&larr; Previous</button>
+      <button class="next-btn" data-next="panel-match">Next: Card Match &rarr;</button>
+    </div>
+  </section>
+
+  <!-- TAB 3: CARD MATCH -->
+  <section class="panel" id="panel-match" role="tabpanel" aria-labelledby="tabbtn-match">
+    <div class="card-block">
+      <h2>Part 2: Card Match</h2>
+      <p>The mystery regions from Part 1 were: <strong>Region A = New England</strong>, <strong>Region B = Middle Colonies</strong>, <strong>Region C = Southern Colonies</strong>. Check your predictions against what's below, then place the cards.</p>
+      <p><strong>How to place cards:</strong> Click (or tap) an economic activity card below to select it, then click the region you think it best fits. On a computer, you can also drag and drop. You can move a card again any time, or click the &times; on a placed card to send it back to the pool.</p>
+
+      <div class="region-board" id="regionBoard">
+        <div class="geo-card ne" data-region="ne">
+          <h3>New England Colonies</h3>
+          <p>Rocky, thin soil; cold climate; short growing season; jagged coastline with many natural harbors; dense forests; rich offshore fishing grounds.</p>
+          <div class="dropzone" id="dropzone-ne" data-region="ne" aria-label="New England drop zone"></div>
+        </div>
+        <div class="geo-card mid" data-region="mid">
+          <h3>Middle Colonies</h3>
+          <p>Fertile soil, especially in river valleys; moderate climate; long growing season; major rivers reaching far inland.</p>
+          <div class="dropzone" id="dropzone-mid" data-region="mid" aria-label="Middle colonies drop zone"></div>
+        </div>
+        <div class="geo-card south" data-region="south">
+          <h3>Southern Colonies</h3>
+          <p>Warm climate, long growing season; flat, fertile lowlands; long coastline; many navigable rivers reaching inland.</p>
+          <div class="dropzone" id="dropzone-south" data-region="south" aria-label="Southern colonies drop zone"></div>
+        </div>
+      </div>
+
+      <h3>Economic Activity Cards</h3>
+      <div class="card-pool" id="cardPool" aria-label="Unplaced economic activity cards"></div>
+      <p class="instructions-note" id="matchProgress"></p>
+    </div>
+    <div class="nav-buttons">
+      <button class="prev-btn" data-prev="panel-predict">&larr; Previous</button>
+      <button class="next-btn" data-next="panel-justify">Next: Justify &rarr;</button>
+    </div>
+  </section>
+
+  <!-- TAB 4: JUSTIFY -->
+  <section class="panel" id="panel-justify" role="tabpanel" aria-labelledby="tabbtn-justify">
+    <div class="card-block">
+      <h2>Part 3: Justify Your Matches</h2>
+      <p>For each region, explain <strong>why</strong> its geography caused the economic activities you placed there. Use specific details from the geography cards. If you're unsure about a placement, explain your best thinking &mdash; there isn't only one "correct" answer as long as you can defend it with evidence.</p>
+
+      <div class="justify-block">
+        <p><strong>New England geography:</strong> Rocky, thin soil; cold climate; short growing season; jagged coastline with many natural harbors; dense forests; rich offshore fishing grounds.</p>
+        <p><strong>Your placed cards:</strong> <span id="justify-cards-ne">(none placed yet &mdash; go back to Card Match)</span></p>
+        <label class="field-label" for="justify-ne">How did this geography cause these economic activities?</label>
+        <textarea id="justify-ne" data-key="justify-ne"></textarea>
+      </div>
+      <div class="justify-block">
+        <p><strong>Middle Colonies geography:</strong> Fertile soil, especially in river valleys; moderate climate; long growing season; major rivers reaching far inland.</p>
+        <p><strong>Your placed cards:</strong> <span id="justify-cards-mid">(none placed yet &mdash; go back to Card Match)</span></p>
+        <label class="field-label" for="justify-mid">How did this geography cause these economic activities?</label>
+        <textarea id="justify-mid" data-key="justify-mid"></textarea>
+      </div>
+      <div class="justify-block">
+        <p><strong>Southern Colonies geography:</strong> Warm climate, long growing season; flat, fertile lowlands; long coastline; many navigable rivers reaching inland.</p>
+        <p><strong>Your placed cards:</strong> <span id="justify-cards-south">(none placed yet &mdash; go back to Card Match)</span></p>
+        <label class="field-label" for="justify-south">How did this geography cause these economic activities?</label>
+        <textarea id="justify-south" data-key="justify-south"></textarea>
+      </div>
+    </div>
+    <div class="nav-buttons">
+      <button class="prev-btn" data-prev="panel-match">&larr; Previous</button>
+      <button class="next-btn" data-next="panel-wrap">Next: Wrap-Up &rarr;</button>
+    </div>
+  </section>
+
+  <!-- TAB 5: WRAP-UP -->
+  <section class="panel" id="panel-wrap" role="tabpanel" aria-labelledby="tabbtn-wrap">
+    <div class="card-block">
+      <h2>Part 4: Wrap-Up</h2>
+      <p>Compare your predictions and matches to one reasonable answer key. If yours is different, that's not automatically wrong &mdash; go back and strengthen your justification if you can defend it.</p>
+      <button id="revealKeyBtn" style="min-height:44px; padding:0.5rem 1rem; border-radius:6px; cursor:pointer;">Show sample answer key</button>
+      <div class="answer-key" id="answerKey">
+        <p><strong>New England:</strong> Shipbuilding, Fishing &amp; Whaling, Subsistence Farming &amp; Small Trades &mdash; poor soil and a short growing season ruled out large-scale farming, so colonists turned to the sea and small trades instead.</p>
+        <p><strong>Middle Colonies:</strong> Grain Farming, Milling &amp; Flour Production, River &amp; Port Trade &mdash; fertile river-valley soil and a long growing season made large-scale grain farming possible, and rivers moved the surplus to port.</p>
+        <p><strong>Southern Colonies:</strong> Cash Crop Plantations, Livestock &amp; Mixed Farming (Backcountry), River Export Trade &mdash; warm climate and fertile lowlands favored large cash-crop plantations along navigable rivers, while inland areas away from the coast relied on livestock and mixed farming.</p>
+      </div>
+
+      <label class="field-label" for="reflectInput">Looking ahead: what kind of workers do you think each of these economies would need to run? We'll explore this next class.</label>
+      <textarea id="reflectInput" data-key="reflect"></textarea>
+
+      <div class="export-buttons">
+        <button id="copyTextBtn">Copy My Work as Text</button>
+        <button id="printBtn">Save as PDF</button>
+      </div>
+      <p id="statusMsg" role="status" aria-live="polite"></p>
+    </div>
+    <div class="nav-buttons">
+      <button class="prev-btn" data-prev="panel-justify">&larr; Previous</button>
+      <button disabled>Finish &rarr;</button>
+    </div>
+  </section>
+
+</main>
+
+<!-- Section-select modal for PDF export -->
+<div class="modal-overlay" id="printModal" role="dialog" aria-modal="true" aria-labelledby="printModalTitle">
+  <div class="modal-box">
+    <h2 id="printModalTitle" style="margin-top:0;">Choose sections to include</h2>
+    <label><input type="checkbox" class="printSection" value="panel-predict" checked> Prediction</label>
+    <label><input type="checkbox" class="printSection" value="panel-match" checked> Card Match</label>
+    <label><input type="checkbox" class="printSection" value="panel-justify" checked> Justify</label>
+    <label><input type="checkbox" class="printSection" value="panel-wrap" checked> Wrap-Up</label>
+    <div class="modal-actions">
+      <button id="printCancelBtn">Cancel</button>
+      <button id="printConfirmBtn" class="primary">Print / Save PDF</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  var LS_KEY = 'edsim_geo_econ_cardmatch_v1';
+
+  var ECON_CARDS = [
+    { id: 'ne1', region: 'ne', title: 'Shipbuilding', text: 'Colonists built ships using abundant timber and the coastline\'s many natural harbors.' },
+    { id: 'ne2', region: 'ne', title: 'Fishing & Whaling', text: 'Cod, herring, and other fish were abundant offshore; whole towns built their economy around fishing (and later whaling).' },
+    { id: 'ne3', region: 'ne', title: 'Subsistence Farming & Small Trades', text: 'Poor soil limited large fields, so most families farmed just enough for their own household and worked a trade on the side.' },
+    { id: 'mid1', region: 'mid', title: 'Grain Farming ("Breadbasket")', text: 'Wheat, corn, and other grains grew well in fertile river-valley soil; colonies exported huge grain surpluses.' },
+    { id: 'mid2', region: 'mid', title: 'Milling & Flour Production', text: 'Fast-flowing rivers powered gristmills that turned raw grain into flour before it was shipped out.' },
+    { id: 'mid3', region: 'mid', title: 'River & Port Trade', text: 'Major rivers carried grain and flour from inland farms to busy port cities for export.' },
+    { id: 'south1', region: 'south', title: 'Cash Crop Plantations', text: 'Tobacco, rice, and indigo grew well in the warm climate and fertile lowlands, grown on large plantations for export.' },
+    { id: 'south2', region: 'south', title: 'Livestock & Mixed Farming (Backcountry)', text: 'Away from the coast, many farmers raised livestock and grew a mix of crops for their own use rather than a single cash crop.' },
+    { id: 'south3', region: 'south', title: 'River Export Trade', text: 'Plantations were built along navigable rivers so crops could ship directly to England without needing a large port city.' }
+  ];
+
+  var state = {
+    placements: {},   // cardId -> region ('ne' | 'mid' | 'south')
+    texts: {},        // fieldKey -> text
+    selectedCard: null
+  };
+
+  function loadState() {
+    try {
+      var raw = localStorage.getItem(LS_KEY);
+      if (raw) {
+        var parsed = JSON.parse(raw);
+        state.placements = parsed.placements || {};
+        state.texts = parsed.texts || {};
+      }
+    } catch (e) { /* ignore corrupt storage */ }
+  }
+
+  function saveState() {
+    try {
+      localStorage.setItem(LS_KEY, JSON.stringify({ placements: state.placements, texts: state.texts }));
+    } catch (e) { /* storage unavailable; continue without saving */ }
+  }
+
+  // ---------- Tabs ----------
+  var tabButtons = Array.prototype.slice.call(document.querySelectorAll('nav.tabs button'));
+  var panels = Array.prototype.slice.call(document.querySelectorAll('.panel'));
+
+  function showPanel(panelId) {
+    panels.forEach(function (p) { p.classList.toggle('active', p.id === panelId); });
+    tabButtons.forEach(function (b) {
+      b.setAttribute('aria-selected', b.getAttribute('aria-controls') === panelId ? 'true' : 'false');
+    });
+    window.scrollTo(0, 0);
+  }
+
+  tabButtons.forEach(function (btn) {
+    btn.addEventListener('click', function () { showPanel(btn.getAttribute('aria-controls')); });
+  });
+  document.querySelectorAll('.next-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () { showPanel(btn.getAttribute('data-next')); });
+  });
+  document.querySelectorAll('.prev-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () { showPanel(btn.getAttribute('data-prev')); });
+  });
+
+  // ---------- Textareas (autosave) ----------
+  document.querySelectorAll('textarea[data-key]').forEach(function (ta) {
+    ta.addEventListener('input', function () {
+      state.texts[ta.getAttribute('data-key')] = ta.value;
+      saveState();
+    });
+  });
+
+  function restoreTexts() {
+    document.querySelectorAll('textarea[data-key]').forEach(function (ta) {
+      var key = ta.getAttribute('data-key');
+      if (state.texts[key]) ta.value = state.texts[key];
+    });
+  }
+
+  // ---------- Card matching ----------
+  var cardPool = document.getElementById('cardPool');
+  var dropzones = Array.prototype.slice.call(document.querySelectorAll('.dropzone'));
+  var matchProgress = document.getElementById('matchProgress');
+
+  function renderCards() {
+    cardPool.innerHTML = '';
+    dropzones.forEach(function (dz) { dz.innerHTML = ''; });
+
+    ECON_CARDS.forEach(function (card) {
+      var placedRegion = state.placements[card.id];
+      var el = buildCardElement(card);
+      if (placedRegion) {
+        var wrapper = document.createElement('div');
+        wrapper.className = 'placed-card';
+        var removeBtn = document.createElement('button');
+        removeBtn.className = 'remove-btn';
+        removeBtn.setAttribute('aria-label', 'Remove ' + card.title + ' from region');
+        removeBtn.textContent = '×';
+        removeBtn.addEventListener('click', function () {
+          delete state.placements[card.id];
+          saveState();
+          renderCards();
+        });
+        wrapper.appendChild(removeBtn);
+        var label = document.createElement('div');
+        label.innerHTML = '<strong>' + card.title + '</strong>' + card.text;
+        wrapper.appendChild(label);
+        var dz = document.getElementById('dropzone-' + placedRegion);
+        dz.appendChild(wrapper);
+      } else {
+        cardPool.appendChild(el);
+      }
+    });
+
+    var placedCount = Object.keys(state.placements).length;
+    matchProgress.textContent = placedCount + ' of ' + ECON_CARDS.length + ' cards placed.';
+
+    updateJustifySummaries();
+  }
+
+  function updateJustifySummaries() {
+    ['ne', 'mid', 'south'].forEach(function (region) {
+      var span = document.getElementById('justify-cards-' + region);
+      if (!span) return;
+      var cards = ECON_CARDS.filter(function (c) { return state.placements[c.id] === region; });
+      span.textContent = cards.length ? cards.map(function (c) { return c.title; }).join(', ') : '(none placed yet — go back to Card Match)';
+    });
+  }
+
+  function buildCardElement(card) {
+    var el = document.createElement('div');
+    el.className = 'econ-card';
+    el.setAttribute('tabindex', '0');
+    el.setAttribute('role', 'button');
+    el.setAttribute('draggable', 'true');
+    el.setAttribute('data-card-id', card.id);
+    el.setAttribute('aria-label', card.title + '. ' + card.text + '. Press Enter to select, then choose a region.');
+    el.innerHTML = '<strong>' + card.title + '</strong>' + card.text;
+
+    el.addEventListener('click', function () { selectCard(card.id, el); });
+    el.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        selectCard(card.id, el);
+      }
+    });
+    el.addEventListener('dragstart', function (e) {
+      e.dataTransfer.setData('text/plain', card.id);
+    });
+    return el;
+  }
+
+  function selectCard(cardId, el) {
+    document.querySelectorAll('.econ-card.selected').forEach(function (c) { c.classList.remove('selected'); });
+    if (state.selectedCard === cardId) {
+      state.selectedCard = null;
+      return;
+    }
+    state.selectedCard = cardId;
+    el.classList.add('selected');
+  }
+
+  dropzones.forEach(function (dz) {
+    dz.addEventListener('click', function () {
+      if (state.selectedCard) {
+        state.placements[state.selectedCard] = dz.getAttribute('data-region');
+        state.selectedCard = null;
+        saveState();
+        renderCards();
+      }
+    });
+    dz.addEventListener('dragover', function (e) {
+      e.preventDefault();
+      dz.classList.add('dragover');
+    });
+    dz.addEventListener('dragleave', function () { dz.classList.remove('dragover'); });
+    dz.addEventListener('drop', function (e) {
+      e.preventDefault();
+      dz.classList.remove('dragover');
+      var cardId = e.dataTransfer.getData('text/plain');
+      if (cardId) {
+        state.placements[cardId] = dz.getAttribute('data-region');
+        saveState();
+        renderCards();
+      }
+    });
+  });
+
+  // ---------- Answer key reveal ----------
+  document.getElementById('revealKeyBtn').addEventListener('click', function () {
+    document.getElementById('answerKey').classList.toggle('active');
+  });
+
+  // ---------- Export: Copy Text ----------
+  function buildExportText() {
+    var lines = [];
+    lines.push('Geography & Colonial Economies: Card Match Investigation');
+    lines.push('');
+    lines.push('PREDICTIONS (before knowing the regions):');
+    lines.push('Region A (New England): ' + (state.texts['predict-a'] || '(no response)'));
+    lines.push('Region B (Middle Colonies): ' + (state.texts['predict-b'] || '(no response)'));
+    lines.push('Region C (Southern Colonies): ' + (state.texts['predict-c'] || '(no response)'));
+    lines.push('');
+    lines.push('CARD PLACEMENTS:');
+    var regionNames = { ne: 'New England', mid: 'Middle Colonies', south: 'Southern Colonies' };
+    ['ne', 'mid', 'south'].forEach(function (region) {
+      var cards = ECON_CARDS.filter(function (c) { return state.placements[c.id] === region; });
+      lines.push(regionNames[region] + ': ' + (cards.length ? cards.map(function (c) { return c.title; }).join(', ') : '(none placed)'));
+    });
+    lines.push('');
+    lines.push('JUSTIFICATIONS:');
+    lines.push('New England: ' + (state.texts['justify-ne'] || '(no response)'));
+    lines.push('Middle Colonies: ' + (state.texts['justify-mid'] || '(no response)'));
+    lines.push('Southern Colonies: ' + (state.texts['justify-south'] || '(no response)'));
+    lines.push('');
+    lines.push('LOOKING AHEAD REFLECTION:');
+    lines.push(state.texts.reflect || '(no response)');
+    return lines.join('\n');
+  }
+
+  var statusMsg = document.getElementById('statusMsg');
+
+  function showStatus(text, kind) {
+    statusMsg.textContent = text;
+    statusMsg.className = kind || '';
+  }
+
+  function resetSimState() {
+    state = { placements: {}, texts: {}, selectedCard: null };
+    document.querySelectorAll('textarea[data-key]').forEach(function (ta) { ta.value = ''; });
+    renderCards();
+    document.getElementById('answerKey').classList.remove('active');
+    showPanel('panel-directions');
+  }
+
+  document.getElementById('copyTextBtn').addEventListener('click', function () {
+    var text = buildExportText();
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () {
+        try { localStorage.removeItem(LS_KEY); } catch (e) {}
+        showStatus('Copied! Paste into your Google Doc. Starting fresh for the next student.', 'success');
+        setTimeout(resetSimState, 1800);
+      }, function () {
+        showStatus('Copy failed — your work is still saved. Try again.', 'error');
+      });
+    } else {
+      showStatus('Copy is not supported in this browser. Try Save as PDF instead.', 'error');
+    }
+  });
+
+  // ---------- Export: Save as PDF (print) ----------
+  var printModal = document.getElementById('printModal');
+  document.getElementById('printBtn').addEventListener('click', function () {
+    printModal.classList.add('active');
+  });
+  document.getElementById('printCancelBtn').addEventListener('click', function () {
+    printModal.classList.remove('active');
+  });
+  document.getElementById('printConfirmBtn').addEventListener('click', function () {
+    var selected = Array.prototype.slice.call(document.querySelectorAll('.printSection:checked')).map(function (cb) { return cb.value; });
+    document.querySelectorAll('main .panel').forEach(function (p) {
+      p.style.display = (selected.indexOf(p.id) !== -1) ? 'block' : 'none';
+    });
+    printModal.classList.remove('active');
+    window.print();
+    setTimeout(function () {
+      document.querySelectorAll('main .panel').forEach(function (p) { p.style.display = ''; });
+      panels.forEach(function (p) { p.classList.toggle('active', p.id === 'panel-directions'); });
+      try { localStorage.removeItem(LS_KEY); } catch (e) {}
+      showStatus('PDF saved. Starting fresh for the next student.', 'success');
+      resetSimState();
+    }, 500);
+  });
+
+  // ---------- Init ----------
+  loadState();
+  restoreTexts();
+  renderCards();
+  showPanel('panel-directions');
+})();
+</script>
+
+</body>
+</html>
