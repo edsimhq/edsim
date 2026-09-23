@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Colonial America Timeline · EdSim</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Special+Elite&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#efe4cc;--bg-deep:#e3d5b3;
+  --parchment:#f6ecd4;--parchment-2:#f0e3c4;
+  --ink:#2b2013;--ink-soft:#5a4c33;--ink-faint:#8c7a56;
+  --border:#c9b78c;--border-hi:#a68f5c;
+  --accent:#8a2e2e;--accent-hi:#a83c3c;--accent-glow:rgba(138,46,46,.18);
+  --gold:#8f6b1f;--gold-hi:#b3892c;--gold-glow:rgba(179,137,44,.22);
+  --green:#3d5c3a;--green-hi:#4f7a4a;--green-glow:rgba(79,122,74,.2);
+  --white:#fffaf0;
+  --fd:'Playfair Display',Georgia,serif;--fb:'Crimson Text',Georgia,serif;--fm:'Special Elite',monospace;
+  --ease:cubic-bezier(.4,0,.2,1);--r:8px;--rs:4px;
+}
+html,body{min-height:100%}
+body{font-family:var(--fb);background:var(--bg);color:var(--ink);display:flex;flex-direction:column;
+  background-image:radial-gradient(ellipse at top left,rgba(255,255,255,.25),transparent 60%),
+                    radial-gradient(ellipse at bottom right,rgba(0,0,0,.05),transparent 60%);}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.5;
+  background:repeating-radial-gradient(circle at 20% 30%,rgba(0,0,0,.02) 0,transparent 2px),
+             repeating-radial-gradient(circle at 70% 80%,rgba(0,0,0,.02) 0,transparent 2px)}
+
+/* HEADER */
+.hdr{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  padding:0 20px;height:52px;border-bottom:2px solid var(--border-hi);
+  background:rgba(239,228,204,.95);backdrop-filter:blur(6px);flex-shrink:0;flex-wrap:wrap;gap:6px}
+.hdr-l{display:flex;align-items:center;gap:10px}
+.logo{font-family:var(--fm);font-size:14px;font-weight:400;color:var(--ink-soft);letter-spacing:.08em}
+.hdiv{width:1px;height:15px;background:var(--border-hi)}
+.unit{font-family:var(--fm);font-size:11px;color:var(--accent);letter-spacing:.1em;text-transform:uppercase}
+.hdr-r{display:flex;align-items:center;gap:8px}
+.hdr-btn{font-family:var(--fm);font-size:10px;font-weight:400;letter-spacing:.06em;text-transform:uppercase;
+  padding:6px 12px;border-radius:var(--rs);cursor:pointer;min-height:36px;
+  background:var(--parchment);border:1px solid var(--border-hi);color:var(--ink-soft);transition:all .15s}
+.hdr-btn:hover{background:var(--white);color:var(--ink)}
+.hdr-btn.danger:hover{border-color:var(--accent-hi);color:var(--accent-hi)}
+
+/* Tier toggle (global reading level) */
+.tier-toggle{display:flex;gap:2px;background:var(--parchment-2);border:1px solid var(--border-hi);border-radius:var(--rs);padding:2px}
+.tier-btn{font-family:var(--fm);font-size:9px;letter-spacing:.05em;text-transform:uppercase;padding:5px 9px;
+  border:none;background:transparent;color:var(--ink-faint);cursor:pointer;border-radius:3px;min-height:28px}
+.tier-btn.active{background:var(--accent);color:var(--white)}
+
+/* NAV TABS */
+.tabbar{display:flex;gap:2px;padding:10px 16px 0;flex-wrap:wrap;max-width:920px;margin:0 auto;width:100%}
+.tab-btn{font-family:var(--fd);font-size:14px;font-weight:600;padding:10px 16px;border:1px solid var(--border-hi);
+  border-bottom:none;background:var(--parchment-2);color:var(--ink-soft);cursor:pointer;border-radius:6px 6px 0 0;
+  min-height:44px;transition:all .15s}
+.tab-btn.active{background:var(--parchment);color:var(--accent);border-bottom:1px solid var(--parchment)}
+.tab-btn:hover:not(.active){background:var(--white)}
+
+/* MAIN */
+.main{position:relative;z-index:5;flex:1;display:flex;flex-direction:column;align-items:center;padding:0 16px 32px;width:100%}
+.panel{width:100%;max-width:920px;background:var(--parchment);border:1px solid var(--border-hi);border-radius:0 8px 8px 8px;
+  padding:24px 22px;display:none;box-shadow:0 2px 14px rgba(43,32,19,.08)}
+.panel.active{display:block;animation:fadeUp .3s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* NEXT/PREV NAV */
+.panel-nav{display:flex;justify-content:space-between;margin-top:22px;padding-top:16px;border-top:1px solid var(--border)}
+.nav-btn{font-family:var(--fd);font-size:14px;font-weight:600;padding:10px 20px;border-radius:var(--rs);cursor:pointer;
+  border:1px solid var(--border-hi);background:var(--white);color:var(--ink);transition:all .15s;min-height:44px}
+.nav-btn:hover{background:var(--gold);color:var(--white);border-color:var(--gold)}
+.nav-btn:disabled{opacity:.35;cursor:not-allowed}
+.nav-btn.primary{background:var(--accent);color:var(--white);border-color:var(--accent)}
+.nav-btn.primary:hover{background:var(--accent-hi)}
+
+/* DIRECTIONS */
+.dir-title{font-family:var(--fd);font-size:32px;font-weight:700;color:var(--ink);margin-bottom:4px}
+.dir-sub{font-family:var(--fm);font-size:12px;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;margin-bottom:18px}
+.dir-step{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--border)}
+.dir-step:last-of-type{border-bottom:none}
+.dir-num{font-family:var(--fd);font-size:22px;font-weight:700;color:var(--gold-hi);flex-shrink:0;width:32px}
+.dir-body h3{font-family:var(--fd);font-size:16px;font-weight:600;margin-bottom:3px}
+.dir-body p{font-size:14.5px;color:var(--ink-soft);line-height:1.55}
+.dir-time{font-family:var(--fm);font-size:10px;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.05em;margin-top:3px}
+.start-row{margin-top:20px;display:flex;justify-content:center}
+
+/* TIMELINE */
+.tl-scroll{overflow-x:auto;padding:20px 4px 28px;margin-bottom:4px}
+.tl-track{position:relative;display:flex;gap:0;min-width:1200px;padding:0 20px}
+.tl-line{position:absolute;top:38px;left:20px;right:20px;height:3px;background:var(--border-hi);border-radius:2px}
+.tl-node{position:relative;flex:1;display:flex;flex-direction:column;align-items:center;cursor:pointer;min-width:90px}
+.tl-dot{width:20px;height:20px;border-radius:50%;background:var(--parchment);border:3px solid var(--gold-hi);
+  margin-top:28px;z-index:2;transition:all .15s}
+.tl-node.selected .tl-dot{background:var(--accent);border-color:var(--accent);transform:scale(1.25)}
+.tl-node:hover .tl-dot{transform:scale(1.15)}
+.tl-year{font-family:var(--fm);font-size:11px;color:var(--ink-soft);margin-top:8px;text-align:center;white-space:nowrap}
+.tl-node.selected .tl-year{color:var(--accent);font-weight:700}
+.tl-label{font-family:var(--fb);font-size:11.5px;color:var(--ink-faint);text-align:center;max-width:100px;line-height:1.3;margin-top:2px}
+
+.event-card{background:var(--white);border:1px solid var(--border-hi);border-radius:var(--r);padding:20px 22px;
+  border-left:4px solid var(--accent)}
+.event-year{font-family:var(--fm);font-size:12px;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px}
+.event-title{font-family:var(--fd);font-size:24px;font-weight:700;color:var(--ink);margin-bottom:12px}
+.event-desc{font-size:15.5px;line-height:1.7;color:var(--ink-soft)}
+.glossary-term{color:var(--accent);border-bottom:1.5px dotted var(--accent);cursor:help;position:relative;font-weight:600}
+.glossary-term .tooltip{display:none;position:absolute;bottom:130%;left:50%;transform:translateX(-50%);
+  background:var(--ink);color:var(--white);font-family:var(--fb);font-size:13px;font-weight:400;line-height:1.5;
+  padding:10px 13px;border-radius:6px;width:240px;z-index:30;box-shadow:0 6px 20px rgba(0,0,0,.3)}
+.glossary-term:hover .tooltip,.glossary-term:focus .tooltip{display:block}
+.event-vocab{margin-top:14px;display:flex;gap:6px;flex-wrap:wrap}
+.vocab-chip{font-family:var(--fm);font-size:10px;text-transform:uppercase;letter-spacing:.04em;background:var(--parchment-2);
+  border:1px solid var(--border-hi);border-radius:12px;padding:4px 11px;color:var(--ink-soft)}
+
+/* VOCAB TAB */
+.vocab-mode-row{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.mode-btn{font-family:var(--fd);font-size:14px;font-weight:600;padding:9px 16px;border-radius:var(--rs);
+  border:1px solid var(--border-hi);background:var(--white);color:var(--ink-soft);cursor:pointer;min-height:40px}
+.mode-btn.active{background:var(--gold);color:var(--white);border-color:var(--gold)}
+
+.fc-wrap{perspective:1000px;margin:0 auto 16px;cursor:pointer;max-width:480px;min-height:190px}
+.fc-card{width:100%;min-height:190px;transform-style:preserve-3d;transition:transform .45s var(--ease);position:relative}
+.fc-card.flipped{transform:rotateY(180deg)}
+.fc-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:var(--r);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:26px 22px;text-align:center;min-height:190px}
+.fc-front{background:var(--white);border:1px solid var(--border-hi)}
+.fc-back{background:#f2e6c9;border:1px solid var(--gold-hi);transform:rotateY(180deg)}
+.fc-lbl{font-family:var(--fm);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:12px}
+.fc-term{font-family:var(--fd);font-size:26px;font-weight:700;color:var(--ink)}
+.fc-def-text{font-size:15px;color:var(--ink);line-height:1.6}
+.fc-flip-hint{font-family:var(--fm);font-size:10px;color:var(--ink-faint);margin-top:12px}
+.fc-controls{display:flex;justify-content:center;gap:10px;max-width:480px;margin:0 auto}
+.fc-ctrl-btn{font-family:var(--fd);font-size:13px;font-weight:600;padding:9px 16px;border-radius:var(--rs);
+  border:1px solid var(--border-hi);background:var(--white);cursor:pointer;min-height:40px}
+.fc-counter{text-align:center;font-family:var(--fm);font-size:11px;color:var(--ink-faint);margin-top:10px}
+
+.quiz-card{background:var(--white);border:1px solid var(--border-hi);border-radius:var(--r);padding:20px;margin-bottom:14px}
+.quiz-q{font-size:15.5px;font-weight:600;margin-bottom:12px;color:var(--ink)}
+.quiz-opts{display:flex;flex-direction:column;gap:8px}
+.opt-btn{font-family:var(--fb);font-size:14px;text-align:left;padding:11px 14px;border-radius:var(--rs);
+  border:1px solid var(--border-hi);background:var(--parchment-2);cursor:pointer;transition:all .12s;min-height:44px}
+.opt-btn:hover:not(:disabled){background:var(--white)}
+.opt-btn.correct{background:rgba(79,122,74,.18)!important;border-color:var(--green-hi)!important}
+.opt-btn.wrong{background:rgba(138,46,46,.15)!important;border-color:var(--accent-hi)!important}
+.opt-btn:disabled{cursor:default}
+.quiz-progress{font-family:var(--fm);font-size:11px;color:var(--ink-faint);margin-bottom:12px}
+.quiz-score{text-align:center;padding:30px 20px}
+.quiz-score .n{font-family:var(--fd);font-size:44px;font-weight:700;color:var(--accent)}
+.quiz-score .l{font-family:var(--fm);font-size:12px;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.06em;margin-top:4px}
+
+/* REFLECTION */
+.reflect-q{margin-bottom:18px}
+.reflect-q label{display:block;font-family:var(--fd);font-size:15.5px;font-weight:600;margin-bottom:8px;color:var(--ink)}
+.reflect-q textarea{width:100%;min-height:110px;font-family:var(--fb);font-size:14.5px;padding:12px;
+  border:1px solid var(--border-hi);border-radius:var(--rs);background:var(--white);color:var(--ink);
+  resize:vertical;line-height:1.6}
+.reflect-q textarea:focus{outline:none;border-color:var(--accent)}
+.export-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.export-btn{font-family:var(--fd);font-size:14px;font-weight:600;padding:12px 22px;border-radius:var(--rs);
+  border:1px solid;cursor:pointer;transition:all .15s;min-height:44px}
+.export-pdf{background:rgba(179,137,44,.15);color:var(--gold-hi);border-color:var(--gold-hi)}
+.export-pdf:hover{background:rgba(179,137,44,.28)}
+.export-copy{background:rgba(61,92,58,.14);color:var(--green-hi);border-color:var(--green-hi)}
+.export-copy:hover{background:rgba(61,92,58,.26)}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--white);
+  padding:10px 20px;border-radius:6px;font-family:var(--fb);font-size:13px;z-index:200;opacity:0;pointer-events:none;
+  transition:opacity .2s}
+.toast.show{opacity:1}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(43,32,19,.55);z-index:100;
+  align-items:center;justify-content:center;backdrop-filter:blur(3px)}
+.modal-overlay.open{display:flex}
+.modal{background:var(--parchment);border:1px solid var(--border-hi);border-radius:var(--r);padding:24px;max-width:400px;width:90%}
+.modal h2{font-family:var(--fd);font-size:19px;margin-bottom:12px}
+.modal-check{display:flex;align-items:center;gap:9px;padding:7px 0;font-size:14px}
+.modal-check input{width:17px;height:17px}
+.modal-btns{display:flex;gap:8px;justify-content:flex-end;margin-top:16px}
+
+/* PRINT */
+@media print{
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  body{background:white!important;color:#111!important}
+  body::after,.hdr,.tabbar,.toast,.modal-overlay{display:none!important}
+  .main{padding:0!important}
+  .panel,.panel.active{display:none!important}
+  #printDoc{display:block!important}
+  #printDoc *{overflow:visible!important}
+}
+#printDoc{display:none;padding:26px 30px;font-family:Georgia,serif;color:#111;max-width:760px;margin:0 auto}
+.pd-header{display:flex;justify-content:space-between;border-bottom:2px solid #111;padding-bottom:10px;margin-bottom:16px}
+.pd-title{font-size:20px;font-weight:700}
+.pd-meta{font-size:12px;color:#555;text-align:right;line-height:1.6}
+.pd-student-box{background:#f5f5f0;border:1px solid #ddd;border-radius:4px;padding:10px 14px;margin-bottom:16px;
+  display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pd-field-label{font-size:10px;text-transform:uppercase;color:#888;letter-spacing:.06em}
+.pd-field-val{font-size:14px;font-weight:700}
+.pd-section-title{font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;
+  background:#111;color:#fff;padding:6px 12px;border-radius:3px;margin:14px 0 10px}
+.pd-tl-item{margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid #eee}
+.pd-tl-year{font-weight:700;font-size:13px}
+.pd-tl-blank{border-bottom:1px solid #999;display:inline-block;min-width:110px}
+.pd-match-row{display:flex;justify-content:space-between;gap:14px;padding:6px 0;font-size:13px;border-bottom:1px dotted #ccc}
+.pd-reflect-item{margin-bottom:16px}
+.pd-reflect-q{font-weight:700;font-size:13.5px;margin-bottom:6px}
+.pd-reflect-lines{border-bottom:1px solid #999;height:26px;overflow:visible}
+
+/* RESPONSIVE */
+@media(max-width:640px){
+  .dir-title{font-size:26px}
+  .student-row{grid-template-columns:1fr}
+  .event-title{font-size:20px}
+  .quiz-opts{gap:7px}
+  .tabbar{overflow-x:auto;flex-wrap:nowrap}
+  .panel{padding:18px 14px}
+}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-l">
+    <span class="logo">EdSim</span><div class="hdiv"></div>
+    <span class="unit">Colonial Foundations · Timeline</span>
+  </div>
+  <div class="hdr-r">
+    <div class="tier-toggle" role="group" aria-label="Reading level">
+      <button class="tier-btn" data-tier="simplified" onclick="setTier('simplified')" aria-label="Simplified reading level">Simplified</button>
+      <button class="tier-btn active" data-tier="standard" onclick="setTier('standard')" aria-label="Standard reading level">Standard</button>
+      <button class="tier-btn" data-tier="advanced" onclick="setTier('advanced')" aria-label="Advanced reading level">Advanced</button>
+    </div>
+    <button class="hdr-btn danger" onclick="confirmReset()" aria-label="Reset all progress">↺ Reset</button>
+  </div>
+</header>
+
+<div class="tabbar" role="tablist">
+  <button class="tab-btn active" onclick="goToTab('directions')" id="tabbtn-directions">Directions</button>
+  <button class="tab-btn" onclick="goToTab('timeline')" id="tabbtn-timeline">Timeline</button>
+  <button class="tab-btn" onclick="goToTab('vocab')" id="tabbtn-vocab">Vocabulary</button>
+  <button class="tab-btn" onclick="goToTab('reflect')" id="tabbtn-reflect">Reflection &amp; Export</button>
+</div>
+
+<div class="main">
+
+  <div id="printDoc"></div>
+
+  <!-- DIRECTIONS -->
+  <div class="panel active" id="panel-directions">
+    <div class="dir-title">Colonial America: A Timeline</div>
+    <div class="dir-sub">EdSim · US History · Colonial Foundations Unit</div>
+
+    <div class="dir-step">
+      <div class="dir-num">1</div>
+      <div class="dir-body">
+        <h3>Timeline</h3>
+        <p>Explore 12 major events in colonial America, from the founding of Jamestown in 1607 to Lexington and Concord in 1775. Click any point on the timeline to read about that event. Use the reading-level toggle at the top right if you'd like simpler or more advanced wording.</p>
+        <div class="dir-time">About 15 minutes</div>
+      </div>
+    </div>
+    <div class="dir-step">
+      <div class="dir-num">2</div>
+      <div class="dir-body">
+        <h3>Vocabulary</h3>
+        <p>Study 10 key terms tied to the timeline with flashcards, then check your understanding with a short quiz.</p>
+        <div class="dir-time">About 10 minutes</div>
+      </div>
+    </div>
+    <div class="dir-step">
+      <div class="dir-num">3</div>
+      <div class="dir-body">
+        <h3>Reflection &amp; Export</h3>
+        <p>Answer two short cause-and-effect questions connecting events on the timeline, then save your work as a PDF or copy it into a Google Doc.</p>
+        <div class="dir-time">About 10 minutes</div>
+      </div>
+    </div>
+
+    <p style="margin-top:16px;font-size:14px;color:var(--ink-soft)">By the end of this activity, you'll be able to place the key events of the colonial period in order, explain how they connect, and use core vocabulary from this unit correctly.</p>
+
+    <div class="panel-nav">
+      <span></span>
+      <button class="nav-btn primary" onclick="goToTab('timeline')">Start: Timeline →</button>
+    </div>
+  </div>
+
+  <!-- TIMELINE -->
+  <div class="panel" id="panel-timeline">
+    <div class="dir-title" style="font-size:24px">The Timeline</div>
+    <p style="color:var(--ink-soft);font-size:14px;margin-bottom:4px">Click any event to read more.</p>
+
+    <div class="tl-scroll">
+      <div class="tl-track" id="tlTrack">
+        <div class="tl-line"></div>
+      </div>
+    </div>
+
+    <div id="eventCard"></div>
+
+    <div class="panel-nav">
+      <button class="nav-btn" onclick="goToTab('directions')">← Directions</button>
+      <button class="nav-btn primary" onclick="goToTab('vocab')">Next: Vocabulary →</button>
+    </div>
+  </div>
+
+  <!-- VOCAB -->
+  <div class="panel" id="panel-vocab">
+    <div class="dir-title" style="font-size:24px">Vocabulary</div>
+    <div class="vocab-mode-row">
+      <button class="mode-btn active" id="modebtn-flash" onclick="setVocabMode('flash')">🃏 Flashcards</button>
+      <button class="mode-btn" id="modebtn-quiz" onclick="setVocabMode('quiz')">🎯 Quiz</button>
+    </div>
+
+    <div id="flashMode">
+      <div class="fc-wrap" id="fcWrap" onclick="flipCard()" role="button" tabindex="0" aria-label="Flip flashcard" onkeydown="if(event.key==='Enter')flipCard()">
+        <div class="fc-card" id="fcCard">
+          <div class="fc-face fc-front">
+            <div class="fc-lbl">Term</div>
+            <div class="fc-term" id="fcTerm"></div>
+            <div class="fc-flip-hint">Click card to see definition</div>
+          </div>
+          <div class="fc-face fc-back">
+            <div class="fc-lbl">Definition</div>
+            <div class="fc-def-text" id="fcDef"></div>
+          </div>
+        </div>
+      </div>
+      <div class="fc-controls">
+        <button class="fc-ctrl-btn" onclick="fcNav(-1)" aria-label="Previous card">← Prev</button>
+        <button class="fc-ctrl-btn" onclick="fcNav(1)" aria-label="Next card">Next →</button>
+      </div>
+      <div class="fc-counter" id="fcCounter"></div>
+    </div>
+
+    <div id="quizMode" style="display:none"></div>
+
+    <div class="panel-nav">
+      <button class="nav-btn" onclick="goToTab('timeline')">← Timeline</button>
+      <button class="nav-btn primary" onclick="goToTab('reflect')">Next: Reflection →</button>
+    </div>
+  </div>
+
+  <!-- REFLECT -->
+  <div class="panel" id="panel-reflect">
+    <div class="dir-title" style="font-size:24px">Reflection &amp; Export</div>
+
+    <div class="reflect-q">
+      <label for="reflect1">1. The French and Indian War (1754–63) led directly to the Proclamation of 1763, which led to colonial anger and eventually the Stamp Act. Pick one link in that chain and explain, in your own words, why one event caused the next.</label>
+      <textarea id="reflect1" oninput="saveState()" placeholder="Type your answer here..."></textarea>
+    </div>
+    <div class="reflect-q">
+      <label for="reflect2">2. Of the 12 events on this timeline, which one do you think most changed the relationship between the colonists and Britain? Use evidence from the timeline to support your answer.</label>
+      <textarea id="reflect2" oninput="saveState()" placeholder="Type your answer here..."></textarea>
+    </div>
+
+    <div class="export-row">
+      <button class="export-btn export-pdf" onclick="openExportModal()">⬇ Save as PDF</button>
+      <button class="export-btn export-copy" onclick="copyText()">📋 Copy Text</button>
+    </div>
+
+    <div class="panel-nav">
+      <button class="nav-btn" onclick="goToTab('vocab')">← Vocabulary</button>
+      <span></span>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- Export modal -->
+<div class="modal-overlay" id="exportModal">
+  <div class="modal">
+    <h2>Choose sections to include</h2>
+    <label class="modal-check"><input type="checkbox" id="chkTimeline" checked/> Timeline fill-in worksheet</label>
+    <label class="modal-check"><input type="checkbox" id="chkVocab" checked/> Vocabulary matching</label>
+    <label class="modal-check"><input type="checkbox" id="chkReflect" checked/> Reflection responses</label>
+    <div class="modal-btns">
+      <button class="nav-btn" onclick="closeExportModal()">Cancel</button>
+      <button class="nav-btn primary" onclick="doExportPDF()">Save PDF</button>
+    </div>
+  </div>
+</div>
+
+<!-- Reset modal -->
+<div class="modal-overlay" id="resetModal">
+  <div class="modal">
+    <h2>Reset all progress?</h2>
+    <p style="font-size:13.5px;color:var(--ink-soft);margin-bottom:14px">This clears your reflection answers and quiz progress on this device. This cannot be undone.</p>
+    <div class="modal-btns">
+      <button class="nav-btn" onclick="closeResetModal()">Cancel</button>
+      <button class="nav-btn primary" onclick="doReset()">Reset everything</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════
+// CONTENT
+// ══════════════════════════════════════════════
+const VOCAB = [
+  {term:"Indentured servant", def:{simplified:"A person who agreed to work for several years without pay in exchange for a free trip to the colonies.",standard:"A person bound by contract to work for a set number of years (often 4–7) in exchange for passage to the colonies, food, and shelter.",advanced:"A colonist bound under a legal labor contract to serve a master for a fixed term, typically to repay the cost of transatlantic passage."}},
+  {term:"Representative government", def:{simplified:"A system where people vote for others to make laws for them, instead of a king deciding everything.",standard:"A system of government in which citizens elect representatives to make laws on their behalf, as with Virginia's House of Burgesses.",advanced:"A political system in which legislative authority is exercised by elected delegates rather than by direct rule, exemplified by the House of Burgesses (1619)."}},
+  {term:"Mayflower Compact", def:{simplified:"A short agreement the Pilgrims signed in 1620 to make fair rules and govern themselves.",standard:"A 1620 agreement signed by Plymouth colonists establishing that laws would be made for the good of the colony and agreed to by majority rule.",advanced:"A 1620 social contract among the Plymouth settlers establishing a framework of self-governance based on majority consent, prior to landing."}},
+  {term:"Puritans", def:{simplified:"A religious group that left England to practice their strict Christian beliefs freely, settling in Massachusetts.",standard:"English Protestants who sought to 'purify' the Church of England and founded the Massachusetts Bay Colony to practice their faith without interference.",advanced:"English Protestant reformers who rejected remaining Catholic elements in the Church of England and established Massachusetts Bay as a religiously governed 'city upon a hill.'"}},
+  {term:"Salutary neglect", def:{simplified:"When Britain mostly left the colonies alone for many years instead of enforcing its rules.",standard:"An unofficial British policy of loosely enforcing trade laws in the colonies, allowing them significant self-governance for decades.",advanced:"The informal 17th–18th century British policy of relaxed enforcement of trade and taxation regulations, which fostered colonial self-reliance and autonomy."}},
+  {term:"Mercantilism", def:{simplified:"An economic idea that colonies exist to make money for the home country by supplying raw materials.",standard:"An economic system in which colonies exist to benefit the mother country economically, supplying raw materials and buying finished goods in return.",advanced:"An economic theory holding that a nation's power depends on accumulating wealth, with colonies serving as sources of raw materials and captive markets for the mother country."}},
+  {term:"Proclamation Line of 1763", def:{simplified:"A line Britain drew along the Appalachian Mountains banning colonists from settling further west.",standard:"A British-drawn boundary along the Appalachian Mountains forbidding colonial settlement west of it, meant to ease tensions with Native Americans.",advanced:"A 1763 British decree establishing the Appalachian crest as the westward limit of colonial settlement, intended to stabilize relations with Native nations after the French and Indian War."}},
+  {term:"No taxation without representation", def:{simplified:"The colonists' argument that Britain shouldn't tax them since they had no elected members in Parliament.",standard:"The colonial argument that Britain had no right to tax the colonies because they had no elected representatives in Parliament.",advanced:"The constitutional principle, invoked by colonists, that legislative bodies may not levy taxes on a population that lacks direct representation in that body."}},
+  {term:"Boycott", def:{simplified:"Refusing to buy certain goods as a form of protest.",standard:"An organized refusal to buy or use certain goods, used by colonists to protest British taxes like the Stamp Act.",advanced:"A coordinated economic protest tactic involving the deliberate withdrawal of commercial patronage to pressure a policy change, as with colonial responses to the Stamp and Townshend Acts."}},
+  {term:"Quartering", def:{simplified:"Forcing colonists to let British soldiers live in their homes or buildings.",standard:"The practice, required by British law, of colonists housing and supplying British troops stationed in the colonies.",advanced:"The legally mandated provision of lodging and supplies to occupying British troops, a colonial grievance formalized in the Quartering Acts."}},
+];
+
+const EVENTS = [
+  {year:"1607", label:"Jamestown", title:"Jamestown Founded",
+   desc:{simplified:"English settlers started the first lasting English colony in America at Jamestown, Virginia. Many early colonists were {Indentured servant|Indentured servant}s who worked for years to pay for their trip.",
+         standard:"The Virginia Company founded Jamestown, the first permanent English colony in North America. Early survival was difficult, and much of the labor was provided by {Indentured servant|Indentured servant}s.",
+         advanced:"The Virginia Company established Jamestown as England's first permanent North American colony, built on a tobacco economy that relied heavily on {Indentured servant|Indentured servant} labor."},
+   vocab:["Indentured servant"]},
+  {year:"1619", label:"House of Burgesses", title:"First Enslaved Africans Arrive / House of Burgesses Convenes",
+   desc:{simplified:"In the same year, the first enslaved Africans were brought to Virginia, and Virginia colonists formed the House of Burgesses, an early form of {Representative government|Representative government}.",
+         standard:"In 1619, the first enslaved Africans arrived in Virginia, and the House of Burgesses convened as the first elected legislative body in the colonies — an early example of {Representative government|Representative government}.",
+         advanced:"1619 marked both the arrival of the first enslaved Africans in English North America and the convening of the House of Burgesses, establishing a precedent for {Representative government|Representative government} in the colonies."},
+   vocab:["Representative government"]},
+  {year:"1620", label:"Plymouth", title:"Mayflower Compact / Plymouth Founded",
+   desc:{simplified:"The Pilgrims landed at Plymouth and signed the {Mayflower Compact|Mayflower Compact} to agree on fair rules for their new colony.",
+         standard:"Separatist colonists ('Pilgrims') founded Plymouth Colony and signed the {Mayflower Compact|Mayflower Compact}, agreeing to govern themselves by majority rule.",
+         advanced:"English Separatists founded Plymouth Colony and drafted the {Mayflower Compact|Mayflower Compact}, a foundational document of colonial self-governance grounded in collective consent."},
+   vocab:["Mayflower Compact"]},
+  {year:"1630", label:"Mass. Bay", title:"Massachusetts Bay Colony Founded",
+   desc:{simplified:"A larger group of {Puritans|Puritans} settled Massachusetts Bay to build a religious community based on their own beliefs.",
+         standard:"{Puritans|Puritans} founded the Massachusetts Bay Colony, aiming to build a religious community that would serve as a model, or 'city upon a hill,' for others.",
+         advanced:"{Puritans|Puritans} established the Massachusetts Bay Colony under Governor John Winthrop, envisioning a covenant community that would model godly government for the world."},
+   vocab:["Puritans"]},
+  {year:"1692", label:"Salem", title:"Salem Witch Trials",
+   desc:{simplified:"In Salem, Massachusetts, dozens of people were accused of witchcraft, and 20 were executed, showing how fear and religious tension could turn deadly.",
+         standard:"A wave of accusations of witchcraft in Salem, Massachusetts led to the execution of 20 people, revealing deep social and religious tensions in Puritan society.",
+         advanced:"The Salem witch trials, driven by religious rigidity, social anxiety, and factional conflict, resulted in 20 executions and remain a case study in mass hysteria and due-process failure."},
+   vocab:[]},
+  {year:"1754–63", label:"French & Indian War", title:"French and Indian War",
+   desc:{simplified:"Britain and France fought over land in North America. Britain won, but the war was expensive and Britain wanted the colonies to help pay for it.",
+         standard:"Britain and France fought for control of North American territory. Britain won but incurred massive war debt, leading it to seek new revenue from the colonies — ending the period of {Salutary neglect|Salutary neglect}.",
+         advanced:"The French and Indian War (the North American theater of the Seven Years' War) ended in British victory but left enormous debt, prompting Parliament to abandon {Salutary neglect|Salutary neglect} and assert tighter control over the colonies."},
+   vocab:["Salutary neglect"]},
+  {year:"1763", label:"Proclamation Line", title:"Proclamation of 1763",
+   desc:{simplified:"After the war, Britain drew the {Proclamation Line of 1763|Proclamation Line of 1763} along the Appalachian Mountains, telling colonists they couldn't move west. Many colonists were angry about this.",
+         standard:"Britain issued the {Proclamation Line of 1763|Proclamation Line of 1763}, banning colonial settlement west of the Appalachian Mountains to reduce conflict with Native Americans — a restriction many colonists resented and ignored.",
+         advanced:"The {Proclamation Line of 1763|Proclamation Line of 1763} sought to stabilize the frontier by barring colonial expansion west of the Appalachians, but colonists widely viewed it as an unjustified curb on their rights, deepening tension with the Crown."},
+   vocab:["Proclamation Line of 1763"]},
+  {year:"1765", label:"Stamp Act", title:"Stamp Act",
+   desc:{simplified:"Britain taxed paper goods like newspapers and legal documents to help pay war debts. Colonists were furious because they had no vote in Parliament — they called this '{No taxation without representation|No taxation without representation}.'",
+         standard:"Parliament passed the Stamp Act, taxing printed materials to help pay off war debt. Colonists protested loudly, arguing '{No taxation without representation|No taxation without representation}' and organizing {Boycott|Boycott}s of British goods.",
+         advanced:"The Stamp Act imposed direct taxes on printed materials to help finance British war debt, provoking colonial outrage under the principle of '{No taxation without representation|No taxation without representation}' and coordinated {Boycott|Boycott} campaigns."},
+   vocab:["No taxation without representation","Boycott"]},
+  {year:"1770", label:"Boston Massacre", title:"Boston Massacre",
+   desc:{simplified:"British soldiers, sent partly because of the anger over {Quartering|Quartering} laws, shot and killed five colonists in Boston during a tense confrontation.",
+         standard:"British soldiers stationed in Boston (under laws requiring colonists to support their {Quartering|Quartering}) fired into a crowd, killing five colonists — an event colonial leaders used as propaganda against British rule.",
+         advanced:"Tensions over British troop presence and {Quartering|Quartering} culminated in the Boston Massacre, in which soldiers killed five colonists — an incident swiftly exploited by colonial propagandists like Paul Revere."},
+   vocab:["Quartering"]},
+  {year:"1773", label:"Tea Party", title:"Boston Tea Party",
+   desc:{simplified:"Colonists dumped British tea into Boston Harbor to protest a tax on tea, another act of {Boycott|Boycott} and resistance.",
+         standard:"Colonists, protesting the Tea Act, boarded British ships and dumped 342 chests of tea into Boston Harbor — a dramatic escalation of colonial {Boycott|Boycott} efforts.",
+         advanced:"In response to the Tea Act's monopoly provisions, the Sons of Liberty destroyed an entire shipment of tea in Boston Harbor, marking a turning point from {Boycott|Boycott} to direct action."},
+   vocab:["Boycott"]},
+  {year:"1775", label:"Lexington & Concord", title:"Lexington and Concord",
+   desc:{simplified:"British troops and colonial militia fought the first battles of the Revolutionary War at Lexington and Concord, Massachusetts.",
+         standard:"British troops marching to seize colonial weapons clashed with local militia at Lexington and Concord, firing the first shots of the American Revolution.",
+         advanced:"British attempts to seize colonial arms and munitions at Concord triggered armed conflict with local militia, marking the outbreak of open warfare between Britain and its colonies."},
+   vocab:[]},
+];
+
+const LS_KEY = 'edsim_colonial_timeline_v1';
+
+// ══════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════
+let currentTier = 'standard';
+let selectedEventIdx = 0;
+let fcIdx = 0, fcFlipped = false;
+let quizQuestions = [], quizIdx = 0, quizScore = 0, quizAnswered = false;
+
+// ══════════════════════════════════════════════
+// PERSISTENCE
+// ══════════════════════════════════════════════
+function ls(){ try{ return JSON.parse(localStorage.getItem(LS_KEY)||'{}'); }catch{ return {}; } }
+function saveLS(d){ try{ localStorage.setItem(LS_KEY, JSON.stringify(d)); }catch{} }
+function saveState(){
+  saveLS({
+    reflect1: document.getElementById('reflect1').value,
+    reflect2: document.getElementById('reflect2').value,
+    tier: currentTier
+  });
+}
+function loadState(){
+  const d = ls();
+  if(d.reflect1) document.getElementById('reflect1').value = d.reflect1;
+  if(d.reflect2) document.getElementById('reflect2').value = d.reflect2;
+  if(d.tier) setTier(d.tier, true);
+}
+
+// ══════════════════════════════════════════════
+// TABS (always land on Directions regardless of persisted state)
+// ══════════════════════════════════════════════
+function goToTab(name){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('panel-'+name).classList.add('active');
+  document.getElementById('tabbtn-'+name).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ══════════════════════════════════════════════
+// READING TIER
+// ══════════════════════════════════════════════
+function setTier(tier, silent){
+  currentTier = tier;
+  document.querySelectorAll('.tier-btn').forEach(b=>b.classList.toggle('active', b.dataset.tier===tier));
+  renderEvent(selectedEventIdx);
+  renderFlashcard();
+  if(!silent) saveState();
+}
+
+// ══════════════════════════════════════════════
+// GLOSSARY RENDERING — {Display Text|Term Name} -> tooltip span
+// ══════════════════════════════════════════════
+function renderGlossary(text){
+  return text.replace(/\{([^|]+)\|([^}]+)\}/g, (m, display, termName)=>{
+    const v = VOCAB.find(x=>x.term===termName);
+    if(!v) return display;
+    const def = v.def[currentTier];
+    return `<span class="glossary-term" tabindex="0">${display}<span class="tooltip">${def}</span></span>`;
+  });
+}
+
+// ══════════════════════════════════════════════
+// TIMELINE
+// ══════════════════════════════════════════════
+function renderTimeline(){
+  const track = document.getElementById('tlTrack');
+  track.innerHTML = '<div class="tl-line"></div>' + EVENTS.map((e,i)=>`
+    <div class="tl-node ${i===selectedEventIdx?'selected':''}" onclick="renderEvent(${i})" role="button" tabindex="0"
+         aria-label="${e.title}, ${e.year}" onkeydown="if(event.key==='Enter')renderEvent(${i})">
+      <div class="tl-dot"></div>
+      <div class="tl-year">${e.year}</div>
+      <div class="tl-label">${e.label}</div>
+    </div>`).join('');
+}
+function renderEvent(idx){
+  selectedEventIdx = idx;
+  const e = EVENTS[idx];
+  document.getElementById('eventCard').innerHTML = `
+    <div class="event-card">
+      <div class="event-year">${e.year}</div>
+      <div class="event-title">${e.title}</div>
+      <div class="event-desc">${renderGlossary(e.desc[currentTier])}</div>
+      ${e.vocab.length? `<div class="event-vocab">${e.vocab.map(v=>`<span class="vocab-chip">${v}</span>`).join('')}</div>` : ''}
+    </div>`;
+  renderTimeline();
+}
+
+// ══════════════════════════════════════════════
+// VOCAB — FLASHCARDS
+// ══════════════════════════════════════════════
+function setVocabMode(mode){
+  document.getElementById('modebtn-flash').classList.toggle('active', mode==='flash');
+  document.getElementById('modebtn-quiz').classList.toggle('active', mode==='quiz');
+  document.getElementById('flashMode').style.display = mode==='flash' ? '' : 'none';
+  document.getElementById('quizMode').style.display = mode==='quiz' ? '' : 'none';
+  if(mode==='quiz' && quizQuestions.length===0) initQuiz();
+}
+function renderFlashcard(){
+  const v = VOCAB[fcIdx];
+  document.getElementById('fcCard').classList.remove('flipped');
+  fcFlipped = false;
+  document.getElementById('fcTerm').textContent = v.term;
+  document.getElementById('fcDef').textContent = v.def[currentTier];
+  document.getElementById('fcCounter').textContent = `Card ${fcIdx+1} of ${VOCAB.length}`;
+}
+function flipCard(){
+  fcFlipped = !fcFlipped;
+  document.getElementById('fcCard').classList.toggle('flipped', fcFlipped);
+}
+function fcNav(dir){
+  fcIdx = (fcIdx + dir + VOCAB.length) % VOCAB.length;
+  renderFlashcard();
+}
+
+// ══════════════════════════════════════════════
+// VOCAB — QUIZ
+// ══════════════════════════════════════════════
+function shuffle(arr){ const a=[...arr]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]];} return a; }
+function initQuiz(){
+  quizQuestions = shuffle(VOCAB).map(item=>{
+    const distractors = shuffle(VOCAB.filter(v=>v.term!==item.term)).slice(0,3);
+    return { item, choices: shuffle([item, ...distractors]) };
+  });
+  quizIdx = 0; quizScore = 0;
+  renderQuizQ();
+}
+function renderQuizQ(){
+  if(quizIdx >= quizQuestions.length){ renderQuizEnd(); return; }
+  quizAnswered = false;
+  const q = quizQuestions[quizIdx];
+  document.getElementById('quizMode').innerHTML = `
+    <div class="quiz-progress">Question ${quizIdx+1} of ${quizQuestions.length} · Score: ${quizScore}</div>
+    <div class="quiz-card">
+      <div class="quiz-q">Which term matches this definition?</div>
+      <div class="quiz-q" style="font-weight:400;font-style:italic;color:var(--ink-soft)">${q.item.def[currentTier]}</div>
+      <div class="quiz-opts" id="quizOpts">
+        ${q.choices.map((c,i)=>`<button class="opt-btn" onclick="answerQuiz(${i})">${c.term}</button>`).join('')}
+      </div>
+    </div>`;
+}
+function answerQuiz(i){
+  if(quizAnswered) return;
+  quizAnswered = true;
+  const q = quizQuestions[quizIdx];
+  const btns = document.querySelectorAll('#quizOpts .opt-btn');
+  btns.forEach(b=>b.disabled=true);
+  const correctIdx = q.choices.findIndex(c=>c.term===q.item.term);
+  if(q.choices[i].term===q.item.term){ btns[i].classList.add('correct'); quizScore++; }
+  else { btns[i].classList.add('wrong'); btns[correctIdx].classList.add('correct'); }
+  setTimeout(()=>{ quizIdx++; renderQuizQ(); }, 1100);
+}
+function renderQuizEnd(){
+  const pct = Math.round((quizScore/quizQuestions.length)*100);
+  document.getElementById('quizMode').innerHTML = `
+    <div class="quiz-score">
+      <div class="n">${pct}%</div>
+      <div class="l">${quizScore} of ${quizQuestions.length} correct</div>
+    </div>
+    <div style="display:flex;justify-content:center">
+      <button class="nav-btn primary" onclick="initQuiz()">Try Again</button>
+    </div>`;
+}
+
+// ══════════════════════════════════════════════
+// EXPORT — PDF
+// ══════════════════════════════════════════════
+function openExportModal(){ document.getElementById('exportModal').classList.add('open'); }
+function closeExportModal(){ document.getElementById('exportModal').classList.remove('open'); }
+
+function buildPrintDoc(){
+  const dateStr = new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+  const incTimeline = document.getElementById('chkTimeline').checked;
+  const incVocab = document.getElementById('chkVocab').checked;
+  const incReflect = document.getElementById('chkReflect').checked;
+
+  let html = `
+    <div class="pd-header">
+      <div class="pd-title">Colonial America Timeline — Worksheet</div>
+      <div class="pd-meta">${dateStr}<br>EdSim · US History</div>
+    </div>
+    <div class="pd-student-box">
+      <div><div class="pd-field-label">Name</div><div class="pd-field-val">&nbsp;</div></div>
+      <div><div class="pd-field-label">Period</div><div class="pd-field-val">&nbsp;</div></div>
+    </div>`;
+
+  if(incTimeline){
+    const shuffled = shuffle(EVENTS);
+    html += `<div class="pd-section-title">Part 1 — Place the Events in Order</div>
+      <p style="font-size:12.5px;color:#555;margin-bottom:10px">Word bank (in random order): ${shuffled.map(e=>e.title).join(' · ')}</p>`;
+    EVENTS.forEach(()=>{
+      html += `<div class="pd-tl-item"><span class="pd-tl-blank">&nbsp;</span> ______________________________________________</div>`;
+    });
+  }
+
+  if(incVocab){
+    html += `<div class="pd-section-title">Part 2 — Vocabulary Matching</div>
+      <p style="font-size:12.5px;color:#555;margin-bottom:8px">Match each term to its definition.</p>`;
+    const shuffledDefs = shuffle(VOCAB);
+    VOCAB.forEach((v,i)=>{
+      html += `<div class="pd-match-row"><span>____ ${v.term}</span><span>${String.fromCharCode(65+i)}. ${shuffledDefs[i].term}</span></div>`;
+    });
+    html += `<p style="font-size:11px;color:#888;margin-top:8px">(Definitions letter-matched separately by teacher key.)</p>`;
+  }
+
+  if(incReflect){
+    const r1 = document.getElementById('reflect1').value;
+    const r2 = document.getElementById('reflect2').value;
+    html += `<div class="pd-section-title">Part 3 — Reflection</div>
+      <div class="pd-reflect-item">
+        <div class="pd-reflect-q">1. Explain one cause-and-effect link between two events on the timeline.</div>
+        <div>${r1 ? r1.replace(/\n/g,'<br>') : '<div class="pd-reflect-lines"></div><div class="pd-reflect-lines"></div><div class="pd-reflect-lines"></div>'}</div>
+      </div>
+      <div class="pd-reflect-item">
+        <div class="pd-reflect-q">2. Which event most changed the relationship between colonists and Britain? Support with evidence.</div>
+        <div>${r2 ? r2.replace(/\n/g,'<br>') : '<div class="pd-reflect-lines"></div><div class="pd-reflect-lines"></div><div class="pd-reflect-lines"></div>'}</div>
+      </div>`;
+  }
+
+  document.getElementById('printDoc').innerHTML = html;
+}
+
+function doExportPDF(){
+  buildPrintDoc();
+  closeExportModal();
+  setTimeout(()=>{
+    window.print();
+    setTimeout(()=>{ afterExportReset(); }, 500);
+  }, 150);
+}
+
+function copyText(){
+  const r1 = document.getElementById('reflect1').value || '(no answer)';
+  const r2 = document.getElementById('reflect2').value || '(no answer)';
+  const text = `COLONIAL AMERICA TIMELINE — REFLECTION\n\n` +
+    `1. Cause-and-effect link:\n${r1}\n\n` +
+    `2. Most significant event:\n${r2}\n\n` +
+    `Vocabulary studied: ${VOCAB.map(v=>v.term).join(', ')}\n` +
+    `Timeline events studied: ${EVENTS.map(e=>e.year+' - '+e.title).join('; ')}`;
+  navigator.clipboard.writeText(text).then(()=>{
+    showToast('Copied! Paste into your Google Doc.');
+    afterExportReset();
+  }).catch(()=>{
+    showToast('Copy failed — your work is still saved. Try again.');
+  });
+}
+
+function afterExportReset(){
+  try{ localStorage.removeItem(LS_KEY); }catch{}
+  document.getElementById('reflect1').value = '';
+  document.getElementById('reflect2').value = '';
+  goToTab('directions');
+  showToast('Saved! Starting fresh for the next student.');
+}
+
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2600);
+}
+
+// ══════════════════════════════════════════════
+// RESET
+// ══════════════════════════════════════════════
+function confirmReset(){ document.getElementById('resetModal').classList.add('open'); }
+function closeResetModal(){ document.getElementById('resetModal').classList.remove('open'); }
+function doReset(){
+  try{ localStorage.removeItem(LS_KEY); }catch{}
+  closeResetModal();
+  document.getElementById('reflect1').value = '';
+  document.getElementById('reflect2').value = '';
+  setTier('standard');
+  fcIdx = 0; quizQuestions = [];
+  renderFlashcard();
+  setVocabMode('flash');
+  goToTab('directions');
+}
+
+// ══════════════════════════════════════════════
+// INIT — always land on Directions tab regardless of persisted state
+// ══════════════════════════════════════════════
+window.addEventListener('DOMContentLoaded', ()=>{
+  goToTab('directions');
+  loadState();
+  renderTimeline();
+  renderEvent(0);
+  renderFlashcard();
+});
+</script>
+</body>
+</html>

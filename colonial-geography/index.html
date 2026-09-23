@@ -310,9 +310,10 @@
   .answer-key.active { display: block; }
 
   @media print {
-    header, .nav-buttons, .export-buttons, #resetNotice { display: none !important; }
+    header, .nav-buttons, .export-buttons, #resetNotice, #revealKeyBtn { display: none !important; }
     .panel { display: block !important; page-break-after: always; }
     textarea { border: 1px solid #999; overflow: visible; height: auto; }
+    .answer-key { display: none !important; }
   }
 </style>
 </head>
@@ -513,6 +514,36 @@
     { id: 'south3', region: 'south', title: 'River Export Trade', text: 'Plantations were built along navigable rivers so crops could ship directly to England without needing a large port city.' }
   ];
 
+  var CARD_ORDER_KEY = 'edsim_geo_econ_cardmatch_order_v1';
+
+  function shuffleArray(arr) {
+    for (var i = arr.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
+    }
+    return arr;
+  }
+
+  // Card display order is shuffled so cards are never grouped 3-in-a-row by
+  // region (that would let students guess the answer from list position
+  // instead of reasoning from geography). The order is fixed once per
+  // device/session via localStorage so cards don't jump around while a
+  // student is mid-activity, but a fresh device gets a fresh shuffle.
+  var cardOrder;
+  try {
+    var savedOrder = JSON.parse(localStorage.getItem(CARD_ORDER_KEY) || 'null');
+    if (savedOrder && savedOrder.length === ECON_CARDS.length) {
+      cardOrder = savedOrder;
+    }
+  } catch (e) { /* ignore corrupt storage */ }
+  if (!cardOrder) {
+    cardOrder = shuffleArray(ECON_CARDS.map(function (c) { return c.id; }));
+    try { localStorage.setItem(CARD_ORDER_KEY, JSON.stringify(cardOrder)); } catch (e) {}
+  }
+  var ECON_CARDS_BY_ID = {};
+  ECON_CARDS.forEach(function (c) { ECON_CARDS_BY_ID[c.id] = c; });
+  var ECON_CARDS_DISPLAY_ORDER = cardOrder.map(function (id) { return ECON_CARDS_BY_ID[id]; });
+
   var state = {
     placements: {},   // cardId -> region ('ne' | 'mid' | 'south')
     texts: {},        // fieldKey -> text
@@ -582,7 +613,7 @@
     cardPool.innerHTML = '';
     dropzones.forEach(function (dz) { dz.innerHTML = ''; });
 
-    ECON_CARDS.forEach(function (card) {
+    ECON_CARDS_DISPLAY_ORDER.forEach(function (card) {
       var placedRegion = state.placements[card.id];
       var el = buildCardElement(card);
       if (placedRegion) {
@@ -724,6 +755,11 @@
   function resetSimState() {
     state = { placements: {}, texts: {}, selectedCard: null };
     document.querySelectorAll('textarea[data-key]').forEach(function (ta) { ta.value = ''; });
+    // Reshuffle the card order for the next student too, so it isn't reused.
+    try { localStorage.removeItem(CARD_ORDER_KEY); } catch (e) {}
+    var freshOrder = shuffleArray(ECON_CARDS.map(function (c) { return c.id; }));
+    try { localStorage.setItem(CARD_ORDER_KEY, JSON.stringify(freshOrder)); } catch (e) {}
+    ECON_CARDS_DISPLAY_ORDER = freshOrder.map(function (id) { return ECON_CARDS_BY_ID[id]; });
     renderCards();
     document.getElementById('answerKey').classList.remove('active');
     showPanel('panel-directions');
