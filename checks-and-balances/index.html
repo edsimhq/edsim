@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checks and Balances</title>
+<style>
+:root{
+  --bg-base:#12141c;
+  --bg-card:#1b1e2b;
+  --bg-card-hover:#242840;
+  --bg-raised:#20233350;
+  --text-primary:#f3f4f8;
+  --text-muted:#a0a4b8;
+  --border:#2e3245;
+  --accent:#f2c14e;
+  --accent-text:#12141c;
+  --legislative:#5b9bd9;
+  --legislative-bg:#1c2c42;
+  --executive:#e2685c;
+  --executive-bg:#3a2323;
+  --judicial:#d9b35c;
+  --judicial-bg:#3a331d;
+  --success:#4caf7d;
+  --success-bg:#183226;
+  --error:#e2685c;
+  --error-bg:#3a2323;
+}
+
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--bg-base);
+  color:var(--text-primary);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  line-height:1.5;
+  min-width:320px;
+}
+.app{max-width:960px;margin:0 auto;padding:0 16px 40px;}
+
+/* ---------- Header / Tabs ---------- */
+header.topbar{
+  position:sticky;top:0;z-index:20;
+  background:linear-gradient(180deg, var(--bg-base) 80%, transparent);
+  padding-top:20px;padding-bottom:8px;
+}
+h1{font-size:1.5rem;margin:0 0 4px;letter-spacing:0.01em;}
+.subtitle{color:var(--text-muted);font-size:0.9rem;margin:0 0 16px;}
+
+.tabs{display:flex;gap:6px;flex-wrap:wrap;border-bottom:1px solid var(--border);}
+.tab-btn{
+  background:transparent;border:none;border-bottom:3px solid transparent;
+  color:var(--text-muted);padding:10px 12px;font-size:0.82rem;font-weight:600;
+  cursor:pointer;min-height:44px;border-radius:6px 6px 0 0;
+}
+.tab-btn:hover{background:var(--bg-card-hover);color:var(--text-primary);}
+.tab-btn:focus-visible{outline:2px solid var(--accent);outline-offset:-2px;}
+.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);}
+
+/* ---------- Panels ---------- */
+main{padding-top:20px;}
+.panel{display:none;animation:fadeIn 0.2s ease;}
+.panel.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+
+.card{
+  background:var(--bg-card);border:1px solid var(--border);border-radius:12px;
+  padding:20px;margin-bottom:16px;
+}
+h2{font-size:1.2rem;margin-top:0;}
+h3{font-size:1.02rem;margin:0 0 8px;}
+p{margin:0 0 12px;}
+.step-list{list-style:none;padding:0;margin:0;}
+.step-list li{
+  display:flex;gap:12px;background:var(--bg-raised);border:1px solid var(--border);
+  border-radius:10px;padding:12px 14px;margin-bottom:10px;
+}
+.step-num{
+  flex-shrink:0;width:28px;height:28px;border-radius:50%;background:var(--accent);
+  color:var(--accent-text);display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:0.85rem;
+}
+.step-body strong{display:block;margin-bottom:2px;}
+.step-time{color:var(--text-muted);font-size:0.82rem;}
+
+/* ---------- Branch Checks tabs ---------- */
+.branch-banner{
+  border-radius:12px;padding:16px 20px;margin-bottom:16px;
+  border:1px solid var(--border);
+}
+.branch-banner.legislative{background:var(--legislative-bg);border-color:var(--legislative);}
+.branch-banner.executive{background:var(--executive-bg);border-color:var(--executive);}
+.branch-banner.judicial{background:var(--judicial-bg);border-color:var(--judicial);}
+.branch-banner h2{margin:0 0 4px;}
+.branch-banner.legislative h2{color:var(--legislative);}
+.branch-banner.executive h2{color:var(--executive);}
+.branch-banner.judicial h2{color:var(--judicial);}
+
+.check-section{margin-bottom:18px;}
+.check-section-title{
+  font-weight:800;font-size:0.95rem;margin-bottom:10px;
+  display:flex;align-items:center;gap:8px;
+}
+.target-swatch{width:12px;height:12px;border-radius:4px;flex-shrink:0;}
+.target-swatch.legislative{background:var(--legislative);}
+.target-swatch.executive{background:var(--executive);}
+.target-swatch.judicial{background:var(--judicial);}
+.check-list{list-style:none;margin:0;padding:0;}
+.check-list li{
+  background:var(--bg-raised);border:1px solid var(--border);border-radius:8px;
+  padding:10px 12px;margin-bottom:8px;font-size:0.9rem;
+}
+
+/* ---------- Match ---------- */
+.match-intro{margin-bottom:16px;}
+.match-bank{
+  background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:16px;
+}
+.match-bank-title{font-weight:700;font-size:0.85rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.03em;margin-bottom:10px;}
+.power-cards{display:flex;flex-wrap:wrap;gap:8px;}
+.power-card{
+  background:var(--bg-raised);border:1px solid var(--border);color:var(--text-primary);
+  border-radius:8px;padding:10px 12px;font-size:0.85rem;cursor:pointer;min-height:44px;
+  text-align:left;max-width:280px;
+}
+.power-card:hover{background:var(--bg-card-hover);}
+.power-card:focus-visible{outline:2px solid var(--accent);outline-offset:-2px;}
+.power-card.selected{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent);}
+
+.match-zones{display:grid;grid-template-columns:1fr;gap:12px;}
+@media (min-width:700px){.match-zones{grid-template-columns:repeat(3,1fr);}}
+.match-zone{
+  border:2px dashed var(--border);border-radius:12px;padding:12px;min-height:120px;
+  cursor:pointer;background:var(--bg-card);
+}
+.match-zone:focus-visible{outline:2px solid var(--accent);outline-offset:-2px;}
+.match-zone[data-branch="legislative"]{border-color:var(--legislative);}
+.match-zone[data-branch="executive"]{border-color:var(--executive);}
+.match-zone[data-branch="judicial"]{border-color:var(--judicial);}
+.zone-label{font-weight:800;font-size:0.92rem;margin-bottom:8px;}
+.zone-label.legislative{color:var(--legislative);}
+.zone-label.executive{color:var(--executive);}
+.zone-label.judicial{color:var(--judicial);}
+.zone-items{display:flex;flex-direction:column;gap:6px;}
+.zone-item{
+  background:var(--success-bg);color:var(--success);border:1px solid var(--success);
+  border-radius:7px;padding:6px 9px;font-size:0.78rem;
+}
+.match-zone.shake{animation:shake 0.35s ease;}
+@keyframes shake{
+  10%,90%{transform:translateX(-2px);}
+  20%,80%{transform:translateX(4px);}
+  30%,50%,70%{transform:translateX(-6px);}
+  40%,60%{transform:translateX(6px);}
+}
+.match-status{margin-top:14px;font-size:0.9rem;color:var(--text-muted);min-height:20px;}
+.match-summary{margin-top:16px;padding:16px;border-radius:12px;border:1px solid var(--border);background:var(--bg-raised);}
+.match-summary h3{margin-top:0;}
+.btn{
+  background:var(--accent);color:var(--accent-text);border:none;border-radius:8px;
+  padding:10px 16px;font-weight:700;font-size:0.88rem;cursor:pointer;min-height:44px;
+}
+.btn:focus-visible{outline:2px solid #fff;outline-offset:2px;}
+.btn.secondary{background:var(--bg-raised);color:var(--text-primary);border:1px solid var(--border);}
+
+/* ---------- Scenario Check ---------- */
+.scenario-progress{margin-bottom:16px;color:var(--text-muted);font-size:0.9rem;}
+.scenario-card{margin-bottom:16px;}
+.scenario-era{color:var(--text-muted);font-size:0.78rem;text-transform:uppercase;letter-spacing:0.04em;font-weight:700;margin-bottom:6px;}
+.scenario-text{margin-bottom:14px;}
+.option-list{list-style:none;margin:0 0 12px;padding:0;}
+.option-btn{
+  display:block;width:100%;text-align:left;background:var(--bg-raised);border:1px solid var(--border);
+  color:var(--text-primary);border-radius:8px;padding:10px 12px;margin-bottom:8px;cursor:pointer;
+  font-size:0.88rem;min-height:44px;
+}
+.option-btn:hover{background:var(--bg-card-hover);}
+.option-btn:focus-visible{outline:2px solid var(--accent);outline-offset:-2px;}
+.option-btn.correct{background:var(--success-bg);border-color:var(--success);color:var(--success);}
+.option-btn.incorrect{background:var(--error-bg);border-color:var(--error);color:var(--error);}
+.option-btn:disabled{cursor:default;}
+.explanation{
+  background:var(--bg-raised);border-left:3px solid var(--accent);padding:10px 14px;
+  border-radius:0 8px 8px 0;font-size:0.88rem;display:none;
+}
+.explanation.show{display:block;}
+
+/* ---------- Nav / Export ---------- */
+.nav-buttons{
+  display:flex;justify-content:space-between;gap:10px;margin-top:24px;padding-top:16px;border-top:1px solid var(--border);
+}
+.export-bar{display:flex;justify-content:flex-end;margin:16px 0;}
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,0.6);display:none;align-items:center;justify-content:center;
+  z-index:100;padding:16px;
+}
+.modal-overlay.show{display:flex;}
+.modal{
+  background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:22px;max-width:420px;width:100%;
+}
+.modal h3{margin-top:0;}
+.modal label{display:flex;align-items:center;gap:8px;padding:8px 0;font-size:0.9rem;min-height:44px;}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:16px;flex-wrap:wrap;}
+.export-msg{font-size:0.85rem;color:var(--success);margin-top:10px;min-height:18px;}
+
+/* ---------- Print ---------- */
+.print-only{display:none;}
+#printArea{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  color:#111;max-width:720px;margin:0 auto;
+}
+#printArea h1{font-size:1.3rem;margin:0 0 4px;}
+#printArea .print-meta{color:#555;font-size:0.85rem;margin:0 0 20px;}
+#printArea h2{font-size:1.05rem;border-bottom:2px solid #333;padding-bottom:4px;margin:24px 0 12px;}
+#printArea h2:first-of-type{margin-top:0;}
+#printArea h3{font-size:0.92rem;margin:14px 0 6px;}
+#printArea .print-check{margin-bottom:6px;font-size:0.88rem;}
+#printArea .print-score{font-weight:700;margin-bottom:10px;}
+#printArea .print-q{border:1px solid #ccc;border-radius:6px;padding:10px 12px;margin-bottom:10px;overflow:visible;}
+#printArea .print-q-title{font-weight:700;margin-bottom:4px;}
+#printArea .print-q-era{color:#666;font-size:0.78rem;text-transform:uppercase;letter-spacing:0.03em;margin-bottom:4px;}
+#printArea .print-q-answer{margin-top:6px;}
+#printArea .print-correct{color:#1a7a4c;font-weight:700;}
+#printArea .print-incorrect{color:#b3261e;font-weight:700;}
+#printArea .print-unanswered{color:#b3261e;font-style:italic;}
+@media print{
+  html, body{background:#fff !important;color:#000 !important;}
+  body > *:not(#printArea){display:none !important;}
+  #printArea{display:block !important;}
+}
+
+@media (max-width:480px){
+  h1{font-size:1.25rem;}
+  .tab-btn{font-size:0.74rem;padding:8px 8px;}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <header class="topbar">
+    <h1>Checks and Balances</h1>
+    <p class="subtitle">How each branch limits the other two</p>
+    <div class="tabs" role="tablist" aria-label="Activity sections">
+      <button class="tab-btn active" data-tab="directions" role="tab" aria-selected="true">1. Directions</button>
+      <button class="tab-btn" data-tab="legislative" role="tab" aria-selected="false">2. Legislative Checks</button>
+      <button class="tab-btn" data-tab="executive" role="tab" aria-selected="false">3. Executive Checks</button>
+      <button class="tab-btn" data-tab="judicial" role="tab" aria-selected="false">4. Judicial Checks</button>
+      <button class="tab-btn" data-tab="match" role="tab" aria-selected="false">5. Match</button>
+      <button class="tab-btn" data-tab="scenarios" role="tab" aria-selected="false">6. Chain Reaction</button>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ===================== TAB 1: DIRECTIONS ===================== -->
+    <section id="panel-directions" class="panel active" data-panel="directions">
+      <div class="card">
+        <h2>Welcome</h2>
+        <p>You already know what each branch of government does on its own. This activity is about how each branch <strong>limits</strong> the other two — the system of checks and balances that keeps any one branch from becoming too powerful.</p>
+        <ul class="step-list">
+          <li>
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <strong>Legislative, Executive, and Judicial Checks</strong>
+              <span>Three tabs, one per branch, covering every check that branch holds over the other two.</span>
+              <div class="step-time">About 10 minutes</div>
+            </div>
+          </li>
+          <li>
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <strong>Match</strong>
+              <span>Sort each check into the branch that holds it.</span>
+              <div class="step-time">About 8–12 minutes</div>
+            </div>
+          </li>
+          <li>
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <strong>Chain Reaction</strong>
+              <span>Read real historical episodes — each one shows a branch taking action, and another branch checking it. Identify which check is happening.</span>
+              <div class="step-time">About 10–15 minutes</div>
+            </div>
+          </li>
+        </ul>
+        <p style="margin-top:16px;"><strong>By the end of this activity</strong>, you'll be able to name the checks each branch holds over the others and recognize them at work in real events.</p>
+      </div>
+    </section>
+
+    <!-- ===================== TAB 2: LEGISLATIVE CHECKS ===================== -->
+    <section id="panel-legislative" class="panel" data-panel="legislative">
+      <div class="branch-banner legislative">
+        <h2>Legislative Checks</h2>
+        <p>Powers Congress holds to limit the Executive and Judicial branches.</p>
+      </div>
+      <div id="legislativeContent"></div>
+    </section>
+
+    <!-- ===================== TAB 3: EXECUTIVE CHECKS ===================== -->
+    <section id="panel-executive" class="panel" data-panel="executive">
+      <div class="branch-banner executive">
+        <h2>Executive Checks</h2>
+        <p>Powers the President holds to limit the Legislative and Judicial branches.</p>
+      </div>
+      <div id="executiveContent"></div>
+    </section>
+
+    <!-- ===================== TAB 4: JUDICIAL CHECKS ===================== -->
+    <section id="panel-judicial" class="panel" data-panel="judicial">
+      <div class="branch-banner judicial">
+        <h2>Judicial Checks</h2>
+        <p>Powers the courts hold to limit the Legislative and Executive branches.</p>
+      </div>
+      <div id="judicialContent"></div>
+    </section>
+
+    <!-- ===================== TAB 5: MATCH ===================== -->
+    <section id="panel-match" class="panel" data-panel="match">
+      <div class="card match-intro">
+        <h2>Match</h2>
+        <p id="matchInstructions">Select a check from the bank below, then click the branch that holds it. Correct matches lock in; incorrect ones bounce back so you can try again.</p>
+      </div>
+      <div id="matchArea"></div>
+    </section>
+
+    <!-- ===================== TAB 6: CHAIN REACTION ===================== -->
+    <section id="panel-scenarios" class="panel" data-panel="scenarios">
+      <div class="card">
+        <h2>Chain Reaction Scenarios</h2>
+        <p>Each scenario shows one branch acting, and another branch checking that action. Identify which check is at work.</p>
+      </div>
+      <div class="scenario-progress" id="scenarioProgress"></div>
+      <div id="scenarioList"></div>
+    </section>
+
+  </main>
+
+  <div class="export-bar">
+    <button class="btn secondary" id="openExportBtn">Save / Export My Work</button>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn secondary" id="prevBtn">← Previous</button>
+    <button class="btn" id="nextBtn">Next →</button>
+  </div>
+
+</div>
+
+<!-- Export modal -->
+<div class="modal-overlay" id="exportModal">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="exportModalTitle">
+    <h3 id="exportModalTitle">Choose what to include</h3>
+    <label><input type="checkbox" id="exp-checks" checked> All Checks (reference)</label>
+    <label><input type="checkbox" id="exp-match" checked> Match results</label>
+    <label><input type="checkbox" id="exp-scenarios" checked> Chain Reaction answers</label>
+    <div class="modal-actions">
+      <button class="btn secondary" id="cancelExportBtn">Cancel</button>
+      <button class="btn secondary" id="copyTextBtn">Copy Text</button>
+      <button class="btn" id="savePdfBtn">Save as PDF</button>
+    </div>
+    <div class="export-msg" id="exportMsg" aria-live="polite"></div>
+  </div>
+</div>
+
+<div id="printArea" class="print-only"></div>
+
+<script>
+(function(){
+"use strict";
+
+var LS_KEY = "edsim_checks_balances_v2";
+
+/* ===================== DATA ===================== */
+
+var BRANCH_LABELS = {legislative:"Legislative", executive:"Executive", judicial:"Judicial"};
+
+// Every check: id, holder (branch exercising it), target (branch it's exercised on), text
+var CHECKS = [
+  // Legislative on Executive
+  {id:"l-e-1", holder:"legislative", target:"executive", text:"Overrides a presidential veto with a two-thirds vote in both the House and Senate"},
+  {id:"l-e-2", holder:"legislative", target:"executive", text:"Confirms presidential appointments — Cabinet members and ambassadors (Senate)"},
+  {id:"l-e-3", holder:"legislative", target:"executive", text:"Ratifies treaties with a two-thirds Senate vote"},
+  {id:"l-e-4", holder:"legislative", target:"executive", text:"Declares war — only Congress can declare war"},
+  {id:"l-e-5", holder:"legislative", target:"executive", text:"Controls federal spending (the “power of the purse”) — can limit funding for executive actions"},
+  {id:"l-e-6", holder:"legislative", target:"executive", text:"Impeaches and can remove the President"},
+  {id:"l-e-7", holder:"legislative", target:"executive", text:"Conducts oversight — investigations, hearings, and subpoenas of the executive branch"},
+  // Legislative on Judicial
+  {id:"l-j-1", holder:"legislative", target:"judicial", text:"Confirms or rejects judicial nominees (Senate)"},
+  {id:"l-j-2", holder:"legislative", target:"judicial", text:"Impeaches and can remove judges"},
+  {id:"l-j-3", holder:"legislative", target:"judicial", text:"Can propose a constitutional amendment to override a Court ruling"},
+  {id:"l-j-4", holder:"legislative", target:"judicial", text:"Controls the courts' structure — creates lower federal courts and sets their jurisdiction"},
+  // Executive on Legislative
+  {id:"e-l-1", holder:"executive", target:"legislative", text:"Vetoes legislation passed by Congress"},
+  // Executive on Judicial
+  {id:"e-j-1", holder:"executive", target:"judicial", text:"Appoints federal judges, subject to Senate confirmation"},
+  {id:"e-j-2", holder:"executive", target:"judicial", text:"Grants pardons and reprieves"},
+  // Judicial on Legislative
+  {id:"j-l-1", holder:"judicial", target:"legislative", text:"Judicial review — strikes down a law passed by Congress as unconstitutional"},
+  // Judicial on Executive
+  {id:"j-e-1", holder:"judicial", target:"executive", text:"Judicial review — strikes down an executive action as unconstitutional"}
+];
+
+function checksFor(holder, target){
+  return CHECKS.filter(function(c){ return c.holder===holder && c.target===target; });
+}
+
+function shuffle(arr){
+  var a = arr.slice();
+  for (var i=a.length-1;i>0;i--){
+    var j = Math.floor(Math.random()*(i+1));
+    var tmp=a[i]; a[i]=a[j]; a[j]=tmp;
+  }
+  return a;
+}
+
+var SCENARIOS = [
+  {
+    id:"s1", era:"Historical · 1986",
+    title:"Congress Overrides a Veto on Apartheid Sanctions",
+    text:"In 1986, Congress passed a bill imposing economic sanctions on South Africa's government to pressure it into ending apartheid. President Reagan vetoed the bill. Both the House and Senate then voted again, and enough members supported the bill to override the veto — the sanctions became law without the President's signature.",
+    options:[
+      {text:"Legislative branch checks Executive — Congress overrides a presidential veto", correct:true},
+      {text:"Judicial branch checks Legislative — a court strikes down a law", correct:false},
+      {text:"Executive branch checks Legislative — the President vetoes a bill", correct:false},
+      {text:"Legislative branch checks Judicial — the Senate rejects a nominee", correct:false}
+    ],
+    explanation:"Congress passed a law, the President vetoed it, and Congress overrode that veto with the required two-thirds vote in both chambers — the Legislative branch's check on the Executive."
+  },
+  {
+    id:"s2", era:"Historical · 1987",
+    title:"The Senate Rejects a Supreme Court Nominee",
+    text:"In 1987, President Reagan nominated Robert Bork to the Supreme Court. After contentious confirmation hearings, the Senate voted against confirming him, and Bork did not join the Court.",
+    options:[
+      {text:"Executive branch checks Judicial — the President appoints a judge", correct:false},
+      {text:"Legislative branch checks Judicial — the Senate can confirm or reject judicial nominees", correct:true},
+      {text:"Judicial branch checks Legislative — judicial review strikes down a law", correct:false},
+      {text:"Legislative branch checks Executive — Congress overrides a veto", correct:false}
+    ],
+    explanation:"The President nominated a judge, but the Senate — part of the Legislative branch — has the power to confirm or reject that nominee. Rejecting the nomination is a direct check on the Judicial branch's composition."
+  },
+  {
+    id:"s3", era:"Historical · 1832",
+    title:"Jackson Vetoes the Bank Recharter",
+    text:"In 1832, Congress passed a bill to renew the charter of the Second Bank of the United States. President Andrew Jackson, who distrusted the bank, vetoed the bill. Congress did not have enough votes to override the veto, so the bank's charter was not renewed.",
+    options:[
+      {text:"Legislative branch checks Executive — Congress overrides a veto", correct:false},
+      {text:"Judicial branch checks Executive — a court strikes down an executive action", correct:false},
+      {text:"Executive branch checks Legislative — the President vetoes legislation", correct:true},
+      {text:"Executive branch checks Judicial — the President appoints a judge", correct:false}
+    ],
+    explanation:"Congress passed a bill, and the President rejected it using the veto power — the Executive branch's check on the Legislative branch. Because Congress couldn't override it, the veto stood."
+  },
+  {
+    id:"s4", era:"Historical · 1967",
+    title:"LBJ Appoints Thurgood Marshall",
+    text:"In 1967, President Lyndon B. Johnson nominated Thurgood Marshall — who had successfully argued Brown v. Board of Education before the Supreme Court — to serve as a Supreme Court Justice. The Senate confirmed the nomination, and Marshall became the first Black Justice in the Court's history.",
+    options:[
+      {text:"Legislative branch checks Judicial — the Senate rejects a nominee", correct:false},
+      {text:"Executive branch checks Judicial — the President appoints federal judges, with Senate confirmation", correct:true},
+      {text:"Judicial branch checks Legislative — judicial review strikes down a law", correct:false},
+      {text:"Executive branch checks Legislative — the President vetoes a bill", correct:false}
+    ],
+    explanation:"The President nominated Marshall, shaping who sits on the Court — the Executive branch's check on the Judicial branch. (Notice the Senate's confirmation power from Scenario 2 works alongside this one.)"
+  },
+  {
+    id:"s5", era:"Historical · 1995",
+    title:"The Court Strikes Down the Gun-Free School Zones Act",
+    text:"In 1990, Congress passed the Gun-Free School Zones Act, making it a federal crime to carry a gun near a school. In United States v. Lopez (1995), the Supreme Court ruled that Congress had exceeded its constitutional power in passing the law, and struck it down.",
+    options:[
+      {text:"Judicial branch checks Executive — judicial review strikes down an executive action", correct:false},
+      {text:"Legislative branch checks Judicial — the Senate rejects a nominee", correct:false},
+      {text:"Executive branch checks Legislative — the President vetoes a bill", correct:false},
+      {text:"Judicial branch checks Legislative — judicial review strikes down a law as unconstitutional", correct:true}
+    ],
+    explanation:"Congress passed a law, and the Supreme Court used judicial review to declare that Congress had gone beyond its constitutional authority — the Judicial branch's check on the Legislative branch."
+  },
+  {
+    id:"s6", era:"Historical · 1952",
+    title:"The Court Strikes Down Truman's Steel Mill Seizure",
+    text:"In 1952, during the Korean War, President Truman ordered the federal government to take control of the nation's steel mills to prevent a labor strike from disrupting wartime production. In Youngstown Sheet & Tube Co. v. Sawyer (1952), the Supreme Court ruled that Truman had exceeded his constitutional authority and struck down the seizure.",
+    options:[
+      {text:"Executive branch checks Judicial — the President appoints a judge", correct:false},
+      {text:"Judicial branch checks Legislative — judicial review strikes down a law", correct:false},
+      {text:"Legislative branch checks Executive — Congress overrides a veto", correct:false},
+      {text:"Judicial branch checks Executive — judicial review strikes down an executive action as unconstitutional", correct:true}
+    ],
+    explanation:"The President took an action on his own authority, and the Supreme Court ruled that action unconstitutional — the Judicial branch's check on the Executive branch."
+  },
+  {
+    id:"s7", era:"Historical · 1974",
+    title:"The Watergate Scandal and Nixon's Resignation",
+    text:"In 1974, the House Judiciary Committee investigated President Nixon's role in covering up the Watergate break-in and approved articles of impeachment against him. Facing near-certain impeachment by the full House and removal by the Senate, Nixon resigned from office before either vote took place.",
+    options:[
+      {text:"Judicial branch checks Executive — judicial review strikes down an executive action", correct:false},
+      {text:"Legislative branch checks Executive — Congress overrides a presidential veto", correct:false},
+      {text:"Legislative branch checks Executive — Congress can impeach and remove the President", correct:true},
+      {text:"Executive branch checks Legislative — the President vetoes a bill", correct:false}
+    ],
+    explanation:"The House investigated the President and moved toward impeachment — a Legislative check on the Executive. Nixon resigned rather than face the House vote and a Senate trial, but the mechanism that pressured him out of office was the impeachment power."
+  },
+  {
+    id:"s8", era:"Historical · 1973",
+    title:"Congress Cuts Off Funding for the Vietnam War",
+    text:"By 1973, Congress wanted to end direct U.S. military involvement in Vietnam, Cambodia, and Laos. Using its control over federal spending, Congress passed a law cutting off funding for further U.S. combat operations in Southeast Asia — effectively ending American military action there, regardless of the President's wishes.",
+    options:[
+      {text:"Legislative branch checks Executive — Congress declares war", correct:false},
+      {text:"Executive branch checks Legislative — the President vetoes a bill", correct:false},
+      {text:"Legislative branch checks Executive — Congress impeaches and removes the President", correct:false},
+      {text:"Legislative branch checks Executive — Congress controls federal spending (the power of the purse)", correct:true}
+    ],
+    explanation:"Congress didn't pass a new law banning the war outright — it used its control over the budget to cut off the money that paid for combat operations. Without funding, the President could not continue the military action."
+  }
+];
+
+// Section 19 compliance: shuffle each scenario's options once at load,
+// so the correct answer's position varies and carries no systematic bias.
+SCENARIOS.forEach(function(sc){ sc.options = shuffle(sc.options); });
+
+/* ===================== STATE ===================== */
+var defaultState = {
+  version: 1,
+  match: { done:false, firstTryCorrect:0, total:0 },
+  scenarios: {} // id -> {selectedIndex, correct}
+};
+
+var state = loadState();
+
+function loadState(){
+  try{
+    var raw = localStorage.getItem(LS_KEY);
+    if (!raw) return JSON.parse(JSON.stringify(defaultState));
+    var parsed = JSON.parse(raw);
+    if (!parsed || parsed.version !== 1) return JSON.parse(JSON.stringify(defaultState));
+    return parsed;
+  }catch(e){
+    return JSON.parse(JSON.stringify(defaultState));
+  }
+}
+function saveState(){
+  try{ localStorage.setItem(LS_KEY, JSON.stringify(state)); }catch(e){ /* ignore quota errors */ }
+}
+
+/* ===================== TABS / NAV ===================== */
+var TAB_ORDER = ["directions","legislative","executive","judicial","match","scenarios"];
+var currentTab = "directions"; // always reset to landing on load, per build standard
+
+function showTab(tab){
+  currentTab = tab;
+  document.querySelectorAll(".panel").forEach(function(p){
+    p.classList.toggle("active", p.getAttribute("data-panel")===tab);
+  });
+  document.querySelectorAll(".tab-btn").forEach(function(b){
+    var active = b.getAttribute("data-tab")===tab;
+    b.classList.toggle("active", active);
+    b.setAttribute("aria-selected", active ? "true":"false");
+  });
+  updateNavButtons();
+  window.scrollTo({top:0, behavior:"instant" in window ? "instant":"auto"});
+}
+function updateNavButtons(){
+  var idx = TAB_ORDER.indexOf(currentTab);
+  document.getElementById("prevBtn").disabled = idx===0;
+  document.getElementById("prevBtn").style.visibility = idx===0 ? "hidden":"visible";
+  document.getElementById("nextBtn").textContent = idx===TAB_ORDER.length-1 ? "Done ✓" : "Next →";
+}
+document.querySelectorAll(".tab-btn").forEach(function(btn){
+  btn.addEventListener("click", function(){ showTab(btn.getAttribute("data-tab")); });
+});
+document.getElementById("prevBtn").addEventListener("click", function(){
+  var idx = TAB_ORDER.indexOf(currentTab);
+  if (idx>0) showTab(TAB_ORDER[idx-1]);
+});
+document.getElementById("nextBtn").addEventListener("click", function(){
+  var idx = TAB_ORDER.indexOf(currentTab);
+  if (idx<TAB_ORDER.length-1) showTab(TAB_ORDER[idx+1]);
+});
+
+/* ===================== BRANCH CHECKS TABS ===================== */
+function renderBranchTab(containerId, holder, otherBranches){
+  var container = document.getElementById(containerId);
+  container.innerHTML = "";
+  otherBranches.forEach(function(target){
+    var section = document.createElement("div");
+    section.className = "check-section";
+    var title = document.createElement("div");
+    title.className = "check-section-title";
+    title.innerHTML = '<span class="target-swatch '+target+'"></span> On the ' + BRANCH_LABELS[target] + ' Branch';
+    section.appendChild(title);
+
+    var list = document.createElement("ul");
+    list.className = "check-list";
+    checksFor(holder, target).forEach(function(c){
+      var li = document.createElement("li");
+      li.textContent = c.text;
+      list.appendChild(li);
+    });
+    section.appendChild(list);
+    container.appendChild(section);
+  });
+}
+
+function renderAllBranchTabs(){
+  renderBranchTab("legislativeContent", "legislative", ["executive","judicial"]);
+  renderBranchTab("executiveContent", "executive", ["legislative","judicial"]);
+  renderBranchTab("judicialContent", "judicial", ["legislative","executive"]);
+}
+
+/* ===================== MATCH TAB ===================== */
+var matchRuntime = { pool:[], placedCount:0, firstTryCorrect:0, selectedCard:null };
+var BRANCH_ORDER = ["legislative","executive","judicial"];
+
+function initMatchTab(){
+  if (state.match.done){
+    renderMatchDone();
+    return;
+  }
+  matchRuntime.placedCount = 0;
+  matchRuntime.firstTryCorrect = 0;
+  matchRuntime.selectedCard = null;
+  matchRuntime.pool = shuffle(CHECKS.map(function(c){
+    return {id:c.id, holder:c.holder, target:c.target, text:c.text, attempts:0, placed:false};
+  }));
+  renderMatchArea();
+}
+
+function renderMatchDone(){
+  var area = document.getElementById("matchArea");
+  area.innerHTML = "";
+  var wrap = document.createElement("div");
+  wrap.className = "card match-summary";
+  var h = document.createElement("h3"); h.textContent = "Match complete";
+  var p = document.createElement("p");
+  p.textContent = state.match.firstTryCorrect + " / " + state.match.total + " correct on the first try.";
+  wrap.appendChild(h); wrap.appendChild(p);
+  var btn = document.createElement("button");
+  btn.className = "btn";
+  btn.textContent = "Play Again";
+  btn.addEventListener("click", function(){
+    state.match = {done:false, firstTryCorrect:0, total:0};
+    saveState();
+    initMatchTab();
+  });
+  wrap.appendChild(btn);
+  area.appendChild(wrap);
+}
+
+function renderMatchArea(){
+  var area = document.getElementById("matchArea");
+  area.innerHTML = "";
+
+  var bank = document.createElement("div");
+  bank.className = "match-bank";
+  var bankTitle = document.createElement("div");
+  bankTitle.className = "match-bank-title";
+  bankTitle.textContent = "Checks (select one)";
+  bank.appendChild(bankTitle);
+  var cardsWrap = document.createElement("div");
+  cardsWrap.className = "power-cards";
+  bank.appendChild(cardsWrap);
+  area.appendChild(bank);
+
+  var zonesWrap = document.createElement("div");
+  zonesWrap.className = "match-zones";
+  BRANCH_ORDER.forEach(function(b){
+    var zone = document.createElement("button");
+    zone.type = "button";
+    zone.className = "match-zone";
+    zone.setAttribute("data-branch", b);
+    zone.setAttribute("aria-label", "Place selected check under " + BRANCH_LABELS[b]);
+    zone.innerHTML = '<div class="zone-label '+b+'">'+BRANCH_LABELS[b]+' holds…</div><div class="zone-items" id="zoneItems-'+b+'"></div>';
+    zone.addEventListener("click", function(){ handleZoneClick(b, zone); });
+    zonesWrap.appendChild(zone);
+  });
+  area.appendChild(zonesWrap);
+
+  var status = document.createElement("div");
+  status.className = "match-status";
+  status.id = "matchStatus";
+  status.setAttribute("aria-live","polite");
+  area.appendChild(status);
+
+  function renderCards(){
+    cardsWrap.innerHTML = "";
+    matchRuntime.pool.filter(function(it){ return !it.placed; }).forEach(function(it){
+      var c = document.createElement("button");
+      c.type = "button";
+      c.className = "power-card" + (matchRuntime.selectedCard===it.id ? " selected":"");
+      c.textContent = it.text;
+      c.setAttribute("aria-pressed", matchRuntime.selectedCard===it.id ? "true":"false");
+      c.addEventListener("click", function(){
+        matchRuntime.selectedCard = (matchRuntime.selectedCard===it.id) ? null : it.id;
+        renderCards();
+        updateStatus();
+      });
+      cardsWrap.appendChild(c);
+    });
+  }
+  function updateStatus(){
+    var s = document.getElementById("matchStatus");
+    if (!s) return;
+    if (matchRuntime.selectedCard){
+      var item = matchRuntime.pool.filter(function(it){return it.id===matchRuntime.selectedCard;})[0];
+      s.textContent = "Selected: “" + item.text + "” — now click the branch that holds this check.";
+    } else {
+      s.textContent = "Placed " + matchRuntime.placedCount + " of " + matchRuntime.pool.length + ".";
+    }
+  }
+
+  window._matchHandlers = { renderCards: renderCards, updateStatus: updateStatus };
+  renderCards();
+  updateStatus();
+}
+
+function handleZoneClick(zoneBranch, zoneEl){
+  if (!matchRuntime.selectedCard) return;
+  var item = matchRuntime.pool.filter(function(it){ return it.id===matchRuntime.selectedCard; })[0];
+  if (!item || item.placed) return;
+
+  item.attempts++;
+  var correct = item.holder === zoneBranch;
+
+  if (correct){
+    if (item.attempts===1) matchRuntime.firstTryCorrect++;
+    item.placed = true;
+    matchRuntime.placedCount++;
+    var zoneList = document.getElementById("zoneItems-"+zoneBranch);
+    if (zoneList){
+      var chip = document.createElement("div");
+      chip.className = "zone-item";
+      chip.textContent = item.text;
+      zoneList.appendChild(chip);
+    }
+    matchRuntime.selectedCard = null;
+    window._matchHandlers.renderCards();
+    window._matchHandlers.updateStatus();
+
+    if (matchRuntime.pool.every(function(it){ return it.placed; })){
+      state.match = {done:true, firstTryCorrect:matchRuntime.firstTryCorrect, total:matchRuntime.pool.length};
+      saveState();
+      setTimeout(renderMatchDone, 400);
+    }
+  } else {
+    zoneEl.classList.add("shake");
+    setTimeout(function(){ zoneEl.classList.remove("shake"); }, 350);
+    var s = document.getElementById("matchStatus");
+    if (s) s.textContent = "Not quite — try another branch for “" + item.text + "”.";
+  }
+}
+
+/* ===================== CHAIN REACTION SCENARIOS ===================== */
+function renderScenarios(){
+  var list = document.getElementById("scenarioList");
+  list.innerHTML = "";
+  SCENARIOS.forEach(function(sc){
+    var saved = state.scenarios[sc.id];
+    var card = document.createElement("div");
+    card.className = "card scenario-card";
+    card.innerHTML =
+      '<div class="scenario-era">'+sc.era+'</div>'+
+      '<h3>'+sc.title+'</h3>'+
+      '<p class="scenario-text">'+sc.text+'</p>';
+
+    var optList = document.createElement("div");
+    optList.className = "option-list";
+    sc.options.forEach(function(opt, idx){
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "option-btn";
+      b.textContent = opt.text;
+      if (saved){
+        b.disabled = true;
+        if (idx===saved.selectedIndex){
+          b.classList.add(opt.correct ? "correct":"incorrect");
+        } else if (opt.correct){
+          b.classList.add("correct");
+        }
+      }
+      b.addEventListener("click", function(){
+        if (state.scenarios[sc.id]) return;
+        state.scenarios[sc.id] = {selectedIndex:idx, correct:opt.correct};
+        saveState();
+        renderScenarios();
+        updateScenarioProgress();
+      });
+      optList.appendChild(b);
+    });
+    card.appendChild(optList);
+
+    var expl = document.createElement("div");
+    expl.className = "explanation" + (saved ? " show":"");
+    expl.textContent = sc.explanation;
+    card.appendChild(expl);
+
+    list.appendChild(card);
+  });
+}
+function updateScenarioProgress(){
+  var answered = Object.keys(state.scenarios).length;
+  var correct = 0;
+  Object.keys(state.scenarios).forEach(function(k){ if (state.scenarios[k].correct) correct++; });
+  var el = document.getElementById("scenarioProgress");
+  el.textContent = "Answered " + answered + " of " + SCENARIOS.length + (answered>0 ? " · " + correct + " correct so far":"");
+}
+
+/* ===================== EXPORT ===================== */
+var exportModal = document.getElementById("exportModal");
+document.getElementById("openExportBtn").addEventListener("click", function(){
+  document.getElementById("exportMsg").textContent = "";
+  exportModal.classList.add("show");
+});
+document.getElementById("cancelExportBtn").addEventListener("click", function(){
+  exportModal.classList.remove("show");
+});
+exportModal.addEventListener("click", function(e){ if (e.target===exportModal) exportModal.classList.remove("show"); });
+
+function escapeHtml(s){
+  return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
+
+function buildExportText(opts){
+  var lines = [];
+  lines.push("CHECKS AND BALANCES — Student Summary");
+  lines.push("");
+  if (opts.checks){
+    lines.push("ALL CHECKS");
+    BRANCH_ORDER.forEach(function(holder){
+      lines.push(BRANCH_LABELS[holder] + " Checks:");
+      BRANCH_ORDER.filter(function(t){return t!==holder;}).forEach(function(target){
+        lines.push("  On " + BRANCH_LABELS[target] + ":");
+        checksFor(holder, target).forEach(function(c){ lines.push("    - " + c.text); });
+      });
+    });
+    lines.push("");
+  }
+  if (opts.match){
+    lines.push("MATCH RESULTS");
+    if (state.match.total>0){
+      lines.push((state.match.done ? "Completed" : "In progress") + ": " + state.match.firstTryCorrect + " / " + state.match.total + " correct on first try");
+    } else {
+      lines.push("Not completed");
+    }
+    lines.push("");
+  }
+  if (opts.scenarios){
+    lines.push("CHAIN REACTION ANSWERS");
+    SCENARIOS.forEach(function(sc){
+      var saved = state.scenarios[sc.id];
+      lines.push(sc.title + " (" + sc.era + ")");
+      if (saved){
+        lines.push("  My answer: " + sc.options[saved.selectedIndex].text);
+        lines.push("  Result: " + (saved.correct ? "Correct":"Incorrect"));
+      } else {
+        lines.push("  My answer: (not answered)");
+      }
+      lines.push("");
+    });
+  }
+  return lines.join("\n");
+}
+
+function buildExportHTML(opts){
+  var today = new Date().toLocaleDateString();
+  var html = "";
+  html += "<h1>Checks and Balances — Student Summary</h1>";
+  html += "<div class='print-meta'>Exported " + escapeHtml(today) + "</div>";
+
+  if (opts.checks){
+    html += "<h2>All Checks</h2>";
+    BRANCH_ORDER.forEach(function(holder){
+      html += "<h3>" + escapeHtml(BRANCH_LABELS[holder]) + " Checks</h3>";
+      BRANCH_ORDER.filter(function(t){return t!==holder;}).forEach(function(target){
+        html += "<div class='print-check'><strong>On " + escapeHtml(BRANCH_LABELS[target]) + ":</strong></div>";
+        checksFor(holder, target).forEach(function(c){
+          html += "<div class='print-check'>• " + escapeHtml(c.text) + "</div>";
+        });
+      });
+    });
+  }
+
+  if (opts.match){
+    html += "<h2>Match Results</h2>";
+    if (state.match.total>0){
+      html += "<div class='print-score'>" + (state.match.done ? "Completed" : "In progress") + ": " + state.match.firstTryCorrect + " / " + state.match.total + " correct on the first try</div>";
+    } else {
+      html += "<div class='print-score'>Not completed</div>";
+    }
+  }
+
+  if (opts.scenarios){
+    html += "<h2>Chain Reaction Answers</h2>";
+    SCENARIOS.forEach(function(sc){
+      var saved = state.scenarios[sc.id];
+      html += "<div class='print-q'>";
+      html += "<div class='print-q-era'>" + escapeHtml(sc.era) + "</div>";
+      html += "<div class='print-q-title'>" + escapeHtml(sc.title) + "</div>";
+      if (saved){
+        html += "<div class='print-q-answer'>My answer: " + escapeHtml(sc.options[saved.selectedIndex].text) + "</div>";
+        html += "<div class='" + (saved.correct ? "print-correct":"print-incorrect") + "'>" + (saved.correct ? "Correct":"Incorrect") + "</div>";
+      } else {
+        html += "<div class='print-unanswered'>Not answered</div>";
+      }
+      html += "</div>";
+    });
+  }
+
+  return html;
+}
+
+function getExportOpts(){
+  return {
+    checks: document.getElementById("exp-checks").checked,
+    match: document.getElementById("exp-match").checked,
+    scenarios: document.getElementById("exp-scenarios").checked
+  };
+}
+
+function resetAllState(){
+  state = JSON.parse(JSON.stringify(defaultState));
+  saveState();
+  initMatchTab();
+  renderScenarios();
+  updateScenarioProgress();
+  showTab("directions");
+}
+
+document.getElementById("copyTextBtn").addEventListener("click", function(){
+  var opts = getExportOpts();
+  var msg = document.getElementById("exportMsg");
+  if (!opts.checks && !opts.match && !opts.scenarios){
+    msg.textContent = "Select at least one section to include.";
+    return;
+  }
+  var text = buildExportText(opts);
+  if (navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(function(){
+      msg.textContent = "Copied! Paste into your Google Doc. Starting fresh for the next student.";
+      setTimeout(function(){
+        exportModal.classList.remove("show");
+        resetAllState();
+      }, 1400);
+    }).catch(function(){
+      msg.textContent = "Copy failed — your work is still saved. Try again.";
+    });
+  } else {
+    msg.textContent = "Copy isn't supported in this browser — try Save as PDF instead.";
+  }
+});
+
+document.getElementById("savePdfBtn").addEventListener("click", function(){
+  var opts = getExportOpts();
+  if (!opts.checks && !opts.match && !opts.scenarios){
+    document.getElementById("exportMsg").textContent = "Select at least one section to include.";
+    return;
+  }
+  var printArea = document.getElementById("printArea");
+  printArea.innerHTML = buildExportHTML(opts);
+
+  var handled = false;
+  function onAfterPrint(){
+    if (handled) return;
+    handled = true;
+    window.removeEventListener("afterprint", onAfterPrint);
+    exportModal.classList.remove("show");
+    resetAllState();
+  }
+  window.addEventListener("afterprint", onAfterPrint);
+  requestAnimationFrame(function(){
+    requestAnimationFrame(function(){
+      window.print();
+    });
+  });
+});
+
+/* ===================== INIT ===================== */
+renderAllBranchTabs();
+initMatchTab();
+renderScenarios();
+updateScenarioProgress();
+showTab("directions"); // navigation always resets to landing view on load, per build standard
+})();
+</script>
+</body>
+</html>
