@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Origins of Self-Government · EdSim</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Special+Elite&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#efe4cc;--bg-deep:#e3d5b3;
+  --parchment:#f6ecd4;--parchment-2:#f0e3c4;
+  --ink:#2b2013;--ink-soft:#5a4c33;--ink-faint:#8c7a56;
+  --border:#c9b78c;--border-hi:#a68f5c;
+  --accent:#8a2e2e;--accent-hi:#a83c3c;--accent-glow:rgba(138,46,46,.18);
+  --gold:#8f6b1f;--gold-hi:#b3892c;--gold-glow:rgba(179,137,44,.22);
+  --green:#3d5c3a;--green-hi:#4f7a4a;--green-glow:rgba(79,122,74,.2);
+  --white:#fffaf0;
+  --fd:'Playfair Display',Georgia,serif;--fb:'Crimson Text',Georgia,serif;--fm:'Special Elite',monospace;
+  --ease:cubic-bezier(.4,0,.2,1);--r:8px;--rs:4px;
+}
+html,body{min-height:100%}
+body{font-family:var(--fb);background:var(--bg);color:var(--ink);display:flex;flex-direction:column;
+  background-image:radial-gradient(ellipse at top left,rgba(255,255,255,.25),transparent 60%),
+                    radial-gradient(ellipse at bottom right,rgba(0,0,0,.05),transparent 60%);}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.5;
+  background:repeating-radial-gradient(circle at 20% 30%,rgba(0,0,0,.02) 0,transparent 2px),
+             repeating-radial-gradient(circle at 70% 80%,rgba(0,0,0,.02) 0,transparent 2px)}
+
+/* HEADER */
+.hdr{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  padding:0 20px;height:52px;border-bottom:2px solid var(--border-hi);
+  background:rgba(239,228,204,.95);backdrop-filter:blur(6px);flex-shrink:0;flex-wrap:wrap;gap:6px}
+.hdr-l{display:flex;align-items:center;gap:10px}
+.logo{font-family:var(--fm);font-size:14px;font-weight:400;color:var(--ink-soft);letter-spacing:.08em}
+.hdiv{width:1px;height:15px;background:var(--border-hi)}
+.unit{font-family:var(--fm);font-size:11px;color:var(--accent);letter-spacing:.1em;text-transform:uppercase}
+.hdr-r{display:flex;align-items:center;gap:8px}
+.hdr-btn{font-family:var(--fm);font-size:10px;font-weight:400;letter-spacing:.06em;text-transform:uppercase;
+  padding:6px 12px;border-radius:var(--rs);cursor:pointer;min-height:36px;
+  background:var(--parchment);border:1px solid var(--border-hi);color:var(--ink-soft);transition:all .15s}
+.hdr-btn:hover{background:var(--white);color:var(--ink)}
+.hdr-btn.danger:hover{border-color:var(--accent-hi);color:var(--accent-hi)}
+
+/* Tier toggle (global reading level + text-version) */
+.tier-toggle{display:flex;gap:2px;background:var(--parchment-2);border:1px solid var(--border-hi);border-radius:var(--rs);padding:2px}
+.tier-btn{font-family:var(--fm);font-size:9px;letter-spacing:.05em;text-transform:uppercase;padding:5px 9px;
+  border:none;background:transparent;color:var(--ink-faint);cursor:pointer;border-radius:3px;min-height:28px}
+.tier-btn.active{background:var(--accent);color:var(--white)}
+
+/* NAV TABS */
+.tabbar{display:flex;gap:2px;padding:10px 16px 0;flex-wrap:wrap;max-width:960px;margin:0 auto;width:100%}
+.tab-btn{font-family:var(--fd);font-size:14px;font-weight:600;padding:10px 16px;border:1px solid var(--border-hi);
+  border-bottom:none;background:var(--parchment-2);color:var(--ink-soft);cursor:pointer;border-radius:6px 6px 0 0;
+  min-height:44px;transition:all .15s}
+.tab-btn.active{background:var(--parchment);color:var(--accent);border-bottom:1px solid var(--parchment)}
+.tab-btn:hover:not(.active){background:var(--white)}
+
+/* MAIN */
+.main{position:relative;z-index:5;flex:1;display:flex;flex-direction:column;align-items:center;padding:0 16px 32px;width:100%}
+.panel{width:100%;max-width:960px;background:var(--parchment);border:1px solid var(--border-hi);border-radius:0 8px 8px 8px;
+  padding:24px 22px;display:none;box-shadow:0 2px 14px rgba(43,32,19,.08)}
+.panel.active{display:block;animation:fadeUp .3s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* NEXT/PREV NAV */
+.panel-nav{display:flex;justify-content:space-between;margin-top:22px;padding-top:16px;border-top:1px solid var(--border);flex-wrap:wrap;gap:10px}
+.nav-btn{font-family:var(--fd);font-size:14px;font-weight:600;padding:10px 20px;border-radius:var(--rs);cursor:pointer;
+  border:1px solid var(--border-hi);background:var(--white);color:var(--ink);transition:all .15s;min-height:44px}
+.nav-btn:hover{background:var(--gold);color:var(--white);border-color:var(--gold)}
+.nav-btn:disabled{opacity:.35;cursor:not-allowed}
+.nav-btn.primary{background:var(--accent);color:var(--white);border-color:var(--accent)}
+.nav-btn.primary:hover{background:var(--accent-hi)}
+.nav-btn.ghost{background:transparent}
+
+/* DIRECTIONS */
+.dir-title{font-family:var(--fd);font-size:32px;font-weight:700;color:var(--ink);margin-bottom:4px}
+.dir-sub{font-family:var(--fm);font-size:12px;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;margin-bottom:18px}
+.dir-step{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--border)}
+.dir-step:last-of-type{border-bottom:none}
+.dir-num{font-family:var(--fd);font-size:22px;font-weight:700;color:var(--gold-hi);flex-shrink:0;width:32px}
+.dir-body h3{font-family:var(--fd);font-size:16px;font-weight:600;margin-bottom:3px}
+.dir-body p{font-size:14.5px;color:var(--ink-soft);line-height:1.55}
+.dir-time{font-family:var(--fm);font-size:10px;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.05em;margin-top:3px}
+
+/* ENLIGHTENMENT LENS */
+.concept-grid{display:grid;grid-template-columns:1fr;gap:14px;margin-top:16px}
+.concept-card{background:var(--white);border:1px solid var(--border-hi);border-radius:var(--r);padding:18px 20px;
+  border-left:5px solid var(--tag-color,var(--gold-hi))}
+.concept-name{font-family:var(--fd);font-size:19px;font-weight:700;color:var(--ink);margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.concept-swatch{width:14px;height:14px;border-radius:50%;background:var(--tag-color,var(--gold-hi));flex-shrink:0}
+.concept-def{font-size:15px;line-height:1.65;color:var(--ink-soft)}
+.concept-card.pop{--tag-color:var(--gold-hi)}
+.concept-card.consent{--tag-color:var(--accent-hi)}
+.concept-card.limited{--tag-color:var(--green-hi)}
+.concept-card.contract{--tag-color:var(--border-hi)}
+
+/* VOCAB REVIEW (Enlightenment Lens) */
+.review-title{font-family:var(--fd);font-size:19px;font-weight:700;color:var(--ink);margin:26px 0 4px}
+.review-sub{font-size:13.5px;color:var(--ink-soft);margin-bottom:14px}
+.vocab-mode-row{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.mode-btn{font-family:var(--fd);font-size:14px;font-weight:600;padding:9px 16px;border-radius:var(--rs);
+  border:1px solid var(--border-hi);background:var(--white);color:var(--ink-soft);cursor:pointer;min-height:40px}
+.mode-btn.active{background:var(--gold);color:var(--white);border-color:var(--gold)}
+
+.fc-wrap{perspective:1000px;margin:0 auto 16px;cursor:pointer;max-width:480px;min-height:190px}
+.fc-card{width:100%;min-height:190px;transform-style:preserve-3d;transition:transform .45s var(--ease);position:relative}
+.fc-card.flipped{transform:rotateY(180deg)}
+.fc-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:var(--r);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:26px 22px;text-align:center;min-height:190px}
+.fc-front{background:var(--white);border:1px solid var(--border-hi)}
+.fc-back{background:#f2e6c9;border:1px solid var(--gold-hi);transform:rotateY(180deg)}
+.fc-lbl{font-family:var(--fm);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:12px}
+.fc-term{font-family:var(--fd);font-size:24px;font-weight:700;color:var(--ink)}
+.fc-def-text{font-size:15px;color:var(--ink);line-height:1.6}
+.fc-flip-hint{font-family:var(--fm);font-size:10px;color:var(--ink-faint);margin-top:12px}
+.fc-controls{display:flex;justify-content:center;gap:10px;max-width:480px;margin:0 auto}
+.fc-ctrl-btn{font-family:var(--fd);font-size:13px;font-weight:600;padding:9px 16px;border-radius:var(--rs);
+  border:1px solid var(--border-hi);background:var(--white);cursor:pointer;min-height:40px}
+.fc-counter{text-align:center;font-family:var(--fm);font-size:11px;color:var(--ink-faint);margin-top:10px}
+
+.quiz-card{background:var(--white);border:1px solid var(--border-hi);border-radius:var(--r);padding:20px;margin-bottom:14px}
+.quiz-q{font-size:15.5px;font-weight:600;margin-bottom:12px;color:var(--ink)}
+.quiz-opts{display:flex;flex-direction:column;gap:8px}
+.opt-btn{font-family:var(--fb);font-size:14px;text-align:left;padding:11px 14px;border-radius:var(--rs);
+  border:1px solid var(--border-hi);background:var(--parchment-2);cursor:pointer;transition:all .12s;min-height:44px}
+.opt-btn:hover:not(:disabled){background:var(--white)}
+.opt-btn.correct{background:rgba(79,122,74,.18)!important;border-color:var(--green-hi)!important}
+.opt-btn.wrong{background:rgba(138,46,46,.15)!important;border-color:var(--accent-hi)!important}
+.opt-btn:disabled{cursor:default}
+.quiz-progress{font-family:var(--fm);font-size:11px;color:var(--ink-faint);margin-bottom:12px}
+.quiz-score{text-align:center;padding:30px 20px}
+.quiz-score .n{font-family:var(--fd);font-size:44px;font-weight:700;color:var(--accent)}
+.quiz-score .l{font-family:var(--fm);font-size:12px;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.06em;margin-top:4px}
+
+.synthesis-box{margin-top:26px;padding-top:18px;border-top:1px solid var(--border)}
+
+/* DOCUMENT PICKER */
+.doc-picker{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0 4px}
+.doc-btn{font-family:var(--fd);font-size:13.5px;font-weight:600;padding:10px 15px;border-radius:var(--rs);
+  border:1px solid var(--border-hi);background:var(--white);color:var(--ink-soft);cursor:pointer;min-height:44px;transition:all .15s}
+.doc-btn.active{background:var(--gold);color:var(--white);border-color:var(--gold)}
+.doc-btn:hover:not(.active){background:var(--parchment-2)}
+
+.doc-card{background:var(--white);border:1px solid var(--border-hi);border-radius:var(--r);padding:20px 22px;margin-top:14px}
+.doc-year{font-family:var(--fm);font-size:12px;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px}
+.doc-title{font-family:var(--fd);font-size:23px;font-weight:700;color:var(--ink);margin-bottom:6px}
+.doc-source{font-family:var(--fb);font-style:italic;font-size:12.5px;color:var(--ink-faint);margin-bottom:14px}
+.doc-hint{font-size:13px;color:var(--ink-faint);margin-bottom:14px}
+
+.tag-legend{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:16px;font-family:var(--fm);font-size:10px;text-transform:uppercase;letter-spacing:.04em}
+.tag-legend span{display:flex;align-items:center;gap:6px;color:var(--ink-soft)}
+.tag-legend i{width:11px;height:11px;border-radius:50%;display:inline-block}
+.tl-swatch-pop{background:var(--gold-hi)}
+.tl-swatch-consent{background:var(--accent-hi)}
+.tl-swatch-limited{background:var(--green-hi)}
+
+.sent{display:block;font-size:16px;line-height:1.85;color:var(--ink);padding:12px 14px;margin-bottom:10px;
+  border-radius:var(--rs);border:1px solid var(--border);transition:all .15s;background:var(--parchment-2)}
+.sent.correct{border-left:5px solid var(--green-hi);background:var(--white)}
+.sent.wrong{border-left:5px solid var(--accent-hi)}
+.sent-row{display:flex;align-items:center;gap:10px;margin-top:10px;flex-wrap:wrap}
+.sent-row label{font-family:var(--fm);font-size:10.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-faint)}
+.sent-select{font-family:var(--fb);font-size:14px;padding:8px 10px;border-radius:var(--rs);border:1px solid var(--border-hi);
+  background:var(--white);color:var(--ink);min-height:40px;cursor:pointer}
+.sent-select:disabled{opacity:.75;cursor:default}
+.sent-feedback{font-family:var(--fm);font-size:11px;text-transform:uppercase;letter-spacing:.04em;min-height:14px}
+.sent-feedback.ok{color:var(--green-hi)}
+.sent-feedback.bad{color:var(--accent-hi)}
+.sent-hint{font-family:var(--fm);font-size:9.5px;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.04em;margin-bottom:10px}
+
+/* REFLECTION */
+.reflect-q{margin-bottom:18px}
+.reflect-q label{display:block;font-family:var(--fd);font-size:15.5px;font-weight:600;margin-bottom:8px;color:var(--ink)}
+.reflect-q textarea{width:100%;min-height:110px;font-family:var(--fb);font-size:14.5px;padding:12px;
+  border:1px solid var(--border-hi);border-radius:var(--rs);background:var(--white);color:var(--ink);
+  resize:vertical;line-height:1.6}
+.reflect-q textarea:focus{outline:none;border-color:var(--accent)}
+.paine-card{background:var(--white);border:1px solid var(--border-hi);border-radius:var(--r);padding:18px 20px;margin-bottom:18px;
+  border-left:5px solid var(--accent)}
+.paine-src{font-family:var(--fm);font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+.paine-text{font-size:16px;line-height:1.8;color:var(--ink);font-style:italic}
+
+.export-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.export-btn{font-family:var(--fd);font-size:14px;font-weight:600;padding:12px 22px;border-radius:var(--rs);
+  border:1px solid;cursor:pointer;transition:all .15s;min-height:44px}
+.export-pdf{background:rgba(179,137,44,.15);color:var(--gold-hi);border-color:var(--gold-hi)}
+.export-pdf:hover{background:rgba(179,137,44,.28)}
+.export-copy{background:rgba(61,92,58,.14);color:var(--green-hi);border-color:var(--green-hi)}
+.export-copy:hover{background:rgba(61,92,58,.26)}
+.export-note{font-size:12.5px;color:var(--ink-faint);margin-top:10px;line-height:1.5}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--white);
+  padding:10px 20px;border-radius:6px;font-family:var(--fb);font-size:13px;z-index:200;opacity:0;pointer-events:none;
+  transition:opacity .2s;max-width:88vw;text-align:center}
+.toast.show{opacity:1}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(43,32,19,.55);z-index:100;
+  align-items:center;justify-content:center;backdrop-filter:blur(3px);padding:16px}
+.modal-overlay.open{display:flex}
+.modal{background:var(--parchment);border:1px solid var(--border-hi);border-radius:var(--r);padding:24px;max-width:420px;width:100%}
+.modal h2{font-family:var(--fd);font-size:19px;margin-bottom:12px}
+.modal p{font-size:14px;color:var(--ink-soft);line-height:1.55;margin-bottom:6px}
+.modal-check{display:flex;align-items:center;gap:9px;padding:7px 0;font-size:14px}
+.modal-check input{width:17px;height:17px}
+.modal-btns{display:flex;gap:8px;justify-content:flex-end;margin-top:16px;flex-wrap:wrap}
+
+/* PRINT */
+@media print{
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  body{background:white!important;color:#111!important}
+  body::after,.hdr,.tabbar,.toast,.modal-overlay{display:none!important}
+  .main{padding:0!important}
+  .panel,.panel.active{display:none!important}
+  #printDoc{display:block!important}
+  #printDoc *{overflow:visible!important}
+}
+#printDoc{display:none;padding:26px 30px;font-family:Georgia,serif;color:#111;max-width:760px;margin:0 auto}
+.pd-header{display:flex;justify-content:space-between;border-bottom:2px solid #111;padding-bottom:10px;margin-bottom:16px}
+.pd-title{font-size:20px;font-weight:700}
+.pd-meta{font-size:12px;color:#555;text-align:right;line-height:1.6}
+.pd-student-box{background:#f5f5f0;border:1px solid #ddd;border-radius:4px;padding:10px 14px;margin-bottom:16px;
+  display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pd-field-label{font-size:10px;text-transform:uppercase;color:#888;letter-spacing:.06em}
+.pd-field-val{font-size:14px;font-weight:700;border-bottom:1px solid #999;min-height:18px}
+.pd-section-title{font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;
+  background:#111;color:#fff;padding:6px 12px;border-radius:3px;margin:14px 0 10px}
+.pd-doc-block{margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid #eee}
+.pd-doc-name{font-weight:700;font-size:13.5px;margin-bottom:4px}
+.pd-doc-excerpt{font-size:12.5px;color:#333;font-style:italic;margin-bottom:6px;line-height:1.5}
+.pd-blank-row{font-size:12.5px;margin-top:4px}
+.pd-blank-line{border-bottom:1px solid #999;display:inline-block;min-width:220px}
+.pd-reflect-item{margin-bottom:16px}
+.pd-reflect-q{font-weight:700;font-size:13.5px;margin-bottom:6px}
+.pd-reflect-lines{border-bottom:1px solid #999;height:26px;overflow:visible}
+.pd-legend{font-size:11.5px;color:#555;margin-bottom:10px}
+
+/* RESPONSIVE */
+@media(max-width:640px){
+  .dir-title{font-size:26px}
+  .doc-title{font-size:20px}
+  .tabbar{overflow-x:auto;flex-wrap:nowrap}
+  .panel{padding:18px 14px}
+}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-l">
+    <span class="logo">EdSim</span><div class="hdiv"></div>
+    <span class="unit">Colonial Foundations · Self-Government</span>
+  </div>
+  <div class="hdr-r">
+    <div class="tier-toggle" role="group" aria-label="Reading level and document text version">
+      <button class="tier-btn" data-tier="simplified" onclick="setTier('simplified')" aria-label="Simplified reading level and paraphrased text">Simplified</button>
+      <button class="tier-btn active" data-tier="standard" onclick="setTier('standard')" aria-label="Standard reading level and modernized text">Standard</button>
+      <button class="tier-btn" data-tier="advanced" onclick="setTier('advanced')" aria-label="Advanced reading level and original spelling">Advanced</button>
+    </div>
+    <button class="hdr-btn danger" onclick="confirmReset()" aria-label="Reset all progress">↺ Reset</button>
+  </div>
+</header>
+
+<div class="tabbar" role="tablist">
+  <button class="tab-btn active" onclick="goToTab('directions')" id="tabbtn-directions">Directions</button>
+  <button class="tab-btn" onclick="goToTab('lens')" id="tabbtn-lens">Enlightenment Lens</button>
+  <button class="tab-btn" onclick="goToTab('documents')" id="tabbtn-documents">Documents</button>
+  <button class="tab-btn" onclick="goToTab('reflect')" id="tabbtn-reflect">Reflection &amp; Export</button>
+</div>
+
+<div class="main">
+
+  <div id="printDoc"></div>
+
+  <!-- DIRECTIONS -->
+  <div class="panel active" id="panel-directions">
+    <div class="dir-title">Origins of Self-Government</div>
+    <div class="dir-sub">EdSim · US History · Colonial Foundations Unit</div>
+
+    <div class="dir-step">
+      <div class="dir-num">1</div>
+      <div class="dir-body">
+        <h3>Enlightenment Lens</h3>
+        <p>Before reading the documents, learn three Enlightenment ideas you'll be hunting for: popular sovereignty, consent of the governed, and limited government. Each idea gets its own color — you'll use these same colors in the next tab.</p>
+        <div class="dir-time">About 5 minutes</div>
+      </div>
+    </div>
+    <div class="dir-step">
+      <div class="dir-num">2</div>
+      <div class="dir-body">
+        <h3>Documents</h3>
+        <p>Read excerpts from four founding colonial documents — the Virginia House of Burgesses records, the Mayflower Compact, the Fundamental Orders of Connecticut, and the Albany Plan of Union. Click any sentence to reveal which Enlightenment idea it demonstrates. Use the reading-level toggle at the top right to switch each document's text between the original spelling, a modernized version, and a simplified paraphrase.</p>
+        <div class="dir-time">About 20 minutes</div>
+      </div>
+    </div>
+    <div class="dir-step">
+      <div class="dir-num">3</div>
+      <div class="dir-body">
+        <h3>Reflection &amp; Export</h3>
+        <p>Compare the four documents, then read a short excerpt from Thomas Paine's <em>Common Sense</em> (1776) and consider how these decades of colonial self-rule connect to the later argument for independence. Save your work as a PDF or copy it into a Google Doc.</p>
+        <div class="dir-time">About 15 minutes</div>
+      </div>
+    </div>
+
+    <p style="margin-top:16px;font-size:14px;color:var(--ink-soft)">By the end of this activity, you'll be able to identify popular sovereignty, consent of the governed, and limited government in colonial-era documents, and explain how these ideas of self-rule fed into later arguments for independence.</p>
+
+    <div class="panel-nav">
+      <span></span>
+      <button class="nav-btn primary" onclick="goToTab('lens')">Start: Enlightenment Lens →</button>
+    </div>
+  </div>
+
+  <!-- ENLIGHTENMENT LENS -->
+  <div class="panel" id="panel-lens">
+    <div class="dir-title" style="font-size:24px">Three Ideas to Watch For</div>
+    <p style="color:var(--ink-soft);font-size:14px;margin-bottom:4px">These ideas didn't arrive with the Declaration of Independence in 1776 — colonists had been practicing them for over 150 years. Learn the three colors below; you'll see them again in the Documents tab.</p>
+
+    <div class="concept-grid" id="conceptGrid"></div>
+
+    <div class="review-title">Check Your Understanding</div>
+    <div class="review-sub">Review the terms before you go hunting for them in the documents.</div>
+    <div class="vocab-mode-row">
+      <button class="mode-btn active" id="modebtn-flash" onclick="setVocabMode('flash')">🃏 Flashcards</button>
+      <button class="mode-btn" id="modebtn-quiz" onclick="setVocabMode('quiz')">🎯 Quiz</button>
+    </div>
+
+    <div id="flashMode">
+      <div class="fc-wrap" id="fcWrap" onclick="flipCard()" role="button" tabindex="0" aria-label="Flip flashcard" onkeydown="if(event.key==='Enter')flipCard()">
+        <div class="fc-card" id="fcCard">
+          <div class="fc-face fc-front">
+            <div class="fc-lbl">Term</div>
+            <div class="fc-term" id="fcTerm"></div>
+            <div class="fc-flip-hint">Click card to see definition</div>
+          </div>
+          <div class="fc-face fc-back">
+            <div class="fc-lbl">Definition</div>
+            <div class="fc-def-text" id="fcDef"></div>
+          </div>
+        </div>
+      </div>
+      <div class="fc-controls">
+        <button class="fc-ctrl-btn" onclick="fcNav(-1)" aria-label="Previous card">← Prev</button>
+        <button class="fc-ctrl-btn" onclick="fcNav(1)" aria-label="Next card">Next →</button>
+      </div>
+      <div class="fc-counter" id="fcCounter"></div>
+    </div>
+
+    <div id="quizMode" style="display:none"></div>
+
+    <div class="synthesis-box">
+      <div class="reflect-q">
+        <label for="synthesis">Synthesis: Most of the world in the 1600s and 1700s was ruled by monarchs who claimed absolute or near-absolute authority. Why might these three ideas — popular sovereignty, consent of the governed, and limited government — have taken hold in the colonies specifically, thousands of miles from the government in London? What about the colonial situation made self-rule practical, or even necessary?</label>
+        <textarea id="synthesis" oninput="saveState()" placeholder="Type your answer here..."></textarea>
+      </div>
+    </div>
+
+    <div class="panel-nav">
+      <button class="nav-btn" onclick="goToTab('directions')">← Directions</button>
+      <button class="nav-btn primary" onclick="goToTab('documents')">Next: Documents →</button>
+    </div>
+  </div>
+
+  <!-- DOCUMENTS -->
+  <div class="panel" id="panel-documents">
+    <div class="dir-title" style="font-size:24px">The Documents</div>
+    <p style="color:var(--ink-soft);font-size:14px;margin-bottom:2px">Click a document below, then click any sentence to reveal which Enlightenment idea it demonstrates.</p>
+
+    <div class="doc-picker" id="docPicker" role="tablist" aria-label="Choose a document"></div>
+    <div id="docCard"></div>
+
+    <div class="panel-nav">
+      <button class="nav-btn" onclick="goToTab('lens')">← Enlightenment Lens</button>
+      <button class="nav-btn primary" onclick="goToTab('reflect')">Next: Reflection →</button>
+    </div>
+  </div>
+
+  <!-- REFLECT -->
+  <div class="panel" id="panel-reflect">
+    <div class="dir-title" style="font-size:24px">Reflection &amp; Export</div>
+
+    <div class="reflect-q">
+      <label for="reflect1">1. Of the four documents, which one do you think most clearly demonstrates <strong>limited government</strong>, and which most clearly demonstrates <strong>popular sovereignty</strong> or <strong>consent of the governed</strong>? Use evidence from the documents to support your answer.</label>
+      <textarea id="reflect1" oninput="saveState()" placeholder="Type your answer here..."></textarea>
+    </div>
+
+    <div class="reflect-q">
+      <label for="reflect2">2. The Albany Plan of Union (1754) was different from the other three documents — it wasn't one colony governing itself, but several colonies proposing to join together. Why might this idea of colonies uniting matter later, when all thirteen colonies had to decide whether to unite against Britain?</label>
+      <textarea id="reflect2" oninput="saveState()" placeholder="Type your answer here..."></textarea>
+    </div>
+
+    <div class="paine-card">
+      <div class="paine-src">Thomas Paine, <em>Common Sense</em>, 1776</div>
+      <div class="paine-text" id="paineText"></div>
+    </div>
+
+    <div class="reflect-q">
+      <label for="reflect3">3. Paine argues that distance and scale make it impractical for Britain to govern America. Which of the self-governing habits you saw in the four documents — colonists making their own laws, electing their own leaders, limiting their own officials — does this argument seem to be defending?</label>
+      <textarea id="reflect3" oninput="saveState()" placeholder="Type your answer here..."></textarea>
+    </div>
+
+    <div class="export-row">
+      <button class="export-btn export-pdf" onclick="openExportModal()">⬇ Save as PDF</button>
+      <button class="export-btn export-copy" onclick="copyText()">📋 Copy Text</button>
+    </div>
+    <div class="export-note">Before you export: once you confirm your download or copy worked, this page will clear for the next student. Nothing is deleted until you confirm it saved.</div>
+
+    <div class="panel-nav">
+      <button class="nav-btn" onclick="goToTab('documents')">← Documents</button>
+      <span></span>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- Export modal -->
+<div class="modal-overlay" id="exportModal">
+  <div class="modal">
+    <h2>Choose sections to include</h2>
+    <label class="modal-check"><input type="checkbox" id="chkDocs" checked/> Document identification worksheet</label>
+    <label class="modal-check"><input type="checkbox" id="chkSynthesis" checked/> Synthesis response</label>
+    <label class="modal-check"><input type="checkbox" id="chkReflect" checked/> Reflection responses</label>
+    <div class="modal-btns">
+      <button class="nav-btn ghost" onclick="closeExportModal()">Cancel</button>
+      <button class="nav-btn primary" onclick="doExportPDF()">Save PDF</button>
+    </div>
+  </div>
+</div>
+
+<!-- Confirm-export-saved modal (Build Standards §5) -->
+<div class="modal-overlay" id="confirmSaveModal">
+  <div class="modal">
+    <h2>Did it work?</h2>
+    <p id="confirmSaveMsg"></p>
+    <div class="modal-btns">
+      <button class="nav-btn ghost" onclick="closeConfirmSaveModal()">No / not sure — keep my work</button>
+      <button class="nav-btn primary" onclick="confirmSaveYes()">Yes, it saved — clear for next student</button>
+    </div>
+  </div>
+</div>
+
+<!-- Reset modal -->
+<div class="modal-overlay" id="resetModal">
+  <div class="modal">
+    <h2>Reset all progress?</h2>
+    <p style="margin-bottom:14px">This clears your reflection answers on this device. This cannot be undone.</p>
+    <div class="modal-btns">
+      <button class="nav-btn ghost" onclick="closeResetModal()">Cancel</button>
+      <button class="nav-btn primary" onclick="doReset()">Reset everything</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════
+// CONTENT
+// ══════════════════════════════════════════════
+
+// Reading tier now does double duty: definitions AND which text version a document shows.
+// simplified -> paraphrase | standard -> modernized spelling | advanced -> original spelling
+const CONCEPTS = [
+  {key:'pop', name:'Popular Sovereignty', cls:'pop',
+   def:{simplified:"The idea that the power to govern comes from the people, not from a king.",
+        standard:"The idea that political authority comes from the people, rather than from a monarch or a proprietor appointed by one.",
+        advanced:"The principle that legitimate political authority is derived from the consent and will of the governed population, not inherited or divinely granted rule."}},
+  {key:'consent', name:'Consent of the Governed', cls:'consent',
+   def:{simplified:"The idea that people must agree to be governed, often by voting for their leaders or agreeing to follow shared rules.",
+        standard:"The idea that a government's authority is only valid when the people being governed have agreed to it — for example, by electing officials or agreeing to a set of rules.",
+        advanced:"The principle that a government's legitimacy depends on the explicit or implicit agreement of those it governs, expressed through elections, oaths, or founding compacts."}},
+  {key:'limited', name:'Limited Government', cls:'limited',
+   def:{simplified:"The idea that even leaders have to follow rules and can't just do whatever they want.",
+        standard:"The idea that government power is restricted by written rules or laws, so that no single person or office can act without limits.",
+        advanced:"The principle that governmental authority is constrained by codified law, term limits, or a system of mutual checks, preventing the concentration of unchecked power in any one office."}},
+  {key:'contract', name:'Social Contract', cls:'contract',
+   def:{simplified:"The idea that people agree together to form a government and follow its rules, in exchange for order and protection.",
+        standard:"The idea that government is formed through an agreement among the people it will govern, who accept certain rules in exchange for order and protection.",
+        advanced:"The theory, associated with Enlightenment thinkers like Locke and Hobbes, that legitimate government arises from an implicit or explicit agreement among individuals who consent to be governed in exchange for the security and order that government provides."}},
+];
+// Only the first three are used as sentence-identification tags in the Documents tab;
+// Social Contract is included here as a review/vocabulary term only.
+const TAGGABLE = ['pop','consent','limited'];
+
+// Each document: 2-3 tagged sentences, each with three parallel text versions (same order/meaning).
+const DOCS = [
+  {id:'burgesses', year:'1619 / 1621', label:'Virginia House of Burgesses', title:'Virginia House of Burgesses',
+   source:'Journals of the House of Burgesses, July 1619; Ordinance and Constitution of the Virginia Company, July 1621',
+   sentences:[
+     {tag:'consent',
+      simplified:"The rules setting up the General Assembly said every settlement could freely choose two representatives, called Burgesses.",
+      standard:"The commission authorizing the General Assembly allowed for two Burgesses to be chosen from every plantation, without restriction or exception.",
+      advanced:"The Comission for authorising the General Assembly admitteth of two Burgesses out of every plantation with out restraine or exception."},
+     {tag:'pop',
+      simplified:"The elected Assembly — not just the governor — had the power to debate issues and make laws for the whole colony.",
+      standard:"The General Assembly had full power to discuss, decide, and act on any urgent matters concerning the public good of the colony, and also to make and enact general laws and orders.",
+      advanced:"[The General Assembly] shall have free Power to treat, consult, and conclude, as well of all emergent Occasions concerning the Publick Weal of the said Colony, as also to make, ordain, and enact such generall Lawes and Orders, for the behoofe of the said Colony."},
+     {tag:'limited',
+      simplified:"Neither the Assembly nor the Governor could act completely on their own — laws needed outside approval, and the Governor could veto the Assembly, so no one side held total power.",
+      standard:"No law made by the General Assembly could take effect unless it was formally ratified by the Virginia Company back in England; likewise, the Governor held a veto over the Assembly's actions.",
+      advanced:"No Law or Ordinance, made in the said Generall Assembly, shall be or continue in Force or Validity, unless the same shall be solemnly ratified and confirmed, in a Generall Quarter Court of the said Company; likewise the Governour, for the time being, shall have a Negative Voice."}
+   ]},
+  {id:'mayflower', year:'1620', label:'Mayflower Compact', title:'The Mayflower Compact',
+   source:'Signed aboard the Mayflower at Cape Cod, November 11, 1620',
+   sentences:[
+     {tag:'pop',
+      simplified:"We agree to join together and form our own government.",
+      standard:"We covenant and combine ourselves together into a civil body politic.",
+      advanced:"We doe by these presents solemnly & mutualy in ye presence of God, and one of another; covenant, & combine our selves togeather into a civill body politick."},
+     {tag:'limited',
+      simplified:"We will make fair laws for the good of everyone in the colony.",
+      standard:"We will enact, constitute, and frame such just and equal laws, ordinances, acts, constitutions, and offices, from time to time, as shall be thought most meet and convenient for the general good of the colony.",
+      advanced:"By vertue hearof to enacte, constitute, and frame such just & equall Lawes, ordinances, Acts, constitutions, & offices, from time to time, as shall be thought most meete and convenient for ye generall good of ye Colonie."},
+     {tag:'consent',
+      simplified:"We promise to follow and obey these laws once we've made them.",
+      standard:"Unto which we promise all due submission and obedience.",
+      advanced:"Unto which we promise all due submission and obedience."}
+   ]},
+  {id:'connecticut', year:'1639', label:'Fundamental Orders of CT', title:'Fundamental Orders of Connecticut',
+   source:'Fundamental Orders of Connecticut, Section 1, January 14, 1639',
+   sentences:[
+     {tag:'limited',
+      simplified:"Government meetings happened twice a year, and leaders could only serve one-year terms before facing election again.",
+      standard:"There shall be two General Assemblies or Courts each year, and no magistrate — including the Governor — may be chosen for more than one year at a time.",
+      advanced:"There shall be yearly two Generall Assemblies or Courts... and no other Magistrate to be chosen for more than one year: provided allwayes there be six chosen besides the Governor."},
+     {tag:'consent',
+      simplified:"Free male colonists who had sworn loyalty to the colony got to vote for their leaders, and decisions were made by majority.",
+      standard:"This choice of officers shall be made by all who are admitted freemen and have taken the Oath of Fidelity, and live within this jurisdiction — decided by the majority of those present.",
+      advanced:"Which choice shall be made by all that are admitted freemen and have taken the Oath of Fidelity, and doe cohabit within this Jurisdiction... or the major parte of such as shall be then present."},
+     {tag:'limited',
+      simplified:"Leaders had to follow the colony's written laws when making decisions — they couldn't just rule however they wanted.",
+      standard:"Magistrates must administer justice according to the laws established here, and where no law exists, according to the Word of God — not according to their own personal will.",
+      advanced:"[Magistrates] shall have power to administer justice according to the Lawes here established, and for want thereof, according to the rule of the word of God."}
+   ]},
+  {id:'albany', year:'1754', label:'Albany Plan of Union', title:'The Albany Plan of Union',
+   source:'Benjamin Franklin, proposed at the Albany Congress, July 1754',
+   sentences:[
+     {tag:'limited',
+      simplified:"The colonies would form one shared government for defense and common issues, but each colony would keep its own local government too.",
+      standard:"One general government may be formed in America, under which each colony may still keep its own present constitution, except in the specific ways the plan directs.",
+      advanced:"It is proposed that one general government may be formed in America, including all the said colonies, within and under which government each colony may retain its present constitution, except in the particulars wherein a change may be directed by the said act."},
+     {tag:'consent',
+      simplified:"Each colony's own elected assembly would choose its representatives to the shared council, and they'd hold new elections every three years.",
+      standard:"The House of Representatives sitting in each colony would choose its own members for the Grand Council, with a new election of members every three years.",
+      advanced:"The House of Representatives that happen to be sitting... may and shall choose members for the Grand Council... there shall be a new election of the members of the Grand Council every three years."}
+   ]},
+];
+
+const PAINE = {
+  simplified:"Small islands that can't protect themselves make sense as part of a bigger kingdom. But it's strange to think a whole continent should be ruled forever by a tiny island. Nature never makes a moon bigger than the planet it circles — and America is much bigger than England.",
+  standard:"Small islands not capable of protecting themselves are the proper objects for kingdoms to take under their care; but there is something very absurd in supposing a continent to be perpetually governed by an island. In no instance hath nature made the satellite larger than its primary planet, and as England and America, with respect to each other, reverse the common order of nature, it is evident they belong to different systems.",
+  advanced:"Small islands not capable of protecting themselves, are the proper objects for kingdoms to take under their care; but there is something very absurd, in supposing a continent to be perpetually governed by an island. In no instance hath nature made the satellite larger than its primary planet, and as England and America, with respect to each other, reverses the common order of nature, it is evident they belong to different systems: England to Europe, America to itself."
+};
+
+const LS_KEY = 'edsim_colonial_selfgov_v2';
+
+// ══════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════
+let currentTier = 'standard';
+let selectedDocIdx = 0;
+let pendingExportKind = null; // 'pdf' | 'copy'
+let docAnswers = {}; // { 'docId-sentIdx': { value, correct } }
+let fcIdx = 0, fcFlipped = false;
+let quizQuestions = [], quizIdx = 0, quizScore = 0, quizAnswered = false;
+
+// ══════════════════════════════════════════════
+// PERSISTENCE
+// ══════════════════════════════════════════════
+function ls(){ try{ return JSON.parse(localStorage.getItem(LS_KEY)||'{}'); }catch{ return {}; } }
+function saveLS(d){ try{ localStorage.setItem(LS_KEY, JSON.stringify(d)); }catch{} }
+function saveState(){
+  saveLS({
+    reflect1: document.getElementById('reflect1').value,
+    reflect2: document.getElementById('reflect2').value,
+    reflect3: document.getElementById('reflect3').value,
+    synthesis: document.getElementById('synthesis').value,
+    tier: currentTier,
+    docAnswers: docAnswers
+  });
+}
+function loadState(){
+  const d = ls();
+  if(d.reflect1) document.getElementById('reflect1').value = d.reflect1;
+  if(d.reflect2) document.getElementById('reflect2').value = d.reflect2;
+  if(d.reflect3) document.getElementById('reflect3').value = d.reflect3;
+  if(d.synthesis) document.getElementById('synthesis').value = d.synthesis;
+  if(d.docAnswers) docAnswers = d.docAnswers;
+  if(d.tier) setTier(d.tier, true);
+}
+
+// ══════════════════════════════════════════════
+// TABS (always land on Directions regardless of persisted state — Build Standards §12)
+// ══════════════════════════════════════════════
+function goToTab(name){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('panel-'+name).classList.add('active');
+  document.getElementById('tabbtn-'+name).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ══════════════════════════════════════════════
+// READING TIER / TEXT VERSION
+// ══════════════════════════════════════════════
+function setTier(tier, silent){
+  currentTier = tier;
+  document.querySelectorAll('.tier-btn').forEach(b=>b.classList.toggle('active', b.dataset.tier===tier));
+  renderConcepts();
+  renderDoc(selectedDocIdx);
+  renderPaine();
+  renderFlashcard();
+  if(!silent) saveState();
+}
+
+// ══════════════════════════════════════════════
+// ENLIGHTENMENT LENS — concept cards
+// ══════════════════════════════════════════════
+function renderConcepts(){
+  document.getElementById('conceptGrid').innerHTML = CONCEPTS.map(c=>`
+    <div class="concept-card ${c.cls}">
+      <div class="concept-name"><span class="concept-swatch"></span>${c.name}</div>
+      <div class="concept-def">${c.def[currentTier]}</div>
+    </div>`).join('');
+}
+
+// ══════════════════════════════════════════════
+// ENLIGHTENMENT LENS — vocab review (flashcards + quiz)
+// ══════════════════════════════════════════════
+function shuffle(arr){ const a=[...arr]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]];} return a; }
+
+function setVocabMode(mode){
+  document.getElementById('modebtn-flash').classList.toggle('active', mode==='flash');
+  document.getElementById('modebtn-quiz').classList.toggle('active', mode==='quiz');
+  document.getElementById('flashMode').style.display = mode==='flash' ? '' : 'none';
+  document.getElementById('quizMode').style.display = mode==='quiz' ? '' : 'none';
+  if(mode==='quiz' && quizQuestions.length===0) initQuiz();
+}
+function renderFlashcard(){
+  const c = CONCEPTS[fcIdx];
+  const card = document.getElementById('fcCard');
+  if(!card) return;
+  card.classList.remove('flipped');
+  fcFlipped = false;
+  document.getElementById('fcTerm').textContent = c.name;
+  document.getElementById('fcDef').textContent = c.def[currentTier];
+  document.getElementById('fcCounter').textContent = `Card ${fcIdx+1} of ${CONCEPTS.length}`;
+}
+function flipCard(){
+  fcFlipped = !fcFlipped;
+  document.getElementById('fcCard').classList.toggle('flipped', fcFlipped);
+}
+function fcNav(dir){
+  fcIdx = (fcIdx + dir + CONCEPTS.length) % CONCEPTS.length;
+  renderFlashcard();
+}
+function initQuiz(){
+  quizQuestions = shuffle(CONCEPTS).map(item=>{
+    const distractors = shuffle(CONCEPTS.filter(v=>v.name!==item.name)).slice(0,3);
+    return { item, choices: shuffle([item, ...distractors]) };
+  });
+  quizIdx = 0; quizScore = 0;
+  renderQuizQ();
+}
+function renderQuizQ(){
+  if(quizIdx >= quizQuestions.length){ renderQuizEnd(); return; }
+  quizAnswered = false;
+  const q = quizQuestions[quizIdx];
+  document.getElementById('quizMode').innerHTML = `
+    <div class="quiz-progress">Question ${quizIdx+1} of ${quizQuestions.length} · Score: ${quizScore}</div>
+    <div class="quiz-card">
+      <div class="quiz-q">Which term matches this definition?</div>
+      <div class="quiz-q" style="font-weight:400;font-style:italic;color:var(--ink-soft)">${q.item.def[currentTier]}</div>
+      <div class="quiz-opts" id="quizOpts">
+        ${q.choices.map((c,i)=>`<button class="opt-btn" onclick="answerQuiz(${i})">${c.name}</button>`).join('')}
+      </div>
+    </div>`;
+}
+function answerQuiz(i){
+  if(quizAnswered) return;
+  quizAnswered = true;
+  const q = quizQuestions[quizIdx];
+  const btns = document.querySelectorAll('#quizOpts .opt-btn');
+  btns.forEach(b=>b.disabled=true);
+  const correctIdx = q.choices.findIndex(c=>c.name===q.item.name);
+  if(q.choices[i].name===q.item.name){ btns[i].classList.add('correct'); quizScore++; }
+  else { btns[i].classList.add('wrong'); btns[correctIdx].classList.add('correct'); }
+  setTimeout(()=>{ quizIdx++; renderQuizQ(); }, 1100);
+}
+function renderQuizEnd(){
+  const pct = Math.round((quizScore/quizQuestions.length)*100);
+  document.getElementById('quizMode').innerHTML = `
+    <div class="quiz-score">
+      <div class="n">${pct}%</div>
+      <div class="l">${quizScore} of ${quizQuestions.length} correct</div>
+    </div>
+    <div style="display:flex;justify-content:center">
+      <button class="nav-btn primary" onclick="initQuiz()">Try Again</button>
+    </div>`;
+}
+
+// ══════════════════════════════════════════════
+// DOCUMENTS
+// ══════════════════════════════════════════════
+function tagName(tag){ return CONCEPTS.find(c=>c.key===tag).name; }
+
+function renderDocPicker(){
+  document.getElementById('docPicker').innerHTML = DOCS.map((d,i)=>`
+    <button class="doc-btn ${i===selectedDocIdx?'active':''}" onclick="renderDoc(${i})" role="tab" aria-selected="${i===selectedDocIdx}">
+      ${d.label}
+    </button>`).join('');
+}
+
+function tagOptionsHtml(selectedVal){
+  let opts = `<option value="">— Choose an idea —</option>`;
+  TAGGABLE.forEach(key=>{
+    const sel = key===selectedVal ? ' selected' : '';
+    opts += `<option value="${key}"${sel}>${tagName(key)}</option>`;
+  });
+  return opts;
+}
+
+function renderDoc(idx){
+  selectedDocIdx = idx;
+  const d = DOCS[idx];
+  document.getElementById('docCard').innerHTML = `
+    <div class="doc-card">
+      <div class="doc-year">${d.year}</div>
+      <div class="doc-title">${d.title}</div>
+      <div class="doc-source">${d.source}</div>
+      <div class="sent-hint">Read each excerpt, then choose which Enlightenment idea it demonstrates.</div>
+      ${d.sentences.map((s,i)=>{
+        const key = d.id+'-'+i;
+        const saved = docAnswers[key];
+        return `
+        <div class="sent" data-tag="${s.tag}" id="sent-${key}">
+          ${s[currentTier]}
+          <div class="sent-row">
+            <label for="select-${key}">Which idea is this?</label>
+            <select class="sent-select" id="select-${key}" onchange="checkSentence('${d.id}',${i},this)" ${saved && saved.correct ? 'disabled':''}>
+              ${tagOptionsHtml(saved ? saved.value : '')}
+            </select>
+          </div>
+          <div class="sent-feedback" id="feedback-${key}"></div>
+        </div>`;
+      }).join('')}
+    </div>`;
+  renderDocPicker();
+  // Reapply any saved correct/incorrect styling and feedback text
+  d.sentences.forEach((s,i)=>{
+    const key = d.id+'-'+i;
+    const saved = docAnswers[key];
+    if(saved && saved.value) applySentenceFeedback(d.id, i, saved.value, saved.correct);
+  });
+}
+
+function applySentenceFeedback(docId, i, value, correct){
+  const el = document.getElementById('sent-'+docId+'-'+i);
+  const feedback = document.getElementById('feedback-'+docId+'-'+i);
+  el.classList.remove('correct','wrong');
+  if(correct){
+    el.classList.add('correct');
+    feedback.textContent = '✓ Correct — ' + tagName(el.dataset.tag) + '.';
+    feedback.className = 'sent-feedback ok';
+  } else {
+    el.classList.add('wrong');
+    feedback.textContent = 'Not quite — read it again and try another option.';
+    feedback.className = 'sent-feedback bad';
+  }
+}
+
+function checkSentence(docId, i, selectEl){
+  const val = selectEl.value;
+  if(!val) return;
+  const correctTag = document.getElementById('sent-'+docId+'-'+i).dataset.tag;
+  const correct = val === correctTag;
+  docAnswers[docId+'-'+i] = { value: val, correct: correct };
+  applySentenceFeedback(docId, i, val, correct);
+  if(correct) selectEl.disabled = true;
+  saveState();
+}
+
+// ══════════════════════════════════════════════
+// PAINE
+// ══════════════════════════════════════════════
+function renderPaine(){
+  document.getElementById('paineText').textContent = PAINE[currentTier];
+}
+
+// ══════════════════════════════════════════════
+// EXPORT — PDF / COPY (Build Standards §3 & §5: confirm-before-reset)
+// ══════════════════════════════════════════════
+function openExportModal(){ document.getElementById('exportModal').classList.add('open'); }
+function closeExportModal(){ document.getElementById('exportModal').classList.remove('open'); }
+
+function buildPrintDoc(){
+  const dateStr = new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+  const incDocs = document.getElementById('chkDocs').checked;
+  const incSynthesis = document.getElementById('chkSynthesis').checked;
+  const incReflect = document.getElementById('chkReflect').checked;
+
+  let html = `
+    <div class="pd-header">
+      <div class="pd-title">Origins of Self-Government — Worksheet</div>
+      <div class="pd-meta">${dateStr}<br>EdSim · US History</div>
+    </div>
+    <div class="pd-student-box">
+      <div><div class="pd-field-label">Name</div><div class="pd-field-val">&nbsp;</div></div>
+      <div><div class="pd-field-label">Period</div><div class="pd-field-val">&nbsp;</div></div>
+    </div>`;
+
+  if(incDocs){
+    html += `<div class="pd-section-title">Part 1 — Identify the Enlightenment Idea</div>
+      <div class="pd-legend">For each excerpt, write which idea it demonstrates: Popular Sovereignty, Consent of the Governed, or Limited Government.</div>`;
+    DOCS.forEach(d=>{
+      html += `<div class="pd-doc-block"><div class="pd-doc-name">${d.title} (${d.year})</div>`;
+      d.sentences.forEach(s=>{
+        html += `<div class="pd-doc-excerpt">"${s.standard}"</div>
+          <div class="pd-blank-row">This shows: <span class="pd-blank-line">&nbsp;</span></div>`;
+      });
+      html += `</div>`;
+    });
+  }
+
+  if(incSynthesis){
+    const syn = document.getElementById('synthesis').value;
+    html += `<div class="pd-section-title">Part 2 — Synthesis</div>
+      <div class="pd-reflect-item">
+        <div class="pd-reflect-q">Why might popular sovereignty, consent of the governed, and limited government have taken hold in the colonies specifically, thousands of miles from London?</div>
+        <div>${syn ? syn.replace(/\n/g,'<br>') : '<div class="pd-reflect-lines"></div><div class="pd-reflect-lines"></div><div class="pd-reflect-lines"></div>'}</div>
+      </div>`;
+  }
+
+  if(incReflect){
+    const r1 = document.getElementById('reflect1').value;
+    const r2 = document.getElementById('reflect2').value;
+    const r3 = document.getElementById('reflect3').value;
+    html += `<div class="pd-section-title">Part 3 — Reflection</div>
+      <div class="pd-reflect-item">
+        <div class="pd-reflect-q">1. Which document most clearly shows limited government? Which most clearly shows popular sovereignty or consent of the governed?</div>
+        <div>${r1 ? r1.replace(/\n/g,'<br>') : '<div class="pd-reflect-lines"></div><div class="pd-reflect-lines"></div><div class="pd-reflect-lines"></div>'}</div>
+      </div>
+      <div class="pd-reflect-item">
+        <div class="pd-reflect-q">2. Why might the Albany Plan's idea of colonies uniting matter later on?</div>
+        <div>${r2 ? r2.replace(/\n/g,'<br>') : '<div class="pd-reflect-lines"></div><div class="pd-reflect-lines"></div><div class="pd-reflect-lines"></div>'}</div>
+      </div>
+      <div class="pd-reflect-item">
+        <div class="pd-reflect-q">3. Which self-governing habit does Paine's distance argument seem to defend?</div>
+        <div>${r3 ? r3.replace(/\n/g,'<br>') : '<div class="pd-reflect-lines"></div><div class="pd-reflect-lines"></div><div class="pd-reflect-lines"></div>'}</div>
+      </div>`;
+  }
+
+  document.getElementById('printDoc').innerHTML = html;
+}
+
+function doExportPDF(){
+  buildPrintDoc();
+  closeExportModal();
+  pendingExportKind = 'pdf';
+  setTimeout(()=>{
+    window.print();
+    setTimeout(()=>{
+      askConfirmSave('Did your PDF actually download or save? Check your Downloads folder before answering.');
+    }, 500);
+  }, 150);
+}
+
+function copyText(){
+  const r1 = document.getElementById('reflect1').value || '(no answer)';
+  const r2 = document.getElementById('reflect2').value || '(no answer)';
+  const r3 = document.getElementById('reflect3').value || '(no answer)';
+  const syn = document.getElementById('synthesis').value || '(no answer)';
+  const text = `ORIGINS OF SELF-GOVERNMENT — REFLECTION\n\n` +
+    `Synthesis — why these ideas took hold in the colonies:\n${syn}\n\n` +
+    `1. Limited government vs. popular sovereignty / consent of the governed:\n${r1}\n\n` +
+    `2. Why the Albany Plan's idea of union might matter later:\n${r2}\n\n` +
+    `3. Which self-governing habit Paine's distance argument defends:\n${r3}\n\n` +
+    `Documents studied: ${DOCS.map(d=>d.title+' ('+d.year+')').join('; ')}`;
+  pendingExportKind = 'copy';
+  navigator.clipboard.writeText(text).then(()=>{
+    askConfirmSave('Copied! Paste it into your Google Doc, check it looks right, then confirm.');
+  }).catch(()=>{
+    showToast('Copy failed — your work is still saved. Try again.');
+    pendingExportKind = null;
+  });
+}
+
+// ── Confirm-before-reset (Build Standards §5 — never an automatic reset) ──
+function askConfirmSave(message){
+  document.getElementById('confirmSaveMsg').textContent = message;
+  document.getElementById('confirmSaveModal').classList.add('open');
+}
+function closeConfirmSaveModal(){
+  document.getElementById('confirmSaveModal').classList.remove('open');
+  pendingExportKind = null; // work is untouched — student can retry export whenever ready
+}
+function confirmSaveYes(){
+  document.getElementById('confirmSaveModal').classList.remove('open');
+  try{ localStorage.removeItem(LS_KEY); }catch{}
+  document.getElementById('reflect1').value = '';
+  document.getElementById('reflect2').value = '';
+  document.getElementById('reflect3').value = '';
+  document.getElementById('synthesis').value = '';
+  docAnswers = {};
+  pendingExportKind = null;
+  selectedDocIdx = 0;
+  renderDoc(0);
+  goToTab('directions');
+  showToast('Saved! Starting fresh for the next student.');
+}
+
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2800);
+}
+
+// ══════════════════════════════════════════════
+// RESET
+// ══════════════════════════════════════════════
+function confirmReset(){ document.getElementById('resetModal').classList.add('open'); }
+function closeResetModal(){ document.getElementById('resetModal').classList.remove('open'); }
+function doReset(){
+  try{ localStorage.removeItem(LS_KEY); }catch{}
+  closeResetModal();
+  document.getElementById('reflect1').value = '';
+  document.getElementById('reflect2').value = '';
+  document.getElementById('reflect3').value = '';
+  document.getElementById('synthesis').value = '';
+  docAnswers = {};
+  fcIdx = 0; quizQuestions = [];
+  setTier('standard');
+  selectedDocIdx = 0;
+  renderDoc(0);
+  setVocabMode('flash');
+  goToTab('directions');
+}
+
+// ══════════════════════════════════════════════
+// INIT — always land on Directions tab regardless of persisted state
+// ══════════════════════════════════════════════
+window.addEventListener('DOMContentLoaded', ()=>{
+  goToTab('directions');
+  renderConcepts();
+  renderDocPicker();
+  renderDoc(0);
+  renderPaine();
+  renderFlashcard();
+  loadState();
+  // loadState may have restored saved answers/tier — re-render doc so selects reflect them
+  renderDoc(selectedDocIdx);
+});
+</script>
+</body>
+</html>
