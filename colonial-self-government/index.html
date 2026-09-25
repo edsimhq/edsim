@@ -155,18 +155,34 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;o
 .tl-swatch-consent{background:var(--accent-hi)}
 .tl-swatch-limited{background:var(--green-hi)}
 
-.sent{display:block;font-size:16px;line-height:1.85;color:var(--ink);padding:12px 14px;margin-bottom:10px;
+.doc-passage{display:block;font-size:16.5px;line-height:1.9;color:var(--ink);padding:18px 20px;margin-bottom:16px;
+  border-radius:var(--rs);border:1px solid var(--border-hi);background:var(--white)}
+.sent{display:block;padding:14px 16px;margin-bottom:14px;
   border-radius:var(--rs);border:1px solid var(--border);transition:all .15s;background:var(--parchment-2)}
-.sent.correct{border-left:5px solid var(--green-hi);background:var(--white)}
-.sent.wrong{border-left:5px solid var(--accent-hi)}
-.sent-row{display:flex;align-items:center;gap:10px;margin-top:10px;flex-wrap:wrap}
+.sent.answered{border-left:5px solid var(--gold-hi);background:var(--white)}
+.sent-row{display:flex;align-items:center;gap:10px;margin-top:12px;flex-wrap:wrap}
 .sent-row label{font-family:var(--fm);font-size:10.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-faint)}
 .sent-select{font-family:var(--fb);font-size:14px;padding:8px 10px;border-radius:var(--rs);border:1px solid var(--border-hi);
   background:var(--white);color:var(--ink);min-height:40px;cursor:pointer}
-.sent-select:disabled{opacity:.75;cursor:default}
-.sent-feedback{font-family:var(--fm);font-size:11px;text-transform:uppercase;letter-spacing:.04em;min-height:14px}
-.sent-feedback.ok{color:var(--green-hi)}
-.sent-feedback.bad{color:var(--accent-hi)}
+.sent-justify-lbl{font-family:var(--fm);font-size:10.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-faint);
+  display:block;margin-top:12px;margin-bottom:6px}
+.sent-justify,.phrase-input{width:100%;font-family:var(--fb);font-size:14px;padding:10px;
+  border:1px solid var(--border-hi);border-radius:var(--rs);background:var(--white);color:var(--ink);resize:vertical;line-height:1.5}
+.sent-justify{min-height:64px}
+.phrase-input{min-height:48px}
+.sent-justify:focus,.phrase-input:focus{outline:none;border-color:var(--accent)}
+.sent-reveal-row{margin-top:10px}
+.reveal-btn{font-family:var(--fd);font-size:12.5px;font-weight:600;padding:8px 14px;border-radius:var(--rs);
+  border:1px solid var(--gold-hi);background:transparent;color:var(--gold-hi);cursor:pointer;min-height:36px}
+.reveal-btn:hover:not(:disabled){background:var(--gold-glow)}
+.reveal-btn:disabled{opacity:.4;cursor:not-allowed;border-color:var(--border)}
+.model-answer{margin-top:10px;padding:12px 14px;border-radius:var(--rs);background:var(--gold-glow);border:1px solid var(--gold-hi)}
+.model-answer .ma-label{font-family:var(--fm);font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--gold-hi);margin-bottom:8px}
+.model-answer .ma-item{margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid rgba(179,137,44,.3)}
+.model-answer .ma-item:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none}
+.model-answer .ma-quote{font-style:italic;font-size:13.5px;color:var(--ink);margin-bottom:4px}
+.model-answer .ma-idea{font-family:var(--fd);font-weight:700;font-size:14px;color:var(--gold-hi);margin-bottom:3px}
+.model-answer .ma-why{font-size:13.5px;color:var(--ink-soft);line-height:1.5}
 .sent-hint{font-family:var(--fm);font-size:9.5px;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.04em;margin-bottom:10px}
 
 /* REFLECTION */
@@ -289,7 +305,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;o
       <div class="dir-num">2</div>
       <div class="dir-body">
         <h3>Documents</h3>
-        <p>Read excerpts from four founding colonial documents — the Virginia House of Burgesses records, the Mayflower Compact, the Fundamental Orders of Connecticut, and the Albany Plan of Union. Click any sentence to reveal which Enlightenment idea it demonstrates. Use the reading-level toggle at the top right to switch each document's text between the original spelling, a modernized version, and a simplified paraphrase.</p>
+        <p>Read four founding colonial documents — the Virginia House of Burgesses records, the Mayflower Compact, the Fundamental Orders of Connecticut, and the Albany Plan of Union. For each one, find a phrase or sentence yourself, identify which Enlightenment idea it demonstrates, and explain your reasoning — then compare your answer to a few reference examples. Use the reading-level toggle at the top right to switch each document's text between the original spelling, a modernized version, and a simplified paraphrase.</p>
         <div class="dir-time">About 20 minutes</div>
       </div>
     </div>
@@ -316,6 +332,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;o
     <p style="color:var(--ink-soft);font-size:14px;margin-bottom:4px">These ideas didn't arrive with the Declaration of Independence in 1776 — colonists had been practicing them for over 150 years. Learn the three colors below; you'll see them again in the Documents tab.</p>
 
     <div class="concept-grid" id="conceptGrid"></div>
+    <p style="font-size:13px;color:var(--ink-faint);margin-top:4px">Popular Sovereignty and Consent of the Governed are closely linked: sovereignty is the claim that power belongs to the people, and consent is how people actually put that power into action — by electing leaders, swearing an oath, or agreeing to a compact. They're worth knowing as separate ideas, but in the Documents tab you'll identify them together as one "self-rule" idea, since a single sentence rarely shows one without the other. Limited Government is the one that's easy to tell apart — that's the real contrast in this activity.</p>
 
     <div class="review-title">Check Your Understanding</div>
     <div class="review-sub">Review the terms before you go hunting for them in the documents.</div>
@@ -363,7 +380,8 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;o
   <!-- DOCUMENTS -->
   <div class="panel" id="panel-documents">
     <div class="dir-title" style="font-size:24px">The Documents</div>
-    <p style="color:var(--ink-soft);font-size:14px;margin-bottom:2px">Click a document below, then click any sentence to reveal which Enlightenment idea it demonstrates.</p>
+    <p style="color:var(--ink-soft);font-size:14px;margin-bottom:2px">Click a document below and read the full passage. Find one phrase or sentence yourself, tell us which idea it demonstrates, and explain your reasoning — then compare your answer to a few reference examples.</p>
+    <p style="color:var(--ink-faint);font-size:12.5px;margin-bottom:2px">Note: Popular Sovereignty and Consent of the Governed are combined into one option here — in a single sentence they're almost always doing the same job (power belongs to the people, and here's how the people are exercising it). Limited Government is the one that stands apart, so that's the real contrast to look for.</p>
 
     <div class="doc-picker" id="docPicker" role="tablist" aria-label="Choose a document"></div>
     <div id="docCard"></div>
@@ -419,6 +437,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;o
   <div class="modal">
     <h2>Choose sections to include</h2>
     <label class="modal-check"><input type="checkbox" id="chkDocs" checked/> Document identification worksheet</label>
+    <label class="modal-check"><input type="checkbox" id="chkQuiz" checked/> Vocabulary quiz score</label>
     <label class="modal-check"><input type="checkbox" id="chkSynthesis" checked/> Synthesis response</label>
     <label class="modal-check"><input type="checkbox" id="chkReflect" checked/> Reflection responses</label>
     <div class="modal-btns">
@@ -477,24 +496,37 @@ const CONCEPTS = [
         standard:"The idea that government is formed through an agreement among the people it will govern, who accept certain rules in exchange for order and protection.",
         advanced:"The theory, associated with Enlightenment thinkers like Locke and Hobbes, that legitimate government arises from an implicit or explicit agreement among individuals who consent to be governed in exchange for the security and order that government provides."}},
 ];
-// Only the first three are used as sentence-identification tags in the Documents tab;
-// Social Contract is included here as a review/vocabulary term only.
-const TAGGABLE = ['pop','consent','limited'];
+// Popular Sovereignty and Consent of the Governed are taught as separate terms above,
+// but in a single sentence of primary-source text they almost always show up together
+// (sovereignty = authority belongs to the people; consent = how people exercise it —
+// electing, swearing an oath, agreeing to a compact). Splitting them sentence-by-sentence
+// in the Documents tab was creating false distinctions, so the identification task
+// combines them into one "self-rule" option and keeps Limited Government as the other —
+// that is the contrast that's actually visible in a single sentence.
+const DOC_TAGS = [
+  {key:'selfrule', name:'Popular Sovereignty / Consent of the Governed'},
+  {key:'limited', name:'Limited Government'}
+];
+const TAGGABLE = ['selfrule','limited'];
+function docTagName(tag){ return DOC_TAGS.find(t=>t.key===tag).name; }
 
 // Each document: 2-3 tagged sentences, each with three parallel text versions (same order/meaning).
 const DOCS = [
   {id:'burgesses', year:'1619 / 1621', label:'Virginia House of Burgesses', title:'Virginia House of Burgesses',
    source:'Journals of the House of Burgesses, July 1619; Ordinance and Constitution of the Virginia Company, July 1621',
    sentences:[
-     {tag:'consent',
+     {tag:'selfrule',
+      rationale:'The colony\'s own settlers picked their representatives — authority runs from the people upward, not down from a governor.',
       simplified:"The rules setting up the General Assembly said every settlement could freely choose two representatives, called Burgesses.",
       standard:"The commission authorizing the General Assembly allowed for two Burgesses to be chosen from every plantation, without restriction or exception.",
       advanced:"The Comission for authorising the General Assembly admitteth of two Burgesses out of every plantation with out restraine or exception."},
-     {tag:'pop',
+     {tag:'selfrule',
+      rationale:'The elected Assembly, not just an appointed governor, held real law-making power over colony affairs.',
       simplified:"The elected Assembly — not just the governor — had the power to debate issues and make laws for the whole colony.",
       standard:"The General Assembly had full power to discuss, decide, and act on any urgent matters concerning the public good of the colony, and also to make and enact general laws and orders.",
       advanced:"[The General Assembly] shall have free Power to treat, consult, and conclude, as well of all emergent Occasions concerning the Publick Weal of the said Colony, as also to make, ordain, and enact such generall Lawes and Orders, for the behoofe of the said Colony."},
      {tag:'limited',
+      rationale:'Power is split and checked in both directions — the Assembly\'s laws needed outside approval, and the Governor\'s own actions could be blocked.',
       simplified:"Neither the Assembly nor the Governor could act completely on their own — laws needed outside approval, and the Governor could veto the Assembly, so no one side held total power.",
       standard:"No law made by the General Assembly could take effect unless it was formally ratified by the Virginia Company back in England; likewise, the Governor held a veto over the Assembly's actions.",
       advanced:"No Law or Ordinance, made in the said Generall Assembly, shall be or continue in Force or Validity, unless the same shall be solemnly ratified and confirmed, in a Generall Quarter Court of the said Company; likewise the Governour, for the time being, shall have a Negative Voice."}
@@ -502,15 +534,18 @@ const DOCS = [
   {id:'mayflower', year:'1620', label:'Mayflower Compact', title:'The Mayflower Compact',
    source:'Signed aboard the Mayflower at Cape Cod, November 11, 1620',
    sentences:[
-     {tag:'pop',
+     {tag:'selfrule',
+      rationale:'The colonists themselves are the ones creating the government — nothing here comes from a king\'s appointment.',
       simplified:"We agree to join together and form our own government.",
       standard:"We covenant and combine ourselves together into a civil body politic.",
       advanced:"We doe by these presents solemnly & mutualy in ye presence of God, and one of another; covenant, & combine our selves togeather into a civill body politick."},
      {tag:'limited',
+      rationale:'The laws they promise to make are bound by a purpose, the "general good," not one person\'s preference.',
       simplified:"We will make fair laws for the good of everyone in the colony.",
       standard:"We will enact, constitute, and frame such just and equal laws, ordinances, acts, constitutions, and offices, from time to time, as shall be thought most meet and convenient for the general good of the colony.",
       advanced:"By vertue hearof to enacte, constitute, and frame such just & equall Lawes, ordinances, Acts, constitutions, & offices, from time to time, as shall be thought most meete and convenient for ye generall good of ye Colonie."},
-     {tag:'consent',
+     {tag:'selfrule',
+      rationale:'Submission and obedience are something they promise, not something forced on them from outside.',
       simplified:"We promise to follow and obey these laws once we've made them.",
       standard:"Unto which we promise all due submission and obedience.",
       advanced:"Unto which we promise all due submission and obedience."}
@@ -519,14 +554,17 @@ const DOCS = [
    source:'Fundamental Orders of Connecticut, Section 1, January 14, 1639',
    sentences:[
      {tag:'limited',
+      rationale:'One-year terms mean no single magistrate, not even the Governor, can hold power indefinitely.',
       simplified:"Government meetings happened twice a year, and leaders could only serve one-year terms before facing election again.",
       standard:"There shall be two General Assemblies or Courts each year, and no magistrate — including the Governor — may be chosen for more than one year at a time.",
       advanced:"There shall be yearly two Generall Assemblies or Courts... and no other Magistrate to be chosen for more than one year: provided allwayes there be six chosen besides the Governor."},
-     {tag:'consent',
+     {tag:'selfrule',
+      rationale:'Officers are chosen by vote among the freemen — authority runs from the community, not a distant crown.',
       simplified:"Free male colonists who had sworn loyalty to the colony got to vote for their leaders, and decisions were made by majority.",
       standard:"This choice of officers shall be made by all who are admitted freemen and have taken the Oath of Fidelity, and live within this jurisdiction — decided by the majority of those present.",
       advanced:"Which choice shall be made by all that are admitted freemen and have taken the Oath of Fidelity, and doe cohabit within this Jurisdiction... or the major parte of such as shall be then present."},
      {tag:'limited',
+      rationale:'Magistrates must rule by established law, not personal judgment — that\'s a legal boundary on their power.',
       simplified:"Leaders had to follow the colony's written laws when making decisions — they couldn't just rule however they wanted.",
       standard:"Magistrates must administer justice according to the laws established here, and where no law exists, according to the Word of God — not according to their own personal will.",
       advanced:"[Magistrates] shall have power to administer justice according to the Lawes here established, and for want thereof, according to the rule of the word of God."}
@@ -535,10 +573,12 @@ const DOCS = [
    source:'Benjamin Franklin, proposed at the Albany Congress, July 1754',
    sentences:[
      {tag:'limited',
+      rationale:'The plan caps the new central government\'s reach — each colony keeps its own constitution except where the plan specifically changes it.',
       simplified:"The colonies would form one shared government for defense and common issues, but each colony would keep its own local government too.",
       standard:"One general government may be formed in America, under which each colony may still keep its own present constitution, except in the specific ways the plan directs.",
       advanced:"It is proposed that one general government may be formed in America, including all the said colonies, within and under which government each colony may retain its present constitution, except in the particulars wherein a change may be directed by the said act."},
-     {tag:'consent',
+     {tag:'selfrule',
+      rationale:'Representatives are chosen by each colony\'s own elected assembly and re-elected regularly — authority flows up from the colonies.',
       simplified:"Each colony's own elected assembly would choose its representatives to the shared council, and they'd hold new elections every three years.",
       standard:"The House of Representatives sitting in each colony would choose its own members for the Grand Council, with a new election of members every three years.",
       advanced:"The House of Representatives that happen to be sitting... may and shall choose members for the Grand Council... there shall be a new election of the members of the Grand Council every three years."}
@@ -551,7 +591,7 @@ const PAINE = {
   advanced:"Small islands not capable of protecting themselves, are the proper objects for kingdoms to take under their care; but there is something very absurd, in supposing a continent to be perpetually governed by an island. In no instance hath nature made the satellite larger than its primary planet, and as England and America, with respect to each other, reverses the common order of nature, it is evident they belong to different systems: England to Europe, America to itself."
 };
 
-const LS_KEY = 'edsim_colonial_selfgov_v2';
+const LS_KEY = 'edsim_colonial_selfgov_v3';
 
 // ══════════════════════════════════════════════
 // STATE
@@ -562,6 +602,7 @@ let pendingExportKind = null; // 'pdf' | 'copy'
 let docAnswers = {}; // { 'docId-sentIdx': { value, correct } }
 let fcIdx = 0, fcFlipped = false;
 let quizQuestions = [], quizIdx = 0, quizScore = 0, quizAnswered = false;
+let lastQuizResult = null; // { score, total } — most recent completed quiz, included in export
 
 // ══════════════════════════════════════════════
 // PERSISTENCE
@@ -575,7 +616,8 @@ function saveState(){
     reflect3: document.getElementById('reflect3').value,
     synthesis: document.getElementById('synthesis').value,
     tier: currentTier,
-    docAnswers: docAnswers
+    docAnswers: docAnswers,
+    lastQuizResult: lastQuizResult
   });
 }
 function loadState(){
@@ -585,6 +627,7 @@ function loadState(){
   if(d.reflect3) document.getElementById('reflect3').value = d.reflect3;
   if(d.synthesis) document.getElementById('synthesis').value = d.synthesis;
   if(d.docAnswers) docAnswers = d.docAnswers;
+  if(d.lastQuizResult) lastQuizResult = d.lastQuizResult;
   if(d.tier) setTier(d.tier, true);
 }
 
@@ -688,6 +731,8 @@ function answerQuiz(i){
 }
 function renderQuizEnd(){
   const pct = Math.round((quizScore/quizQuestions.length)*100);
+  lastQuizResult = { score: quizScore, total: quizQuestions.length };
+  saveState();
   document.getElementById('quizMode').innerHTML = `
     <div class="quiz-score">
       <div class="n">${pct}%</div>
@@ -714,68 +759,106 @@ function tagOptionsHtml(selectedVal){
   let opts = `<option value="">— Choose an idea —</option>`;
   TAGGABLE.forEach(key=>{
     const sel = key===selectedVal ? ' selected' : '';
-    opts += `<option value="${key}"${sel}>${tagName(key)}</option>`;
+    opts += `<option value="${key}"${sel}>${docTagName(key)}</option>`;
   });
   return opts;
+}
+
+// A document is "ready to check" once the student has typed a phrase, picked an idea,
+// AND written a real justification (not just a few characters) — the reveal only
+// unlocks then, so there's nothing to gain by guessing before doing the reading.
+const MIN_JUSTIFY_LEN = 15;
+const MIN_PHRASE_LEN = 8;
+
+function passageText(d){
+  return d.sentences.map(s=>s[currentTier]).join(' ');
 }
 
 function renderDoc(idx){
   selectedDocIdx = idx;
   const d = DOCS[idx];
+  const saved = docAnswers[d.id] || {};
   document.getElementById('docCard').innerHTML = `
     <div class="doc-card">
       <div class="doc-year">${d.year}</div>
       <div class="doc-title">${d.title}</div>
       <div class="doc-source">${d.source}</div>
-      <div class="sent-hint">Read each excerpt, then choose which Enlightenment idea it demonstrates.</div>
-      ${d.sentences.map((s,i)=>{
-        const key = d.id+'-'+i;
-        const saved = docAnswers[key];
-        return `
-        <div class="sent" data-tag="${s.tag}" id="sent-${key}">
-          ${s[currentTier]}
-          <div class="sent-row">
-            <label for="select-${key}">Which idea is this?</label>
-            <select class="sent-select" id="select-${key}" onchange="checkSentence('${d.id}',${i},this)" ${saved && saved.correct ? 'disabled':''}>
-              ${tagOptionsHtml(saved ? saved.value : '')}
-            </select>
-          </div>
-          <div class="sent-feedback" id="feedback-${key}"></div>
-        </div>`;
-      }).join('')}
+      <div class="sent-hint">Read the full passage, then find one phrase or sentence yourself.</div>
+      <div class="doc-passage" id="passage-${d.id}">${passageText(d)}</div>
+
+      <div class="sent" id="sent-${d.id}">
+        <label class="sent-justify-lbl" for="phrase-${d.id}">Type or paste the exact phrase or sentence you found</label>
+        <textarea class="phrase-input" id="phrase-${d.id}" oninput="onDocChange('${d.id}')" placeholder="Copy the words from the passage above...">${saved.phrase || ''}</textarea>
+
+        <div class="sent-row">
+          <label for="select-${d.id}">Which idea does it demonstrate?</label>
+          <select class="sent-select" id="select-${d.id}" onchange="onDocChange('${d.id}')">
+            ${tagOptionsHtml(saved.value || '')}
+          </select>
+        </div>
+
+        <label class="sent-justify-lbl" for="justify-${d.id}">Explain your reasoning — why does this phrase show that idea?</label>
+        <textarea class="sent-justify" id="justify-${d.id}" oninput="onDocChange('${d.id}')" placeholder="Type your explanation here...">${saved.justify || ''}</textarea>
+
+        <div class="sent-reveal-row">
+          <button class="reveal-btn" id="reveal-${d.id}" onclick="revealExemplars('${d.id}')">Compare to reference examples</button>
+        </div>
+        <div id="model-${d.id}"></div>
+      </div>
     </div>`;
   renderDocPicker();
-  // Reapply any saved correct/incorrect styling and feedback text
-  d.sentences.forEach((s,i)=>{
-    const key = d.id+'-'+i;
-    const saved = docAnswers[key];
-    if(saved && saved.value) applySentenceFeedback(d.id, i, saved.value, saved.correct);
-  });
-}
-
-function applySentenceFeedback(docId, i, value, correct){
-  const el = document.getElementById('sent-'+docId+'-'+i);
-  const feedback = document.getElementById('feedback-'+docId+'-'+i);
-  el.classList.remove('correct','wrong');
-  if(correct){
-    el.classList.add('correct');
-    feedback.textContent = '✓ Correct — ' + tagName(el.dataset.tag) + '.';
-    feedback.className = 'sent-feedback ok';
-  } else {
-    el.classList.add('wrong');
-    feedback.textContent = 'Not quite — read it again and try another option.';
-    feedback.className = 'sent-feedback bad';
+  updateDocReadyState(d.id);
+  if(saved.revealed){
+    showExemplars(d.id);
+    const btn = document.getElementById('reveal-'+d.id);
+    btn.disabled = true;
+    btn.textContent = 'Reference examples shown below ✓';
   }
 }
 
-function checkSentence(docId, i, selectEl){
-  const val = selectEl.value;
-  if(!val) return;
-  const correctTag = document.getElementById('sent-'+docId+'-'+i).dataset.tag;
-  const correct = val === correctTag;
-  docAnswers[docId+'-'+i] = { value: val, correct: correct };
-  applySentenceFeedback(docId, i, val, correct);
-  if(correct) selectEl.disabled = true;
+function updateDocReadyState(docId){
+  const phrase = document.getElementById('phrase-'+docId);
+  const select = document.getElementById('select-'+docId);
+  const justify = document.getElementById('justify-'+docId);
+  const btn = document.getElementById('reveal-'+docId);
+  const el = document.getElementById('sent-'+docId);
+  if(!phrase || !select || !justify || !btn) return;
+  const ready = phrase.value.trim().length >= MIN_PHRASE_LEN && !!select.value && justify.value.trim().length >= MIN_JUSTIFY_LEN;
+  // Once revealed, the button stays locked even if the student keeps editing — see revealExemplars().
+  if(!(docAnswers[docId] && docAnswers[docId].revealed)) btn.disabled = !ready;
+  el.classList.toggle('answered', ready);
+}
+
+function onDocChange(docId){
+  const phrase = document.getElementById('phrase-'+docId);
+  const select = document.getElementById('select-'+docId);
+  const justify = document.getElementById('justify-'+docId);
+  docAnswers[docId] = Object.assign({}, docAnswers[docId], { phrase: phrase.value, value: select.value, justify: justify.value });
+  updateDocReadyState(docId);
+  saveState();
+}
+
+function showExemplars(docId){
+  const d = DOCS.find(x=>x.id===docId);
+  document.getElementById('model-'+docId).innerHTML = `
+    <div class="model-answer">
+      <div class="ma-label">Reference Examples From This Document</div>
+      ${d.sentences.map(s=>`
+        <div class="ma-item">
+          <div class="ma-quote">"${s[currentTier]}"</div>
+          <div class="ma-idea">${docTagName(s.tag)}</div>
+          <div class="ma-why">${s.rationale}</div>
+        </div>`).join('')}
+    </div>`;
+}
+
+function revealExemplars(docId){
+  const btn = document.getElementById('reveal-'+docId);
+  if(btn.disabled) return;
+  docAnswers[docId] = Object.assign({}, docAnswers[docId], { revealed: true });
+  showExemplars(docId);
+  btn.disabled = true;
+  btn.textContent = 'Reference examples shown below ✓';
   saveState();
 }
 
@@ -795,6 +878,7 @@ function closeExportModal(){ document.getElementById('exportModal').classList.re
 function buildPrintDoc(){
   const dateStr = new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
   const incDocs = document.getElementById('chkDocs').checked;
+  const incQuiz = document.getElementById('chkQuiz').checked;
   const incSynthesis = document.getElementById('chkSynthesis').checked;
   const incReflect = document.getElementById('chkReflect').checked;
 
@@ -809,21 +893,34 @@ function buildPrintDoc(){
     </div>`;
 
   if(incDocs){
-    html += `<div class="pd-section-title">Part 1 — Identify the Enlightenment Idea</div>
-      <div class="pd-legend">For each excerpt, write which idea it demonstrates: Popular Sovereignty, Consent of the Governed, or Limited Government.</div>`;
+    html += `<div class="pd-section-title">Part 1 — Find the Evidence</div>
+      <div class="pd-legend">For each document, the phrase the student found, the idea it demonstrates, and their reasoning.</div>`;
     DOCS.forEach(d=>{
-      html += `<div class="pd-doc-block"><div class="pd-doc-name">${d.title} (${d.year})</div>`;
-      d.sentences.forEach(s=>{
-        html += `<div class="pd-doc-excerpt">"${s.standard}"</div>
-          <div class="pd-blank-row">This shows: <span class="pd-blank-line">&nbsp;</span></div>`;
-      });
-      html += `</div>`;
+      const saved = docAnswers[d.id] || {};
+      const chosen = saved.value ? docTagName(saved.value) : null;
+      html += `<div class="pd-doc-block">
+        <div class="pd-doc-name">${d.title} (${d.year})</div>
+        <div class="pd-doc-excerpt">${d.sentences.map(s=>s.standard).join(' ')}</div>
+        <div class="pd-blank-row">Phrase found: ${saved.phrase ? '<strong>"'+saved.phrase.replace(/\n/g,' ')+'"</strong>' : '<span class="pd-blank-line">&nbsp;</span>'}</div>
+        <div class="pd-blank-row">This shows: <strong>${chosen || '<span class="pd-blank-line">&nbsp;</span>'}</strong></div>
+        <div class="pd-blank-row">Reasoning: ${saved.justify ? saved.justify.replace(/\n/g,'<br>') : '<div class="pd-reflect-lines"></div>'}</div>
+      </div>`;
     });
+  }
+
+  if(incQuiz){
+    html += `<div class="pd-section-title">Part 2 — Vocabulary Quiz Score</div>`;
+    if(lastQuizResult){
+      const pct = Math.round((lastQuizResult.score/lastQuizResult.total)*100);
+      html += `<div class="pd-doc-block">Score: <strong>${lastQuizResult.score} of ${lastQuizResult.total} correct (${pct}%)</strong></div>`;
+    } else {
+      html += `<div class="pd-doc-block" style="color:#888">Quiz not completed — take the Enlightenment Lens quiz before exporting to include a score here.</div>`;
+    }
   }
 
   if(incSynthesis){
     const syn = document.getElementById('synthesis').value;
-    html += `<div class="pd-section-title">Part 2 — Synthesis</div>
+    html += `<div class="pd-section-title">Part 3 — Synthesis</div>
       <div class="pd-reflect-item">
         <div class="pd-reflect-q">Why might popular sovereignty, consent of the governed, and limited government have taken hold in the colonies specifically, thousands of miles from London?</div>
         <div>${syn ? syn.replace(/\n/g,'<br>') : '<div class="pd-reflect-lines"></div><div class="pd-reflect-lines"></div><div class="pd-reflect-lines"></div>'}</div>
@@ -834,7 +931,7 @@ function buildPrintDoc(){
     const r1 = document.getElementById('reflect1').value;
     const r2 = document.getElementById('reflect2').value;
     const r3 = document.getElementById('reflect3').value;
-    html += `<div class="pd-section-title">Part 3 — Reflection</div>
+    html += `<div class="pd-section-title">Part 4 — Reflection</div>
       <div class="pd-reflect-item">
         <div class="pd-reflect-q">1. Which document most clearly shows limited government? Which most clearly shows popular sovereignty or consent of the governed?</div>
         <div>${r1 ? r1.replace(/\n/g,'<br>') : '<div class="pd-reflect-lines"></div><div class="pd-reflect-lines"></div><div class="pd-reflect-lines"></div>'}</div>
@@ -869,12 +966,24 @@ function copyText(){
   const r2 = document.getElementById('reflect2').value || '(no answer)';
   const r3 = document.getElementById('reflect3').value || '(no answer)';
   const syn = document.getElementById('synthesis').value || '(no answer)';
-  const text = `ORIGINS OF SELF-GOVERNMENT — REFLECTION\n\n` +
+  const quizLine = lastQuizResult
+    ? `${lastQuizResult.score} of ${lastQuizResult.total} correct (${Math.round((lastQuizResult.score/lastQuizResult.total)*100)}%)`
+    : '(quiz not completed)';
+  let docsText = '';
+  DOCS.forEach(d=>{
+    const saved = docAnswers[d.id] || {};
+    const phrase = saved.phrase || '(no phrase found)';
+    const chosen = saved.value ? docTagName(saved.value) : '(not answered)';
+    const justify = saved.justify || '(no explanation)';
+    docsText += `\n${d.title} (${d.year}):\n  Phrase found: "${phrase}"\n  Idea: ${chosen}\n  Reasoning: ${justify}\n`;
+  });
+  const text = `ORIGINS OF SELF-GOVERNMENT\n` +
+    `\nFIND THE EVIDENCE\n${docsText}\n` +
+    `Vocabulary quiz score: ${quizLine}\n\n` +
     `Synthesis — why these ideas took hold in the colonies:\n${syn}\n\n` +
     `1. Limited government vs. popular sovereignty / consent of the governed:\n${r1}\n\n` +
     `2. Why the Albany Plan's idea of union might matter later:\n${r2}\n\n` +
-    `3. Which self-governing habit Paine's distance argument defends:\n${r3}\n\n` +
-    `Documents studied: ${DOCS.map(d=>d.title+' ('+d.year+')').join('; ')}`;
+    `3. Which self-governing habit Paine's distance argument defends:\n${r3}`;
   pendingExportKind = 'copy';
   navigator.clipboard.writeText(text).then(()=>{
     askConfirmSave('Copied! Paste it into your Google Doc, check it looks right, then confirm.');
@@ -901,9 +1010,12 @@ function confirmSaveYes(){
   document.getElementById('reflect3').value = '';
   document.getElementById('synthesis').value = '';
   docAnswers = {};
+  lastQuizResult = null;
+  quizQuestions = [];
   pendingExportKind = null;
   selectedDocIdx = 0;
   renderDoc(0);
+  setVocabMode('flash');
   goToTab('directions');
   showToast('Saved! Starting fresh for the next student.');
 }
@@ -928,6 +1040,7 @@ function doReset(){
   document.getElementById('reflect3').value = '';
   document.getElementById('synthesis').value = '';
   docAnswers = {};
+  lastQuizResult = null;
   fcIdx = 0; quizQuestions = [];
   setTier('standard');
   selectedDocIdx = 0;
