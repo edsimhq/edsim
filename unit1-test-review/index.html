@@ -1,0 +1,513 @@
+<title>Colonial Foundations Review</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d0f14;--surf:#161922;--surf2:#1e2230;--surf3:#252a3a;
+  --border:#2e3448;--border-hi:#3d4562;
+  --text:#e8ecf4;--dim:#7a8399;--faint:#2a3048;
+  --gold:#f5c842;--gold-dim:#b89020;--gold-glow:rgba(245,200,66,0.22);
+  --blue:#5b9bf5;--blue-dim:#2f5fa8;--blue-glow:rgba(91,155,245,0.2);
+  --red:#e6534f;--red-dim:#8a2622;--red-glow:rgba(230,83,79,0.2);
+  --green:#2ec784;--green-dim:#15633f;--green-glow:rgba(46,199,132,0.18);
+  --fd:'Bebas Neue',sans-serif;--fb:'DM Sans',sans-serif;--fm:'DM Mono',monospace;
+  --r:10px;--rs:6px;--ease:cubic-bezier(.4,0,.2,1);
+  color-scheme:dark;
+}
+html,body{height:100%}
+body{background:var(--bg);color:var(--text);font-family:var(--fb);
+  display:flex;flex-direction:column;align-items:center;
+  background-image:radial-gradient(ellipse at 50% 0%,rgba(245,200,66,0.06) 0%,transparent 55%);
+  padding-inline:16px}
+
+.wrap{width:100%;max-width:720px;display:flex;flex-direction:column;min-height:100%}
+
+/* HEADER */
+.hdr{width:100%;display:flex;align-items:center;justify-content:space-between;
+  padding-block:14px;border-bottom:1px solid var(--border);position:sticky;
+  top:env(safe-area-inset-top,0px);background:rgba(13,15,20,0.92);
+  backdrop-filter:blur(8px);z-index:50;gap:10px}
+.hdr-title{font-family:var(--fd);font-size:22px;color:var(--gold);letter-spacing:2px;
+  text-shadow:0 0 30px var(--gold-glow)}
+.hdr-sub{font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.12em;text-transform:uppercase}
+.hdr-nav{display:flex;gap:6px}
+.hdr-btn{font-family:var(--fm);font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--dim);background:var(--surf);border:1px solid var(--border);border-radius:var(--rs);
+  padding:8px 12px;cursor:pointer;transition:all .18s var(--ease);min-height:36px}
+.hdr-btn:hover{color:var(--text);border-color:var(--border-hi)}
+.hdr-btn.active{color:#0d0f14;background:var(--gold);border-color:var(--gold)}
+
+main{flex:1;width:100%;padding-block:24px 40px}
+.screen{display:none}
+.screen.active{display:block;animation:fadeIn .3s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* MENU */
+.menu-hero{text-align:center;margin-bottom:28px}
+.menu-title{font-family:var(--fd);font-size:56px;color:var(--gold);letter-spacing:3px;
+  line-height:.95;text-shadow:0 0 60px var(--gold-glow);text-wrap:balance}
+.menu-sub{font-family:var(--fb);font-size:14px;color:var(--dim);margin-top:10px;line-height:1.5;
+  max-width:480px;margin-inline:auto}
+.menu-cards{display:grid;gap:14px;grid-template-columns:1fr 1fr}
+@media(max-width:520px){.menu-cards{grid-template-columns:1fr}}
+.menu-card{background:var(--surf);border:1px solid var(--border);border-radius:14px;
+  padding:22px;text-align:left;cursor:pointer;transition:all .2s var(--ease);color:inherit;
+  font:inherit;display:flex;flex-direction:column;gap:8px;min-height:44px}
+.menu-card:hover{border-color:var(--gold-dim);transform:translateY(-2px)}
+.menu-card:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.menu-card-icon{font-size:26px}
+.menu-card h3{font-family:var(--fd);font-size:24px;letter-spacing:1px;color:var(--text)}
+.menu-card p{font-size:13px;color:var(--dim);line-height:1.5}
+.menu-card .tag{font-family:var(--fm);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--gold-dim)}
+
+/* PROGRESS */
+.prog-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;gap:12px}
+.prog-label{font-family:var(--fm);font-size:11px;color:var(--dim);letter-spacing:.08em;text-transform:uppercase}
+.prog-pips{display:flex;gap:4px;flex-wrap:wrap}
+.pip{width:22px;height:5px;border-radius:3px;background:var(--surf3);transition:background .3s}
+.pip.done-know{background:var(--green)}
+.pip.done-study{background:var(--red-dim)}
+.pip.active{background:var(--gold)}
+
+/* FLASHCARDS */
+.card-stage{perspective:1400px;margin-bottom:18px}
+.flip-card{position:relative;width:100%;min-height:260px;cursor:pointer;
+  transform-style:preserve-3d;transition:transform .5s var(--ease)}
+.flip-card.flipped{transform:rotateY(180deg)}
+.flip-card:focus-visible{outline:2px solid var(--gold);outline-offset:4px;border-radius:14px}
+.face{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;
+  border:1px solid var(--border);background:var(--surf);display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;padding:28px 24px;gap:14px}
+.face-front{background:linear-gradient(160deg,var(--surf) 0%,var(--surf2) 100%)}
+.face-back{transform:rotateY(180deg);background:linear-gradient(160deg,var(--surf2) 0%,var(--surf3) 100%);
+  border-color:var(--gold-dim)}
+.face-eyebrow{font-family:var(--fm);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-dim)}
+.face-term{font-family:var(--fd);font-size:40px;letter-spacing:1px;color:var(--text);text-wrap:balance}
+.face-def{font-size:16px;line-height:1.6;color:var(--text);max-width:480px}
+.face-hint{font-family:var(--fm);font-size:10px;color:var(--dim);letter-spacing:.06em;position:absolute;bottom:16px}
+
+.card-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.act-btn{font-family:var(--fd);font-size:18px;letter-spacing:1px;border:none;border-radius:var(--r);
+  padding:14px;cursor:pointer;transition:all .18s var(--ease);min-height:48px}
+.act-btn.study{background:var(--surf2);color:var(--red);border:1.5px solid var(--red-dim)}
+.act-btn.study:hover{background:rgba(230,83,79,0.1)}
+.act-btn.know{background:var(--green);color:#0d0f14}
+.act-btn.know:hover{background:#3fe098}
+.act-btn:disabled{opacity:.4;cursor:not-allowed}
+
+.deck-tools{display:flex;justify-content:center;margin-top:16px}
+.text-btn{font-family:var(--fm);font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--dim);background:none;border:none;cursor:pointer;padding:8px;min-height:36px}
+.text-btn:hover{color:var(--gold)}
+
+/* QUIZ */
+.q-card{background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:22px;margin-bottom:16px}
+.q-eyebrow{font-family:var(--fm);font-size:10px;color:var(--gold-dim);letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px}
+.q-text{font-family:var(--fd);font-size:26px;letter-spacing:.4px;line-height:1.2;color:var(--text);text-wrap:balance}
+
+.choices{display:grid;gap:10px;margin-bottom:16px}
+.choice{display:flex;align-items:center;gap:12px;text-align:left;background:var(--surf);
+  border:1.5px solid var(--border);border-radius:var(--r);padding:14px 16px;cursor:pointer;
+  transition:all .16s var(--ease);font:inherit;color:var(--text);min-height:48px}
+.choice:hover:not(:disabled){border-color:var(--gold-dim);transform:translateX(2px)}
+.choice:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.choice-mark{font-family:var(--fd);font-size:16px;color:var(--dim);width:22px;flex-shrink:0}
+.choice-txt{flex:1;font-size:14px;line-height:1.4}
+.choice.correct{border-color:var(--green);background:rgba(46,199,132,0.1)}
+.choice.correct .choice-mark{color:var(--green)}
+.choice.wrong{border-color:var(--red);background:rgba(230,83,79,0.08)}
+.choice.wrong .choice-mark{color:var(--red)}
+.choice:disabled{cursor:default}
+.choice:disabled:not(.correct):not(.wrong){opacity:.45}
+
+.feedback{border-radius:var(--r);padding:14px 16px;margin-bottom:16px;display:none;
+  animation:fadeIn .25s ease;font-size:13px;line-height:1.6}
+.feedback.show{display:block}
+.feedback.right{background:rgba(46,199,132,0.1);border:1px solid var(--green-dim);color:var(--text)}
+.feedback.miss{background:rgba(230,83,79,0.08);border:1px solid var(--red-dim);color:var(--text)}
+.feedback b{font-family:var(--fd);font-size:15px;letter-spacing:.5px;display:block;margin-bottom:4px}
+.feedback.right b{color:var(--green)}
+.feedback.miss b{color:var(--red)}
+
+.next-row{display:flex;justify-content:flex-end}
+.next-btn{font-family:var(--fd);font-size:18px;letter-spacing:1px;background:var(--gold);color:#0d0f14;
+  border:none;border-radius:var(--r);padding:12px 26px;cursor:pointer;transition:all .18s var(--ease);
+  min-height:46px;display:none}
+.next-btn.show{display:inline-block;animation:fadeIn .25s ease}
+.next-btn:hover{background:#ffd84d}
+
+.score-chip{font-family:var(--fm);font-size:12px;color:var(--dim);white-space:nowrap}
+.score-chip span{color:var(--gold);font-weight:600}
+
+/* RESULTS */
+.result-wrap{text-align:center;padding-block:20px}
+.result-kicker{font-family:var(--fm);font-size:11px;color:var(--dim);letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px}
+.result-title{font-family:var(--fd);font-size:52px;color:var(--gold);letter-spacing:2px;
+  text-shadow:0 0 50px var(--gold-glow);margin-bottom:4px}
+.result-score{font-family:var(--fd);font-size:74px;color:var(--text);line-height:1;margin:14px 0 6px}
+.result-meta{font-family:var(--fm);font-size:12px;color:var(--dim)}
+.result-note{font-size:13px;color:var(--dim);max-width:400px;margin:16px auto 24px;line-height:1.55}
+.result-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.result-btn{font-family:var(--fd);font-size:17px;letter-spacing:1px;border-radius:var(--r);
+  padding:12px 24px;cursor:pointer;border:none;transition:all .15s var(--ease);min-height:46px}
+.result-btn.primary{background:var(--gold);color:#0d0f14}
+.result-btn.primary:hover{background:#ffd84d}
+.result-btn.secondary{background:var(--surf);color:var(--text);border:1px solid var(--border)}
+.result-btn.secondary:hover{border-color:var(--border-hi)}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
+@media(max-width:480px){
+  .menu-title{font-size:42px}
+  .q-text{font-size:21px}
+  .face-term{font-size:30px}
+  .result-score{font-size:56px}
+}
+</style>
+
+<div class="wrap">
+  <div class="hdr">
+    <div>
+      <div class="hdr-title">COLONIAL REVIEW</div>
+      <div class="hdr-sub">Unit 1 · Colonial Foundations</div>
+    </div>
+    <div class="hdr-nav">
+      <button class="hdr-btn" id="navFlash" onclick="goScreen('flash')">Flashcards</button>
+      <button class="hdr-btn" id="navQuiz" onclick="goScreen('quiz')">Quiz</button>
+    </div>
+  </div>
+
+  <main>
+    <!-- MENU -->
+    <section class="screen active" id="screenMenu">
+      <div class="menu-hero">
+        <div class="menu-title">PICK YOUR<br>REVIEW MODE</div>
+        <p class="menu-sub">Same content as your Unit 1 exam, in two active-recall formats. Cards and questions shuffle every time — no memorizing the order.</p>
+      </div>
+      <div class="menu-cards">
+        <button class="menu-card" onclick="goScreen('flash')">
+          <div class="menu-card-icon">🗂️</div>
+          <h3>Vocabulary Flashcards</h3>
+          <p>Flip all 10 Part II terms. Sort each one into "I know it" or "study again," then drill the ones you missed.</p>
+          <div class="tag">10 terms</div>
+        </button>
+        <button class="menu-card" onclick="goScreen('quiz')">
+          <div class="menu-card-icon">⚡</div>
+          <h3>Practice Quiz</h3>
+          <p>15 multiple-choice questions covering every exam topic, with instant feedback and a short explanation after each answer.</p>
+          <div class="tag">15 questions</div>
+        </button>
+      </div>
+    </section>
+
+    <!-- FLASHCARDS -->
+    <section class="screen" id="screenFlash">
+      <div class="prog-row">
+        <div class="prog-label" id="flashLabel">Card 1 of 10</div>
+        <div class="prog-pips" id="flashPips"></div>
+      </div>
+      <div class="card-stage">
+        <div class="flip-card" id="flipCard" tabindex="0" role="button" aria-label="Flip card">
+          <div class="face face-front">
+            <div class="face-eyebrow">Term</div>
+            <div class="face-term" id="flashTerm">—</div>
+            <div class="face-hint">Click or press Enter to flip</div>
+          </div>
+          <div class="face face-back">
+            <div class="face-eyebrow">Definition</div>
+            <div class="face-def" id="flashDef">—</div>
+          </div>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="act-btn study" id="btnStudy" onclick="flashAnswer(false)" disabled>Study again</button>
+        <button class="act-btn know" id="btnKnow" onclick="flashAnswer(true)" disabled>I know it</button>
+      </div>
+      <div class="deck-tools">
+        <button class="text-btn" onclick="restartFlash(false)">↻ Reshuffle whole deck</button>
+      </div>
+
+      <div class="result-wrap" id="flashResult" style="display:none">
+        <div class="result-kicker">Deck complete</div>
+        <div class="result-title" id="flashResultTitle">NICE WORK</div>
+        <div class="result-score"><span id="flashKnown">0</span>/<span id="flashTotal">10</span></div>
+        <div class="result-meta">terms marked "I know it"</div>
+        <p class="result-note" id="flashResultNote"></p>
+        <div class="result-actions">
+          <button class="result-btn primary" id="btnRestudy" onclick="restartFlash(true)">Study missed terms again</button>
+          <button class="result-btn secondary" onclick="restartFlash(false)">Reshuffle full deck</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUIZ -->
+    <section class="screen" id="screenQuiz">
+      <div class="prog-row">
+        <div class="prog-label" id="quizLabel">Question 1 of 15</div>
+        <div class="score-chip">Score: <span id="quizScore">0</span></div>
+      </div>
+      <div class="prog-pips" id="quizPips" style="margin-bottom:16px"></div>
+
+      <div class="q-card">
+        <div class="q-eyebrow" id="quizTopic">Topic</div>
+        <div class="q-text" id="quizText">—</div>
+      </div>
+
+      <div class="choices" id="quizChoices"></div>
+
+      <div class="feedback" id="quizFeedback"></div>
+
+      <div class="next-row">
+        <button class="next-btn" id="quizNextBtn" onclick="nextQuestion()">Next question →</button>
+      </div>
+
+      <div class="result-wrap" id="quizResult" style="display:none">
+        <div class="result-kicker">Quiz complete</div>
+        <div class="result-title" id="quizResultTitle">GREAT JOB</div>
+        <div class="result-score"><span id="quizFinalScore">0</span>/15</div>
+        <div class="result-meta" id="quizAccuracy"></div>
+        <p class="result-note" id="quizResultNote"></p>
+        <div class="result-actions">
+          <button class="result-btn primary" onclick="startQuiz()">Play again</button>
+          <button class="result-btn secondary" onclick="goScreen('menu')">Back to menu</button>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+/* ============ DATA ============ */
+const VOCAB = [
+  {term:"Indentured servant", def:"A person who agreed to work for a set number of years in exchange for the cost of passage to the colonies."},
+  {term:"Representative government", def:"A system of government in which people elect delegates to make laws on their behalf."},
+  {term:"Mayflower Compact", def:"The 1620 agreement in which the Plymouth colonists promised to make and obey their own laws for the general good of the colony."},
+  {term:"Puritans", def:"English settlers who came to Massachusetts Bay seeking to practice their own religion and build a model religious community."},
+  {term:"Salutary neglect", def:"Britain's policy, before 1763, of loosely enforcing trade laws and allowing the colonies broad self-government."},
+  {term:"Mercantilism", def:"An economic policy in which colonies exist to supply raw materials to, and buy finished goods from, the mother country."},
+  {term:"Proclamation Line of 1763", def:"A British order forbidding colonists from settling west of the Appalachian Mountains."},
+  {term:"No taxation without representation", def:"The colonial argument that Parliament had no right to tax colonists who elected no members to it."},
+  {term:"Boycott", def:"An organized refusal to buy or use certain goods, used to protest British policies."},
+  {term:"Quartering", def:"The practice of requiring colonists to house and supply British soldiers."}
+];
+
+const QUIZ = [
+  {topic:"Sources", q:"Which of the following is a secondary source about the Jamestown colony?",
+   choices:["a letter written in 1608 by a settler describing conditions in the colony","a 1622 list of the names of colonists living at Jamestown","a chapter in a 2019 college textbook analyzing why Jamestown nearly failed","a map of the Chesapeake Bay drawn by an early Jamestown colonist"],
+   correct:2, exp:"A secondary source is created after the event to analyze or interpret it — a modern textbook chapter, not something written by a witness."},
+  {topic:"Sources", q:"Two primary sources describing the same event disagree completely. What should a historian do first?",
+   choices:["accept the longer account as more accurate","discard both accounts as unreliable","consider each author's point of view and purpose","trust the account written by the more famous author"],
+   correct:2, exp:"Conflicting primary sources aren't automatically wrong — a historian weighs each author's perspective and reason for writing before deciding what to trust."},
+  {topic:"Contact & Colonization", q:"European settler populations grew sharply between 1610 and 1700 while Native American populations fell sharply over the same period. What best explains this trend?",
+   choices:["steady, parallel growth of both populations","nearly 90 years of cooperation between the two groups","the diseases and technology Europeans brought to the Americas","the impact of the French and Indian War on both groups"],
+   correct:2, exp:"European colonization brought diseases Native peoples had no immunity to, along with new technology and warfare — the main driver of this population trend."},
+  {topic:"Contact & Colonization", q:"Under the Spanish encomienda system, colonists in the Americas were given the right to",
+   choices:["elect representatives to a colonial assembly","demand labor and tribute from Native peoples","trade freely with any European nation","claim only land that no one already lived on"],
+   correct:1, exp:"Encomienda granted Spanish colonists control over Native labor and tribute in exchange for supposedly “protecting” and converting them."},
+  {topic:"Contact & Colonization", q:"A Narragansett chief tells other Native leaders that English settlers have destroyed their land and resources, and urges unity. What course of action does he support?",
+   choices:["leaving their land to become hunters and gatherers","relocating west of the Appalachian Mountains","forming alliances to fight the colonial settlers","making peace agreements with English settlers"],
+   correct:2, exp:"Leaders like Miantonomo called on Native nations to unite and resist English expansion by force, not to retreat or seek peace."},
+  {topic:"Contact & Colonization", q:"A 1775 Virginia Gazette notice advertises the arrival of indentured servants with many trade skills, for sale. What does this best demonstrate?",
+   choices:["a skilled labor force was emigrating to British North America","impoverished Europeans were being denied entry to America","an extreme shortage of plantation workers existed in the South","northern economies were growing faster than southern ones"],
+   correct:0, exp:"Notices advertising skilled tradespeople among arriving servants show that willing, skilled workers were choosing to emigrate to the colonies."},
+  {topic:"Colonial Regions", q:"Which combination of geographic factors best explains why many New England colonists turned to fishing, shipbuilding, and trade rather than large-scale farming?",
+   choices:["fertile river valleys and a mild climate","rocky soil, a short growing season, and natural harbors","vast grasslands with few forests","warm weather and tidal rivers suited to plantations"],
+   correct:1, exp:"New England's rocky soil and short growing season made large-scale farming difficult, while its natural harbors made fishing, shipbuilding, and trade natural alternatives."},
+  {topic:"Colonial Regions", q:"The Middle Colonies were often called the “breadbasket” of colonial America because they",
+   choices:["depended on large fishing fleets to feed the other colonies","had the shortest growing season of any region","grew most of the tobacco shipped to Europe","exported surplus wheat and other grains from fertile farmland"],
+   correct:3, exp:"Fertile soil and a mild climate let the Middle Colonies produce far more grain than they needed, which they exported to the other colonies and Europe."},
+  {topic:"Colonial Regions", q:"Which characteristic of the Southern Colonies most directly supported the growth of large plantations producing tobacco, rice, and indigo?",
+   choices:["a warm climate with a long growing season","rocky soil that favored small farms","a short growing season","a dense network of manufacturing cities"],
+   correct:0, exp:"A warm climate and long growing season let Southern planters grow labor-intensive cash crops like tobacco, rice, and indigo on a large scale."},
+  {topic:"Origins of Self-Government", q:"The Fundamental Orders of Connecticut (1639) represent an early step in the colonial advance toward",
+   choices:["freedom of speech and of the press","an American monarchy","representative government","abolition of slavery"],
+   correct:2, exp:"The Fundamental Orders set up regular elections and a General Assembly, making it an early written framework for representative government."},
+  {topic:"Origins of Self-Government", q:"In his 1620 Farewell Address to the Pilgrims, John Robinson urged colonists to choose good leaders and give them “due honor and obedience.” What is his point of view about government in Plymouth?",
+   choices:["Separate leaders for church and state should be elected.","People have the right to rebel against the government.","Rulers must be given absolute authority to govern.","The power to govern belongs to the people."],
+   correct:3, exp:"Robinson frames the colonists as choosing their own leaders from among themselves — government growing out of the consent of the community, not an outside ruler."},
+  {topic:"Origins of Self-Government", q:"The Declaration of Independence states that when government becomes destructive of its ends, “it is the Right of the People to alter or abolish it.” Which Enlightenment principle does this reflect?",
+   choices:["equal rights","consent of the governed","separation of powers","religious freedom"],
+   correct:1, exp:"This line reflects consent of the governed: government's authority comes from the people, who may withdraw it if that government fails them."},
+  {topic:"Origins of Self-Government", q:"Benjamin Franklin's Albany Plan of Union (1754) proposed that the colonies",
+   choices:["form a joint government to coordinate defense and other shared matters","declare independence from Great Britain","replace their elected assemblies with royal governors","end all trade with Native nations"],
+   correct:0, exp:"The Albany Plan proposed a joint colonial government mainly to coordinate defense — an early, ultimately rejected, preview of colonial unity."},
+  {topic:"Road to Revolution", q:"Which situation most directly contributed to the tensions that led to the 1770 Boston Massacre?",
+   choices:["a shortage of food after a poor harvest","the closing of Boston Harbor","the presence of British troops stationed in the city","a ban on printing newspapers in Massachusetts"],
+   correct:2, exp:"British troops stationed in Boston to enforce order created constant friction with residents, which boiled over into the Boston Massacre."},
+  {topic:"Origins of Self-Government", q:"In Common Sense (1776), Thomas Paine argues it makes no sense for a small island to permanently govern an entire continent. What was Paine's overall purpose in this passage?",
+   choices:["to convince Americans to remain English colonists","to suggest the colonies join a European confederation","to propose revising the Articles of Confederation","to urge Americans to become independent from their mother country"],
+   correct:3, exp:"Paine used this argument to make independence sound like simple common sense, not radical rebellion — the pamphlet's whole purpose."}
+];
+
+/* ============ UTIL ============ */
+function shuffle(arr){
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}
+  return a;
+}
+
+/* ============ NAV ============ */
+function goScreen(name){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('navFlash').classList.toggle('active', name==='flash');
+  document.getElementById('navQuiz').classList.toggle('active', name==='quiz');
+  if(name==='menu'){ document.getElementById('screenMenu').classList.add('active'); }
+  if(name==='flash'){ document.getElementById('screenFlash').classList.add('active'); if(!flashState.started) restartFlash(false); }
+  if(name==='quiz'){ document.getElementById('screenQuiz').classList.add('active'); if(!quizState.started) startQuiz(); }
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ============ FLASHCARDS ============ */
+let flashState = {started:false, deck:[], idx:0, flipped:false, known:[], study:[]};
+
+function restartFlash(missedOnly){
+  const source = (missedOnly && flashState.study.length) ? flashState.study.map(i=>VOCAB[i]).map((c)=>c) : VOCAB;
+  const indices = missedOnly && flashState.study.length ? [...flashState.study] : VOCAB.map((_,i)=>i);
+  flashState = {started:true, deck:shuffle(indices), idx:0, flipped:false, known:[], study:[]};
+  document.getElementById('flashResult').style.display='none';
+  buildFlashPips();
+  loadFlashCard();
+}
+
+function buildFlashPips(){
+  const wrap = document.getElementById('flashPips');
+  wrap.innerHTML='';
+  flashState.deck.forEach(()=>{ const p=document.createElement('div'); p.className='pip'; wrap.appendChild(p); });
+}
+
+function loadFlashCard(){
+  const card = document.getElementById('flipCard');
+  card.classList.remove('flipped');
+  flashState.flipped=false;
+  document.getElementById('btnStudy').disabled=true;
+  document.getElementById('btnKnow').disabled=true;
+
+  if(flashState.idx >= flashState.deck.length){ finishFlashDeck(); return; }
+
+  const item = VOCAB[flashState.deck[flashState.idx]];
+  document.getElementById('flashTerm').textContent = item.term;
+  document.getElementById('flashDef').textContent = item.def;
+  document.getElementById('flashLabel').textContent = 'Card ' + (flashState.idx+1) + ' of ' + flashState.deck.length;
+  document.querySelectorAll('#flashPips .pip').forEach((p,i)=>{
+    p.className='pip'+(i<flashState.idx?(flashState.known.includes(flashState.deck[i])?' done-know':' done-study'):(i===flashState.idx?' active':''));
+  });
+}
+
+function flipFlashCard(){
+  if(flashState.idx >= flashState.deck.length) return;
+  flashState.flipped = !flashState.flipped;
+  document.getElementById('flipCard').classList.toggle('flipped', flashState.flipped);
+  if(flashState.flipped){
+    document.getElementById('btnStudy').disabled=false;
+    document.getElementById('btnKnow').disabled=false;
+  }
+}
+document.getElementById('flipCard').addEventListener('click', flipFlashCard);
+document.getElementById('flipCard').addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); flipFlashCard(); }});
+
+function flashAnswer(knew){
+  const id = flashState.deck[flashState.idx];
+  if(knew) flashState.known.push(id); else flashState.study.push(id);
+  flashState.idx++;
+  loadFlashCard();
+}
+
+function finishFlashDeck(){
+  document.getElementById('flashResult').style.display='block';
+  document.getElementById('flashKnown').textContent = flashState.known.length;
+  document.getElementById('flashTotal').textContent = flashState.deck.length;
+  const pct = flashState.deck.length ? Math.round(flashState.known.length/flashState.deck.length*100) : 0;
+  document.getElementById('flashResultTitle').textContent = pct===100 ? 'PERFECT DECK' : pct>=70 ? 'NICE WORK' : 'GOOD START';
+  const btn = document.getElementById('btnRestudy');
+  if(flashState.study.length===0){
+    document.getElementById('flashResultNote').textContent = 'You know every term in this deck. Try the practice quiz next.';
+    btn.style.display='none';
+  } else {
+    document.getElementById('flashResultNote').textContent = flashState.study.length + ' term' + (flashState.study.length===1?'':'s') + ' need another pass.';
+    btn.style.display='inline-block';
+  }
+}
+
+/* ============ QUIZ ============ */
+let quizState = {started:false, order:[], idx:0, score:0, current:null, answered:false};
+
+function startQuiz(){
+  quizState = {started:true, order:shuffle(QUIZ.map((_,i)=>i)), idx:0, score:0, current:null, answered:false};
+  document.getElementById('quizResult').style.display='none';
+  document.getElementById('quizScore').textContent='0';
+  buildQuizPips();
+  loadQuestion();
+}
+
+function buildQuizPips(){
+  const wrap = document.getElementById('quizPips');
+  wrap.innerHTML='';
+  quizState.order.forEach(()=>{ const p=document.createElement('div'); p.className='pip'; wrap.appendChild(p); });
+}
+
+function loadQuestion(){
+  if(quizState.idx >= quizState.order.length){ finishQuiz(); return; }
+  const q = QUIZ[quizState.order[quizState.idx]];
+  const choiceIdx = shuffle(q.choices.map((_,i)=>i));
+  quizState.current = {q, choiceIdx};
+  quizState.answered = false;
+
+  document.getElementById('quizTopic').textContent = q.topic;
+  document.getElementById('quizText').textContent = q.q;
+  document.getElementById('quizLabel').textContent = 'Question '+(quizState.idx+1)+' of '+quizState.order.length;
+  document.querySelectorAll('#quizPips .pip').forEach((p,i)=>{ p.className='pip'+(i<quizState.idx?' done-know':(i===quizState.idx?' active':'')); });
+
+  const wrap = document.getElementById('quizChoices');
+  wrap.innerHTML='';
+  const letters=['A','B','C','D'];
+  choiceIdx.forEach((origIdx, pos)=>{
+    const btn = document.createElement('button');
+    btn.className='choice';
+    btn.innerHTML = '<span class="choice-mark">'+letters[pos]+'</span><span class="choice-txt">'+q.choices[origIdx]+'</span>';
+    btn.addEventListener('click', ()=>answerQuestion(origIdx, btn));
+    wrap.appendChild(btn);
+  });
+
+  document.getElementById('quizFeedback').className='feedback';
+  document.getElementById('quizNextBtn').classList.remove('show');
+}
+
+function answerQuestion(origIdx, btn){
+  if(quizState.answered) return;
+  quizState.answered = true;
+  const {q} = quizState.current;
+  const isRight = origIdx === q.correct;
+  if(isRight){ quizState.score++; document.getElementById('quizScore').textContent = quizState.score; }
+
+  document.querySelectorAll('#quizChoices .choice').forEach(c=>{ c.disabled=true; });
+  btn.classList.add(isRight?'correct':'wrong');
+  if(!isRight){
+    const correctBtn = [...document.querySelectorAll('#quizChoices .choice')][quizState.current.choiceIdx.indexOf(q.correct)];
+    if(correctBtn) correctBtn.classList.add('correct');
+  }
+
+  const fb = document.getElementById('quizFeedback');
+  fb.className = 'feedback show ' + (isRight?'right':'miss');
+  fb.innerHTML = '<b>'+(isRight?'Correct':'Not quite')+'</b>' + q.exp;
+  document.getElementById('quizNextBtn').classList.add('show');
+}
+
+function nextQuestion(){
+  quizState.idx++;
+  loadQuestion();
+}
+
+function finishQuiz(){
+  document.getElementById('quizResult').style.display='block';
+  document.querySelectorAll('#quizPips .pip').forEach(p=>p.className='pip done-know');
+  document.getElementById('quizFinalScore').textContent = quizState.score;
+  const pct = Math.round(quizState.score/quizState.order.length*100);
+  document.getElementById('quizAccuracy').textContent = pct+'% correct';
+  document.getElementById('quizResultTitle').textContent = pct>=90?'EXCELLENT':pct>=70?'GREAT JOB':pct>=50?'GOOD EFFORT':'KEEP PRACTICING';
+  document.getElementById('quizResultNote').textContent = pct>=80
+    ? "You've got this unit down. A quick pass through the flashcards will lock in the rest."
+    : "Try the flashcards for the terms and topics that tripped you up, then run the quiz again — it reshuffles every time.";
+}
+</script>
