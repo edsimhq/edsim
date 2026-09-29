@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Who Holds the Power? | EdSim</title>
+<!--
+  EdSim | Participation in Government
+  Who Holds the Power? Federal vs. State Government (Day 1)
+  Stand-alone file: vanilla HTML/CSS/JS, no external requests, no AI features, no PII collected.
+  Auto-save uses localStorage (per device). Reset only fires after the student confirms an export saved.
+-->
+<style>
+:root{
+  --bg-base:#0c1424;
+  --bg-card:#15223a;
+  --bg-card-hover:#1c2d4e;
+  --bg-inset:#0f1b30;
+  --text-primary:#eef2f9;
+  --text-muted:#aab8cf;
+  --border:#2c3f62;
+  --accent:#e2b558;
+  --accent-ink:#1a1305;
+  --accent-secondary:#78b7ee;
+  --c-delegated:#7db8f2;
+  --c-reserved:#f0ae6a;
+  --c-concurrent:#a4d98f;
+  --tint-delegated:rgba(125,184,242,.12);
+  --tint-reserved:rgba(240,174,106,.12);
+  --tint-concurrent:rgba(164,217,143,.12);
+  --good:#86e0a3;
+  --bad:#ff9a9a;
+  --tint-good:rgba(134,224,163,.13);
+  --tint-bad:rgba(255,154,154,.13);
+  --focus:#ffffff;
+  --shadow:rgba(0,0,0,.4);
+  --overlay:rgba(4,8,16,.78);
+  --glow:rgba(226,181,88,.10);
+  --glow-2:rgba(120,183,238,.09);
+  --radius:12px;
+  --print-ink:#000000;
+  --print-paper:#ffffff;
+  --print-rule:#999999;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--bg-base);color:var(--text-primary);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  font-size:17px;line-height:1.55;min-width:0;
+}
+/* ambient theme: slow drifting light + fine grain */
+body::before{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(60vmax 40vmax at 15% 10%,var(--glow),transparent 60%),
+    radial-gradient(50vmax 40vmax at 90% 90%,var(--glow-2),transparent 60%);
+  animation:drift 40s ease-in-out infinite alternate;
+}
+body::after{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+@keyframes drift{from{transform:translate3d(0,0,0)}to{transform:translate3d(-2%,2%,0)}}
+@media (prefers-reduced-motion:reduce){body::before{animation:none}*{scroll-behavior:auto!important;transition:none!important}}
+
+.app{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:16px 16px 40px}
+button{font:inherit;color:inherit;cursor:pointer;min-height:44px;min-width:44px}
+button:focus-visible,.gloss:focus-visible,textarea:focus-visible,input:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+h1,h2,h3{font-family:Georgia,"Times New Roman",serif;line-height:1.25;margin:0 0 .5em}
+h1{font-size:1.9rem;letter-spacing:.01em}
+h2{font-size:1.5rem;color:var(--accent)}
+h3{font-size:1.1rem}
+p{margin:.4em 0 .8em}
+
+.top{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;justify-content:space-between;padding:8px 0 14px;border-bottom:2px solid var(--accent)}
+.kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-secondary);margin:0 0 4px}
+.sub{color:var(--text-muted);margin:0}
+.tier{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.tier span{font-size:.85rem;color:var(--text-muted)}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:999px;overflow:hidden}
+.seg button{border:0;background:var(--bg-card);padding:6px 16px}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);font-weight:700}
+
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0}
+.tab{flex:1 1 150px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:8px 12px;text-align:left}
+.tab small{display:block;color:var(--text-muted);font-size:.75rem}
+.tab[aria-selected="true"]{border-color:var(--accent);background:var(--bg-card-hover);box-shadow:inset 0 -3px 0 var(--accent)}
+.tab.done .lbl::after{content:" \2713";color:var(--good)}
+
+.panel{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:0 8px 24px var(--shadow);overflow:visible}
+.panel[hidden]{display:none}
+.lede{font-size:1.05rem}
+.muted{color:var(--text-muted)}
+
+.pnav{display:flex;justify-content:space-between;gap:10px;margin-top:22px;padding-top:14px;border-top:1px solid var(--border)}
+.btn{border:1px solid var(--border);background:var(--bg-card-hover);border-radius:10px;padding:8px 18px}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:700}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+
+.steps{list-style:none;padding:0;margin:12px 0;display:grid;gap:10px}
+.steps li{background:var(--bg-inset);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.steps b{color:var(--accent)}
+.goal{border-left:4px solid var(--accent);background:var(--bg-inset);padding:10px 14px;border-radius:0 10px 10px 0}
+
+.defs{list-style:none;padding:0;margin:10px 0;display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.def{padding:10px 12px;border-radius:10px;border:1px solid var(--border)}
+.def.delegated{background:var(--tint-delegated);border-color:var(--c-delegated)}
+.def.reserved{background:var(--tint-reserved);border-color:var(--c-reserved)}
+.def.concurrent{background:var(--tint-concurrent);border-color:var(--c-concurrent)}
+.def.delegated strong{color:var(--c-delegated)}.def.reserved strong{color:var(--c-reserved)}.def.concurrent strong{color:var(--c-concurrent)}
+
+.scorebar{display:inline-block;background:var(--bg-inset);border:1px solid var(--border);border-radius:999px;padding:4px 14px;font-size:.95rem;margin:6px 0}
+.fbline{min-height:1.6em;margin:6px 0;font-weight:600}
+.fbline:focus{outline:none}
+.fbline.no{color:var(--bad)}.fbline.ok{color:var(--good)}
+.pool{display:flex;flex-wrap:wrap;gap:8px;padding:12px;background:var(--bg-inset);border:1px dashed var(--border);border-radius:var(--radius);min-height:70px}
+.card{background:var(--bg-card-hover);border:1px solid var(--border);border-radius:10px;padding:8px 14px;text-align:left;touch-action:manipulation}
+.card:hover{border-color:var(--accent-secondary)}
+.card.sel{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent)}
+.empty{margin:0;color:var(--text-muted)}
+.selstat{margin:10px 0;color:var(--text-muted)}
+.cols{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media (max-width:820px){.cols{grid-template-columns:1fr}}
+.col{border:2px solid var(--border);border-radius:var(--radius);padding:12px;background:var(--bg-inset)}
+.col.delegated{border-color:var(--c-delegated)}.col.reserved{border-color:var(--c-reserved)}.col.concurrent{border-color:var(--c-concurrent)}
+.col.delegated h3{color:var(--c-delegated)}.col.reserved h3{color:var(--c-reserved)}.col.concurrent h3{color:var(--c-concurrent)}
+.placeBtn{width:100%;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;margin-bottom:8px}
+.placeBtn:not([disabled]){border-color:var(--accent);background:var(--bg-card-hover)}
+.placeBtn[disabled]{opacity:.5;cursor:not-allowed}
+.zone{display:grid;gap:8px;min-height:80px;border-radius:10px;padding:2px}
+.zone.over{background:var(--tint-good);outline:2px dashed var(--good)}
+.placed{background:var(--bg-card);border-radius:10px;padding:8px 10px;border-left:4px solid var(--good)}
+.placed .ptxt{font-weight:600}
+.placed .psrc{font-size:.88rem;color:var(--text-muted);margin-top:2px}
+.summary{margin-top:16px;border:2px solid var(--good);background:var(--tint-good);border-radius:var(--radius);padding:12px 16px}
+
+.q{background:var(--bg-inset);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;margin:14px 0}
+.q .num{font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-secondary)}
+.q .stem{font-size:1.05rem;margin:4px 0 10px}
+.opts{display:grid;gap:8px}
+.opt{text-align:left;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:8px 14px}
+.opt:hover{border-color:var(--accent-secondary)}
+.opt[aria-disabled="true"]{cursor:default}
+.opt[aria-disabled="true"]:hover{border-color:var(--border)}
+.opt.chosen{border-color:var(--accent);border-width:2px}
+.opt.right{background:var(--tint-good);border-color:var(--good)}
+.opt.wrong{background:var(--tint-bad);border-color:var(--bad)}
+.fb{margin-top:10px;padding:10px 12px;border-radius:10px;border-left:4px solid var(--border)}
+.fb.ok{background:var(--tint-good);border-left-color:var(--good)}
+.fb.no{background:var(--tint-bad);border-left-color:var(--bad)}
+.fb .v{font-weight:700}
+.tagline{display:inline-block;margin-top:6px;font-size:.85rem;color:var(--text-muted)}
+
+label.fl{display:block;font-weight:600;margin:14px 0 4px}
+.starter{color:var(--text-muted);font-size:.92rem;margin:0 0 4px}
+textarea{width:100%;min-height:110px;background:var(--bg-inset);color:var(--text-primary);border:1px solid var(--border);border-radius:10px;padding:10px 12px;font:inherit;resize:vertical;overflow:visible}
+.exportbar{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 6px}
+.notice{background:var(--bg-inset);border:1px solid var(--accent);border-radius:10px;padding:10px 14px;margin:14px 0}
+
+.gloss{border-bottom:1px dotted var(--accent);cursor:help;position:relative}
+.gloss:hover::after,.gloss:focus::after{
+  content:attr(data-def);position:absolute;left:0;bottom:calc(100% + 6px);z-index:20;
+  width:max-content;max-width:240px;background:var(--bg-card-hover);color:var(--text-primary);
+  border:1px solid var(--accent);border-radius:8px;padding:6px 10px;font-size:.85rem;line-height:1.35;
+  box-shadow:0 6px 18px var(--shadow);white-space:normal;
+}
+
+.foot{margin-top:16px;color:var(--text-muted);font-size:.85rem;text-align:center}
+
+.modal{position:fixed;inset:0;z-index:50;background:var(--overlay);display:none;align-items:center;justify-content:center;padding:16px}
+.modal.active{display:flex}
+.modal .box{background:var(--bg-card);border:2px solid var(--accent);border-radius:var(--radius);max-width:520px;width:100%;padding:20px;max-height:90vh;overflow:auto}
+.modal .row{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.chk{display:flex;align-items:center;gap:10px;min-height:44px}
+.chk input{width:22px;height:22px}
+.err{color:var(--bad);min-height:1.4em;margin:6px 0 0}
+
+#printArea{display:none}
+
+@media print{
+  @page{margin:.7in}
+  body{background:var(--print-paper);color:var(--print-ink);font-size:12pt}
+  body::before,body::after{display:none}
+  .app,.modal{display:none!important}
+  #printArea{display:block!important;overflow:visible}
+  #printArea *{overflow:visible!important;color:var(--print-ink)!important;background:transparent!important}
+  #printArea h1{font-size:18pt;margin:0 0 6pt}
+  #printArea h2{font-size:14pt;border-bottom:1px solid var(--print-rule);padding-bottom:2pt;margin:16pt 0 6pt}
+  #printArea h3{font-size:12pt;margin:10pt 0 3pt}
+  #printArea p,#printArea li{margin:2pt 0;orphans:3;widows:3}
+  #printArea ul{margin:2pt 0 6pt 18pt;padding:0}
+  #printArea .nameline{margin:6pt 0 10pt}
+  #printArea .resp{white-space:pre-wrap;border:1px solid var(--print-rule);padding:6pt;min-height:40pt;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <header class="top">
+    <div>
+      <p class="kicker">EdSim &middot; Participation in Government</p>
+      <h1>Who Holds the Power?</h1>
+      <p class="sub">Federal vs. state government &middot; Day 1</p>
+    </div>
+    <div class="tier" role="group" aria-label="Reading level">
+      <span>Reading level:</span>
+      <div class="seg">
+        <button type="button" id="tierStd" aria-pressed="true">Standard</button>
+        <button type="button" id="tierSimple" aria-pressed="false">Simplified</button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="tabs" role="tablist" aria-label="Activity sections" id="tabs"></nav>
+
+  <main>
+    <section class="panel" id="panel-0" role="tabpanel" aria-labelledby="tab-0"><div id="body-0"></div><div class="pnav"></div></section>
+    <section class="panel" id="panel-1" role="tabpanel" aria-labelledby="tab-1" hidden><div id="body-1"></div><div class="pnav"></div></section>
+    <section class="panel" id="panel-2" role="tabpanel" aria-labelledby="tab-2" hidden><div id="body-2"></div><div class="pnav"></div></section>
+    <section class="panel" id="panel-3" role="tabpanel" aria-labelledby="tab-3" hidden><div id="body-3"></div><div class="pnav"></div></section>
+    <section class="panel" id="panel-4" role="tabpanel" aria-labelledby="tab-4" hidden><div id="body-4"></div><div class="pnav"></div></section>
+  </main>
+
+  <p class="foot" id="saveNote">Your progress saves automatically on this device.</p>
+</div>
+
+<!-- Export section-select modal -->
+<div class="modal" id="exportModal" role="dialog" aria-modal="true" aria-labelledby="exportTitle">
+  <div class="box">
+    <h2 id="exportTitle">Choose what to export</h2>
+    <p class="muted">Pick the sections to include. You can export in more than one sitting and hand in each export.</p>
+    <div id="exportChecks"></div>
+    <p class="err" id="exportErr" role="alert"></p>
+    <div class="row">
+      <button type="button" class="btn primary" id="exportPdfBtn">Save as PDF</button>
+      <button type="button" class="btn primary" id="exportCopyBtn">Copy Text</button>
+      <button type="button" class="btn" id="exportCancelBtn">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Confirm-before-reset modal -->
+<div class="modal" id="confirmResetModal" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+  <div class="box">
+    <h2 id="confirmTitle">Did it save?</h2>
+    <p id="confirmResetMsg"></p>
+    <div class="row">
+      <button type="button" class="btn primary" id="confirmResetYesBtn">Yes, it saved &mdash; clear for next student</button>
+      <button type="button" class="btn" id="confirmResetNoBtn">No / not sure &mdash; keep my work</button>
+    </div>
+  </div>
+</div>
+
+<div id="printArea" aria-hidden="true"></div>
+
+<script>
+(function(){
+'use strict';
+
+/* ---------- constants ---------- */
+var LS_KEY='edsim_fedstate_power_v1';
+var TAB_COUNT=5;
+function x(e,s){return {e:e,s:s};}
+function $(id){return document.getElementById(id);}
+
+/* ---------- content ---------- */
+var TABS=[
+  {label:'Directions',sub:'Start here'},
+  {label:'Round 1',sub:'Name That Power'},
+  {label:'Round 2',sub:'When Laws Collide'},
+  {label:'Round 3',sub:'Trace the Rule'},
+  {label:'Reflect & Export',sub:'Wrap up'}
+];
+
+var COLS=[
+  {key:'delegated',label:'Delegated',def:x('Powers the Constitution gives to the federal government.','Powers the Constitution gives the federal government.')},
+  {key:'reserved',label:'Reserved',def:x('Powers kept by the states (10th Amendment).','Powers left to the states.')},
+  {key:'concurrent',label:'Concurrent',def:x('Powers both levels share.','Powers both share.')}
+];
+
+var CARDS=[
+ {id:'d1',ans:'delegated',text:x('Coining and printing money','Making the nation’s money'),
+  src:x('Article I, Section 8 gives Congress the power to coin money. States are barred from doing it (Article I, Section 10).','The Constitution says Congress makes money. States are not allowed to.')},
+ {id:'d2',ans:'delegated',text:x('Declaring war','Deciding to go to war'),
+  src:x('Article I, Section 8 gives Congress the power to declare war.','The Constitution gives this job to Congress.')},
+ {id:'d3',ans:'delegated',text:x('Negotiating treaties with other countries','Making agreements with other countries'),
+  src:x('Article II, Section 2: the president negotiates treaties and the Senate approves them. States cannot make treaties (Article I, Section 10).','The president makes the deal and the Senate must approve it. States can’t do this.')},
+ {id:'d4',ans:'delegated',text:x('Regulating trade between states','Making rules for trade between states'),
+  src:x('The Commerce Clause (Article I, Section 8) gives Congress this power.','The Commerce Clause gives Congress this job.')},
+ {id:'d5',ans:'delegated',text:x('Running the postal service','Running the post office'),
+  src:x('Article I, Section 8 gives Congress the power to establish post offices.','The Constitution names post offices as a job for Congress.')},
+ {id:'d6',ans:'delegated',text:x('Setting the rules for becoming a citizen','Deciding how a person can become a citizen'),
+  src:x('Article I, Section 8 gives Congress the power to set one uniform rule of naturalization.','Congress sets one set of rules for the whole country. This process is called naturalization.')},
+ {id:'r1',ans:'reserved',text:x('Issuing driver’s licenses','Giving out driver’s licenses'),
+  src:x('The Constitution doesn’t list this power, so the 10th Amendment leaves it to the states.','The Constitution does not list this job, so the 10th Amendment leaves it to the states.')},
+ {id:'r2',ans:'reserved',text:x('Setting up and running public school districts','Running public schools'),
+  src:x('Education isn’t listed in the Constitution, so it falls to the states under the 10th Amendment. Federal rules still apply on top (see Round 3).','Schools are not listed for the federal government, so states run them. Federal rules still add some limits (see Round 3).')},
+ {id:'r3',ans:'reserved',text:x('Creating local police departments','Setting up local police'),
+  src:x('Protecting public safety is part of the states’ police power under the 10th Amendment.','Public safety is a state job. This is called the police power.')},
+ {id:'r4',ans:'reserved',text:x('Issuing marriage licenses','Giving out marriage licenses'),
+  src:x('Not listed in the Constitution, so states handle it. They must still follow the Constitution’s guarantees, such as equal protection.','States do this job, but they must still follow the rights in the Constitution, such as equal protection.')},
+ {id:'r5',ans:'reserved',text:x('Licensing professionals such as teachers, nurses, and barbers','Giving licenses to teachers, nurses, and barbers'),
+  src:x('States protect public health and safety through the police power (10th Amendment).','States protect health and safety, so they decide who gets a license.')},
+ {id:'r6',ans:'reserved',text:x('Deciding local zoning and land use','Deciding what can be built where in a town'),
+  src:x('Land-use rules come from state power, which states pass down to towns and counties.','This is a state power that states let towns use. The rules are called zoning.')},
+ {id:'c1',ans:'concurrent',text:x('Collecting taxes','Collecting taxes'),
+  src:x('Congress can tax (Article I, Section 8), and states keep their own taxing power too (10th Amendment). Both levels do it.','The federal government and the states both collect taxes.')},
+ {id:'c2',ans:'concurrent',text:x('Building and maintaining highways','Building and fixing highways'),
+  src:x('The federal government funds and builds interstate highways. States build and maintain their own roads as well.','The federal government and the states both build roads.')},
+ {id:'c3',ans:'concurrent',text:x('Running court systems','Running courts'),
+  src:x('Article III creates federal courts, and each state constitution creates state courts.','There are federal courts and state courts.')},
+ {id:'c4',ans:'concurrent',text:x('Writing and enforcing criminal laws','Making and enforcing criminal laws'),
+  src:x('Congress can create federal crimes, and states make and enforce their own criminal laws.','There are federal crimes and state crimes.')},
+ {id:'c5',ans:'concurrent',text:x('Borrowing money','Borrowing money'),
+  src:x('Congress can borrow money (Article I, Section 8), and states can borrow too.','Both levels of government can borrow money.')},
+ {id:'c6',ans:'concurrent',text:x('Chartering banks','Allowing banks to open'),
+  src:x('Congress created national banks (McCulloch v. Maryland), and states charter their own banks.','There are national banks and state banks.')}
+];
+
+var R1_INTRO=x('Every government power falls into one of three groups. Sort each card into the group where it belongs. A card only stays if you place it correctly, and the card then shows you where the power comes from.','Every government power fits one of three groups. Sort each card into its group. If you are right, the card stays and shows where the power comes from.');
+var R1_HOW=x('Tap or click a card, then choose “Place selected card here” under a column. You can also drag a card into a column.','Tap or click a card. Then press “Place selected card here” under a column. You can also drag a card.');
+var R1_MISS=x('Not quite. Use the test: Is the power listed in the Constitution for the federal government? Do both levels do it? If it isn’t listed for the federal government and isn’t denied to the states, think 10th Amendment. The card is back in the pool.','Not quite. Ask: Does the Constitution list it for the federal government? Do both levels do it? If not listed, the 10th Amendment gives it to the states. The card is back in the pool.');
+var R1_DONE=x('Key idea: if the Constitution lists a power for the federal government, it is delegated. If it is not listed and not denied to the states, the 10th Amendment reserves it to the states. Many everyday powers, like taxing and building roads, are concurrent.','Key idea: if the Constitution lists it for the federal government, it is delegated. If not, the 10th Amendment leaves it to the states (reserved). Some powers, like taxing, are shared (concurrent).');
+
+var R2_INTRO=x('The Supremacy Clause (Article VI) says the Constitution and federal laws are “the supreme law of the land.” That matters when a state law and a federal law collide. Read each scenario and choose which law controls. Watch for cases where the answer is not what you expect.','The Supremacy Clause (Article VI) says federal law is the highest law of the land. That matters when a state law and a federal law collide. Read each scenario and pick who controls. Some answers may surprise you.');
+var FED='fed',STA='sta';
+var R2=[
+ {id:'q1',stem:x('Maryland puts a tax on the Second Bank of the United States, a federal institution. Which law controls?','Maryland taxes the national bank. Which law controls?'),
+  opts:[{id:FED,t:x('Federal law controls','Federal law controls')},{id:STA,t:x('State law controls','State law controls')}],correct:FED,
+  why:x('Federal. In McCulloch v. Maryland (1819), the Supreme Court ruled that a state cannot tax or block a valid federal institution. The Supremacy Clause makes federal law the supreme law of the land.','Federal law controls. This is McCulloch v. Maryland (1819). The Supremacy Clause makes federal law the highest law, so a state can’t block a federal bank.')},
+ {id:'q2',stem:x('New York gives one company a monopoly on steamboat travel in its waters, but a competitor holds a federal license to operate there. Which law controls?','A state gives one company the only right to run steamboats. Another company has a federal license. Which law controls?'),
+  opts:[{id:FED,t:x('Federal law controls','Federal law controls')},{id:STA,t:x('State law controls','State law controls')}],correct:FED,
+  why:x('Federal. Gibbons v. Ogden (1824) held that Congress’s power to regulate interstate commerce overrides a conflicting state law.','Federal law controls. This is Gibbons v. Ogden (1824). Congress controls trade between states, so it beats a conflicting state law.')},
+ {id:'q3',stem:x('After the Supreme Court orders schools desegregated, Arkansas officials say they don’t have to obey. Which law controls?','The Supreme Court orders schools to desegregate. Arkansas says it doesn’t have to follow the ruling. Which law controls?'),
+  opts:[{id:FED,t:x('Federal law controls','Federal law controls')},{id:STA,t:x('State law controls','State law controls')}],correct:FED,
+  why:x('Federal. In Cooper v. Aaron (1958), the Court said states must follow its rulings, because the Constitution is the supreme law of the land.','Federal law controls. In Cooper v. Aaron (1958), the Court said states must obey its rulings.')},
+ {id:'q4',stem:x('The federal government sets a minimum wage, and a state passes a law requiring a higher one. Which wage applies to workers in that state?','The federal government sets a minimum wage. A state sets a higher one. Which applies?'),
+  opts:[{id:STA,t:x('The state’s higher wage applies','The state’s higher wage applies')},{id:FED,t:x('Only the federal wage applies','Only the federal wage applies')}],correct:STA,
+  why:x('The state’s higher wage. Federal law here is a floor, not a ceiling, so a state can go above it. This is not a true conflict, because an employer can follow both laws at once. The Supremacy Clause only decides things when both laws cannot be followed.','The state’s higher wage applies. The federal rule is a minimum, so a state can go higher. An employer can follow both laws, so there is no real conflict.')},
+ {id:'q5',stem:x('A state legalizes marijuana, but federal law still bans it. Which law controls?','A state makes marijuana legal. Federal law still bans it. Which law controls?'),
+  opts:[{id:FED,t:x('Federal law still applies','Federal law still applies')},{id:STA,t:x('State law wins inside the state','State law wins inside the state')}],correct:FED,
+  why:x('Federal law still applies. In Gonzales v. Raich (2005), the Court held that Congress can regulate marijuana under the Commerce Clause, even when it is grown and used within one state. A state can stop enforcing its own ban, but it can’t cancel federal law.','Federal law still applies. In Gonzales v. Raich (2005), the Court said Congress can regulate marijuana. A state can change its own law, but it can’t cancel federal law.')},
+ {id:'q6',stem:x('Congress passes a law ordering local sheriffs to run federal background checks on gun buyers. Can Congress force them to do it?','Congress orders local sheriffs to run federal background checks. Can Congress force them?'),
+  opts:[{id:STA,t:x('No, Congress cannot order state officials to carry out federal law','No. Congress can’t order state officials to do federal work')},{id:FED,t:x('Yes, federal law is supreme, so state officials must comply','Yes. Federal law is supreme, so they must do it')}],correct:STA,
+  why:x('No. In Printz v. United States (1997), the Court held that Congress cannot commandeer state officials to carry out federal programs. Supremacy has limits: it settles conflicts between laws, but the 10th Amendment protects states from being ordered around like federal employees.','No. In Printz v. United States (1997), the Court said Congress can’t commandeer state officials. Federal law is supreme, but the 10th Amendment protects states from being ordered around.')},
+ {id:'q7',stem:x('Who actually runs federal elections, such as the vote for president or Congress?','Who actually runs elections for president and Congress?'),
+  opts:[{id:'a',t:x('Congress','Congress')},{id:'b',t:x('The president','The president')},{id:'c',t:x('The states','The states')},{id:'d',t:x('The Supreme Court','The Supreme Court')}],correct:'c',
+  why:x('The states. State and local officials run the polling places, count the votes, and set most of the procedures. The Elections Clause (Article I, Section 4) gives states this job for congressional elections, but it also lets Congress step in and change state rules. For president, Article II lets each state decide how its electors are chosen.','The states. State and local officials run the polling places and count the votes. The Elections Clause (Article I, Section 4) gives states this job, but Congress can change their rules.')},
+ {id:'q8',stem:x('Congress passed the National Voter Registration Act (1993), which requires states to offer voter registration at places like motor vehicle offices for federal elections. Was Congress allowed to require this?','Congress passed a law making states offer voter registration at the DMV for federal elections. Was that allowed?'),
+  opts:[{id:'a',t:x('Yes, Congress can set rules for how states run federal elections','Yes. Congress can set rules for how states run federal elections')},{id:'b',t:x('No, elections belong only to the states','No. Elections belong only to the states')},{id:'c',t:x('Only if every state agrees to it','Only if every state agrees')}],correct:'a',
+  why:x('Yes. The Elections Clause lets Congress make or change state rules for federal elections. The states run the elections, but Congress sets a check on how, which is why the two levels share this power.','Yes. The Elections Clause lets Congress change state rules for federal elections. States run the elections, but Congress can set limits on how.')}
+];
+
+var R3_INTRO=x('Now apply it to rules you actually live under. For each one, decide who is really behind it. “Federal money with strings attached” means Washington offers funds to states or schools, but only if they agree to follow certain rules.','Now look at rules in real life. For each one, decide who is behind it. “Federal money with strings attached” means Washington offers money, but only if states or schools follow certain rules.');
+var LAW_FED='fed',LAW_STATE='state',LAW_MONEY='money';
+var R3_OPTS=[
+  {id:LAW_FED,t:x('Federal law (including the Constitution)','Federal law (including the Constitution)')},
+  {id:LAW_STATE,t:x('State law','State law')},
+  {id:LAW_MONEY,t:x('Federal money with strings attached','Federal money with strings attached')}
+];
+var R3=[
+ {id:'s1',stem:x('Free and reduced-price lunches at your school.','Free and reduced-price school lunches.'),correct:LAW_MONEY,
+  label:x('Round 1 label: Reserved power (education), with federal funding attached.','Round 1 label: Reserved power (schools), plus federal money.'),
+  why:x('Federal money with strings attached. Schools that take federal lunch funds must follow federal nutrition rules. Education is a Reserved power, so Washington uses its spending power to have a say without taking the job over.','Federal money with strings. Schools that take federal lunch money must follow federal food rules. Schools are a state job, so Washington uses money to have a say.')},
+ {id:'s2',stem:x('Special education services in public schools.','Special education services in public schools.'),correct:LAW_MONEY,
+  label:x('Round 1 label: Reserved power (education), with federal funding attached.','Round 1 label: Reserved power (schools), plus federal money.'),
+  why:x('Federal money with strings attached. The Individuals with Disabilities Education Act (IDEA) sends federal funds to states, and states that accept them agree to follow federal requirements.','Federal money with strings. The IDEA law sends federal money to states. States that take it must follow federal rules.')},
+ {id:'s3',stem:x('The voting age is 18 in every state.','You can vote at age 18 in every state.'),correct:LAW_FED,
+  label:x('Round 1 label: Delegated power (a constitutional amendment).','Round 1 label: Delegated power (an amendment).'),
+  why:x('Federal law, specifically the Constitution. The 26th Amendment set the voting age at 18 for all elections, so no state can set a higher one. An amendment is part of the Constitution, the highest law.','Federal law. The 26th Amendment sets the voting age at 18 everywhere. An amendment is part of the Constitution, the highest law.')},
+ {id:'s4',stem:x('Speed limits and driver’s license tests.','Speed limits and driver’s license tests.'),correct:LAW_STATE,
+  label:x('Round 1 label: Reserved power.','Round 1 label: Reserved power.'),
+  why:x('State law. Driving rules come from the states’ reserved police power, which is why speed limits and license tests differ from state to state.','State law. States make driving rules, which is why they are different in different states.')},
+ {id:'s5',stem:x('The Social Security tax taken out of most paychecks.','The Social Security tax taken from most paychecks.'),correct:LAW_FED,
+  label:x('Round 1 label: Delegated power (taxing and spending).','Round 1 label: Delegated power (taxing and spending).'),
+  why:x('Federal law. Congress uses its power to tax and spend (Article I, Section 8) to run Social Security, and the payroll tax funds it.','Federal law. Congress runs Social Security using its power to tax and spend.')},
+ {id:'s6',stem:x('The minimum age to buy tobacco and vaping products is 21 across the country.','You must be 21 to buy tobacco and vape products anywhere in the country.'),correct:LAW_FED,
+  label:x('Round 1 label: Delegated power (Commerce Clause).','Round 1 label: Delegated power (Commerce Clause).'),
+  why:x('Federal law. A 2019 federal law raised the minimum sales age to 21 nationwide, and it overrides any state or local law that sets a lower one.','Federal law. A 2019 federal law set the age at 21 everywhere. It beats any lower state age.')}
+];
+var R3_OWN=x('Your turn: find one more rule in your own life (at school, on the road, at work, or in your neighborhood). Who is behind it: federal law, state law, or federal money with strings attached? Write the rule and your answer.','Your turn: think of one more rule in your life (school, driving, work, or your town). Who is behind it? Write the rule and your answer.');
+var R3_OWN_STARTER='One rule in my life is ... I think it comes from ... because ...';
+
+var REFLECT=[
+ {id:'q1',head:'Explain it',q:'In your own words, what is the difference between a delegated power, a reserved power, and a concurrent power? Give one example of each from today’s activity.',starter:'A delegated power is ... A reserved power is ... A concurrent power is ...'},
+ {id:'q2',head:'Supremacy',q:'In Round 2, the state won in some scenarios (the higher minimum wage, the sheriffs) and the federal government won in others. What separates those two situations?',starter:'The state won when ... The federal government won when ...'},
+ {id:'q3',head:'Elections',q:'The states run federal elections, but Congress can override their rules. Why might the framers have split the power this way instead of giving it all to one level?',starter:'The framers may have split election power because ...'},
+ {id:'q4',head:'Your life',q:'Pick one rule from your own life (school, driving, work, your neighborhood). Which level of government is behind it, and which power does it use?',starter:'One rule in my life is ... It comes from the ... government because ...'},
+ {id:'q5',head:'Take a position',q:'Should the federal government be able to attach conditions to the money it gives states, like the highway funds or school lunch rules? Give one reason for and one reason against, then say where you land.',starter:'One reason for is ... One reason against is ... I think ... because ...'}
+];
+
+var DIRS=[
+ {t:x('Round 1: Name That Power','Round 1: Name That Power'),m:'about 10 min',d:x('Sort 18 cards into Delegated, Reserved, and Concurrent powers. Each correct card shows where the power comes from in the Constitution.','Sort 18 cards into three groups. Each correct card shows where the power comes from.')},
+ {t:x('Round 2: When Laws Collide','Round 2: When Laws Collide'),m:'about 10 min',d:x('Eight scenarios where a state law and a federal law meet, including who runs federal elections. Decide which law controls and why.','Eight scenarios about state and federal laws. Decide which controls, including who runs elections.')},
+ {t:x('Round 3: Trace the Rule','Round 3: Trace the Rule'),m:'about 7 min',d:x('Six real-life rules. Decide whether federal law, state law, or federal money with strings is behind each one, then find your own example.','Six rules from real life. Decide who is behind each one, then find your own example.')},
+ {t:x('Reflect & Export','Reflect & Export'),m:'about 10 min',d:x('Answer five short questions, then save your work as a PDF or copy it into a document.','Answer five short questions, then save your work.')}
+];
+var DIR_INTRO=x('Today you will figure out which powers belong to the federal government, which belong to the states, and which are shared, and what happens when the two levels disagree.','Today you will learn which powers the federal government has, which the states have, which are shared, and what happens when they disagree.');
+var DIR_GOAL=x('By the end you should be able to sort powers into delegated, reserved, and concurrent, explain the Supremacy Clause and its limits, and say who runs federal elections.','By the end you should be able to sort powers into three groups, explain the Supremacy Clause, and say who runs elections.');
+var DIR_SAVE=x('Your work saves automatically on this device. If you run out of time, export what you have (PDF or Copy Text), then finish later and export again. The Reflect & Export tab explains how.','Your work saves on this device. If you run out of time, export what you have and finish later.');
+
+/* ---------- glossary (Simplified tier only) ---------- */
+var GLOSS={
+ 'delegated':'given to someone to carry out; here, given to the federal government',
+ 'reserved':'kept back; here, kept by the states',
+ 'concurrent':'happening at the same time; shared by both',
+ 'supremacy clause':'Article VI: federal law is the highest law of the land',
+ 'commerce clause':'the part of the Constitution that lets Congress regulate trade between states',
+ 'elections clause':'Article I, Section 4: states run elections, but Congress can change their rules',
+ '10th amendment':'says powers not given to the federal government belong to the states or the people',
+ '26th amendment':'set the national voting age at 18',
+ 'commandeer':'to take over and order around',
+ 'naturalization':'the process of becoming a citizen',
+ 'zoning':'rules about what can be built where',
+ 'police power':'a state’s power to protect public health and safety',
+ 'equal protection':'the idea that laws must treat people equally',
+ 'monopoly':'when one company has all the business',
+ 'desegregate':'to end the separation of students by race',
+ 'amendment':'a change or addition to the Constitution',
+ 'payroll tax':'a tax taken out of a paycheck',
+ 'treaty':'a formal agreement between countries',
+ 'treaties':'formal agreements between countries',
+ 'strings attached':'rules you must follow to get the money',
+ 'spending power':'Congress’s power to tax and spend money'
+};
+var GKEYS=Object.keys(GLOSS).sort(function(a,b){return b.length-a.length;});
+var GRE=new RegExp('\\b('+GKEYS.map(function(k){return k.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');}).join('|')+')\\b','gi');
+
+/* ---------- helpers ---------- */
+var CBY={};CARDS.forEach(function(c){CBY[c.id]=c;});
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+function T(o){return state.tier==='simple'?o.s:o.e;}
+function plain(o){return esc(T(o));}
+function rich(text){
+  var safe=esc(text);
+  if(state.tier!=='simple')return safe;
+  var seen={};
+  return safe.replace(GRE,function(m){
+    var k=m.toLowerCase();
+    if(seen[k])return m;
+    seen[k]=1;
+    var d=GLOSS[k];
+    return '<span class="gloss" tabindex="0" role="note" data-def="'+esc(d)+'" aria-label="'+esc(m+': '+d)+'">'+esc(m)+'</span>';
+  });
+}
+function R(o){return rich(T(o));}
+
+/* ---------- state ---------- */
+function defaultState(){
+  return {v:1,tier:'standard',cardOrder:shuffle(CARDS.map(function(c){return c.id;})),place:{},misses:{},r2:{},r3:{},reflect:{}};
+}
+function validate(s){
+  if(!s||s.v!==1)return null;
+  var ids=CARDS.map(function(c){return c.id;});
+  if(!Array.isArray(s.cardOrder)||s.cardOrder.length!==ids.length)return null;
+  for(var i=0;i<ids.length;i++){if(s.cardOrder.indexOf(ids[i])<0)return null;}
+  var out=defaultState();
+  out.cardOrder=s.cardOrder.slice();
+  out.tier=s.tier==='simple'?'simple':'standard';
+  var colKeys=COLS.map(function(c){return c.key;});
+  Object.keys(s.place||{}).forEach(function(id){if(CBY[id]&&colKeys.indexOf(s.place[id])>-1)out.place[id]=s.place[id];});
+  Object.keys(s.misses||{}).forEach(function(id){if(CBY[id]&&s.misses[id]===true)out.misses[id]=true;});
+  R2.forEach(function(q){var v=(s.r2||{})[q.id];if(v&&q.opts.some(function(o){return o.id===v;}))out.r2[q.id]=v;});
+  R3.forEach(function(q){var v=(s.r3||{})[q.id];if(v&&R3_OPTS.some(function(o){return o.id===v;}))out.r3[q.id]=v;});
+  var rk=['r3own'].concat(REFLECT.map(function(r){return r.id;}));
+  rk.forEach(function(k){var v=(s.reflect||{})[k];if(typeof v==='string')out.reflect[k]=v.slice(0,5000);});
+  return out;
+}
+var storageOK=true;
+function load(){
+  try{var raw=localStorage.getItem(LS_KEY);if(!raw)return null;return validate(JSON.parse(raw));}
+  catch(e){storageOK=false;return null;}
+}
+function save(){
+  try{localStorage.setItem(LS_KEY,JSON.stringify(state));}catch(e){storageOK=false;}
+}
+var state=load()||defaultState();
+/* navigation is never restored: always start on Directions */
+var currentTab=0;
+var selectedCard=null;
+var r1Msg={text:'',kind:''};
+var optOrder={};
+
+/* ---------- tabs ---------- */
+function buildTabs(){
+  var nav=$('tabs');nav.innerHTML='';
+  TABS.forEach(function(t,i){
+    var b=document.createElement('button');
+    b.type='button';b.className='tab';b.id='tab-'+i;b.setAttribute('role','tab');
+    b.setAttribute('aria-controls','panel-'+i);
+    b.innerHTML='<span class="lbl">'+esc(t.label)+'</span><small>'+esc(t.sub)+'</small>';
+    b.addEventListener('click',function(){showTab(i);});
+    b.addEventListener('keydown',function(e){
+      var n=null;
+      if(e.key==='ArrowRight')n=(i+1)%TAB_COUNT;
+      else if(e.key==='ArrowLeft')n=(i+TAB_COUNT-1)%TAB_COUNT;
+      else if(e.key==='Home')n=0;
+      else if(e.key==='End')n=TAB_COUNT-1;
+      if(n!==null){e.preventDefault();showTab(n);$('tab-'+n).focus();}
+    });
+    nav.appendChild(b);
+  });
+  for(var i=0;i<TAB_COUNT;i++){
+    var pn=document.querySelector('#panel-'+i+' .pnav');
+    pn.innerHTML='';
+    var prev=document.createElement('button');
+    prev.type='button';prev.className='btn';prev.textContent='← Previous';
+    if(i===0){prev.style.visibility='hidden';prev.setAttribute('aria-hidden','true');prev.tabIndex=-1;}
+    else prev.addEventListener('click',(function(k){return function(){showTab(k-1);};})(i));
+    var next=document.createElement('button');
+    next.type='button';next.className='btn primary';next.textContent='Next →';
+    if(i===TAB_COUNT-1){next.style.visibility='hidden';next.setAttribute('aria-hidden','true');next.tabIndex=-1;}
+    else next.addEventListener('click',(function(k){return function(){showTab(k+1);};})(i));
+    pn.appendChild(prev);pn.appendChild(next);
+  }
+}
+function showTab(i){
+  currentTab=i;
+  for(var k=0;k<TAB_COUNT;k++){
+    $('panel-'+k).hidden=(k!==i);
+    var t=$('tab-'+k);
+    t.setAttribute('aria-selected',k===i?'true':'false');
+    t.tabIndex=(k===i)?0:-1;
+  }
+  window.scrollTo(0,0);
+}
+function r1Done(){return CARDS.every(function(c){return state.place[c.id];});}
+function r2Done(){return R2.every(function(q){return state.r2[q.id];});}
+function r3Done(){return R3.every(function(q){return state.r3[q.id];});}
+function reflectDone(){return REFLECT.every(function(r){return (state.reflect[r.id]||'').trim().length>0;});}
+function updateTabs(){
+  var flags=[false,r1Done(),r2Done(),r3Done(),reflectDone()];
+  flags.forEach(function(f,i){
+    var t=$('tab-'+i);
+    t.classList.toggle('done',f);
+    t.setAttribute('aria-label',TABS[i].label+', '+TABS[i].sub+(f?', complete':''));
+  });
+}
+
+/* ---------- Directions ---------- */
+function renderDirections(){
+  var h='<h2>How this activity works</h2>';
+  h+='<p class="lede">'+R(DIR_INTRO)+'</p>';
+  h+='<p class="goal"><strong>Your goal:</strong> '+R(DIR_GOAL)+'</p>';
+  h+='<h3>What is on each tab</h3><ul class="steps">';
+  DIRS.forEach(function(d){h+='<li><b>'+plain(d.t)+'</b> <span class="muted">('+esc(d.m)+')</span><br>'+R(d.d)+'</li>';});
+  h+='</ul>';
+  h+='<p><strong>Total time:</strong> about 35 to 40 minutes.</p>';
+  h+='<p>'+R(DIR_SAVE)+'</p>';
+  h+='<p class="muted">Reading level: use the Standard / Simplified buttons at the top of the page at any time. Simplified adds shorter wording and word help you can tap or hover.</p>';
+  $('body-0').innerHTML=h;
+}
+
+/* ---------- Round 1 ---------- */
+function renderR1(){
+  var host=$('body-1');
+  var placed=Object.keys(state.place).length;
+  var firstTry=CARDS.filter(function(c){return state.place[c.id]&&!state.misses[c.id];}).length;
+  var h='<h2>Round 1: Name That Power</h2>';
+  h+='<p class="lede">'+R(R1_INTRO)+'</p>';
+  h+='<ul class="defs">'+COLS.map(function(c){return '<li class="def '+c.key+'"><strong>'+esc(c.label)+'</strong>: '+R(c.def)+'</li>';}).join('')+'</ul>';
+  h+='<p class="muted">'+plain(R1_HOW)+'</p>';
+  h+='<div class="scorebar">Placed '+placed+' of '+CARDS.length+' &middot; Correct on the first try: '+firstTry+'</div>';
+  h+='<div class="fbline '+esc(r1Msg.kind)+'" id="r1fb" tabindex="-1" role="status" aria-live="polite">'+esc(r1Msg.text)+'</div>';
+  h+='<h3>Cards to sort</h3><div class="pool" id="pool">';
+  var remaining=state.cardOrder.filter(function(id){return !state.place[id];});
+  remaining.forEach(function(id){
+    var c=CBY[id];
+    h+='<button type="button" class="card'+(selectedCard===id?' sel':'')+'" draggable="true" data-id="'+id+'" aria-pressed="'+(selectedCard===id?'true':'false')+'">'+plain(c.text)+'</button>';
+  });
+  if(!remaining.length)h+='<p class="empty">All cards placed.</p>';
+  h+='</div>';
+  h+='<p class="selstat" id="selstat">'+(selectedCard?'Selected: <strong>'+plain(CBY[selectedCard].text)+'</strong>. Now choose a column below.':'Nothing selected yet.')+'</p>';
+  h+='<div class="cols">';
+  COLS.forEach(function(col){
+    var inCol=Object.keys(state.place).filter(function(id){return state.place[id]===col.key;});
+    h+='<section class="col '+col.key+'" aria-label="'+esc(col.label)+' powers"><h3>'+esc(col.label)+'</h3>';
+    h+='<button type="button" class="placeBtn" data-col="'+col.key+'"'+(selectedCard?'':' disabled')+'>Place selected card here</button>';
+    h+='<div class="zone" data-col="'+col.key+'">';
+    inCol.forEach(function(id){
+      var c=CBY[id];
+      h+='<div class="placed"><div class="ptxt">✓ '+plain(c.text)+'</div><div class="psrc">'+R(c.src)+'</div></div>';
+    });
+    h+='</div></section>';
+  });
+  h+='</div>';
+  if(placed===CARDS.length){
+    h+='<div class="summary"><strong>All '+CARDS.length+' cards placed.</strong> You got '+firstTry+' right on the first try.<br>'+R(R1_DONE)+'</div>';
+  }
+  host.innerHTML=h;
+  bindR1(host);
+}
+function bindR1(host){
+  host.querySelectorAll('.card').forEach(function(b){
+    b.addEventListener('click',function(){
+      var id=b.getAttribute('data-id');
+      selectedCard=(selectedCard===id)?null:id;
+      renderR1();
+      var again=host.querySelector('.card[data-id="'+id+'"]');
+      if(again)again.focus();
+    });
+    b.addEventListener('dragstart',function(e){
+      var id=b.getAttribute('data-id');
+      try{e.dataTransfer.setData('text/plain',id);e.dataTransfer.effectAllowed='move';}catch(err){}
+      selectedCard=id;
+    });
+  });
+  host.querySelectorAll('.placeBtn').forEach(function(b){
+    b.addEventListener('click',function(){if(selectedCard)placeCard(selectedCard,b.getAttribute('data-col'));});
+  });
+  host.querySelectorAll('.zone').forEach(function(z){
+    z.addEventListener('dragover',function(e){e.preventDefault();z.classList.add('over');});
+    z.addEventListener('dragleave',function(){z.classList.remove('over');});
+    z.addEventListener('drop',function(e){
+      e.preventDefault();z.classList.remove('over');
+      var id='';
+      try{id=e.dataTransfer.getData('text/plain');}catch(err){}
+      if(!id)id=selectedCard;
+      if(id&&CBY[id]&&!state.place[id])placeCard(id,z.getAttribute('data-col'));
+    });
+  });
+}
+function placeCard(id,col){
+  var c=CBY[id];
+  if(!c||state.place[id])return;
+  if(c.ans===col){
+    state.place[id]=col;
+    r1Msg={text:'Correct. “'+T(c.text)+'” is a '+col+' power.',kind:'ok'};
+  }else{
+    state.misses[id]=true;
+    r1Msg={text:T(R1_MISS),kind:'no'};
+  }
+  selectedCard=null;
+  save();
+  renderR1();
+  updateTabs();
+  var fb=$('r1fb');if(fb)fb.focus();
+}
+
+/* ---------- multiple-choice rounds ---------- */
+function optionsFor(item,list){
+  if(!optOrder[item.id])optOrder[item.id]=shuffle(list.map(function(o){return o.id;}));
+  var byId={};list.forEach(function(o){byId[o.id]=o;});
+  return optOrder[item.id].map(function(id){return byId[id];});
+}
+function mcScore(items,store){
+  var n=0,c=0;
+  items.forEach(function(it){if(store[it.id]){n++;if(store[it.id]===it.correct)c++;}});
+  return {answered:n,correct:c};
+}
+function mcHTML(items,store,optList,prefix){
+  var h='';
+  items.forEach(function(it,idx){
+    var chosen=store[it.id];
+    var list=optList||it.opts;
+    var opts=optionsFor(it,list);
+    h+='<div class="q" data-q="'+it.id+'"><div class="num">'+esc(prefix)+' '+(idx+1)+' of '+items.length+'</div>';
+    h+='<div class="stem" id="stem-'+it.id+'">'+plain(it.stem)+'</div>';
+    h+='<div class="opts" role="group" aria-labelledby="stem-'+it.id+'">';
+    opts.forEach(function(o){
+      var cls='opt';
+      if(chosen){
+        if(o.id===it.correct)cls+=' right';
+        else if(o.id===chosen)cls+=' wrong';
+        if(o.id===chosen)cls+=' chosen';
+      }
+      h+='<button type="button" class="'+cls+'" data-q="'+it.id+'" data-o="'+o.id+'" aria-pressed="'+(chosen===o.id?'true':'false')+'"'+(chosen?' aria-disabled="true"':'')+'>'+plain(o.t)+'</button>';
+    });
+    h+='</div>';
+    if(chosen){
+      var ok=chosen===it.correct;
+      h+='<div class="fb '+(ok?'ok':'no')+'" role="status"><span class="v">'+(ok?'Correct. ':'Not quite. ')+'</span>'+R(it.why);
+      if(it.label)h+='<br><span class="tagline">'+plain(it.label)+'</span>';
+      h+='</div>';
+    }
+    h+='</div>';
+  });
+  return h;
+}
+function bindMC(host,store,onChange){
+  host.querySelectorAll('.opt').forEach(function(b){
+    b.addEventListener('click',function(){
+      var q=b.getAttribute('data-q');
+      if(store[q])return;
+      store[q]=b.getAttribute('data-o');
+      save();
+      onChange();
+      updateTabs();
+      var again=host.querySelector('.opt[data-q="'+q+'"][data-o="'+store[q]+'"]');
+      if(again)again.focus();
+    });
+  });
+}
+function renderR2(){
+  var host=$('body-2');
+  var sc=mcScore(R2,state.r2);
+  var h='<h2>Round 2: When Laws Collide</h2><p class="lede">'+R(R2_INTRO)+'</p>';
+  h+='<div class="scorebar">Answered '+sc.answered+' of '+R2.length+' &middot; Correct: '+sc.correct+'</div>';
+  h+=mcHTML(R2,state.r2,null,'Scenario');
+  host.innerHTML=h;
+  bindMC(host,state.r2,renderR2);
+}
+function renderR3(){
+  var host=$('body-3');
+  var sc=mcScore(R3,state.r3);
+  var h='<h2>Round 3: Trace the Rule</h2><p class="lede">'+R(R3_INTRO)+'</p>';
+  h+='<div class="scorebar">Answered '+sc.answered+' of '+R3.length+' &middot; Correct: '+sc.correct+'</div>';
+  h+='<p class="muted">Question for each rule: who is really behind it?</p>';
+  h+=mcHTML(R3,state.r3,R3_OPTS,'Rule');
+  h+='<h3>Find your own</h3>';
+  h+='<label class="fl" for="ta-r3own">'+R(R3_OWN)+'</label>';
+  if(state.tier==='simple')h+='<p class="starter">Sentence starter: '+esc(R3_OWN_STARTER)+'</p>';
+  h+='<textarea id="ta-r3own" aria-label="Your own example of a rule"></textarea>';
+  host.innerHTML=h;
+  bindMC(host,state.r3,renderR3);
+  bindTA('ta-r3own','r3own');
+}
+
+/* ---------- reflection + export ---------- */
+function bindTA(domId,key){
+  var ta=$(domId);if(!ta)return;
+  ta.value=state.reflect[key]||'';
+  ta.addEventListener('input',function(){state.reflect[key]=ta.value;save();updateTabs();});
+}
+function renderReflect(){
+  var host=$('body-4');
+  var h='<h2>Reflect &amp; Export</h2><p class="lede">Answer each question in a few sentences. Your answers save as you type.</p>';
+  REFLECT.forEach(function(r,i){
+    h+='<label class="fl" for="ta-'+r.id+'">'+(i+1)+'. '+esc(r.head)+': '+esc(r.q)+'</label>';
+    if(state.tier==='simple')h+='<p class="starter">Sentence starter: '+esc(r.starter)+'</p>';
+    h+='<textarea id="ta-'+r.id+'"></textarea>';
+  });
+  h+='<div class="notice"><strong>Before you export:</strong> once you confirm your download or copy worked, this page will clear for the next student. Nothing is deleted until you confirm it saved.</div>';
+  h+='<div class="exportbar"><button type="button" class="btn primary" id="openExport">Export my work&hellip;</button></div>';
+  h+='<p class="muted">You can export in more than one sitting. Choose only the sections you have finished, then export the rest next time.</p>';
+  host.innerHTML=h;
+  REFLECT.forEach(function(r){bindTA('ta-'+r.id,r.id);});
+  $('openExport').addEventListener('click',openExport);
+}
+
+/* ---------- export ---------- */
+var SECTIONS=[
+  {id:'r1',label:'Round 1: Name That Power'},
+  {id:'r2',label:'Round 2: When Laws Collide'},
+  {id:'r3',label:'Round 3: Trace the Rule'},
+  {id:'ref',label:'Reflection answers'}
+];
+var lastFocus=null;
+function openModal(id){lastFocus=document.activeElement;var m=$(id);m.classList.add('active');var b=m.querySelector('button');if(b)b.focus();}
+function closeModal(id){$(id).classList.remove('active');if(lastFocus&&lastFocus.focus)try{lastFocus.focus();}catch(e){}}
+function openExport(){
+  $('exportChecks').innerHTML=SECTIONS.map(function(s){
+    return '<label class="chk"><input type="checkbox" value="'+s.id+'" checked> '+esc(s.label)+'</label>';
+  }).join('');
+  $('exportErr').textContent='';
+  openModal('exportModal');
+}
+function selectedSections(){
+  var out=[];
+  $('exportChecks').querySelectorAll('input:checked').forEach(function(i){out.push(i.value);});
+  return out;
+}
+function optText(list,id){var o=list.filter(function(x){return x.id===id;})[0];return o?T(o.t):'';}
+function buildSections(ids){
+  var out=[];
+  ids.forEach(function(id){
+    var L=[];
+    if(id==='r1'){
+      var firstTry=CARDS.filter(function(c){return state.place[c.id]&&!state.misses[c.id];}).length;
+      L.push({k:'p',t:'Cards placed: '+Object.keys(state.place).length+' of '+CARDS.length+'. Correct on the first try: '+firstTry+'.'});
+      COLS.forEach(function(col){
+        L.push({k:'h',t:col.label+' powers'});
+        var any=false;
+        Object.keys(state.place).forEach(function(cid){if(state.place[cid]===col.key){any=true;L.push({k:'li',t:T(CBY[cid].text)});}});
+        if(!any)L.push({k:'li',t:'(none placed)'});
+      });
+      var left=CARDS.filter(function(c){return !state.place[c.id];});
+      if(left.length){L.push({k:'h',t:'Not yet placed'});left.forEach(function(c){L.push({k:'li',t:T(c.text)});});}
+      out.push({title:'Round 1: Name That Power',lines:L});
+    }else if(id==='r2'||id==='r3'){
+      var items=id==='r2'?R2:R3,store=id==='r2'?state.r2:state.r3;
+      var sc=mcScore(items,store);
+      L.push({k:'p',t:'Answered '+sc.answered+' of '+items.length+'. Correct: '+sc.correct+'.'});
+      items.forEach(function(it,i){
+        var list=id==='r2'?it.opts:R3_OPTS;
+        L.push({k:'h',t:(i+1)+'. '+T(it.stem)});
+        var ch=store[it.id];
+        if(!ch){L.push({k:'li',t:'Not answered'});}
+        else{
+          L.push({k:'li',t:'Your answer: '+optText(list,ch)+(ch===it.correct?' (correct)':' (not correct)')});
+          if(ch!==it.correct)L.push({k:'li',t:'Correct answer: '+optText(list,it.correct)});
+          L.push({k:'li',t:'Why: '+T(it.why)});
+        }
+      });
+      if(id==='r3'){
+        L.push({k:'h',t:'My own example'});
+        L.push({k:'r',t:(state.reflect.r3own||'').trim()||'(no response)'});
+      }
+      out.push({title:id==='r2'?'Round 2: When Laws Collide':'Round 3: Trace the Rule',lines:L});
+    }else if(id==='ref'){
+      REFLECT.forEach(function(r,i){
+        L.push({k:'h',t:(i+1)+'. '+r.head+': '+r.q});
+        L.push({k:'r',t:(state.reflect[r.id]||'').trim()||'(no response)'});
+      });
+      out.push({title:'Reflection',lines:L});
+    }
+  });
+  return out;
+}
+function buildText(secs){
+  var t='Who Holds the Power? Federal vs. State Government\n';
+  secs.forEach(function(s){
+    t+='\n== '+s.title+' ==\n';
+    s.lines.forEach(function(l){
+      if(l.k==='h')t+='\n'+l.t+'\n';
+      else if(l.k==='li')t+='  - '+l.t+'\n';
+      else t+=l.t+'\n';
+    });
+  });
+  return t;
+}
+function buildPrintHTML(secs){
+  var h='<h1>Who Holds the Power? Federal vs. State Government</h1><p class="nameline">Name: ______________________________ &nbsp; Date: ______________</p>';
+  secs.forEach(function(s){
+    h+='<h2>'+esc(s.title)+'</h2>';
+    var inList=false;
+    s.lines.forEach(function(l){
+      if(l.k!=='li'&&inList){h+='</ul>';inList=false;}
+      if(l.k==='h')h+='<h3>'+esc(l.t)+'</h3>';
+      else if(l.k==='p')h+='<p>'+esc(l.t)+'</p>';
+      else if(l.k==='r')h+='<div class="resp">'+esc(l.t)+'</div>';
+      else{if(!inList){h+='<ul>';inList=true;}h+='<li>'+esc(l.t)+'</li>';}
+    });
+    if(inList)h+='</ul>';
+  });
+  return h;
+}
+function askConfirmReset(msg){
+  $('confirmResetMsg').textContent=msg;
+  openModal('confirmResetModal');
+}
+function exportPdf(){
+  var ids=selectedSections();
+  if(!ids.length){$('exportErr').textContent='Choose at least one section to export.';return;}
+  $('printArea').innerHTML=buildPrintHTML(buildSections(ids));
+  closeModal('exportModal');
+  window.print();
+  /* window.print() gives no success signal, so ask instead of guessing */
+  setTimeout(function(){askConfirmReset('Did your PDF actually download or save? Check your Downloads folder before answering.');},500);
+}
+function fallbackCopy(text){
+  var ta=document.createElement('textarea');
+  ta.value=text;ta.setAttribute('readonly','');ta.style.position='fixed';ta.style.opacity='0';
+  document.body.appendChild(ta);ta.select();
+  var ok=false;try{ok=document.execCommand('copy');}catch(e){}
+  document.body.removeChild(ta);
+  return ok;
+}
+function exportCopy(){
+  var ids=selectedSections();
+  if(!ids.length){$('exportErr').textContent='Choose at least one section to export.';return;}
+  var text=buildText(buildSections(ids));
+  function done(){closeModal('exportModal');askConfirmReset('Copied! Paste it into your Google Doc, check that it looks right, then confirm.');}
+  function fail(){$('exportErr').textContent='Copy failed. Your work is still saved. Try again or use Save as PDF.';}
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(done,function(){if(fallbackCopy(text))done();else fail();});
+  }else{if(fallbackCopy(text))done();else fail();}
+}
+function resetSimState(){
+  state=defaultState();
+  optOrder={};selectedCard=null;r1Msg={text:'',kind:''};
+  $('printArea').innerHTML='';
+  renderAll();
+  showTab(0);
+}
+
+/* ---------- tier ---------- */
+function setTier(t){
+  state.tier=t;
+  $('tierStd').setAttribute('aria-pressed',t==='standard'?'true':'false');
+  $('tierSimple').setAttribute('aria-pressed',t==='simple'?'true':'false');
+  save();
+  renderAll();
+}
+function renderAll(){
+  renderDirections();renderR1();renderR2();renderR3();renderReflect();updateTabs();
+  $('tierStd').setAttribute('aria-pressed',state.tier==='standard'?'true':'false');
+  $('tierSimple').setAttribute('aria-pressed',state.tier==='simple'?'true':'false');
+  if(!storageOK)$('saveNote').textContent='Auto-save is not available in this view. Use Export before you close the page.';
+}
+
+/* ---------- wire up ---------- */
+$('tierStd').addEventListener('click',function(){setTier('standard');});
+$('tierSimple').addEventListener('click',function(){setTier('simple');});
+$('exportPdfBtn').addEventListener('click',exportPdf);
+$('exportCopyBtn').addEventListener('click',exportCopy);
+$('exportCancelBtn').addEventListener('click',function(){closeModal('exportModal');});
+$('confirmResetYesBtn').addEventListener('click',function(){
+  closeModal('confirmResetModal');
+  try{localStorage.removeItem(LS_KEY);}catch(e){}
+  resetSimState();
+});
+$('confirmResetNoBtn').addEventListener('click',function(){closeModal('confirmResetModal');});
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'){
+    if($('exportModal').classList.contains('active'))closeModal('exportModal');
+    else if($('confirmResetModal').classList.contains('active'))closeModal('confirmResetModal');
+  }
+});
+
+buildTabs();
+renderAll();
+showTab(0);
+})();
+</script>
+</body>
+</html>
