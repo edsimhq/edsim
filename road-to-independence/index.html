@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Road to Independence · EdSim</title>
+<!--
+  EdSim · US History · Road to Independence (Cause-and-Effect Flowchart)
+  Standalone file: no PII requested, no network calls, no analytics, no external fonts or scripts.
+  Progress auto-saves to localStorage (per device, not per student) and clears only after the
+  student confirms an export actually saved (Build Standards §3, §5).
+  Optional URL parameters: ?mode=supported|regular|challenge   ?tier=simplified|standard|advanced
+-->
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg-base:#10141d;
+  --bg-panel:#181f2e;
+  --bg-card:#232c42;
+  --bg-card-hover:#2c3752;
+  --bg-slot:#141a27;
+  --text:#f3eee2;
+  --text-muted:#b9c0cf;
+  --border:#3b4762;
+  --border-hi:#5b6b90;
+  --brit:#f28b85;
+  --brit-bg:rgba(242,139,133,.10);
+  --col:#7db8ff;
+  --col-bg:rgba(125,184,255,.10);
+  --counter:#e6bd60;
+  --counter-bg:rgba(230,189,96,.10);
+  --result:#b8a6f5;
+  --result-bg:rgba(184,166,245,.10);
+  --step:#9fb0d3;
+  --ok:#86d99a;
+  --ok-bg:rgba(134,217,154,.14);
+  --warn:#f5b46e;
+  --warn-bg:rgba(245,180,110,.16);
+  --accent:#e6bd60;
+  --accent-hi:#f1cd7c;
+  --accent-ink:#10141d;
+  --focus:#ffffff;
+  --shadow:rgba(0,0,0,.45);
+  --overlay:rgba(6,8,13,.72);
+  --grain:rgba(255,255,255,.025);
+  --p-ink:#111111;
+  --p-bg:#ffffff;
+  --p-line:#999999;
+  --p-muted:#555555;
+  --p-panel:#f4f4ef;
+  --p-rule:#dddddd;
+  --font-head:Georgia,'Times New Roman',serif;
+  --font-body:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  --font-mono:'Courier New',Courier,monospace;
+  --r:8px;--rs:5px;
+  --ease:cubic-bezier(.4,0,.2,1);
+}
+html,body{min-height:100%}
+body{font-family:var(--font-body);background:var(--bg-base);color:var(--text);line-height:1.5;
+  background-image:radial-gradient(ellipse at 15% 0%,rgba(125,184,255,.08),transparent 55%),
+                   radial-gradient(ellipse at 90% 100%,rgba(242,139,133,.06),transparent 55%);}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:1;
+  background:repeating-linear-gradient(0deg,var(--grain) 0,var(--grain) 1px,transparent 1px,transparent 3px)}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+button{font-family:inherit;color:inherit}
+
+/* HEADER */
+.hdr{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;
+  padding:6px 18px;min-height:56px;background:var(--bg-panel);border-bottom:2px solid var(--accent)}
+.hdr-l{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.logo{font-family:var(--font-mono);font-size:15px;letter-spacing:.08em;color:var(--text)}
+.hdiv{width:1px;height:16px;background:var(--border-hi)}
+.unit{font-family:var(--font-mono);font-size:12px;color:var(--accent);letter-spacing:.1em;text-transform:uppercase}
+.hdr-r{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.ctl{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-muted)}
+.ctl select{font-family:var(--font-body);font-size:13px;min-height:44px;padding:0 10px;border-radius:var(--rs);
+  background:var(--bg-card);color:var(--text);border:1px solid var(--border-hi)}
+.tier-toggle{display:flex;gap:2px;background:var(--bg-card);border:1px solid var(--border-hi);border-radius:var(--rs);padding:2px}
+.tier-btn{font-family:var(--font-mono);font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:0 10px;min-height:44px;
+  border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:3px}
+.tier-btn.active{background:var(--accent);color:var(--accent-ink);font-weight:700}
+.hdr-btn{font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:0 14px;min-height:44px;
+  border-radius:var(--rs);cursor:pointer;background:var(--bg-card);border:1px solid var(--border-hi);color:var(--text)}
+.hdr-btn:hover{background:var(--bg-card-hover)}
+
+/* TABS */
+.tabbar{position:relative;z-index:5;display:flex;gap:4px;padding:14px 16px 0;flex-wrap:wrap;max-width:1080px;margin:0 auto;width:100%}
+.tab-btn{font-family:var(--font-head);font-size:15px;font-weight:700;padding:0 16px;min-height:44px;border:1px solid var(--border-hi);
+  border-bottom:none;background:var(--bg-card);color:var(--text-muted);cursor:pointer;border-radius:7px 7px 0 0;transition:background .15s var(--ease)}
+.tab-btn:hover:not(.active){background:var(--bg-card-hover);color:var(--text)}
+.tab-btn.active{background:var(--bg-panel);color:var(--accent);border-color:var(--accent);border-bottom:1px solid var(--bg-panel)}
+
+/* MAIN / PANELS */
+.main{position:relative;z-index:5;display:flex;flex-direction:column;align-items:center;padding:0 16px 40px;width:100%}
+.panel{width:100%;max-width:1080px;background:var(--bg-panel);border:1px solid var(--border-hi);border-radius:0 var(--r) var(--r) var(--r);
+  padding:26px 24px;display:none;box-shadow:0 4px 22px var(--shadow)}
+.panel.active{display:block;animation:fadeUp .3s var(--ease) both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.h1{font-family:var(--font-head);font-size:32px;font-weight:700;line-height:1.15;margin-bottom:4px}
+.h2{font-family:var(--font-head);font-size:25px;font-weight:700;line-height:1.2}
+.sub{font-family:var(--font-mono);font-size:12px;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px}
+.intro{color:var(--text-muted);font-size:15px;margin:8px 0 12px;max-width:820px}
+.panel-nav{display:flex;justify-content:space-between;gap:10px;margin-top:26px;padding-top:16px;border-top:1px solid var(--border)}
+.nav-btn{font-family:var(--font-head);font-size:15px;font-weight:700;padding:0 20px;min-height:44px;border-radius:var(--rs);cursor:pointer;
+  border:1px solid var(--border-hi);background:var(--bg-card);color:var(--text);transition:background .15s var(--ease)}
+.nav-btn:hover{background:var(--bg-card-hover)}
+.nav-btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.nav-btn.primary:hover{background:var(--accent-hi)}
+
+/* DIRECTIONS */
+.dir-step{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--border)}
+.dir-step:last-of-type{border-bottom:none}
+.dir-num{font-family:var(--font-head);font-size:24px;font-weight:700;color:var(--accent);flex-shrink:0;width:34px}
+.dir-body h3{font-family:var(--font-head);font-size:17px;margin-bottom:2px}
+.dir-body p{font-size:15px;color:var(--text-muted)}
+.dir-time{font-family:var(--font-mono);font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;margin-top:3px}
+.howto{margin-top:18px;background:var(--bg-card);border:1px solid var(--border-hi);border-left:4px solid var(--accent);border-radius:var(--r);padding:14px 18px}
+.howto h3{font-family:var(--font-head);font-size:16px;margin-bottom:6px}
+.howto li{margin:4px 0 4px 20px;font-size:14.5px;color:var(--text-muted)}
+..chip{font-family:var(--font-mono);font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:5px 11px;border-radius:14px;border:1px solid var(--border-hi);background:var(--bg-card)}
+.chip.brit{color:var(--brit);border-color:var(--brit)}.chip.col{color:var(--col);border-color:var(--col)}
+.chip.counter{color:var(--counter);border-color:var(--counter)}.chip.result{color:var(--result);border-color:var(--result)}
+
+/* ROUND UI */
+.progress{font-family:var(--font-mono);font-size:12px;color:var(--text-muted);margin:6px 0 16px;letter-spacing:.03em}
+.loop-title{font-family:var(--font-head);font-size:18px;color:var(--accent);margin:18px 0 8px}
+.group.chain{max-width:760px;margin:0 auto}
+.group.loop .row{display:grid;grid-template-columns:repeat(4,1fr);column-gap:30px;row-gap:26px}
+.slot{position:relative;background:var(--bg-slot);border:2px dashed var(--border-hi);border-radius:var(--r);padding:10px 12px 12px;min-height:118px;transition:border-color .15s,background .15s}
+.slot.filled{border-style:solid;background:var(--bg-card)}
+.slot.drop-over{border-color:var(--accent);background:var(--bg-card-hover)}
+.slot.lane-step{border-left:5px solid var(--step)}
+.slot.lane-brit{border-color:var(--brit)}.slot.lane-brit.filled{background:var(--brit-bg)}
+.slot.lane-col{border-color:var(--col)}.slot.lane-col.filled{background:var(--col-bg)}
+.slot.lane-counter{border-color:var(--counter)}.slot.lane-counter.filled{background:var(--counter-bg)}
+.slot.lane-result{border-color:var(--result)}.slot.lane-result.filled{background:var(--result-bg)}
+.slot.ok{box-shadow:0 0 0 3px var(--ok)}
+.slot.bad{box-shadow:0 0 0 3px var(--warn)}
+.slot.locked{border-style:solid}
+.slot-lane{font-family:var(--font-mono);font-size:11px;letter-spacing:.07em;text-transform:uppercase;margin-bottom:6px;color:var(--text-muted)}
+.lane-step .slot-lane{color:var(--step)}.lane-brit .slot-lane{color:var(--brit)}.lane-col .slot-lane{color:var(--col)}
+.lane-counter .slot-lane{color:var(--counter)}.lane-result .slot-lane{color:var(--result)}
+.slot-btn{display:block;width:100%;text-align:left;min-height:44px;padding:6px 4px;border:none;background:transparent;cursor:pointer;
+  font-family:var(--font-head);font-size:16px;font-weight:700;color:var(--text)}
+.slot:not(.filled) .slot-btn{font-family:var(--font-body);font-weight:400;font-size:14px;color:var(--text-muted)}
+.slot-btn:disabled{cursor:default;opacity:1}
+.slot-btn .yr,.card-pick .yr{display:block;font-family:var(--font-mono);font-size:12px;font-weight:400;color:var(--text-muted);margin-top:1px}
+.slot-msg{font-size:13px;color:var(--warn);margin-top:6px;font-weight:600}
+.group.chain .slot.has-next{margin-bottom:28px}
+.group.chain .slot.has-next::after{content:"\25BC";position:absolute;left:50%;bottom:-26px;transform:translateX(-50%);color:var(--text-muted);font-size:17px}
+.group.loop .slot.has-next::after{content:"\279C";position:absolute;right:-24px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:20px}
+.note-cell{border:1px dashed var(--border);border-radius:var(--r);padding:14px;color:var(--text-muted);font-size:14px;grid-column:span 2;display:flex;align-items:center}
+.card-desc{font-size:13.5px;color:var(--text-muted);padding:0 4px;line-height:1.55}
+.bank-wrap{margin-top:28px;padding-top:16px;border-top:1px solid var(--border)}
+.bank-wrap h3{font-family:var(--font-head);font-size:18px}
+.hint{font-size:13.5px;color:var(--text-muted);margin:2px 0 12px}
+.bank{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;min-height:60px;padding:10px;border:1px dashed var(--border);border-radius:var(--r)}
+.bank.drop-over{border-color:var(--accent);background:var(--bg-card-hover)}
+.bank-empty{color:var(--text-muted);font-size:14px;padding:10px}
+.card{background:var(--bg-card);border:1px solid var(--border-hi);border-radius:var(--r);padding:8px 10px 10px;cursor:grab;transition:transform .12s var(--ease),border-color .12s}
+.card:hover{background:var(--bg-card-hover)}
+.card.held{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent);transform:translateY(-2px)}
+.card-pick{display:block;width:100%;text-align:left;min-height:44px;padding:6px 4px;background:transparent;border:none;cursor:pointer;
+  font-family:var(--font-head);font-size:16px;font-weight:700;color:var(--text)}
+.check-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.check-result{margin-top:12px;min-height:24px;font-size:15px}
+.check-result .good{color:var(--ok);font-weight:600}.check-result .fix{color:var(--warn);font-weight:600}
+.links-title{font-family:var(--font-head);font-size:20px;margin:30px 0 4px}
+.link-row{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r);padding:12px 14px;margin:10px 0}
+.link-head{font-size:14px;margin-bottom:8px;color:var(--text-muted)}
+.link-head strong{color:var(--text)}
+.link-select{font-family:var(--font-body);font-size:14px;min-height:44px;padding:0 10px;border-radius:var(--rs);background:var(--bg-slot);color:var(--text);
+  border:1px solid var(--border-hi);margin-bottom:8px;max-width:100%}
+textarea{width:100%;min-height:78px;font-family:var(--font-body);font-size:15px;padding:10px 12px;border:1px solid var(--border-hi);border-radius:var(--rs);
+  background:var(--bg-slot);color:var(--text);resize:vertical;line-height:1.55}
+textarea:focus{outline:3px solid var(--focus);outline-offset:1px}
+.links-empty{color:var(--text-muted);font-size:14px}
+
+/* GLOSSARY */
+.glossary-term{color:var(--accent);border-bottom:1.5px dotted var(--accent);cursor:help;position:relative;font-weight:600}
+.glossary-term .tooltip{display:none;position:absolute;bottom:130%;left:0;background:var(--text);color:var(--bg-base);font-family:var(--font-body);font-size:13px;
+  font-weight:400;line-height:1.5;padding:10px 13px;border-radius:6px;width:250px;max-width:80vw;z-index:30;box-shadow:0 6px 20px var(--shadow)}
+.glossary-term:hover .tooltip,.glossary-term:focus .tooltip{display:block}
+
+.chk{display:flex;align-items:center;gap:10px;min-height:44px;font-size:14.5px;cursor:pointer}
+.chk input{width:22px;height:22px;flex-shrink:0;accent-color:var(--accent)}
+
+/* REFLECT / EXPORT */
+.reflect-q{margin:18px 0}
+.reflect-q label{display:block;font-family:var(--font-head);font-size:16.5px;font-weight:700;margin-bottom:8px}
+.reflect-q textarea{min-height:130px}
+.export-notice{margin-top:22px;padding:12px 16px;border:1px solid var(--warn);background:var(--warn-bg);border-radius:var(--r);font-size:14px}
+.export-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.export-btn{font-family:var(--font-head);font-size:15px;font-weight:700;padding:0 22px;min-height:48px;border-radius:var(--rs);border:1px solid;cursor:pointer}
+.export-pdf{background:var(--counter-bg);color:var(--counter);border-color:var(--counter)}
+.export-copy{background:var(--col-bg);color:var(--col);border-color:var(--col)}
+.export-btn:hover{background:var(--bg-card-hover)}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--text);color:var(--bg-base);padding:11px 20px;border-radius:6px;
+  font-size:14px;z-index:300;opacity:0;pointer-events:none;transition:opacity .2s;max-width:90vw;text-align:center}
+.toast.show{opacity:1}
+
+/* MODALS */
+.modal-overlay{display:none;position:fixed;inset:0;background:var(--overlay);z-index:200;align-items:center;justify-content:center}
+.modal-overlay.active{display:flex}
+.modal{background:var(--bg-panel);border:1px solid var(--accent);border-radius:var(--r);padding:24px;max-width:440px;width:92%}
+.modal h2{font-family:var(--font-head);font-size:20px;margin-bottom:10px}
+.modal p{font-size:14.5px;color:var(--text-muted);margin-bottom:6px}
+.modal .chk{min-height:44px}
+.modal-btns{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;margin-top:16px}
+
+/* PRINT */
+#printDoc{display:none}
+@media print{
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  html,body{background:var(--p-bg)!important;color:var(--p-ink)!important}
+  body::after{display:none!important}
+  #app,.toast,.modal-overlay{display:none!important}
+  #printDoc{display:block!important;padding:24px 30px;font-family:Georgia,'Times New Roman',serif;color:var(--p-ink);max-width:780px;margin:0 auto}
+  #printDoc *{overflow:visible!important}
+}
+.pd-header{display:flex;justify-content:space-between;gap:16px;border-bottom:2px solid var(--p-ink);padding-bottom:10px;margin-bottom:14px}
+.pd-title{font-size:21px;font-weight:700}
+.pd-meta{font-size:12px;color:var(--p-muted);text-align:right;line-height:1.6}
+.pd-name{display:grid;grid-template-columns:2fr 1fr;gap:20px;margin-bottom:14px;font-size:12px;color:var(--p-muted)}
+.pd-name div{border-bottom:1px solid var(--p-ink);padding-top:22px}
+.pd-sec{font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;background:var(--p-ink);color:var(--p-bg);padding:6px 12px;border-radius:3px;margin:16px 0 10px}
+.pd-item{margin:0 0 12px;padding-bottom:8px;border-bottom:1px solid var(--p-rule);page-break-inside:avoid}
+.pd-lab{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--p-muted)}
+.pd-val{font-size:14px;font-weight:700}
+.pd-txt{font-size:13.5px;margin-top:4px;white-space:pre-wrap}
+.pd-line{border-bottom:1px solid var(--p-line);height:26px}
+.pd-sub{font-size:14px;font-weight:700;margin:12px 0 6px}
+.pd-quote{font-style:italic;font-size:14px}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .group.loop .row{grid-template-columns:1fr}
+  .group.loop .slot.has-next{margin-bottom:28px}
+  .group.loop .slot.has-next::after{content:"\25BC";right:auto;left:50%;top:auto;bottom:-26px;transform:translateX(-50%);font-size:17px}
+  .note-cell{grid-column:auto}
+}
+@media(max-width:640px){
+  .h1{font-size:26px}.panel{padding:18px 14px}
+  .tabbar{overflow-x:auto;flex-wrap:nowrap}
+  .tab-btn{white-space:nowrap}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media print{</style>
+</head>
+<body>
+<div id="app">
+<header class="hdr">
+  <div class="hdr-l">
+    <span class="logo">EdSim</span><div class="hdiv"></div>
+    <span class="unit">Road to Independence · Day 1</span>
+  </div>
+  <div class="hdr-r">
+    <div class="ctl"><label for="modeSelect">Mode</label>
+      <select id="modeSelect">
+        <option value="supported">Supported</option>
+        <option value="regular">Regular</option>
+        <option value="challenge">Challenge</option>
+      </select>
+    </div>
+    <div class="tier-toggle" role="group" aria-label="Reading level">
+      <button type="button" class="tier-btn" data-tier="simplified" aria-label="Simplified reading level">Simplified</button>
+      <button type="button" class="tier-btn" data-tier="standard" aria-label="Standard reading level">Standard</button>
+      <button type="button" class="tier-btn" data-tier="advanced" aria-label="Advanced reading level">Advanced</button>
+    </div>
+    <button type="button" class="hdr-btn" id="resetBtn" aria-label="Reset all progress">&#8634; Reset</button>
+  </div>
+</header>
+
+<div class="tabbar" role="tablist" aria-label="Activity sections">
+  <button type="button" class="tab-btn active" role="tab" data-act="tab" data-tab="directions" id="tabbtn-directions" aria-selected="true">Directions</button>
+  <button type="button" class="tab-btn" role="tab" data-act="tab" data-tab="r1" id="tabbtn-r1" aria-selected="false">Round 1</button>
+  <button type="button" class="tab-btn" role="tab" data-act="tab" data-tab="r2" id="tabbtn-r2" aria-selected="false">Round 2</button>
+  <button type="button" class="tab-btn" role="tab" data-act="tab" data-tab="r3" id="tabbtn-r3" aria-selected="false">Round 3</button>
+  <button type="button" class="tab-btn" role="tab" data-act="tab" data-tab="reflect" id="tabbtn-reflect" aria-selected="false">Exit Ticket &amp; Export</button>
+</div>
+
+<div class="main">
+
+  <!-- DIRECTIONS -->
+  <section class="panel active" id="panel-directions" role="tabpanel" aria-labelledby="tabbtn-directions">
+    <h1 class="h1">Road to Independence</h1>
+    <div class="sub">EdSim · US History · Cause and Effect</div>
+    <p class="intro">Why did thirteen British colonies decide to break away? In this activity you will build the chain of events that led from the French and Indian War to the Declaration of Independence, and explain how each step led to the next. Tomorrow you will use this chain to test the Declaration&rsquo;s complaints.</p>
+
+    <div class="dir-step"><div class="dir-num">1</div><div class="dir-body">
+      <h3>Round 1 · The War and the New Course (1754&ndash;1765)</h3>
+      <p>Put the cards in cause-and-effect order to show how winning a war led Britain to tighten control. Then explain each link.</p>
+      <div class="dir-time">About 10 minutes</div></div></div>
+    <div class="dir-step"><div class="dir-num">2</div><div class="dir-body">
+      <h3>Round 2 · Action and Reaction Loops (1765&ndash;1773)</h3>
+      <p>Sort cards into three loops. Each loop shows a British action, the colonial response, and how Britain answered back.</p>
+      <div class="legend"><span class="chip brit">British action</span><span class="chip col">Colonial response</span><span class="chip counter">British counter-response</span><span class="chip result">What happened next</span></div>
+      <div class="dir-time">About 12 minutes</div></div></div>
+    <div class="dir-step"><div class="dir-num">3</div><div class="dir-body">
+      <h3>Round 3 · Crisis to Independence (1774&ndash;1776)</h3>
+      <p>Order the final steps from the Coercive Acts to the Declaration of Independence, and explain each link.</p>
+      <div class="dir-time">About 10 minutes</div></div></div>
+    <div class="dir-step"><div class="dir-num">4</div><div class="dir-body">
+      <h3>Exit Ticket &amp; Export</h3>
+      <p>Answer two short questions to show what you learned today. Then save your work as a PDF or copy it into your own Google Doc, and hand it in before you leave.</p>
+      <div class="dir-time">About 8 minutes</div></div></div>
+
+    <div class="howto">
+      <h3>How to use the cards</h3>
+      <ul>
+        <li><strong>Click or tap a card</strong> to pick it up, then click or tap a slot to place it. You can also drag and drop.</li>
+        <li><strong>Click a placed card</strong> to pick it back up and move it.</li>
+        <li>Press <strong>Check</strong> any time. It flags problems but never gives away the answer.</li>
+        <li>Once two neighboring cards are placed, an <strong>explanation box</strong> appears. Finish the sentence starter in your own words. This is where your thinking shows.</li>
+        <li><strong>Mode</strong> (top right): Supported gives you some cards, Regular is the standard activity, and Challenge hides the dates. <strong>Reading level</strong> changes the wording of the cards.</li>
+        <li>Your work saves on this device as you go.</li>
+      </ul>
+    </div>
+    <p class="intro" style="margin-top:16px">By the end, you will have a complete cause-and-effect chain from 1754 to 1776 and a written explanation of how Britain&rsquo;s actions and the colonists&rsquo; responses pushed the two sides toward war.</p>
+    <div class="panel-nav"><span></span><button type="button" class="nav-btn primary" data-act="tab" data-tab="r1">Start: Round 1 &rarr;</button></div>
+  </section>
+
+  <section class="panel" id="panel-r1" role="tabpanel" aria-labelledby="tabbtn-r1">
+    <h2 class="h2">Round 1 · The War and the New Course</h2><div class="sub">1754&ndash;1765</div>
+    <div id="rbody-r1"></div>
+    <div class="panel-nav"><button type="button" class="nav-btn" data-act="tab" data-tab="directions">&larr; Directions</button><button type="button" class="nav-btn primary" data-act="tab" data-tab="r2">Next: Round 2 &rarr;</button></div>
+  </section>
+
+  <section class="panel" id="panel-r2" role="tabpanel" aria-labelledby="tabbtn-r2">
+    <h2 class="h2">Round 2 · Action and Reaction Loops</h2><div class="sub">1765&ndash;1773</div>
+    <div id="rbody-r2"></div>
+    <div class="panel-nav"><button type="button" class="nav-btn" data-act="tab" data-tab="r1">&larr; Round 1</button><button type="button" class="nav-btn primary" data-act="tab" data-tab="r3">Next: Round 3 &rarr;</button></div>
+  </section>
+
+  <section class="panel" id="panel-r3" role="tabpanel" aria-labelledby="tabbtn-r3">
+    <h2 class="h2">Round 3 · Crisis to Independence</h2><div class="sub">1774&ndash;1776</div>
+    <div id="rbody-r3"></div>
+    <div class="panel-nav"><button type="button" class="nav-btn" data-act="tab" data-tab="r2">&larr; Round 2</button><button type="button" class="nav-btn primary" data-act="tab" data-tab="reflect">Next: Exit Ticket &rarr;</button></div>
+  </section>
+
+
+  <section class="panel" id="panel-reflect" role="tabpanel" aria-labelledby="tabbtn-reflect">
+    <h2 class="h2">Exit Ticket &amp; Export</h2><div class="sub">Show what you learned today</div>
+    <div class="reflect-q">
+      <label for="reflectA">1. Choose one British action from your chart. Explain how the colonists responded and how Britain answered back. Use the word &ldquo;because&rdquo; at least once.</label>
+      <textarea id="reflectA" placeholder="Type your answer here..."></textarea>
+    </div>
+    <div class="reflect-q">
+      <label for="reflectB">2. Which event in your chart do you think made war most likely? Explain why, using at least two events as evidence.</label>
+      <textarea id="reflectB" placeholder="Type your answer here..."></textarea>
+    </div>
+    <div class="export-notice"><strong>Before you export:</strong> once you confirm your download or copy worked, this page will clear for the next student. Nothing is deleted until you confirm it saved.</div>
+    <div class="export-row">
+      <button type="button" class="export-btn export-pdf" id="pdfBtn">&#11015; Save as PDF</button>
+      <button type="button" class="export-btn export-copy" id="copyBtn">&#128203; Copy Text</button>
+    </div>
+    <div class="panel-nav"><button type="button" class="nav-btn" data-act="tab" data-tab="r3">&larr; Round 3</button><span></span></div>
+  </section>
+</div>
+</div>
+
+<div id="printDoc"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<!-- Export section-select modal -->
+<div class="modal-overlay" id="exportModal">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="exportTitle">
+    <h2 id="exportTitle">Choose sections to include</h2>
+    <label class="chk"><input type="checkbox" id="chk-r1" checked/> Round 1 chain</label>
+    <label class="chk"><input type="checkbox" id="chk-r2" checked/> Round 2 loops</label>
+    <label class="chk"><input type="checkbox" id="chk-r3" checked/> Round 3 chain</label>
+    <label class="chk"><input type="checkbox" id="chk-reflect" checked/> Exit ticket answers</label>
+    <div class="modal-btns">
+      <button type="button" class="nav-btn" id="exportCancelBtn">Cancel</button>
+      <button type="button" class="nav-btn primary" id="exportGoBtn">Save PDF</button>
+    </div>
+  </div>
+</div>
+
+<!-- Confirm-before-reset modal (Build Standards §5) -->
+<div class="modal-overlay" id="confirmResetModal">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="confirmResetTitle">
+    <h2 id="confirmResetTitle">Did it save?</h2>
+    <p id="confirmResetMsg"></p>
+    <div class="modal-btns">
+      <button type="button" class="nav-btn" id="confirmResetNoBtn">No / not sure &mdash; keep my work</button>
+      <button type="button" class="nav-btn primary" id="confirmResetYesBtn">Yes, it saved &mdash; clear for next student</button>
+    </div>
+  </div>
+</div>
+
+<!-- Header reset modal -->
+<div class="modal-overlay" id="resetModal">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="resetTitle">
+    <h2 id="resetTitle">Reset all progress?</h2>
+    <p>This clears every card, explanation, and answer on this device. It cannot be undone.</p>
+    <div class="modal-btns">
+      <button type="button" class="nav-btn" id="resetCancelBtn">Cancel</button>
+      <button type="button" class="nav-btn primary" id="resetGoBtn">Reset everything</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════
+// CONTENT
+// ══════════════════════════════════════════════
+const TIERS = ['simplified','standard','advanced'];
+const MODES = ['supported','regular','challenge'];
+const LS_KEY = 'edsim_road_to_independence_v1';
+const TABS = ['directions','r1','r2','r3','reflect'];
+const STARTERS = [
+  'Britain did this because…',
+  'Colonists responded this way because…',
+  'This led to the next step because…',
+  'This made the conflict worse because…'
+];
+
+const VOCAB = {
+  "Salutary neglect":{simplified:`When Britain mostly left the colonies alone for many years instead of enforcing its rules.`,standard:`An unofficial British policy of loosely enforcing trade laws in the colonies, allowing them significant self-governance for decades.`,advanced:`The informal 17th–18th century British policy of relaxed enforcement of trade and taxation regulations, which fostered colonial self-reliance and autonomy.`},
+  "Mercantilism":{simplified:`An economic idea that colonies exist to make money for the home country by supplying raw materials.`,standard:`An economic system in which colonies exist to benefit the mother country economically, supplying raw materials and buying finished goods in return.`,advanced:`An economic theory holding that a nation’s power depends on accumulating wealth, with colonies serving as sources of raw materials and captive markets for the mother country.`},
+  "Proclamation Line of 1763":{simplified:`A line Britain drew along the Appalachian Mountains banning colonists from settling further west.`,standard:`A British-drawn boundary along the Appalachian Mountains forbidding colonial settlement west of it, meant to ease tensions with Native Americans.`,advanced:`A 1763 British decree establishing the Appalachian crest as the westward limit of colonial settlement, intended to stabilize relations with Native nations after the French and Indian War.`},
+  "No taxation without representation":{simplified:`The colonists’ argument that Britain shouldn’t tax them since they had no elected members in Parliament.`,standard:`The colonial argument that Britain had no right to tax the colonies because they had no elected representatives in Parliament.`,advanced:`The constitutional principle, invoked by colonists, that legislative bodies may not levy taxes on a population that lacks direct representation in that body.`},
+  "Boycott":{simplified:`Refusing to buy certain goods as a form of protest.`,standard:`An organized refusal to buy or use certain goods, used by colonists to protest British taxes like the Stamp Act.`,advanced:`A coordinated economic protest tactic involving the deliberate withdrawal of commercial patronage to pressure a policy change, as with colonial responses to the Stamp and Townshend Acts.`},
+  "Quartering":{simplified:`Forcing colonists to let British soldiers live in their homes or buildings.`,standard:`The practice, required by British law, of colonists housing and supplying British troops stationed in the colonies.`,advanced:`The legally mandated provision of lodging and supplies to occupying British troops, a colonial grievance formalized in the Quartering Acts.`},
+  "Smuggling":{simplified:`Secretly bringing goods into a country to avoid paying taxes.`,standard:`Secretly bringing in goods to avoid paying taxes or to get around trade laws.`,advanced:`The illicit importation of goods to evade customs duties or trade restrictions.`},
+  "Sons of Liberty":{simplified:`Colonists who protested British taxes, sometimes by gathering crowds and pressuring tax officials.`,standard:`A colonial protest group that organized crowds and pressured British officials to resist new taxes.`,advanced:`A network of colonial activists that organized public protests and intimidated tax officials to resist British revenue measures.`},
+  "Repeal":{simplified:`To cancel a law.`,standard:`To officially cancel a law.`,advanced:`To formally revoke a law through a legislative act.`},
+  "Militia":{simplified:`Ordinary townspeople who trained to fight when they were needed.`,standard:`Local citizen-soldiers who trained part-time and could be called up to defend their community.`,advanced:`Part-time citizen-soldiers organized by localities for defense, distinct from a standing army.`},
+  "Petition":{simplified:`A formal written request to a leader.`,standard:`A formal written request sent to a government or ruler asking for action.`,advanced:`A formal written appeal to authority requesting redress of grievances.`},
+  "Charter":{simplified:`A written document from the king that let a colony exist and govern itself.`,standard:`A written grant from the Crown that created a colony and set the rules for its government.`,advanced:`A royal grant establishing a colony and defining its powers of self-government.`}
+};
+
+function mk(id,title,years,sortYear,s,st,adv,extra){
+  return Object.assign({id:id,title:title,years:years,sortYear:sortYear,desc:{simplified:s,standard:st,advanced:adv},distractor:false},extra||{});
+}
+
+const LANE_LABEL = {brit:'British action',col:'Colonial response',counter:'British counter-response',result:'What happened next'};
+
+function chainSlots(ids,anchors){
+  return ids.map(function(id,i){ return {lane:'step',label:'Step '+(i+1),correct:id,anchor:anchors.indexOf(i)>-1}; });
+}
+
+const ROUNDS = {
+  r1:{
+    id:'r1', kind:'chain', name:'Round 1',
+    intro:`Put the cards in cause-and-effect order. Start with the background ideas, then follow how winning a war pushed Britain to tighten control over the colonies.`,
+    distractorNote:`One card does not belong in this chain.`,
+    cards:[
+      mk('r1-merc','Mercantilism','1600s–1700s',1650,
+        `Britain believed its colonies existed to make Britain rich. Colonists sold raw materials to Britain and bought British goods.`,
+        `Under this system, colonies existed to benefit Britain by supplying raw materials and buying British manufactured goods. Trade laws favored Britain.`,
+        `This economic theory held that colonies existed to enrich the mother country by supplying raw materials and serving as captive markets, and Parliament regulated colonial trade accordingly.`),
+      mk('r1-neglect','Salutary Neglect','early 1700s–1763',1720,
+        `For many years Britain made trade rules but rarely enforced them. Colonists ran many of their own local affairs.`,
+        `Britain passed {mercantilism|Mercantilism} trade laws but enforced them loosely for decades, so colonists governed themselves in many ways.`,
+        `For decades Britain enforced its {mercantilist|Mercantilism} trade regulations loosely, allowing colonial assemblies to develop substantial self-government.`),
+      mk('r1-war','French and Indian War','1754–1763',1754,
+        `Britain and France fought over land in North America. Britain won, but the war cost a huge amount of money.`,
+        `Britain defeated France and gained land in North America, but the war left Britain with enormous debt and a large territory to defend. Britain ended {salutary neglect|Salutary neglect} and looked to the colonies for money.`,
+        `Britain’s victory over France doubled its North American empire but left crushing war debt and costly new defense responsibilities, prompting Parliament to abandon {salutary neglect|Salutary neglect} and assert tighter control.`),
+      mk('r1-proc','Proclamation of 1763','1763',1763,
+        `Britain banned colonists from settling west of the Appalachian Mountains. Britain wanted to avoid costly wars with Native Americans.`,
+        `To keep the peace with Native Americans after the war, Britain issued the {Proclamation Line of 1763|Proclamation Line of 1763}, banning colonial settlement west of the Appalachian Mountains. Many colonists were angry.`,
+        `Following conflict with Native nations, Britain drew the {Proclamation Line of 1763|Proclamation Line of 1763} along the Appalachians to stabilize the frontier, but colonists viewed it as an unjust restriction on expansion.`),
+      mk('r1-sugar','Sugar Act','1764',1764,
+        `Britain taxed sugar and other imports and began enforcing trade rules strictly. People caught {smuggling|Smuggling} could be tried without a jury.`,
+        `The Sugar Act taxed imported sugar and other goods and cracked down on {smuggling|Smuggling}. Accused smugglers could be tried in special courts without a jury.`,
+        `The Sugar Act aimed to raise revenue and enforce trade laws by strictly collecting import duties and expanding vice-admiralty courts, where accused smugglers were tried without juries.`),
+      mk('r1-quarter','Quartering Act','1765',1765.2,
+        `Colonists had to provide housing and supplies for British soldiers who stayed in America after the war.`,
+        `The Quartering Act required colonies to house and supply British troops who remained in America after the war. {Quartering|Quartering} became a lasting complaint.`,
+        `The Quartering Act obliged colonial governments to provide barracks and supplies for the British army kept in America, and {quartering|Quartering} soon became a symbol of military intrusion.`),
+      mk('r1-stamp','Stamp Act','1765',1765.2,
+        `Britain taxed paper items like newspapers and legal papers. Colonists had no vote in Parliament, so they were furious.`,
+        `The Stamp Act placed a direct tax on newspapers, legal documents, and other printed items to help pay for British troops. Colonists said Parliament could not tax them without their consent.`,
+        `The Stamp Act imposed a major direct tax on the colonies to help fund the army; colonists argued it violated the principle of {no taxation without representation|No taxation without representation}.`),
+      mk('r1-albany','Albany Plan of Union','1754',1754,
+        `Colonial leaders proposed uniting the colonies for defense. The plan was rejected.`,
+        `Delegates at the Albany Congress proposed a united colonial government for defense against France, but the colonies and Britain rejected it.`,
+        `The Albany Plan of Union, proposed by Benjamin Franklin and others, sought coordinated frontier defense but was rejected by the colonial legislatures and the Crown.`,
+        {distractor:true})
+    ],
+    slots:chainSlots(['r1-merc','r1-neglect','r1-war','r1-proc','r1-sugar','r1-quarter','r1-stamp'],[0,2,4])
+  },
+  r2:{
+    id:'r2', kind:'loops', name:'Round 2',
+    intro:`Each loop shows the conflict escalating: a British action, the colonial response, and then a British counter-response. Sort the cards into the right loop and the right slot.`,
+    distractorNote:`One card does not belong in any loop.`,
+    cards:[
+      mk('r2-stamp','Stamp Act','1765',1765.2,
+        `Britain taxed paper items like newspapers and legal papers. Colonists had no vote in Parliament, so they were furious.`,
+        `The Stamp Act placed a direct tax on newspapers, legal documents, and other printed items to help pay for British troops.`,
+        `The Stamp Act imposed a major direct tax on the colonies to help fund the army, provoking widespread resistance.`),
+      mk('r2-stampcong','Stamp Act Congress and Sons of Liberty protests','1765',1765.5,
+        `Delegates from nine colonies met to protest together, and the {Sons of Liberty|Sons of Liberty} pressured tax officials. Colonists shouted, “No taxation without representation!”`,
+        `Delegates from nine colonies met at the Stamp Act Congress to send a united protest, while the {Sons of Liberty|Sons of Liberty} pressured stamp agents. The slogan was “{No taxation without representation|No taxation without representation}.”`,
+        `Nine colonies sent delegates to the Stamp Act Congress, which declared that only colonial assemblies could tax colonists, while the {Sons of Liberty|Sons of Liberty} intimidated stamp distributors.`),
+      mk('r2-repeal','Stamp Act repealed','1766',1766.2,
+        `Britain cancelled ({repealed|Repeal}) the Stamp Act because the protests hurt British trade.`,
+        `Parliament {repealed|Repeal} the Stamp Act after colonial protests hurt British merchants.`,
+        `Facing colonial resistance and pressure from British merchants hurt by lost trade, Parliament {repealed|Repeal} the Stamp Act in 1766.`),
+      mk('r2-declact','Declaratory Act','1766',1766.2,
+        `On the same day, Parliament said it had the power to make laws for the colonies “in all cases whatsoever.”`,
+        `At the same time, Parliament passed the Declaratory Act, insisting it could make laws for the colonies “in all cases whatsoever.” Britain backed down on the tax but not on its authority.`,
+        `Alongside repeal, the Declaratory Act asserted Parliament’s authority to legislate for the colonies “in all cases whatsoever,” retreating on the tax while reaffirming sovereignty.`),
+      mk('r2-townshend','Townshend Acts','1767',1767,
+        `Britain taxed imported goods like glass, paper, paint, and tea. The money paid British officials in America.`,
+        `The Townshend Acts taxed imported glass, lead, paint, paper, and tea. The money paid the salaries of royal officials, which weakened colonial assemblies’ control over them.`,
+        `The Townshend Acts imposed import duties on glass, lead, paint, paper, and tea, using the revenue to pay royal governors and judges and reduce their dependence on colonial assemblies.`),
+      mk('r2-boycott','Boycotts and protest writings','1767–1768',1767.5,
+        `Colonists refused to buy the taxed British goods. Writers like John Dickinson argued the taxes were unfair.`,
+        `Colonists organized {boycotts|Boycott} of taxed British goods, and writers like John Dickinson (Letters from a Farmer in Pennsylvania) argued that Parliament had no right to tax them for revenue.`,
+        `Merchants and consumers organized nonimportation agreements ({boycotts|Boycott}), while John Dickinson’s Letters from a Farmer in Pennsylvania argued that Parliament could regulate trade but not tax for revenue.`),
+      mk('r2-troops','Troops sent to Boston','1768',1768,
+        `Britain sent soldiers to Boston to protect tax collectors and keep order. Many colonists were angry about the soldiers living among them.`,
+        `Britain sent thousands of soldiers to Boston to support customs officers and enforce the duties. Their presence, and {quartering|Quartering} them, angered many colonists.`,
+        `In response to unrest in Boston, Britain stationed troops in the city to support customs enforcement, intensifying colonial resentment over {quartering|Quartering} and military intrusion in civilian life.`),
+      mk('r2-massacre','Boston Massacre','1770',1770,
+        `British soldiers fired into an angry crowd and killed five colonists. Colonial leaders spread the story across the colonies.`,
+        `After a confrontation with a crowd in Boston, British soldiers fired and killed five colonists. Colonial leaders, including Paul Revere with his famous engraving, used the event to build anger at British rule.`,
+        `Soldiers fired on a hostile Boston crowd, killing five colonists; propagandists such as Paul Revere, whose engraving circulated widely, portrayed it as a massacre, hardening opposition to British troops.`),
+      mk('r2-tea','Tea Act','1773',1773,
+        `Britain let one company sell tea cheaply in the colonies, which hurt colonial merchants. The tea was still taxed.`,
+        `The Tea Act gave the British East India Company special rights to sell tea in the colonies. Colonists saw it as a trick to make them accept Parliament’s right to tax them.`,
+        `The Tea Act gave the East India Company a favored position in the colonial tea trade; colonists saw the cheaper but still-taxed tea as a maneuver to win acceptance of Parliament’s taxing power.`),
+      mk('r2-teaparty','Boston Tea Party','1773',1773.9,
+        `Colonists dumped 342 chests of British tea into Boston Harbor to protest.`,
+        `Protesters boarded ships in Boston Harbor and dumped 342 chests of tea into the water to protest the Tea Act and the tax on tea.`,
+        `Members of the {Sons of Liberty|Sons of Liberty} destroyed 342 chests of East India Company tea in Boston Harbor, escalating resistance from {boycott|Boycott} to direct action.`),
+      mk('r2-awakening','The Great Awakening','1730s–1740s',1735,
+        `A wave of religious revival swept the colonies. Traveling preachers encouraged people to think for themselves about faith and authority.`,
+        `A widespread religious revival swept through the colonies, led by traveling preachers like George Whitefield, encouraging personal religious experience over established church authority.`,
+        `An intercolonial religious revival, led by preachers such as George Whitefield and Jonathan Edwards, emphasized individual spiritual experience over institutional authority.`,
+        {distractor:true})
+    ],
+    slots:[
+      {lane:'brit',label:LANE_LABEL.brit,correct:'r2-stamp',anchor:true},
+      {lane:'col',label:LANE_LABEL.col,correct:'r2-stampcong'},
+      {lane:'counter',label:LANE_LABEL.counter,correct:'r2-repeal'},
+      {lane:'result',label:LANE_LABEL.result,correct:'r2-declact'},
+      {lane:'brit',label:LANE_LABEL.brit,correct:'r2-townshend',anchor:true},
+      {lane:'col',label:LANE_LABEL.col,correct:'r2-boycott'},
+      {lane:'counter',label:LANE_LABEL.counter,correct:'r2-troops'},
+      {lane:'result',label:LANE_LABEL.result,correct:'r2-massacre'},
+      {lane:'brit',label:LANE_LABEL.brit,correct:'r2-tea',anchor:true},
+      {lane:'col',label:LANE_LABEL.col,correct:'r2-teaparty'}
+    ],
+    groups:[
+      {title:'Loop A · The Stamp Act, 1765–1766', slots:[0,1,2,3]},
+      {title:'Loop B · The Townshend Acts, 1767–1770', slots:[4,5,6,7]},
+      {title:'Loop C · The Tea Act, 1773', slots:[8,9], note:`Britain’s counter-response to the Tea Party comes next, in Round 3.`}
+    ]
+  },
+  r3:{
+    id:'r3', kind:'chain', name:'Round 3',
+    intro:`The crisis deepens. Put these cards in order from Britain’s response to the Tea Party all the way to the Declaration of Independence.`,
+    distractorNote:`One card does not belong in this chain.`,
+    cards:[
+      mk('r3-coercive','Coercive (Intolerable) Acts','1774',1774.4,
+        `After the Tea Party, Britain punished Massachusetts. It closed Boston Harbor, cut back the colony’s self-government, and made it easier to move trials of officials to England.`,
+        `In response to the Boston Tea Party, Parliament passed the Coercive Acts, which colonists called the Intolerable Acts. The Boston Port Act closed the harbor, the Massachusetts Government Act cut back self-government and altered the colony’s {charter|Charter}, and the Administration of Justice Act let some trials move to England.`,
+        `Parliament answered the Tea Party with the Coercive Acts: the Boston Port Act closed the harbor, the Massachusetts Government Act altered the colony’s {charter|Charter}, and the Administration of Justice Act allowed officials’ trials to be moved out of the colony.`),
+      mk('r3-congress','Committees of Correspondence and the First Continental Congress','1774',1774.7,
+        `Colonies had already shared news by letter. In 1774, delegates from twelve colonies met in Philadelphia to answer the Coercive Acts.`,
+        `Committees of Correspondence had linked the colonies by sharing news and plans. In 1774, delegates from twelve colonies met in Philadelphia as the First Continental Congress and organized a {boycott|Boycott} of British goods to protest the Coercive Acts.`,
+        `Building on networks created by the Committees of Correspondence, the First Continental Congress united twelve colonies in coordinating economic resistance to the Coercive Acts and asserting colonial rights.`),
+      mk('r3-lex','Lexington and Concord','1775',1775.3,
+        `British soldiers marched to seize colonial weapons, and the first battles of the war began in Massachusetts.`,
+        `British troops sent to seize colonial weapons at Concord clashed with {militia|Militia} at Lexington and Concord, starting the American Revolutionary War.`,
+        `When British troops marched to seize arms at Concord, local {militia|Militia} confronted them at Lexington and Concord, marking the outbreak of armed conflict.`),
+      mk('r3-olive','Olive Branch Petition rejected','1775',1775.6,
+        `Congress asked King George III to help end the fighting. The king refused to read it and said the colonists were rebels.`,
+        `The Second Continental Congress sent the Olive Branch {Petition|Petition}, asking King George III to prevent further conflict. He refused to receive it and declared the colonies in rebellion.`,
+        `The Second Continental Congress’s Olive Branch {Petition|Petition} appealed to the king to restore peace; George III refused to receive it and issued a proclamation declaring the colonies in rebellion.`),
+      mk('r3-sense','Common Sense','1776',1776.0,
+        `Thomas Paine’s pamphlet argued in simple language that America should be independent from Britain.`,
+        `In January 1776, Thomas Paine published Common Sense, a pamphlet arguing that the colonies should break away from Britain and its king.`,
+        `Thomas Paine’s pamphlet Common Sense (January 1776) argued for independence in plain, persuasive language, shifting popular opinion away from reconciliation with the Crown.`),
+      mk('r3-decl','Declaration of Independence','July 1776',1776.5,
+        `Congress announced that the colonies were free and independent. It listed complaints against King George III.`,
+        `On July 4, 1776, the Second Continental Congress adopted the Declaration of Independence, explaining why the colonies were breaking from Britain and listing grievances against King George III.`,
+        `The Declaration of Independence justified separation by grounding it in natural rights and the consent of the governed, then presented a long list of grievances against the Crown.`),
+      mk('r3-paris','Treaty of Paris','1783',1783,
+        `The treaty that officially ended the Revolutionary War and recognized the United States.`,
+        `The Treaty of Paris officially ended the Revolutionary War and recognized American independence.`,
+        `The Treaty of Paris (1783) formally concluded the Revolutionary War and secured British recognition of the United States.`,
+        {distractor:true})
+    ],
+    slots:chainSlots(['r3-coercive','r3-congress','r3-lex','r3-olive','r3-sense','r3-decl'],[0,3,5])
+  }
+};
+// Build default single group for chain rounds
+['r1','r3'].forEach(function(k){
+  ROUNDS[k].groups=[{title:'',slots:ROUNDS[k].slots.map(function(s,i){return i;})}];
+});
+
+// ══════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════
+let state = null;
+let held = null;          // {rid, cardId} — card currently picked up (tap-to-place)
+const checks = {};        // rid -> {flags:{slotIdx:{status,msg}}, summary:{ok,text}}
+
+function shuffle(arr){ const a=arr.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); const t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+function defaultState(){
+  const s = {v:1, tier:'standard', mode:'regular', rounds:{}, reflect:{a:'',b:''}};
+  Object.keys(ROUNDS).forEach(function(rid){
+    s.rounds[rid] = {place:{}, links:{}, order:shuffle(ROUNDS[rid].cards.map(function(c){return c.id;}))};
+  });
+  return s;
+}
+
+function sanitize(raw){
+  const s = defaultState();
+  if(!raw || typeof raw!=='object' || raw.v!==1) return s;
+  if(TIERS.indexOf(raw.tier)>-1) s.tier = raw.tier;
+  if(MODES.indexOf(raw.mode)>-1) s.mode = raw.mode;
+  Object.keys(ROUNDS).forEach(function(rid){
+    const R = ROUNDS[rid];
+    const rr = raw.rounds && raw.rounds[rid];
+    if(!rr || typeof rr!=='object') return;
+    const ids = R.cards.map(function(c){return c.id;});
+    if(rr.place && typeof rr.place==='object'){
+      const used = {};
+      Object.keys(rr.place).forEach(function(k){
+        const i = Number(k), cid = rr.place[k];
+        if(Number.isInteger(i) && i>=0 && i<R.slots.length && ids.indexOf(cid)>-1 && !used[cid]){ s.rounds[rid].place[i]=cid; used[cid]=true; }
+      });
+    }
+    if(rr.links && typeof rr.links==='object'){
+      Object.keys(rr.links).forEach(function(k){
+        const i = Number(k), l = rr.links[k];
+        if(Number.isInteger(i) && i>=0 && i<R.slots.length && l && typeof l==='object'){
+          const si = Number(l.s);
+          s.rounds[rid].links[i] = {s:(Number.isInteger(si)&&si>=0&&si<STARTERS.length)?si:0, t:(typeof l.t==='string')?l.t.slice(0,2000):''};
+        }
+      });
+    }
+    if(Array.isArray(rr.order) && rr.order.length===ids.length && ids.every(function(id){return rr.order.indexOf(id)>-1;})) s.rounds[rid].order = rr.order.slice();
+  });
+  if(raw.reflect && typeof raw.reflect==='object'){
+    if(typeof raw.reflect.a==='string') s.reflect.a = raw.reflect.a.slice(0,4000);
+    if(typeof raw.reflect.b==='string') s.reflect.b = raw.reflect.b.slice(0,4000);
+  }
+  return s;
+}
+
+function saveState(){ try{ localStorage.setItem(LS_KEY, JSON.stringify(state)); }catch(e){} }
+function loadState(){
+  try{ return sanitize(JSON.parse(localStorage.getItem(LS_KEY)||'null')); }catch(e){ return defaultState(); }
+}
+
+function cardOf(rid,cid){ return ROUNDS[rid].cards.filter(function(c){return c.id===cid;})[0]; }
+
+// Supported mode: give the anchor cards and remove distractors
+function applyAnchors(){
+  if(state.mode!=='supported') return;
+  Object.keys(ROUNDS).forEach(function(rid){
+    const R = ROUNDS[rid], p = state.rounds[rid].place;
+    Object.keys(p).forEach(function(k){ if(cardOf(rid,p[k]).distractor) delete p[k]; });
+    R.slots.forEach(function(sl,i){
+      if(!sl.anchor) return;
+      Object.keys(p).forEach(function(k){ if(p[k]===sl.correct) delete p[k]; });
+      p[i] = sl.correct;
+    });
+  });
+}
+
+// ══════════════════════════════════════════════
+// TABS
+// ══════════════════════════════════════════════
+function goToTab(name){
+  if(TABS.indexOf(name)<0) return;
+  if(held){ const r=held.rid; held=null; renderRound(r); }
+  TABS.forEach(function(t){
+    document.getElementById('panel-'+t).classList.toggle('active', t===name);
+    const b = document.getElementById('tabbtn-'+t);
+    b.classList.toggle('active', t===name);
+    b.setAttribute('aria-selected', t===name?'true':'false');
+  });
+  window.scrollTo({top:0});
+}
+
+// ══════════════════════════════════════════════
+// GLOSSARY
+// ══════════════════════════════════════════════
+function gloss(text){
+  return text.replace(/\{([^|}]+)\|([^}]+)\}/g, function(m,d,t){
+    const v = VOCAB[t];
+    if(!v) return d;
+    return '<span class="glossary-term" tabindex="0">'+d+'<span class="tooltip" role="tooltip">'+v[state.tier]+'</span></span>';
+  });
+}
+function placeTip(g){
+  const tip = g.querySelector('.tooltip'); if(!tip) return;
+  tip.style.left='0'; tip.style.display='block';
+  const r = tip.getBoundingClientRect();
+  const over = r.right - (window.innerWidth-8);
+  if(over>0) tip.style.left = (-over)+'px';
+  tip.style.display='';
+}
+document.addEventListener('mouseover', function(e){ const g=e.target.closest && e.target.closest('.glossary-term'); if(g) placeTip(g); });
+document.addEventListener('focusin', function(e){ const g=e.target.closest && e.target.closest('.glossary-term'); if(g) placeTip(g); });
+
+// ══════════════════════════════════════════════
+// ROUND RENDERING
+// ══════════════════════════════════════════════
+function yearsText(c){ return state.mode==='challenge' ? '' : c.years; }
+
+function progressText(rid){
+  const R=ROUNDS[rid], st=state.rounds[rid];
+  const placed = Object.keys(st.place).length;
+  let total=0, done=0;
+  R.groups.forEach(function(g){
+    for(let j=0;j<g.slots.length-1;j++){
+      total++;
+      const a=g.slots[j], b=g.slots[j+1], l=st.links[a];
+      if(st.place[a] && st.place[b] && l && l.t && l.t.trim()) done++;
+    }
+  });
+  return 'Cards placed: '+placed+' of '+R.slots.length+' · Explanations written: '+done+' of '+total;
+}
+
+function slotHTML(rid,R,i,hasNext){
+  const sl=R.slots[i], p=state.rounds[rid].place, cid=p[i], c=cid?cardOf(rid,cid):null;
+  const locked = state.mode==='supported' && sl.anchor;
+  const flag = checks[rid] && checks[rid].flags[i];
+  const cls = ['slot','lane-'+sl.lane];
+  if(c) cls.push('filled');
+  if(locked) cls.push('locked');
+  if(hasNext) cls.push('has-next');
+  if(flag) cls.push(flag.status);
+  let label, aria;
+  if(c){
+    const yr = yearsText(c);
+    label = esc(c.title)+(yr?'<span class="yr">'+esc(yr)+'</span>':'');
+    aria = sl.label+': '+c.title+(locked?' (given to you)':'. Click to pick up this card.');
+  } else {
+    label = held && held.rid===rid ? 'Place selected card here' : 'Empty — pick a card, then click here';
+    aria = sl.label+': empty. '+(held&&held.rid===rid?'Place the selected card here.':'Select a card first.');
+  }
+  return '<div class="'+cls.join(' ')+'" data-drop-rid="'+rid+'" data-drop-slot="'+i+'"'+(c&&!locked?' draggable="true" data-drag-rid="'+rid+'" data-drag-card="'+cid+'"':'')+'>'+
+    '<div class="slot-lane">'+esc(sl.label)+'</div>'+
+    '<button type="button" class="slot-btn" data-act="slot" data-rid="'+rid+'" data-slot="'+i+'" aria-label="'+esc(aria)+'"'+(locked?' disabled':'')+'>'+label+'</button>'+
+    (c?'<p class="card-desc">'+gloss(c.desc[state.tier])+'</p>':'')+
+    (flag && flag.msg?'<p class="slot-msg">'+esc(flag.msg)+'</p>':'')+
+  '</div>';
+}
+
+function renderRound(rid){
+  const R=ROUNDS[rid], st=state.rounds[rid], el=document.getElementById('rbody-'+rid);
+  const placed = {};
+  Object.keys(st.place).forEach(function(k){ placed[st.place[k]]=true; });
+  const bank = st.order.filter(function(id){
+    return !placed[id] && !(state.mode==='supported' && cardOf(rid,id).distractor);
+  });
+  let html = '<p class="intro">'+R.intro+(state.mode==='supported'?'':' '+R.distractorNote)+'</p>';
+  if(R.kind==='loops') html += '<div class="legend"><span class="chip brit">British action</span><span class="chip col">Colonial response</span><span class="chip counter">British counter-response</span><span class="chip result">What happened next</span></div>';
+  html += '<div class="progress" id="prog-'+rid+'">'+progressText(rid)+'</div>';
+
+  R.groups.forEach(function(g){
+    html += '<div class="group '+(R.kind==='chain'?'chain':'loop')+'">';
+    if(g.title) html += '<h3 class="loop-title">'+esc(g.title)+'</h3>';
+    if(R.kind==='loops') html += '<div class="row">';
+    g.slots.forEach(function(si,j){ html += slotHTML(rid,R,si, j<g.slots.length-1); });
+    if(g.note) html += '<div class="note-cell">'+esc(g.note)+'</div>';
+    if(R.kind==='loops') html += '</div>';
+    html += '</div>';
+  });
+
+  html += '<div class="bank-wrap"><h3>Card bank</h3><p class="hint">Click a card to pick it up, then click a slot. Or drag it. Drop a card back here to remove it.</p>'+
+    '<div class="bank" data-bank-rid="'+rid+'">';
+  if(bank.length){
+    bank.forEach(function(id){
+      const c = cardOf(rid,id), yr=yearsText(c), isHeld = held&&held.rid===rid&&held.cardId===id;
+      html += '<div class="card'+(isHeld?' held':'')+'" draggable="true" data-drag-rid="'+rid+'" data-drag-card="'+id+'">'+
+        '<button type="button" class="card-pick" data-act="pick" data-rid="'+rid+'" data-card="'+id+'" aria-pressed="'+(isHeld?'true':'false')+'">'+esc(c.title)+(yr?'<span class="yr">'+esc(yr)+'</span>':'')+'</button>'+
+        '<p class="card-desc">'+gloss(c.desc[state.tier])+'</p></div>';
+    });
+  } else html += '<div class="bank-empty">All cards are placed.</div>';
+  html += '</div></div>';
+
+  html += '<div class="check-row"><button type="button" class="nav-btn primary" data-act="check" data-rid="'+rid+'">Check my '+(R.kind==='chain'?'chain':'loops')+'</button></div>';
+  const ch = checks[rid];
+  html += '<div class="check-result" id="chk-'+rid+'" role="status" aria-live="polite">'+(ch?'<span class="'+(ch.summary.ok?'good':'fix')+'">'+esc(ch.summary.text)+'</span>':'')+'</div>';
+
+  html += '<h3 class="links-title">Explain each link</h3><p class="hint">Once two neighboring cards are placed, an explanation box appears. Explanations stay with their step numbers.</p><div class="links">';
+  let anyLink = false;
+  R.groups.forEach(function(g){
+    let head = false;
+    for(let j=0;j<g.slots.length-1;j++){
+      const a=g.slots[j], b=g.slots[j+1];
+      if(!(st.place[a] && st.place[b])) continue;
+      anyLink = true;
+      if(g.title && !head){ html += '<div class="loop-title" style="font-size:16px;margin-top:14px">'+esc(g.title)+'</div>'; head=true; }
+      const ca=cardOf(rid,st.place[a]), cb=cardOf(rid,st.place[b]), l=st.links[a]||{s:0,t:''};
+      html += '<div class="link-row"><div class="link-head"><strong>'+esc(R.slots[a].label)+'</strong> '+esc(ca.title)+' &rarr; <strong>'+esc(R.slots[b].label)+'</strong> '+esc(cb.title)+'</div>'+
+        '<label class="sr-only" for="ls-'+rid+'-'+a+'">Sentence starter</label>'+
+        '<select class="link-select" id="ls-'+rid+'-'+a+'" data-link-rid="'+rid+'" data-link-key="'+a+'" data-link-part="s">'+
+          STARTERS.map(function(t,k){ return '<option value="'+k+'"'+(l.s===k?' selected':'')+'>'+esc(t)+'</option>'; }).join('')+
+        '</select>'+
+        '<label class="sr-only" for="lt-'+rid+'-'+a+'">Your explanation</label>'+
+        '<textarea id="lt-'+rid+'-'+a+'" data-link-rid="'+rid+'" data-link-key="'+a+'" data-link-part="t" placeholder="Finish the sentence in your own words...">'+esc(l.t)+'</textarea></div>';
+    }
+  });
+  if(!anyLink) html += '<p class="links-empty">Place two neighboring cards to unlock your first explanation box.</p>';
+  html += '</div>';
+  el.innerHTML = html;
+}
+
+// ══════════════════════════════════════════════
+// PLACEMENT
+// ══════════════════════════════════════════════
+function refocus(sel){ const e=document.querySelector(sel); if(e) e.focus(); }
+function toast(msg){
+  const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show');
+  clearTimeout(toast._t); toast._t=setTimeout(function(){ t.classList.remove('show'); },2600);
+}
+
+function placeCard(rid,cid,i){
+  const R=ROUNDS[rid], p=state.rounds[rid].place;
+  if(state.mode==='supported' && R.slots[i].anchor) return false;
+  if(state.mode==='supported' && cardOf(rid,cid).distractor) return false;
+  Object.keys(p).forEach(function(k){ if(p[k]===cid) delete p[k]; });
+  p[i] = cid;
+  delete checks[rid];
+  return true;
+}
+
+function onPick(rid,cid){
+  if(held && held.rid===rid && held.cardId===cid) held=null; else held={rid:rid,cardId:cid};
+  renderRound(rid);
+  refocus('[data-act="pick"][data-rid="'+rid+'"][data-card="'+cid+'"]');
+}
+
+function onSlot(rid,i){
+  const R=ROUNDS[rid], p=state.rounds[rid].place;
+  if(state.mode==='supported' && R.slots[i].anchor){ toast('This card is given to you in Supported mode.'); return; }
+  if(held && held.rid===rid){
+    placeCard(rid,held.cardId,i); held=null;
+    saveState(); renderRound(rid);
+    refocus('[data-act="slot"][data-rid="'+rid+'"][data-slot="'+i+'"]');
+  } else if(p[i]){
+    const cid=p[i]; delete p[i]; held={rid:rid,cardId:cid}; delete checks[rid];
+    saveState(); renderRound(rid);
+    refocus('[data-act="pick"][data-rid="'+rid+'"][data-card="'+cid+'"]');
+  }
+}
+
+// ══════════════════════════════════════════════
+// CHECK (flags problems, never reveals answers)
+// ══════════════════════════════════════════════
+function runCheck(rid){
+  const R=ROUNDS[rid], p=state.rounds[rid].place, flags={};
+  function cd(i){ return cardOf(rid,p[i]); }
+  let summary;
+  if(R.kind==='chain'){
+    const empty = R.slots.filter(function(s,i){return !p[i];}).length;
+    if(empty){
+      summary = {ok:false, text:'Fill every step first. '+empty+(empty>1?' steps are':' step is')+' still empty.'};
+    } else {
+      let issues=0;
+      R.slots.forEach(function(s,i){
+        if(cd(i).distractor){ flags[i]={status:'bad',msg:'This card does not belong in this chain. Did it cause, or result from, its neighbors?'}; issues++; }
+      });
+      for(let i=1;i<R.slots.length;i++){
+        const a=cd(i-1), b=cd(i);
+        if(!a.distractor && !b.distractor && a.sortYear>b.sortYear){
+          if(!flags[i]) flags[i]={status:'bad',msg:'This happened before Step '+i+'. Check the order.'};
+          issues++;
+        }
+      }
+      R.slots.forEach(function(s,i){ if(!flags[i]) flags[i]={status:'ok'}; });
+      summary = issues ? {ok:false, text:issues+(issues>1?' things':' thing')+' to look at. Flagged steps are outlined in orange.'}
+                       : {ok:true, text:'Your steps are in a workable order. Now make sure each explanation says WHY one step led to the next.'};
+    }
+  } else {
+    let good=0, empty=0;
+    R.slots.forEach(function(s,i){
+      if(!p[i]){ empty++; return; }
+      if(p[i]===s.correct){ flags[i]={status:'ok'}; good++; }
+      else flags[i]={status:'bad', msg: cd(i).distractor ? 'This card does not belong in any loop.' : 'Not quite. Check who is acting and who is responding.'};
+    });
+    summary = {ok:good===R.slots.length,
+      text: empty ? good+' of '+R.slots.length+' correct so far. '+empty+' slot'+(empty>1?'s are':' is')+' still empty.'
+                  : good+' of '+R.slots.length+' slots are correct. Green means correct; orange means try again.'};
+  }
+  checks[rid] = {flags:flags, summary:summary};
+}
+
+// ══════════════════════════════════════════════
+// RENDER ALL
+// ══════════════════════════════════════════════
+function syncControls(){
+  document.querySelectorAll('.tier-btn').forEach(function(b){ b.classList.toggle('active', b.dataset.tier===state.tier); });
+  document.getElementById('modeSelect').value = state.mode;
+  document.getElementById('reflectA').value = state.reflect.a;
+  document.getElementById('reflectB').value = state.reflect.b;
+}
+function renderAll(){
+  Object.keys(ROUNDS).forEach(renderRound);
+  syncControls();
+}
+
+// ══════════════════════════════════════════════
+// EVENTS
+// ══════════════════════════════════════════════
+document.addEventListener('click', function(e){
+  const el = e.target.closest('[data-act]'); if(!el) return;
+  const act = el.dataset.act;
+  if(act==='tab') goToTab(el.dataset.tab);
+  else if(act==='pick') onPick(el.dataset.rid, el.dataset.card);
+  else if(act==='slot') onSlot(el.dataset.rid, Number(el.dataset.slot));
+  else if(act==='check'){ runCheck(el.dataset.rid); renderRound(el.dataset.rid); refocus('[data-act="check"][data-rid="'+el.dataset.rid+'"]'); }
+});
+
+document.addEventListener('input', function(e){
+  const t = e.target;
+  if(t.dataset.linkRid){
+    const st = state.rounds[t.dataset.linkRid], k = Number(t.dataset.linkKey);
+    if(!st.links[k]) st.links[k] = {s:0,t:''};
+    if(t.dataset.linkPart==='t') st.links[k].t = t.value; else st.links[k].s = Number(t.value)||0;
+    saveState();
+    const pg = document.getElementById('prog-'+t.dataset.linkRid); if(pg) pg.textContent = progressText(t.dataset.linkRid);
+  } else if(t.id==='reflectA'){ state.reflect.a = t.value; saveState(); }
+  else if(t.id==='reflectB'){ state.reflect.b = t.value; saveState(); }
+});
+
+document.addEventListener('change', function(e){
+  const t = e.target;
+  if(t.dataset.linkRid && t.dataset.linkPart==='s'){
+    const st = state.rounds[t.dataset.linkRid], k = Number(t.dataset.linkKey);
+    if(!st.links[k]) st.links[k] = {s:0,t:''};
+    st.links[k].s = Number(t.value)||0; saveState();
+  } else if(t.id==='modeSelect'){
+    state.mode = MODES.indexOf(t.value)>-1 ? t.value : 'regular';
+    held=null; Object.keys(checks).forEach(function(k){ delete checks[k]; });
+    applyAnchors(); saveState(); renderAll();
+  }
+});
+
+document.querySelectorAll('.tier-btn').forEach(function(b){
+  b.addEventListener('click', function(){ state.tier=b.dataset.tier; saveState(); renderAll(); });
+});
+
+// Drag and drop (mouse); tap-to-place is the primary path
+document.addEventListener('dragstart', function(e){
+  const d = e.target.closest && e.target.closest('[data-drag-card]'); if(!d) return;
+  try{ e.dataTransfer.setData('text/plain', d.dataset.dragRid+'|'+d.dataset.dragCard); e.dataTransfer.effectAllowed='move'; }catch(err){}
+});
+document.addEventListener('dragover', function(e){
+  const s = e.target.closest && (e.target.closest('[data-drop-slot]') || e.target.closest('[data-bank-rid]'));
+  if(s){ e.preventDefault(); s.classList.add('drop-over'); }
+});
+document.addEventListener('dragleave', function(e){
+  const s = e.target.closest && (e.target.closest('[data-drop-slot]') || e.target.closest('[data-bank-rid]'));
+  if(s) s.classList.remove('drop-over');
+});
+document.addEventListener('drop', function(e){
+  const slotEl = e.target.closest && e.target.closest('[data-drop-slot]');
+  const bankEl = e.target.closest && e.target.closest('[data-bank-rid]');
+  if(!slotEl && !bankEl) return;
+  e.preventDefault();
+  document.querySelectorAll('.drop-over').forEach(function(x){ x.classList.remove('drop-over'); });
+  let data=''; try{ data = e.dataTransfer.getData('text/plain'); }catch(err){}
+  const parts = data.split('|'); if(parts.length!==2) return;
+  const rid=parts[0], cid=parts[1];
+  if(!ROUNDS[rid] || !cardOf(rid,cid)) return;
+  if(slotEl){
+    if(slotEl.dataset.dropRid!==rid) return;
+    placeCard(rid,cid,Number(slotEl.dataset.dropSlot));
+  } else {
+    if(bankEl.dataset.bankRid!==rid) return;
+    const p=state.rounds[rid].place, R=ROUNDS[rid];
+    Object.keys(p).forEach(function(k){ if(p[k]===cid && !(state.mode==='supported' && R.slots[k].anchor)) delete p[k]; });
+    delete checks[rid];
+  }
+  held=null; saveState(); renderRound(rid);
+});
+
+// ══════════════════════════════════════════════
+// EXPORT
+// ══════════════════════════════════════════════
+function slotSummary(rid){
+  const R=ROUNDS[rid], st=state.rounds[rid], out=[];
+  R.groups.forEach(function(g){
+    const items=[];
+    g.slots.forEach(function(si,j){
+      const c = st.place[si] ? cardOf(rid,st.place[si]) : null;
+      let link = null;
+      if(j<g.slots.length-1 && st.place[si] && st.place[g.slots[j+1]]){
+        const l = st.links[si]; if(l && l.t && l.t.trim()) link = STARTERS[l.s]+' '+l.t.trim();
+      }
+      items.push({label:R.slots[si].label, card:c?c.title:'', years:c&&state.mode!=='challenge'?c.years:'', link:link});
+    });
+    out.push({title:g.title, items:items});
+  });
+  return out;
+}
+
+function buildPrintDoc(){
+  const d = new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+  const inc = function(id){ return document.getElementById('chk-'+id).checked; };
+  let h = '<div class="pd-header"><div class="pd-title">Road to Independence — Worksheet</div><div class="pd-meta">'+esc(d)+'<br>EdSim · US History</div></div>'+
+    '<div class="pd-name"><div>Name</div><div>Period</div></div>';
+  ['r1','r2','r3'].forEach(function(rid,n){
+    if(!inc(rid)) return;
+    h += '<div class="pd-sec">'+esc(ROUNDS[rid].name)+' — '+esc(ROUNDS[rid].id==='r2'?'Action and Reaction Loops':(rid==='r1'?'The War and the New Course':'Crisis to Independence'))+'</div>';
+    slotSummary(rid).forEach(function(g){
+      if(g.title) h += '<div class="pd-sub">'+esc(g.title)+'</div>';
+      g.items.forEach(function(it){
+        h += '<div class="pd-item"><div class="pd-lab">'+esc(it.label)+'</div>'+
+          (it.card ? '<div class="pd-val">'+esc(it.card)+(it.years?' ('+esc(it.years)+')':'')+'</div>' : '<div class="pd-line"></div>')+
+          (it.link ? '<div class="pd-txt">'+esc(it.link)+'</div>' : '')+'</div>';
+      });
+    });
+  });
+  if(inc('reflect')){
+    h += '<div class="pd-sec">Exit Ticket</div>'+
+      '<div class="pd-item"><div class="pd-val">1. British action, colonial response, and Britain’s answer</div>'+(state.reflect.a.trim()?'<div class="pd-txt">'+esc(state.reflect.a)+'</div>':'<div class="pd-line"></div><div class="pd-line"></div><div class="pd-line"></div><div class="pd-line"></div>')+'</div>'+
+      '<div class="pd-item"><div class="pd-val">2. The event that made war most likely</div>'+(state.reflect.b.trim()?'<div class="pd-txt">'+esc(state.reflect.b)+'</div>':'<div class="pd-line"></div><div class="pd-line"></div><div class="pd-line"></div><div class="pd-line"></div>')+'</div>';
+  }
+  document.getElementById('printDoc').innerHTML = h;
+}
+
+function buildText(){
+  let t = 'ROAD TO INDEPENDENCE — MY WORK\n';
+  [['r1','ROUND 1 — THE WAR AND THE NEW COURSE'],['r2','ROUND 2 — ACTION AND REACTION LOOPS'],['r3','ROUND 3 — CRISIS TO INDEPENDENCE']].forEach(function(pair){
+    t += '\n'+pair[1]+'\n';
+    slotSummary(pair[0]).forEach(function(g){
+      if(g.title) t += '\n'+g.title+'\n';
+      g.items.forEach(function(it){
+        t += '- '+it.label+': '+(it.card?it.card+(it.years?' ('+it.years+')':''):'(empty)')+'\n';
+        if(it.link) t += '    '+it.link+'\n';
+      });
+    });
+  });
+  t += '\nEXIT TICKET\n1. '+(state.reflect.a.trim()||'(no answer)')+'\n\n2. '+(state.reflect.b.trim()||'(no answer)')+'\n';
+  return t;
+}
+
+function openModal(id){ document.getElementById(id).classList.add('active'); }
+function closeModal(id){ document.getElementById(id).classList.remove('active'); }
+
+function askConfirmReset(message){
+  document.getElementById('confirmResetMsg').textContent = message;
+  openModal('confirmResetModal');
+}
+function resetSimState(){
+  try{ localStorage.removeItem(LS_KEY); }catch(e){}
+  const keepTier = state.tier;
+  state = defaultState(); state.tier = keepTier;
+  held=null; Object.keys(checks).forEach(function(k){ delete checks[k]; });
+  renderAll(); goToTab('directions');
+}
+
+document.getElementById('pdfBtn').addEventListener('click', function(){ openModal('exportModal'); });
+document.getElementById('exportCancelBtn').addEventListener('click', function(){ closeModal('exportModal'); });
+document.getElementById('exportGoBtn').addEventListener('click', function(){
+  buildPrintDoc(); closeModal('exportModal');
+  setTimeout(function(){
+    window.print();
+    // window.print() gives no reliable success signal, so ask instead of guessing
+    setTimeout(function(){ askConfirmReset('Did your PDF actually download or save? Check your Downloads folder before answering.'); },500);
+  },150);
+});
+document.getElementById('copyBtn').addEventListener('click', function(){
+  if(!navigator.clipboard){ toast('Copy is not available here. Your work is still saved. Try Save as PDF.'); return; }
+  navigator.clipboard.writeText(buildText()).then(function(){
+    askConfirmReset('Copied! Paste it into your Google Doc, check it looks right, then confirm.');
+  }, function(){ toast('Copy failed. Your work is still saved. Try again.'); });
+});
+document.getElementById('confirmResetYesBtn').addEventListener('click', function(){
+  closeModal('confirmResetModal'); resetSimState();
+});
+document.getElementById('confirmResetNoBtn').addEventListener('click', function(){
+  closeModal('confirmResetModal'); // work is untouched
+});
+document.getElementById('resetBtn').addEventListener('click', function(){ openModal('resetModal'); });
+document.getElementById('resetCancelBtn').addEventListener('click', function(){ closeModal('resetModal'); });
+document.getElementById('resetGoBtn').addEventListener('click', function(){ closeModal('resetModal'); resetSimState(); });
+document.addEventListener('keydown', function(e){
+  if(e.key==='Escape'){ ['exportModal','resetModal'].forEach(closeModal); }
+});
+
+// ══════════════════════════════════════════════
+// INIT — always land on Directions regardless of saved state (Build Standards §12)
+// ══════════════════════════════════════════════
+function init(){
+  state = loadState();
+  try{
+    const q = new URLSearchParams(window.location.search);
+    if(MODES.indexOf(q.get('mode'))>-1) state.mode = q.get('mode');
+    if(TIERS.indexOf(q.get('tier'))>-1) state.tier = q.get('tier');
+  }catch(e){}
+  applyAnchors();
+  renderAll();
+  goToTab('directions');
+}
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
